@@ -509,7 +509,7 @@ import { Chrono } from 'react-chrono'
 // )
 
 export const Timeline: FunctionComponent<{
-  type: string
+  type?: string
   cardHeight?: number
 }> = ({ type, cardHeight }) => {
   const [counter, setCounter] = useState(0)
