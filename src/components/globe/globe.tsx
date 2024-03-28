@@ -41,7 +41,7 @@ export const Globe: React.FC<GlobeProps> = ({ type="sightings" }: GlobeProps) =>
   
   return (
     <EarthGlobe
-    width="'100vw"
+    
     animateIn
       pointsData={points}
       globeImageUrl={images.earthSky}
