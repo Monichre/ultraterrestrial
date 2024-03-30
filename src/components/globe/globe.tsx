@@ -32,7 +32,7 @@ export const Globe: React.FC<GlobeProps> = ({ type="sightings" }: GlobeProps) =>
             lat: geometry.coordinates[1],
             lng: geometry.coordinates[0],
             color: green,
-            size: .005,
+            size: .002,
           }
         })
         setPoints(formatted)
@@ -47,7 +47,7 @@ export const Globe: React.FC<GlobeProps> = ({ type="sightings" }: GlobeProps) =>
       globeImageUrl={images.earthSky}
       backgroundImageUrl={images.nightSky}
       labelsData={points}
-      pointAltitude={0}
+      pointAltitude={.05}
       pointColor={(d: any) => d.color}
       // labelText={(d: any) => d.name}
 
