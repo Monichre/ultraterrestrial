@@ -1,10 +1,17 @@
 {
-  "deno.enablePaths": [
-    "supabase/functions"
-  ],
+  "deno.enablePaths": ["supabase/functions"],
   "deno.lint": true,
   "deno.unstable": true,
   "[typescript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
-  }
+  },
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.showOnAllFunctions": true,
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "CodeGPT.Autocomplete.provider": "CodeGPT Plus - Plus",
+  "editor.formatOnSave": true,
+  "notebook.formatOnSave.enabled": true,
+  "javascript.updateImportsOnFileMove.enabled": "always"
 }
