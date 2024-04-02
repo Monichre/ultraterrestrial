@@ -2,8 +2,8 @@ import { importTopics } from '@/lib/data/import-data'
 
 export async function POST(request: Request) {
   try {
-    const res = await importTopics()
-    console.log('res: ', res)
+    // const res = await importTopics()
+    // console.log('res: ', res)
     // Process the webhook payload
   } catch (error: any) {
     return new Response(`Webhook error: ${error.message}`, {

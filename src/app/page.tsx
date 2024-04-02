@@ -21,6 +21,12 @@ import AdminHeader from '@/components/ui/header/admin-header'
 import { motion } from 'framer-motion'
 import { Hero } from '@/components/hero'
 import { SiteHeader } from '@/components/ui/header/site-header'
+import {
+  getAllEvents,
+  getAllKeyFigures,
+  getAllTopics,
+} from '@/lib/airtable/client'
+import { Astronaut } from '@/components/ui/home/astronaut/astronaut'
 // export function FadeDown() {
 //   const FADE_DOWN_ANIMATION_VARIANTS = {
 //     hidden: { opacity: 0, y: -10 },
@@ -63,6 +69,12 @@ import { SiteHeader } from '@/components/ui/header/site-header'
 // }
 
 export default async function Index() {
+  const topics = await getAllTopics()
+  const keyFigures = await getAllKeyFigures()
+  const events = await getAllEvents()
+  console.log('events: ', events)
+  console.log('keyFigures: ', keyFigures)
+  console.log('topics: ', topics)
   // const canInitSupabaseClient = () => {
   //   // This function is just for the interactive tutorial.
   //   // Feel free to remove it once you have Supabase connected.
@@ -108,7 +120,8 @@ export default async function Index() {
   return (
     <>
       <SiteHeader />
-      <Hero />
+      <Astronaut />
+      {/* <Hero /> */}
 
       {/* <Timeline>
           {events.map((event: any) => (
