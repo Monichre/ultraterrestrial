@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 
 import { unfurl } from 'unfurl.js'
-import Header from '@/components/Header'
+import Header from '@/components/ui/header/admin-header'
 // import FlowUi from '@/components/flow-ui/flow-ui'
 import { BellIcon, CheckIcon } from '@radix-ui/react-icons'
 import { cn } from '@/utils'
@@ -17,7 +17,10 @@ import {
 } from '@/components/ui/card'
 import { Timeline } from '@/components/timeline'
 import dayjs from 'dayjs'
-
+import AdminHeader from '@/components/ui/header/admin-header'
+import { motion } from 'framer-motion'
+import { Hero } from '@/components/hero'
+import { SiteHeader } from '@/components/ui/header/site-header'
 // export function FadeDown() {
 //   const FADE_DOWN_ANIMATION_VARIANTS = {
 //     hidden: { opacity: 0, y: -10 },
@@ -60,53 +63,54 @@ import dayjs from 'dayjs'
 // }
 
 export default async function Index() {
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient()
-      return true
-    } catch (e) {
-      return false
-    }
-  }
+  // const canInitSupabaseClient = () => {
+  //   // This function is just for the interactive tutorial.
+  //   // Feel free to remove it once you have Supabase connected.
+  //   try {
+  //     createClient()
+  //     return true
+  //   } catch (e) {
+  //     return false
+  //   }
+  // }
 
-  const supabase = createClient()
+  // const supabase = createClient()
 
-  let { data, error }: any = await supabase.from('topics').select('*')
-  let { data: eventData }: any = await supabase.from('events').select('*')
-  function extractUrls(text) {
-    const urlRegex = /(https?:\/\/[^\s]+)/g
-    return text.match(urlRegex)
-  }
-  const events = await Promise.all(
-    eventData.map(async (event) => {
-      const url = extractUrls(event.description)
-      const preview =
-        url && url[0] ? await unfurl(url).catch((err) => null) : null
+  // let { data, error }: any = await supabase.from('topics').select('*')
+  // let { data: eventData }: any = await supabase.from('events').select('*')
+  // function extractUrls(text) {
+  //   const urlRegex = /(https?:\/\/[^\s]+)/g
+  //   return text.match(urlRegex)
+  // }
+  // const events = await Promise.all(
+  //   eventData.map(async (event) => {
+  //     const url = extractUrls(event.description)
+  //     const preview =
+  //       url && url[0] ? await unfurl(url).catch((err) => null) : null
 
-      return {
-        ...event,
-        preview: { ...preview } || null,
-      }
-    })
-  )
+  //     return {
+  //       ...event,
+  //       preview: { ...preview } || null,
+  //     }
+  //   })
+  // )
 
-  const topics = data.map(
-    ({ id, name, description, key_personnel: subjectMatterExperts }: any) => ({
-      id,
-      name,
-      description,
+  // const topics = data.map(
+  //   ({ id, name, description, key_personnel: subjectMatterExperts }: any) => ({
+  //     id,
+  //     name,
+  //     description,
 
-      subjectMatterExperts,
-    })
-  )
+  //     subjectMatterExperts,
+  //   })
+  // )
 
   return (
     <>
-      <Header />
-      <div className=' w-full'>
-        <Timeline>
+      <SiteHeader />
+      <Hero />
+
+      {/* <Timeline>
           {events.map((event: any) => (
             <Card key={event?.id} className={cn('w-[380px]')}>
               <CardHeader>
@@ -137,8 +141,7 @@ export default async function Index() {
               </CardFooter>
             </Card>
           ))}
-        </Timeline>
-      </div>
+        </Timeline> */}
     </>
   )
 }
