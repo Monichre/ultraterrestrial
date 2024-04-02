@@ -30,6 +30,10 @@
     "@sanity/vision": "^3.36.2",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
+    "@trigger.dev/nextjs": "^2.3.18",
+    "@trigger.dev/react": "^2.3.18",
+    "@trigger.dev/sdk": "^2.3.18",
+    "airtable": "^0.12.2",
     "autoprefixer": "10.4.17",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
@@ -64,10 +68,7 @@
     "twit": "^2.2.11",
     "typescript": "5.3.3",
     "unfurl.js": "^6.4.0",
-    "zustand": "^4.5.2",
-    "@trigger.dev/sdk": "^2.3.18",
-    "@trigger.dev/nextjs": "^2.3.18",
-    "@trigger.dev/react": "^2.3.18"
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@slicemachine/adapter-next": "^0.3.38",
