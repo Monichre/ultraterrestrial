@@ -1,6 +1,6 @@
 import AuthButton from '@/components/AuthButton'
 import DeployButton from '@/components/DeployButton'
-import Header from '@/components/Header'
+import Header from '@/components/ui/header/admin-header'
 import FetchDataSteps from '@/components/tutorial/FetchDataSteps'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
