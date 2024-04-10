@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@copilotkit/react-core':
     specifier: ^0.22.0
@@ -10,6 +14,12 @@ dependencies:
   '@copilotkit/react-ui':
     specifier: ^0.19.0
     version: 0.19.0(@types/react@18.2.48)(react@18.2.0)
+  '@liveblocks/client':
+    specifier: ^1.11.1
+    version: 1.11.1
+  '@liveblocks/zustand':
+    specifier: ^1.11.1
+    version: 1.11.1(zustand@4.5.2)
   '@portabletext/react':
     specifier: ^3.0.15
     version: 3.0.15(react@18.2.0)
@@ -1792,6 +1802,7 @@ packages:
 
   /@emotion/memoize@0.7.4:
     resolution: {integrity: sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -2398,6 +2409,26 @@ packages:
     resolution: {integrity: sha512-Wst46p51km8gH0ZUmeNrtpRYmdlRHUpN1DQd3GFAyKANi8WVz8c2jHYTf1CVScFaCjQw1iO3ZZdqGDxQPRErTg==}
     dependencies:
       '@lezer/common': 1.2.1
+    dev: false
+
+  /@liveblocks/client@1.11.1:
+    resolution: {integrity: sha512-+94LplyUElOZpKECX/rF1UJmkU9WRj3S1aD9w6iOYIitT1RFW+9Z4Et7nxO43FUODaheR1a40iqyikfDcRXswA==}
+    dependencies:
+      '@liveblocks/core': 1.11.1
+    dev: false
+
+  /@liveblocks/core@1.11.1:
+    resolution: {integrity: sha512-QkrONvIkVBGqZynrgGTF4jI4oFcui4+0Vf8QYdvvdtqXG6t6mcryDic1Rq53tuKsPzOXP1Nb7XSW3LH1z8ERxQ==}
+    dev: false
+
+  /@liveblocks/zustand@1.11.1(zustand@4.5.2):
+    resolution: {integrity: sha512-NqIkEkqBd3GoPiXC6ndAyEcE6YE9xtX3jjeG2pbNuOQL6AzH+LNHR55ubtuItApD4CZb0hxUGFDlj3FcaiP7gw==}
+    peerDependencies:
+      zustand: ^4.1.3
+    dependencies:
+      '@liveblocks/client': 1.11.1
+      '@liveblocks/core': 1.11.1
+      zustand: 4.5.2(@types/react@18.2.48)(react@18.2.0)
     dev: false
 
   /@ljharb/through@2.3.13:
