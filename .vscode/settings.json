@@ -1,11 +1,5 @@
 {
-  "typescript.referencesCodeLens.enabled": true,
-  "typescript.referencesCodeLens.showOnAllFunctions": true,
-  "typescript.implementationsCodeLens.enabled": true,
-  "typescript.suggest.completeFunctionCalls": true,
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "CodeGPT.Autocomplete.provider": "CodeGPT Plus - Plus",
-  "editor.formatOnSave": true,
-  "notebook.formatOnSave.enabled": true,
-  "javascript.updateImportsOnFileMove.enabled": "always"
+  "bitoAI.codeCompletion.enableAutoCompletion": true,
+  "bitoAI.codeCompletion.enableCommentToCode": true,
+  "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }
