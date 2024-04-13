@@ -27,6 +27,8 @@ import {
   getAllTopics,
 } from '@/lib/airtable/client'
 import { Astronaut } from '@/components/ui/home/astronaut/astronaut'
+import { PlanetMenu } from '@/components/planet-menu'
+import { Home } from '@/components/home'
 // export function FadeDown() {
 //   const FADE_DOWN_ANIMATION_VARIANTS = {
 //     hidden: { opacity: 0, y: -10 },
@@ -69,12 +71,12 @@ import { Astronaut } from '@/components/ui/home/astronaut/astronaut'
 // }
 
 export default async function Index() {
-  const topics = await getAllTopics()
-  const keyFigures = await getAllKeyFigures()
-  const events = await getAllEvents()
-  console.log('events: ', events)
-  console.log('keyFigures: ', keyFigures)
-  console.log('topics: ', topics)
+  // const topics = await getAllTopics()
+  // const keyFigures = await getAllKeyFigures()
+  // const events = await getAllEvents()
+  // console.log('events: ', events)
+  // console.log('keyFigures: ', keyFigures)
+  // console.log('topics: ', topics)
   // const canInitSupabaseClient = () => {
   //   // This function is just for the interactive tutorial.
   //   // Feel free to remove it once you have Supabase connected.
@@ -118,9 +120,10 @@ export default async function Index() {
   // )
 
   return (
-    <>
+    <div className='h-[100vh] overflow-hidden'>
       <SiteHeader />
-      <Astronaut />
+
+      <Home />
       {/* <Hero /> */}
 
       {/* <Timeline>
@@ -155,7 +158,7 @@ export default async function Index() {
             </Card>
           ))}
         </Timeline> */}
-    </>
+    </div>
   )
 }
 
