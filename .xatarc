@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Liam-Ellis-s-workspace-kgubvq.us-east-1.xata.sh/db/ultraterrestrial",
+  "codegen": {
+    "output": "src/lib/xata/index.ts"
+  }
+}

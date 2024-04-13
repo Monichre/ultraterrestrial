@@ -1,4 +1,3 @@
-import { GeistSans } from 'geist/font/sans'
 import './globals.css'
 
 import { Montserrat } from 'next/font/google'
@@ -27,9 +26,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // bg-background text-foreground
   return (
     <html lang='en' className={montserrat.className} suppressHydrationWarning>
-      <body className='bg-background text-foreground'>
+      <body className='bg-[url("/8k_stars_milky_way.jpeg")] be-center bg-cover'>
         <ThemeProvider
           attribute='class'
           defaultTheme='dark'
