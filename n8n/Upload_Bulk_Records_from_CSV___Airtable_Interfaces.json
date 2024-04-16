@@ -1,0 +1,536 @@
+{
+  "name": "Upload Bulk Records from CSV - Airtable Interfaces",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "get",
+        "base": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $item(\"0\").$node[\"Airtable Base IDs\"].json[\"Base ID\"] }}"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $item(\"0\").$node[\"Airtable Base IDs\"].json[\"Upload Table ID\"] }}"
+        },
+        "id": "={{ $node[\"New Upload\"].json[\"id\"] }}",
+        "options": {}
+      },
+      "id": "577fb3b7-b0a6-4f2b-9b53-36d1f77de5a0",
+      "name": "Get File ID",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        1120,
+        1120
+      ],
+      "typeVersion": 2,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "y1fxtpVqMiwpQPFq",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $item(\"0\").$node[\"Airtable Base IDs\"].json[\"Base ID\"] }}/{{ $item(\"0\").$node[\"Airtable Base IDs\"].json[\"Upload Table ID\"] }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"records\":[{\n\"id\":\"{{ $item(\"0\").$node[\"Get File ID\"].json[\"record_id\"] }}\",\n\"fields\":{\n\"Status\":\"Failed\"\n}\n}\n]\n}",
+        "options": {}
+      },
+      "id": "a287658f-50e0-4d08-9342-a5143dc20ff2",
+      "name": "Status Failed",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2820,
+        1180
+      ],
+      "executeOnce": true,
+      "typeVersion": 4.1,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "y1fxtpVqMiwpQPFq",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $item(\"0\").$node[\"Airtable Base IDs\"].json[\"Base ID\"] }}/{{ $item(\"0\").$node[\"Airtable Base IDs\"].json[\"Upload Table ID\"] }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"records\":[{\n\"id\":\"{{ $item(\"0\").$node[\"Get File ID\"].json[\"record_id\"] }}\",\n\"fields\":{\n\"Status\":\"Uploaded\"\n}\n}\n]\n}",
+        "options": {}
+      },
+      "id": "e3aae523-4803-4f69-9697-ab677c3f216d",
+      "name": "Status Uploaded",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2820,
+        1020
+      ],
+      "executeOnce": true,
+      "typeVersion": 4.1,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "y1fxtpVqMiwpQPFq",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Confirm the key names and column references\n\n\n\n\nWhen adapting this to your own base and Google Sheets (CSV) template, make sure to modify this node accordingly, as key values you will need to set the Airtable Fields, and the Expressions need to match the Read File column names\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMake sure that the fields have the correct data type (Strings, Integers (numbers), etc)",
+        "height": 538.9310265075466,
+        "width": 319.2310328152142
+      },
+      "id": "833515af-bf3a-4bc7-b79c-a6c1731f4714",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2280,
+        820
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Input your Airtables relevant ID's. These will be used in the API Calls",
+        "height": 416.06551185206945
+      },
+      "id": "e3cfcf21-3210-455c-b539-2dcacda3172a",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        840,
+        920
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $item(\"0\").$node[\"Get File ID\"].json[\"Campaign\"][\"0\"] }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "c244d6fe-21bf-4488-9780-32b56baa9998",
+      "name": "Campaign is Not Empty",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1880,
+        1120
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "Campaign",
+              "stringValue": "=\"Campaigns\":[\"{{ $item(\"0\").$node[\"Get File ID\"].json[\"Campaign\"][\"0\"] }}\"],"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ced8a7f4-4ccc-4fcf-8c13-c1b8f099283e",
+      "name": "Campaign Not Empty",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2120,
+        1020
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "Campaign"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "23e0a41c-cbbd-401d-88b4-a4b190dbcd72",
+      "name": "Campaign Not Empty1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2120,
+        1200
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "binaryPropertyName": "=data",
+        "options": {
+          "headerRow": true
+        }
+      },
+      "id": "f6c40cf2-4893-42ee-859c-f430b4dc5cf1",
+      "name": "Read File",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "position": [
+        1660,
+        1120
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "fields": {
+          "values": [
+            {
+              "name": "Base ID",
+              "stringValue": "=appZ0qelhmC2Y9igI"
+            },
+            {
+              "name": "Upload Table ID",
+              "stringValue": "tblDzSabZcP47sIMp"
+            },
+            {
+              "name": "Lead Table ID",
+              "stringValue": "tblnsXKf3TBztlIPV"
+            }
+          ]
+        },
+        "include": "none",
+        "options": {}
+      },
+      "id": "b7495a65-32bf-430d-9998-483582bbe6ef",
+      "name": "Airtable Base IDs",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        900,
+        1120
+      ],
+      "typeVersion": 3.2
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $item(\"0\").$node[\"Airtable Base IDs\"].json[\"Base ID\"] }}/{{ $item(\"0\").$node[\"Airtable Base IDs\"].json[\"Upload Table ID\"] }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"records\":[{\n\"id\":\"{{ $node[\"Get File ID\"].json[\"record_id\"] }}\",\n\"fields\":{\n\"Status\":\"Processing\"\n}\n}\n]\n}",
+        "options": {}
+      },
+      "id": "9fa8f822-f611-4af6-a2a4-7baaf2efa82d",
+      "name": "Status Processing",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1280,
+        1120
+      ],
+      "typeVersion": 4.1,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "y1fxtpVqMiwpQPFq",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $node[\"Get File ID\"].json[\"File\"][\"0\"][\"url\"] }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "af23a338-a9a0-49db-88de-d6eb68af2be9",
+      "name": "Download File",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1460,
+        1120
+      ],
+      "typeVersion": 4.1
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.airtable.com/v0/{{ $item(\"0\").$node[\"Airtable Base IDs\"].json[\"Base ID\"] }}/{{ $item(\"0\").$node[\"Airtable Base IDs\"].json[\"Lead Table ID\"] }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "airtableTokenApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"records\": [\n        {\n            \"fields\": {\n                \"FirstName\": \"{{ $json[\"FirstName\"] }}\",\n                \"LastName\": \"{{ $json[\"LastName\"] || \"\"}}\",\n                \"Email\": \"{{ $json[\"Email\"] || \"\" }}\",\n                \"Phone\": \"{{ $json[\"Phone\"] || \"\" }}\",\n                \"Company\": \"{{ $json[\"Company\"] || \"\" }}\",\n                \"Title\": \"{{ $json[\"Title\"] || \"\" }}\",\n                \"Country\": \"{{ $json[\"Country\"] || \"\" }}\",\n                \"City\": \"{{ $json[\"City\"] || \"\" }}\",\n                \"Website\": \"{{ $json[\"Website\"] || \"\" }}\",\n                \"LeadSource\": \"{{ $json[\"LeadSource\"] || \"\" }}\",\n                \"LeadStatus\": \"{{ $json[\"LeadStatus\"] || \"\" }}\",\n                {{ $json[\"Campaign\"] }}\n                \"InterestLevel\": \"{{ $json[\"InterestLevel\"] || \"\" }}\",\n                \"LastContactDate\": \"{{ $json[\"LastContactDate\"] || \"\" }}\"\n\n\n            }\n        }\n    ]\n}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 8
+            }
+          }
+        }
+      },
+      "id": "4428cdc4-1ffd-4f6f-8d96-49d20b80bfba",
+      "name": "Create Records",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2380,
+        1120
+      ],
+      "typeVersion": 4.1,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "y1fxtpVqMiwpQPFq",
+          "name": "Airtable Personal Access Token account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "content": "# Bulk Upload Contacts Through CSV | Airtable Interface & Airtable Grid\n\n\n## Airtable Template - https://www.airtable.com/universe/expkxniTpHDg4Y4Ni/interfaces-upload-bulk-records-from-csv\n## Google Sheets Template - https://docs.google.com/spreadsheets/d/1SEwOGCfekc1h_ZfZ8PDQY6oGgOGSzSgtD7pEliEGaZ0/edit?usp=sharing",
+        "height": 349.25800232621134,
+        "width": 1608.819505196552
+      },
+      "id": "e7a2cf60-099f-4c32-b9f0-ad2dd3d6e282",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        380,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "appZ0qelhmC2Y9igI"
+        },
+        "tableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "tblDzSabZcP47sIMp"
+        },
+        "triggerField": "Created At",
+        "additionalFields": {
+          "viewId": ""
+        }
+      },
+      "id": "dd8b54fa-15fb-4df5-b94f-8286dae7026b",
+      "name": "New Upload",
+      "type": "n8n-nodes-base.airtableTrigger",
+      "position": [
+        660,
+        1120
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "y1fxtpVqMiwpQPFq",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Walkthrough and Overview\n\n### https://www.youtube.com/watch?v=LgYxS1O-rbs",
+        "height": 224.90387533954015,
+        "width": 879.3031720944707
+      },
+      "id": "32f6ec9b-3f23-4d58-9cc2-b41fd9246091",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1980,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "# Setup Checklist\n\n### 1.Go to the Airtable Template and copy the latest version of the base\n### \n### 2. From your new Airtable base URL, get and replace your base and tables id's into this workflow's trigger node.\n### 3. Input your Airtable Id's in the second node \"Airtable Base ID's\"\n### 4. Make sure to add a Personal Access Token for Airtable Integration. It should, as minimum have enabled scopes for \"data.record:read\", \"data.record:write\", \"schema.bases:read\"\n### 5. Any file uploads can now be done from the Interface Form\n\n#After Setup\n\n### - Make sure you that if you add, remove or modify fields (or field names), those changes should also be applied to the \"Create Record\" node\n### - Make sure that the CSV upload header row, matches the Airtable Leads field names\n### - If you modify any field type (Text to Number, or Number to Text), those changes should also be applied to the \"Create Records\" value (Numbers go without double quotes / strings, dates and the rest of the data types go with double quotes) [JSON Syntax]",
+        "height": 768.2443727570767,
+        "width": 558.4226026659302
+      },
+      "id": "78363718-c1c2-4bf0-ba04-a48403cca0cb",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        60,
+        820
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Read File": {
+      "main": [
+        [
+          {
+            "node": "Campaign is Not Empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "New Upload": {
+      "main": [
+        [
+          {
+            "node": "Airtable Base IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get File ID": {
+      "main": [
+        [
+          {
+            "node": "Status Processing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Read File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Records": {
+      "main": [
+        [
+          {
+            "node": "Status Uploaded",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Status Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable Base IDs": {
+      "main": [
+        [
+          {
+            "node": "Get File ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Status Processing": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Campaign Not Empty": {
+      "main": [
+        [
+          {
+            "node": "Create Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Campaign Not Empty1": {
+      "main": [
+        [
+          {
+            "node": "Create Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Campaign is Not Empty": {
+      "main": [
+        [
+          {
+            "node": "Campaign Not Empty",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Campaign Not Empty1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "b3f20c77-54f8-47c6-b923-dd029afb685b",
+  "meta": {
+    "templateId": "2071",
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8fa17bfe42249a1d25f5c84c70a6e2f9f9acb4122d6a0f289fe44da73ed19461"
+  },
+  "id": "CvJCYjdH3TV1Yo7O",
+  "tags": []
+}

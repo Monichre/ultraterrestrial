@@ -1,1 +1,1 @@
-export * from './diagram';
+export * from './grommet-diagram'

@@ -1,12 +1,30 @@
 import './globals.css'
 
-import { Montserrat } from 'next/font/google'
+import { Montserrat, Oxanium, Inria_Sans, Rajdhani } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 
 // Montserrat
 // If loading a variable font, you don't need to specify the font weight
 const montserrat = Montserrat({
   weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  subsets: ['latin'],
+})
+
+const oxanium = Oxanium({
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  subsets: ['latin'],
+})
+
+const inria = Inria_Sans({
+  weight: ['300', '400'],
+  display: 'swap',
+  subsets: ['latin'],
+})
+
+const rajdhani = Rajdhani({
+  weight: ['300', '400'],
   display: 'swap',
   subsets: ['latin'],
 })
@@ -28,7 +46,11 @@ export default function RootLayout({
 }) {
   // bg-background text-foreground
   return (
-    <html lang='en' className={montserrat.className} suppressHydrationWarning>
+    <html
+      lang='en'
+      className={`${montserrat.className} ${oxanium.className} ${inria.className} ${rajdhani.className}`}
+      suppressHydrationWarning
+    >
       <body className='bg-[url("/8k_stars_milky_way.jpeg")] be-center bg-cover'>
         <ThemeProvider
           attribute='class'

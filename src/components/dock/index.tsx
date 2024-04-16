@@ -1,8 +1,8 @@
-import { Card } from 'grommet'
 import { Dock } from 'lucide-react'
 import { FunctionComponent } from 'react'
 import { DockCard } from './DockCard'
 import { DockDivider } from './DockDivider'
+import { Card } from './Card'
 
 interface DockMenuProps {}
 
@@ -20,7 +20,7 @@ const GRADIENTS = [
 export const DockMenu: FunctionComponent<DockMenuProps> = () => {
   return (
     <Dock>
-      {GRADIENTS.map((src, index) =>
+      {GRADIENTS.map((src: any, index: any) =>
         src ? (
           <DockCard key={src}>
             <Card src={src} />
@@ -32,3 +32,4 @@ export const DockMenu: FunctionComponent<DockMenuProps> = () => {
     </Dock>
   )
 }
+s

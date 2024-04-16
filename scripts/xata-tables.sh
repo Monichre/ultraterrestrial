@@ -21,7 +21,7 @@ for table in "${table_names[@]}"; do
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer ${XATA_API_KEY}" \
     -d "{
-        \"statement\": \"select * from ${table};\",
+        \"statement\": \"select * from \\\"${table}\\\";\",
         \"consistency\": \"strong\",
         \"responseType\": \"json\"
     }" > "${table}.json"

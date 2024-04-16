@@ -1,32 +1,3 @@
-import { createClient } from '@/lib/supabase/server'
-
-import { unfurl } from 'unfurl.js'
-import Header from '@/components/ui/header/admin-header'
-// import FlowUi from '@/components/flow-ui/flow-ui'
-import { BellIcon, CheckIcon } from '@radix-ui/react-icons'
-import { cn } from '@/utils'
-import { Button } from '@/components/ui/button'
-// import { motion } from 'framer-motion'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Timeline } from '@/components/timeline'
-import dayjs from 'dayjs'
-import AdminHeader from '@/components/ui/header/admin-header'
-import { motion } from 'framer-motion'
-import { Hero } from '@/components/hero'
-import { SiteHeader } from '@/components/ui/header/site-header'
-import {
-  getAllEvents,
-  getAllKeyFigures,
-  getAllTopics,
-} from '@/lib/airtable/client'
-import { Astronaut } from '@/components/ui/home/astronaut/astronaut'
 import { PlanetMenu } from '@/components/planet-menu'
 import { Home } from '@/components/home'
 // export function FadeDown() {
@@ -121,7 +92,7 @@ export default async function Index() {
 
   return (
     <div className='h-[100vh] overflow-hidden'>
-      <SiteHeader />
+      <PlanetMenu />
 
       <Home />
       {/* <Hero /> */}
