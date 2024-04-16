@@ -18,31 +18,35 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
 
   const goToInvestigations = () => router.push('/investigate')
   const goToSightings = () => router.push('/sightings')
+  const goToVisualizations = () => router.push('/visualizations/mind-map')
+  const goToConnectionsGraph = () =>
+    router.push('/visualizations/connection-graph')
 
   return (
-    <div className='absolute top-20 left-20 z-20'>
+    <div className='absolute h-[400px] w-[400px] top-32 left-32 z-20'>
       <ReactPlanet
         hideOrbit
         open
         autoClose
         orbitRadius={100}
-        rotation={150}
+        rotation={45}
+        satelliteOrientation={'READABLE'}
         centerContent={
           <div
             style={{
-              height: 100,
-              width: 100,
+              height: 80,
+              width: 80,
               cursor: 'pointer',
             }}
           >
-            <Image alt='earth' src='/earth-1.png' height={100} width={100} />
+            <Image alt='earth' src='/earth-1.png' height={80} width={80} />
           </div>
         }
       >
         <div
           style={{
-            height: 50,
-            width: 50,
+            height: 40,
+            width: 40,
             cursor: 'pointer',
           }}
           onClick={goToSightings}
@@ -61,9 +65,9 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
 
         <div
           style={{
-            height: 50,
+            height: 40,
             cursor: 'pointer',
-            width: 50,
+            width: 40,
           }}
           onClick={goToInvestigations}
         >
@@ -74,6 +78,44 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
               </TooltipTrigger>
               <TooltipContent>
                 <p>Investigations</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        <div
+          style={{
+            height: 40,
+            cursor: 'pointer',
+            width: 40,
+          }}
+          onClick={goToConnectionsGraph}
+        >
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Image alt='saturn' src='/saturn.png' height={50} width={50} />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Connections</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        <div
+          style={{
+            height: 40,
+            cursor: 'pointer',
+            width: 40,
+          }}
+          onClick={goToVisualizations}
+        >
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Image alt='moon' src='/moon.png' height={50} width={50} />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Visualizations</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

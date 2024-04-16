@@ -1,11 +1,12 @@
 'use client'
 
+import { rajdhani } from '@/app/layout'
 import { motion } from 'framer-motion'
 import { FunctionComponent } from 'react'
 
 import ParticleImage, { ParticleOptions } from 'react-particle-image'
 
-const words = 'We Are Not Alone'
+const words = 'UltraTerrestrial'
 
 export function FadeUpStagger() {
   const FADE_UP_ANIMATION_VARIANTS = {
@@ -54,13 +55,13 @@ export function LetterPullUp() {
       y: 0,
       opacity: 1,
       transition: {
-        delay: i * 0.3, // Delay each letter's animation by 0.05 seconds
+        delay: i * 0.1, // Delay each letter's animation by 0.05 seconds
       },
     }),
   }
 
   return (
-    <div className='flex justify-center'>
+    <div className='flex justify-center absolute w-full left-0 top-[400px]'>
       {letters.map((letter, i) => (
         <motion.h1
           key={i}
@@ -68,7 +69,7 @@ export function LetterPullUp() {
           initial='initial'
           animate='animate'
           custom={i}
-          className='text-center font-display text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-9xl md:leading-[5rem]'
+          className={`text-center font-display text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]  `}
         >
           {letter === ' ' ? <span>&nbsp;</span> : letter}
         </motion.h1>
@@ -77,7 +78,7 @@ export function LetterPullUp() {
   )
 }
 
-const WordPullUp = () => {
+export const WordPullUp = () => {
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -148,7 +149,7 @@ interface HeroProps {}
 
 interface AnimatedHeroProps {}
 
-const AnimatedHero: FunctionComponent<AnimatedHeroProps> = () => {
+export const AnimatedHero: FunctionComponent<AnimatedHeroProps> = () => {
   const particleOptions: ParticleOptions = {
     filter: ({ x, y, image }) => {
       // Get pixel

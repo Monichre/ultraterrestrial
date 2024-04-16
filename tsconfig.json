@@ -14,14 +14,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-
     "allowImportingTsExtensions": true,
-
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -30,10 +24,11 @@
   "include": [
     "*.ts",
     "next-env.d.ts",
+    "src",
     "src/**/**/*",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
+
     "liveblocks.config.ts"
   ],
   "exclude": ["node_modules"]

@@ -1,5 +1,8 @@
 import { PlanetMenu } from '@/components/planet-menu'
 import { Home } from '@/components/home'
+import { AnimatedHero, WordPullUp, LetterPullUp } from '@/components/hero'
+import { Suspense } from 'react'
+
 // export function FadeDown() {
 //   const FADE_DOWN_ANIMATION_VARIANTS = {
 //     hidden: { opacity: 0, y: -10 },
@@ -42,59 +45,14 @@ import { Home } from '@/components/home'
 // }
 
 export default async function Index() {
-  // const topics = await getAllTopics()
-  // const keyFigures = await getAllKeyFigures()
-  // const events = await getAllEvents()
-  // console.log('events: ', events)
-  // console.log('keyFigures: ', keyFigures)
-  // console.log('topics: ', topics)
-  // const canInitSupabaseClient = () => {
-  //   // This function is just for the interactive tutorial.
-  //   // Feel free to remove it once you have Supabase connected.
-  //   try {
-  //     createClient()
-  //     return true
-  //   } catch (e) {
-  //     return false
-  //   }
-  // }
-
-  // const supabase = createClient()
-
-  // let { data, error }: any = await supabase.from('topics').select('*')
-  // let { data: eventData }: any = await supabase.from('events').select('*')
-  // function extractUrls(text) {
-  //   const urlRegex = /(https?:\/\/[^\s]+)/g
-  //   return text.match(urlRegex)
-  // }
-  // const events = await Promise.all(
-  //   eventData.map(async (event) => {
-  //     const url = extractUrls(event.description)
-  //     const preview =
-  //       url && url[0] ? await unfurl(url).catch((err) => null) : null
-
-  //     return {
-  //       ...event,
-  //       preview: { ...preview } || null,
-  //     }
-  //   })
-  // )
-
-  // const topics = data.map(
-  //   ({ id, name, description, key_personnel: subjectMatterExperts }: any) => ({
-  //     id,
-  //     name,
-  //     description,
-
-  //     subjectMatterExperts,
-  //   })
-  // )
-
   return (
     <div className='h-[100vh] overflow-hidden'>
-      <PlanetMenu />
+      <Suspense fallback={null}>
+        <PlanetMenu />
 
-      <Home />
+        <LetterPullUp />
+        <Home />
+      </Suspense>
       {/* <Hero /> */}
 
       {/* <Timeline>
