@@ -3,8 +3,10 @@ import * as THREE from 'three'
 import { useRef, useState, useMemo, useEffect, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Billboard, Text, TrackballControls } from '@react-three/drei'
-
-function Word({ children, ...props }: any) {
+import { useRouter } from 'next/navigation'
+// generate random words
+function Word({ children, item, ...props }: any) {
+  const router = useRouter()
   const color = new THREE.Color()
 
   const ref: any = useRef()
@@ -29,45 +31,51 @@ function Word({ children, ...props }: any) {
       0.1
     )
   })
+
+  const goToPage = () => router.push(`/investigate/${item?.type}/${item?.id}`)
+
+  const fontProps = {
+    fontFamily: 'Inria Sans',
+    fontSize: 1,
+    letterSpacing: -0.05,
+    lineHeight: 1,
+  }
   return (
     <Billboard {...props}>
       <Text
         ref={ref}
         onPointerOver={over}
         onPointerOut={out}
-        onClick={() => console.log('clicked')}
-        // {...fontProps}
+        onClick={goToPage}
+        {...fontProps}
         children={children}
       />
     </Billboard>
   )
 }
 
-function Cloud({ count = 4, radius = 20 }) {
-  // Create a count x count random words with spherical distribution
+function Cloud({ items, radius = 20 }) {
   const words = useMemo(() => {
-    const temp = []
-    const spherical = new THREE.Spherical()
-    const phiSpan = Math.PI / (count + 1)
-    const thetaSpan = (Math.PI * 2) / count
-    for (let i = 1; i < count + 1; i++)
-      for (let j = 0; j < count; j++)
-        temp.push([
-          new THREE.Vector3().setFromSpherical(
-            spherical.set(radius, phiSpan * i, thetaSpan * j)
-          ),
-          'Topics',
-          'Events',
-          'Key Figures',
-        ])
-    return temp
-  }, [count, radius])
-  return words.map(([pos, word], index) => (
-    <Word key={index} position={pos} children={word} />
+    return items.map((item, idx) => {
+      const phi = Math.acos(-1 + (2 * idx) / items.length)
+      const theta = Math.sqrt(items.length * Math.PI) * phi
+      return [
+        new THREE.Vector3().setFromSpherical(
+          new THREE.Spherical(radius, phi, theta)
+        ),
+        item.name,
+      ]
+    })
+  }, [items, radius])
+
+  return words.map(([pos, name], index) => (
+    <Word key={index} position={pos} children={name} item={items[index]} />
   ))
 }
-
-export const WordCloud = () => {
+export type WordCloudProps = {
+  events: any[]
+}
+export const WordCloud = ({ records }: any) => {
   return (
     <Canvas
       dpr={[1, 2]}
@@ -77,7 +85,7 @@ export const WordCloud = () => {
       <fog attach='fog' args={['#202025', 0, 80]} />
       <Suspense fallback={null}>
         <group rotation={[10, 10.5, 10]}>
-          <Cloud count={8} radius={20} />
+          <Cloud items={records} radius={30} />
         </group>
       </Suspense>
       <TrackballControls />

@@ -1,0 +1,302 @@
+{
+  "name": "Transform Data For Join Tables",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "05775f1d-e39e-4f15-87e8-53b018620974",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        320,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appN3js5xinc0L7ln",
+          "mode": "list",
+          "cachedResultName": "UltraTerrestrial",
+          "cachedResultUrl": "https://airtable.com/appN3js5xinc0L7ln"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblvOAYLKKcbxbb0w",
+          "mode": "list",
+          "cachedResultName": "Key Figures",
+          "cachedResultUrl": "https://airtable.com/appN3js5xinc0L7ln/tblvOAYLKKcbxbb0w"
+        },
+        "filterByFormula": "=",
+        "options": {
+          "fields": [
+            "id",
+            "topics",
+            "name",
+            "testimonies",
+            "organizations",
+            "id (from topics)"
+          ]
+        }
+      },
+      "id": "3bade1f3-b0c3-4bec-b649-4e33f5ea94c7",
+      "name": "Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [
+        660,
+        360
+      ],
+      "alwaysOutputData": true,
+      "notesInFlow": true,
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "y1fxtpVqMiwpQPFq",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "8773168b-1b76-42f9-8b99-7181e99617f5",
+              "leftValue": "={{ $json[\"id (from topics)\"] }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "3bd5851c-de2e-451e-896d-e537eb3d6932",
+              "leftValue": "={{ $json[\"id (from topics)\"] }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "d1b2fe58-0d2c-4144-b16f-ded3f4fc8d3a",
+              "leftValue": "=",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "058ec971-8124-41ee-bce9-aaf03ee0ef43",
+      "name": "Filter Out Records Without Topics",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        900,
+        360
+      ],
+      "alwaysOutputData": true,
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "bfbf8515-be63-44c9-a6f5-083e9f4a7c13",
+              "leftValue": "={{ $json.testimonies }}",
+              "rightValue": "={{ $json.testimonies }}",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "6e85b60f-6b8d-4e8f-8ffb-01396377e894",
+              "leftValue": "={{ $json.testimonies }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f85d3fa6-d866-471b-bbfe-4d5f0132ec63",
+      "name": "Filter Out Records Without Testimonies",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        940,
+        680
+      ],
+      "alwaysOutputData": true,
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nconst unique = []\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n    const {id} = item.json\n  const topics = item.json['id (from topics)']\n    topics.forEach(topicId => {\n    unique.push({topic: topicId, 'subject-matter-expert': id})\n  })\n  \n}\nreturn {records: unique}\n//return $input.all();"
+      },
+      "id": "98774092-6a14-4be7-aa12-2af4e17c9a81",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        360
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b3d8b0f0-9d56-4688-9211-b6286e3325be",
+      "name": "Xata",
+      "type": "@n8n/n8n-nodes-langchain.memoryXata",
+      "typeVersion": 1.2,
+      "position": [
+        1360,
+        320
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "xataApi": {
+          "id": "gj25O3AwU4bUXfrk",
+          "name": "Xata Api account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ultraterrestrial-kgubvq.us-east-1.xata.sh/db/ultraterrestrial:main/tables/topic-subject-matter-experts/bulk",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "xataApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "records",
+              "value": "={{ $json.records }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "726d79d8-79bd-41f4-ac7e-52795fa55a80",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1700,
+        280
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "tj90DgTpHAKHXIui",
+          "name": "Header Auth account"
+        },
+        "xataApi": {
+          "id": "gj25O3AwU4bUXfrk",
+          "name": "Xata Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "main": [
+        [
+          {
+            "node": "Filter Out Records Without Topics",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter Out Records Without Testimonies",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Out Records Without Topics": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "29d7deec-8754-4f4a-94aa-ba6060bcde40",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8fa17bfe42249a1d25f5c84c70a6e2f9f9acb4122d6a0f289fe44da73ed19461"
+  },
+  "id": "715LED2wCNuywj9Y",
+  "tags": []
+}

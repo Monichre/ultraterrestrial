@@ -8,8 +8,6 @@ export interface HomeProps {}
 export const Home: React.FC<HomeProps> = ({ children }: any) => {
   return (
     <>
-      <PlanetMenu />
-
       <Astronaut />
     </>
   )

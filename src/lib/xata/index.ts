@@ -14,9 +14,9 @@ const tables = [
       { name: "summary", type: "text" },
     ],
     revLinks: [
-      { column: "topics", table: "events" },
-      { column: "topic", table: "testimonies" },
       { column: "topic", table: "topic-subject-matter-experts" },
+      { column: "topic", table: "event-topic-subject-matter-experts" },
+      { column: "topic", table: "topics-testimonies" },
     ],
   },
   {
@@ -25,15 +25,18 @@ const tables = [
       { name: "name", type: "string" },
       { name: "bio", type: "text" },
       { name: "role", type: "string" },
-      { name: "photo", type: "text" },
+      { name: "picture", type: "text" },
       { name: "facebook", type: "string" },
       { name: "twitter", type: "string" },
       { name: "website", type: "string" },
       { name: "instagram", type: "string" },
+      { name: "photo", type: "file[]" },
+      { name: "rank", type: "int" },
+      { name: "credibility", type: "int" },
+      { name: "popularity", type: "int" },
     ],
     revLinks: [
-      { column: "personnel", table: "events" },
-      { column: "witness", table: "testimonies" },
+      { column: "member", table: "organization-members" },
       {
         column: "subject-matter-expert",
         table: "event-subject-matter-experts",
@@ -42,7 +45,11 @@ const tables = [
         column: "subject-matter-expert",
         table: "topic-subject-matter-experts",
       },
-      { column: "member", table: "organization-members" },
+      {
+        column: "subject-matter-expert",
+        table: "event-topic-subject-matter-experts",
+      },
+      { column: "witness", table: "testimonies" },
     ],
   },
   {
@@ -54,17 +61,11 @@ const tables = [
       { name: "location", type: "string" },
       { name: "latitude", type: "float" },
       { name: "longitude", type: "float" },
-      {
-        name: "personnel",
-        type: "link",
-        link: { table: "personnel" },
-        unique: true,
-      },
-      { name: "topics", type: "link", link: { table: "topics" }, unique: true },
     ],
     revLinks: [
-      { column: "event", table: "testimonies" },
       { column: "event", table: "event-subject-matter-experts" },
+      { column: "event", table: "event-topic-subject-matter-experts" },
+      { column: "event", table: "testimonies" },
     ],
   },
   {
@@ -96,17 +97,6 @@ const tables = [
     ],
   },
   {
-    name: "testimonies",
-    columns: [
-      { name: "witness", type: "link", link: { table: "personnel" } },
-      { name: "claim", type: "text" },
-      { name: "date", type: "datetime" },
-      { name: "topic", type: "link", link: { table: "topics" }, unique: true },
-      { name: "event", type: "link", link: { table: "events" }, unique: true },
-      { name: "documentation", type: "file[]" },
-    ],
-  },
-  {
     name: "event-subject-matter-experts",
     columns: [
       { name: "event", type: "link", link: { table: "events" } },
@@ -135,6 +125,45 @@ const tables = [
       { name: "organization", type: "link", link: { table: "organizations" } },
     ],
   },
+  {
+    name: "event-topic-subject-matter-experts",
+    columns: [
+      { name: "event", type: "link", link: { table: "events" } },
+      {
+        name: "subject-matter-expert",
+        type: "link",
+        link: { table: "personnel" },
+      },
+      { name: "topic", type: "link", link: { table: "topics" } },
+    ],
+  },
+  {
+    name: "testimonies",
+    columns: [
+      { name: "claim", type: "text" },
+      { name: "event", type: "link", link: { table: "events" } },
+      { name: "summary", type: "text" },
+      { name: "witness", type: "link", link: { table: "personnel" } },
+      { name: "documentation", type: "file[]" },
+    ],
+    revLinks: [{ column: "testimony", table: "topics-testimonies" }],
+  },
+  {
+    name: "topics-testimonies",
+    columns: [
+      { name: "topic", type: "link", link: { table: "topics" } },
+      { name: "testimony", type: "link", link: { table: "testimonies" } },
+    ],
+  },
+  {
+    name: "documents",
+    columns: [
+      { name: "file", type: "file[]" },
+      { name: "content", type: "text" },
+      { name: "embedding", type: "vector", vector: { dimension: 1536 } },
+      { name: "title", type: "string" },
+    ],
+  },
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -155,9 +184,6 @@ export type OrganizationsRecord = Organizations & XataRecord;
 export type Sightings = InferredTypes["sightings"];
 export type SightingsRecord = Sightings & XataRecord;
 
-export type Testimonies = InferredTypes["testimonies"];
-export type TestimoniesRecord = Testimonies & XataRecord;
-
 export type EventSubjectMatterExperts =
   InferredTypes["event-subject-matter-experts"];
 export type EventSubjectMatterExpertsRecord = EventSubjectMatterExperts &
@@ -171,16 +197,33 @@ export type TopicSubjectMatterExpertsRecord = TopicSubjectMatterExperts &
 export type OrganizationMembers = InferredTypes["organization-members"];
 export type OrganizationMembersRecord = OrganizationMembers & XataRecord;
 
+export type EventTopicSubjectMatterExperts =
+  InferredTypes["event-topic-subject-matter-experts"];
+export type EventTopicSubjectMatterExpertsRecord =
+  EventTopicSubjectMatterExperts & XataRecord;
+
+export type Testimonies = InferredTypes["testimonies"];
+export type TestimoniesRecord = Testimonies & XataRecord;
+
+export type TopicsTestimonies = InferredTypes["topics-testimonies"];
+export type TopicsTestimoniesRecord = TopicsTestimonies & XataRecord;
+
+export type Documents = InferredTypes["documents"];
+export type DocumentsRecord = Documents & XataRecord;
+
 export type DatabaseSchema = {
   topics: TopicsRecord;
   personnel: PersonnelRecord;
   events: EventsRecord;
   organizations: OrganizationsRecord;
   sightings: SightingsRecord;
-  testimonies: TestimoniesRecord;
   "event-subject-matter-experts": EventSubjectMatterExpertsRecord;
   "topic-subject-matter-experts": TopicSubjectMatterExpertsRecord;
   "organization-members": OrganizationMembersRecord;
+  "event-topic-subject-matter-experts": EventTopicSubjectMatterExpertsRecord;
+  testimonies: TestimoniesRecord;
+  "topics-testimonies": TopicsTestimoniesRecord;
+  documents: DocumentsRecord;
 };
 
 const DatabaseClient = buildClient();
