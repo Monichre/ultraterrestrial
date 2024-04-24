@@ -3,6 +3,7 @@ import './globals.css'
 import { Oswald, Source_Sans_3 } from 'next/font/google'
 // Montserrat, Oxanium, Inria_Sans, Rajdhani,
 import { ThemeProvider } from '@/components/theme-provider'
+import { PlanetMenu } from '@/components/planet-menu'
 
 // Montserrat
 // If loading a variable font, you don't need to specify the font weight
@@ -48,8 +49,9 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase',
+  title: 'UltraTerrestrial',
+  description:
+    'Tracking the State of Disclosure. Striving to document, explore and disseminate the past, present and future of the UFO topic and its bearing on humanity, the universe and our place within it.',
 }
 
 export default function RootLayout({
@@ -73,9 +75,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <main className='min-h-screen flex flex-col items-center'> */}
-          {children}
-          {/* </main> */}
+          <PlanetMenu />
+          <main className='min-h-[100vh] min-w-screen relative'>
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>

@@ -1,4 +1,5 @@
 'use client'
+
 import { Planet as ReactPlanet } from 'react-planet'
 import {
   Tooltip,
@@ -23,23 +24,22 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
     router.push('/visualizations/connection-graph')
 
   return (
-    <div className='absolute h-[400px] w-[400px] top-32 left-32 z-20'>
+    <div className='fixed h-[220px] w-[220px] top-[80px] left-[80px] z-20'>
       <ReactPlanet
         hideOrbit
         open
-        autoClose
-        orbitRadius={100}
+        orbitRadius={80}
         rotation={45}
-        satelliteOrientation={'READABLE'}
+        // satelliteOrientation={'READABLE'}
         centerContent={
           <div
             style={{
-              height: 80,
-              width: 80,
+              height: 60,
+              width: 60,
               cursor: 'pointer',
             }}
           >
-            <Image alt='earth' src='/earth-1.png' height={80} width={80} />
+            <Image alt='earth' src='/earth-1.png' height={60} width={60} />
           </div>
         }
       >
