@@ -114,4 +114,13 @@ h1 {
   /* color: #fff; */
   letter-spacing: 2px !important;
   text-transform: uppercase;
+  text-transform: uppercase;
+  background: radial-gradient(
+      circle farthest-corner at center center,
+      white,
+      #111
+    )
+    no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

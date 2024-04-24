@@ -1,6 +1,6 @@
 'use client'
 
-import { rajdhani } from '@/app/layout'
+import styles from ''
 import { motion } from 'framer-motion'
 import { FunctionComponent } from 'react'
 
@@ -43,38 +43,6 @@ export function FadeUpStagger() {
         our place within it.
       </motion.div>
     </motion.div>
-  )
-}
-
-export function LetterPullUp() {
-  const letters = words.split('')
-
-  const pullupVariant = {
-    initial: { y: 100, opacity: 0 },
-    animate: (i: any) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        delay: i * 0.1, // Delay each letter's animation by 0.05 seconds
-      },
-    }),
-  }
-
-  return (
-    <div className='flex justify-center absolute w-full left-0 top-[400px]'>
-      {letters.map((letter, i) => (
-        <motion.h1
-          key={i}
-          variants={pullupVariant}
-          initial='initial'
-          animate='animate'
-          custom={i}
-          className={`text-center font-display text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]  `}
-        >
-          {letter === ' ' ? <span>&nbsp;</span> : letter}
-        </motion.h1>
-      ))}
-    </div>
   )
 }
 

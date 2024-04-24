@@ -1,14 +1,26 @@
 'use client'
 
-import { PlanetMenu } from '../planet-menu'
 import { Astronaut } from '../ui/home/astronaut/astronaut'
-
+import { Howl } from 'howler'
+import { useEffect } from 'react'
 export interface HomeProps {}
 
-export const Home: React.FC<HomeProps> = ({ children }: any) => {
-  return (
-    <>
-      <Astronaut />
-    </>
-  )
+export const Home: React.FC<HomeProps> = () => {
+  const sound = new Howl({
+    src: ['/audio/interstellar-stay.mp3'],
+    html5: true,
+    loop: true,
+    preload: true,
+    autoplay: true,
+    volume: 0.5,
+    onend: function () {
+      console.log('Finished!')
+    },
+  })
+
+  useEffect(() => {
+    // sound.play()
+  }, [sound])
+
+  return <Astronaut />
 }

@@ -1,14 +1,12 @@
-import { getXataClient } from '@/lib/xata'
+import { getConnectionModels } from '@/lib/xata/models'
+import type { NextRequest } from 'next/server'
 
-import { type NextRequest } from 'next/server'
-const xata: any = getXataClient()
+export async function POST(request: NextRequest) {
+  const records = await getConnectionModels()
+  // .getAll()
+  console.log('records: ', records)
 
-// Maybe do a vector search for connected records?
-export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams
-  console.log('searchParams: ', searchParams)
-  const query = searchParams.get('query')
-  console.log('query: ', query)
+  return Response.json({ records })
 
   // query is "hello" for /api/search?query=hello
 }
