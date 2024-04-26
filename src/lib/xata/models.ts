@@ -1,6 +1,5 @@
 import { getXataClient } from '@/lib/xata/client'
 
-
 export const generateDataNodes = async () => {
   const xata = getXataClient()
   const events = await xata.db.events.sort('date', 'desc').getAll()
@@ -57,7 +56,8 @@ export const getConnectionModels = async () => {
 
 export const getTopicPersonnelAndEventGraphData = async () => {
   const xata = getXataClient()
-  const eventsWithSMES = await xata.db['event-subject-matter-experts'].select([
+  const eventsWithSMES = await xata.db['event-subject-matter-experts']
+    .select([
       'event.name',
       'event.id',
       'event.date',
@@ -97,7 +97,20 @@ export const getTopicPersonnelAndEventGraphData = async () => {
   console.log('events: ', events)
 
   const topics = await xata.db.topics.getAll()
-  const topicsWithSMES = await xata.db['topic-subject-matter-experts'].getAll()
+  const topicsWithSMES = await xata.db['topic-subject-matter-experts']
+    .select([
+      'topic.id',
+      'topic.name',
+      'topic.summary',
+      'subject-matter-expert.id',
+      'subject-matter-expert.name',
+      'subject-matter-expert.photo',
+      'subject-matter-expert.role',
+      'subject-matter-expert.bio',
+      'subject-matter-expert.rank',
+      'subject-matter-expert.credibility',
+    ])
+    .getAll()
 
   console.log({ topicsWithSMES })
   // const testimonies = await xata.db.testimonies.getAll()
@@ -119,7 +132,7 @@ export const getTopicPersonnelAndEventGraphData = async () => {
       'popularity',
     ])
     .filter({
-      rank: { $gt: 0 },
+      rank: { $isNot: 0 },
     })
     .getAll()
 
