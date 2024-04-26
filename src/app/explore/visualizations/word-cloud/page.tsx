@@ -6,7 +6,7 @@ const xata = getXataClient()
 import { WordCloud } from '@/components/word-cloud'
 // import { MindMap } from '@/features/mind-map'
 
-export default async function Investigate() {
+export default async function Index() {
   const events = await xata.db.events
     .select(['name', 'id'])
     .getAll()

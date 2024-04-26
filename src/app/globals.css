@@ -124,3 +124,18 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+canvas {
+  background: none !important;
+  background-color: transparent !important;
+}
+
+* > canvas {
+  background: none !important;
+  background-color: transparent !important;
+}
+
+#graph-canvas > * {
+  background: none !important;
+  background-color: transparent !important;
+}
