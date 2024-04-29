@@ -1,112 +1,73 @@
 'use client'
 
+import { TopicPersonnelAndEventGraphDataPayload } from '@/lib/xata'
 import { DOMAIN_MODEL_COLORS } from '@/utils/colors'
 import { useState, useEffect, useMemo } from 'react'
 import { GraphNode, GraphEdge } from 'reagraph'
 
-export const useModelNodes = ({ models }: any) => {
+interface ModelNodesProps {
+  models: TopicPersonnelAndEventGraphDataPayload
+}
+
+const rootNodes = [
+  {
+    label: 'topics',
+    id: 'topics',
+    fill: DOMAIN_MODEL_COLORS.topics,
+
+    data: {
+      x: 0,
+      y: 1,
+      size: 15,
+      color: DOMAIN_MODEL_COLORS.topics,
+    },
+  },
+  {
+    label: 'events',
+    id: 'events',
+    fill: DOMAIN_MODEL_COLORS.events,
+    data: {
+      x: 0,
+      y: 1,
+      size: 15,
+      color: DOMAIN_MODEL_COLORS.events,
+    },
+  },
+  {
+    label: 'personnel',
+    id: 'personnel',
+    fill: DOMAIN_MODEL_COLORS.personnel,
+    data: {
+      x: 0,
+      y: 1,
+      size: 15,
+      color: DOMAIN_MODEL_COLORS.personnel,
+    },
+  },
+]
+const rootEdges: any = []
+
+export const useModelNodes = ({ models }: ModelNodesProps) => {
   const {
-    events: eventModels,
+    events: {
+      all: allEventModels,
+      withConnections: eventsSubjectMatterExpertsEdges,
+    },
     topics: topicModels,
     personnel: personnelModels,
-  } = models
+  }: any = models
+
+  console.log(
+    'eventsSubjectMatterExpertsEdges: ',
+    eventsSubjectMatterExpertsEdges
+  )
 
   const { all: allTopics, withConnections: topicsSubjectMatterExpertEdges } =
     topicModels
 
-  const rootNodes = [
-    {
-      label: 'ultraterrestrial',
-      id: 'ultraterrestrial',
-      fill: DOMAIN_MODEL_COLORS.root,
-      data: {
-        x: 0,
-        y: 1,
-        size: 15,
-        color: DOMAIN_MODEL_COLORS.root,
-      },
-    },
-    {
-      label: 'topics',
-      id: 'topics',
-      fill: DOMAIN_MODEL_COLORS.topics,
+  const [topics, eventsRootNode, personnelRootNode]: any = rootNodes
+  console.log('eventsRootNode: ', eventsRootNode)
 
-      data: {
-        x: 0,
-        y: 1,
-        size: 15,
-        color: DOMAIN_MODEL_COLORS.topics,
-      },
-    },
-    {
-      label: 'events',
-      id: 'events',
-      fill: DOMAIN_MODEL_COLORS.events,
-      data: {
-        x: 0,
-        y: 1,
-        size: 15,
-        color: DOMAIN_MODEL_COLORS.events,
-      },
-    },
-    {
-      label: 'personnel',
-      id: 'personnel',
-      fill: DOMAIN_MODEL_COLORS.personnel,
-      data: {
-        x: 0,
-        y: 1,
-        size: 15,
-        color: DOMAIN_MODEL_COLORS.personnel,
-      },
-    },
-  ]
-  const rootEdges = [
-    {
-      source: rootNodes[0].id,
-      target: rootNodes[1].id,
-      id: `${rootNodes[0].id}->${rootNodes[1].id}`,
-      label: `${rootNodes[0].id}->${rootNodes[1].id}`,
-    },
-    {
-      source: rootNodes[0].id,
-      target: rootNodes[2].id,
-      id: `${rootNodes[0].id}-${rootNodes[2].id}`,
-      label: `${rootNodes[0].id}-${rootNodes[2].id}`,
-    },
-    {
-      source: rootNodes[0].id,
-      target: rootNodes[3].id,
-      id: `${rootNodes[0].id}-${rootNodes[3].id}`,
-      label: `${rootNodes[0].id}-${rootNodes[3].id}`,
-    },
-  ]
-
-  const [root, topics, events, personnelRootNode] = rootNodes
-
-  // const [nodes, edges] = useMemo(() => {
-  //   const n = rootNodes
-  //   const e = rootEdges
-  //   for (const node of topicModels) {
-  //     if (!n.find(nn => nn.id === node.id)) {
-  //       n.push({
-  //         id: node.id,
-  //         label: node.name,
-  //         data: {...node}
-  //       });
-  //     }
-  //   }
-  //   for (const edge of mitreTechniquesAll.links) {
-  //     if (n.find(nn => nn.id === edge.source) && n.find(nn => nn.id === edge.target)) {
-  //       e.push({
-  //         id: `${edge.source}-${edge.target}`,
-  //         source: edge.source,
-  //         target: edge.target
-  //       });
-  //     }
-  //   }
-  //   return [n, e];
-  // }, []);
   const [nodes, edges] = useMemo(() => {
     const tempNodes: any = rootNodes
     const tempEdges: any = rootEdges
@@ -115,12 +76,12 @@ export const useModelNodes = ({ models }: any) => {
       const personnelNode: GraphNode = {
         id: id,
         label: person?.name,
-
+        fill: DOMAIN_MODEL_COLORS.personnel,
         data: {
           ...person,
           color: DOMAIN_MODEL_COLORS.personnel,
-          type: 'personnel',
-          segment: 'personnel',
+          type: 'key figures',
+          segment: 'key figures',
         },
       }
       tempNodes.push(personnelNode)
@@ -138,9 +99,9 @@ export const useModelNodes = ({ models }: any) => {
         id: id,
         label: topic?.name,
 
+        fill: DOMAIN_MODEL_COLORS.topics,
         data: {
           ...topic,
-          color: DOMAIN_MODEL_COLORS.topics,
           type: 'topic',
           segment: 'topics',
         },
@@ -157,7 +118,6 @@ export const useModelNodes = ({ models }: any) => {
     })
 
     topicsSubjectMatterExpertEdges.forEach((edge) => {
-      console.log('edge: ', edge)
       if (edge?.topic && edge['subject-matter-expert']) {
         const newEdge = {
           source: edge['topic'].id,
@@ -166,6 +126,55 @@ export const useModelNodes = ({ models }: any) => {
         }
         tempEdges.push(newEdge)
       }
+    })
+
+    eventsSubjectMatterExpertsEdges.forEach(({ id, event, ...rest }) => {
+      console.log('event: ', event)
+      console.log('event: ', event)
+      const person = rest['subject-matter-expert']
+      if (!tempNodes.find((node) => node?.id === person.id)) {
+        const personnelNode: GraphNode = {
+          id: person.id,
+          label: person?.name,
+          fill: DOMAIN_MODEL_COLORS.personnel,
+          data: {
+            ...person,
+            type: 'key figures',
+            segment: 'key figures',
+          },
+        }
+        tempNodes.push(personnelNode)
+      }
+      const rootPersonnelToChildNodeEdge = {
+        source: personnelRootNode.id,
+        target: person.id,
+        id: `${personnelRootNode.id}->${person.id}`,
+      }
+      tempEdges.push(rootPersonnelToChildNodeEdge)
+      const eventNode = {
+        id: event?.id,
+        label: event?.name,
+        fill: DOMAIN_MODEL_COLORS?.events,
+        data: {
+          ...event,
+          type: 'event',
+          segment: 'events',
+        },
+      }
+      tempNodes.push(eventNode)
+      const rootEventToChildEventEdge = {
+        source: eventsRootNode?.id,
+        target: event?.id,
+        id: `${eventsRootNode.id}->${event.id}`,
+      }
+      const eventToPersonnelEdge = {
+        source: event?.id,
+        target: person.id,
+        id: id,
+      }
+
+      tempEdges.push(rootEventToChildEventEdge)
+      tempEdges.push(eventToPersonnelEdge)
     })
 
     return [tempNodes, tempEdges]

@@ -61,6 +61,7 @@ const tables = [
       { name: "latitude", type: "float" },
       { name: "longitude", type: "float" },
       { name: "date", type: "datetime" },
+      { name: "photos", type: "file[]" },
     ],
     revLinks: [
       { column: "event", table: "event-subject-matter-experts" },

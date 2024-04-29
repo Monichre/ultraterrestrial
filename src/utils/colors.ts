@@ -43,7 +43,7 @@ export const NEONS = {
 }
 
 export const DOMAIN_MODEL_COLORS = {
-  topics: NEONS.orange,
+  topics: NEONS.pink,
   events: NEONS.green,
   personnel: NEONS.blue,
   organizations: NEONS.yellow,
