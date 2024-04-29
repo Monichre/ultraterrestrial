@@ -125,7 +125,7 @@ export const getTopicPersonnelAndEventGraphData = async () => {
     ])
     .getPaginated({
       pagination: {
-        size: 20,
+        size: 110,
       },
     })
 
@@ -219,7 +219,7 @@ export const getTopicPersonnelAndEventGraphData = async () => {
         topicExpertConnections: [],
       }
     )
-  console.log('keyFigures: ', keyFigures)
+
   const payload: TopicPersonnelAndEventGraphDataPayload = {
     topics: {
       all: topics,
@@ -230,7 +230,7 @@ export const getTopicPersonnelAndEventGraphData = async () => {
       withConnections: eventExpertConnections,
     },
     personnel: {
-      all: keyFigures,
+      all: personnel,
     },
   }
   return payload

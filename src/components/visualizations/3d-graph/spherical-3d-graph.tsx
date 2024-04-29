@@ -27,8 +27,9 @@ export const Spherical3DGraph: FC<Spherical3DGraphProps> = ({
   models,
 }: any) => {
   const { nodes, edges } = useModelNodes({ models })
+  console.log('edges: ', edges)
 
-  console.log('nodes: ', nodes)
+  // console.log('nodes: ', nodes)
   const data = {
     nodes,
     links: edges.map(({ source, target, id, ...rest }: any) => {
@@ -39,6 +40,8 @@ export const Spherical3DGraph: FC<Spherical3DGraphProps> = ({
       }
     }),
   }
+  const { links } = data
+  console.log('links: ', links)
   return (
     <ForceGraph3D
       graphData={data}

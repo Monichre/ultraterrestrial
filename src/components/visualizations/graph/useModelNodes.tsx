@@ -3,8 +3,6 @@
 // import { TopicPersonnelAndEventGraphDataPayload } from '@/lib/xata'
 import { DOMAIN_MODEL_COLORS } from '@/utils/colors'
 import { useState, useEffect, useMemo } from 'react'
-import { GraphNode, GraphEdge } from 'reagraph'
-import { JSONData } from '@xata.io/client'
 
 interface ModelNodesProps {
   models: any
@@ -54,12 +52,14 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
       all: allEventModels,
       withConnections: eventsSubjectMatterExpertsEdges,
     },
-    topics: topicModels,
+    topics: { all: allTopics, withConnections: topicsSubjectMatterExpertEdges },
     personnel: personnelModels,
   }: any = models
-
-  const { all: allTopics, withConnections: topicsSubjectMatterExpertEdges } =
-    topicModels
+  console.log(
+    'eventsSubjectMatterExpertsEdges: ',
+    eventsSubjectMatterExpertsEdges
+  )
+  console.log('allEventModels: ', allEventModels)
 
   const [topicsRootNode, eventsRootNode, personnelRootNode]: any = rootNodes
   const [keyFigures, setKeyFigures] = useState(personnelModels)
@@ -71,7 +71,7 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
     const tempEdges: any = rootEdges
 
     personnelModels.forEach(({ id, ...person }: any) => {
-      const personnelNode: GraphNode = {
+      const personnelNode: any = {
         id: id,
         label: person?.name,
         fill: DOMAIN_MODEL_COLORS.personnel,
@@ -93,7 +93,7 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
     })
 
     allTopics.forEach(({ id, ...topic }: any) => {
-      const topicNode: GraphNode = {
+      const topicNode: any = {
         id: id,
         label: topic?.name,
 
@@ -115,37 +115,16 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
     })
 
     topicsSubjectMatterExpertEdges.forEach((edge) => {
-      if (edge?.topic && edge['subject-matter-expert']) {
-        const newEdge = {
-          source: edge['topic'].id,
-          target: edge['subject-matter-expert'].id,
-          id: edge?.id,
-        }
-        tempEdges.push(newEdge)
-      }
+      console.log('edge: ', edge)
+      tempEdges.push({
+        source: edge.topic,
+        target: edge['subject-matter-expert'],
+        id: edge.id,
+      })
     })
 
-    eventsSubjectMatterExpertsEdges.forEach(({ id, event, ...rest }) => {
-      const person = rest['subject-matter-expert']
-      if (!tempNodes.find((node) => node?.id === person.id)) {
-        const personnelNode: GraphNode = {
-          id: person.id,
-          label: person?.name,
-          fill: DOMAIN_MODEL_COLORS.personnel,
-          data: {
-            ...person,
-            type: 'key figures',
-            segment: 'key figures',
-          },
-        }
-        tempNodes.push(personnelNode)
-      }
-      const rootPersonnelToChildNodeEdge = {
-        source: personnelRootNode.id,
-        target: person.id,
-        id: `${personnelRootNode.id}->${person.id}`,
-      }
-      tempEdges.push(rootPersonnelToChildNodeEdge)
+    allEventModels.forEach((event) => {
+      console.log('event: ', event)
       const eventNode = {
         id: event?.id,
         label: event?.name,
@@ -157,18 +136,23 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
         },
       }
       tempNodes.push(eventNode)
+
       const rootEventToChildEventEdge = {
         source: eventsRootNode?.id,
         target: event?.id,
         id: `${eventsRootNode.id}->${event.id}`,
       }
-      const eventToPersonnelEdge = {
-        source: event?.id,
-        target: person.id,
-        id: id,
-      }
-
       tempEdges.push(rootEventToChildEventEdge)
+    })
+
+    eventsSubjectMatterExpertsEdges.forEach(({ id, event, ...rest }) => {
+      const target: any = rest['subject-matter-expert']
+
+      const eventToPersonnelEdge = {
+        source: event,
+        target,
+        id,
+      }
       tempEdges.push(eventToPersonnelEdge)
     })
 
