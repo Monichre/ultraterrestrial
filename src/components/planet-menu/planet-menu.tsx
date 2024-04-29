@@ -7,22 +7,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useRouter } from 'next/navigation'
+
 import Image from 'next/image'
 import { Suspense } from 'react'
+import Link from 'next/link'
 
 export interface PlanetMenuProps {}
 
 export const PlanetMenu: React.FC<PlanetMenuProps> = (
   props: PlanetMenuProps
 ) => {
-  const router = useRouter()
-
-  const goToInvestigations = () => router.push('/history')
-  const goToSightings = () => router.push('/sightings')
-  const goToVisualizations = () => router.push('/visualizations/mind-map')
-  const goToConnectionsGraph = () => router.push('/explore')
-
   return (
     <div className='fixed h-[220px] w-[220px] top-[80px] left-[80px] z-20'>
       <Suspense fallback={null}>
@@ -31,10 +25,11 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
           open
           orbitRadius={80}
           rotation={45}
-          // satelliteOrientation={'READABLE'}
           centerContent={
             <div
               style={{
+                position: 'relative',
+                zIndex: 20,
                 height: 60,
                 width: 60,
                 cursor: 'pointer',
@@ -44,13 +39,15 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
             </div>
           }
         >
-          <div
+          <Link
             style={{
+              position: 'relative',
+              zIndex: 20,
               height: 40,
               width: 40,
               cursor: 'pointer',
             }}
-            onClick={goToSightings}
+            href='/sightings'
           >
             <TooltipProvider>
               <Tooltip>
@@ -62,15 +59,17 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          </div>
+          </Link>
 
-          <div
+          <Link
             style={{
+              position: 'relative',
+              zIndex: 20,
               height: 40,
               cursor: 'pointer',
               width: 40,
             }}
-            onClick={goToInvestigations}
+            href='/history'
           >
             <TooltipProvider>
               <Tooltip>
@@ -82,14 +81,16 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          </div>
-          <div
+          </Link>
+          <Link
             style={{
+              position: 'relative',
+              zIndex: 20,
               height: 40,
               cursor: 'pointer',
               width: 40,
             }}
-            onClick={goToConnectionsGraph}
+            href='/explore'
           >
             <TooltipProvider>
               <Tooltip>
@@ -106,14 +107,16 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          </div>
-          <div
+          </Link>
+          <Link
             style={{
+              position: 'relative',
+              zIndex: 20,
               height: 40,
               cursor: 'pointer',
               width: 40,
             }}
-            onClick={goToVisualizations}
+            href='/explore/visualizations/word-cloud'
           >
             <TooltipProvider>
               <Tooltip>
@@ -121,11 +124,11 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
                   <Image alt='moon' src='/moon.png' height={50} width={50} />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Visualizations</p>
+                  <p>Explore Topics in a Word Cloud</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          </div>
+          </Link>
         </ReactPlanet>
       </Suspense>
     </div>

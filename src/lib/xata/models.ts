@@ -1,4 +1,11 @@
 import { getXataClient } from '@/lib/xata/client'
+import {
+  DatabaseSchema,
+  EventsRecord,
+  EventSubjectMatterExpertsRecord,
+  PersonnelRecord,
+  TopicSubjectMatterExpertsRecord,
+} from './xata'
 
 export const generateDataNodes = async () => {
   const xata = getXataClient()
@@ -54,6 +61,19 @@ export const getConnectionModels = async () => {
 //   // });
 // }
 
+export type TopicPersonnelAndEventGraphDataPayload = {
+  topics: {
+    all: DatabaseSchema['topics'][]
+    withConnections: DatabaseSchema['topic-subject-matter-experts'][]
+  }
+  events: {
+    all: DatabaseSchema['events'][]
+    withConnections: DatabaseSchema['event-subject-matter-experts'][]
+  }
+  personnel: {
+    all: DatabaseSchema['personnel'][]
+  }
+}
 export const getTopicPersonnelAndEventGraphData = async () => {
   const xata = getXataClient()
   const eventsWithSMES = await xata.db['event-subject-matter-experts']
@@ -65,6 +85,7 @@ export const getTopicPersonnelAndEventGraphData = async () => {
       'event.longitude',
       'event.latitude',
       'event.description',
+      'event.photos',
       'subject-matter-expert.id',
       'subject-matter-expert.name',
       'subject-matter-expert.photo',
@@ -74,7 +95,6 @@ export const getTopicPersonnelAndEventGraphData = async () => {
       'subject-matter-expert.credibility',
     ])
     .getAll()
-  console.log('eventsWithSMES: ', eventsWithSMES)
 
   // const events = await xata.db.events.getAll()
 
@@ -85,6 +105,7 @@ export const getTopicPersonnelAndEventGraphData = async () => {
       'description',
       'location',
       'latitude',
+      'photos',
       'longitude',
       'date',
     ])
@@ -93,8 +114,6 @@ export const getTopicPersonnelAndEventGraphData = async () => {
         size: 20,
       },
     })
-
-  console.log('events: ', events)
 
   const topics = await xata.db.topics.getAll()
   const topicsWithSMES = await xata.db['topic-subject-matter-experts']
@@ -112,7 +131,6 @@ export const getTopicPersonnelAndEventGraphData = async () => {
     ])
     .getAll()
 
-  console.log({ topicsWithSMES })
   // const testimonies = await xata.db.testimonies.getAll()
 
   // const organizations = await xata.db.organizations.getAll()
@@ -135,19 +153,18 @@ export const getTopicPersonnelAndEventGraphData = async () => {
       rank: { $isNot: 0 },
     })
     .getAll()
-
-  console.log('personnel: ', personnel)
-  return {
+  const payload: TopicPersonnelAndEventGraphDataPayload = {
     topics: {
-      all: topics,
-      withConnections: topicsWithSMES,
+      all: topics as TopicSubjectMatterExpertsRecord[],
+      withConnections: topicsWithSMES as TopicSubjectMatterExpertsRecord[],
     },
     events: {
-      all: events,
-      withConnections: eventsWithSMES,
+      all: events as EventsRecord[],
+      withConnections: eventsWithSMES as EventSubjectMatterExpertsRecord[],
     },
     personnel: {
-      all: personnel,
+      all: personnel as PersonnelRecord[],
     },
   }
+  return payload
 }

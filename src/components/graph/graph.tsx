@@ -11,6 +11,7 @@ import {
   useSelection,
 } from 'reagraph'
 import { BufferGeometry } from 'three'
+import { TopicPersonnelAndEventGraphDataPayload } from '@/lib/xata'
 
 // function Scene({ children, ...props }) {
 //   const ref = useRef()
@@ -98,7 +99,7 @@ import { BufferGeometry } from 'three'
 // }
 
 export interface GraphProps {
-  models: any
+  models: TopicPersonnelAndEventGraphDataPayload
 }
 
 export const Graph: React.FC<GraphProps> = ({ models }) => {
@@ -153,8 +154,7 @@ export const Graph: React.FC<GraphProps> = ({ models }) => {
           defaultNodeSize={10}
           nodes={nodes}
           edges={edges}
-          // clusterAttribute='type'
-
+          clusterAttribute='type'
           draggable
           layoutType='forceDirected3d'
           // clusterAttribute='type'
