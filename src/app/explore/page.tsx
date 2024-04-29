@@ -24,8 +24,8 @@ export default async function Index() {
       // @ts-ignore
       withConnections: data?.topics?.withConnections,
     },
-
-    personnel: data?.personnel?.all,
+    // @ts-ignore
+    personnel: data?.personnel?.all.toSerializable(),
   }
   // {/* <Graph models={models} /> */}
 
