@@ -24,5 +24,5 @@ for table in "${table_names[@]}"; do
         \"statement\": \"select * from \\\"${table}\\\";\",
         \"consistency\": \"strong\",
         \"responseType\": \"json\"
-    }" > "./models/${table}.json"
+    }" > "./docs/models/${table}.json"
 done

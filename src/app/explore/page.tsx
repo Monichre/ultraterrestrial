@@ -3,8 +3,9 @@ import {
   TopicPersonnelAndEventGraphDataPayload,
 } from '@/lib/xata'
 
-import { Graph } from '@/components/graph'
+// import { Graph } from '@/components/visualizations/graph'
 import { Suspense } from 'react'
+import { Spherical3DGraph } from '@/components/visualizations/3d-graph/spherical-3d-graph'
 
 export default async function Index() {
   const data: TopicPersonnelAndEventGraphDataPayload =
@@ -15,21 +16,22 @@ export default async function Index() {
       // @ts-ignore
       all: data?.events?.all.toSerializable(),
       // @ts-ignore
-      withConnections: data?.events?.withConnections?.toSerializable(),
+      withConnections: data?.events?.withConnections,
     },
     topics: {
       // @ts-ignore
-      all: data?.topics?.all?.toSerializable(),
+      all: data?.topics?.all.toSerializable(),
       // @ts-ignore
-      withConnections: data?.topics?.withConnections?.toSerializable(),
+      withConnections: data?.topics?.withConnections,
     },
-    // @ts-ignore
-    personnel: data?.personnel?.all?.toSerializable(),
+
+    personnel: data?.personnel?.all,
   }
+  // {/* <Graph models={models} /> */}
 
   return (
-    <Suspense fallback={null}>
-      <Graph models={models} />
+    <Suspense>
+      <Spherical3DGraph models={models} />
     </Suspense>
   )
 }

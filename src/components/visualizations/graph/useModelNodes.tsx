@@ -1,12 +1,13 @@
 'use client'
 
-import { TopicPersonnelAndEventGraphDataPayload } from '@/lib/xata'
+// import { TopicPersonnelAndEventGraphDataPayload } from '@/lib/xata'
 import { DOMAIN_MODEL_COLORS } from '@/utils/colors'
 import { useState, useEffect, useMemo } from 'react'
 import { GraphNode, GraphEdge } from 'reagraph'
+import { JSONData } from '@xata.io/client'
 
 interface ModelNodesProps {
-  models: TopicPersonnelAndEventGraphDataPayload
+  models: any
 }
 
 const rootNodes = [
@@ -57,16 +58,13 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
     personnel: personnelModels,
   }: any = models
 
-  console.log(
-    'eventsSubjectMatterExpertsEdges: ',
-    eventsSubjectMatterExpertsEdges
-  )
-
   const { all: allTopics, withConnections: topicsSubjectMatterExpertEdges } =
     topicModels
 
-  const [topics, eventsRootNode, personnelRootNode]: any = rootNodes
-  console.log('eventsRootNode: ', eventsRootNode)
+  const [topicsRootNode, eventsRootNode, personnelRootNode]: any = rootNodes
+  const [keyFigures, setKeyFigures] = useState(personnelModels)
+  const [topics, setTopics] = useState(allTopics)
+  const [events, setEvents] = useState(allEventModels)
 
   const [nodes, edges] = useMemo(() => {
     const tempNodes: any = rootNodes
@@ -108,10 +106,9 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
       }
       tempNodes.push(topicNode)
       const rootTopicToChildTopicNodeEdge: GraphEdge = {
-        source: topics.id,
+        source: topicsRootNode.id,
         target: id,
-        id: `${topics.id}->${id}`,
-        // label: `${topics.id}->>${topicNode.id}`,
+        id: `${topicsRootNode.id}->${id}`,
       }
 
       tempEdges.push(rootTopicToChildTopicNodeEdge)
@@ -129,8 +126,6 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
     })
 
     eventsSubjectMatterExpertsEdges.forEach(({ id, event, ...rest }) => {
-      console.log('event: ', event)
-      console.log('event: ', event)
       const person = rest['subject-matter-expert']
       if (!tempNodes.find((node) => node?.id === person.id)) {
         const personnelNode: GraphNode = {

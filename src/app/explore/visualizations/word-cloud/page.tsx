@@ -3,7 +3,7 @@
 import { getXataClient } from '@/lib/xata'
 const xata = getXataClient()
 
-import { WordCloud } from '@/components/word-cloud'
+import { WordCloud } from '@/components/visualizations/word-cloud'
 // import { MindMap } from '@/features/mind-map'
 
 export default async function Index() {

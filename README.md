@@ -38,7 +38,7 @@
 <https://developers.facebook.com/apps/383699827904694/webhooks/>
 
 ### Vector Store OpenAI Assistant File List
- 
+
 - [Bob Lazar Interview 1989](Bob-Lazar-Interview-1989.md) - 4/28/2024, 7:06 PM
 - [unclassified-2022-annual-report-uap](unclassified-2022-annual-report-uap.pdf) - 4/24/2024, 6:25 AM
 - [CIA-RDP96-00788R001700210016-5](CIA-RDP96-00788R001700210016-5.pdf) - 4/24/2024, 6:25 AM
@@ -68,3 +68,9 @@
 - [john.lear.letter](john.lear.letter.pdf) - 4/24/2024, 6:06 AM
 - [Prelimary-Assessment-UAP-20210625](Prelimary-Assessment-UAP-20210625.pdf) - 4/24/2024, 6:06 AM
 - [roswell](roswell.pdf) - 4/24/2024, 6:06 AM
+
+## Visualizations
+
+![Alt text](docs/3d-graph-sphere.png "3D Graph On A Sphere")
+
+- [3D Graph On A Sphere](https://observablehq.com/@fil/3d-graph-on-sphere)

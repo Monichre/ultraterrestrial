@@ -1,3 +1,5 @@
+// 'use server'
+
 import { getXataClient } from '@/lib/xata/client'
 import {
   DatabaseSchema,
@@ -45,21 +47,54 @@ export const getConnectionModels = async () => {
   }
 }
 
-// export const search = async (searchParams) => {
-//   //   const results = await xata.search.all(searchParams, {
-//   //   tables: [
-//   //     {
-//   //       table: "Actor",
-//   //       target: ["name"],
-//   //       filter: {"city": "New York"},
-//   //       boosters: [{ numericBooster: { column: 'lifetimeBoxOffice', factor: 3 } }]
-//   //     },
-//   //     { ... },
-//   //   ],
-//   //   fuzziness: 1,
-//   //   prefix: "phrase"
-//   // });
-// }
+export const search = async (searchParams: string) => {
+  //   const results = await xata.search.all(searchParams, {
+  //   tables: [
+  //     {
+  //       table: "Actor",
+  //       target: ["name"],
+  //       filter: {"city": "New York"},
+  //       boosters: [{ numericBooster: { column: 'lifetimeBoxOffice', factor: 3 } }]
+  //     },
+  //     { ... },
+  //   ],
+  //   fuzziness: 1,
+  //   prefix: "phrase"
+  // });
+}
+
+// [Docs](https://xata.io/docs/sdk/ask)
+type TableName = 'events' | 'personnel' | 'topics' | 'testimonies'
+export const askAI = async (table: TableName = 'topics', question: string) => {
+  const xata = getXataClient()
+  // @ts-ignore
+  const result = await xata.db[`${table}`].ask(question, {
+    rules: [
+      // ...array of strings with the rules for the model...,
+    ],
+    searchType: 'keyword|vector',
+    search: {
+      fuzziness: 0 | 1 | 2,
+      prefix: 'phrase|disabled',
+      target: {
+        // ...search target options...
+      },
+      filter: {
+        // ...search filter options...
+      },
+      boosters: [
+        // ...search boosters options...
+      ],
+    },
+    vectorSearch: {
+      column: '<embedding column>',
+      contentColumn: '<content column>',
+      filter: {
+        // ...search filter options...
+      },
+    },
+  })
+}
 
 export type TopicPersonnelAndEventGraphDataPayload = {
   topics: {
@@ -76,27 +111,6 @@ export type TopicPersonnelAndEventGraphDataPayload = {
 }
 export const getTopicPersonnelAndEventGraphData = async () => {
   const xata = getXataClient()
-  const eventsWithSMES = await xata.db['event-subject-matter-experts']
-    .select([
-      'event.name',
-      'event.id',
-      'event.date',
-      'event.location',
-      'event.longitude',
-      'event.latitude',
-      'event.description',
-      'event.photos',
-      'subject-matter-expert.id',
-      'subject-matter-expert.name',
-      'subject-matter-expert.photo',
-      'subject-matter-expert.role',
-      'subject-matter-expert.bio',
-      'subject-matter-expert.rank',
-      'subject-matter-expert.credibility',
-    ])
-    .getAll()
-
-  // const events = await xata.db.events.getAll()
 
   const { records: events } = await xata.db.events
     .sort('date', 'desc')
@@ -116,31 +130,18 @@ export const getTopicPersonnelAndEventGraphData = async () => {
     })
 
   const topics = await xata.db.topics.getAll()
-  const topicsWithSMES = await xata.db['topic-subject-matter-experts']
-    .select([
-      'topic.id',
-      'topic.name',
-      'topic.summary',
-      'subject-matter-expert.id',
-      'subject-matter-expert.name',
-      'subject-matter-expert.photo',
-      'subject-matter-expert.role',
-      'subject-matter-expert.bio',
-      'subject-matter-expert.rank',
-      'subject-matter-expert.credibility',
-    ])
-    .getAll()
 
   // const testimonies = await xata.db.testimonies.getAll()
 
   // const organizations = await xata.db.organizations.getAll()
 
-  const personnel = await xata.db.personnel
+  const { records: personnel } = await xata.db.personnel
+
     .select([
       'name',
       'bio',
       'role',
-      'picture',
+      'photo',
       'facebook',
       'twitter',
       'website',
@@ -148,22 +149,88 @@ export const getTopicPersonnelAndEventGraphData = async () => {
       'rank',
       'credibility',
       'popularity',
+      {
+        name: '<-topic-subject-matter-experts.subject-matter-expert',
+        columns: ['*'],
+        as: 'topics',
+      },
+      {
+        name: '<-event-subject-matter-experts.subject-matter-expert',
+        columns: ['*'],
+        as: 'events',
+      },
     ])
-    .filter({
-      rank: { $isNot: 0 },
+    .getPaginated({
+      pagination: { size: 85, offset: 0 },
     })
-    .getAll()
+  console.log('personnel: ', personnel)
+  // .filter({
+  //   rank: { $isNot: 0 },
+  // })
+
+  const { keyFigures, eventExpertConnections, topicExpertConnections } =
+    personnel.reduce(
+      (acc: any, item: any) => {
+        const personnelTopics = item?.topics?.records?.length
+          ? item?.topics?.records.map((record) => ({
+              id: record.id,
+              topic: record.topic,
+              'subject-matter-expert': record['subject-matter-expert'],
+            }))
+          : null
+        const personnelEvents = item?.events?.records?.length
+          ? item?.events?.records.map((record) => ({
+              id: record.id,
+              event: record.event,
+              'subject-matter-expert': record['subject-matter-expert'],
+            }))
+          : null
+        if (personnelTopics && personnelTopics?.length) {
+          personnelTopics.forEach((topic) =>
+            acc.topicExpertConnections.push(topic)
+          )
+        }
+        if (personnelEvents && personnelEvents?.length) {
+          personnelEvents.forEach((event) =>
+            acc.eventExpertConnections.push(event)
+          )
+        }
+        const photo = item.photo?.length ? item.photo[0] : null
+        const person: any = {
+          id: item.id,
+          name: item.name,
+          bio: item.bio,
+          role: item.role,
+          photo,
+          facebook: item.facebook,
+          twitter: item.twitter,
+          website: item.website,
+          instagram: item.instagram,
+          rank: item.rank,
+          credibility: item.credibility,
+          popularity: item.popularity,
+        }
+        acc.keyFigures.push(person)
+        return acc
+      },
+      {
+        keyFigures: [],
+        eventExpertConnections: [],
+        topicExpertConnections: [],
+      }
+    )
+  console.log('keyFigures: ', keyFigures)
   const payload: TopicPersonnelAndEventGraphDataPayload = {
     topics: {
-      all: topics as TopicSubjectMatterExpertsRecord[],
-      withConnections: topicsWithSMES as TopicSubjectMatterExpertsRecord[],
+      all: topics,
+      withConnections: topicExpertConnections,
     },
     events: {
-      all: events as EventsRecord[],
-      withConnections: eventsWithSMES as EventSubjectMatterExpertsRecord[],
+      all: events,
+      withConnections: eventExpertConnections,
     },
     personnel: {
-      all: personnel as PersonnelRecord[],
+      all: keyFigures,
     },
   }
   return payload
