@@ -1,4 +1,4 @@
-import { DrawingBoard } from '@/components/drawing-board'
+import { DrawingBoard } from '@/components/visualizations/drawing-board'
 import { getXataClient } from '@/lib/xata'
 const xata = getXataClient()
 

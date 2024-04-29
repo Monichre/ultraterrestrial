@@ -1,0 +1,1 @@
+{"records":[],"columns":[{"name":"id","type":"text"},{"name":"xata.version","type":"int4"},{"name":"xata.createdAt","type":"timestamptz"},{"name":"xata.updatedAt","type":"timestamptz"},{"name":"event","type":"text"},{"name":"subject-matter-expert","type":"text"},{"name":"topic","type":"text"}],"total":0}
