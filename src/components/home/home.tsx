@@ -3,6 +3,7 @@
 import { Astronaut } from '../ui/home/astronaut/astronaut'
 import { Howl } from 'howler'
 import { useEffect } from 'react'
+import { PlanetMenu } from '../planet-menu'
 export interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => {
@@ -22,5 +23,10 @@ export const Home: React.FC<HomeProps> = () => {
     // sound.play()
   }, [sound])
 
-  return <Astronaut />
+  return (
+    <>
+      <PlanetMenu />
+      <Astronaut />
+    </>
+  )
 }
