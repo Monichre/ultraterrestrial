@@ -3,7 +3,6 @@ import './globals.css'
 import { Oswald, Source_Sans_3 } from 'next/font/google'
 // Montserrat, Oxanium, Inria_Sans, Rajdhani,
 import { ThemeProvider } from '@/components/theme-provider'
-import { PlanetMenu } from '@/components/planet-menu'
 
 // Montserrat
 // If loading a variable font, you don't need to specify the font weight
@@ -59,9 +58,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // bg-background text-foreground
-  // ${rajdhani.className}
-  // ${montserrat.className}  ${oxanium.className}
   return (
     <html
       lang='en'
@@ -75,7 +71,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <PlanetMenu />
           <main className='min-h-[100vh] min-w-screen relative'>
             {children}
           </main>

@@ -1,12 +1,6 @@
 'use client'
 
 import { Planet as ReactPlanet } from 'react-planet'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
 
 import Image from 'next/image'
 import { Suspense } from 'react'
@@ -19,10 +13,10 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
 ) => {
   return (
     <div className='fixed h-[220px] w-[220px] top-[80px] left-[80px] z-20'>
-      <Suspense fallback={null}>
+      <Suspense>
         <ReactPlanet
           hideOrbit
-          open
+          // open
           orbitRadius={80}
           rotation={45}
           centerContent={
@@ -49,16 +43,7 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
             }}
             href='/sightings'
           >
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Image alt='venus' src='/venus.png' height={50} width={50} />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Sightings</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Image alt='venus' src='/venus.png' height={50} width={50} />
           </Link>
 
           <Link
@@ -71,16 +56,7 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
             }}
             href='/history'
           >
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Image alt='mars' src='/mars.png' height={50} width={50} />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Investigations</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Image alt='mars' src='/mars.png' height={50} width={50} />
           </Link>
           <Link
             style={{
@@ -92,21 +68,7 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
             }}
             href='/explore'
           >
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Image
-                    alt='saturn'
-                    src='/saturn.png'
-                    height={50}
-                    width={50}
-                  />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Connections</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Image alt='saturn' src='/saturn.png' height={50} width={50} />
           </Link>
           <Link
             style={{
@@ -118,16 +80,7 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
             }}
             href='/explore/visualizations/word-cloud'
           >
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Image alt='moon' src='/moon.png' height={50} width={50} />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Explore Topics in a Word Cloud</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Image alt='moon' src='/moon.png' height={50} width={50} />
           </Link>
         </ReactPlanet>
       </Suspense>

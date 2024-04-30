@@ -3,7 +3,6 @@ import {
   TopicPersonnelAndEventGraphDataPayload,
 } from '@/lib/xata'
 
-// import { Graph } from '@/components/visualizations/graph'
 import { Suspense } from 'react'
 import { Spherical3DGraph } from '@/components/visualizations/3d-graph/spherical-3d-graph'
 

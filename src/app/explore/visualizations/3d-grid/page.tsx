@@ -1,5 +1,7 @@
-import { DrawingBoard } from '@/components/visualizations/drawing-board'
+import { ThreeDGrid } from '@/components/visualizations/3d-grid/3d-grid'
+
 import { getXataClient } from '@/lib/xata'
+import { Suspense } from 'react'
 const xata = getXataClient()
 
 export default async function Index() {
@@ -16,13 +18,19 @@ export default async function Index() {
 
   // const { events, personnel, topics, testimonies, organizations } =
   //   await getData()
-  const models = {
-    events: events.toSerializable(),
-    topics: topics.toSerializable(),
-    testimonies: testimonies.toSerializable(),
-    organizations: organizations.toSerializable(),
-    personnel: personnel.toSerializable(),
-  }
+  const data = [
+    ...events.toSerializable(),
+    ...topics.toSerializable(),
+    ...testimonies.toSerializable(),
+    ...organizations.toSerializable(),
+    ...personnel.toSerializable(),
+  ]
 
-  return <DrawingBoard models={models} />
+  console.log('data: ', data)
+
+  return (
+    <Suspense fallback={null}>
+      <ThreeDGrid data={data} />
+    </Suspense>
+  )
 }
