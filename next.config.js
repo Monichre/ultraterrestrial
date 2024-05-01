@@ -1,7 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'json', 'geojson'],
-  transpilePackages: ['three'],
+  transpilePackages: ['three', '@react-three/drei'],
+  crossOrigin: 'anonymous',
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'us-east-1.xata.sh',
+        port: '',
+        pathname: '/file/**',
+      },
+    ],
+  },
   experimental: {
     taint: true,
   },

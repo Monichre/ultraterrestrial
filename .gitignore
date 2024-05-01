@@ -38,3 +38,4 @@ ultravenv
 *.tsbuildinfo
 next-env.d.ts
 ./vscode
+*storybook.log

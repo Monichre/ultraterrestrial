@@ -18,5 +18,14 @@ module.exports = {
       path: 'src/components/{{name}}/{{name}}.tsx',
       templateFile: './templates/component/Component.hbs',
     },
+    {
+      type: 'add',
+      path: 'src/components/{{name}}/{{name}}.stories.ts',
+      templateFile: './templates/component/Component.stories.hbs',
+    },
+    {
+      type: 'add',
+      path: 'src/components/{{name}}/{{name}}.css',
+    },
   ],
 }

@@ -29,7 +29,7 @@ export default async function Index() {
   // {/* <Graph models={models} /> */}
 
   return (
-    <Suspense>
+    <Suspense fallback={null}>
       <Spherical3DGraph models={models} />
     </Suspense>
   )
