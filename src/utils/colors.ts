@@ -37,7 +37,7 @@ export const paletteAltTwo = {
 export const NEONS = {
   pink: `#E393E6`,
   green: `#79FFE1`,
-  blue: `#6EE3E6`,
+  blue: `#27F1FF`,
   orange: `#F7A072`,
   yellow: `#FEED72`,
 }
