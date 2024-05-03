@@ -55,20 +55,20 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
     topics: { all: allTopics, withConnections: topicsSubjectMatterExpertEdges },
     personnel: personnelModels,
   }: any = models
-  console.log(
-    'eventsSubjectMatterExpertsEdges: ',
-    eventsSubjectMatterExpertsEdges
-  )
-  console.log('allEventModels: ', allEventModels)
 
   const [topicsRootNode, eventsRootNode, personnelRootNode]: any = rootNodes
   const [keyFigures, setKeyFigures] = useState(personnelModels)
   const [topics, setTopics] = useState(allTopics)
   const [events, setEvents] = useState(allEventModels)
+  const [graphData, setGraphData] = useState({
+    nodes: [],
+    edges: [],
+    links: [],
+  })
 
-  const [nodes, edges] = useMemo(() => {
-    const tempNodes: any = rootNodes
-    const tempEdges: any = rootEdges
+  const [nodes, edges, links] = useMemo(() => {
+    const tempNodes: any = [...rootNodes]
+    const tempEdges: any = [...rootEdges]
 
     personnelModels.forEach(({ id, ...person }: any) => {
       const personnelNode: any = {
@@ -78,12 +78,11 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
         data: {
           ...person,
           color: DOMAIN_MODEL_COLORS.personnel,
-          type: 'key figures',
-          segment: 'key figures',
         },
       }
       tempNodes.push(personnelNode)
       const rootPersonnelToChildNodeEdge = {
+        color: DOMAIN_MODEL_COLORS.personnel,
         source: personnelRootNode.id,
         target: id,
         id: `${personnelRootNode.id}->${id}`,
@@ -100,15 +99,15 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
         fill: DOMAIN_MODEL_COLORS.topics,
         data: {
           ...topic,
-          type: 'topic',
-          segment: 'topics',
         },
       }
       tempNodes.push(topicNode)
-      const rootTopicToChildTopicNodeEdge: GraphEdge = {
+
+      const rootTopicToChildTopicNodeEdge = {
         source: topicsRootNode.id,
         target: id,
         id: `${topicsRootNode.id}->${id}`,
+        color: DOMAIN_MODEL_COLORS.topics,
       }
 
       tempEdges.push(rootTopicToChildTopicNodeEdge)
@@ -120,6 +119,7 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
         source: edge.topic,
         target: edge['subject-matter-expert'],
         id: edge.id,
+        color: '#fff',
       })
     })
 
@@ -131,8 +131,6 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
         fill: DOMAIN_MODEL_COLORS?.events,
         data: {
           ...event,
-          type: 'event',
-          segment: 'events',
         },
       }
       tempNodes.push(eventNode)
@@ -141,6 +139,7 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
         source: eventsRootNode?.id,
         target: event?.id,
         id: `${eventsRootNode.id}->${event.id}`,
+        color: DOMAIN_MODEL_COLORS?.events,
       }
       tempEdges.push(rootEventToChildEventEdge)
     })
@@ -152,15 +151,23 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
         source: event,
         target,
         id,
+        color: '#fff',
       }
       tempEdges.push(eventToPersonnelEdge)
     })
+    const tempLinks = tempEdges.map(({ source, target, id, ...rest }: any) => {
+      return {
+        source,
+        target,
+      }
+    })
 
-    return [tempNodes, tempEdges]
-  }, [])
+    return [tempNodes, tempEdges, tempLinks]
+  }, [rootNodes, models])
 
   return {
     nodes,
     edges,
+    links,
   }
 }

@@ -1,13 +1,13 @@
 'use client'
 
-import { FC } from 'react'
-import {
-  ForceGraph2D,
-  ForceGraph3D,
-  ForceGraphVR,
-  ForceGraphAR,
-} from 'react-force-graph'
+import { FC, useCallback, useRef } from 'react'
+import { ForceGraph3D } from 'react-force-graph'
 import { useModelNodes } from '../graph/useModelNodes'
+// import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
+import {
+  CSS2DObject,
+  CSS2DRenderer,
+} from 'three/examples/jsm/renderers/CSS2DRenderer'
 interface Spherical3DGraphProps {
   models: any
 }
@@ -26,66 +26,31 @@ function forceRadius(nodes: any, R = 1) {
 export const Spherical3DGraph: FC<Spherical3DGraphProps> = ({
   models,
 }: any) => {
-  const { nodes, edges } = useModelNodes({ models })
-  console.log('edges: ', edges)
+  const graphRef: any = useRef()
+  const { nodes, edges, links } = useModelNodes({ models })
 
-  // console.log('nodes: ', nodes)
-  const data = {
-    nodes,
-    links: edges.map(({ source, target, id, ...rest }: any) => {
-      console.log('rest: ', rest)
-      return {
-        source,
-        target,
-      }
-    }),
-  }
-  const { links } = data
-  console.log('links: ', links)
+  const handleNodeClick = useCallback((node: any) => {
+    console.log('node: ', node)
+    // Aim at node from outside it
+    const distance = 40
+    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z)
+
+    graphRef.current.cameraPosition(
+      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+      node, // lookAt ({ x, y, z })
+      3000 // ms transition duration
+    )
+  }, [])
+
   return (
     <ForceGraph3D
-      graphData={data}
+      ref={graphRef}
+      graphData={{ nodes, links }}
       nodeLabel={(node) => `${node.label}`}
-      // linkThreeObject={}
-      // nodeThreeObjectExtend={true}
-      // nodeThreeObject={(node) => {
-      //   console.log('node: ', node)
-      //   var geometry = new THREE.BoxGeometry()
-
-      //   // Create a standard material
-      //   var material = new THREE.MeshStandardMaterial({
-      //     color: '#151515',
-      //     metalness: 0.5,
-      //     roughness: 0.5,
-      //     envMapIntensity: 2,
-      //   })
-
-      //   // Create a mesh with the geometry and material
-      //   var mesh = new THREE.Mesh(geometry, material)
-
-      //   // Create a smaller box inside the first one
-      //   var innerGeometry = new THREE.BoxGeometry()
-      //   var innerMaterial = new THREE.MeshBasicMaterial({
-      //     toneMapped: false,
-      //     fog: false,
-      //   })
-      //   var innerMesh = new THREE.Mesh(innerGeometry, innerMaterial)
-      //   innerMesh.scale.set(0.9, 0.93, 0.9)
-      //   innerMesh.position.set(0, 0, 0.2)
-      //   mesh.add(innerMesh)
-
-      //   // Load an image texture
-      //   var textureLoader = new THREE.TextureLoader()
-      //   textureLoader.load(node, function (texture) {
-      //     mesh.material.map = texture
-      //     mesh.material.needsUpdate = true
-      //   })
-      //   var textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff })
-      //   var textMesh = new THREE.Mesh(geometry, textMaterial)
-      //   textMesh.position.set(0.55, 0, 0)
-      //   return textMesh
-      // }}
-      // linkDirectionalParticles={1}
+      nodeColor={(n) => n.color || n.fill}
+      // nodeRelSize={20}
+      linkColor={(link) => link?.color}
+      onNodeClick={handleNodeClick}
     />
   )
 }

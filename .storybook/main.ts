@@ -12,6 +12,16 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    '@storybook/addon-actions/register',
+
+    {
+      name: '@storybook/addon-storysource',
+      options: {
+        sourceLoaderOptions: {
+          injectStoryParameters: false,
+        },
+      },
+    },
   ],
   framework: {
     name: '@storybook/nextjs',
