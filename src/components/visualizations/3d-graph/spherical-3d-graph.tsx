@@ -29,18 +29,21 @@ export const Spherical3DGraph: FC<Spherical3DGraphProps> = ({
   const graphRef: any = useRef()
   const { nodes, edges, links } = useModelNodes({ models })
 
-  const handleNodeClick = useCallback((node: any) => {
-    console.log('node: ', node)
-    // Aim at node from outside it
-    const distance = 40
-    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z)
+  const handleNodeClick = useCallback(
+    (node: any) => {
+      console.log('node: ', node)
+      // Aim at node from outside it
+      const distance = 40
+      const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z)
 
-    graphRef.current.cameraPosition(
-      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-      node, // lookAt ({ x, y, z })
-      3000 // ms transition duration
-    )
-  }, [])
+      graphRef.current.cameraPosition(
+        { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+        node, // lookAt ({ x, y, z })
+        3000 // ms transition duration
+      )
+    },
+    [graphRef]
+  )
 
   return (
     <ForceGraph3D

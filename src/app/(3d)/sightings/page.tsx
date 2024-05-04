@@ -1,4 +1,4 @@
-import { Globe } from '@/components/globe'
+import { Globe } from '@/components/visualizations/globe'
 
 // import { MapboxGlobe } from '@/components/globe/mapbox-globe'
 {
