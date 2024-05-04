@@ -1,3 +1,4 @@
+import { DockMenu } from '@/components/dock'
 import { Search } from '@/components/search'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -5,6 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Search />
       {children}
+      <DockMenu />
     </>
   )
 }

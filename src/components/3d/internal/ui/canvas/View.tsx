@@ -6,7 +6,7 @@ import {
   PerspectiveCamera,
   View as ViewImpl,
 } from '@react-three/drei'
-import { Three } from '@/internal/helpers/components/Three'
+import { Three } from '@/components/3d/internal/helpers/Three'
 
 export const Common = ({ color }) => (
   <Suspense fallback={null}>

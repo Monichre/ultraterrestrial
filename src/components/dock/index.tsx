@@ -1,8 +1,10 @@
-import { Dock } from 'lucide-react'
+'use client'
+
 import { FunctionComponent } from 'react'
 import { DockCard } from './DockCard'
 import { DockDivider } from './DockDivider'
 import { Card } from './Card'
+import { Dock } from './Dock'
 
 interface DockMenuProps {}
 
@@ -32,4 +34,3 @@ export const DockMenu: FunctionComponent<DockMenuProps> = () => {
     </Dock>
   )
 }
-s
