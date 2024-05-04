@@ -1,8 +1,42 @@
 import { SpatialGallery } from '@/components/visualizations/spatial-gallery'
-import { Suspense } from 'react'
+
 import { getXataClient } from '@/lib/xata'
 import { transformImage } from '@xata.io/client'
 const xata = getXataClient()
+
+function generatePositions(totalItems: [any]) {
+  const layers = [1, 8, 16, 24, 32, 29] // Items per layer
+  const radiusIncrement = 1.5 // Increase in radius per layer
+  let currentRadius = 0
+  const spatialData = []
+
+  let itemIndex: any = 0
+  for (let layerIndex = 0; layerIndex < layers.length; layerIndex++) {
+    const numItemsInLayer = layers[layerIndex]
+    currentRadius += radiusIncrement
+
+    for (let i = 0; i < numItemsInLayer; i++) {
+      const angle = (i / numItemsInLayer) * 2 * Math.PI
+      const x = currentRadius * Math.cos(angle)
+      const z = currentRadius * Math.sin(angle)
+      const rotationY = -angle // Faces towards the center
+
+      spatialData.push({
+        position: [x, 0, z],
+        rotation: [0, rotationY, 0],
+      })
+
+      itemIndex++
+      if (itemIndex >= totalItems) break
+    }
+    if (itemIndex >= totalItems) break
+  }
+
+  return spatialData
+}
+
+// const spatialData = generatePositions(110)
+// console.log(spatialData)
 
 const EventsPage = async () => {
   const records = await xata.db.events
@@ -51,10 +85,8 @@ const EventsPage = async () => {
         height: 750,
         width: 1260,
         dpr: 2,
-        // download: `${rest?.name.toLowerCase().replace(/\s+/g, '')}.jpg`,
         format: 'jpeg',
       })
-      console.log('url: ', url)
 
       return {
         id,
