@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import { LampEffect } from './LampEffect';
+import { LampEffect } from '@/components/animations/lamp-effect/lamp-effect'
+import type { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 const meta = {
   title: 'Components/LampEffect',
@@ -16,11 +16,11 @@ const meta = {
     onLogout: fn(),
     onCreateAccount: fn(),
   },
-} satisfies Meta<typeof LampEffect>;
+} satisfies Meta<typeof LampEffect>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
   args: {
@@ -28,6 +28,6 @@ export const Demo: Story = {
       name: 'Jane Doe',
     },
   },
-};
+}
 
-export const LoggedOut: Story = {};
+export const LoggedOut: Story = {}

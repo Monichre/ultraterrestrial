@@ -95,11 +95,13 @@ export const MultiStepLoader = ({
   loading,
   duration = 2000,
   loop = true,
+  onClick,
 }: {
   loadingStates: LoadingState[]
   loading?: boolean
   duration?: number
   loop?: boolean
+  onClick?: any
 }) => {
   const [currentState, setCurrentState] = useState(0)
 
@@ -124,6 +126,7 @@ export const MultiStepLoader = ({
     <AnimatePresence mode='wait'>
       {loading && (
         <motion.div
+          onClick={onClick}
           initial={{
             opacity: 0,
           }}

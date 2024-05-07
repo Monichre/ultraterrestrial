@@ -1,46 +1,28 @@
 import './globals.css'
 
 import { Oswald, Source_Sans_3 } from 'next/font/google'
-// Montserrat, Oxanium, Inria_Sans, Rajdhani,
-import { ThemeProvider } from '@/components/theme-provider'
+import localFont from 'next/font/local'
+import { ThemeProvider } from '@/providers'
 
-// Montserrat
-// If loading a variable font, you don't need to specify the font weight
-// const montserrat = Montserrat({
-//   weight: ['400', '500', '600', '700'],
-//   display: 'swap',
-//   subsets: ['latin'],
-// })
+const ailerons = localFont({
+  src: './ailerons.woff2',
+  display: 'swap',
+  variable: '--font-ailerons',
+})
 
 const oswald = Oswald({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   subsets: ['latin'],
+  variable: '--font-oswald',
 })
 
 const sourceSans = Source_Sans_3({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   subsets: ['latin'],
+  variable: '--font-source-sans',
 })
-
-// const oxanium = Oxanium({
-//   weight: ['400', '500', '600', '700'],
-//   display: 'swap',
-//   subsets: ['latin'],
-// })
-
-// const inria = Inria_Sans({
-//   weight: ['300', '400'],
-//   display: 'swap',
-//   subsets: ['latin'],
-// })
-
-// export const rajdhani = Rajdhani({
-//   weight: ['300', '400'],
-//   display: 'swap',
-//   subsets: ['latin'],
-// })
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -61,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang='en'
-      className={`${oswald.className} ${sourceSans.className} `}
+      className={`${oswald.variable} ${sourceSans.variable} ${ailerons.variable} `}
       suppressHydrationWarning
     >
       <body className='bg-[url("/8k_stars_milky_way.jpeg")] be-center bg-cover'>

@@ -26,6 +26,7 @@ export const Home: React.FC<HomeProps> = () => {
   return (
     <>
       <PlanetMenu />
+
       <Astronaut />
     </>
   )

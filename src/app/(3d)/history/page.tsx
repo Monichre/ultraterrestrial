@@ -1,50 +1,15 @@
-import { SpatialGallery } from '@/components/visualizations/spatial-gallery'
+const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
+dayjs.extend(utc)
 
+import { ThreeDScrollThrough } from '@/components/3d/3d-scroll-through'
 import { getXataClient } from '@/lib/xata'
-import { transformImage } from '@xata.io/client'
+
 const xata = getXataClient()
 
-function generatePositions(totalItems: [any]) {
-  const layers = [1, 8, 16, 24, 32, 29] // Items per layer
-  const radiusIncrement = 1.5 // Increase in radius per layer
-  let currentRadius = 0
-  const spatialData = []
-
-  let itemIndex: any = 0
-  for (let layerIndex = 0; layerIndex < layers.length; layerIndex++) {
-    const numItemsInLayer = layers[layerIndex]
-    currentRadius += radiusIncrement
-
-    for (let i = 0; i < numItemsInLayer; i++) {
-      const angle = (i / numItemsInLayer) * 2 * Math.PI
-      const x = currentRadius * Math.cos(angle)
-      const z = currentRadius * Math.sin(angle)
-      const rotationY = -angle // Faces towards the center
-
-      spatialData.push({
-        position: [x, 0, z],
-        rotation: [0, rotationY, 0],
-      })
-
-      itemIndex++
-      if (itemIndex >= totalItems) break
-    }
-    if (itemIndex >= totalItems) break
-  }
-
-  return spatialData
-}
-
-// const spatialData = generatePositions(110)
-// console.log(spatialData)
-
-const EventsPage = async () => {
-  const records = await xata.db.events
-    .filter({
-      $none: {
-        photos: [],
-      },
-    })
+export default async function Index() {
+  const records: any = await xata.db.events
+    .sort('date', 'desc')
     .select([
       'name',
       'description',
@@ -55,59 +20,75 @@ const EventsPage = async () => {
       'photos',
       'photos.signedUrl',
       'photos.enablePublicUrl',
-      // 'photos.base64Content',
+      {
+        name: '<-event-subject-matter-experts.event',
+        columns: ['*'],
+        as: 'experts',
+      },
     ])
     .getAll()
 
-  const spatialData = [
-    { position: [0, 0, 1.5], rotation: [0, 0, 0] },
-    { position: [-0.8, 0, -0.6], rotation: [0, 0, 0] },
-    { position: [0.8, 0, -0.6], rotation: [0, 0, 0] },
-    { position: [-1.75, 0, 0.25], rotation: [0, Math.PI / 2.5, 0] },
-    { position: [-2.15, 0, 1.5], rotation: [0, Math.PI / 2.5, 0] },
-    { position: [-2, 0, 2.75], rotation: [0, Math.PI / 2.5, 0] },
-    { position: [1.75, 0, 0.25], rotation: [0, -Math.PI / 2.5, 0] },
-    { position: [2.15, 0, 1.5], rotation: [0, -Math.PI / 2.5, 0] },
-    { position: [2, 0, 2.75], rotation: [0, -Math.PI / 2.5, 0] },
-  ]
+  const expertPersonnel = await xata.db['event-subject-matter-experts']
+    .select([
+      'event.id',
+      'subject-matter-expert.id',
+      'subject-matter-expert.name',
+      'subject-matter-expert.photo',
+    ])
+    .getAll()
 
-  const events = records
+  const personnel = expertPersonnel
     .toSerializable()
-    .filter((event) => event?.photos?.length)
-    .slice(0, 9)
-    .map(({ id, photos, xata, ...rest }: any, i) => {
-      const { position, rotation } = spatialData[i]
+    .map(({ event, id, xata: xataMeta, ...rest }) => ({
+      ...rest['subject-matter-expert'],
+      eventId: event?.id,
+    }))
 
-      const [photo] = photos
+  const data = records.toSerializable()
 
-      // Apply transformations to a Xata image URL
-      const url = transformImage(photo.url, {
-        height: 750,
-        width: 1260,
-        dpr: 2,
-        format: 'jpeg',
-      })
-
+  const events = data.map((event: { experts: { records: any[] } }) => {
+    if (event?.experts?.records) {
+      const experts = event.experts.records.map((expert) => expert)
       return {
-        id,
-        photo: {
-          ...photo,
-          url,
-        },
-        position,
-        rotation,
-        ...rest,
+        ...event,
+        experts,
       }
-    })
+    }
+    return event
+  })
+
+  const removeEmptyKeys = (obj: any) => {
+    const newObj: any = {}
+    for (let key in obj) {
+      if (obj[key] && obj[key].length) {
+        newObj[key] = obj[key]
+      }
+    }
+    return newObj
+  }
+  function removeLeadingZero(input) {
+    const str = String(input)
+    return str.startsWith('0') ? str.slice(1) : str
+  }
+
+  const eventsByYear: any = removeEmptyKeys(
+    events.reduce((acc: any, item: any) => {
+      const year: any = removeLeadingZero(item.date.split('-')[0]) // dayjs.utc(new Date(date)).getYear()
+      console.log('year: ', year)
+
+      if (acc[year]) {
+        acc[year].push(item)
+      } else {
+        acc[year] = []
+        acc[year].push(item)
+      }
+      return acc
+    }, {})
+  )
+
+  const years = Object.keys(eventsByYear)
 
   return (
-    <div
-      className='h-[100vh] overflow-scroll'
-      style={{ height: '100vh', width: '100vw' }}
-    >
-      <SpatialGallery items={events} />
-    </div>
+    <ThreeDScrollThrough years={years} events={events} keyFigures={personnel} />
   )
 }
-
-export default EventsPage

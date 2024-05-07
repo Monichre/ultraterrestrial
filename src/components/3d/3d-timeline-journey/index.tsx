@@ -1,1 +1,1 @@
-export * from './3d-timeline-journey';
+export * from './3d-timeline-journey'

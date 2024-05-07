@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import { HoverCard } from './HoverCard';
+import type { Meta, StoryObj } from '@storybook/react'
+
+import { HoverCard } from './hover-card'
 
 const meta = {
   title: 'Components/HoverCard',
@@ -11,23 +11,15 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  args: {
-    onLogin: fn(),
-    onLogout: fn(),
-    onCreateAccount: fn(),
-  },
-} satisfies Meta<typeof HoverCard>;
+  args: {},
+} satisfies Meta<typeof HoverCard>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
-  args: {
-    user: {
-      name: 'Jane Doe',
-    },
-  },
-};
+  args: {},
+}
 
-export const LoggedOut: Story = {};
+export const LoggedOut: Story = {}

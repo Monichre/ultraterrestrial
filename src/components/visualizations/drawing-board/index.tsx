@@ -1,1 +1,1 @@
-export * from './drawing-board'
+export * from './drawing-board';

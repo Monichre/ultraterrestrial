@@ -20,9 +20,8 @@ function addVariablesForColors({ addBase, theme }: any) {
 const config = {
   darkMode: ['class'],
   content: [
-    './pages/**/*.{ts,tsx}',
     './src/components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
+    './src/app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
   prefix: '',
@@ -35,6 +34,11 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        oswald: ['var(--font-oswald)'],
+        source: ['var(--font-source-sans)'],
+        ailerions: ['var(--font-ailerions)'],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -75,6 +79,11 @@ const config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        spotlight: 'spotlight 2s ease .75s 1 forwards',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -84,10 +93,18 @@ const config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
-      },
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
+        spotlight: {
+          '0%': {
+            // @ts-ignore
+            opacity: 0,
+            transform: 'translate(-72%, -62%) scale(0.5)',
+          },
+          '100%': {
+            // @ts-ignore
+            opacity: 1,
+            transform: 'translate(-50%,-40%) scale(1)',
+          },
+        },
       },
     },
   },
