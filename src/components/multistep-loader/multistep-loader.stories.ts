@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import { MultistepLoader } from './MultistepLoader';
+import type { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
+import { MultiStepLoader } from '@/components/multistep-loader/multistep-loader'
 
 const meta = {
   title: 'Components/MultistepLoader',
-  component: MultistepLoader,
+  component: MultiStepLoader,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   parameters: {
@@ -12,22 +12,30 @@ const meta = {
     layout: 'fullscreen',
   },
   args: {
-    onLogin: fn(),
-    onLogout: fn(),
-    onCreateAccount: fn(),
+    loadingStates: [
+      {
+        text: 'test',
+      },
+      {
+        text: 'test 2',
+      },
+    ],
   },
-} satisfies Meta<typeof MultistepLoader>;
+} satisfies Meta<typeof MultiStepLoader>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
   args: {
-    user: {
-      name: 'Jane Doe',
-    },
+    loadingStates: [
+      {
+        text: 'test',
+      },
+      {
+        text: 'test 2',
+      },
+    ],
   },
-};
-
-export const LoggedOut: Story = {};
+}

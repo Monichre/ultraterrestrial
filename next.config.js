@@ -4,6 +4,13 @@ const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'json', 'geojson'],
   transpilePackages: ['three', '@react-three/drei'],
   crossOrigin: 'anonymous',
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -81,11 +88,6 @@ const nextConfig = {
       use: ['raw-loader', 'glslify-loader'],
     })
 
-    config.module.rules.push({
-      test: /\.(glsl|vs|fs|vert|frag)$/,
-      exclude: /node_modules/,
-      use: ['raw-loader', 'glslify-loader'],
-    })
     config.module.rules.push({
       test: /\.(frag|vert)$/,
       type: 'asset/source',

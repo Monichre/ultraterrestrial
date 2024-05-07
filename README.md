@@ -9,68 +9,71 @@
 
 ## Tech Stack
 
-**Sanity CMS**
-
----
+**Xata**
 
 **Supabase**
 
 [Cheatsheet](https://supabase.com/dashboard/project/oylaiyodggkrghjkbruy/api?resource=event_topic_link)
 [GraphiQL](https://supabase.com/dashboard/project/oylaiyodggkrghjkbruy/api/graphiql)
 
----
+**N8N** *(Running locally)*
 
-**ReactFlow + D3**
+1. Docker (<https://docs.n8n.io/hosting/installation/docker/#next-steps>)
 
-<https://github.com/abdulmajeed33/d3-force-network-visualization/tree/main>
+```
+docker volume create n8n_data
 
-[D3 Tree Diagram](https://observablehq.com/@d3/tree/2?intent=fork)
+docker run -it --rm --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n
+```
 
----
+2. With Postgres
 
-**Local Dev**
+```
+docker volume create n8n_data
 
-### Airtable
+docker run -it --rm \
+ --name n8n \
+ -p 5678:5678 \
+ -e DB_TYPE=postgresdb \
+ -e DB_POSTGRESDB_DATABASE=<POSTGRES_DATABASE> \
+ -e DB_POSTGRESDB_HOST=<POSTGRES_HOST> \
+ -e DB_POSTGRESDB_PORT=<POSTGRES_PORT> \
+ -e DB_POSTGRESDB_USER=<POSTGRES_USER> \
+ -e DB_POSTGRESDB_SCHEMA=<POSTGRES_SCHEMA> \
+ -e DB_POSTGRESDB_PASSWORD=<POSTGRES_PASSWORD> \
+ -v n8n_data:/home/node/.n8n \
+ docker.n8n.io/n8nio/n8n
+ ```
+
+**Airtable**
 
 [Subject Matter Expert Form](https://airtable.com/appN3js5xinc0L7ln/paggeZBJoI9CJWw2o/form)
 [Docs](https://airtable.com/appN3js5xinc0L7ln/api/docs#javascript/metadata)
 
 <https://developers.facebook.com/apps/383699827904694/webhooks/>
 
-### Vector Store OpenAI Assistant File List
-
-- [Bob Lazar Interview 1989](Bob-Lazar-Interview-1989.md) - 4/28/2024, 7:06 PM
-- [unclassified-2022-annual-report-uap](unclassified-2022-annual-report-uap.pdf) - 4/24/2024, 6:25 AM
-- [CIA-RDP96-00788R001700210016-5](CIA-RDP96-00788R001700210016-5.pdf) - 4/24/2024, 6:25 AM
-- [DOPSR-CLEARED-508-COMPLIANT](DOPSR-CLEARED-508-COMPLIANT.pdf) - 4/24/2024, 6:16 AM
-- [TheUFOPhenomenon](TheUFOPhenomenon.txt) - 4/24/2024, 6:16 AM
-- [Subcommittee on National Security](Subcommittee-on-National-Security.txt) - 4/24/2024, 6:16 AM
-- [AARO_DHS_Kona_Blue](AARO_DHS_Kona_Blue.pdf) - 4/24/2024, 6:16 AM
-- [podcast-episode-1-transcript](podcast-episode-1-transcript.md) - 4/24/2024, 6:16 AM
-- [Joe Rogan Experience #1315 - Bob Laz](Joe-Rogan-Experience-1315-Bob-Laz.md) - 4/24/2024, 6:08 AM
-- [rogan 2028 - knapp & corbell](rogan-2028-knapp-corbell.txt) - 4/24/2024, 6:08 AM
-- [The UFO Reporter Part 1: The Files o.sty](The-UFO-Reporter-Part-1-The-Files-o.sty.txt) - 4/24/2024, 6:08 AM
-- [david-grusch-joe-rogan](david-grusch-joe-rogan.txt) - 4/24/2024, 6:08 AM
-- [David Fravor: UFOs, Aliens, Fighter](David-Fravor-UFOs-Aliens-Fighter.txt) - 4/24/2024, 6:08 AM
-- [The UFO Reporter Part 2: The Files o.sty](The-UFO-Reporter-Part-2-The-Files-o.sty.txt) - 4/24/2024, 6:08 AM
-- [Joe Rogan Experience #1361 - Cmdr.sty](Joe-Rogan-Experience-1361-Cmdr.sty.txt) - 4/24/2024, 6:08 AM
-- [Transcript of #1510 - George Knapp & ... _ Happy Scribe](Transcript-of-1510-George-Knapp-Happy-Scribe.pdf) - 4/24/2024, 6:08 AM
-- [Cold War UFOs - Keith Mitchell](Cold-War-UFOs-Keith-Mitchell.txt) - 4/24/2024, 6:08 AM
-- [ufo6](ufo6.pdf) - 4/24/2024, 6:08 AM
-- [ufo3](ufo3.pdf) - 4/24/2024, 6:08 AM
-- [sgp.fas.org-CIAs Role in the Study of UFOs 1947-90](sgp.fas.org-CIAs-Role-in-the-Study-of-UFOs-1947-90.pdf) - 4/24/2024, 6:08 AM
-- [ufo5](ufo5.pdf) - 4/24/2024, 6:08 AM
-- [ufo9](ufo9.pdf) - 4/24/2024, 6:08 AM
-- [livescience.com-Flying saucers to mind control 24 declassified military CIA secrets](livescience.com-Flying-saucers-to-mind-control-24-declassified-military-CIA-secrets.pdf) - 4/24/2024, 6:08 AM
-- [bluebook](bluebook.pdf) - 4/24/2024, 6:08 AM
-- [ufo13](ufo13.pdf) - 4/24/2024, 6:08 AM
-- [roswell](roswell.pdf) - 4/24/2024, 6:08 AM
-- [john.lear.letter](john.lear.letter.pdf) - 4/24/2024, 6:06 AM
-- [Prelimary-Assessment-UAP-20210625](Prelimary-Assessment-UAP-20210625.pdf) - 4/24/2024, 6:06 AM
-- [roswell](roswell.pdf) - 4/24/2024, 6:06 AM
-
 ## Visualizations
+
+## Features
+
+### Live Collaboration
+
+<https://liveblocks.io/docs/tools/nextjs-starter-kit>
+<https://livekit.io/?ref=therundown>
+
+## UI/3D
 
 ![Alt text](docs/3d-graph-sphere.png "3D Graph On A Sphere")
 
 - [3D Graph On A Sphere](https://observablehq.com/@fil/3d-graph-on-sphere)
+
+<https://github.com/NASA-AMMOS/3DTilesRendererJS>
+
+**ReactFlow + D3**
+<https://github.com/abdulmajeed33/d3-force-network-visualization/tree/main>
+
+[D3 Tree Diagram](https://observablehq.com/@d3/tree/2?intent=fork)
+
+<https://github.com/lewhunt/divz>
+<https://github.com/lewhunt/divz>
+<https://codesandbox.io/p/sandbox/camera-scroll-tu24h?file=%2Fsrc%2FModel.js>

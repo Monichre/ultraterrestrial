@@ -8,6 +8,7 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "module": "esnext",
     "resolveJsonModule": true,
@@ -15,8 +16,8 @@
     "jsx": "preserve",
     "incremental": true,
     "allowImportingTsExtensions": true,
-    "types": ["node", "webgl2"],
-
+    "types": ["node", "webgl2", "three"],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
@@ -28,7 +29,9 @@
   },
   "include": [
     "*.ts",
+    "*.tsx",
     "next-env.d.ts",
+    "global.d.ts",
     "src",
     "src/**/**/*",
     "**/*.ts",

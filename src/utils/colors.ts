@@ -6,18 +6,7 @@ export function hexToRgba(hex: string, alpha: number): string {
   const b = parseInt(hex.slice(5, 7), 16)
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
-export const palette = {
-  green: `#407663`,
-  darkBlue: `#09101D`,
-  cambridge: `#6FB08C`,
-  richBlack: `#030513`,
-  black: `#060404`,
-  silver: `#C5CBCC`,
-  gray: `#4e5969`,
-  brown: `#28180B`,
-  smoke: `#130F0E`,
-  khaki: `#B2A581`,
-}
+
 export const paletteTwo = {
   green: `#6FB08C`,
   darkBlue: `#000100`,
@@ -49,4 +38,18 @@ export const DOMAIN_MODEL_COLORS = {
   organizations: NEONS.yellow,
   testimonies: NEONS.pink,
   root: `#27F1FF`,
+}
+
+export const palette: Record<string, string> = {
+  forest: `#407663`,
+  darkBlue: `#09101D`,
+  cambridge: `#6FB08C`,
+  richBlack: `#030513`,
+  black: `#060404`,
+  silver: `#C5CBCC`,
+  gray: `#4e5969`,
+  brown: `#28180B`,
+  smoke: `#130F0E`,
+  khaki: `#B2A581`,
+  ...NEONS,
 }

@@ -12,8 +12,8 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
   props: PlanetMenuProps
 ) => {
   return (
-    <div className='fixed h-[220px] w-[220px] top-[80px] left-[80px] z-20'>
-      <Suspense>
+    <Suspense fallback={null}>
+      <div className='absolute top-[80px] right-[0px] z-40 h-[150px] w-[150px]'>
         <ReactPlanet
           hideOrbit
           // open
@@ -43,7 +43,7 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
             }}
             href='/sightings'
           >
-            <Image alt='venus' src='/venus.png' height={50} width={50} />
+            <Image alt='venus' src='/venus.png' height={40} width={40} />
           </Link>
 
           <Link
@@ -56,9 +56,11 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
             }}
             href='/history'
           >
-            <Image alt='mars' src='/mars.png' height={50} width={50} />
+            <Image alt='mars' src='/mars.png' height={40} width={40} />
           </Link>
+
           <Link
+            key='explore-root'
             style={{
               position: 'relative',
               zIndex: 20,
@@ -68,9 +70,11 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
             }}
             href='/explore'
           >
-            <Image alt='saturn' src='/saturn.png' height={50} width={50} />
+            <Image alt='saturn' src='/saturn.png' height={40} width={40} />
           </Link>
+
           <Link
+            key='explore-word-cloud'
             style={{
               position: 'relative',
               zIndex: 20,
@@ -80,10 +84,10 @@ export const PlanetMenu: React.FC<PlanetMenuProps> = (
             }}
             href='/explore/visualizations/word-cloud'
           >
-            <Image alt='moon' src='/moon.png' height={50} width={50} />
+            <Image alt='moon' src='/moon.png' height={40} width={40} />
           </Link>
         </ReactPlanet>
-      </Suspense>
-    </div>
+      </div>
+    </Suspense>
   )
 }
