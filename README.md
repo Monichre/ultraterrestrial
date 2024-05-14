@@ -77,3 +77,27 @@ docker run -it --rm \
 <https://github.com/lewhunt/divz>
 <https://github.com/lewhunt/divz>
 <https://codesandbox.io/p/sandbox/camera-scroll-tu24h?file=%2Fsrc%2FModel.js>
+<https://github.com/pmndrs/uikit>
+
+<https://youtu.be/pR5XSg0BgyE>"
+<https://youtu.be/pR5XSg0BgyE>
+<https://youtu.be/Cruarl4ES_s>
+<https://youtu.be/ZiiMyzXWmkQ>
+<https://youtu.be/UbR1j0pbA1s>
+<https://youtu.be/X78kt7U4VCs>
+
+**Mapbox WebGL**
+<https://deck.gl/>
+
+# Features
+
+[Deepgram: AI Speech Integration](https://github.com/deepgram)
+
+[Tavily AI Search API](https://docs.tavily.com/docs/tavily-api/introduction)
+
+[CoPIlotKit: Custom AI Copilots](https://github.com/CopilotKit/CopilotKit)
+
+OPenAI Integrated with NextJS Logs
+<https://github.com/whoiskatrin/npm-copilot>
+
+<https://app.eraser.io/workspace/ifOFwdSYj9tNbIpTEZ0R>

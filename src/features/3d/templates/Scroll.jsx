@@ -1,3 +1,4 @@
+'use client'
 // https://github.com/studio-freight/lenis
 // TODO refactor for app-directory
 // See https://github.com/pmndrs/react-three-next/pull/123
@@ -7,22 +8,39 @@
 // 3 - enjoy
 import { addEffect, useFrame } from '@react-three/fiber'
 import Lenis from '@studio-freight/lenis'
-import { useEffect } from 'react'
-import { useRef } from 'react'
+
 import * as THREE from 'three'
 
-const state = {
-  top: 0,
-  progress: 0,
-}
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+} from 'react'
+
+const ScrollContext = createContext(0)
+export const useScrollContext = () => useContext(ScrollContext)
 
 const { damp } = THREE.MathUtils
 
 export default function Scroll({ children }) {
+  const state = useMemo(
+    () => ({
+      top: 0,
+      progress: 0,
+    }),
+    []
+  )
+
   const content = useRef(null)
   const wrapper = useRef(null)
+  const [scroll, setScroll] = useState(0)
 
+  console.log({ scroll })
   useEffect(() => {
+    console.log('state: ', state)
     const lenis = new Lenis({
       wrapper: wrapper.current,
       content: content.current,
@@ -45,34 +63,44 @@ export default function Scroll({ children }) {
       effectSub()
       lenis.destroy()
     }
-  }, [])
+  }, [state])
 
   return (
-    <div
-      ref={wrapper}
-      style={{
-        position: 'absolute',
-        overflow: 'hidden',
-        width: '100%',
-        height: '100%',
-        top: 0,
-      }}>
+    <ScrollContext.Provider value={{ scroll, setScroll }}>
       <div
-        ref={content}
+        ref={wrapper}
         style={{
-          position: 'relative',
-          minHeight: '200vh',
-        }}>
-        {children}
+          position: 'absolute',
+          overflow: 'hidden',
+          width: '100%',
+          height: '100%',
+          top: 0,
+        }}
+      >
+        <div
+          ref={content}
+          style={{
+            position: 'relative',
+            minHeight: '200vh',
+          }}
+        >
+          {children}
+        </div>
       </div>
-    </div>
+    </ScrollContext.Provider>
   )
 }
 
 export const ScrollTicker = ({ smooth = 9999999 }) => {
-  useFrame(({ viewport, camera }, delta) => {
-    camera.position.y = damp(camera.position.y, -state.progress * viewport.height, smooth, delta)
-  })
+  // useFrame(({ viewport, camera }, delta) => {
+
+  //   // camera.position.y = damp(
+  //   //   camera.position.y,
+  //   //   -state.progress * viewport.height,
+  //   //   smooth,
+  //   //   delta
+  //   // )
+  // })
 
   return null
 }

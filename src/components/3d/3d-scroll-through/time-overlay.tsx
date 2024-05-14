@@ -1,17 +1,20 @@
+// @ts-nocheck
 'use client'
-import React, { forwardRef } from 'react'
 
-export const TimeOverlay = forwardRef(({ caption, scroll }: any, ref: any) => {
+import React, { forwardRef, useRef } from 'react'
+
+export const TimeOverlay = forwardRef(({ scroll, ...props }: any, ref) => {
+  const caption: any = useRef()
   return (
     <div
       ref={ref}
+      className='scroll'
       onScroll={(e: any) => {
+        console.log('e: ', e)
         scroll.current =
           e.target.scrollTop / (e.target.scrollHeight - window.innerHeight)
         caption.current.innerText = scroll.current.toFixed(2)
       }}
-      id='scroll-overlay'
-      className='scroll'
     >
       <div style={{ height: '400vh' }}>
         <div className='dot'>

@@ -17,6 +17,7 @@ export function FadeUpStagger() {
     <motion.div
       initial='hidden'
       animate='show'
+      w
       viewport={{ once: true }}
       variants={{
         hidden: {},
