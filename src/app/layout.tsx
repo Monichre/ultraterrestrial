@@ -3,6 +3,8 @@ import './globals.css'
 import { Oswald, Source_Sans_3 } from 'next/font/google'
 import localFont from 'next/font/local'
 import { ThemeProvider } from '@/providers'
+import { AnimationProvider } from '@/providers/animation-provider'
+import { PageTransition } from '@/components/animations/page-transition'
 
 const ailerons = localFont({
   src: './ailerons.woff2',
@@ -53,9 +55,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className='min-h-[100vh] min-w-screen relative'>
-            {children}
-          </main>
+          <AnimationProvider>
+            <PageTransition>
+              <main className='min-h-[100vh] min-w-screen relative'>
+                {children}
+              </main>
+            </PageTransition>
+          </AnimationProvider>
         </ThemeProvider>
       </body>
     </html>

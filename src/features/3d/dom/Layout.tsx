@@ -2,12 +2,12 @@
 
 import { useRef } from 'react'
 import dynamic from 'next/dynamic'
-const Scene = dynamic(() => import('@/features/3d/ui/canvas/Scene'), {
+const Scene = dynamic(() => import('@/features/3d/canvas/Scene'), {
   ssr: false,
 })
 
-const Layout = ({ children }) => {
-  const ref = useRef()
+const Layout = ({ children }: any) => {
+  const ref: any = useRef()
 
   return (
     <div
