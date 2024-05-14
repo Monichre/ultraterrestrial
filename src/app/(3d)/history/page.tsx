@@ -2,8 +2,8 @@ const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
 
-import { ThreeDScrollThrough } from '@/components/3d/3d-scroll-through'
-import Scroll from '@/features/3d/templates/Scroll'
+import { ScrollThrough3D } from '@/components/3d/scroll-through-3d'
+
 import { getXataClient } from '@/lib/xata'
 
 const xata = getXataClient()
@@ -90,6 +90,6 @@ export default async function Index() {
   const years = Object.keys(eventsByYear)
 
   return (
-    <ThreeDScrollThrough years={years} events={events} keyFigures={personnel} />
+    <ScrollThrough3D years={years} events={events} keyFigures={personnel} />
   )
 }
