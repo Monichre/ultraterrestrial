@@ -1,9 +1,8 @@
-// @ts-nocheck
 'use client'
 
 import React, { forwardRef, useRef } from 'react'
 
-export const TimeOverlay = forwardRef(({ scroll, ...props }: any, ref) => {
+export const Overlay = forwardRef(({ scroll, ...props }: any, ref: any) => {
   const caption: any = useRef()
   return (
     <div
@@ -74,4 +73,4 @@ export const TimeOverlay = forwardRef(({ scroll, ...props }: any, ref) => {
   )
 })
 
-TimeOverlay.displayName = 'TimeOverlay'
+Overlay.displayName = 'Overlay'

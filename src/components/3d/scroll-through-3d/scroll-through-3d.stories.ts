@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
-import { ThreeDdScrollThrough } from './3d-scroll-through'
+import { ScrollThrough3D } from './scroll-through-3d'
 
 const meta = {
   title: 'Components/3D Scroll Through',
-  component: ThreeDdScrollThrough,
+  component: ScrollThrough3D,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   parameters: {
@@ -16,7 +16,7 @@ const meta = {
     onLogout: fn(),
     onCreateAccount: fn(),
   },
-} satisfies Meta<typeof ThreeDdScrollThrough>
+} satisfies Meta<typeof ScrollThrough3D>
 
 export default meta
 
