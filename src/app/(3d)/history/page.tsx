@@ -87,9 +87,13 @@ export default async function Index() {
     }, {})
   )
 
-  const years = Object.keys(eventsByYear)
+  const years = Object.keys(eventsByYear).reverse()
 
   return (
-    <ScrollThrough3D years={years} events={events} keyFigures={personnel} />
+    <ScrollThrough3D
+      years={years}
+      events={eventsByYear}
+      keyFigures={personnel}
+    />
   )
 }

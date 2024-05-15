@@ -1,4 +1,4 @@
-import { palette } from '@/utils/colors'
+import { palette } from '@/utils/constants/colors'
 import { useState } from 'react'
 import { create } from 'zustand'
 const chroma = require('chroma-js')

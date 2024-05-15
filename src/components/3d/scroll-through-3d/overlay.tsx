@@ -1,76 +1,245 @@
 'use client'
 
-import React, { forwardRef, useRef } from 'react'
+import * as THREE from 'three'
+import GlobeConnections from '@/components/3d/globe-connections/GlobeConnectionsExample'
+import { useTexture, View } from '@react-three/drei'
+import React, {
+  forwardRef,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import { useIntersectionObserver } from '@uidotdev/usehooks'
+import Image from 'next/image'
+import { NEONS } from '@/utils/constants/colors'
+import { Card3D } from '@/components/3d/3d-card/3d-card'
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'framer-motion'
+const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
+dayjs.extend(utc)
 
-export const Overlay = forwardRef(({ scroll, ...props }: any, ref: any) => {
-  const caption: any = useRef()
+interface OverlayEventImageProps {
+  photo: any
+}
+
+const OverlayEventImage: React.FC<OverlayEventImageProps> = ({
+  photo,
+}: any) => {
+  const texture: any = useTexture(photo?.signed)
+
+  return <meshStandardMaterial {...texture} />
+}
+
+//  ;<View key={photo?.id}>
+//    <OverlayEventImage photo={photo} />
+//  </View>
+
+const OverlaySection = ({ event, position, updateTimeFrame }: any) => {
+  const [ref, entry]: any = useIntersectionObserver({
+    threshold: 0,
+    root: document.querySelector('.scroll'),
+    rootMargin: '0px',
+  })
+
+  const elementRef: any = useRef()
+  // const ref = useRef(null)
+  const isInView = useInView(elementRef)
+  console.log('isInView: ', isInView)
+  const { scrollYProgress } = useScroll({
+    target: elementRef,
+    offset: ['end end', 'start start'],
+  })
+  console.log('scrollYProgress: ', scrollYProgress)
+
+  console.log('isInView: ', isInView)
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      //
+      updateTimeFrame(position)
+    }
+  }, [entry, position, updateTimeFrame])
+
   return (
-    <div
-      ref={ref}
-      className='scroll'
-      onScroll={(e: any) => {
-        console.log('e: ', e)
-        scroll.current =
-          e.target.scrollTop / (e.target.scrollHeight - window.innerHeight)
-        caption.current.innerText = scroll.current.toFixed(2)
-      }}
-    >
-      <div style={{ height: '400vh' }}>
-        <div className='dot'>
-          <h1>headset</h1>
-          Virtual reality (VR) is a simulated experience that can be similar to
-          or completely different from the real world.
-        </div>
+    <div style={{ height: '200vh', position: 'relative' }} ref={ref}>
+      <div className='dot'>
+        <h1>
+          {event.name}{' '}
+          <span className=''>{dayjs(event.date).format('DDDD/MMMM/YYYY')}</span>
+        </h1>
+        {/* <p className='text-white'>{currentEvent.description}</p> */}
       </div>
-      <div style={{ height: '200vh' }}>
-        <div className='dot'>
-          <h1>headphone</h1>
-          Headphones are a pair of small loudspeaker drivers worn on or around
-          the head over a user's ears.
-        </div>
+      <div ref={elementRef}>
+        {/* <Card3D
+          title={event.name}
+          content={event?.description}
+          image={event?.photos[0]}
+        /> */}
+        {/* {event?.photos && event.photos.length
+          ? event.photos.map((photo: any) => (
+              <Image
+                key={photo?.signedUrl}
+                src={photo?.signedUrl}
+                alt='event photo'
+                height={400}
+                width={600}
+              />
+            ))
+          : null} */}
       </div>
-      <div style={{ height: '200vh' }}>
-        <div className='dot'>
-          <h1>rocket</h1>A rocket (from Italian: rocchetto,
-          lit. 'bobbin/spool')[nb 1][1] is a projectile that spacecraft,
-          aircraft or other vehicle use to obtain thrust from a rocket engine.
-        </div>
-      </div>
-      <div style={{ height: '200vh' }}>
-        <div className='dot'>
-          <h1>turbine</h1>A turbine (/ˈtɜːrbaɪn/ or /ˈtɜːrbɪn/) (from the Greek
-          τύρβη, tyrbē, or Latin turbo, meaning vortex)[1][2] is a rotary
-          mechanical device that extracts energy from a fluid flow and converts
-          it into useful work.
-        </div>
-      </div>
-      <div style={{ height: '200vh' }}>
-        <div className='dot'>
-          <h1>table</h1>A table is an item of furniture with a flat top and one
-          or more legs, used as a surface for working at, eating from or on
-          which to place things.[1][2]
-        </div>
-      </div>
-      <div style={{ height: '200vh' }}>
-        <div className='dot'>
-          <h1>laptop</h1>A laptop, laptop computer, or notebook computer is a
-          small, portable personal computer (PC) with a screen and alphanumeric
-          keyboard.
-        </div>
-      </div>
-      <div style={{ height: '200vh' }}>
-        <div className='dot'>
-          <h1>zeppelin</h1>A Zeppelin is a type of rigid airship named after the
-          German inventor Count Ferdinand von Zeppelin (German pronunciation:
-          [ˈt͡sɛpəliːn]) who pioneered rigid airship development at the beginning
-          of the 20th century.
-        </div>
-      </div>
-      <span className='caption' ref={caption}>
-        0.00
-      </span>
     </div>
   )
-})
+}
+
+export type OverlayProps = {
+  currentEvents: any
+  activeYear: string
+  children?: any
+  moveToPreviousYear: any
+  moveToNextYear: any
+  scroll: any
+  eventsByYear: any
+  updateActiveYear: any
+}
+export const Overlay = forwardRef(
+  (
+    {
+      scroll,
+      activeYear,
+      currentEvents,
+      updateActiveYear,
+      eventsByYear,
+      moveToNextYear,
+      moveToPreviousYear,
+      ...props
+    }: OverlayProps,
+    ref: any
+  ) => {
+    console.log('activeYear: ', activeYear)
+    const [events, setEvents] = useState(currentEvents)
+    const scrollDirection = useRef('down')
+
+    console.log('currentEvents: ', currentEvents)
+
+    const handleScroll = (e: any) => {
+      let lastScrollTop = scroll.current
+
+      scroll.current =
+        e.target.scrollTop / (e.target.scrollHeight - window.innerHeight)
+
+      if (scroll.current > lastScrollTop) {
+        scrollDirection.current = 'down'
+      } else {
+        scrollDirection.current = 'up'
+      }
+    }
+
+    const updateTimeFrame = (position: any) => {
+      console.log('position: ', position)
+
+      // updateActiveYear
+      if (
+        (position === 'first' ||
+          (position === 'last' && currentEvents.length === 1)) &&
+        scrollDirection.current === 'up'
+      ) {
+        moveToPreviousYear()
+      }
+      if (position === 'last' && scrollDirection.current === 'down') {
+        moveToNextYear()
+      }
+    }
+
+    // useEffect(() => {
+    //   console.log('currentEvents: ', currentEvents)
+    //   // setEvents((events: any) => [...new Set([...events, ...currentEvents])])
+    //   if (events?.length) {
+    //     const updated: any = [...events, ...currentEvents]
+
+    //     setEvents(
+    //       updated.filter(
+    //         (item: any) => updated.indexOf(item) === updated.lastIndexOf(item)
+    //       )
+    //     )
+    //   }
+    // }, [currentEvents, events])
+
+    // const { scrollYProgress } = useScroll({
+    //   target: ref,
+    //   offset: ['start start', 'end start'],
+    // })
+    // console.log('scrollYProgress: ', scrollYProgress)
+
+    // const y = useMotionValue(scroll.current)
+
+    // const [svgHeight, setSvgHeight] = useState(0)
+
+    // useEffect(() => {
+    //   if (ref.current) {
+    //     setSvgHeight(ref.current.offsetHeight)
+    //   }
+    // }, [ref])
+
+    // const y1 = useSpring(
+    //   useTransform(scrollYProgress, [0, 0.8], [50, svgHeight]),
+    //   {
+    //     stiffness: 500,
+    //     damping: 90,
+    //   }
+    // )
+    // const y2 = useSpring(
+    //   useTransform(scrollYProgress, [0, 1], [50, svgHeight - 200]),
+    //   {
+    //     stiffness: 500,
+    //     damping: 90,
+    //   }
+    // )
+
+    return (
+      
+        
+
+        <div ref={ref} className='scroll' onScroll={handleScroll}>
+          <Suspense fallback={null}>
+            {events.map((currentEvent: any, index: number) => {
+              return (
+                <OverlaySection
+                  position={
+                    index === currentEvents.length - 1
+                      ? 'last'
+                      : index === 0
+                        ? 'first'
+                        : null
+                  }
+                  key={currentEvent?.id}
+                  updateTimeFrame={updateTimeFrame}
+                  event={currentEvent}
+                />
+              )
+            })}
+       
+        
+
+            <h1 className='caption'>
+              {/* ref={caption} */}
+              {activeYear}
+            </h1>
+            <div id='globe-connections'>
+              {/* <GlobeConnections width={1000} height={1000} /> */}
+            </div>
+          </Suspense>
+        </div>
+      
+    )
+  }
+)
 
 Overlay.displayName = 'Overlay'

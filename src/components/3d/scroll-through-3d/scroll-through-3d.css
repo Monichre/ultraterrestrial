@@ -36,11 +36,19 @@
   margin: 80px;
   z-index: 1;
   color: white;
-  font-size: 8em;
+  font-size: 6em;
   font-weight: 100;
   line-height: 1em;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: auto;
+}
+
+#globe-connections {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 80px;
+  z-index: 20;
 }
 
 .dot {
@@ -48,7 +56,7 @@
   position: sticky;
   top: 0px;
   display: inline-block;
-  max-width: 600px;
+  max-width: 800px;
   padding: 0;
   padding: 80px;
   color: #a0a0a0;
@@ -61,7 +69,8 @@
   -webkit-font-smoothing: auto;
   pointer-events: none;
   color: white;
-  font-size: 5em;
+  /* background: white; */
+  font-size: 3em;
   font-weight: 100;
   line-height: 1em;
   margin: 0;
@@ -99,4 +108,33 @@
   .dot > h1 {
     font-size: 3em;
   }
+}
+
+.progress {
+  position: sticky;
+  top: 0;
+  width: 80px;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  z-index: 100;
+}
+
+.progress svg {
+  transform: translateX(-100px) rotate(-90deg);
+}
+
+circle {
+  stroke-dashoffset: 0;
+  stroke-width: 5%;
+  fill: none;
+}
+
+.bg {
+  stroke: var(--accent);
+  opacity: 0.2;
+}
+
+.progress .indicator {
+  stroke: #fff;
 }

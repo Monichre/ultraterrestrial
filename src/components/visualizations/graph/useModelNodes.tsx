@@ -1,4 +1,4 @@
-import { DOMAIN_MODEL_COLORS } from '@/utils/colors'
+import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
 import { useState, useEffect, useMemo } from 'react'
 
 interface ModelNodesProps {
@@ -59,9 +59,15 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
     links: [],
   })
 
+  const transformData
+  useEffect(() => {
+
+  }, [models])
+
   const [nodes, edges, links] = useMemo(() => {
     const tempNodes = [...rootNodes]
-    const tempEdges = []
+    const tempEdges: any = []
+    const tempLinks: any = []
 
     const createNodeAndEdge = (rootNode, models, color) => {
       models.forEach(({ id, ...model }) => {
@@ -81,6 +87,10 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
           target: id,
           id: `${rootNode.id}->${id}`,
         })
+           tempLinks.push({
+        source: rootNode.id,
+        target: id,
+      })
       })
     }
 
@@ -103,6 +113,10 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
         id: edge.id,
         color: '#fff',
       })
+         tempLinks.push({
+        source: edge.topic,
+        target: edge['subject-matter-expert'],
+      })
     })
 
     eventsSubjectMatterExpertsEdges.forEach(({ id, event, ...rest }) => {
@@ -113,15 +127,19 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
         id,
         color: '#fff',
       })
+      tempLinks.push({
+        source: event,
+        target
+      })
     })
 
-    const tempLinks = tempEdges.map(({ source, target }) => ({
-      source,
-      target,
-    }))
+    // const tempLinks = tempEdges.map(({ source, target }) => ({
+    //   source,
+    //   target,
+    // }))
 
     return [tempNodes, tempEdges, tempLinks]
-  }, [rootNodes, models])
+  }, [])
 
   return {
     nodes,
