@@ -20,7 +20,7 @@ module.exports = {
     },
     {
       type: 'add',
-      path: 'src/components/{{name}}/{{name}}.stories.ts',
+      path: 'src/stories/{{name}}/{{name}}.stories.ts',
       templateFile: './templates/component/Component.stories.hbs',
     },
     {

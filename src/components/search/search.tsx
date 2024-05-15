@@ -1,6 +1,6 @@
 'use client'
 
-import { hexToRgba, palette } from '@/utils/colors'
+import { hexToRgba, palette } from '@/utils/constants/colors'
 import { ArrowRightIcon, SearchIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'

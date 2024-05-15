@@ -1,9 +1,20 @@
-import {Group3DFacade} from 'troika-3d'
-import { Bezier3DInstanceableFacade } from '../bezier-3d/Bezier3DFacade'
-import {Vector3} from 'three'
+import { Group3DFacade } from 'troika-3d'
 
+import { Vector3 } from 'three'
+import { Bezier3DInstanceableFacade } from '@/components/3d/globe-connections/bezier-3d-facade'
 
-const colors = ["#68affc", "#a3d71e", "#b735e8", "#5df23e", "#cf80dd", "#50942f", "#74398b", "#a0d48d", "#eb36a0", "#47f0a3"]
+const colors = [
+  '#68affc',
+  '#a3d71e',
+  '#b735e8',
+  '#5df23e',
+  '#cf80dd',
+  '#50942f',
+  '#74398b',
+  '#a0d48d',
+  '#eb36a0',
+  '#47f0a3',
+]
 // [
 //   0x00876c,
 //   0xffff9d,
@@ -20,26 +31,33 @@ const colors = ["#68affc", "#a3d71e", "#b735e8", "#5df23e", "#cf80dd", "#50942f"
 //   0xe4604e,
 // ]
 
-
 class ConnectionsFacade extends Group3DFacade {
   constructor(parent) {
     super(parent)
-    this.objectRefs = {globe: null, cities: null}
+    this.objectRefs = { globe: null, cities: null }
 
     this.onBeforeRender = () => {
-      const {globe, cities} = this.objectRefs
+      const { globe, cities } = this.objectRefs
       const cxns = []
       if (globe && cities && !globe.isDestroying && !cities.isDestroying) {
         cities.forEachChild((cityLabel, i) => {
-          const {offsetHeight, offsetTop, parentFlexNode} = cityLabel
-          if (cityLabel.visible && offsetHeight && !cityLabel.isFullyClipped &&
-            (offsetTop + offsetHeight / 2 > parentFlexNode.scrollTop) &&
-            (offsetTop + offsetHeight / 2 < parentFlexNode.scrollTop + parentFlexNode.clientHeight)
+          const { offsetHeight, offsetTop, parentFlexNode } = cityLabel
+          if (
+            cityLabel.visible &&
+            offsetHeight &&
+            !cityLabel.isFullyClipped &&
+            offsetTop + offsetHeight / 2 > parentFlexNode.scrollTop &&
+            offsetTop + offsetHeight / 2 <
+              parentFlexNode.scrollTop + parentFlexNode.clientHeight
           ) {
             const labelY = offsetHeight / 2
-            const labelPos = cityLabel.threeObject.localToWorld(new Vector3(0.005, -labelY, 0))
-            const labelCtrl = cityLabel.threeObject.localToWorld(new Vector3(-0.2, -labelY, 0))
-            const {lat, lng, hovering} = cityLabel
+            const labelPos = cityLabel.threeObject.localToWorld(
+              new Vector3(0.005, -labelY, 0)
+            )
+            const labelCtrl = cityLabel.threeObject.localToWorld(
+              new Vector3(-0.2, -labelY, 0)
+            )
+            const { lat, lng, hovering } = cityLabel
             const globePos = globe.latLonToWorldPosition(lat, lng, 1)
             const globeCtrl = globe.latLonToWorldPosition(lat, lng, 4)
             // globeCtrl.y = globeCtrl.y > 0 ? 3 : -3
@@ -63,12 +81,14 @@ class ConnectionsFacade extends Group3DFacade {
               p2y: labelPos.y,
               p2z: labelPos.z,
               dashArray: hovering ? [0.01, 0.01] : null,
-              animation: hovering ? {
-                from: {dashOffset: 0},
-                to: {dashOffset: -0.02},
-                duration: 200,
-                iterations: Infinity
-              } : null
+              animation: hovering
+                ? {
+                    from: { dashOffset: 0 },
+                    to: { dashOffset: -0.02 },
+                    duration: 200,
+                    iterations: Infinity,
+                  }
+                : null,
             })
           }
         })

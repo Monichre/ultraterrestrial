@@ -29,7 +29,7 @@ import {
 } from '@react-three/drei'
 import { useDrag } from '@use-gesture/react'
 import { mergeRefs } from 'react-merge-refs'
-import { DOMAIN_MODEL_COLORS, paletteAlt } from '@/utils/colors'
+import { DOMAIN_MODEL_COLORS, paletteAlt } from '@/utils/constants/colors'
 import { BallCollider, Physics, RigidBody } from '@react-three/rapier'
 import { useSphere } from '@react-three/cannon'
 

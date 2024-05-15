@@ -16,7 +16,7 @@ import {
   TrackballControls,
   OrbitControls,
 } from '@react-three/drei'
-import { DOMAIN_MODEL_COLORS } from '@/utils/colors'
+import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
 // import { MotionCanvas, LayoutCamera } from "framer-motion-3d"
 
 export const RootConnectionGraph = ({ models }: any) => {

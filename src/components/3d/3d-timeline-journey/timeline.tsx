@@ -38,7 +38,7 @@ import { MultiStepLoader } from '@/components/multistep-loader'
 import { Canvas, useFrame, useThree, extend } from '@react-three/fiber'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { palette } from '@/utils/colors'
+import { palette } from '@/utils/constants/colors'
 import { geometry } from 'maath'
 extend(geometry)
 

@@ -19,7 +19,7 @@ import {
   Instance,
   Sphere,
 } from '@react-three/drei'
-import { DOMAIN_MODEL_COLORS } from '@/utils/colors'
+import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
 import { a, useTransition, useSpring } from '@react-spring/three'
 import { Physics } from '@react-three/cannon'
 
