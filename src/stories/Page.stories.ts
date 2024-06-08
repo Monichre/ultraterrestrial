@@ -27,7 +27,7 @@ import { Page } from './Page'
 // };
 
 const meta = {
-  title: 'Example/Page',
+  title: 'Page',
   component: Page,
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
@@ -53,3 +53,21 @@ export const LoggedIn: Story = {
     await expect(logoutButton).toBeInTheDocument()
   },
 }
+
+// import type { Meta } from '@storybook/react';
+
+// import { YourComponent } from './YourComponent';
+
+// const meta: Meta<typeof YourComponent> = {
+//   component: YourComponent,
+//   decorators: [
+//     (Story) => (
+//       <div style={{ margin: '3em' }}>
+//         {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
+//         <Story />
+//       </div>
+//     ),
+//   ],
+// };
+
+// export default meta;

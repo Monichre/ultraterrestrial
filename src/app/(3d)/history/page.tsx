@@ -2,7 +2,7 @@ const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
 
-import { ScrollThrough3D } from '@/components/3d/scroll-through-3d'
+import { ScrollThrough3D } from '@/features/3d/scroll-through-3d'
 
 import { getXataClient } from '@/lib/xata'
 

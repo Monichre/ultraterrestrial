@@ -1,6 +1,18 @@
-import { getXataClient } from '@/lib/xata/client'
-import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
-
+import {
+  createGraphNode,
+  createGraphLink,
+  type GraphLink,
+  type GraphNode,
+} from '../graph/helpers'
+import {
+  rootNodes,
+  topicsRootNode,
+  eventsRootNode,
+  personnelRootNode,
+  testimoniesRootNode,
+} from '../graph/root-nodes'
+import { getXataClient } from './client'
+import { writeLogToFile } from '../../utils/write-log'
 const xata = getXataClient()
 
 export type NetworkGraphPayload = {
@@ -17,60 +29,18 @@ export type NetworkGraphPayload = {
     topicsTestimoniesConnections: Record<string, any>[]
   }
   graphData: {
-    nodes:Record<string, any>[]
-    links: Record<string, any>[]
+    nodes: GraphNode[]
+    links: GraphLink[]
   }
 }
 
-const createGraphNode = (
-  { record, type }: any
-) => {
-  const {id, name: label, ...rest} = record
-  // @ts-ignore
-  const color = DOMAIN_MODEL_COLORS[type]
-  const node = {
-    id,
-    label,
-    fill: color,
-    data: {
-      ...rest,
-      color,
-      type,
-    },
-  }
-  return node
-}
-
-export const createGraphRootEdge = ({record, type='events'}: any) => {
-  const color = DOMAIN_MODEL_COLORS[type]
-  const edge = {
-    color,
-    source: type,
-    target: record?.id,
-    id: `${type}->${record.id}`,
-  }
-  return edge
-}
-
-export const createGraphLink = ({ targetNode, sourceNode }: any) => {
-  // How to handle two way linking between nodes?
-  const link = {
-    source: sourceNode?.id,
-    target: targetNode?.id,
-  }
-  return link
-}
-export const createGraphEdge = ({ targetNode, sourceNode }: any) => {
-  // const color = DOMAIN_MODEL_COLORS[type]
-  const edge = {
-    // color,
-    source: sourceNode?.id,
-    target: targetNode?.id,
-    id: `${sourceNode.id}->${targetNode.id}`,
-  }
-  return edge
-}
-
+/**
+ * Retrieves the data required to generate an entity network graph.
+ *
+ * This function fetches data from the Xata database, including events, topics, testimonies, and personnel. It also fetches connection data between these entities. The function returns an object containing the fetched data, organized into records and graph data structures.
+ *
+ * @returns {Promise<NetworkGraphPayload>} The data required to generate an entity network graph.
+ */
 export const getEntityNetworkGraphData = async () => {
   const events = await xata.db.events
     .sort('date', 'desc')
@@ -106,52 +76,104 @@ export const getEntityNetworkGraphData = async () => {
       'popularity',
     ])
     .getAll()
-  console.log('personnel: ', personnel)
 
   const topicsExpertsConnections =
     await xata.db['topic-subject-matter-experts'].getAll()
   const eventsExpertsConnections =
     await xata.db['event-subject-matter-experts'].getAll()
 
-    // This is a 3 way link. How to handle?
+  // This is a 3 way link. How to handle?
   const eventsTopicsExpertsConnections =
     await xata.db['event-topic-subject-matter-experts'].getAll()
 
   const topicsTestimoniesConnections =
     await xata.db['topics-testimonies'].getAll()
 
-    const records: any =  {
-      topics: topics.toSerializable(),
-      events: events.toSerializable(),
-      personnel: personnel.toSerializable(),
-      testimonies: testimonies.toSerializable(),
-      // organizations: organizations.toSeriali
-    }
-    const connections = {
-        topicsExpertsConnections: topicsExpertsConnections.toSerializable(),
-        eventsExpertsConnections: eventsExpertsConnections.toSerializable(),
-        eventsTopicsExpertsConnections:
-          eventsTopicsExpertsConnections.toSerializable(),
-        topicsTestimoniesConnections:
-          topicsTestimoniesConnections.toSerializable(),
-    }
+  const records: any = {
+    topics: topics.toSerializable(),
+    events: events.toSerializable(),
+    personnel: personnel.toSerializable(),
+    testimonies: testimonies.toSerializable(),
+    // organizations: organizations.toSeriali
+  }
 
-    const graphData = {
-      nodes: [...records.topics, ...records.events, ...records.personnel, ...records.testimonies].map(record => createGraphNode({record, type: 'root'})),
-      links: [...connections.topicsExpertsConnections, ...connections.eventsExpertsConnections].map(record => {
-        const [root, sourceData, targetData] = Object.entries(record)
-        const [sourceType, sourceNode] = sourceData
-        const [targetType, targetNode] = targetData
-        return createGraphLink({sourceNode, targetNode})
-      })
+  const topicsNodes = records.topics.map((record: any) =>
+    createGraphNode({ record, type: 'topics' })
+  )
+  const eventsNodes = records.events.map((record: any) =>
+    createGraphNode({ record, type: 'events' })
+  )
+  const personnelNodes = records.personnel.map((record: any) =>
+    createGraphNode({ record, type: 'personnel' })
+  )
+  const testimoniesNodes = records.testimonies.map((record: any) =>
+    createGraphNode({ record, type: 'testimonies' })
+  )
+
+  const nodes = [
+    ...rootNodes,
+    ...topicsNodes,
+    ...eventsNodes,
+    ...personnelNodes,
+    ...testimoniesNodes,
+  ]
+
+  const rootTopicsConnections = topicsNodes.map((target: any) =>
+    createGraphLink({ target, source: topicsRootNode })
+  )
+  const rootEventsConnections = eventsNodes.map((target: any) =>
+    createGraphLink({ target, source: eventsRootNode })
+  )
+  const rootPersonnelConnections = personnelNodes.map((target: any) =>
+    createGraphLink({ target, source: personnelRootNode })
+  )
+  const rootTestimoniesConnections = testimoniesNodes.map((target: any) =>
+    createGraphLink({ target, source: testimoniesRootNode })
+  )
+
+  const connections = {
+    topicsExpertsConnections: topicsExpertsConnections.toSerializable(),
+    eventsExpertsConnections: eventsExpertsConnections.toSerializable(),
+    eventsTopicsExpertsConnections:
+      eventsTopicsExpertsConnections.toSerializable(),
+    topicsTestimoniesConnections: topicsTestimoniesConnections.toSerializable(),
+  }
+
+  const connectionLinks = [
+    ...connections.topicsExpertsConnections,
+    ...connections.eventsExpertsConnections,
+  ].map(({ id, ...rest }) => {
+    const [sourceData, targetData] = Object.entries(rest)
+
+    const [sourceType, sourceNode]: any = sourceData
+    const [targetType, targetNode]: any = targetData
+
+    const sourceNodeExists = nodes.find((node) => node.id === sourceNode.id)
+    const targetNodeExists = nodes.find((node) => node.id === targetNode.id)
+
+    if (sourceNodeExists && targetNodeExists) {
+      return createGraphLink({ id, sourceNode, targetNode })
     }
+  })
 
-      const payload: NetworkGraphPayload = {
-        records,
-connections,
-graphData
+  const links = [
+    ...rootTopicsConnections,
+    ...rootEventsConnections,
+    ...rootPersonnelConnections,
+    ...rootTestimoniesConnections,
+    ...connectionLinks,
+  ].filter((link) => link.source && link.target)
 
-      }
-    
+  const graphData = {
+    nodes,
+    links,
+  }
+
+  const payload: NetworkGraphPayload = {
+    records,
+    connections,
+    graphData,
+  }
+
   return payload
 }

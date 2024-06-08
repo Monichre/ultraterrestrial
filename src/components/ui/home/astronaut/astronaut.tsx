@@ -4,7 +4,7 @@ import { FunctionComponent, useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import { motion } from 'framer-motion'
-import { Sparkles } from '@/components/animations/sparkles'
+import { Sparkles } from '@/components/ui/animations/sparkles'
 const words = 'UltraTerrestrial'
 
 export function LetterPullUp(props: any) {

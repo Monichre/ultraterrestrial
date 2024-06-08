@@ -13,6 +13,8 @@ const config: StorybookConfig = {
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
     '@storybook/addon-actions/register',
+    'storybook-vscode-component/register',
+    '@storybook/addon-console',
 
     {
       name: '@storybook/addon-storysource',

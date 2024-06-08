@@ -1,10 +1,13 @@
+import 'reactflow/dist/style.css'
+
 import './globals.css'
 
 import { Oswald, Source_Sans_3 } from 'next/font/google'
 import localFont from 'next/font/local'
 import { ThemeProvider } from '@/providers'
 import { AnimationProvider } from '@/providers/animation-provider'
-import { PageTransition } from '@/components/animations/page-transition'
+import { PageTransition } from '@/components/ui/animations/page-transition'
+import DataLayer from '@/providers/data-layer'
 
 const ailerons = localFont({
   src: './ailerons.woff2',
@@ -49,20 +52,22 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className='bg-[url("/8k_stars_milky_way.jpeg")] be-center bg-cover'>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='dark'
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AnimationProvider>
-            <PageTransition>
-              <main className='min-h-[100vh] min-w-screen relative'>
-                {children}
-              </main>
-            </PageTransition>
-          </AnimationProvider>
-        </ThemeProvider>
+        <DataLayer>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='dark'
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AnimationProvider>
+              <PageTransition>
+                <main className='min-h-[100vh] min-w-screen relative'>
+                  {children}
+                </main>
+              </PageTransition>
+            </AnimationProvider>
+          </ThemeProvider>
+        </DataLayer>
       </body>
     </html>
   )

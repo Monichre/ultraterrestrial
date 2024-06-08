@@ -1,4 +1,4 @@
-export const ArrowIcon = () => {
+export const ArrowIcon = ({className='h-4 w-4 text-white stroke-2'}) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -6,7 +6,7 @@ export const ArrowIcon = () => {
       viewBox='0 0 24 24'
       stroke-width='1.5'
       stroke='currentColor'
-      className='h-4 w-4 text-white stroke-2'
+      className={className}
     >
       <path
         strokeLinecap='round'

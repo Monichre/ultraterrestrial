@@ -2,7 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "target": "ES2017",
+    "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -16,7 +16,7 @@
     "jsx": "preserve",
     "incremental": true,
     "allowImportingTsExtensions": true,
-    "types": ["node", "webgl2", "three"],
+    "types": ["node", "three", "@types/node"], // Added "@types/node" package
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
@@ -27,17 +27,27 @@
       }
     ]
   },
+
   "include": [
     "*.ts",
     "*.tsx",
     "next-env.d.ts",
     "global.d.ts",
     "src",
-    "src/**/**/*",
+
     "**/*.ts",
     "**/*.tsx",
-    "liveblocks.config.ts",
+
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      }
+    }
+  }
 }
