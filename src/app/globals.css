@@ -74,6 +74,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+foreignObject {
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
 body {
   /* background-image: url('https://user-images.githubusercontent.com/26748614/96337246-f14d4580-1085-11eb-8793-a86d929e034d.jpg'); */
   background: radial-gradient(circle at center, #004d4d, #003333, #001919);
@@ -185,3 +191,4 @@ canvas {
   font-size: 12px;
   color: rgba(127, 255, 255, 0.75);
 }
+

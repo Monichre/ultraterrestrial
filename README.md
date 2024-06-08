@@ -101,3 +101,18 @@ OPenAI Integrated with NextJS Logs
 <https://github.com/whoiskatrin/npm-copilot>
 
 <https://app.eraser.io/workspace/ifOFwdSYj9tNbIpTEZ0R>
+
+<https://bg.ibelick.com/>
+<https://www.tailwindcss-animated.com/configurator.html>
+
+React + Mind Map UI + ThreeJS: <https://dev.to/pahund/drawing-a-mind-map-with-three-js-and-react-nuffshell-coding-diary-part-i-1g6n>
+
+### Additional 3D Graph Options
+
+<https://github.com/uber/react-vis-force/tree/master>
+<https://github.com/anvaka/VivaGraphJS>
+<https://github.com/anvaka/ngraph.pixel>
+
+<https://github.com/vasturiano/three-forcegraph?tab=readme-ov-file>
+
+[COBE](https://cobe.vercel.app/docs)

@@ -2,7 +2,7 @@ const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
 
-import { ThreeDTimelineJourney } from '@/components/3d/3d-timeline-journey'
+import { ThreeDTimelineJourney } from '@/features/3d/3d-timeline-journey'
 
 import { getXataClient } from '@/lib/xata'
 import { Suspense } from 'react'

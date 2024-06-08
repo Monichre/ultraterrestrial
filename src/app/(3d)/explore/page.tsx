@@ -4,17 +4,18 @@ import {
 } from '@/lib/xata'
 
 import { Suspense } from 'react'
-import { Spherical3DGraph } from '@/components/visualizations/3d-graph/spherical-3d-graph'
+import { EntityNetworkGraph } from '@/components/3d/entity-network-graph'
 
 export default async function Index() {
   const data: NetworkGraphPayload =
-    await getEntityNetworkGraphData()
+  await getEntityNetworkGraphData()
+  console.log('data: ', data);
 
   // {/* <Graph models={models} /> */}
 
   return (
     <Suspense fallback={null}>
-      <Spherical3DGraph models={data} />
+      <EntityNetworkGraph {...data}/>
     </Suspense>
   )
 }

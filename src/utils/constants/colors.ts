@@ -1,5 +1,3 @@
-'use client'
-
 export function hexToRgba(hex: string, alpha: number): string {
   const r = parseInt(hex.slice(1, 3), 16)
   const g = parseInt(hex.slice(3, 5), 16)
@@ -37,7 +35,7 @@ export const DOMAIN_MODEL_COLORS = {
   personnel: NEONS.blue,
   organizations: NEONS.yellow,
   testimonies: NEONS.pink,
-  root: `#27F1FF`,
+  root: '#27F1FF',
 }
 
 export const palette: Record<string, string> = {
