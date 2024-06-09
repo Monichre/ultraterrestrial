@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
-import { Handle, Position } from 'reactflow'
+import { Handle, Position, type Node } from 'reactflow'
 
 import { Input } from '@/components/ui/input'
 
@@ -26,6 +26,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
+import { useGraph } from '@/contexts/xyflow/GraphContext'
 
 const notifications = [
   {
@@ -44,53 +45,34 @@ const notifications = [
 
 type CardProps = React.ComponentProps<typeof Card>
 
-function EntityCard({ className = null, onClick, data, ...props }: any) {
-  console.log('props: ', props)
-  console.log('data: ', data)
+function EntityCard({ nodeData, onClick }: any) {
+  const { childCount, label, type, fill, id, ...rest } = nodeData
   const handleClick = () => {
-    onClick(data.type)
+    onClick(label)
   }
   return (
-    <Card className={cn('w-[380px]', className)} {...props}>
+    <Card className={cn('w-[380px]')} {...rest}>
       <CardHeader>
-        <CardTitle>{data.label}</CardTitle>
-        <CardDescription>You have 3 unread messages.</CardDescription>
+        <CardTitle>{label || type}</CardTitle>
+        <CardDescription>
+          There are {childCount} {label}
+        </CardDescription>
       </CardHeader>
       <CardContent className='grid gap-4'>
         <div className=' flex items-center space-x-4 rounded-md border p-4'>
           <BellRing />
           <div className='flex-1 space-y-1'>
-            <p className='text-sm font-medium leading-none'>
-              Push Notifications
-            </p>
+            <p className='text-sm font-medium leading-none'>AI Assist</p>
             <p className='text-sm text-muted-foreground'>
-              Send notifications to device.
+              Search and connect data points with the help of our AI
             </p>
           </div>
           <Switch />
         </div>
-        <div>
-          {notifications.map((notification, index) => (
-            <div
-              key={index}
-              className='mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0'
-            >
-              <span className='flex h-2 w-2 translate-y-1 rounded-full bg-sky-500' />
-              <div className='space-y-1'>
-                <p className='text-sm font-medium leading-none'>
-                  {notification.title}
-                </p>
-                <p className='text-sm text-muted-foreground'>
-                  {notification.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
       </CardContent>
       <CardFooter>
         <Button className='w-full' onClick={handleClick}>
-          Show All {data.type}
+          Show All {label}
         </Button>
       </CardFooter>
     </Card>
@@ -168,18 +150,20 @@ export type NodeProps<T = any> = {
 // node:
 // }
 
-export const CustomRootNode = (props: NodeProps) => {
+export const CustomRootNode = (props: Node) => {
+  const { addRootNodeChildren } = useGraph()
   const { data, ...rest } = props
-  console.log('data: ', data)
-  const onClick = useCallback((type: any) => {
-    console.log(type)
-  }, [])
+
+  const onClick = (type: any) => {
+    console.log('type: ', type)
+    addRootNodeChildren(type)
+  }
 
   return (
     <>
       <Handle type='target' position={Position.Top} />
       <div>
-        <EntityCard data={data} onClick={onClick} {...rest} />
+        <EntityCard nodeData={{ ...data, ...rest }} onClick={onClick} />
       </div>
       <Handle type='source' position={Position.Bottom} />
     </>
