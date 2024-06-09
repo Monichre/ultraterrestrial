@@ -39,9 +39,10 @@ const createHandles = (node: {
 }
 
 const createRootNode = (node: any, index: number) => {
+  console.log('node: ', node)
   const { id, label, name, fill, data } = node
   const title = label || name
-
+  const childCount = node?.childNodes ? node?.childNodes?.length : 0
   return {
     id,
     type: 'customRoot',
@@ -51,6 +52,7 @@ const createRootNode = (node: any, index: number) => {
     },
     data: {
       // @ts-ignore
+      childCount,
       ...data,
       label: title,
       fill,
@@ -80,15 +82,29 @@ const createRootNodeChild = (node: any) => {
   }
 }
 
+const createRootNodeEdge = (rootNodeChildNode: any) => {
+  const { parentId: source, id: target, data } = rootNodeChildNode
+  return {
+    id: `${source}:${target}`,
+    source,
+    target,
+    animated: true,
+    data,
+  }
+}
+
 export const useXYFlow = ({ allEntityGraphData }: UseGraphProps) => {
-  console.log('allEntityGraphData: ', allEntityGraphData)
   const { graph } = use3DGraph({ allEntityGraphData })
-  console.log('graph: ', graph)
-  const [graphNodes, setGraphNodes] = useState()
+  const [flowGraph, setFlowGraph] = useState()
   const [flowState, setFlowState]: any = useState({
     nodes: graph.root.nodes.map(createRootNode),
     edges: [],
   })
+
+  const createRootNodeEdges = (rootNodeChildNodes: Node[]) => {
+    const rootNodeEdges = rootNodeChildNodes.map(createRootNodeEdge)
+    return rootNodeEdges
+  }
 
   useEffect(() => {
     const formattedGraphNodesObject: any = {}
@@ -110,11 +126,10 @@ export const useXYFlow = ({ allEntityGraphData }: UseGraphProps) => {
         nodes: tempNodes,
         edges: tempLinks,
       }
-      graphModel.nodes = tempNodes
-      graphModel.links = tempLinks
+
+      setFlowGraph(formattedGraphNodesObject)
     }
 
-    console.log('formattedGraphNodesObject: ', formattedGraphNodesObject)
     const initialNodes = graph.root.nodes.map(createRootNode)
 
     setFlowState((xyFlowState: any) => ({
@@ -129,5 +144,7 @@ export const useXYFlow = ({ allEntityGraphData }: UseGraphProps) => {
 
   return {
     flowState,
+    flowGraph,
+    createRootNodeEdges,
   }
 }
