@@ -1,9 +1,9 @@
 'use client'
 
-import { XyFlowGraph } from '@/features/xyflow/xyflow-graph'
+import { Graph } from '@/features/graph/graph'
 
 import type { NetworkGraphPayload } from '@/lib/xata'
-import { XyFlowProvider } from '@/providers/xyflow-provider'
+import { GraphProvider } from '@/providers/graph-provider'
 
 export interface MindMapProps {
   allEntityGraphData: NetworkGraphPayload['graphData']
@@ -13,8 +13,8 @@ export const MindMap: React.FC<MindMapProps> = ({
   allEntityGraphData,
 }: MindMapProps) => {
   return (
-    <XyFlowProvider>
-      <XyFlowGraph initialGraphData={allEntityGraphData} />
-    </XyFlowProvider>
+    <GraphProvider initialGraphData={allEntityGraphData}>
+      <Graph />
+    </GraphProvider>
   )
 }

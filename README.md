@@ -78,7 +78,7 @@ docker run -it --rm \
 <https://github.com/lewhunt/divz>
 <https://codesandbox.io/p/sandbox/camera-scroll-tu24h?file=%2Fsrc%2FModel.js>
 <https://github.com/pmndrs/uikit>
-
+<https://twitter.com/odayibasi>
 <https://youtu.be/pR5XSg0BgyE>"
 <https://youtu.be/pR5XSg0BgyE>
 <https://youtu.be/Cruarl4ES_s>
@@ -116,3 +116,7 @@ React + Mind Map UI + ThreeJS: <https://dev.to/pahund/drawing-a-mind-map-with-th
 <https://github.com/vasturiano/three-forcegraph?tab=readme-ov-file>
 
 [COBE](https://cobe.vercel.app/docs)
+<https://www.youtube.com/watch?v=EvgdirLeYaQ&ab_channel=UsmanAbdurRehman>
+<https://github.com/xyflow/xyflow/discussions/3764>
+
+<https://medium.com/frontend-development-with-js/visualization-reactflow-samples-cd454557ebb1>

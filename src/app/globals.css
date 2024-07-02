@@ -131,7 +131,9 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
+h2, h3 {
+  font-family: var(--font-ailerons);
+}
 canvas {
   background: none !important;
   background-color: transparent !important;
@@ -192,3 +194,8 @@ canvas {
   color: rgba(127, 255, 255, 0.75);
 }
 
+
+
+.entity-node > *, .root-node > * {
+  color: white;
+}

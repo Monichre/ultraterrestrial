@@ -10,12 +10,10 @@ const config: StorybookConfig = {
     '@storybook/addon-onboarding',
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@chromatic-com/storybook',
     '@storybook/addon-interactions',
     '@storybook/addon-actions/register',
     'storybook-vscode-component/register',
     '@storybook/addon-console',
-
     {
       name: '@storybook/addon-storysource',
       options: {
@@ -23,7 +21,7 @@ const config: StorybookConfig = {
           injectStoryParameters: false,
         },
       },
-    },
+    }
   ],
   framework: {
     name: '@storybook/nextjs',

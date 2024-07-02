@@ -1,3 +1,5 @@
 declare module 'howler'
 declare module 'troika-3d'
 declare module 'troika-3d-ui'
+// declare module 'd3-force'
+declare module 'd3-quadtree'

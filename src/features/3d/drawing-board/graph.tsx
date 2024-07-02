@@ -5,7 +5,7 @@ import { Nodes, Node } from './nodes'
 import type { DrawingBoardProps } from '@/features/3d/drawing-board/drawing-board'
 import { Spotlight } from '@/components/ui/animations/spotlight'
 import { DotGridBackground } from '@/components/ui/backgrounds'
-import { ArrowIcon } from '@/components/icons/arrow'
+import { ArrowIcon } from '@/components/ui/icons/arrow'
 import { FloatingEntityMenu } from '@/features/3d/drawing-board/entity-menu'
 import { SmartCommandMenu } from '@/features/3d/drawing-board/command-menu'
 import {

@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+
+const WhyDidYouRender = require('@welldone-software/why-did-you-render')
+
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'json', 'geojson'],
@@ -92,9 +95,13 @@ const nextConfig = {
       test: /\.(frag|vert)$/,
       type: 'asset/source',
     })
+    config.node = {
+      process: 'mock',
+    }
 
     return config
   },
+  ...WhyDidYouRender(React),
 }
 
 module.exports = nextConfig
