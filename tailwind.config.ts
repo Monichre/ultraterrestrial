@@ -23,6 +23,7 @@ const config = {
     './src/components/**/*.{ts,tsx}',
     './src/app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    './src/stories/*.{ts,tsx}',
   ],
   prefix: '',
   theme: {

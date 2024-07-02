@@ -2,8 +2,9 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/utils/cn'
+import Link from 'next/link'
 
-export const ThreeDPin = ({
+export const PinContainer = ({
   children,
   title,
   href,
@@ -28,13 +29,14 @@ export const ThreeDPin = ({
   }
 
   return (
-    <div
+    <Link
       className={cn(
         'relative group/pin z-50  cursor-pointer',
         containerClassName
       )}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      href={href || '/'}
     >
       <div
         style={{
@@ -53,7 +55,7 @@ export const ThreeDPin = ({
         </div>
       </div>
       <PinPerspective title={title} href={href} />
-    </div>
+    </Link>
   )
 }
 

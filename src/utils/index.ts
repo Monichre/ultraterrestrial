@@ -7,3 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const mergeStyles = (styleArray: any[]) =>
   styleArray.map((style: any) => `${style}`).join(' ')
+
+export function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}

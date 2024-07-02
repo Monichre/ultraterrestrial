@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/utils/cn'
-import { ArrowIcon } from '@/components/icons/arrow'
+import { ArrowIcon } from '@/components/ui/icons/arrow'
 
 export const GlowingStarsBackgroundCard = ({
   className,
