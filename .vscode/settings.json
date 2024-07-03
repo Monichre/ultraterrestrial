@@ -1,6 +1,12 @@
 {
-  "github.copilot.advanced": {},
-  "CodeGPT.apiKey": "OpenAI"
+  "github.copilot.advanced": {
+
+  },
+  "CodeGPT.apiKey": "OpenAI",
+  "github.copilot.preferredAccount": "Monichre",
+  "github.copilot.chat.localeOverride": "en",
+  "CodeGPT.Autocomplete.enabled": true,
+  "editor.inlineSuggest.showToolbar": "always"
   
 
 

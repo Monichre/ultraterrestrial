@@ -26,6 +26,8 @@ import {
   useOnViewportChange,
   type Viewport,
   useStoreApi,
+  MarkerType,
+  Position,
 } from '@xyflow/react'
 import {
   NODE_SPACE,
@@ -35,14 +37,7 @@ import {
 } from '@/utils/constants/nodes'
 import * as d3 from 'd3'
 // import { simulation } from '@/features/graph/utils/force-directed'
-import {
-  forceSimulation,
-  forceLink,
-  forceManyBody,
-  forceX,
-  forceY,
-} from 'd3-force'
-import { collide } from '@/features/graph/utils/collide'
+
 const GraphContext: any = createContext({
   nodes: [],
   setNodes: (nodes: any) => {},
@@ -51,6 +46,7 @@ const GraphContext: any = createContext({
   flowGraph: [],
   createRootNodeEdges: (nodes: any) => {},
   addRootNodeChildren: (type: string) => {},
+  store: null,
 })
 
 function ViewportChangeLogger() {
@@ -62,13 +58,6 @@ function ViewportChangeLogger() {
 
   return null
 }
-const simulation = forceSimulation()
-  .force('charge', forceManyBody().strength(-1000))
-  .force('x', forceX().x(0).strength(0.05))
-  .force('y', forceY().y(0).strength(0.05))
-  .force('collide', collide())
-  .alphaTarget(0.05)
-  .stop()
 
 export const GraphContextProvider = ({
   children,
@@ -77,63 +66,15 @@ export const GraphContextProvider = ({
   children: React.ReactNode
   allEntityGraphData: any
 }) => {
-  const { getNodes, fitView, getEdges } = useReactFlow()
-  // const store = useStoreApi()
+  const { getNodes, fitView, getEdges, addNodes, addEdges, getNode } =
+    useReactFlow()
+  const store = useStoreApi()
 
   const { graph }: any = use3DGraph({ allEntityGraphData })
   const [nodes, setNodes]: any = useState<Node[]>([])
   const [edges, setEdges]: any = useState<Edge[]>([])
   const [flowGraph, setFlowGraph]: any = useState({})
 
-  // const runLayout = () => {
-  //   let layoutNodes = getNodes().map((node) => ({
-  //     ...node,
-  //     x: node.position.x,
-  //     y: node.position.y,
-  //   }))
-
-  //   simulation.nodes(nodes).force(
-  //     'link',
-  //     forceLink(edges)
-  //       .id((d: { id: any }) => d.id)
-  //       .strength(0.05)
-  //       .distance(100)
-  //   )
-
-  //   // The tick function is called every animation frame while the simulation is
-  //   // running and progresses the simulation one step forward each time.
-  //   const tick = () => {
-  //     getNodes().forEach((node, i) => {
-  //       const dragging = Boolean(
-  //         document.querySelector(`[data-id="${node.id}"].dragging`)
-  //       )
-
-  //       // Setting the fx/fy properties of a node tells the simulation to "fix"
-  //       // the node at that position and ignore any forces that would normally
-  //       // cause it to move.
-  //       nodes[i].fx = dragging ? node.position.x : null
-  //       nodes[i].fy = dragging ? node.position.y : null
-  //     })
-
-  //     simulation.tick()
-  //     setNodes((nodes: any[]) =>
-  //       nodes.map((node) => ({ ...node, position: { x: node.x, y: node.y } }))
-  //     )
-
-  //     window.requestAnimationFrame(() => {
-  //       // Give React and React Flow a chance to update and render the new node
-  //       // positions before we fit the viewport to the new layout.
-  //       fitView()
-
-  //       // If the simulation hasn't be stopped, schedule another tick.
-  //       tick()
-  //     })
-  //   }
-  // }
-
-  const updateNodes = useCallback((newNodes: any) => {
-    setNodes(newNodes)
-  }, [])
   const createRootNode = useCallback((node: any, index: number) => {
     const { id, label, name, fill, data } = node
     const title = label || name
@@ -171,7 +112,6 @@ export const GraphContextProvider = ({
   //  Positioning Root Node Children --------------------------------------------------------------------------------------
   const calculateChildNodePosition = (childNodeType: any) => {
     const parentNodePosition = ROOT_NODE_POSITIONS[childNodeType]
-    console.log('parentNodePosition: ', parentNodePosition)
 
     return {
       position: {
@@ -181,41 +121,8 @@ export const GraphContextProvider = ({
     }
   }
 
-  // const runForceSimulation = useCallback((newnodes: any[], newEdges: any) => {
-  //   const simulation = d3
-  //     .forceSimulation(newnodes)
-  //     .force(
-  //       'link',
-  //       d3
-  //         .forceLink(newEdges)
-  //         .id((d: any) => d.id)
-  //         .distance(400)
-  //     )
-  //     .force('charge', d3.forceManyBody().strength(-500))
-  //     .force(
-  //       'center',
-  //       d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)
-  //     )
-  //     .force('collide', d3.forceCollide().radius(ROOT_NODE_WIDTH / 2))
-
-  //   // Run the simulation
-  //   simulation.tick(500)
-
-  //   // Return newnodes with adjusted positions
-  //   return newnodes.map((node: any) => ({
-  //     ...node,
-  //     position: {
-  //       x: node.x - ROOT_NODE_WIDTH * 2,
-  //       y: node.y + ROOT_NODE_WIDTH * 2,
-  //     },
-  //   }))
-  // }, [])
-
   //  Root Node Children --------------------------------------------------------------------------------------
-
-  // FIXME: Will need to refactor this function so as to not duplicate nodes in the node state
-  const createRootNodeChild = useCallback((node: any, ...rest) => {
-    console.log('rest: ', rest)
+  const createRootNodeChild = useCallback((node: any) => {
     const { id, label, name, fill, data } = node
     const title = label || name
     return {
@@ -234,29 +141,36 @@ export const GraphContextProvider = ({
     }
   }, [])
 
+  const updateNodes = useCallback((newNodes: any) => {
+    setNodes(newNodes)
+  }, [])
+
+  function dedupeArrayObjects(arr: any[], key: string): any[] {
+    const unique = new Map(arr.map((item) => [item[key], item]))
+    return Array.from(unique.values())
+  }
+
+  /* 
+
+- https://github.com/JanDez/D3_Reactflow/blob/main/src/hooks/useReactCanvasData.ts
+- https://github.com/idootop/reactflow-auto-layout/blob/main/src/layout/useAutoLayout.ts
+
+*/
   const addRootNodeChildren = useCallback(
     (type: any) => {
       const { nodes: incomingNodes } = flowGraph[type]
-      console.log('incomingNodes: ', incomingNodes)
+
       const notHidden = incomingNodes.map((node: Node) => ({
         ...node,
         hidden: false,
-        // position: {
-        //   x: node.position.x - ROOT_NODE_WIDTH * 2,
-        //   y: node.position.y + ROOT_NODE_WIDTH * 2,
-        // },
       }))
-      const allNodes = [...nodes, ...notHidden]
 
-      const incomingEdges = createRootNodeEdges(incomingNodes)
-      // const newNodes = runForceSimulation(allNodes, incomingEdges)
-      // runLayout()
-      setNodes(allNodes)
-      setEdges(incomingEdges)
+      const incomingEdges = createRootNodeEdges(notHidden)
 
-      // reactFlow.zoomOut()
+      addNodes(notHidden)
+      addEdges(incomingEdges)
     },
-    [createRootNodeEdges, flowGraph, nodes] // runForceSimulation
+    [addEdges, addNodes, createRootNodeEdges, flowGraph] // runForceSimulation
   )
 
   //  Graph State Functions --------------------------------------------------------------------------------------
@@ -327,8 +241,7 @@ export const GraphContextProvider = ({
         fitView,
         setNodes,
         getEdges,
-        // runLayout,
-        // formatNodesWithForceLayout,
+        store,
       }}
     >
       {children}

@@ -18,26 +18,15 @@ import {
   useStore,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
-import { useGraph } from '@/contexts/graph/GraphContext'
+import { useGraph } from '@/contexts/graph/graph-context'
 import * as d3 from 'd3'
 import { ROOT_NODE_WIDTH } from '@/utils/constants/nodes'
 
 import { collide } from '@/features/graph/utils/collide'
 import { EntityEdge } from '@/features/graph/edges/entity-edge'
-// import {
-//   forceSimulation,
-//   forceLink,
-//   forceManyBody,
-//   forceCenter,
-//   forceX,
-//   forceY,
-// } from 'd3-force'
-const simulation = d3
-  .forceSimulation()
-  .force('charge', d3.forceManyBody().strength(-1000))
-  .force('center', d3.forceCenter())
-  .force('collide', d3.forceCollide().radius(75))
-  .stop()
+import { useForceLayout } from '@/features/graph/hooks/useForceLayout'
+import { useExpandCollapse } from '@/features/graph/hooks/useExpandCollapse'
+
 // .force('center', forceCenter())
 // .force('collide', collide())
 // .force('y', forceY().y(0).strength(0.05))
@@ -164,11 +153,11 @@ export function Graph(props: any) {
   //           .distance(100)
   //       )
   //       .force('charge', d3.forceManyBody().strength(-500))
-  //       .force(
-  //         'center',
-  //         d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)
-  //       )
-  //       .force('collide', d3.forceCollide().radius(ROOT_NODE_WIDTH / 2))
+  // .force(
+  //   'center',
+  //   d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)
+  // )
+  // .force('collide', d3.forceCollide().radius(ROOT_NODE_WIDTH / 2))
   //       .on('tick', () => {
   //         setNodes((nodes: any) => [
   //           ...nodes.map((node: any) => ({
@@ -228,68 +217,8 @@ export function Graph(props: any) {
 
   //   return () => (simulation ? simulation.stop() : null)
   // }, [edges, nodes, setNodes])
-
-  useEffect(() => {
-    // If React Flow hasn't initialised our nodes with a width and height yet, or
-    // if there are no nodes in the flow, then we can't run the simulation!
-
-    simulation
-      .nodes(nodes)
-      .force(
-        'link',
-        d3
-          .forceLink(edges)
-          .id((d: any) => d.id)
-          .strength(0.05)
-          .distance(100)
-      )
-      .force('collide', collide())
-      .on('tick', () => {
-        setNodes((nodes: any) => [
-          ...nodes.map((node: any, index: any) => ({
-            ...node,
-            position: {
-              x: node.position.x - ROOT_NODE_WIDTH / 2,
-              y:
-                index === 0
-                  ? node.position.y + ROOT_NODE_WIDTH / 2
-                  : index * (node.position.y + ROOT_NODE_WIDTH / 2),
-            },
-          })),
-        ])
-      })
-    // simulation.on('tick', () => {
-    //   setNodes(
-    //     nodes.map((node: { x: any; y: any }) => ({
-    //       ...node,
-    //       position: { x: node.x, y: node.y },
-    //     }))
-    //   )
-    // })
-
-    simulation.tick()
-
-    // The tick function is called every animation frame while the simulation is
-    // running and progresses the simulation one step forward each time.
-
-    window.requestAnimationFrame(() => {
-      // Give React and React Flow a chance to update and render the new node
-      // positions before we fit the viewport to the new layout.
-      fitView()
-
-      // If the simulation hasn't be stopped, schedule another tick.
-      simulation.tick()
-    })
-
-    // window.requestAnimationFrame(() => {
-    //   // Give React and React Flow a chance to update and render the new node
-    //   // positions before we fit the viewport to the new layout.
-    //   // fitView()
-
-    //   // If the simulation hasn't be stopped, schedule another tick.
-    //   tick()
-    // })
-  }, [edges, fitView, nodes, setNodes])
+  // useExpandCollapse(nodes, edges)
+  useForceLayout()
 
   return (
     <div className='relative h-[100vh] w-[100vw]'>

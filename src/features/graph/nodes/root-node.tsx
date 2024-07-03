@@ -31,7 +31,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
-import { useGraph } from '@/contexts/graph/GraphContext'
+import { useGraph } from '@/contexts/graph/graph-context'
 import { OpenAILogo } from '@/components/ui/icons'
 import { Separator } from '@/components/ui/separator'
 

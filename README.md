@@ -120,3 +120,7 @@ React + Mind Map UI + ThreeJS: <https://dev.to/pahund/drawing-a-mind-map-with-th
 <https://github.com/xyflow/xyflow/discussions/3764>
 
 <https://medium.com/frontend-development-with-js/visualization-reactflow-samples-cd454557ebb1>
+<https://github.com/danielcaldas/react-d3-graph>
+<https://github.com/builduilabs/2023-09-10-animated-list-recipe/blob/main/app/page.tsx>
+
+<https://cloud.tiptap.dev/pro-extensions>
