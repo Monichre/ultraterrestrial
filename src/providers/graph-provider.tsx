@@ -1,6 +1,6 @@
 'use client'
 import { ReactFlowProvider } from '@xyflow/react'
-import { GraphContextProvider } from '@/contexts/graph/GraphContext'
+import { GraphContextProvider } from '@/contexts/graph/graph-context'
 
 interface XyFlowProviderProps {
   children: any

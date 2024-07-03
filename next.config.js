@@ -1,6 +1,5 @@
+const MillionLint = require('@million/lint')
 /** @type {import('next').NextConfig} */
-
-const WhyDidYouRender = require('@welldone-software/why-did-you-render')
 
 const nextConfig = {
   reactStrictMode: true,
@@ -90,18 +89,12 @@ const nextConfig = {
       exclude: /node_modules/,
       use: ['raw-loader', 'glslify-loader'],
     })
-
     config.module.rules.push({
       test: /\.(frag|vert)$/,
       type: 'asset/source',
     })
-    config.node = {
-      process: 'mock',
-    }
-
     return config
   },
-  ...WhyDidYouRender(React),
 }
 
-module.exports = nextConfig
+export default MillionLint.next({ rsc: true })(nextConfig)

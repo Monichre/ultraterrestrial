@@ -39,3 +39,5 @@ ultravenv
 next-env.d.ts
 ./vscode
 *storybook.log
+# Million Lint
+.million

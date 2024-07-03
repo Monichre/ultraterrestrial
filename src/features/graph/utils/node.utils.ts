@@ -1,8 +1,92 @@
 // import { nextId } from './id'
-import { Edge, Node, Position } from '@xyflow/react'
+import { Edge, MarkerType, Node, Position } from '@xyflow/react'
 // import dagre from 'dagre'
 // import { PaletteElement, PaletteElementNodeStyles } from './types'
-import { CSSProperties } from 'react'
+
+export const getNodeSize = (
+  node: any,
+  defaultSize = { width: 380, height: 280 }
+) => {
+  // const internalNode = getNode(node.id)
+  const nodeWith = node?.width
+  const nodeHeight = node?.height
+  const hasDimension = [nodeWith, nodeHeight].every((e) => e != null)
+  return {
+    hasDimension,
+    width: nodeWith,
+    height: nodeHeight,
+    widthWithDefault: nodeWith ?? defaultSize.width,
+    heightWithDefault: nodeHeight ?? defaultSize.height,
+  }
+}
+
+type IFixPosition = (pros: {
+  x: number
+  y: number
+  width: number
+  height: number
+}) => {
+  x: number
+  y: number
+}
+export const getNodeLayouted = (props: {
+  node: any
+  position: { x: number; y: number }
+  direction: any
+  visibility: any
+  fixPosition?: IFixPosition
+}) => {
+  const {
+    node,
+    position,
+    direction,
+    visibility,
+    fixPosition = (p) => ({ x: p.x, y: p.y }),
+  } = props
+  const hidden = visibility !== 'visible'
+  const isHorizontal = direction === 'horizontal'
+  const { width, height, widthWithDefault, heightWithDefault } =
+    getNodeSize(node)
+  node.targetPosition = isHorizontal ? Position.Left : Position.Top
+  node.sourcePosition = isHorizontal ? Position.Right : Position.Bottom
+  return {
+    ...node,
+    type: 'base',
+    width,
+    height,
+    hidden,
+    position: fixPosition({
+      ...position,
+      width: widthWithDefault,
+      height: heightWithDefault,
+    }),
+    data: {
+      ...node.data,
+      label: node.id,
+    },
+    style: {
+      ...node.style,
+      opacity: hidden ? 0 : 1,
+    },
+  }
+}
+
+export const getEdgeLayouted = (props: { edge: any; visibility: any }) => {
+  const { edge, visibility } = props
+  const hidden = visibility !== 'visible'
+  return {
+    ...edge,
+    hidden,
+    type: 'base',
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
+    style: {
+      ...edge.style,
+      opacity: hidden ? 0 : 1,
+    },
+  }
+}
 
 export function generateNodes(
   type: string,
@@ -44,48 +128,6 @@ export const generateEdges = (parentId: string, childrens: Array<Node>) => {
     }
   })
 }
-
-// const dagreGraph = new dagre.graphlib.Graph()
-// dagreGraph.setDefaultEdgeLabel(() => ({}))
-
-const nodeWidth = 240
-const nodeHeight = 36
-
-// export const getLayoutedElements = (
-//   nodes: Array<Node>,
-//   edges: Array<Edge>,
-//   direction = 'TB'
-// ): { nodes: Array<Node>; edges: Array<Edge> } => {
-//   const isHorizontal = direction === 'LR'
-//   dagreGraph.setGraph({ rankdir: direction })
-
-//   nodes.forEach((node) => {
-//     dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight })
-//   })
-
-//   edges.forEach((edge) => {
-//     dagreGraph.setEdge(edge.source, edge.target)
-//   })
-
-//   dagre.layout(dagreGraph)
-
-//   const newNodes: Array<Node> = nodes.map((node) => {
-//     const nodeWithPosition = dagreGraph.node(node.id)
-//     node.targetPosition = isHorizontal ? Position.Left : Position.Top
-//     node.sourcePosition = isHorizontal ? Position.Right : Position.Bottom
-
-//     // We are shifting the dagre node position (anchor=center center) to the top left
-//     // so it matches the React Flow node anchor point (top left).
-//     node.position = {
-//       x: nodeWithPosition.x - nodeWidth / 2,
-//       y: nodeWithPosition.y - nodeHeight / 2,
-//     }
-
-//     return node
-//   })
-
-//   return { nodes: newNodes, edges }
-// }
 
 export const findLeafNodes = (nodes: Array<Node>, nodeId: string) => {
   const node = nodes.find((node) => node.id === nodeId)!
