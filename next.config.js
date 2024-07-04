@@ -97,4 +97,4 @@ const nextConfig = {
   },
 }
 
-export default MillionLint.next({ rsc: true })(nextConfig)
+module.exports = MillionLint.next({ rsc: true })(nextConfig)

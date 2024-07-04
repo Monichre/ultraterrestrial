@@ -24,6 +24,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { AnimatePresence, motion } from 'framer-motion'
 
 interface Photo {
   id: string
@@ -71,7 +72,7 @@ const DinkyCard: React.FC<DinkyCardProps> = ({ data, ...rest }) => {
   console.log('rest: ', rest)
   return (
     <Card
-      className='relative overflow-hidden entity-node !w-[300px]'
+      className='card relative overflow-hidden entity-node min-w-[400px] w-auto max-w-[600px]'
       style={{ borderColor: color }}
       {...rest}
     >
@@ -81,9 +82,9 @@ const DinkyCard: React.FC<DinkyCardProps> = ({ data, ...rest }) => {
       </CardHeader>
       <CardContent className='relative z-20'>
         <div className='text-2xl font-bold'>{name}</div>
-        <p className='text-xs text-muted-foreground text-white'>
+        {/* <p className='text-xs text-muted-foreground text-white'>
           {description}
-        </p>
+        </p> */}
 
         {/* <img src={photos[0].url} alt={photos[0].name} className='mt-2' /> */}
 
@@ -171,18 +172,9 @@ export const EntityNode = (props: any) => {
 
   return (
     <>
-      <Handle type='source' position={Position.Top} />
-      {/* <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-      </motion.div> */}
+      <Handle type='target' position={Position.Top} />
 
-      <DinkyCard {...props} />
-
-      {/* <Handle type='source' position={Position.Bottom} /> */}
+      <DinkyCard {...props} key={props.id} />
     </>
   )
 }

@@ -186,7 +186,7 @@ export function Graph(props: any) {
   //     simulationRef.current.force(
   //       'center',
   //       d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)
-  //     )
+  //     )and
   //     simulationRef.current.restart() // Restart simulation to apply the new force
   //   }
 
@@ -218,7 +218,7 @@ export function Graph(props: any) {
   //   return () => (simulation ? simulation.stop() : null)
   // }, [edges, nodes, setNodes])
   // useExpandCollapse(nodes, edges)
-  useForceLayout()
+  // useForceLayout()
 
   return (
     <div className='relative h-[100vh] w-[100vw]'>

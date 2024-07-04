@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
   Handle,
   Position,
@@ -168,30 +168,47 @@ function RootNodeCard({ nodeData, onClick }: any) {
   )
 }
 
-export const RootNode = (props: Node) => {
-  const { addRootNodeChildren } = useGraph()
+export const RootNode = (props: any) => {
+  const { addRootNodeChildren, nodes, edges } = useGraph()
+  console.log('edges: ', edges)
+  console.log('nodes: ', nodes)
+  const [clicked, setClicked] = useState(false)
 
-  // const updateNodeInternals = useUpdateNodeInternals(props.id)
+  const updateNodeInternals = useUpdateNodeInternals()
+  const updates = updateNodeInternals(props.data.id)
+  console.log('updates: ', updates)
 
   const { data, ...rest }: any = props
+  console.log('data: ', data)
 
-  const [handleCount, setHandleCount] = useState(0)
+  const [handles, setHandles] = useState([])
 
   const onClick = (type: any) => {
     addRootNodeChildren(type)
-    // toggle()
+
+    setClicked(true)
   }
+  useEffect(() => {
+    if (clicked && edges?.length) {
+      const nodeEdges = edges.filter((edge) => edge.id.includes(data.type))
+      console.log('nodeEdges: ', nodeEdges)
+      setHandles(nodeEdges)
+    }
+  }, [clicked, data, edges])
 
   return (
     <>
-      {Array.from({ length: handleCount }).map((_, index) => (
-        <Handle
-          key={index}
-          type='target'
-          position={Position.Bottom}
-          id={`handle-${index}`}
-        />
-      ))}
+      {handles?.length
+        ? handles.map((edge, index) => (
+            <Handle
+              key={index}
+              type='source'
+              position={Position.Bottom}
+              id={`handle:${edge?.id}`}
+              isConnectable={true}
+            />
+          ))
+        : null}
       <div className='relative'>
         <RootNodeCard nodeData={{ ...data, ...rest }} onClick={onClick} />
       </div>
