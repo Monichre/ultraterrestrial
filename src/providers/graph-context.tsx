@@ -59,7 +59,7 @@ function ViewportChangeLogger() {
   return null
 }
 
-export const GraphContextProvider = ({
+export const GraphProvider = ({
   children,
   allEntityGraphData,
 }: {
@@ -94,23 +94,29 @@ export const GraphContextProvider = ({
     }
   }, [])
 
-  const createRootNodeEdge = (rootNodeChildNode: any) => {
-    const { parentId: source, id: target, data } = rootNodeChildNode
+  const createRootNodeEdge = (rootNodeChildNode: any, source: any) => {
+    const { id: target, data } = rootNodeChildNode
     const id = `${source}:${target}`
+    console.log('id: ', id)
     return {
       id,
       source,
       target,
       animated: true,
-      type: 'entityEdge',
-      sourceHandle: `handle:${id}`,
+      // type: 'entityEdge',
+      // sourceHandle: `handle:${id}`,
     }
   }
 
-  const createRootNodeEdges = useCallback((rootNodeChildNodes: Node[]) => {
-    const rootNodeEdges = rootNodeChildNodes.map(createRootNodeEdge)
-    return rootNodeEdges
-  }, [])
+  const createRootNodeEdges = useCallback(
+    (rootNodeChildNodes: Node[], source: any) => {
+      const rootNodeEdges = rootNodeChildNodes.map((node) =>
+        createRootNodeEdge(node, source)
+      )
+      return rootNodeEdges
+    },
+    []
+  )
 
   //  Positioning Root Node Children --------------------------------------------------------------------------------------
 
@@ -127,7 +133,7 @@ export const GraphContextProvider = ({
         fill,
       },
       type: 'entityNode',
-      parentId: `${data.type}-root-node`,
+      // parentId: `${data.type}-root-node`,
     }
   }, [])
 
@@ -158,25 +164,24 @@ export const GraphContextProvider = ({
       const space = 100
       const totalArea = total * parentWidth + space * (total - 1)
       const xStartPos = parentNodePosition.x - totalArea / 2
-      const yStartPos = parentNodePosition.y + totalArea / 2
+      const yStartPos = parentNodePosition.y + parentWidth
 
       let y = yStartPos + 380
-      let x = xStartPos - parentWidth
-      const positionedNodes = incomingNodes.map((node: Node, index: any) => {
-        x += space + parentWidth
-        y += space + parentWidth
 
+      const positionedNodes = incomingNodes.map((node: Node, index: any) => {
         return {
           ...node,
           position: {
-            x,
+            x: 0,
             y,
           },
         }
       })
       console.log('positionedNodes: ', positionedNodes)
+      const source = `${type}-root-node`
+      console.log('source: ', source)
 
-      const incomingEdges = createRootNodeEdges(positionedNodes)
+      const incomingEdges = createRootNodeEdges(positionedNodes, source)
 
       addNodes(positionedNodes)
       addEdges(incomingEdges)
@@ -261,7 +266,7 @@ export const useGraph: any = () => {
   const context = useContext(GraphContext)
 
   if (!context) {
-    throw new Error('useGraph must be used within a GraphProvider')
+    throw new Error('useGraph must be used within a UfologyProvider')
   }
   return context
 }

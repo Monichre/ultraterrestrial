@@ -18,7 +18,7 @@ import {
   useStore,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
-import { useGraph } from '@/contexts/graph/graph-context'
+
 import * as d3 from 'd3'
 import { ROOT_NODE_WIDTH } from '@/utils/constants/nodes'
 
@@ -26,6 +26,9 @@ import { collide } from '@/features/graph/utils/collide'
 import { EntityEdge } from '@/features/graph/edges/entity-edge'
 import { useForceLayout } from '@/features/graph/hooks/useForceLayout'
 import { useExpandCollapse } from '@/features/graph/hooks/useExpandCollapse'
+import { DevTools } from '@/features/graph/loggers/dev-tools'
+import { useGraph } from '@/providers/graph-context'
+import { useForceLayoutAlt } from '@/features/graph/hooks/useForceLayoutAlt'
 
 // .force('center', forceCenter())
 // .force('collide', collide())
@@ -125,6 +128,7 @@ export function Graph(props: any) {
     edges,
     onNodesChange,
     updateNodes,
+    addRootNodeChildren,
     onEdgesChange,
     setNodes,
     onConnect,
@@ -134,11 +138,8 @@ export function Graph(props: any) {
   const nodeOrigin: NodeOrigin = [0.5, 0.5]
   const edgeOptions = {
     animated: true,
-    style: {
-      stroke: 'white',
-    },
+    style: { stroke: 'white' },
   }
-
   // const simulationRef: any = useRef<d3.Simulation<any, undefined>>(null)
 
   // useEffect(() => {
@@ -219,6 +220,32 @@ export function Graph(props: any) {
   // }, [edges, nodes, setNodes])
   // useExpandCollapse(nodes, edges)
   // useForceLayout()
+  // useForceLayout()
+
+  const onNodeClick: any = useCallback(
+    (args: any, node: any, ...rest: any) => {
+      console.log('node: ', node)
+      console.log('args: ', args)
+      console.log('rest: ', rest)
+      // setNodes((nds) =>
+      //   nds.map((n) => {
+      //     if (n.id === node.id) {
+      //       return {
+      //         ...n,
+      //         data: { ...n.data, expanded: !n.data.expanded }
+      //       };
+      //     }
+
+      //     return n;
+      //   })
+      // );
+      addRootNodeChildren(node?.data.type)
+      // simulation.tick()
+      // toggle()
+    },
+    [addRootNodeChildren]
+  )
+  useForceLayoutAlt()
 
   return (
     <div className='relative h-[100vh] w-[100vw]'>
@@ -229,9 +256,9 @@ export function Graph(props: any) {
         />
         <ReactFlow
           nodeTypes={nodeTypes}
-          edgeTypes={{
-            entityEdge: EntityEdge,
-          }}
+          // edgeTypes={{
+          //   entityEdge: EntityEdge,
+          // }}
           defaultViewport={{
             zoom: 0,
             x: 0,
@@ -243,12 +270,12 @@ export function Graph(props: any) {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           nodeOrigin={nodeOrigin}
+          onNodeClick={onNodeClick}
           onConnect={onConnect}
-          fitView
         >
           <Background />
           <Controls showInteractive={false} />
-          <Panel position='top-left'>React Flow Mind Map</Panel>
+          <DevTools />
         </ReactFlow>
       </DotGridBackgroundBlack>
     </div>

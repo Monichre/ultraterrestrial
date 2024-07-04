@@ -1,4 +1,5 @@
 // import { nextId } from './id'
+import type { Reactflow } from '@/features/graph/layouts/types'
 import { Edge, MarkerType, Node, Position } from '@xyflow/react'
 // import dagre from 'dagre'
 // import { PaletteElement, PaletteElementNodeStyles } from './types'
@@ -158,4 +159,7 @@ export const getEdgeColor = (depth: number, palette: any) => {
   const style = palette.edge.buildStyles(color)
 
   return { style, color }
+}
+export const getRootNode = (nodes: Reactflow['nodes']) => {
+  return nodes.find((e) => e.type === 'start') ?? nodes[0]
 }

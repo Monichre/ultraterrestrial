@@ -1,15 +1,18 @@
 import {
   kD3DAGAlgorithms,
   type D3DAGLayoutAlgorithms,
-} from '@/features/graph/layouts/d3-dag'
-import { layoutD3Hierarchy } from '@/features/graph/layouts/d3-hierarchy'
-import { layoutDagreTree } from '@/features/graph/layouts/dagre-tree'
+} from '@/features/graph/layouts/algorithms/d3-dag'
+import { layoutD3Hierarchy } from '@/features/graph/layouts/algorithms/d3-hierarchy'
+import { layoutDagreTree } from '@/features/graph/layouts/algorithms/dagre-tree'
 import {
   kElkAlgorithms,
   type ELKLayoutAlgorithms,
-} from '@/features/graph/layouts/elk'
-import { layoutOrigin } from '@/features/graph/layouts/origin'
+} from '@/features/graph/layouts/algorithms/elk'
+import { layoutOrigin } from '@/features/graph/layouts/algorithms/origin'
+import { type Node, type Edge } from '@xyflow/react'
+
 import { removeEmpty } from '@/utils'
+import type { Reactflow } from '@/features/graph/layouts/types'
 
 export type LayoutDirection = 'vertical' | 'horizontal'
 export type LayoutVisibility = 'visible' | 'hidden'
@@ -37,11 +40,22 @@ export type ReactflowLayoutConfig = {
 export type LayoutAlgorithmProps = any &
   Omit<ReactflowLayoutConfig, 'algorithm'>
 
+// export type LayoutAlgorithm = (
+//   props: LayoutAlgorithmProps
+// ) => Promise<any | undefined>
+
+export type Direction = 'TB' | 'LR' | 'RL' | 'BT'
+
+export type LayoutAlgorithmOptions = {
+  direction: Direction
+  spacing: [number, number]
+}
+
 export type LayoutAlgorithm = (
   props: LayoutAlgorithmProps
-) => Promise<any | undefined>
+) => Promise<Reactflow | undefined>
 
-export const kLayoutAlgorithms: Record<string, LayoutAlgorithm> = {
+export const layoutAlgorithms: Record<string, LayoutAlgorithm> = {
   origin: layoutOrigin,
   'dagre-tree': layoutDagreTree,
   'd3-hierarchy': layoutD3Hierarchy,
@@ -49,7 +63,7 @@ export const kLayoutAlgorithms: Record<string, LayoutAlgorithm> = {
   ...kD3DAGAlgorithms,
 }
 
-export const kDefaultLayoutConfig: ReactflowLayoutConfig = {
+export const defaultLayoutConfig: ReactflowLayoutConfig = {
   algorithm: 'elk-mr-tree',
   direction: 'vertical',
   visibility: 'visible',
@@ -63,20 +77,3 @@ export type LayoutAlgorithms =
   | 'd3-hierarchy'
   | ELKLayoutAlgorithms
   | D3DAGLayoutAlgorithms
-
-export const layoutReactflow = async (options: any): Promise<any> => {
-  const config = { ...kDefaultLayoutConfig, ...removeEmpty(options) }
-  const { nodes = [], edges = [] } = config
-  const layout = kLayoutAlgorithms[config.algorithm]
-  let result = await layout({ ...config, nodes, edges })
-  if (!result) {
-    // If the layout fails, fallback to the origin layout
-    result = await layoutReactflow({
-      ...config,
-      nodes,
-      edges,
-      algorithm: 'origin',
-    })
-  }
-  return result!
-}
