@@ -1,6 +1,7 @@
+/* eslint-disable react/display-name */
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import {
   Handle,
   Position,
@@ -31,7 +32,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
-import { useGraph } from '@/contexts/graph/graph-context'
+// import { useGraph } from '@/contexts/graph/graph-context'
 import { OpenAILogo } from '@/components/ui/icons'
 import { Separator } from '@/components/ui/separator'
 
@@ -109,9 +110,9 @@ export type NodeProps<T = any> = {
 
 function RootNodeCard({ nodeData, onClick }: any) {
   const { childCount, label, type, fill, id, ...rest } = nodeData
-  const handleClick = () => {
-    onClick(label)
-  }
+  // const handleClick = () => {
+  //   onClick(label)
+  // }
   const nodeProps = {
     ...rest,
     zIndex: 5000,
@@ -157,7 +158,7 @@ function RootNodeCard({ nodeData, onClick }: any) {
       <CardFooter className='p-2 relative z-20'>
         <Button
           className='w-full'
-          onClick={handleClick}
+          // onClick={handleClick}
           size='sm'
           variant='ghost'
         >
@@ -168,50 +169,51 @@ function RootNodeCard({ nodeData, onClick }: any) {
   )
 }
 
-export const RootNode = (props: any) => {
-  const { addRootNodeChildren, nodes, edges } = useGraph()
-  console.log('edges: ', edges)
-  console.log('nodes: ', nodes)
-  const [clicked, setClicked] = useState(false)
+const RN = (props: any) => {
+  // const { addRootNodeChildren, nodes, edges } = useGraph()
+  //
+  //
+  // const [clicked, setClicked] = useState(false)
 
   const updateNodeInternals = useUpdateNodeInternals()
-  const updates = updateNodeInternals(props.data.id)
-  console.log('updates: ', updates)
+  updateNodeInternals(props.id)
+  //
 
   const { data, ...rest }: any = props
-  console.log('data: ', data)
+  //
 
-  const [handles, setHandles] = useState([])
+  // const [handles, setHandles] = useState([])
 
-  const onClick = (type: any) => {
-    addRootNodeChildren(type)
+  // const onClick = (type: any) => {
+  //   addRootNodeChildren(type)
 
-    setClicked(true)
-  }
-  useEffect(() => {
-    if (clicked && edges?.length) {
-      const nodeEdges = edges.filter((edge) => edge.id.includes(data.type))
-      console.log('nodeEdges: ', nodeEdges)
-      setHandles(nodeEdges)
-    }
-  }, [clicked, data, edges])
+  //   setClicked(true)
+  // }
+  // useEffect(() => {
+  //   if (clicked && edges?.length) {
+  //     const nodeEdges = edges.filter((edge) => edge.id.includes(data.type))
+  //
+  //     setHandles(nodeEdges)
+  //   }
+  // }, [clicked, data, edges])
 
   return (
     <>
-      {handles?.length
-        ? handles.map((edge, index) => (
-            <Handle
-              key={index}
-              type='source'
-              position={Position.Bottom}
-              id={`handle:${edge?.id}`}
-              isConnectable={true}
-            />
-          ))
-        : null}
+      {Array.from({ length: props.data.childCount }).map((_, index) => (
+        <Handle
+          key={index}
+          type='source'
+          position={Position.Bottom}
+          id={`handle:${index}`}
+          isConnectable={true}
+        />
+      ))}
+
       <div className='relative'>
-        <RootNodeCard nodeData={{ ...data, ...rest }} onClick={onClick} />
+        <RootNodeCard nodeData={{ ...data, ...rest }} />
       </div>
     </>
   )
 }
+
+export const RootNode = memo(RN)
