@@ -83,7 +83,8 @@ export const GraphContextProvider = ({
       id,
       type: 'rootNode',
       position: ROOT_NODE_POSITIONS[data.type],
-      zIndex: 2000,
+
+      width: 400,
       data: {
         childCount,
         ...data,
@@ -95,12 +96,14 @@ export const GraphContextProvider = ({
 
   const createRootNodeEdge = (rootNodeChildNode: any) => {
     const { parentId: source, id: target, data } = rootNodeChildNode
+    const id = `${source}:${target}`
     return {
-      id: `${source}:${target}`,
+      id,
       source,
       target,
       animated: true,
       type: 'entityEdge',
+      sourceHandle: `handle:${id}`,
     }
   }
 
@@ -110,25 +113,14 @@ export const GraphContextProvider = ({
   }, [])
 
   //  Positioning Root Node Children --------------------------------------------------------------------------------------
-  const calculateChildNodePosition = (childNodeType: any) => {
-    const parentNodePosition = ROOT_NODE_POSITIONS[childNodeType]
-
-    return {
-      position: {
-        x: parentNodePosition.x,
-        y: parentNodePosition.y + ROOT_NODE_WIDTH,
-      },
-    }
-  }
 
   //  Root Node Children --------------------------------------------------------------------------------------
-  const createRootNodeChild = useCallback((node: any) => {
+  const createRootNodeChild = useCallback((node: any, index: any) => {
     const { id, label, name, fill, data } = node
     const title = label || name
     return {
       id,
-      hidden: true,
-      zIndex: 1000,
+
       data: {
         ...data,
         label: title,
@@ -136,8 +128,6 @@ export const GraphContextProvider = ({
       },
       type: 'entityNode',
       parentId: `${data.type}-root-node`,
-      ...calculateChildNodePosition(data.type),
-      // extent: 'parent',
     }
   }, [])
 
@@ -158,16 +148,37 @@ export const GraphContextProvider = ({
 */
   const addRootNodeChildren = useCallback(
     (type: any) => {
+      console.log('type: ', type)
       const { nodes: incomingNodes } = flowGraph[type]
+      const total = incomingNodes.length
+      const parentNodePosition = ROOT_NODE_POSITIONS[type]
+      console.log('parentNodePosition: ', parentNodePosition)
+      const parentWidth = ROOT_NODE_WIDTH
 
-      const notHidden = incomingNodes.map((node: Node) => ({
-        ...node,
-        hidden: false,
-      }))
+      const space = 100
+      const totalArea = total * parentWidth + space * (total - 1)
+      const xStartPos = parentNodePosition.x - totalArea / 2
+      const yStartPos = parentNodePosition.y + totalArea / 2
 
-      const incomingEdges = createRootNodeEdges(notHidden)
+      let y = yStartPos + 380
+      let x = xStartPos - parentWidth
+      const positionedNodes = incomingNodes.map((node: Node, index: any) => {
+        x += space + parentWidth
+        y += space + parentWidth
 
-      addNodes(notHidden)
+        return {
+          ...node,
+          position: {
+            x,
+            y,
+          },
+        }
+      })
+      console.log('positionedNodes: ', positionedNodes)
+
+      const incomingEdges = createRootNodeEdges(positionedNodes)
+
+      addNodes(positionedNodes)
       addEdges(incomingEdges)
     },
     [addEdges, addNodes, createRootNodeEdges, flowGraph] // runForceSimulation
@@ -182,16 +193,13 @@ export const GraphContextProvider = ({
     [setNodes]
   )
 
-  const onEdgesChange: OnEdgesChange = useCallback(
-    (chs) => {
-      setEdges((eds: Edge[]) => applyEdgeChanges(chs, eds))
-    },
-    [setEdges]
-  )
+  const onEdgesChange: OnEdgesChange = useCallback((chs) => {
+    setEdges((eds: Edge[]) => applyEdgeChanges(chs, eds))
+  }, [])
 
   const onConnect: OnConnect = useCallback(
     (params) => setEdges((eds: any) => addEdge(params, eds)),
-    [setEdges]
+    []
   )
 
   //  useEffects --------------------------------------------------------------------------------------
@@ -215,8 +223,7 @@ export const GraphContextProvider = ({
         edges: tempLinks,
       }
     }
-    console.log('graph: ', graph)
-    console.log('formattedGraphNodesObject: ', formattedGraphNodesObject)
+
     setFlowGraph(formattedGraphNodesObject)
 
     const initialNodes = graph.root.nodes.map(createRootNode)

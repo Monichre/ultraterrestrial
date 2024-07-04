@@ -39,6 +39,7 @@ const config = {
         oswald: ['var(--font-oswald)'],
         source: ['var(--font-source-sans)'],
         ailerions: ['var(--font-ailerions)'],
+        futura: ['var(--font-futura)'],
       },
       colors: {
         border: 'hsl(var(--border))',
