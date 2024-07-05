@@ -1,10 +1,10 @@
+import { ThreeDPinCard } from '@/features/3d/3d-pin/3d-pin-card'
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
-import { ThreeDPin } from './3d-pin'
 
 const meta = {
   title: 'Components/ThreeDPin',
-  component: ThreeDPin,
+  component: ThreeDPinCard,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   parameters: {
@@ -12,7 +12,7 @@ const meta = {
     layout: 'fullscreen',
   },
   args: {},
-} satisfies Meta<typeof ThreeDPin>
+} satisfies Meta<typeof ThreeDPinCard>
 
 export default meta
 

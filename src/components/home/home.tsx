@@ -3,7 +3,8 @@
 import { Astronaut } from '../ui/home/astronaut/astronaut'
 import { Howl } from 'howler'
 import { useEffect } from 'react'
-import { PlanetMenu } from '../planet-menu'
+// import { PlanetMenu } from '../planet-menu'
+import { CanvasCursor } from '@/components/ui/canvas-cursor'
 export interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => {
@@ -25,7 +26,8 @@ export const Home: React.FC<HomeProps> = () => {
 
   return (
     <>
-      <PlanetMenu />
+      {/* <PlanetMenu /> */}
+      <CanvasCursor />
 
       <Astronaut />
     </>

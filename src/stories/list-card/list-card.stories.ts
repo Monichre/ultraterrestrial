@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { ListCard } from '@/components/ui/list-card'
+import { ListCard } from '@/components/ui/card/list-card'
 
 const meta = {
   title: 'Components/ListCard',

@@ -1,0 +1,73 @@
+import { Card } from '@/components/ui/card'
+import { DotGridBackgroundBlack } from '@/components/ui/backgrounds'
+import {
+  CardHeader,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '@/components/ui/card'
+import { OpenAILogo } from '@/components/ui/icons'
+import { CommandDemo } from '@/features/graph/nodes'
+
+import { cn, capitalize } from '@/utils'
+import { Switch } from '@radix-ui/react-switch'
+import { Button } from '@/components/ui/button'
+
+export const RootNodeCard = ({ nodeData }: any) => {
+  const { childCount, label, type, fill, id, ...rest } = nodeData
+
+  const nodeProps = {
+    ...rest,
+    zIndex: 5000,
+  }
+
+  return (
+    <Card
+      {...nodeProps}
+      className={cn(
+        'w-[280px]',
+        'relative',
+        'overflow-hidden',
+        // '!bg-transparent'
+        'bg-black',
+        `root-node`
+      )}
+    >
+      <DotGridBackgroundBlack />
+      <CardHeader className='p-2 relative z-20'>
+        <div className='flex align-middle content-center items-center justify-between'>
+          <h3 className={`!font-source`}>
+            {capitalize(label) || capitalize(type)}
+          </h3>
+          <div className='flex align-middle content-center items-center justify-between space-x-2 rounded-md border p-2'>
+            <div className='flex align-middle content-center items-center justify-between space-x-2 '>
+              <div className='h-4 w-4'>
+                <OpenAILogo className='h-full w-full' />
+              </div>
+              <p className='text-xs font-source leading-none'>AI</p>
+            </div>
+
+            <Switch />
+          </div>
+        </div>
+
+        <CardDescription className='text-xs relative z-20'>
+          There are {childCount} {capitalize(label)}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className='p-2 relative z-20'>
+        <CommandDemo />
+      </CardContent>
+      <CardFooter className='p-2 relative z-20'>
+        <Button
+          className='w-full'
+          // onClick={handleClick}
+          size='sm'
+          variant='ghost'
+        >
+          Show All {capitalize(label)}
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+}
