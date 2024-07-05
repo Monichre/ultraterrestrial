@@ -1,5 +1,6 @@
 'use client'
 
+import { useReportWebVitals } from 'next/web-vitals'
 import { Graph } from '@/features/graph/graph'
 
 import type { NetworkGraphPayload } from '@/lib/xata'
@@ -9,14 +10,17 @@ export interface MindMapProps {
   allEntityGraphData: NetworkGraphPayload['graphData']
 }
 
-// cc: Mindmap
-// #mindmap:1
 export const MindMap: React.FC<MindMapProps> = ({
   allEntityGraphData,
 }: MindMapProps) => {
+  useReportWebVitals((metric) => {
+    console.log(metric)
+  })
   return (
-    <UfologyProvider ufologyData={allEntityGraphData}>
-      <Graph />
-    </UfologyProvider>
+    <>
+      <UfologyProvider ufologyData={allEntityGraphData}>
+        <Graph />
+      </UfologyProvider>
+    </>
   )
 }

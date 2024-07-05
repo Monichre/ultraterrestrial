@@ -4,7 +4,7 @@ import {
   type Item,
   ListCard,
   SortableListItem,
-} from '@/components/ui/list-card'
+} from '@/components/ui/card/list-card'
 
 import { useCallback, useState } from 'react'
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'

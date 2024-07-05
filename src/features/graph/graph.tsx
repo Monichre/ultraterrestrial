@@ -24,11 +24,10 @@ import { ROOT_NODE_WIDTH } from '@/utils/constants/nodes'
 
 import { collide } from '@/features/graph/utils/collide'
 import { EntityEdge } from '@/features/graph/edges/entity-edge'
-import { useForceLayout } from '@/features/graph/hooks/useForceLayout'
 import { useExpandCollapse } from '@/features/graph/hooks/useExpandCollapse'
 import { DevTools } from '@/features/graph/loggers/dev-tools'
 import { useGraph } from '@/providers/graph-context'
-import { useForceLayoutAlt } from '@/features/graph/hooks/useForceLayoutAlt'
+import { useForceLayout } from '@/features/graph/hooks/useForceLayout'
 
 // .force('center', forceCenter())
 // .force('collide', collide())
@@ -221,31 +220,16 @@ export function Graph(props: any) {
   // useExpandCollapse(nodes, edges)
   // useForceLayout()
   // useForceLayout()
-
+  console.count('graph render: ')
   const onNodeClick: any = useCallback(
     (args: any, node: any, ...rest: any) => {
-      console.log('node: ', node)
-      console.log('args: ', args)
-      console.log('rest: ', rest)
-      // setNodes((nds) =>
-      //   nds.map((n) => {
-      //     if (n.id === node.id) {
-      //       return {
-      //         ...n,
-      //         data: { ...n.data, expanded: !n.data.expanded }
-      //       };
-      //     }
-
-      //     return n;
-      //   })
-      // );
       addRootNodeChildren(node?.data.type)
       // simulation.tick()
       // toggle()
     },
     [addRootNodeChildren]
   )
-  useForceLayoutAlt()
+  useForceLayout()
 
   return (
     <div className='relative h-[100vh] w-[100vw]'>

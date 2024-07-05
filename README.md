@@ -124,3 +124,5 @@ React + Mind Map UI + ThreeJS: <https://dev.to/pahund/drawing-a-mind-map-with-th
 <https://github.com/builduilabs/2023-09-10-animated-list-recipe/blob/main/app/page.tsx>
 
 <https://cloud.tiptap.dev/pro-extensions>
+
+<https://codesandbox.io/p/sandbox/expand-collapse-force-layout-c8crob?file=%2FuseForceLayout.ts%3A53%2C4-74%2C10>

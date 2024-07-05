@@ -146,19 +146,11 @@ export const GraphProvider = ({
     return Array.from(unique.values())
   }
 
-  /* 
-
-- https://github.com/JanDez/D3_Reactflow/blob/main/src/hooks/useReactCanvasData.ts
-- https://github.com/idootop/reactflow-auto-layout/blob/main/src/layout/useAutoLayout.ts
-
-*/
   const addRootNodeChildren = useCallback(
     (type: any) => {
-      console.log('type: ', type)
       const { nodes: incomingNodes } = flowGraph[type]
       const total = incomingNodes.length
       const parentNodePosition = ROOT_NODE_POSITIONS[type]
-      console.log('parentNodePosition: ', parentNodePosition)
       const parentWidth = ROOT_NODE_WIDTH
 
       const space = 100
@@ -177,10 +169,8 @@ export const GraphProvider = ({
           },
         }
       })
-      console.log('positionedNodes: ', positionedNodes)
-      const source = `${type}-root-node`
-      console.log('source: ', source)
 
+      const source = `${type}-root-node`
       const incomingEdges = createRootNodeEdges(positionedNodes, source)
 
       addNodes(positionedNodes)
