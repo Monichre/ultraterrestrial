@@ -52,24 +52,24 @@ export function LetterPullUp(props: any) {
             // initial='initial'
             animate={visible ? 'show' : 'hide'}
             custom={i}
-            className={`text-center font-display text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] `}
+            className={`text-center font-display text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] text-black`}
           >
             {letter === ' ' ? <span>&nbsp;</span> : letter}
           </motion.h1>
         ))}
       </div>
-      <motion.div
+      {/* <motion.div
         variants={sparkleAnimation}
         animate={visible ? 'show' : 'hide'}
         className='w-[40rem] mx-auto relative'
       >
-        {/* Gradients */}
+        
         <div className='absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm' />
         <div className='absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4' />
         <div className='absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm' />
         <div className='absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4' />
 
-        {/* Core component */}
+        
         <Sparkles
           background='transparent'
           minSize={0.4}
@@ -79,9 +79,9 @@ export function LetterPullUp(props: any) {
           particleColor='#FFFFFF'
         />
 
-        {/* Radial Gradient to prevent sharp edges */}
+        
         <div className='absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]'></div>
-      </motion.div>
+      </motion.div> */}
     </div>
   )
 }
