@@ -19,7 +19,8 @@
     "types": ["node", "three", "@types/node"], // Added "@types/node" package
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"],
+      "@/utils": ["src/utils"]
     },
     "plugins": [
       {
@@ -34,10 +35,9 @@
     "next-env.d.ts",
     "global.d.ts",
     "src",
-
+    "src/**/*",
     "**/*.ts",
     "**/*.tsx",
-
     ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"],

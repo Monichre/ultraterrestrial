@@ -161,7 +161,8 @@ export const GraphProvider = ({
         fill,
         parentId: `${data.type}-root-node`,
       },
-      type: 'entityNode',
+      type: `${data.type}Node`,
+      // type: 'entityNode',
     }
   }, [])
 
@@ -269,20 +270,33 @@ export const GraphProvider = ({
       console.log('positionedNodes: ', positionedNodes)
 
       const incomingEdges = createRootNodeEdges(positionedNodes, source)
-      updateChildNodeBatchIndex(source)
+
+      // Note: This is to update the root node that has been clicked with the respective amount of handles to support the edge linking
       const rootNode: any = getNode(source)
+      const incomingHandles: any = incomingEdges.map(
+        (edge) => edge.sourceHandle
+      )
+      // const restOfNodes = getNodes().filter(
+      //   (node) => !initialNodes.includes(node)
+      // )
+      // We then need to replace/mutate the corresponding root node is the current state of the graph in order to have Reactflow update the node accordingly
       const initialRootNodes = [
-        ...getNodes().filter((node) => node.id !== rootNode.id),
+        ...getNodes().filter((node: any) => node.id !== rootNode.id),
         {
           ...rootNode,
           data: {
             ...rootNode.data,
-            handles: incomingEdges.map((edge) => edge.sourceHandle),
+            handles: rootNode.data?.handles?.length
+              ? [...rootNode.data.handles, ...incomingHandles]
+              : incomingHandles,
           },
         },
       ]
+
+      // So now we set the root nodes with the relevant root node having updated handles, then set the rest of the existing nodes, and then the newest positioned child nodes
       setNodes((nds: any) => [...initialRootNodes, ...positionedNodes])
-      setEdges(incomingEdges)
+      setEdges((edges: any) => [...edges, ...incomingEdges])
+      updateChildNodeBatchIndex(source)
       return {
         childNodes,
         edges: incomingEdges,
@@ -294,6 +308,7 @@ export const GraphProvider = ({
       getNode,
       getNodes,
       graph,
+      initialNodes,
       rootNodeState,
     ] // runForceSimulation
   )

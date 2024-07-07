@@ -39,22 +39,6 @@ interface Photo {
   url: string
 }
 
-interface DinkyCardProps {
-  data: {
-    date: string
-    description: string
-    latitude: number
-    location: string
-    longitude: number
-    photos: Photo[]
-    name: string
-    color: string
-    type: string
-    label: string
-    fill: string
-  }
-}
-
 const EN = memo((props: any) => {
   const updateNodeInternals = useUpdateNodeInternals()
   updateNodeInternals(props.id)
