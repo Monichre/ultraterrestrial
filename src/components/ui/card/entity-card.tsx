@@ -26,7 +26,30 @@ import { Toolbar } from '@/components/toolbar'
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
-export interface MindMapEntityCardProps extends GraphNodeCardData {}
+
+type ImageProps = {
+  id: string
+  url: string
+  attributes: {
+    height: number
+    width: number
+  }
+}
+export interface MindMapEntityCardProps {
+  data: {
+    date: any
+    description: string
+    latitude: number
+    location: string
+    longitude: number
+    photos: ImageProps[]
+    name: string
+    color: string
+    type: string
+    label: string
+    fill: string
+  }
+}
 
 export const openSpring = { type: 'spring', stiffness: 200, damping: 30 }
 export const closeSpring = { type: 'spring', stiffness: 300, damping: 35 }
@@ -60,7 +83,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     label,
     fill,
   } = data
-  const image = photos?.length ? photos[0] : null
+  const image: ImageProps | null = photos?.length ? photos[0] : null
   const [open, setOpen] = useState(false)
   const toggle = () => setOpen(!open)
 
@@ -140,7 +163,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     const halfHeight = event.target.offsetHeight / 2
     x.set(event.nativeEvent.offsetX - halfWidth) // set the x value, which is then used in transform and rotate
   }
-  const cardRef = useRef()
+  // const cardRef = useRef()
   return (
     <div className='relative w-fit h-fit'>
       <AnimatePresence mode='popLayout'>
@@ -173,7 +196,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
                 alt='Product image'
                 className='aspect-square w-100 h-100 rounded-md object-cover m-auto'
                 height='100'
-                src={image?.src}
+                src={image?.url}
                 width='100'
               />
             )}
@@ -183,7 +206,6 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
 
       <Card
         className={`entity-card shadow relative ${animatedClass} rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
-        ref={cardRef}
       >
         <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative'>
           <CardHeader
@@ -223,9 +245,9 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
                       }}
                       alt='Product image'
                       className='aspect-square w-full h-full rounded-md object-cover m-auto'
-                      height='300'
-                      src={image.src}
-                      width='300'
+                      height={image?.attributes?.height}
+                      src={image.url}
+                      width={image?.attributes?.width}
                     />
                   )}
                 </AnimatedCardContent>

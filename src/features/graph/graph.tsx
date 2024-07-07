@@ -212,41 +212,21 @@ export function Graph(props: any) {
   const treeHeight = 100
 
   const onNodeClick: any = useCallback(
-    (args: any, node: any, ...rest: any) => {
-      getRootNodeChildren(node?.data.type)
-      // addRootNodeChildren
-      // setChildren(kidNodes)
-      // simulation.tick()
-      // nextTick(10).then(() => {
-      //   setChildrenLoaded(true)
-      // })
-      // toggle()
+    (event: any, node: any, ...rest: any) => {
+      console.log('rest: ', rest)
+      const { target } = event
+      console.log('target: ', target.classList)
+      console.log('target: ', typeof target)
+      if (target.classList.contains('load-records-button')) {
+        // Your code here
+
+        getRootNodeChildren(node?.data.type)
+      }
     },
     [getRootNodeChildren]
   )
   // useForceLayout(childrenLoaded)
-  // const init = useCallback(
-  //   async (nodes: any, edges: any) => {
-  //     const data = layout({
-  //       ...defaultLayoutConfig,
-  //       nodes,
-  //       edges,
-  //       algorithm: 'elk-layered',
-  //     }).then((res) => {
-  //       console.log('res: ', res)
-  //       return res
-  //     })
-  //     console.log('data: ', data)
-  //     return data
-  //   },
-  //   [layout]
-  // )
 
-  // useEffect(() => {
-  //   if (nodes && nodes.length) {
-  //     init(nodes, edges)
-  //   }
-  // }, [edges, init, nodes])
   // const { nodes: visibleNodes, edges: visibleEdges }: any =
   // useRootNodesHierarchy(nodes, edges, childrenLoaded, {
   //   treeWidth,

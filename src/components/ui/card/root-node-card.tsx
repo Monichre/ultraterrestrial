@@ -64,12 +64,12 @@ export const RootNodeCard = ({ nodeData }: any) => {
       </CardContent>
       <CardFooter className='p-2 relative z-20'>
         <Button
-          className='w-full'
+          className='w-full load-records-button'
           // onClick={handleClick}
           size='sm'
           variant='ghost'
         >
-          Show All {capitalize(label)}
+          Load {capitalize(label)} Records
         </Button>
       </CardFooter>
     </Card>
