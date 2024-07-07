@@ -18,6 +18,7 @@ function isHierarchyPointNode(pointNode: any): pointNode is Node {
 export function useExpandCollapse(
   nodes: Node[],
   edges: any[],
+  childrenLoaded,
   {
     layoutNodes = true,
     treeWidth = 220,
@@ -25,11 +26,21 @@ export function useExpandCollapse(
   }: UseExpandCollapseOptions = {}
 ): { nodes: Node[]; edges: any[] } {
   return useMemo(() => {
+    if (!childrenLoaded) {
+      return {
+        nodes,
+        edges,
+      }
+    }
     const hierarchy = stratify()
       .id((d: { id: any }) => d.id)
       .parentId((d: any) => edges.find((e: any) => e.target === d.id)?.source)(
-      nodes
-    )
+        nodes
+      )
+      .catch((err: any) => {
+        console.log('err: ', err)
+      })
+    console.log('hierarchy: ', hierarchy)
 
     hierarchy
       .descendants()
@@ -47,7 +58,9 @@ export function useExpandCollapse(
       .nodeSize([treeWidth, treeHeight])
       .separation(() => 1)
 
+    console.log('layout: ', layout)
     const root = layoutNodes ? layout(hierarchy) : hierarchy
+    console.log('layout: ', layout)
 
     return {
       nodes: root
@@ -69,5 +82,5 @@ export function useExpandCollapse(
           root.find((h: { id: any }) => h.id === edge.target)
       ),
     }
-  }, [nodes, edges, layoutNodes, treeWidth, treeHeight])
+  }, [nodes, edges, layoutNodes, treeWidth, treeHeight, childrenLoaded])
 }

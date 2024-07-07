@@ -126,3 +126,9 @@ React + Mind Map UI + ThreeJS: <https://dev.to/pahund/drawing-a-mind-map-with-th
 <https://cloud.tiptap.dev/pro-extensions>
 
 <https://codesandbox.io/p/sandbox/expand-collapse-force-layout-c8crob?file=%2FuseForceLayout.ts%3A53%2C4-74%2C10>
+
+Building a Scrollable and Draggable Timeline with GSAP
+<https://tympanus.net/codrops/2022/01/03/building-a-scrollable-and-draggable-timeline-with-gsap/>
+
+Crafting Scroll Based Animations in Three.js
+<https://tympanus.net/codrops/2022/01/05/crafting-scroll-based-animations-in-three-js/>

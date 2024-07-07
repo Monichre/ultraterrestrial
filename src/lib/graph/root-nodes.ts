@@ -33,6 +33,15 @@ export const testimoniesRootNode = {
   },
 }
 
+export const organizationsRootNode = {
+  name: 'organizations',
+  id: 'organizations-root-node',
+  fill: DOMAIN_MODEL_COLORS.organizations,
+  data: {
+    type: 'organizations',
+  },
+}
+
 export const rootNodes = [
   eventsRootNode,
   topicsRootNode,

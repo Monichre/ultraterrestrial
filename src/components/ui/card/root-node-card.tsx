@@ -14,7 +14,11 @@ import { Switch } from '@radix-ui/react-switch'
 import { Button } from '@/components/ui/button'
 
 export const RootNodeCard = ({ nodeData }: any) => {
-  const { childCount, label, type, fill, id, ...rest } = nodeData
+  console.log('nodeData: ', nodeData)
+  const {
+    data: { childCount, label, type, fill, id },
+    ...rest
+  } = nodeData
 
   const nodeProps = {
     ...rest,

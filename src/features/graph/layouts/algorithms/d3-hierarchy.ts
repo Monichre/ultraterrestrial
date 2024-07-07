@@ -1,6 +1,6 @@
 // Based on: https://github.com/flanksource/flanksource-ui/blob/75b35591d3bbc7d446fa326d0ca7536790f38d88/src/ui/Graphs/Layouts/algorithms/d3-hierarchy.ts
 
-import { stratify, tree, type HierarchyPointNode } from 'd3-hierarchy'
+import { stratify, tree } from 'd3-hierarchy'
 
 import { LayoutAlgorithm } from '..'
 import type { ReactflowNodeWithData } from '@/features/graph/layouts/types'

@@ -1,39 +1,39 @@
-import type { NetworkGraphPayload } from "@/lib/xata"
-import { useState, useEffect } from "react"
+import type { NetworkGraphPayload } from '@/lib/xata'
+import { useState, useEffect } from 'react'
 
 type EntityGraphSchema = {
-nodes: Node
+  nodes: Node
 }
 
 export type GraphState = {
-   root: {
-      nodes: [],
-      links: {},
-    },
-    events: {
-      nodes: [],
-      links: {},
-    },
-    testimonies: {
-      nodes: [],
-      links: {},
-    },
-    personnel: {
-      nodes: [],
-      links: {},
-    },
-    topics: {
-      nodes: [],
-      links: {},
-    },
+  root: {
+    nodes: []
+    links: {}
+  }
+  events: {
+    nodes: []
+    links: {}
+  }
+  testimonies: {
+    nodes: []
+    links: {}
+  }
+  personnel: {
+    nodes: []
+    links: {}
+  }
+  topics: {
+    nodes: []
+    links: {}
+  }
 }
 
 export type UseGraphProps = {
   allEntityGraphData: NetworkGraphPayload['graphData']
 }
 
-export const use3DGraph = ({allEntityGraphData}: UseGraphProps) => {
-    const [graph, setGraph] = useState({
+export const use3DGraph = ({ allEntityGraphData }: UseGraphProps) => {
+  const [graph, setGraph] = useState({
     root: {
       nodes: [],
       links: {},
@@ -122,5 +122,5 @@ export const use3DGraph = ({allEntityGraphData}: UseGraphProps) => {
     }
   }, [allEntityGraphData.links, allEntityGraphData.nodes])
 
-return {graph}
+  return { graph3d: graph }
 }

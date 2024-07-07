@@ -25,9 +25,9 @@ import { use3DGraph } from '@/hooks/use3dGraph'
 export const DrawingBoardReactThreeFiberGraph: React.FC<DrawingBoardProps> = ({
   allEntityGraphData,
 }: DrawingBoardProps) => {
-  const { graph } = use3DGraph({ allEntityGraphData })
+  const { graph3d } = use3DGraph({ allEntityGraphData })
 
-  const { root, events, ...rest } = graph
+  const { root, events, ...rest } = graph3d
   console.log('events: ', events)
   console.log('rest: ', rest)
 

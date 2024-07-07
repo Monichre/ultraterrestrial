@@ -40,6 +40,11 @@ const config = {
         source: ['var(--font-source-sans)'],
         ailerions: ['var(--font-ailerions)'],
         futura: ['var(--font-futura)'],
+        firaCode: ['var(--font-fire-code)'],
+        centima: ['var(--font-centima})'],
+        centimaSans: ['var(--font-centima-sans)'],
+        eirene: ['var(--font-eirene})'],
+        stellar: ['var(--font-stellar})'],
       },
       colors: {
         border: 'hsl(var(--border))',

@@ -45,13 +45,8 @@ const runForceSimulation = (nodes: any[], edges: any[], setNodes: any) => {
   const simulation = forceSimulation()
     .nodes(simulationNodes)
     .force('charge', forceManyBody().strength(strength))
-    .force(
-      'link',
-      forceLink(simulationLinks)
-        .id((d: any) => d.id)
-        .strength(0.05)
-        .distance(distance)
-    )
+    .force('x', forceX().x(0).strength(0.05))
+    .force('y', forceY().y(0).strength(0.05))
     .on('tick', () => {
       setNodes(
         simulationNodes.map((node) => ({
@@ -60,20 +55,36 @@ const runForceSimulation = (nodes: any[], edges: any[], setNodes: any) => {
         }))
       )
     })
+  // .force(
+  //   'link',
+  //   forceLink(simulationLinks)
+  //     .id((d: any) => d.id)
+  //     .strength(0.05)
+  //     .distance(distance)
+  // )
   // .force('x', forceX().x(0).strength(0.05))
   // .force('y', forceY().y(0).strength(0.05))
   return simulation
 }
 
-export function useForceLayout() {
+export function useForceLayout(loadChildNodes = false) {
   const { setNodes, getNodes, getEdges } = useReactFlow()
   const nodesInitialized = useNodesInitialized()
   const [layoutedNodes, setLayoutedNodes] = useState(getNodes())
   console.log('layoutedNodes: ', layoutedNodes)
   const simulationRef = useRef()
+  // const runIt = () => {
+  //   const simulation = runForceSimulation(getNodes(), getEdges(), setNodes)
+  //   console.log('simulation: ', simulation)
+  //   // simulationRef.current = simulation
 
+  //   nextTick(10).then(() => {
+  //     simulation.stop()
+  //   })
+  //   return simulation
+  // }
   useEffect(() => {
-    if (nodesInitialized) {
+    if (loadChildNodes) {
       const simulation = runForceSimulation(getNodes(), getEdges(), setNodes)
       console.log('simulation: ', simulation)
       // simulationRef.current = simulation
@@ -88,5 +99,5 @@ export function useForceLayout() {
     // return () => {
     //   simulation.stop()
     // }
-  }, [nodesInitialized, getEdges, setNodes, getNodes])
+  }, [getEdges, setNodes, getNodes, loadChildNodes])
 }

@@ -27,7 +27,7 @@ function useAutoLayout(options: LayoutOptions) {
   // actually trigger a layout change.
   const elements = useStore(
     (state: any) => ({
-      nodeMap: state.nodeInternals,
+      nodeMap: state.nodeLookup,
       edgeMap: state.edges.reduce(
         (acc: { set: (arg0: any, arg1: any) => any }, edge: { id: any }) =>
           acc.set(edge.id, edge),

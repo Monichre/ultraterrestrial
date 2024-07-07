@@ -30,7 +30,10 @@ import {
   Position,
 } from '@xyflow/react'
 import {
+  CHILD_DIMENSIONS,
   NODE_SPACE,
+  PADDING,
+  ROOT_DIMENSIONS,
   ROOT_NODE_HEIGHT,
   ROOT_NODE_POSITIONS,
   ROOT_NODE_WIDTH,
@@ -43,22 +46,17 @@ const GraphContext: any = createContext({
   setNodes: (nodes: any) => {},
   edges: [],
   setEdges: (edges: any) => {},
-  flowGraph: [],
+  graph: [],
   createRootNodeEdges: (nodes: any) => {},
   addRootNodeChildren: (type: string) => {},
+  initialNodes: [],
   store: null,
 })
-
-function ViewportChangeLogger() {
-  useOnViewportChange({
-    onStart: (viewport: Viewport) => console.log('start', viewport),
-    onChange: (viewport: Viewport) => console.log('change', viewport),
-    onEnd: (viewport: Viewport) => console.log('end', viewport),
-  })
-
-  return null
-}
-
+export type RootNodeKey =
+  | 'events-root-node'
+  | 'personnel-root-node'
+  | 'testimonies-root-node'
+  | 'topics-root-node'
 export const GraphProvider = ({
   children,
   allEntityGraphData,
@@ -66,15 +64,48 @@ export const GraphProvider = ({
   children: React.ReactNode
   allEntityGraphData: any
 }) => {
-  const { getNodes, fitView, getEdges, addNodes, addEdges, getNode } =
-    useReactFlow()
+  const {
+    getNodes,
+    fitView,
+    getEdges,
+    addNodes,
+    addEdges,
+    getNode,
+    screenToFlowPosition,
+  } = useReactFlow()
   const store = useStoreApi()
 
-  const { graph }: any = use3DGraph({ allEntityGraphData })
+  const { graph3d }: any = use3DGraph({ allEntityGraphData })
   const [nodes, setNodes]: any = useState<Node[]>([])
   const [edges, setEdges]: any = useState<Edge[]>([])
-  const [flowGraph, setFlowGraph]: any = useState({})
+  const [graph, setGraph]: any = useState({})
 
+  const [initialNodes, setInitialNodes]: any = useState()
+  const [rootNodeState, setRootNodeState]: any = useState({
+    'events-root-node': {
+      lastIndex: 0,
+    },
+    'personnel-root-node': {
+      lastIndex: 0,
+    },
+    'testimonies-root-node': {
+      lastIndex: 0,
+    },
+    'topics-root-node': {
+      lastIndex: 0,
+    },
+  })
+  const childNodeBatchSize = 10
+  console.log('graph: ', graph)
+
+  const updateChildNodeBatchIndex = (type: RootNodeKey) => {
+    setRootNodeState((rootNodeState: any) => ({
+      ...rootNodeState,
+      [type]: {
+        lastIndex: rootNodeState[type].lastIndex + childNodeBatchSize,
+      },
+    }))
+  }
   const createRootNode = useCallback((node: any, index: number) => {
     const { id, label, name, fill, data } = node
     const title = label || name
@@ -84,7 +115,6 @@ export const GraphProvider = ({
       type: 'rootNode',
       position: ROOT_NODE_POSITIONS[data.type],
 
-      width: 400,
       data: {
         childCount,
         ...data,
@@ -97,14 +127,14 @@ export const GraphProvider = ({
   const createRootNodeEdge = (rootNodeChildNode: any, source: any) => {
     const { id: target, data } = rootNodeChildNode
     const id = `${source}:${target}`
-    console.log('id: ', id)
+
     return {
       id,
       source,
       target,
       animated: true,
       // type: 'entityEdge',
-      // sourceHandle: `handle:${id}`,
+      sourceHandle: `handle:${id}`,
     }
   }
 
@@ -118,8 +148,6 @@ export const GraphProvider = ({
     []
   )
 
-  //  Positioning Root Node Children --------------------------------------------------------------------------------------
-
   //  Root Node Children --------------------------------------------------------------------------------------
   const createRootNodeChild = useCallback((node: any, index: any) => {
     const { id, label, name, fill, data } = node
@@ -131,9 +159,9 @@ export const GraphProvider = ({
         ...data,
         label: title,
         fill,
+        parentId: `${data.type}-root-node`,
       },
       type: 'entityNode',
-      // parentId: `${data.type}-root-node`,
     }
   }, [])
 
@@ -148,7 +176,7 @@ export const GraphProvider = ({
 
   const addRootNodeChildren = useCallback(
     (type: any) => {
-      const { nodes: incomingNodes } = flowGraph[type]
+      const { nodes: incomingNodes } = graph[type]
       const total = incomingNodes.length
       const parentNodePosition = ROOT_NODE_POSITIONS[type]
       const parentWidth = ROOT_NODE_WIDTH
@@ -175,8 +203,99 @@ export const GraphProvider = ({
 
       addNodes(positionedNodes)
       addEdges(incomingEdges)
+      return {
+        nodes: positionedNodes,
+      }
     },
-    [addEdges, addNodes, createRootNodeEdges, flowGraph] // runForceSimulation
+    [addEdges, addNodes, createRootNodeEdges, graph] // runForceSimulation
+  )
+  type NodePosition = {
+    position: {
+      x: number
+      y: number
+    }
+  }
+
+  const assignPositionsToChildNodes = useCallback(
+    (parentNode: NodePosition, childNodes: any[]): any[] => {
+      let currentX = parentNode.position.x
+      let currentY = parentNode.position.y + ROOT_DIMENSIONS.height + PADDING
+
+      return childNodes.map((childNode) => {
+        const positionedNode = {
+          ...childNode,
+          position: screenToFlowPosition({ x: currentX, y: currentY }),
+        }
+
+        currentX += CHILD_DIMENSIONS.width + PADDING
+        if (currentX + CHILD_DIMENSIONS.width > parentNode.position.x + 500) {
+          // Adjust this value if needed for different layouts
+          currentX = parentNode.position.x
+          currentY += CHILD_DIMENSIONS.height + PADDING
+        }
+
+        return positionedNode
+      })
+    },
+    [screenToFlowPosition]
+  )
+
+  const getRootNodeChildren = useCallback(
+    (type: any) => {
+      const source: any = `${type}-root-node`
+      console.log('source: ', source)
+      const nodeState = rootNodeState[source]
+      console.log('nodeState: ', nodeState)
+      const { lastIndex } = nodeState
+      // #TODO - add handling for if batch size is greater than remaining child nodes
+      const childNodes = graph[type].nodes.slice(
+        lastIndex,
+        lastIndex + childNodeBatchSize
+      )
+      console.log('childNodes: ', childNodes)
+      console.log('childNodes length ', childNodes.length)
+
+      const parentNodePosition = ROOT_NODE_POSITIONS[type]
+      const parentNode = {
+        position: {
+          ...parentNodePosition,
+        },
+      }
+
+      const positionedNodes = assignPositionsToChildNodes(
+        parentNode,
+        childNodes
+      )
+      console.log('positionedNodes: ', positionedNodes)
+
+      const incomingEdges = createRootNodeEdges(positionedNodes, source)
+      updateChildNodeBatchIndex(source)
+      const rootNode: any = getNode(source)
+      const initialRootNodes = [
+        ...getNodes().filter((node) => node.id !== rootNode.id),
+        {
+          ...rootNode,
+          data: {
+            ...rootNode.data,
+            handles: incomingEdges.map((edge) => edge.sourceHandle),
+          },
+        },
+      ]
+      setNodes((nds: any) => [...initialRootNodes, ...positionedNodes])
+      setEdges(incomingEdges)
+      return {
+        childNodes,
+        edges: incomingEdges,
+      }
+    },
+    [
+      assignPositionsToChildNodes,
+      createRootNodeEdges,
+      getNode,
+      getNodes,
+      graph,
+      rootNodeState,
+    ] // runForceSimulation
   )
 
   //  Graph State Functions --------------------------------------------------------------------------------------
@@ -201,9 +320,9 @@ export const GraphProvider = ({
   useEffect(() => {
     const formattedGraphNodesObject: any = {}
 
-    for (let key in graph) {
+    for (let key in graph3d) {
       // @ts-ignore
-      const graphModel = graph[key]
+      const graphModel = graph3d[key]
 
       let tempNodes = graphModel.nodes.map(createRootNodeChild)
       let tempLinks = [].concat(
@@ -219,12 +338,13 @@ export const GraphProvider = ({
       }
     }
 
-    setFlowGraph(formattedGraphNodesObject)
+    setGraph(formattedGraphNodesObject)
 
-    const initialNodes = graph.root.nodes.map(createRootNode)
-    setNodes(initialNodes)
+    const IN = graph3d.root.nodes.map(createRootNode)
+    setNodes(IN)
+    setInitialNodes(IN)
     setEdges([])
-  }, [createRootNode, createRootNodeChild, graph])
+  }, [createRootNode, createRootNodeChild, graph3d])
 
   return (
     <GraphContext.Provider
@@ -234,8 +354,9 @@ export const GraphProvider = ({
         updateNodes,
         edges,
         setEdges,
-        flowGraph,
+        graph,
         createRootNodeEdges,
+        getRootNodeChildren,
         onNodesChange,
         onEdgesChange,
         onConnect,
@@ -243,11 +364,11 @@ export const GraphProvider = ({
         fitView,
         setNodes,
         getEdges,
+        initialNodes,
         store,
       }}
     >
       {children}
-      <ViewportChangeLogger />
     </GraphContext.Provider>
   )
 }
