@@ -7,7 +7,14 @@ import {
 } from '@/components/ui/backgrounds'
 import { nodeTypes } from '@/features/graph/utils/node-types'
 
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import {
   ReactFlow,
   Controls,
@@ -16,7 +23,9 @@ import {
   type NodeOrigin,
   useReactFlow,
   useStore,
+  MiniMap,
 } from '@xyflow/react'
+import { getLayoutedElements } from '@/features/graph/layouts/algorithms/elk-layout.ts'
 import '@xyflow/react/dist/style.css'
 
 import * as d3 from 'd3'
@@ -28,6 +37,12 @@ import { useExpandCollapse } from '@/features/graph/hooks/useExpandCollapse'
 import { DevTools } from '@/features/graph/loggers/dev-tools'
 import { useGraph } from '@/providers/graph-context'
 import { useForceLayout } from '@/features/graph/hooks/useForceLayout'
+import { useRootNodesHierarchy } from '@/features/graph/hooks/useRootNodesHierarchy'
+
+import { nextTick } from '@/utils'
+import { useAutoLayoutAlternative } from '@/features/graph/hooks/useAutoLayoutAlt'
+import { defaultLayoutConfig } from './layouts/algorithms/index'
+import { Toolbar } from '@/components/toolbar'
 
 // .force('center', forceCenter())
 // .force('collide', collide())
@@ -130,15 +145,21 @@ export function Graph(props: any) {
     addRootNodeChildren,
     onEdgesChange,
     setNodes,
+    setEdges,
     onConnect,
     fitView,
+    initialNodes,
+    getRootNodeChildren,
   } = useGraph()
+  const reactFlow = useReactFlow()
 
+  console.log('nodes: ', nodes)
   const nodeOrigin: NodeOrigin = [0.5, 0.5]
   const edgeOptions = {
     animated: true,
     style: { stroke: 'white' },
   }
+
   // const simulationRef: any = useRef<d3.Simulation<any, undefined>>(null)
 
   // useEffect(() => {
@@ -181,55 +202,93 @@ export function Graph(props: any) {
   //   return () => simulationRef.current?.stop()
   // }, [simulationRef, nodes, edges, setNodes])
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     simulationRef.current.force(
-  //       'center',
-  //       d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)
-  //     )and
-  //     simulationRef.current.restart() // Restart simulation to apply the new force
-  //   }
+  // const { layout, layouting } = useAutoLayoutAlternative()
 
-  //   window.addEventListener('resize', handleResize)
+  const [childrenLoaded, setChildrenLoaded] = useState(false)
+  const [children, setChildren] = useState([])
 
-  //   return () => window.removeEventListener('resize', handleResize)
-  // }, [])
-
-  // useEffect(() => {
-  //   const simulation: any = createForceDirectedSimulation(nodes, edges)
-  //   if (simulation) {
-  //     simulation.nodes(nodes).on('tick', () => {
-  //       const forceDirectedNodes = nodes.map((forceDirectedNode: any) => {
-  //         console.log('forceDirectedNode: ', forceDirectedNode)
-  //         return {
-  //           ...forceDirectedNode,
-  //           position: {
-  //             x: Math.round(forceDirectedNode.position.x),
-  //             y: Math.round(forceDirectedNode.position.y),
-  //           },
-  //         }
-  //       })
-  //       setNodes(forceDirectedNodes)
-  //     })
-
-  //     simulation.force('link').links(edges)
-  //   }
-
-  //   return () => (simulation ? simulation.stop() : null)
-  // }, [edges, nodes, setNodes])
-  // useExpandCollapse(nodes, edges)
-  // useForceLayout()
-  // useForceLayout()
   console.count('graph render: ')
+  const treeWidth = 220
+  const treeHeight = 100
+
   const onNodeClick: any = useCallback(
     (args: any, node: any, ...rest: any) => {
-      addRootNodeChildren(node?.data.type)
+      getRootNodeChildren(node?.data.type)
+      // addRootNodeChildren
+      // setChildren(kidNodes)
       // simulation.tick()
+      // nextTick(10).then(() => {
+      //   setChildrenLoaded(true)
+      // })
       // toggle()
     },
-    [addRootNodeChildren]
+    [getRootNodeChildren]
   )
-  useForceLayout()
+  // useForceLayout(childrenLoaded)
+  // const init = useCallback(
+  //   async (nodes: any, edges: any) => {
+  //     const data = layout({
+  //       ...defaultLayoutConfig,
+  //       nodes,
+  //       edges,
+  //       algorithm: 'elk-layered',
+  //     }).then((res) => {
+  //       console.log('res: ', res)
+  //       return res
+  //     })
+  //     console.log('data: ', data)
+  //     return data
+  //   },
+  //   [layout]
+  // )
+
+  // useEffect(() => {
+  //   if (nodes && nodes.length) {
+  //     init(nodes, edges)
+  //   }
+  // }, [edges, init, nodes])
+  // const { nodes: visibleNodes, edges: visibleEdges }: any =
+  // useRootNodesHierarchy(nodes, edges, childrenLoaded, {
+  //   treeWidth,
+  //   treeHeight,
+  //   layoutNodes: false,
+  // })
+  // console.log('visibleNodes: ', visibleNodes)
+
+  // useExpandCollapse(nodes, edges)
+
+  // const onLayout = useCallback(() => {
+  //   if (nodes?.length) {
+  //     const opts = { 'elk.direction': 'DOWN' }
+  //     const ns = nodes // useInitialNodes ? initialNode:
+  //     console.log('ns: ', ns)
+  //     const es = edges
+
+  //     getLayoutedElements(ns, es, opts).then((res) => {
+  //       console.log('res: ', res)
+  //       // console.log('layoutedEdges: ', layoutedEdges)
+  //       // console.log('layoutedNodes: ', layoutedNodes)
+  //       // reactFlow.setNodes(layoutedNodes)
+  //       // reactFlow.setEdges(layoutedEdges)
+
+  //       // window.requestAnimationFrame(() => fitView())
+  //     })
+  //   }
+  // }, [nodes, edges])
+
+  // Calculate the initial layout on mount.
+  // useEffect(() => {
+  //   const opts = { 'elk.direction': 'DOWN' }
+  //   getLayoutedElements(nodes, edges, opts).then((res) => {
+  //     console.log('res: ', res)
+  //     // console.log('layoutedEdges: ', layoutedEdges)
+  //     // // console.log('layoutedNodes: ', layoutedNodes)
+  //     // setNodes(res?.nodes)
+  //     // setEdges(res?.edges)
+
+  //     // window.requestAnimationFrame(() => fitView())
+  //   })
+  // }, [edges, nodes, reactFlow, ])
 
   return (
     <div className='relative h-[100vh] w-[100vw]'>
@@ -242,24 +301,22 @@ export function Graph(props: any) {
           nodeTypes={nodeTypes}
           // edgeTypes={{
           //   entityEdge: EntityEdge,
-          // }}
-          defaultViewport={{
-            zoom: 0,
-            x: 0,
-            y: 0,
-          }}
+
           defaultEdgeOptions={edgeOptions}
           nodes={nodes}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
-          nodeOrigin={nodeOrigin}
           onNodeClick={onNodeClick}
           onConnect={onConnect}
         >
+          <div className='w-full absolute top-10 left-0 z-20 cursor-pointer flex justify-center'>
+            <Toolbar />
+          </div>
           <Background />
           <Controls showInteractive={false} />
           <DevTools />
+          <MiniMap />
         </ReactFlow>
       </DotGridBackgroundBlack>
     </div>

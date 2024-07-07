@@ -62,6 +62,7 @@ import {
   DotGridBackgroundBlack,
 } from '@/components/ui/backgrounds'
 import { RootNodeCard } from '@/components/ui/card/root-node-card'
+import { motion } from 'framer-motion'
 // import { useLayoutedElements } from '@/features/graph/graph'
 
 export function CommandDemo() {
@@ -109,49 +110,36 @@ export type NodeProps<T = any> = {
   sourcePosition?: Position
 }
 
-const RN = (props: any) => {
-  // const { addRootNodeChildren, nodes, edges } = useGraph()
-  //
-  //
-  // const [clicked, setClicked] = useState(false)
-
+const RN = (node: any) => {
   const updateNodeInternals = useUpdateNodeInternals()
-  updateNodeInternals(props.id)
-  //
+  const [handles, setHandles] = useState([])
 
-  const { data, ...rest }: any = props
-  //
+  useEffect(() => {
+    if (node?.data.handles && node.data.handles.length) {
+      const { data } = node
+      console.log('data: ', data)
 
-  // const [handles, setHandles] = useState([])
-
-  // const onClick = (type: any) => {
-  //   addRootNodeChildren(type)
-
-  //   setClicked(true)
-  // }
-  // useEffect(() => {
-  //   if (clicked && edges?.length) {
-  //     const nodeEdges = edges.filter((edge) => edge.id.includes(data.type))
-  //
-  //     setHandles(nodeEdges)
-  //   }
-  // }, [clicked, data, edges])
+      setHandles(data.handles)
+      updateNodeInternals(node.id)
+    }
+  }, [node, updateNodeInternals])
 
   return (
     <>
-      {Array.from({ length: props.data.childCount }).map((_, index) => (
-        <Handle
-          key={index}
-          type='source'
-          position={Position.Bottom}
-          id={`handle:${index}`}
-          isConnectable={true}
-        />
-      ))}
-
-      <div className='relative'>
-        <RootNodeCard nodeData={{ ...data, ...rest }} />
-      </div>
+      <motion.div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative w-fit h-fit'>
+        {handles && handles?.length
+          ? handles.map((id, index) => (
+              <Handle
+                key={id}
+                type='source'
+                position={Position.Bottom}
+                id={id}
+                isConnectable={true}
+              />
+            ))
+          : null}
+        <RootNodeCard nodeData={node} />
+      </motion.div>
     </>
   )
 }

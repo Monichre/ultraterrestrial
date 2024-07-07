@@ -59,11 +59,6 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
     links: [],
   })
 
-  const transformData
-  useEffect(() => {
-
-  }, [models])
-
   const [nodes, edges, links] = useMemo(() => {
     const tempNodes = [...rootNodes]
     const tempEdges: any = []
@@ -87,10 +82,10 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
           target: id,
           id: `${rootNode.id}->${id}`,
         })
-           tempLinks.push({
-        source: rootNode.id,
-        target: id,
-      })
+        tempLinks.push({
+          source: rootNode.id,
+          target: id,
+        })
       })
     }
 
@@ -113,7 +108,7 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
         id: edge.id,
         color: '#fff',
       })
-         tempLinks.push({
+      tempLinks.push({
         source: edge.topic,
         target: edge['subject-matter-expert'],
       })
@@ -129,7 +124,7 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
       })
       tempLinks.push({
         source: event,
-        target
+        target,
       })
     })
 

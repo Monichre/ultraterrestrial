@@ -28,6 +28,7 @@
   }
 
   .dark {
+    /* old */
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
     --card: 224 71.4% 4.1%;
@@ -52,6 +53,30 @@
   
 }
 
+/* 
+Cool effect 
+ demo: https://github.com/Monichre/LineTextHoverAnimations/blob/main/css/base.css
+ code: https://tympanus.net/Development/LineTextHoverAnimations/index.html
+ "JetBrains Mono", monospace
+body::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-image: repeating-linear-gradient(transparent, transparent 2px, #0000003d 3px);
+	background-size: auto 100%;
+	pointer-events: none;
+}
+
+.root 
+--color-bg-effect: white;
+--blendmode-effect: difference;
+--bg-blur: 0px;
+
+
+*/
 * {
   @apply border-border;
 }
@@ -70,6 +95,10 @@ body {
 
     @apply bg-gradient-to-b from-card/50 to-secondary/20;
    }
+
+   .bg-dot {
+
+   }
   
  }
 
@@ -80,20 +109,122 @@ body {
   }
   
  }
-
- @font-face {
+/* //  -------------------------------------------------------------------------------------- */
+@font-face {
   font-family: 'Futura';
-  src: url('/_fonts/futura/futura.ttf');
+  font-style: normal;
+  src: url('/src/app/_fonts/futura/futura.ttf');
+  font-weight: 400;
+  /* Add more font formats and sources if needed */
+}
+@font-face {
+  font-family: 'Futura';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/src/app/_fonts/futura/futura medium bt.ttf');
   /* Add more font formats and sources if needed */
 }
 
 
-
-
-foreignObject {
-  box-sizing: border-box;
-  font-family: sans-serif;
+@font-face {
+  font-family: 'Futura';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/src/app/_fonts/futura/futura-bold.ttf');
+  /* Add more font formats and sources if needed */
 }
+
+@font-face {
+  font-family: 'Futura';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/src/app/_fonts/futura/Futura Light font.ttf');
+  /* Add more font formats and sources if needed */
+}
+
+@font-face {
+  font-family: 'Futura';
+  font-style: normal;
+  font-weight: 900;
+  src: url('/src/app/_fonts/futura/futura-black.ttf');
+  /* Add more font formats and sources if needed */
+}
+
+@font-face {
+  font-family: 'Futura';
+  font-style: normal;
+  font-weight: 900;
+  src: url('/src/app/_fonts/futura/futura-black.ttf');
+  /* Add more font formats and sources if needed */
+}
+
+
+/* //  -------------------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Brandbe';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/src/app/_fonts/Brandbe.otf');
+  /* Add more font formats and sources if needed */
+}
+
+/* //  -------------------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Eirene Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/src/app/_fonts/Eirene-Sans-Font-Family/EireneSans-Regular.otf');
+  /* Add more font formats and sources if needed */
+}
+
+@font-face {
+  font-family: 'Centima Sans';
+  font-style: normal;
+  font-weight: bold;
+  src: url('/src/app/_fonts/centima/CentimaProSans-Bold.woff');
+  /* Add more font formats and sources if needed */
+}
+@font-face {
+  font-family: 'Centima Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/src/app/_fonts/centima/CentimaProSans.woff');
+  /* Add more font formats and sources if needed */
+}
+@font-face {
+  font-family: 'Centima';
+  font-style: normal;
+  font-weight: bold;
+  src: url('/src/app/_fonts/centima/Centima-Mono-W01-Bold.woff');
+  /* Add more font formats and sources if needed */
+}
+
+@font-face {
+  font-family: 'Stellar';
+  font-style: normal;
+  font-weight: light;
+  src: url('./_fonts/stellar/PPStellar-Light.woff');
+  
+}
+@font-face {
+  font-family: 'Stellar';
+  font-style: normal;
+  font-weight: bold;
+  src: url('./_fonts/stellar/PPStellar-Bold.woff');
+  
+}
+
+@font-face {
+  font-family: 'Brandbe';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./_fonts/Brandbe.otf');
+  /* Add more font formats and sources if needed */
+}
+
+
+/* //  -------------------------------------------------------------------------------------- */
 
 body {
   /* background-image: url('https://user-images.githubusercontent.com/26748614/96337246-f14d4580-1085-11eb-8793-a86d929e034d.jpg'); */

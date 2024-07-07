@@ -9,50 +9,34 @@ import { PlusIcon } from 'lucide-react'
 
 export function Toolbar() {
   return (
-    <div className='flex items-center justify-between rounded-full bg-zinc-800 p-2 max-w-max'>
-      <div className='flex space-x-2 border-r border-zinc-600 pr-1'>
+    <div className='flex shadow items-center justify-between rounded-full p-1 max-w-max m-auto border border-white/80 dark:border-neutral-700/80 text-neutral-500 bg-gradient-to-b from-card/70 rounded-[calc(var(--radius)-2px)]'>
+      <div className='flex  border-r border-zinc-600 pr-1'>
         <Button
           variant='ghost'
           size='icon'
           className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100'
         >
-          <MessageCircleIcon className='h-6 w-6 stroke-1' />
+          <MessageCircleIcon className='h-5 w-5 stroke-1' />
           <span className='sr-only'>Create a comment</span>
         </Button>
-        <div className='relative'>
-          <Button
-            variant='ghost'
-            size='icon'
-            className='text-zinc-100 relative rounded-full hover:bg-gray-600 hover:text-zinc-100'
-          >
-            <InboxIcon className='h-6 w-6 stroke-1' />
-            <span className='sr-only'>Open inbox</span>
-            <span className='absolute top-2 right-2 block h-2 w-2 rounded-full bg-blue-500' />
-          </Button>
-        </div>
+
         <Button
           variant='ghost'
           size='icon'
           className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100'
         >
-          <LayersIcon className='h-6 w-6 stroke-1' />
+          <LayersIcon className='h-5 w-5 stroke-1' />
           <span className='sr-only'>Edit</span>
         </Button>
       </div>
-      <div className='flex space-x-2 border-r border-zinc-600 px-3'>
-        <PlusIcon className='h-7 w-7 text-black dark:text-neutral-900' />
 
-        <div className='relative'>
-          <OpenAILogo />
-        </div>
-      </div>
-      <div className='flex items-center justify-center space-x-2 pl-1'>
+      <div className='flex items-center justify-center'>
         <Button
           variant='ghost'
           size='icon'
           className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100'
         >
-          <ShareIcon className='h-6 w-6 stroke-1' />
+          <ShareIcon className='h-5 w-5 stroke-1' />
           <span className='sr-only'>Open share UI</span>
         </Button>
         <Button
@@ -60,7 +44,7 @@ export function Toolbar() {
           size='icon'
           className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100'
         >
-          <MenuIcon className='h-6 w-6 stroke-1' />
+          <MenuIcon className='h-5 w-5 stroke-1' />
           <span className='sr-only'>Open menu</span>
         </Button>
       </div>

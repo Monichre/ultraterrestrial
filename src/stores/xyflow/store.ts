@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { create } from 'zustand'
 import {
   applyEdgeChanges,
@@ -11,15 +13,19 @@ import {
   OnConnectStartParams,
   ReactFlowInstance,
   Viewport,
-} from 'reactflow'
+} from '@xyflow/react'
 import Graph from 'graphology'
 
-import { findLeafNodes, generateEdges, generateNodes } from '@/utils/node'
 import {
   MouseEvent as ReactMouseEvent,
   RefObject,
   TouchEvent as ReactTouchEvent,
 } from 'react'
+import {
+  findLeafNodes,
+  generateNodes,
+  generateEdges,
+} from '@/features/graph/utils/node.utils'
 
 // import { nextId } from '@/utils/id'
 // import { getConfigKey, loadMapData, updateConfig } from '@/utils/storage'

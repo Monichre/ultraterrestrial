@@ -12,7 +12,6 @@ import {
   testimoniesRootNode,
 } from '../graph/root-nodes'
 import { getXataClient } from './client'
-import { writeLogToFile } from '../../utils/write-log'
 const xata = getXataClient()
 
 export type NetworkGraphPayload = {

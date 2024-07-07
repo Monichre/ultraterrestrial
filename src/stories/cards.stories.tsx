@@ -2,7 +2,7 @@ import { Card } from '@/components/ui/card/card'
 import {
   MindMapEntityCard,
   type MindMapEntityCardProps,
-} from '@/components/ui/card/mindmap-entity-card'
+} from '@/components/ui/card/entity-card'
 import { RootNodeCard } from '@/components/ui/card/root-node-card'
 import { StarsCard, type StarsCardProps } from '@/components/ui/card/stars-card'
 import type { StoryObj } from '@storybook/react'
@@ -41,5 +41,21 @@ export const CardStory = {
 }
 
 export const MindMapEntityCardStory: Story = {
-  render: (args) => <MindMapEntityCard {...args} />,
+  render: (args: any) => (
+    <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'>
+      <MindMapEntityCard {...args} />
+    </div>
+  ),
+  args: {
+    data: {
+      name: 'Roswell UFO Sighting',
+      date: '2/5/1947',
+      location: 'Roswell, New Mexico',
+      photos: [
+        {
+          src: '/foofighters.webp',
+        },
+      ],
+    },
+  },
 }

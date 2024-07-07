@@ -6,7 +6,7 @@ import { JSONData } from '@xata.io/client'
 import type { NetworkGraphPayload } from '@/lib/xata/get-entity-network-graph-data'
 // https://github.com/vasturiano/react-force-graph/blob/master/example/custom-node-shape/index-three.html
 
-export const EntityNetworkGraph: FC<any> = ({
+export const EntityNetworkGraph3D: FC<any> = ({
   graphData,
 }: JSONData<NetworkGraphPayload>) => {
   console.log('graphData: ', graphData)

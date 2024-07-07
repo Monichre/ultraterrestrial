@@ -12,20 +12,19 @@ const tables = [
     columns: [
       { name: "name", type: "string" },
       { name: "summary", type: "text" },
+      { name: "photo", type: "file", file: { defaultPublicAccess: true } },
     ],
     revLinks: [
       { column: "topic", table: "topic-subject-matter-experts" },
-      { column: "topic", table: "event-topic-subject-matter-experts" },
       { column: "topic", table: "topics-testimonies" },
+      { column: "topic", table: "event-topic-subject-matter-experts" },
     ],
   },
   {
     name: "personnel",
     columns: [
-      { name: "name", type: "string" },
       { name: "bio", type: "text" },
       { name: "role", type: "string" },
-      { name: "picture", type: "text" },
       { name: "facebook", type: "string" },
       { name: "twitter", type: "string" },
       { name: "website", type: "string" },
@@ -34,6 +33,7 @@ const tables = [
       { name: "rank", type: "int" },
       { name: "credibility", type: "int" },
       { name: "popularity", type: "int" },
+      { name: "name", type: "string", unique: true },
     ],
     revLinks: [
       { column: "member", table: "organization-members" },
@@ -45,11 +45,11 @@ const tables = [
         column: "subject-matter-expert",
         table: "topic-subject-matter-experts",
       },
+      { column: "witness", table: "testimonies" },
       {
         column: "subject-matter-expert",
         table: "event-topic-subject-matter-experts",
       },
-      { column: "witness", table: "testimonies" },
     ],
   },
   {
@@ -65,8 +65,8 @@ const tables = [
     ],
     revLinks: [
       { column: "event", table: "event-subject-matter-experts" },
-      { column: "event", table: "event-topic-subject-matter-experts" },
       { column: "event", table: "testimonies" },
+      { column: "event", table: "event-topic-subject-matter-experts" },
     ],
   },
   {
@@ -127,18 +127,6 @@ const tables = [
     ],
   },
   {
-    name: "event-topic-subject-matter-experts",
-    columns: [
-      { name: "event", type: "link", link: { table: "events" } },
-      {
-        name: "subject-matter-expert",
-        type: "link",
-        link: { table: "personnel" },
-      },
-      { name: "topic", type: "link", link: { table: "topics" } },
-    ],
-  },
-  {
     name: "testimonies",
     columns: [
       { name: "claim", type: "text" },
@@ -146,6 +134,7 @@ const tables = [
       { name: "summary", type: "text" },
       { name: "witness", type: "link", link: { table: "personnel" } },
       { name: "documentation", type: "file[]" },
+      { name: "date", type: "datetime" },
     ],
     revLinks: [{ column: "testimony", table: "topics-testimonies" }],
   },
@@ -163,6 +152,30 @@ const tables = [
       { name: "content", type: "text" },
       { name: "embedding", type: "vector", vector: { dimension: 1536 } },
       { name: "title", type: "string" },
+    ],
+  },
+  {
+    name: "locations",
+    columns: [
+      { name: "name", type: "string" },
+      { name: "coordinates", type: "string" },
+      { name: "google-maps-location-id", type: "text" },
+      { name: "city", type: "string" },
+      { name: "state", type: "string" },
+      { name: "latitude", type: "float" },
+      { name: "longitude", type: "float" },
+    ],
+  },
+  {
+    name: "event-topic-subject-matter-experts",
+    columns: [
+      { name: "event", type: "link", link: { table: "events" } },
+      { name: "topic", type: "link", link: { table: "topics" } },
+      {
+        name: "subject-matter-expert",
+        type: "link",
+        link: { table: "personnel" },
+      },
     ],
   },
 ] as const;
@@ -198,11 +211,6 @@ export type TopicSubjectMatterExpertsRecord = TopicSubjectMatterExperts &
 export type OrganizationMembers = InferredTypes["organization-members"];
 export type OrganizationMembersRecord = OrganizationMembers & XataRecord;
 
-export type EventTopicSubjectMatterExperts =
-  InferredTypes["event-topic-subject-matter-experts"];
-export type EventTopicSubjectMatterExpertsRecord =
-  EventTopicSubjectMatterExperts & XataRecord;
-
 export type Testimonies = InferredTypes["testimonies"];
 export type TestimoniesRecord = Testimonies & XataRecord;
 
@@ -211,6 +219,14 @@ export type TopicsTestimoniesRecord = TopicsTestimonies & XataRecord;
 
 export type Documents = InferredTypes["documents"];
 export type DocumentsRecord = Documents & XataRecord;
+
+export type Locations = InferredTypes["locations"];
+export type LocationsRecord = Locations & XataRecord;
+
+export type EventTopicSubjectMatterExperts =
+  InferredTypes["event-topic-subject-matter-experts"];
+export type EventTopicSubjectMatterExpertsRecord =
+  EventTopicSubjectMatterExperts & XataRecord;
 
 export type DatabaseSchema = {
   topics: TopicsRecord;
@@ -221,10 +237,11 @@ export type DatabaseSchema = {
   "event-subject-matter-experts": EventSubjectMatterExpertsRecord;
   "topic-subject-matter-experts": TopicSubjectMatterExpertsRecord;
   "organization-members": OrganizationMembersRecord;
-  "event-topic-subject-matter-experts": EventTopicSubjectMatterExpertsRecord;
   testimonies: TestimoniesRecord;
   "topics-testimonies": TopicsTestimoniesRecord;
   documents: DocumentsRecord;
+  locations: LocationsRecord;
+  "event-topic-subject-matter-experts": EventTopicSubjectMatterExpertsRecord;
 };
 
 const DatabaseClient = buildClient();

@@ -13,25 +13,29 @@ export const ROOT_NODE_POSITIONS: any = {
     y: 0,
   },
   topics: {
-    x: 300,
+    x: 500,
     y: 0,
   },
   personnel: {
-    x: 600,
+    x: 1000,
     y: 0,
   },
   testimonies: {
-    x: 900,
+    x: 1500,
     y: 0,
   },
   organizations: {
-    x: 1200,
+    x: 2000,
     y: 0,
   },
 }
 
 // !TODO: Make this responsive
 
-export const ROOT_NODE_WIDTH = 280
-export const ROOT_NODE_HEIGHT = 300
-export const NODE_SPACE = 300
+export const ROOT_NODE_WIDTH = 148
+export const ROOT_NODE_HEIGHT = 129
+export const NODE_SPACE = 100
+
+export const ROOT_DIMENSIONS = { width: 148, height: 129 }
+export const CHILD_DIMENSIONS = { width: 200, height: 100 }
+export const PADDING = 100

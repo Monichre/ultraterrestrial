@@ -8,19 +8,22 @@ import { useReactFlow } from '@xyflow/react'
 import { nextTick } from '@/utils'
 import { getRootNode } from '@/features/graph/utils/node.utils'
 
-export const useAutoLayout = () => {
-  const reactFlow = useReactFlow()
-  const layoutWithFlush = async (options: ILayoutReactflow) => {
-    const layoutInitial: any = await layoutReactflow(options)
-    reactFlow.setNodes(layoutInitial.nodes)
-    reactFlow.setEdges(layoutInitial.edges)
+export const layoutWithFlush = async (
+  reactFlow: any,
+  options: ILayoutReactflow
+) => {
+  const layout = await layoutReactflow(options)
+  reactFlow.setNodes(layout.nodes)
+  reactFlow.setEdges(layout.edges)
+  // Wait for render to complete
+  await nextTick(10)
+  const nodes = reactFlow.getNodes()
+  const edges = reactFlow.getEdges()
+  return { layout, nodes, edges }
+}
 
-    // Wait for render to complete
-    await nextTick(10)
-    const nodes = reactFlow.getNodes()
-    const edges = reactFlow.getEdges()
-    return { layout: layoutInitial, nodes, edges }
-  }
+export const useAutoLayoutAlternative = () => {
+  const reactFlow = useReactFlow()
 
   const [layouting, setLayouting] = useState(false)
 
@@ -32,21 +35,24 @@ export const useAutoLayout = () => {
 
     setLayouting(true)
     // Perform the first layout to acquire node sizes
-    const firstLayout: any = await layoutWithFlush({
+    const firstLayout: any = await layoutWithFlush(reactFlow, {
       ...options,
       visibility: 'hidden', // Hide layout during the first layout pass
     })
     // Perform the second layout using actual node sizes
-    const secondLayout: any = await layoutWithFlush({
+    const secondLayout: any = await layoutWithFlush(reactFlow, {
       visibility: 'visible',
       ...options,
       nodes: firstLayout.nodes ?? options.nodes,
       edges: firstLayout.edges ?? options.edges,
     })
+    console.log('secondLayout: ', secondLayout)
+    console.log('secondLayout: ', secondLayout)
     setLayouting(false)
 
     // Center the viewpoint to the position of the root node
     const root = getRootNode(secondLayout.layout.nodes)
+    console.log('getRootNode: ', getRootNode)
     // Give it a little offset so it's visually centered
     const offset = isHorizontal
       ? {

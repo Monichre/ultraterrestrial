@@ -66,7 +66,9 @@ export const layoutReactflow = async (
 ): Promise<Reactflow> => {
   const config = { ...defaultLayoutConfig, ...removeEmpty(options) }
   const { nodes = [], edges = [] } = config
+  console.log('edges: ', edges)
   const layout = layoutAlgorithms[config.algorithm]
+  console.log('layout: ', layout)
   let result = await layout({ ...config, nodes, edges })
   if (!result) {
     // If the layout fails, fallback to the origin layout
