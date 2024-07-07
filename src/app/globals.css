@@ -53,30 +53,8 @@
   
 }
 
-/* 
-Cool effect 
- demo: https://github.com/Monichre/LineTextHoverAnimations/blob/main/css/base.css
- code: https://tympanus.net/Development/LineTextHoverAnimations/index.html
- "JetBrains Mono", monospace
-body::after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	background-image: repeating-linear-gradient(transparent, transparent 2px, #0000003d 3px);
-	background-size: auto 100%;
-	pointer-events: none;
-}
-
-.root 
---color-bg-effect: white;
---blendmode-effect: difference;
---bg-blur: 0px;
 
 
-*/
 * {
   @apply border-border;
 }
@@ -226,11 +204,38 @@ body {
 
 /* //  -------------------------------------------------------------------------------------- */
 
+/* background-image: url('https://user-images.githubusercontent.com/26748614/96337246-f14d4580-1085-11eb-8793-a86d929e034d.jpg'); */
+/* background: radial-gradient(circle at center, #004d4d, #003333, #001919); */
 body {
-  /* background-image: url('https://user-images.githubusercontent.com/26748614/96337246-f14d4580-1085-11eb-8793-a86d929e034d.jpg'); */
-  background: radial-gradient(circle at center, #004d4d, #003333, #001919);
+background-color: #fff;
+  /* background-color: #0a0a0a; */
+  /* background-image: radial-gradient(ellipse 80% 80% at 50% -20%,rgba(120,119,198,0.3),rgba(255,255,255,0)); */
+  
 }
+body::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-image: repeating-linear-gradient(transparent, transparent 2px, #0000003d 3px);
+	background-size: auto 100%;
+	pointer-events: none;
+}
+/* 
+Cool effect 
+ demo: https://github.com/Monichre/LineTextHoverAnimations/blob/main/css/base.css
+ code: https://tympanus.net/Development/LineTextHoverAnimations/index.html
+ "JetBrains Mono", monospace
 
+
+.root 
+--color-bg-effect: white;
+--blendmode-effect: difference;
+--bg-blur: 0px;
+
+*/
 .wordcloud {
   height: 100vh !important;
 }
@@ -270,8 +275,8 @@ h1 {
   text-transform: uppercase;
   background: radial-gradient(
       circle farthest-corner at center center,
-      white,
-      #111
+      #000,
+      #000
     )
     no-repeat;
   -webkit-background-clip: text;

@@ -1,16 +1,12 @@
 'use client'
+import * as React from 'react'
 
-import useCanvasCursor from '@/hooks/useCanvasCursor'
+import AnimatedCursor from 'react-animated-cursor'
 
-export const CanvasCursor = () => {
-  const valuesAlt = ` 2.000  0.000  0.000  0.000  0.000 
-  0.000  2.000  0.000  0.000  0.000 
-  0.000  0.000  2.000  0.000  0.000 
-  0.000  0.000  0.000  1.000  0.000`
+interface BlobCursorProps {}
 
+export const BlobCursor: React.FC<BlobCursorProps> = () => {
   const values = '1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -15'
-  useCanvasCursor()
-
   return (
     <>
       <svg
@@ -18,7 +14,6 @@ export const CanvasCursor = () => {
         xmlns='http://www.w3.org/2000/svg'
         version='1.1'
         width='800'
-        className='fixed'
       >
         <defs>
           <filter id='goo'>
@@ -33,16 +28,22 @@ export const CanvasCursor = () => {
           </filter>
         </defs>
       </svg>
-
-      <canvas
-        className='pointer-events-none fixed inset-0'
-        id='canvas'
-        // style={{
-        //   mixBlendMode: 'difference',
-        //   transformOrigin: 'center center',
-        //   backgroundColor: '#fff',
-        // filter: 'url("#goo")',
+      <AnimatedCursor
+        innerSize={8}
+        outerSize={35}
+        innerScale={1}
+        outerScale={1.7}
+        // color={'#fff'}
+        // innerStyle={{
+        //   backgroundColor: 'red',
         // }}
+        outerAlpha={0.8}
+        outerStyle={{
+          mixBlendMode: 'difference',
+          transformOrigin: 'center center',
+          backgroundColor: '#fff',
+          filter: 'url("#goo")',
+        }}
       />
     </>
   )

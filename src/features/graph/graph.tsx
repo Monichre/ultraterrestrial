@@ -173,7 +173,7 @@ export function Graph(props: any) {
     [getRootNodeChildren]
   )
   // useForceLayout(childrenLoaded)
-
+  // #NOTE: This might be an interesting way to enhance, bypass or hack any trouble with edges as the node connections get more complex: https://magicui.design/docs/components/animated-beam
   return (
     <div className='relative h-[100vh] w-[100vw]'>
       <DotGridBackgroundBlack>

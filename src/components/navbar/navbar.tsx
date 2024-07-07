@@ -9,6 +9,37 @@ import {
 import { cn } from '@/utils/cn'
 import Link from 'next/link'
 
+export const HomePageNav = ({ navItems }: any) => {
+  return (
+    <div
+      className={cn(
+        'fixed flex w-full justify-center top-10 inset-x-0 mx-auto z-[5000] p-1'
+      )}
+    >
+      <div className='flex max-w-fit items-center space-between space-x-16 px-4 py-2 m-auto'>
+        {navItems.map((navItem: any, idx: number) => (
+          <Link
+            key={`link=${idx}`}
+            href={navItem.link}
+            className={cn(
+              'relative items-center flex space-x-1 text-black dark:hover:text-neutral-300 hover:text-neutral-500'
+            )}
+          >
+            <span className='block sm:hidden'>{navItem.icon}</span>
+            <span className='hidden sm:block text-sm !font-jetbrains tracking-wide'>
+              {navItem.name}
+            </span>
+          </Link>
+        ))}
+      </div>
+      <button className='border self-end text-sm !font-jetbrains relative border-neutral-200 dark:border-white/[0.2] text-black px-4 py-2 rounded-full'>
+        <span>Login</span>
+        <span className='absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent h-px' />
+      </button>
+    </div>
+  )
+}
+
 export const NavBar = ({
   navItems,
   className,
