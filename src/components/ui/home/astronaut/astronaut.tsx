@@ -52,7 +52,7 @@ export function LetterPullUp(props: any) {
             // initial='initial'
             animate={visible ? 'show' : 'hide'}
             custom={i}
-            className={`text-center font-display text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] text-black`}
+            className={`text-center !font-ailerons text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] text-black`}
           >
             {letter === ' ' ? <span>&nbsp;</span> : letter}
           </motion.h1>

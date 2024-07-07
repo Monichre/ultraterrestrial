@@ -12,7 +12,11 @@ import { CommandDemo } from '@/features/graph/nodes'
 import { cn, capitalize } from '@/utils'
 import { Switch } from '@radix-ui/react-switch'
 import { Button } from '@/components/ui/button'
+import './cards.css'
 
+// animate='show'
+// variants={container}
+// initial='hidden'
 export const RootNodeCard = ({ nodeData }: any) => {
   console.log('nodeData: ', nodeData)
   const {
@@ -24,6 +28,7 @@ export const RootNodeCard = ({ nodeData }: any) => {
     ...rest,
     zIndex: 5000,
   }
+  // 'bg-black',
 
   return (
     <Card
@@ -33,8 +38,8 @@ export const RootNodeCard = ({ nodeData }: any) => {
         'relative',
         'overflow-hidden',
         // '!bg-transparent'
-        'bg-black',
-        `root-node`
+        `root-node`,
+        'bg-dot-white/[0.2]'
       )}
     >
       <DotGridBackgroundBlack />
