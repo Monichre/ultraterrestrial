@@ -233,6 +233,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 40 }}
                 transition={openSpring}
+                className='pb-2'
               >
                 <AnimatedCardContent>
                   {image && (
@@ -245,9 +246,9 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
                       }}
                       alt='Product image'
                       className='aspect-square w-full h-full rounded-md object-cover m-auto'
-                      height={image?.attributes?.height}
+                      height={200}
                       src={image.url}
-                      width={image?.attributes?.width}
+                      width={200}
                     />
                   )}
                 </AnimatedCardContent>

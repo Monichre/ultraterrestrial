@@ -91,7 +91,7 @@ body {
 @font-face {
   font-family: 'Futura';
   font-style: normal;
-  src: url('/src/app/_fonts/futura/futura.ttf');
+  src: url('/fonts/futura/futura.ttf');
   font-weight: 400;
   /* Add more font formats and sources if needed */
 }
@@ -99,7 +99,7 @@ body {
   font-family: 'Futura';
   font-style: normal;
   font-weight: 500;
-  src: url('/src/app/_fonts/futura/futura medium bt.ttf');
+  src: url('/fonts/futura/futura medium bt.ttf');
   /* Add more font formats and sources if needed */
 }
 
@@ -108,7 +108,7 @@ body {
   font-family: 'Futura';
   font-style: normal;
   font-weight: 700;
-  src: url('/src/app/_fonts/futura/futura-bold.ttf');
+  src: url('/fonts/futura/futura-bold.ttf');
   /* Add more font formats and sources if needed */
 }
 
@@ -116,7 +116,7 @@ body {
   font-family: 'Futura';
   font-style: normal;
   font-weight: 300;
-  src: url('/src/app/_fonts/futura/Futura Light font.ttf');
+  src: url('/fonts/futura/Futura Light font.ttf');
   /* Add more font formats and sources if needed */
 }
 
@@ -124,7 +124,7 @@ body {
   font-family: 'Futura';
   font-style: normal;
   font-weight: 900;
-  src: url('/src/app/_fonts/futura/futura-black.ttf');
+  src: url('/fonts/futura/futura-black.ttf');
   /* Add more font formats and sources if needed */
 }
 
@@ -132,7 +132,7 @@ body {
   font-family: 'Futura';
   font-style: normal;
   font-weight: 900;
-  src: url('/src/app/_fonts/futura/futura-black.ttf');
+  src: url('/fonts/futura/futura-black.ttf');
   /* Add more font formats and sources if needed */
 }
 
@@ -143,7 +143,7 @@ body {
   font-family: 'Brandbe';
   font-style: normal;
   font-weight: 700;
-  src: url('/src/app/_fonts/Brandbe.otf');
+  src: url('/fonts/Brandbe.otf');
   /* Add more font formats and sources if needed */
 }
 
@@ -152,7 +152,7 @@ body {
   font-family: 'Eirene Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('/src/app/_fonts/Eirene-Sans-Font-Family/EireneSans-Regular.otf');
+  src: url('/fonts/Eirene-Sans-Font-Family/EireneSans-Regular.otf');
   /* Add more font formats and sources if needed */
 }
 
@@ -160,21 +160,21 @@ body {
   font-family: 'Centima Sans';
   font-style: normal;
   font-weight: bold;
-  src: url('/src/app/_fonts/centima/CentimaProSans-Bold.woff');
+  src: url('/fonts/centima/CentimaProSans-Bold.woff');
   /* Add more font formats and sources if needed */
 }
 @font-face {
   font-family: 'Centima Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('/src/app/_fonts/centima/CentimaProSans.woff');
+  src: url('/fonts/centima/CentimaProSans.woff');
   /* Add more font formats and sources if needed */
 }
 @font-face {
   font-family: 'Centima';
   font-style: normal;
   font-weight: bold;
-  src: url('/src/app/_fonts/centima/Centima-Mono-W01-Bold.woff');
+  src: url('/fonts/centima/Centima-Mono-W01-Bold.woff');
   /* Add more font formats and sources if needed */
 }
 
@@ -182,14 +182,14 @@ body {
   font-family: 'Stellar';
   font-style: normal;
   font-weight: light;
-  src: url('./_fonts/stellar/PPStellar-Light.woff');
+  src: url('/fonts/stellar/PPStellar-Light.woff');
   
 }
 @font-face {
   font-family: 'Stellar';
   font-style: normal;
   font-weight: bold;
-  src: url('./_fonts/stellar/PPStellar-Bold.woff');
+  src: url('/fonts/stellar/PPStellar-Bold.woff');
   
 }
 
@@ -197,7 +197,15 @@ body {
   font-family: 'Brandbe';
   font-style: normal;
   font-weight: 700;
-  src: url('./_fonts/Brandbe.otf');
+  src: url('/fonts/Brandbe.otf');
+  /* Add more font formats and sources if needed */
+}
+
+@font-face {
+  font-family: 'Ailerons';
+  /* font-style: normal;
+  font-weight: bold; */
+  src: url('/fonts/ailerons.woff2');
   /* Add more font formats and sources if needed */
 }
 
@@ -259,7 +267,8 @@ Cool effect
 }
 
 h1 {
-  font-family: var(--font-ailerons);
+  
+  font-family: 'Ailerons';
   /* text-shadow: 1px 1px 1px #ddd; */
   /* font-family: 'Source Sans 3', sans-serif; */
   /* background: #fff; */
@@ -352,5 +361,5 @@ canvas {
 }
 
 a {
-  font-family: 
+  /* font-family:  */
 }

@@ -38,7 +38,7 @@ const config = {
       fontFamily: {
         oswald: ['var(--font-oswald)'],
         source: ['var(--font-source-sans)'],
-        ailerions: ['var(--font-ailerions)'],
+        ailerons: ['var(--font-ailerons)'],
         futura: ['var(--font-futura)'],
         firaCode: ['var(--font-fire-code)'],
         centima: ['var(--font-centima})'],

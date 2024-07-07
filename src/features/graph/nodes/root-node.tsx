@@ -123,10 +123,22 @@ const RN = (node: any) => {
       updateNodeInternals(node.id)
     }
   }, [node, updateNodeInternals])
-
+  const container = {
+    hidden: { opacity: 0, height: 0, width: 0 },
+    show: {
+      opacity: 1,
+      height: 'auto',
+      width: 'auto',
+      transition: {
+        delayChildren: 0.5,
+        type: 'spring',
+        stiffness: 100,
+      },
+    },
+  }
   return (
     <>
-      <motion.div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative w-fit h-fit'>
+      <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative w-fit h-fit'>
         {handles && handles?.length
           ? handles.map((id, index) => (
               <Handle
@@ -139,7 +151,7 @@ const RN = (node: any) => {
             ))
           : null}
         <RootNodeCard nodeData={node} />
-      </motion.div>
+      </div>
     </>
   )
 }

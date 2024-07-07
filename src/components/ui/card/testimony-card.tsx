@@ -90,7 +90,7 @@ export function TestimonyCard({ data }: TestimonyCardProps) {
     <Card
       className={`entity-card shadow relative w-[350px] rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
     >
-      <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative'>
+      <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative p-2'>
         <CardHeader className='flex flex-row items-center align-center justify-between space-y-0 p-2'>
           <h3 className='text-neutral-200'>{animatedClaim}</h3>
 

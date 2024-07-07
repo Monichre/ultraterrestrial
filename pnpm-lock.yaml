@@ -479,6 +479,9 @@ importers:
       twit:
         specifier: ^2.2.11
         version: 2.2.11
+      twitter-api-v2:
+        specifier: ^1.17.1
+        version: 1.17.1
       typescript:
         specifier: 5.5.3
         version: 5.5.3
@@ -488,6 +491,9 @@ importers:
       utc:
         specifier: link:dayjs/plugin/utc
         version: link:dayjs/plugin/utc
+      vaul:
+        specifier: ^0.9.1
+        version: 0.9.1(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       zod:
         specifier: ^3.23.4
         version: 3.23.4
@@ -14912,6 +14918,9 @@ packages:
     resolution: {integrity: sha512-BkdwvZGRVoUTcEBp0zuocuqfih4LB+kEFUWkWJOVBg6pAE9Ebv9vmsYTTrfXleZGf45Bj5H3A1/O9YhF2uSYNg==}
     engines: {node: '>=0.10.0'}
 
+  twitter-api-v2@1.17.1:
+    resolution: {integrity: sha512-eLVetUOGiKalx/7NlF8+heMmtEXBhObP0mS9RFgcgjh5KTVq7SOWaIMIe1IrsAAV9DFCjd6O7fL+FMp6sibQYg==}
+
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -15330,6 +15339,12 @@ packages:
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+
+  vaul@0.9.1:
+    resolution: {integrity: sha512-fAhd7i4RNMinx+WEm6pF3nOl78DFkAazcN04ElLPFF9BMCNGbY/kou8UMhIcicm0rJCNePJP0Yyza60gGOD0Jw==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
 
   verror@1.10.0:
     resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
@@ -34724,6 +34739,8 @@ snapshots:
       mime: 1.6.0
       request: 2.88.2
 
+  twitter-api-v2@1.17.1: {}
+
   type-check@0.4.0:
     dependencies:
       prelude-ls: 1.2.1
@@ -35128,6 +35145,15 @@ snapshots:
   value-equal@1.0.1: {}
 
   vary@1.1.2: {}
+
+  vaul@0.9.1(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      '@radix-ui/react-dialog': 1.0.5(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
 
   verror@1.10.0:
     dependencies:

@@ -28,114 +28,11 @@ import {
 import { getLayoutedElements } from '@/features/graph/layouts/algorithms/elk-layout.ts'
 import '@xyflow/react/dist/style.css'
 
-import * as d3 from 'd3'
-import { ROOT_NODE_WIDTH } from '@/utils/constants/nodes'
-
-import { collide } from '@/features/graph/utils/collide'
-import { EntityEdge } from '@/features/graph/edges/entity-edge'
-import { useExpandCollapse } from '@/features/graph/hooks/useExpandCollapse'
 import { DevTools } from '@/features/graph/loggers/dev-tools'
 import { useGraph } from '@/providers/graph-context'
-import { useForceLayout } from '@/features/graph/hooks/useForceLayout'
-import { useRootNodesHierarchy } from '@/features/graph/hooks/useRootNodesHierarchy'
 
-import { nextTick } from '@/utils'
-import { useAutoLayoutAlternative } from '@/features/graph/hooks/useAutoLayoutAlt'
-import { defaultLayoutConfig } from './layouts/algorithms/index'
 import { Toolbar } from '@/components/toolbar'
 
-// .force('center', forceCenter())
-// .force('collide', collide())
-// .force('y', forceY().y(0).strength(0.05))
-// .force('x', forceX().x(0).strength(0.05))
-
-// const simulation = d3
-//   .forceSimulation(nodes)
-//   .force(
-//     'link',
-//     d3.forceLink(edges).id((d: any) => d.id)
-//   )
-//   .force('charge', d3.forceManyBody().strength(-500))
-//   .force(
-//     'center',
-//     d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)
-//   )
-//   .force('collide', d3.forceCollide().radius(75))
-//   .stop()
-
-// export const useLayoutedElements = () => {
-//   const { getNodes, setNodes, getEdges } = useGraph()
-
-//    useEffect(() => {
-//     let nodes = getNodes().map((node: { position: { x: any; y: any } }) => ({
-//       ...node,
-//       x: node.position.x,
-//       y: node.position.y,
-//     }))
-//     let edges = getEdges().map((edge: any) => edge)
-//     let running = false
-
-//     // If React Flow hasn't initialised our nodes with a width and height yet, or
-//     // if there are no nodes in the flow, then we can't run the simulation!
-
-//     simulation.nodes(nodes).force(
-//       'link',
-//       forceLink(edges)
-//         .id((d: { id: any }) => d.id)
-//         .strength(0.05)
-//         .distance(100)
-//     )
-
-//     // The tick function is called every animation frame while the simulation is
-//     // running and progresses the simulation one step forward each time.
-//     const tick = () => {
-//       getNodes().forEach(
-//         (
-//           node: { id: any; position: { x: any; y: any } },
-//           i: string | number
-//         ) => {
-//           const dragging = Boolean(
-//             document.querySelector(`[data-id="${node.id}"].dragging`)
-//           )
-
-//           // Setting the fx/fy properties of a node tells the simulation to "fix"
-//           // the node at that position and ignore any forces that would normally
-//           // cause it to move.
-//           // @ts-ignore
-//           nodes[i].x = dragging ? node.position.x : null
-//           // @ts-ignore
-//           nodes[i].y = dragging ? node.position.y : null
-//         }
-//       )
-
-//       simulation.tick()
-//       setNodes(
-//         nodes.map((node: { x: any; y: any }) => ({
-//           ...node,
-//           position: { x: node.x, y: node.y },
-//         }))
-//       )
-
-//       window.requestAnimationFrame(() => {
-//         // Give React and React Flow a chance to update and render the new node
-//         // positions before we fit the viewport to the new layout.
-//         // fitView()
-
-//         // If the simulation hasn't be stopped, schedule another tick.
-//         tick()
-//       })
-//     }
-
-//     const toggle = () => {
-//       running = !running
-//       running && window.requestAnimationFrame(tick)
-//     }
-
-//     const isRunning = () => running
-
-//     return { toggle }
-//   }, [getEdges, getNodes, setNodes])
-// }
 export function Graph(props: any) {
   const {
     nodes,
@@ -181,6 +78,9 @@ export function Graph(props: any) {
           className='-top-40 left-0 md:left-60 md:-top-20'
           fill='white'
         />
+        <div className='w-full absolute top-10 left-0 z-20 cursor-pointer flex justify-center'>
+          <Toolbar />
+        </div>
         <ReactFlow
           nodeTypes={nodeTypes}
           // edgeTypes={{
@@ -194,13 +94,10 @@ export function Graph(props: any) {
           onNodeClick={onNodeClick}
           onConnect={onConnect}
         >
-          <div className='w-full absolute top-10 left-0 z-20 cursor-pointer flex justify-center'>
-            <Toolbar />
-          </div>
           <Background />
-          <Controls showInteractive={false} />
-          <DevTools />
-          <MiniMap />
+          {/* <Controls showInteractive={false} /> */}
+          {/* <DevTools /> */}
+          {/* <MiniMap /> */}
         </ReactFlow>
       </DotGridBackgroundBlack>
     </div>

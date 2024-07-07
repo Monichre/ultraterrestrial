@@ -9,7 +9,7 @@ import localFont from 'next/font/local'
 export const centima = localFont({
   src: [
     {
-      path: './centima/Centima-Mono-W01-Bold.woff',
+      path: '/fonts/centima/Centima-Mono-W01-Bold.woff',
       weight: 'bold',
       style: 'normal',
     },
@@ -21,12 +21,12 @@ export const centima = localFont({
 export const centimaSans = localFont({
   src: [
     {
-      path: './centima/CentimaProSans-Bold.woff',
+      path: '/fonts/centima/CentimaProSans-Bold.woff',
       weight: 'bold',
       style: 'normal',
     },
     {
-      path: './centima/CentimaProSans.woff',
+      path: '/fonts/centima/CentimaProSans.woff',
       weight: '400',
       style: 'normal',
     },
@@ -38,12 +38,12 @@ export const centimaSans = localFont({
 export const eirene = localFont({
   src: [
     {
-      path: './Eirene-Sans-Font-Family/EireneSans-Bold.otf',
+      path: '/fonts/Eirene-Sans-Font-Family/EireneSans-Bold.otf',
       weight: 'bold',
       style: 'normal',
     },
     {
-      path: './Eirene-Sans-Font-Family/EireneSans-Regular.otf',
+      path: '/fonts/Eirene-Sans-Font-Family/EireneSans-Regular.otf',
       weight: '400',
       style: 'normal',
     },
@@ -55,12 +55,12 @@ export const eirene = localFont({
 export const stellar = localFont({
   src: [
     {
-      path: './stellar/PPStellar-Bold.woff',
+      path: '/fonts/stellar/PPStellar-Bold.woff',
       weight: 'bold',
       style: 'normal',
     },
     {
-      path: './stellar/PPStellar-Light.woff',
+      path: '/fonts/stellar/PPStellar-Light.woff',
       weight: '300',
       style: 'normal',
     },
@@ -70,26 +70,32 @@ export const stellar = localFont({
 })
 
 export const ailerons = localFont({
-  src: './ailerons.woff2',
+  src: [
+    {
+      path: '/fonts/ailerons.woff2',
+      style: 'normal',
+    },
+  ],
   display: 'swap',
+  weight: '700',
   variable: '--font-ailerons',
 })
 
 export const futura = localFont({
   src: [
     {
-      path: './futura/futura.ttf',
+      path: '/fonts/futura/futura.ttf',
       weight: '400',
       style: 'normal',
     },
     {
-      path: './futura/futura medium bt.ttf',
+      path: '/fonts/futura/futura medium bt.ttf',
       weight: '500',
       style: 'normal',
     },
 
     {
-      path: './futura/Futura Bold font.ttf',
+      path: '/fonts/futura/Futura Bold font.ttf',
       weight: '700',
       style: 'normal',
     },
