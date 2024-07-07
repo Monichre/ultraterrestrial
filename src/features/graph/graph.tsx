@@ -160,115 +160,19 @@ export function Graph(props: any) {
     style: { stroke: 'white' },
   }
 
-  // const simulationRef: any = useRef<d3.Simulation<any, undefined>>(null)
-
-  // useEffect(() => {
-  //   if (!simulationRef.current) {
-  //     simulationRef.current = d3
-  //       .forceSimulation(nodes)
-  //       .force(
-  //         'link',
-  //         d3
-  //           .forceLink(edges)
-  //           .id((d: any) => d.id) // Cast to Node to access the 'id' property
-  //           .distance(100)
-  //       )
-  //       .force('charge', d3.forceManyBody().strength(-500))
-  // .force(
-  //   'center',
-  //   d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)
-  // )
-  // .force('collide', d3.forceCollide().radius(ROOT_NODE_WIDTH / 2))
-  //       .on('tick', () => {
-  //         setNodes((nodes: any) => [
-  //           ...nodes.map((node: any) => ({
-  //             ...node,
-  //             position: {
-  //               x: node.x - ROOT_NODE_WIDTH / 2,
-  //               y: node.y + ROOT_NODE_WIDTH / 2,
-  //             },
-  //           })),
-  //         ])
-  //       })
-  //   }
-
-  //   // Optional: Update simulation with new nodes/edges if they change
-  //   simulationRef.current.nodes(nodes)
-  //   d3.forceLink(simulationRef.current.force('link')).links(edges)
-
-  //   simulationRef.current.tick(150) // Pre-runs the simulation
-
-  //   // Cleanup function to stop the simulation when the component unmounts
-  //   return () => simulationRef.current?.stop()
-  // }, [simulationRef, nodes, edges, setNodes])
-
-  // const { layout, layouting } = useAutoLayoutAlternative()
-
   const [childrenLoaded, setChildrenLoaded] = useState(false)
-  const [children, setChildren] = useState([])
-
-  console.count('graph render: ')
-  const treeWidth = 220
-  const treeHeight = 100
 
   const onNodeClick: any = useCallback(
     (event: any, node: any, ...rest: any) => {
-      console.log('rest: ', rest)
       const { target } = event
-      console.log('target: ', target.classList)
-      console.log('target: ', typeof target)
+      // Ignore any other clicks to the node that are not the load button
       if (target.classList.contains('load-records-button')) {
-        // Your code here
-
         getRootNodeChildren(node?.data.type)
       }
     },
     [getRootNodeChildren]
   )
   // useForceLayout(childrenLoaded)
-
-  // const { nodes: visibleNodes, edges: visibleEdges }: any =
-  // useRootNodesHierarchy(nodes, edges, childrenLoaded, {
-  //   treeWidth,
-  //   treeHeight,
-  //   layoutNodes: false,
-  // })
-  // console.log('visibleNodes: ', visibleNodes)
-
-  // useExpandCollapse(nodes, edges)
-
-  // const onLayout = useCallback(() => {
-  //   if (nodes?.length) {
-  //     const opts = { 'elk.direction': 'DOWN' }
-  //     const ns = nodes // useInitialNodes ? initialNode:
-  //     console.log('ns: ', ns)
-  //     const es = edges
-
-  //     getLayoutedElements(ns, es, opts).then((res) => {
-  //       console.log('res: ', res)
-  //       // console.log('layoutedEdges: ', layoutedEdges)
-  //       // console.log('layoutedNodes: ', layoutedNodes)
-  //       // reactFlow.setNodes(layoutedNodes)
-  //       // reactFlow.setEdges(layoutedEdges)
-
-  //       // window.requestAnimationFrame(() => fitView())
-  //     })
-  //   }
-  // }, [nodes, edges])
-
-  // Calculate the initial layout on mount.
-  // useEffect(() => {
-  //   const opts = { 'elk.direction': 'DOWN' }
-  //   getLayoutedElements(nodes, edges, opts).then((res) => {
-  //     console.log('res: ', res)
-  //     // console.log('layoutedEdges: ', layoutedEdges)
-  //     // // console.log('layoutedNodes: ', layoutedNodes)
-  //     // setNodes(res?.nodes)
-  //     // setEdges(res?.edges)
-
-  //     // window.requestAnimationFrame(() => fitView())
-  //   })
-  // }, [edges, nodes, reactFlow, ])
 
   return (
     <div className='relative h-[100vh] w-[100vw]'>
