@@ -10,6 +10,7 @@ import {
   eventsRootNode,
   personnelRootNode,
   testimoniesRootNode,
+  organizationsRootNode,
 } from '../graph/root-nodes'
 import { getXataClient } from './client'
 const xata = getXataClient()
@@ -20,12 +21,14 @@ export type NetworkGraphPayload = {
     events: Record<string, any>[]
     personnel: Record<string, any>[]
     testimonies: Record<string, any>[]
+    organizations: Record<string, any>[]
   }
   connections: {
     topicsExpertsConnections: Record<string, any>[]
     eventsExpertsConnections: Record<string, any>[]
     eventsTopicsExpertsConnections: Record<string, any>[]
     topicsTestimoniesConnections: Record<string, any>[]
+    organizationsPersonnelConnections: Record<string, any>[]
   }
   graphData: {
     nodes: GraphNode[]
@@ -58,7 +61,7 @@ export const getEntityNetworkGraphData = async () => {
 
   const testimonies = await xata.db.testimonies.getAll()
 
-  // const organizations = await xata.db.organizations.getAll()
+  const organizations = await xata.db.organizations.getAll()
 
   const personnel = await xata.db.personnel
     .select([
@@ -81,6 +84,8 @@ export const getEntityNetworkGraphData = async () => {
   const eventsExpertsConnections =
     await xata.db['event-subject-matter-experts'].getAll()
 
+  const organizationsMembers = await xata.db['organization-members'].getAll()
+
   // This is a 3 way link. How to handle?
   const eventsTopicsExpertsConnections =
     await xata.db['event-topic-subject-matter-experts'].getAll()
@@ -93,7 +98,7 @@ export const getEntityNetworkGraphData = async () => {
     events: events.toSerializable(),
     personnel: personnel.toSerializable(),
     testimonies: testimonies.toSerializable(),
-    // organizations: organizations.toSeriali
+    organizations: organizations.toSerializable(),
   }
 
   const topicsNodes = records.topics.map((record: any) =>
@@ -109,12 +114,17 @@ export const getEntityNetworkGraphData = async () => {
     createGraphNode({ record, type: 'testimonies' })
   )
 
+  const organizationsNodes = records.organizations.map((record: any) =>
+    createGraphNode({ record, type: 'organizations' })
+  )
+
   const nodes = [
     ...rootNodes,
     ...topicsNodes,
     ...eventsNodes,
     ...personnelNodes,
     ...testimoniesNodes,
+    ...organizationsNodes,
   ]
 
   const rootTopicsConnections = topicsNodes.map((target: any) =>
@@ -130,18 +140,24 @@ export const getEntityNetworkGraphData = async () => {
     createGraphLink({ target, source: testimoniesRootNode })
   )
 
+  const rootOrganizationsConnections = organizationsNodes.map((target: any) =>
+    createGraphLink({ target, source: organizationsRootNode })
+  )
+
   const connections = {
     topicsExpertsConnections: topicsExpertsConnections.toSerializable(),
     eventsExpertsConnections: eventsExpertsConnections.toSerializable(),
     eventsTopicsExpertsConnections:
       eventsTopicsExpertsConnections.toSerializable(),
     topicsTestimoniesConnections: topicsTestimoniesConnections.toSerializable(),
+    organizationsPersonnelConnections: organizationsMembers.toSerializable(),
   }
 
   const connectionLinks = [
     ...connections.topicsExpertsConnections,
     ...connections.eventsExpertsConnections,
   ].map(({ id, ...rest }) => {
+    console.log('rest: ', rest)
     const [sourceData, targetData] = Object.entries(rest)
 
     const [sourceType, sourceNode]: any = sourceData
@@ -160,6 +176,7 @@ export const getEntityNetworkGraphData = async () => {
     ...rootEventsConnections,
     ...rootPersonnelConnections,
     ...rootTestimoniesConnections,
+    ...rootOrganizationsConnections,
     ...connectionLinks,
   ].filter((link) => link.source && link.target)
 

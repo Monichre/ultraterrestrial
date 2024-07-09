@@ -15,17 +15,23 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'us-east-1.xata.sh',
-        port: '',
-        pathname: '/file/**',
-      },
+      // {
+      //   protocol: 'https',
+      //   hostname: 'us-east-1.xata.sh',
+      //   port: '',
+      //   pathname: '*',
+      // },
       {
         protocol: 'https',
         hostname: '**.xata.sh',
         port: '',
-        pathname: '/transform/**',
+        pathname: '*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'us-east-1.xata.sh',
+        port: '',
+        pathname: '*',
       },
       {
         protocol: 'https',
@@ -34,6 +40,7 @@ const nextConfig = {
         pathname: '*',
       },
     ],
+    domains: ['us-east-1.storage.xata.sh', 'us-east-1.xata.sh', 'xata.sh'],
   },
   async headers() {
     return [

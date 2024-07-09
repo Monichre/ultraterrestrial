@@ -12,7 +12,13 @@ table_names=(
     "topic-subject-matter-experts"
     "topics"
     "topics-testimonies"
+    "locations"
+    "documents"
 )
+today=$(date +%Y-%m-%d)
+# Create the directory if it doesn't exist
+mkdir -p "./docs/models/${today}/json"
+folder="./docs/models/${today}/json"
 
 # Loop through the array of table names
 for table in "${table_names[@]}"; do
@@ -24,5 +30,5 @@ for table in "${table_names[@]}"; do
         \"statement\": \"select * from \\\"${table}\\\";\",
         \"consistency\": \"strong\",
         \"responseType\": \"json\"
-    }" > "./docs/models/${table}.json"
+    }" > "${folder}/${table}.json"
 done

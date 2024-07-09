@@ -45,7 +45,7 @@ const config = {
         centimaSans: ['var(--font-centima-sans)'],
         eirene: ['var(--font-eirene})'],
         stellar: ['var(--font-stellar})'],
-        jetbrains: ['--font-jetbrains'],
+        jetbrains: ['var(--font-jetbrains)'],
       },
       colors: {
         border: 'hsl(var(--border))',

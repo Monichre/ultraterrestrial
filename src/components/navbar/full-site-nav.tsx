@@ -1,9 +1,10 @@
 'use client'
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { memo, useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
+import { cn } from '@/utils'
 
 const transition = {
   type: 'spring',
@@ -14,52 +15,76 @@ const transition = {
   restSpeed: 0.001,
 }
 
-export const MenuItem = ({
-  setActive,
-  active,
-  item,
-  children,
-}: {
-  setActive: (item: string) => void
-  active: string | null
-  item: string
-  children?: React.ReactNode
-}) => {
-  return (
-    <div onMouseEnter={() => setActive(item)} className='relative '>
-      <motion.p
-        transition={{ duration: 0.3 }}
-        className='cursor-pointer text-black hover:opacity-[0.9] dark:text-white'
+export const MenuItem = memo(
+  ({
+    setActive,
+    active,
+    item,
+    children,
+  }: {
+    setActive: (item: string) => void
+    active: string | null
+    item: string
+    children?: React.ReactNode
+  }) => {
+    const [visible, setVisible] = useState(item === active)
+    const handleMouseEnter = () => {
+      setActive(item)
+    }
+
+    useEffect(() => {
+      setVisible(item === active)
+    }, [active, item])
+    return (
+      <div
+        onMouseEnter={handleMouseEnter}
+        className='relative'
+        // onMouseLeave={handleMouseExit}
       >
-        {item}
-      </motion.p>
-      {active !== null && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={transition}
-        >
-          {active === item && (
-            <div className='absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4'>
+        <AnimatePresence initial={false}>
+          <motion.p
+            transition={{ duration: 0.3 }}
+            className='cursor-pointer text-black hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
+          >
+            {item}
+          </motion.p>
+          {visible && (
+            <motion.div
+              key='item'
+              // initial={{ opacity: 0, scale: 0.85, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.85, y: 10 }}
+              transition={transition}
+              layout
+            >
               <motion.div
+                className='absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4'
                 transition={transition}
-                layoutId='active' // layoutId ensures smooth animation
-                className='bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl'
+                layout
               >
                 <motion.div
-                  layout // layout ensures smooth animation
-                  className='w-max h-full p-4'
+                  transition={transition}
+                  layout
+                  // layoutId='active' // layoutId ensures smooth animation
+                  className='bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl'
                 >
-                  {children}
+                  <motion.div
+                    // layout // layout ensures smooth animation
+                    className='w-max h-full p-4'
+                  >
+                    {children}
+                  </motion.div>
                 </motion.div>
               </motion.div>
-            </div>
+            </motion.div>
           )}
-        </motion.div>
-      )}
-    </div>
-  )
-}
+        </AnimatePresence>
+      </div>
+    )
+  }
+)
+
+MenuItem.displayName = 'FullSiteNavMenuItem'
 
 export const Menu = ({
   setActive,
@@ -71,42 +96,10 @@ export const Menu = ({
   return (
     <nav
       onMouseLeave={() => setActive(null)} // resets the state
-      className='relative rounded-full boder border-transparent dark:bg-black dark:border-white/[0.2] bg-white shadow-input flex justify-center space-x-4 px-8 py-6 '
+      className='relative flex justify-center space-x-12 px-8 py-6 '
     >
       {children}
     </nav>
-  )
-}
-
-export const ProductItem = ({
-  title,
-  description,
-  href,
-  src,
-}: {
-  title: string
-  description: string
-  href: string
-  src: string
-}) => {
-  return (
-    <Link href={href} className='flex space-x-2'>
-      <Image
-        src={src}
-        width={140}
-        height={70}
-        alt={title}
-        className='flex-shrink-0 rounded-md shadow-2xl'
-      />
-      <div>
-        <h4 className='text-xl font-bold mb-1 text-black dark:text-white'>
-          {title}
-        </h4>
-        <p className='text-neutral-700 text-sm max-w-[10rem] dark:text-neutral-300'>
-          {description}
-        </p>
-      </div>
-    </Link>
   )
 }
 
@@ -114,7 +107,7 @@ export const HoveredLink = ({ children, ...rest }: any) => {
   return (
     <Link
       {...rest}
-      className='text-neutral-700 dark:text-neutral-200 hover:text-black '
+      className='text-white text-sm !font-jetbrains tracking-wide'
     >
       {children}
     </Link>
@@ -145,53 +138,58 @@ const navItems = [
 ]
 export function FullSiteNav({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null)
+  console.log('active: ', active)
   return (
     <div
       className={cn('fixed top-10 inset-x-0 max-w-2xl mx-auto z-50', className)}
     >
       <Menu setActive={setActive}>
-        <MenuItem setActive={setActive} active={active} item='Services'>
+        <MenuItem
+          setActive={setActive}
+          active={active}
+          item='Explore'
+          key='Explore'
+        >
           <div className='flex flex-col space-y-4 text-sm'>
-            <HoveredLink href='/web-dev'>Web Development</HoveredLink>
-            <HoveredLink href='/interface-design'>Interface Design</HoveredLink>
-            <HoveredLink href='/seo'>Search Engine Optimization</HoveredLink>
-            <HoveredLink href='/branding'>Branding</HoveredLink>
+            <HoveredLink className='' href='/explore/ufology'>
+              Connect the dots for all things Ufology
+            </HoveredLink>
+            <HoveredLink className='' href='/explore/key-figures'>
+              Key Figures
+            </HoveredLink>
+            <HoveredLink className='' href='/explore/visualizations'>
+              3D Visualizations
+            </HoveredLink>
           </div>
         </MenuItem>
-        <MenuItem setActive={setActive} active={active} item='Products'>
-          <div className='  text-sm grid grid-cols-2 gap-10 p-4'>
-            <ProductItem
-              title='Algochurn'
-              href='https://algochurn.com'
-              src='https://assets.aceternity.com/demos/algochurn.webp'
-              description='Prepare for tech interviews like never before.'
-            />
-            <ProductItem
-              title='Tailwind Master Kit'
-              href='https://tailwindmasterkit.com'
-              src='https://assets.aceternity.com/demos/tailwindmasterkit.webp'
-              description='Production ready Tailwind css components for your next project'
-            />
-            <ProductItem
-              title='Moonbeam'
-              href='https://gomoonbeam.com'
-              src='https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.51.31%E2%80%AFPM.png'
-              description='Never write from scratch again. Go from idea to blog in minutes.'
-            />
-            <ProductItem
-              title='Rogue'
-              href='https://userogue.com'
-              src='https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.47.07%E2%80%AFPM.png'
-              description='Respond to government RFPs, RFIs and RFQs 10x faster using AI'
-            />
+        <MenuItem
+          setActive={setActive}
+          active={active}
+          item='History'
+          key='History'
+        >
+          <div className='flex flex-col space-y-4 text-sm'>
+            <HoveredLink className='' href='/history'>
+              Timeline{' '}
+            </HoveredLink>
+            <HoveredLink className='' href='/history/gallery'>
+              Team
+            </HoveredLink>
+            <HoveredLink className='' href='/history/events'>
+              Historical Events
+            </HoveredLink>
           </div>
         </MenuItem>
-        <MenuItem setActive={setActive} active={active} item='Pricing'>
+        <MenuItem
+          setActive={setActive}
+          active={active}
+          item='Sightings'
+          key='Sightings'
+        >
           <div className='flex flex-col space-y-4 text-sm'>
-            <HoveredLink href='/hobby'>Hobby</HoveredLink>
-            <HoveredLink href='/individual'>Individual</HoveredLink>
-            <HoveredLink href='/team'>Team</HoveredLink>
-            <HoveredLink href='/enterprise'>Enterprise</HoveredLink>
+            <HoveredLink className='' href='/sightings'>
+              Hobby
+            </HoveredLink>
           </div>
         </MenuItem>
       </Menu>
