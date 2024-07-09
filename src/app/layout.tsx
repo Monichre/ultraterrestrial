@@ -7,7 +7,7 @@ import { AnimationProvider } from '@/providers/animation-provider'
 import { PageTransition } from '@/components/ui/animations/page-transition'
 import DataLayer from '@/providers/data-layer'
 import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
-import { HomePageNav, NavBar } from '@/components/navbar'
+
 import {
   centima,
   centimaSans,
@@ -19,7 +19,7 @@ import {
   sourceSans,
   fireCode,
   jetBrains,
-} from './_fonts/fonts'
+} from './fonts'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -79,7 +79,7 @@ export default function RootLayout({
               <PageTransition>
                 <main className='min-h-[100vh] min-w-screen relative'>
                   {/* <NavBar navItems={navItems} /> */}
-                  <HomePageNav navItems={navItems} />
+                  {/* <HomePageNav navItems={navItems} /> */}
                   {/* <FullSiteNav className='top-2' /> */}
                   {children}
                 </main>

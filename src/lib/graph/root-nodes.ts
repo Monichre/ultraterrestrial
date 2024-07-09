@@ -47,4 +47,5 @@ export const rootNodes = [
   topicsRootNode,
   personnelRootNode,
   testimoniesRootNode,
+  organizationsRootNode,
 ]

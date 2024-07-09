@@ -26,6 +26,10 @@ export type GraphState = {
     nodes: []
     links: {}
   }
+  organizations: {
+    nodes: []
+    links: []
+  }
 }
 
 export type UseGraphProps = {
@@ -54,6 +58,10 @@ export const use3DGraph = ({ allEntityGraphData }: UseGraphProps) => {
       nodes: [],
       links: {},
     },
+    organizations: {
+      nodes: [],
+      links: [],
+    },
   })
 
   useEffect(() => {
@@ -77,6 +85,10 @@ export const use3DGraph = ({ allEntityGraphData }: UseGraphProps) => {
       topics: {
         nodes: [],
         links: {},
+      },
+      organizations: {
+        nodes: [],
+        links: [],
       },
     }
     if (allEntityGraphData.nodes?.length) {

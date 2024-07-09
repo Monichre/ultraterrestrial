@@ -1,5 +1,6 @@
 .entity-card h3, .entity-card .date {
-  font-family: 'Centima Sans';
+  /* font-family: 'Centima Sans'; */
+  font-family: var(--font-centima-sans);
 }
 
 .entity-card, .root-node {

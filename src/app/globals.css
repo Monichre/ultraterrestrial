@@ -87,20 +87,20 @@ body {
   }
   
  }
-/* //  -------------------------------------------------------------------------------------- */
-@font-face {
+
+/* @font-face {
   font-family: 'Futura';
   font-style: normal;
-  src: url('/fonts/futura/futura.ttf');
+  src: url('./fonts/futura/futura.ttf');
   font-weight: 400;
-  /* Add more font formats and sources if needed */
+  
 }
 @font-face {
   font-family: 'Futura';
   font-style: normal;
   font-weight: 500;
-  src: url('/fonts/futura/futura medium bt.ttf');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/futura/futura medium bt.ttf');
+  
 }
 
 
@@ -108,88 +108,87 @@ body {
   font-family: 'Futura';
   font-style: normal;
   font-weight: 700;
-  src: url('/fonts/futura/futura-bold.ttf');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/futura/futura-bold.ttf');
+  
 }
 
 @font-face {
   font-family: 'Futura';
   font-style: normal;
   font-weight: 300;
-  src: url('/fonts/futura/Futura Light font.ttf');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/futura/Futura Light font.ttf');
+  
 }
 
 @font-face {
   font-family: 'Futura';
   font-style: normal;
   font-weight: 900;
-  src: url('/fonts/futura/futura-black.ttf');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/futura/futura-black.ttf');
+  
 }
 
 @font-face {
   font-family: 'Futura';
   font-style: normal;
   font-weight: 900;
-  src: url('/fonts/futura/futura-black.ttf');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/futura/futura-black.ttf');
+  
 }
 
 
-/* //  -------------------------------------------------------------------------------------- */
 
 @font-face {
   font-family: 'Brandbe';
   font-style: normal;
   font-weight: 700;
-  src: url('/fonts/Brandbe.otf');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/Brandbe.otf');
+  
 }
 
-/* //  -------------------------------------------------------------------------------------- */
+
 @font-face {
   font-family: 'Eirene Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/Eirene-Sans-Font-Family/EireneSans-Regular.otf');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/Eirene-Sans-Font-Family/EireneSans-Regular.otf');
+  
 }
 
 @font-face {
   font-family: 'Centima Sans';
   font-style: normal;
   font-weight: bold;
-  src: url('/fonts/centima/CentimaProSans-Bold.woff');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/centima/CentimaProSans-Bold.woff');
+  
 }
 @font-face {
   font-family: 'Centima Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/centima/CentimaProSans.woff');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/centima/CentimaProSans.woff');
+  
 }
 @font-face {
   font-family: 'Centima';
   font-style: normal;
   font-weight: bold;
-  src: url('/fonts/centima/Centima-Mono-W01-Bold.woff');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/centima/Centima-Mono-W01-Bold.woff');
+  
 }
 
 @font-face {
   font-family: 'Stellar';
   font-style: normal;
   font-weight: light;
-  src: url('/fonts/stellar/PPStellar-Light.woff');
+  src: url('./fonts/stellar/PPStellar-Light.woff');
   
 }
 @font-face {
   font-family: 'Stellar';
   font-style: normal;
   font-weight: bold;
-  src: url('/fonts/stellar/PPStellar-Bold.woff');
+  src: url('./fonts/stellar/PPStellar-Bold.woff');
   
 }
 
@@ -197,20 +196,20 @@ body {
   font-family: 'Brandbe';
   font-style: normal;
   font-weight: 700;
-  src: url('/fonts/Brandbe.otf');
-  /* Add more font formats and sources if needed */
+  src: url('./fonts/Brandbe.otf');
+  
 }
 
 @font-face {
   font-family: 'Ailerons';
-  /* font-style: normal;
-  font-weight: bold; */
-  src: url('/fonts/ailerons.woff2');
-  /* Add more font formats and sources if needed */
-}
+  
+  
+  src: url('./fonts/ailerons.woff2');
+  
+} */
 
 
-/* //  -------------------------------------------------------------------------------------- */
+
 
 /* background-image: url('https://user-images.githubusercontent.com/26748614/96337246-f14d4580-1085-11eb-8793-a86d929e034d.jpg'); */
 /* background: radial-gradient(circle at center, #004d4d, #003333, #001919); */

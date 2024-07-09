@@ -2,7 +2,7 @@ import { Card } from '@/components/ui/card/card'
 import {
   MindMapEntityCard,
   type MindMapEntityCardProps,
-} from '@/components/ui/card/entity-card'
+} from '@/components/ui/card/entity-card/entity-card'
 import { RootNodeCard } from '@/components/ui/card/root-node-card'
 import { StarsCard, type StarsCardProps } from '@/components/ui/card/stars-card'
 import type { StoryObj } from '@storybook/react'

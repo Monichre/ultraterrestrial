@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import { CanvasCursor } from '@/components/ui/canvas-cursor'
 import { HomePageNav } from '@/components/navbar'
 import { Sparkles, LibraryBig, Crosshair, Home as HomeIcon } from 'lucide-react'
+import { FullSiteNav } from '@/components/navbar/full-site-nav'
 export interface HomeProps {}
 
 const navItems = [
@@ -51,7 +52,8 @@ export const Home: React.FC<HomeProps> = () => {
 
   return (
     <div className='h-[100vh] w-[100vw] relative'>
-      <HomePageNav navItems={navItems} />
+      {/* <HomePageNav navItems={navItems} /> */}
+      <FullSiteNav />
       <CanvasCursor />
 
       <Astronaut />
