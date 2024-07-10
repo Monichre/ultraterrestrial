@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
 import { cn } from '@/utils'
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 
 const transition = {
   type: 'spring',
@@ -193,6 +194,14 @@ export function FullSiteNav({ className }: { className?: string }) {
           </div>
         </MenuItem>
       </Menu>
+      <div>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+      </div>
     </div>
   )
 }

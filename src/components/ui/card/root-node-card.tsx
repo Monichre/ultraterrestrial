@@ -14,13 +14,9 @@ import { Switch } from '@radix-ui/react-switch'
 import { Button } from '@/components/ui/button'
 import './cards.css'
 
-// animate='show'
-// variants={container}
-// initial='hidden'
 export const RootNodeCard = ({ nodeData }: any) => {
-  console.log('nodeData: ', nodeData)
   const {
-    data: { childCount, label, type, fill, id },
+    data: { childCount, label, type },
     ...rest
   } = nodeData
 

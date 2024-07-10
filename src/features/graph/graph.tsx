@@ -25,10 +25,9 @@ import {
   useStore,
   MiniMap,
 } from '@xyflow/react'
-import { getLayoutedElements } from '@/features/graph/layouts/algorithms/elk-layout.ts'
+
 import '@xyflow/react/dist/style.css'
 
-import { DevTools } from '@/features/graph/loggers/dev-tools'
 import { useGraph } from '@/providers/graph-context'
 
 import { Toolbar } from '@/components/toolbar'
@@ -48,16 +47,12 @@ export function Graph(props: any) {
     initialNodes,
     getRootNodeChildren,
   } = useGraph()
-  const reactFlow = useReactFlow()
+  // const reactFlow = useReactFlow()
 
-  console.log('nodes: ', nodes)
-  const nodeOrigin: NodeOrigin = [0.5, 0.5]
   const edgeOptions = {
     animated: true,
     style: { stroke: 'white' },
   }
-
-  const [childrenLoaded, setChildrenLoaded] = useState(false)
 
   const onNodeClick: any = useCallback(
     (event: any, node: any, ...rest: any) => {
@@ -82,6 +77,7 @@ export function Graph(props: any) {
           <Toolbar />
         </div>
         <ReactFlow
+          colorMode='dark'
           nodeTypes={nodeTypes}
           // edgeTypes={{
           //   entityEdge: EntityEdge,
@@ -95,9 +91,6 @@ export function Graph(props: any) {
           onConnect={onConnect}
         >
           <Background />
-          {/* <Controls showInteractive={false} /> */}
-          {/* <DevTools /> */}
-          {/* <MiniMap /> */}
         </ReactFlow>
       </DotGridBackgroundBlack>
     </div>

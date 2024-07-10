@@ -6,6 +6,7 @@ import React, {
   useState,
   createContext,
   useContext,
+  useCallback,
 } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -30,25 +31,41 @@ import {
   UfologyContext,
   UfologyContextSchema,
 } from '@/providers/ufology-provider'
+import { searchConnections } from '@/api/search'
 gsap.registerPlugin(splitText)
 export interface MindmapSidebarProps {
   children: any
   node: any
 }
 
+// #TODO: HAve to fix the sidebar context - its crazy that theres a side bar for each card
 export const MM: React.FC<MindmapSidebarProps> = memo(
   ({ children, node }: MindmapSidebarProps) => {
     const { open, setOpen } = useMindMapSidebar()
-    const { getConnections } = useContext<UfologyContextSchema>(UfologyContext)
+    // const { getConnections } = useContext<UfologyContextSchema>(UfologyContext)
     const handleOpen = (isOpen: boolean) => {
       setOpen(isOpen)
     }
     const [connections, setConnections] = useState([])
 
     useEffect(() => {
-      if (open && node) {
+      const getConnections = async ({ id, type }: any) => {
+        const sources = await searchConnections({
+          id,
+          type,
+          tables:
+            'event-subject-matter-experts,testimonies,event-topic-subject-matter-experts',
+        })
+
+        console.log('sources: ', sources)
+        return sources
+      }
+      if (open && node && !connections?.length) {
         const { id, type } = node
-        getConnections({ id, type })
+        getConnections({ id, type }).then((res) => {
+          console.log('res: ', res)
+          setConnections(res)
+        })
       }
       // // @ts-ignore
       // const cols = Array.from(document.querySelector('.hover-effect') ?? [])
@@ -64,7 +81,7 @@ export const MM: React.FC<MindmapSidebarProps> = memo(
       //     stagger: 0.05,
       //   })
       // })
-    }, [getConnections, node, open])
+    }, [node, open, connections])
 
     return (
       <Sheet key={'entity-card'} open={open} onOpenChange={handleOpen}>

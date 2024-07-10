@@ -10,6 +10,8 @@
   "python.analysis.autoImportCompletions": true,
   "editor.tabCompletion": "on",
   "cody.autocomplete.formatOnAccept": true,
+  "github.copilot.chat.terminalChatLocation": "quickChat",
+  "github.copilot.renameSuggestions.triggerAutomatically": true,
   
   
   

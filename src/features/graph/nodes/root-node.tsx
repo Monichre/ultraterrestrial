@@ -6,6 +6,7 @@ import {
   Handle,
   Position,
   type Node,
+  type NodeProps,
   useUpdateNodeInternals,
 } from '@xyflow/react'
 
@@ -95,29 +96,27 @@ export function CommandDemo() {
   )
 }
 
-export type NodeProps<T = any> = {
-  id: string
-  data: T
-  dragHandle?: boolean
-  type?: string
-  selected?: boolean
-  isConnectable?: boolean
-  zIndex?: number
-  xPos: number
-  yPos: number
-  dragging: boolean
-  targetPosition?: Position
-  sourcePosition?: Position
-}
+type NumberNode = Node<{ number: number }, 'number'>
 
-const RN = (node: any) => {
+export type RootNode = Node<{
+  data: {
+    name: string
+    type: string
+    childCount: number
+    label: string
+    url: string
+    handles: string[]
+  }
+  handles?: string[]
+}>
+
+const RN = (node: RootNode) => {
   const updateNodeInternals = useUpdateNodeInternals()
-  const [handles, setHandles] = useState([])
+  const [handles, setHandles]: any = useState([])
 
   useEffect(() => {
-    if (node?.data.handles && node.data.handles.length) {
+    if (node?.data?.handles && node.data?.handles.length) {
       const { data } = node
-      console.log('data: ', data)
 
       setHandles(data.handles)
       updateNodeInternals(node.id)
@@ -140,7 +139,7 @@ const RN = (node: any) => {
     <>
       <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative w-fit h-fit'>
         {handles && handles?.length
-          ? handles.map((id, index) => (
+          ? handles.map((id: string) => (
               <Handle
                 key={id}
                 type='source'
