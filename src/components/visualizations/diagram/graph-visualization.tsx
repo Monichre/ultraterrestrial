@@ -125,7 +125,7 @@ export const GraphVisualization = ({ models }: any) => {
 
   return (
     <div className='h-[100vh] connection-graph overflow-scroll'>
-      <RootConnectionGraph models={models} />
+      {/* <RootConnectionGraph models={models} /> */}
     </div>
   )
 }
