@@ -159,6 +159,7 @@
     "reaflow": "^5.2.10",
     "reagraph": "^4.16.1",
     "sigma": "3.0.0-beta.17",
+    "split-type": "^0.3.4",
     "storybook-vscode-component": "^1.0.9",
     "styled-components": "^6.1.8",
     "tailwind-merge": "^2.2.2",

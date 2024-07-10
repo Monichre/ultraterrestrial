@@ -425,6 +425,9 @@ importers:
       sigma:
         specifier: 3.0.0-beta.17
         version: 3.0.0-beta.17(graphology-types@0.24.7)
+      split-type:
+        specifier: ^0.3.4
+        version: 0.3.4
       storybook-vscode-component:
         specifier: ^1.0.9
         version: 1.0.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -14065,6 +14068,9 @@ packages:
   split-string@3.1.0:
     resolution: {integrity: sha512-NzNVhJDYpwceVVii8/Hu6DKfD2G+NrQHlS/V/qgv763EYudVwEcMQNxd2lh+0VrUByXN/oJkl5grOhYWvQUYiw==}
     engines: {node: '>=0.10.0'}
+
+  split-type@0.3.4:
+    resolution: {integrity: sha512-otEk9vnD8qwfLsk3Lx0gz+qRkNIJCx0mlyL47ImP/DjMuV39d75Lpfwjn9fHteDRz0aoOblSzQjSNT9+Sswxcg==}
 
   split2@4.2.0:
     resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
@@ -33639,6 +33645,8 @@ snapshots:
   split-string@3.1.0:
     dependencies:
       extend-shallow: 3.0.2
+
+  split-type@0.3.4: {}
 
   split2@4.2.0: {}
 

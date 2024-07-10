@@ -41,6 +41,7 @@ type ImageProps = {
   }
 }
 export interface MindMapEntityCardProps {
+  id: string
   data: {
     date: any
     description: string
@@ -73,6 +74,7 @@ export const AnimatedImageContent = motion(AnimatedImageRef)
 
 export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   data,
+  id,
   ...rest
 }) => {
   const {
@@ -174,7 +176,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   // onMouseLeave={handleMouseLeave}
 
   return (
-    <MindmapSidebar node={data}>
+    <MindmapSidebar node={{ ...data, id }}>
       <div className='relative w-fit h-fit'>
         <Card
           className={`entity-card shadow relative ${animatedClass} rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
