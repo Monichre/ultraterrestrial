@@ -6,6 +6,10 @@
   "github.copilot.preferredAccount": "Monichre",
   "debug.console.acceptSuggestionOnEnter": "on",
   "emmet.showSuggestionsAsSnippets": true,
+  "editor.wordBasedSuggestions": "allDocuments",
+  "python.analysis.autoImportCompletions": true,
+  "editor.tabCompletion": "on",
+  "cody.autocomplete.formatOnAccept": true,
   
   
   
