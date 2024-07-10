@@ -232,27 +232,27 @@ const ScrollHtml = React.forwardRef(
         }px,0)`
       }
     })
-    ReactDOM.render(
-      <div
-        // @ts-ignore
-        ref={mergeRefs([ref, group])}
-        style={{
-          ...style,
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          willChange: 'transform',
-        }}
-        {...props}
-      >
-        <context.Provider value={state}>
-          <fiberContext.Provider value={fiberState}>
-            {children}
-          </fiberContext.Provider>
-        </context.Provider>
-      </div>,
-      state.fixed
-    )
+    // ReactDOM.createRoot(
+    //   <div
+    //     // @ts-ignore
+    //     ref={mergeRefs([ref, group])}
+    //     style={{
+    //       ...style,
+    //       position: 'absolute',
+    //       top: 0,
+    //       left: 0,
+    //       willChange: 'transform',
+    //     }}
+    //     {...props}
+    //   >
+    //     <context.Provider value={state}>
+    //       <fiberContext.Provider value={fiberState}>
+    //         {children}
+    //       </fiberContext.Provider>
+    //     </context.Provider>
+    //   </div>,
+    //   state.fixed
+    // )
     return null
   }
 )

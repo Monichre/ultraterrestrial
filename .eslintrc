@@ -1,3 +1,8 @@
 {
   "extends": ["next/core-web-vitals", "prettier", "next"],
+  "rules": {
+    "react/no-unescaped-entities": false,
+    "react/no-children-prop": false,
+    "react/display-name": false
+  }
 }

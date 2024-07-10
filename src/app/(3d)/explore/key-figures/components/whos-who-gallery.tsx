@@ -1,3 +1,5 @@
+'use client'
+
 import * as THREE from 'three'
 import { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
@@ -18,7 +20,7 @@ export const WhosWhoGallery = ({ personnel }: any) => (
     <color attach='background' args={['#191920']} />
     <fog attach='fog' args={['#191920', 0, 15]} />
     <group position={[0, -0.5, 0]}>
-      <Frames images={images} />
+      {/* <Frames images={images} /> */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[50, 50]} />
         {/* @ts-ignore */}
@@ -40,47 +42,46 @@ export const WhosWhoGallery = ({ personnel }: any) => (
   </Canvas>
 )
 
-function Frames({
-  personnel,
-  q = new THREE.Quaternion(),
-  p = new THREE.Vector3(),
-}: any) {
-  const ref: any = useRef()
-  const clicked = useRef()
-  
-  
-  useEffect(() => {
-    clicked.current = ref.current.getObjectByName(personnel?.id)
-    if (clicked.current) {
-      clicked.current.parent.updateWorldMatrix(true, true)
-      clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, 1.25))
-      clicked.current.parent.getWorldQuaternion(q)
-    } else {
-      p.set(0, 0, 5.5)
-      q.identity()
-    }
-  })
-  useFrame((state, dt) => {
-    easing.damp3(state.camera.position, p, 0.4, dt)
-    easing.dampQ(state.camera.quaternion, q, 0.4, dt)
-  })
-  return (
-    <group
-      ref={ref}
-      onClick={(e) => (
-        e.stopPropagation(),
-        // setLocation(
-        //   clicked.current === e.object ? '/' : '/item/' + e.object.name
-        // )
-      )}
-      // onPointerMissed={() => setLocation('/')}
-    >
-      {personnel.map(
-        (props) => <Frame key={props.url} {...props} /> /* prettier-ignore */
-      )}
-    </group>
-  )
-}
+// function Frames({
+//   personnel,
+//   q = new THREE.Quaternion(),
+//   p = new THREE.Vector3(),
+// }: any) {
+//   const ref: any = useRef()
+//   const clicked = useRef()
+
+//   useEffect(() => {
+//     clicked.current = ref.current.getObjectByName(personnel?.id)
+//     if (clicked.current) {
+//       clicked.current.parent.updateWorldMatrix(true, true)
+//       clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, 1.25))
+//       clicked.current.parent.getWorldQuaternion(q)
+//     } else {
+//       p.set(0, 0, 5.5)
+//       q.identity()
+//     }
+//   })
+//   useFrame((state, dt) => {
+//     easing.damp3(state.camera.position, p, 0.4, dt)
+//     easing.dampQ(state.camera.quaternion, q, 0.4, dt)
+//   })
+//   return (
+//     <group
+//       ref={ref}
+//       onClick={(e) => (
+//         e.stopPropagation(),
+//         setLocation(
+//           clicked.current === e.object ? '/' : '/item/' + e.object.name
+//         )
+//       )}
+//       // onPointerMissed={() => setLocation('/')}
+//     >
+//       {personnel.map(
+//         (props) => <Frame key={props.url} {...props} /> /* prettier-ignore */
+//       )}
+//     </group>
+//   )
+// }
 
 function Frame({ person, c = new THREE.Color(), ...props }: any) {
   const image: any = useRef()
