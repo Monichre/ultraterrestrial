@@ -20,7 +20,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@/utils": ["src/utils"]
+      "@/utils": ["src/utils/*"],
+      "@/api/*": ["src/api/*"]
     },
     "plugins": [
       {

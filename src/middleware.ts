@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { clerkMiddleware } from '@clerk/nextjs/server'
 
 const allowedOrigins = [
   'https://us-east-1.storage.xata.sh',
@@ -43,5 +44,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/api/image',
+  matcher: ['/api/image', '/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 }
+export default clerkMiddleware()

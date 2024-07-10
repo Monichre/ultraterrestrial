@@ -7,6 +7,13 @@ import { AnimationProvider } from '@/providers/animation-provider'
 import { PageTransition } from '@/components/ui/animations/page-transition'
 import DataLayer from '@/providers/data-layer'
 import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
 
 import {
   centima,
@@ -62,32 +69,34 @@ export default function RootLayout({
 }) {
   // bg-[url("/8k_stars_milky_way.jpeg")] bg-center bg-cover dark
   return (
-    <html
-      lang='en'
-      className={`${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${fireCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} dark`}
-      suppressHydrationWarning
-    >
-      <body className='bg-[#fff]'>
-        <DataLayer>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='dark'
-            enableSystem
-            disableTransitionOnChange
-          >
-            <AnimationProvider>
-              <PageTransition>
-                <main className='min-h-[100vh] min-w-screen relative'>
-                  {/* <NavBar navItems={navItems} /> */}
-                  {/* <HomePageNav navItems={navItems} /> */}
-                  {/* <FullSiteNav className='top-2' /> */}
-                  {children}
-                </main>
-              </PageTransition>
-            </AnimationProvider>
-          </ThemeProvider>
-        </DataLayer>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang='en'
+        className={`${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${fireCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} dark`}
+        suppressHydrationWarning
+      >
+        <body className='bg-[#fff]'>
+          <DataLayer>
+            <ThemeProvider
+              attribute='class'
+              defaultTheme='dark'
+              enableSystem
+              disableTransitionOnChange
+            >
+              <AnimationProvider>
+                <PageTransition>
+                  <main className='min-h-[100vh] min-w-screen relative'>
+                    {/* <NavBar navItems={navItems} /> */}
+                    {/* <HomePageNav navItems={navItems} /> */}
+                    {/* <FullSiteNav className='top-2' /> */}
+                    {children}
+                  </main>
+                </PageTransition>
+              </AnimationProvider>
+            </ThemeProvider>
+          </DataLayer>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
