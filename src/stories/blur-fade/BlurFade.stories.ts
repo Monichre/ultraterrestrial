@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { MindmapSidebar } from '@/components/mindmap-sidebar';
+import { BlurFade } from '@/components/blur-fade';
 
 const meta = {
-  title: 'Components/MindmapSidebar',
-  component: MindmapSidebar,
+  title: 'Components/BlurFade',
+  component: BlurFade,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   parameters: {
@@ -13,7 +13,7 @@ const meta = {
   args: {
 
   },
-} satisfies Meta<typeof MindmapSidebar>;
+} satisfies Meta<typeof BlurFade>;
 
 export default meta;
 

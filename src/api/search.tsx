@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const searchConnections = async ({ id, type, tables }) => {
+export const searchConnections = async ({ id, type, tables }: any) => {
   try {
     const response = await axios.get('/api/data/search', {
       params: {

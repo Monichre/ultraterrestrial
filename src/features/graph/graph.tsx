@@ -1,6 +1,6 @@
 'use client'
 
-import { Spotlight } from '@/components/ui/animations/spotlight'
+import { Spotlight } from '@/components/animations/spotlight'
 import {
   DotGridBackground,
   DotGridBackgroundBlack,
@@ -31,6 +31,10 @@ import '@xyflow/react/dist/style.css'
 import { useGraph } from '@/providers/graph-context'
 
 import { Toolbar } from '@/components/toolbar'
+import {
+  MindmapSidebar,
+  MindMapSidebarProvider,
+} from '@/components/mind-map/mindmap-sidebar'
 
 export function Graph(props: any) {
   const {
@@ -46,6 +50,7 @@ export function Graph(props: any) {
     fitView,
     initialNodes,
     getRootNodeChildren,
+    zoomOut,
   } = useGraph()
   // const reactFlow = useReactFlow()
 
@@ -56,13 +61,17 @@ export function Graph(props: any) {
 
   const onNodeClick: any = useCallback(
     (event: any, node: any, ...rest: any) => {
+      console.log('rest: ', rest)
+      console.log('node: ', node)
+      console.log('event: ', event)
       const { target } = event
       // Ignore any other clicks to the node that are not the load button
       if (target.classList.contains('load-records-button')) {
         getRootNodeChildren(node?.data.type)
+        zoomOut({ duration: 0.5 })
       }
     },
-    [getRootNodeChildren]
+    [getRootNodeChildren, zoomOut]
   )
   // useForceLayout(childrenLoaded)
   // #NOTE: This might be an interesting way to enhance, bypass or hack any trouble with edges as the node connections get more complex: https://magicui.design/docs/components/animated-beam
@@ -76,22 +85,28 @@ export function Graph(props: any) {
         <div className='w-full absolute top-10 left-0 z-20 cursor-pointer flex justify-center'>
           <Toolbar />
         </div>
-        <ReactFlow
-          colorMode='dark'
-          nodeTypes={nodeTypes}
-          // edgeTypes={{
-          //   entityEdge: EntityEdge,
+        <MindMapSidebarProvider>
+          <MindmapSidebar />
+          <ReactFlow
+            colorMode='dark'
+            nodeTypes={nodeTypes}
+            // edgeTypes={{
+            //   entityEdge: EntityEdge,
 
-          defaultEdgeOptions={edgeOptions}
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onNodeClick={onNodeClick}
-          onConnect={onConnect}
-        >
-          <Background />
-        </ReactFlow>
+            defaultEdgeOptions={edgeOptions}
+            nodes={nodes}
+            edges={edges}
+            defaultViewport={{ x: 0, y: 0, zoom: 0 }}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onNodeClick={onNodeClick}
+            onConnect={onConnect}
+            fitView
+          >
+            <Background />
+            <MiniMap />
+          </ReactFlow>
+        </MindMapSidebarProvider>
       </DotGridBackgroundBlack>
     </div>
   )

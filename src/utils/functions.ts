@@ -115,3 +115,9 @@ export const deepClone = <T>(obj: T): T => {
 export function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+export function flattenArray(arr: any[]): any[] {
+  return arr.reduce((acc, val) => {
+    return Array.isArray(val) ? acc.concat(flattenArray(val)) : acc.concat(val)
+  }, [])
+}

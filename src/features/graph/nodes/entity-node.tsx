@@ -33,9 +33,8 @@ const EN = memo((props: any) => {
   return (
     <>
       <Handle type='target' position={Position.Top} />
-      <MindMapSidebarProvider>
-        <MindMapEntityCard {...props} key={props.id} />
-      </MindMapSidebarProvider>
+
+      <MindMapEntityCard {...props} key={props.id} />
     </>
   )
 })

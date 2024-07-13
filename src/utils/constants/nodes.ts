@@ -11,22 +11,27 @@ export const ROOT_NODE_POSITIONS: any = {
   events: {
     x: 0,
     y: 0,
+    childNodeDirection: 'left',
   },
   topics: {
     x: 500,
     y: 0,
+    childNodeDirection: 'below',
   },
   personnel: {
     x: 1000,
     y: 0,
+    childNodeDirection: 'above',
   },
   testimonies: {
     x: 1500,
     y: 0,
+    childNodeDirection: 'below',
   },
   organizations: {
     x: 2000,
     y: 0,
+    childNodeDirection: 'right',
   },
 }
 

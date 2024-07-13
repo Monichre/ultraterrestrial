@@ -26,14 +26,15 @@ import {
   useAspect,
 } from '@react-three/drei'
 import * as THREE from 'three'
-import { Spotlight } from '@/components/ui/animations/spotlight'
+import { Spotlight } from '@/components/animations/spotlight'
 import { motion } from 'framer-motion'
-import {
-  GlowingStarsBackgroundCard,
-  GlowingStarsTitle,
-  GlowingStarsDescription,
-} from '@/components/ui/backgrounds/stars-background'
+
 import { Flex, Box } from '@react-three/flex'
+import {
+  StarsCard,
+  StarsCardTitle,
+  StarsCardDescription,
+} from '@/components/ui/card/stars-card'
 
 const testCard = () => {
   return (
@@ -126,17 +127,17 @@ function CardNode({ node, r, position, ...props }: any) {
 function GlowingStarsBackgroundCardPreview() {
   return (
     <div className='flex py-20 items-center justify-center antialiased'>
-      <GlowingStarsBackgroundCard>
-        <GlowingStarsTitle>Next.js 14</GlowingStarsTitle>
+      <StarsCard>
+        <StarsCardTitle>Next.js 14</StarsCardTitle>
         <div className='flex justify-between items-end'>
-          <GlowingStarsDescription>
+          <StarsCardDescription>
             The power of full-stack to the frontend. Read the release notes.
-          </GlowingStarsDescription>
+          </StarsCardDescription>
           <div className='h-8 w-8 rounded-full bg-[hsla(0,0%,100%,.1)] flex items-center justify-center'>
             <Icon />
           </div>
         </div>
-      </GlowingStarsBackgroundCard>
+      </StarsCard>
     </div>
   )
 }

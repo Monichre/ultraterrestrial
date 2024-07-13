@@ -1,6 +1,6 @@
-"use client";
-import { useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+'use client'
+import { useState } from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 export default function DataLayer({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -11,11 +11,9 @@ export default function DataLayer({ children }: { children: React.ReactNode }) {
             staleTime: 5 * 60 * 1000,
           },
         },
-      }),
-  );
+      })
+  )
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
-  );
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  )
 }

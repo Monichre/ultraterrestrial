@@ -15,6 +15,7 @@ import type { GraphNodeCardData } from '@/components/ui/card/graph-node-card'
 import '../cards.css'
 import {
   AnimatePresence,
+  LayoutGroup,
   motion,
   useMotionValue,
   useSpring,
@@ -35,6 +36,7 @@ dayjs.extend(utc)
 type ImageProps = {
   id: string
   url: string
+  signedUrl?: string
   attributes: {
     height: number
     width: number
@@ -88,9 +90,19 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     type,
     label,
     fill,
+    ...restOfData
   } = data
+  console.log('restOfData: ', restOfData)
+  const node = {
+    id,
+    data,
+    type,
+  }
   const date = dayjs(data?.date).format('DD/MMMM/YYYY')
-  const image: ImageProps | null = photos?.length ? photos[0] : null
+  const image: any = photos?.length
+    ? photos[0]
+    : { url: '/foofighters.webp', signedUrl: '/foofighters.webp' }
+  console.log('image: ', image)
   const [expand, setExpand] = useState(false)
   const toggle = () => setExpand(!expand)
 
@@ -175,72 +187,99 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   // onMouseEnter={handleMouseEnter}
   // onMouseLeave={handleMouseLeave}
 
+  const variants = {
+    open: { opacity: 1, y: 0 },
+    closed: { opacity: 0, y: -40 },
+    transition: {
+      ...openSpring,
+      duration: 0.5,
+    },
+  }
+  const variants2 = {
+    open: { height: 210, opacity: 1, y: 0 },
+    closed: { height: 0, opacity: 0, y: -40 },
+    transition: {
+      ...openSpring,
+      duration: 0.5,
+    },
+  }
+  const truncateText = (text: string, maxLength: number): string => {
+    if (text.length <= maxLength) {
+      return text
+    }
+    return text.substring(0, maxLength) + '...'
+  }
   return (
-    <MindmapSidebar node={{ ...data, id }}>
-      <div className='relative w-fit h-fit'>
-        <Card
-          className={`entity-card shadow relative ${animatedClass} rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
-        >
-          <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative'>
-            <EntityCardUtilityMenu node={data} onSave={() => {}} />
-            <CardHeader
-              className='flex flex-row items-center align-center justify-between space-y-0 p-2'
-              onClick={toggle}
-            >
-              <h3 className='text-neutral-200 font-jetbrains'>
-                {animatedTitle}
-              </h3>
+    <div className='relative w-fit h-fit'>
+      <Card
+        className={`entity-card shadow relative ${animatedClass} rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
+      >
+        <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative'>
+          <EntityCardUtilityMenu node={node} onSave={() => {}} />
+          <CardHeader
+            className='flex flex-row items-center align-center justify-between p-4'
+            onClick={toggle}
+          >
+            <h3 className='text-neutral-200 font-jetbrains'>{animatedTitle}</h3>
 
-              <div className='w-fit ml-auto date'>
-                <span className='text-sm text-muted-foreground'>
-                  {animatedDate}
-                </span>
-              </div>
-            </CardHeader>
-            {/* <CardDescription>
+            <div className='w-fit ml-auto date'>
+              <span className='text-sm text-muted-foreground'>
+                {animatedDate}
+              </span>
+            </div>
+          </CardHeader>
+          {/* <CardDescription>
           Lipsum dolor sit amet, consectetur adipiscing elit
         </CardDescription> */}
-            <AnimatePresence>
-              {expand && (
-                <motion.div
-                  initial={{ opacity: 0, y: -40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 40 }}
-                  transition={openSpring}
-                  className='pb-2'
-                >
-                  <AnimatedCardContent>
-                    {image && (
-                      <AnimatedImageContent
-                        initial={{ opacity: 0, height: 0, width: 0, y: -40 }}
-                        animate={{ opacity: 1, height: 300, width: 300, y: 0 }}
-                        transition={{
-                          ...openSpring,
-                          delay: 0.5,
-                        }}
-                        alt='Product image'
-                        className='aspect-square w-full h-full rounded-md object-cover m-auto'
-                        height={200}
-                        src={image.url}
-                        width={200}
-                      />
-                    )}
-                  </AnimatedCardContent>
-                  <motion.div
-                    className='w-full flex justify-center'
-                    initial={{ opacity: 0, y: -40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      ...openSpring,
-                      delay: 1,
-                    }}
-                  ></motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </Card>
-      </div>
-    </MindmapSidebar>
+
+          {expand && (
+            <motion.div
+              variants={variants}
+              key={`${id}-image-container`}
+              // initial={{ opacity: 0, y: -40 }}
+              animate={expand}
+              transition={{
+                ...openSpring,
+                staggerChildren: 0.05,
+                delayChildren: 0.05,
+                duration: 1,
+              }}
+              className='p-2'
+            >
+              <AnimatedCardContent
+                key={`${id}-image-card`}
+                variants={variants2}
+                animate={expand ? 'open' : 'closed'}
+              >
+                <AnimatedImageContent
+                  key={`${id}-image`}
+                  // initial={{ opacity: 0, height: 0, width: 0, y: -40 }}
+                  // animate={expand ? { opacity: 1, height: 300, width: 300, y: 0 }: { opacity: 0, height: 0, width: 0, y: -40 }}
+
+                  variants={variants}
+                  animate={expand ? 'open' : 'closed'}
+                  alt='Product image'
+                  className='w-[200px] h-[200px] rounded-md object-cover m-auto'
+                  height={200}
+                  src={image?.url}
+                  width={200}
+                />
+              </AnimatedCardContent>
+              <motion.div
+                className='w-full flex justify-center p-2'
+                key={`${id}-additional-info`}
+                variants={variants}
+                animate={expand ? 'open' : 'closed'}
+                transition={{
+                  ...openSpring,
+                }}
+              >
+                <p>{description}</p>
+              </motion.div>
+            </motion.div>
+          )}
+        </div>
+      </Card>
+    </div>
   )
 }

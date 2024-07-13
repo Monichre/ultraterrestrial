@@ -15,12 +15,12 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      // {
-      //   protocol: 'https',
-      //   hostname: 'us-east-1.xata.sh',
-      //   port: '',
-      //   pathname: '*',
-      // },
+      {
+        protocol: 'https',
+        hostname: 'us-east-1.xata.sh',
+        port: '',
+        pathname: '*',
+      },
       {
         protocol: 'https',
         hostname: '**.xata.sh',
@@ -41,27 +41,6 @@ const nextConfig = {
       },
     ],
     domains: ['us-east-1.storage.xata.sh', 'us-east-1.xata.sh', 'xata.sh'],
-  },
-  async headers() {
-    return [
-      {
-        source: '/api/image',
-        headers: [
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: '*', // Set your origin
-          },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET, POST, PUT, DELETE, OPTIONS',
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'Content-Type, Authorization',
-          },
-        ],
-      },
-    ]
   },
   experimental: {
     taint: true,
