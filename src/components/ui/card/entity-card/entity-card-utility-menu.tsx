@@ -34,7 +34,7 @@ interface EntityCardUtilityMenuProps {
   onSave: any
 }
 
-export const EM: FunctionComponent<EntityCardUtilityMenuProps> = () => {
+export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({ node }) => {
   const gradientOne =
     'bg-[radial-gradient(50%_86.9%_at_50%_100%,_rgba(255,_255,_255,_0.2)_0%,_rgba(255,_255,_255,_0)_100%)] bg-black'
   const gradientTwo =
@@ -45,8 +45,10 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = () => {
     setBookmarked(true)
     // #TODO: Run some save logic (BIG ASK. Loaded Feature with zero configuration in place)
   }
-  const { open, setOpen } = useMindMapSidebar()
-  const handleOpen = () => setOpen(true)
+  const { open, handleSidebarOpen } = useMindMapSidebar()
+  const handleOpen = () => {
+    handleSidebarOpen({ node: node, isOpen: true })
+  }
   return (
     <div
       className={`absolute top-[-50px] z-[-2] w-full h-auto flex align-center items-center justify-center bg-none`}
@@ -74,11 +76,9 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = () => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <SheetTrigger asChild>
-                  <Button variant='ghost' size='icon' onClick={handleOpen}>
-                    <Share1Icon className='h-5 w-5 text-neutral-200' />
-                  </Button>
-                </SheetTrigger>
+                <Button variant='ghost' size='icon' onClick={handleOpen}>
+                  <Share1Icon className='h-5 w-5 text-neutral-200' />
+                </Button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>See Connections</p>

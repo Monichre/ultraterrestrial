@@ -1,6 +1,7 @@
 import { getXataClient } from '@/lib/xata'
+import { flattenArray } from '@/utils'
 
-import { type NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 const xata: any = getXataClient()
 
 const objectMap = {
@@ -41,7 +42,46 @@ export async function GET(request: NextRequest) {
     prefix: 'phrase',
   })
 
-  const connections = records.map(({ record }: { record: any }) => record)
-  console.log('connections: ', connections)
-  return Response.json({ connections })
+  const data = await Promise.all(
+    records.map(async ({ record }: { record: any }) => {
+      const smeId =
+        record && record['subject-matter-expert']?.id
+          ? record['subject-matter-expert']?.id
+          : null
+      const topicId = record?.topic?.id || null
+      const subjectMatterExpert = smeId
+        ? await xata.db.personnel.read(smeId)
+        : null
+
+      const eventId = record?.event?.id || null
+      const event = eventId ? await xata.db.events.read(eventId) : null
+      const organization = record?.organization?.id
+        ? await xata.db.organizations.read(record?.organization?.id)
+        : null
+      const topic = topicId ? await xata.db.topics.read(topicId) : null
+      const testimony = record?.testimony?.id
+        ? await xata.db.testimonies.read(record?.testimony?.id)
+        : null
+
+      const recordConnections = [
+        subjectMatterExpert,
+        topic,
+        event,
+        organization,
+        testimony,
+      ].filter((connection) => connection && connection.id !== id)
+
+      return {
+        ...record,
+        connections: recordConnections,
+      }
+    })
+  )
+  const sources = flattenArray(data.map(({ connections }) => connections))
+  console.log('sources: ', sources)
+  /* The code snippet `const connections = await Promise.all(async (rec)` seems to have a syntax error.
+  It looks like there is a missing closing parenthesis and curly braces. */
+  // const connections = await Promise.all(async (rec)
+
+  return NextResponse.json({ data: sources, totalCount })
 }

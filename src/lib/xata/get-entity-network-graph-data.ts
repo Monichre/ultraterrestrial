@@ -1,3 +1,4 @@
+import { writeLogToFile } from '@/utils/write-log'
 import {
   createGraphNode,
   createGraphLink,
@@ -52,16 +53,34 @@ export const getEntityNetworkGraphData = async () => {
       'location',
       'latitude',
       'photos',
+      'photos.signedUrl',
+      'photos.enablePublicUrl',
       'longitude',
       'date',
     ])
-    .getAll()
+    .getAll({ consistency: 'eventual' })
 
-  const topics = await xata.db.topics.getAll()
+  const topics = await xata.db.topics.getAll({ consistency: 'eventual' })
 
-  const testimonies = await xata.db.testimonies.getAll()
+  const testimonies = await xata.db.testimonies
+    .select([
+      '*',
+      'witness.id',
+      'witness.name',
+      'witness.role',
+      'witness.photo',
+      'witness.photo.signedUrl',
+      'event.id',
+      'event.name',
+      'event.date',
+    ])
+    .getAll({
+      consistency: 'eventual',
+    })
 
-  const organizations = await xata.db.organizations.getAll()
+  const organizations = await xata.db.organizations.getAll({
+    consistency: 'eventual',
+  })
 
   const personnel = await xata.db.personnel
     .select([
@@ -69,6 +88,8 @@ export const getEntityNetworkGraphData = async () => {
       'bio',
       'role',
       'photo',
+      'photo.signedUrl',
+      'photo.enablePublicUrl',
       'facebook',
       'twitter',
       'website',
@@ -77,21 +98,27 @@ export const getEntityNetworkGraphData = async () => {
       'credibility',
       'popularity',
     ])
-    .getAll()
+    .getAll({ consistency: 'eventual' })
 
-  const topicsExpertsConnections =
-    await xata.db['topic-subject-matter-experts'].getAll()
-  const eventsExpertsConnections =
-    await xata.db['event-subject-matter-experts'].getAll()
+  const topicsExpertsConnections = await xata.db[
+    'topic-subject-matter-experts'
+  ].getAll({ consistency: 'eventual' })
+  const eventsExpertsConnections = await xata.db[
+    'event-subject-matter-experts'
+  ].getAll({ consistency: 'eventual' })
 
-  const organizationsMembers = await xata.db['organization-members'].getAll()
+  const organizationsMembers = await xata.db['organization-members'].getAll({
+    consistency: 'eventual',
+  })
 
   // This is a 3 way link. How to handle?
-  const eventsTopicsExpertsConnections =
-    await xata.db['event-topic-subject-matter-experts'].getAll()
+  const eventsTopicsExpertsConnections = await xata.db[
+    'event-topic-subject-matter-experts'
+  ].getAll({ consistency: 'eventual' })
 
-  const topicsTestimoniesConnections =
-    await xata.db['topics-testimonies'].getAll()
+  const topicsTestimoniesConnections = await xata.db[
+    'topics-testimonies'
+  ].getAll({ consistency: 'eventual' })
 
   const records: any = {
     topics: topics.toSerializable(),
@@ -157,7 +184,6 @@ export const getEntityNetworkGraphData = async () => {
     ...connections.topicsExpertsConnections,
     ...connections.eventsExpertsConnections,
   ].map(({ id, ...rest }) => {
-    console.log('rest: ', rest)
     const [sourceData, targetData] = Object.entries(rest)
 
     const [sourceType, sourceNode]: any = sourceData
@@ -190,6 +216,8 @@ export const getEntityNetworkGraphData = async () => {
     connections,
     graphData,
   }
+
+  // await writeLogToFile(payload, 'network-graph-data.json')
 
   return payload
 }

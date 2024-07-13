@@ -72,6 +72,9 @@ export const GraphProvider = ({
     addEdges,
     getNode,
     screenToFlowPosition,
+    setViewport,
+    zoomIn,
+    zoomOut,
   } = useReactFlow()
   const store = useStoreApi()
 
@@ -218,15 +221,97 @@ export const GraphProvider = ({
   }
 
   const assignPositionsToChildNodes = useCallback(
-    (parentNode: NodePosition, childNodes: any[]): any[] => {
+    // #TODO: Refactor this function to incorporate the childNodeDirection logic
+    /*
+    const assignPositionsToChildNodes = useCallback(
+  (parentNode: NodePosition, childNodes: any[]): any[] => {
+    let currentX = parentNode.position.x
+    let currentY = parentNode.position.y
+    const positions = [];
+
+    childNodes.forEach((childNode, index) => {
+      let positionedNode = { ...childNode };
+
+      switch (parentNode.childNodeDirection) {
+        case 'left':
+          currentX -= (CHILD_DIMENSIONS.width + PADDING);
+          positionedNode.position = screenToFlowPosition({ x: currentX, y: currentY });
+          break;
+        case 'right':
+          currentX += (CHILD_DIMENSIONS.width + PADDING);
+          positionedNode.position = screenToFlowPosition({ x: currentX, y: currentY });
+          break;
+        case 'above':
+          currentY -= (CHILD_DIMENSIONS.height + PADDING);
+          positionedNode.position = screenToFlowPosition({ x: currentX, y: currentY });
+          break;
+        case 'below':
+          currentY += (CHILD_DIMENSIONS.height + PADDING);
+          positionedNode.position = screenToFlowPosition({ x: currentX, y: currentY });
+          break;
+        default:
+          // Default behavior if direction is not specified
+          currentY += (CHILD_DIMENSIONS.height + PADDING);
+          positionedNode.position = screenToFlowPosition({ x: currentX, y: currentY });
+          break;
+      }
+
+      positions.push(positionedNode);
+    });
+
+    return positions;
+  },
+  [screenToFlowPosition]
+);
+    */
+    (parentNode: any, childNodes: any[]): any[] => {
       let currentX = parentNode.position.x
       let currentY = parentNode.position.y + ROOT_DIMENSIONS.height + PADDING
-
+      const { childNodeDirection } = parentNode
       return childNodes.map((childNode) => {
         const positionedNode = {
           ...childNode,
           position: screenToFlowPosition({ x: currentX, y: currentY }),
         }
+
+        // switch (childNodeDirection) {
+        //   case 'left':
+        //     currentX -= CHILD_DIMENSIONS.width + PADDING
+        //     positionedNode.position = screenToFlowPosition({
+        //       x: currentX,
+        //       y: currentY,
+        //     })
+        //     break
+        //   case 'right':
+        //     currentX += CHILD_DIMENSIONS.width + PADDING
+        //     positionedNode.position = screenToFlowPosition({
+        //       x: currentX,
+        //       y: currentY,
+        //     })
+        //     break
+        //   case 'above':
+        //     currentY -= CHILD_DIMENSIONS.height + PADDING
+        //     positionedNode.position = screenToFlowPosition({
+        //       x: currentX,
+        //       y: currentY,
+        //     })
+        //     break
+        //   case 'below':
+        //     currentY += CHILD_DIMENSIONS.height + PADDING
+        //     positionedNode.position = screenToFlowPosition({
+        //       x: currentX,
+        //       y: currentY,
+        //     })
+        //     break
+        //   default:
+        //     // Default behavior if direction is not specified
+        //     currentY += CHILD_DIMENSIONS.height + PADDING
+        //     positionedNode.position = screenToFlowPosition({
+        //       x: currentX,
+        //       y: currentY,
+        //     })
+        //     break
+        // }
 
         currentX += CHILD_DIMENSIONS.width + PADDING
         if (currentX + CHILD_DIMENSIONS.width > parentNode.position.x + 500) {
@@ -244,30 +329,29 @@ export const GraphProvider = ({
   const getRootNodeChildren = useCallback(
     (type: any) => {
       const source: any = `${type}-root-node`
-      console.log('source: ', source)
+
       const nodeState = rootNodeState[source]
-      console.log('nodeState: ', nodeState)
+
       const { lastIndex } = nodeState
       // #TODO - add handling for if batch size is greater than remaining child nodes
       const childNodes = graph[type].nodes.slice(
         lastIndex,
         lastIndex + childNodeBatchSize
       )
-      console.log('childNodes: ', childNodes)
-      console.log('childNodes length ', childNodes.length)
 
-      const parentNodePosition = ROOT_NODE_POSITIONS[type]
+      const { x, y, childNodeDirection } = ROOT_NODE_POSITIONS[type]
       const parentNode = {
         position: {
-          ...parentNodePosition,
+          x,
+          y,
         },
+        childNodeDirection,
       }
 
       const positionedNodes = assignPositionsToChildNodes(
         parentNode,
         childNodes
       )
-      console.log('positionedNodes: ', positionedNodes)
 
       const incomingEdges = createRootNodeEdges(positionedNodes, source)
 
@@ -295,8 +379,22 @@ export const GraphProvider = ({
 
       // So now we set the root nodes with the relevant root node having updated handles, then set the rest of the existing nodes, and then the newest positioned child nodes
       setNodes((nds: any) => [...initialRootNodes, ...positionedNodes])
+      // const handleTransform = useCallback(() => {
+      //   setViewport({ x: positionedNodes[positionedNodes?.length - 1].x, y: positionedNodes[positionedNodes?.length - 1].y, zoom: 1 }, { duration: 800 });
+      // }, [setViewport]);
+
       setEdges((edges: any) => [...edges, ...incomingEdges])
       updateChildNodeBatchIndex(source)
+
+      setViewport(
+        {
+          x: positionedNodes[5].x, //
+          y: positionedNodes[5].y, //
+          zoom: 0.5,
+        },
+        { duration: 800 }
+      )
+
       return {
         childNodes,
         edges: incomingEdges,
@@ -308,8 +406,8 @@ export const GraphProvider = ({
       getNode,
       getNodes,
       graph,
-      initialNodes,
       rootNodeState,
+      setViewport,
     ] // runForceSimulation
   )
 
@@ -329,6 +427,13 @@ export const GraphProvider = ({
   const onConnect: OnConnect = useCallback(
     (params) => setEdges((eds: any) => addEdge(params, eds)),
     []
+  )
+
+  const adjustViewport = useCallback(
+    ({ x, y }: any) => {
+      setViewport({ x, y, zoom: 0 }, { duration: 800 })
+    },
+    [setViewport]
   )
 
   //  useEffects --------------------------------------------------------------------------------------
@@ -381,6 +486,9 @@ export const GraphProvider = ({
         getEdges,
         initialNodes,
         store,
+        adjustViewport,
+        zoomIn,
+        zoomOut,
       }}
     >
       {children}

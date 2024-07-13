@@ -21,10 +21,10 @@ import {
 } from '@react-three/drei'
 import { useDrag } from '@use-gesture/react'
 import {
-  GlowingStarsBackgroundCard,
-  GlowingStarsTitle,
-  GlowingStarsDescription,
-} from '@/components/ui/backgrounds/stars-background'
+  StarsCard,
+  StarsCardDescription,
+  StarsCardTitle,
+} from '@/components/ui/card/stars-card'
 
 const context = createContext(null)
 
@@ -153,17 +153,17 @@ const Icon = () => {
 
 function GlowingStarsBackgroundCardPreview({ name }: any) {
   return (
-    <GlowingStarsBackgroundCard>
-      <GlowingStarsTitle>{name}</GlowingStarsTitle>
+    <StarsCard>
+      <StarsCardTitle>{name}</StarsCardTitle>
       <div className='flex justify-between items-end'>
-        <GlowingStarsDescription>
+        <StarsCardDescription>
           The power of full-stack to the frontend. Read the release notes.
-        </GlowingStarsDescription>
+        </StarsCardDescription>
         <div className='h-8 w-8 rounded-full bg-[hsla(0,0%,100%,.1)] flex items-center justify-center'>
           <Icon />
         </div>
       </div>
-    </GlowingStarsBackgroundCard>
+    </StarsCard>
   )
 }
 
@@ -226,8 +226,6 @@ export const Node = forwardRef(
     // style={{ transition: 'all 0.2s', opacity: isVisible ? 1 : 0, transform: `scale(${isVisible ? 1 : 0.25})` }}
 
     return (
-      
-
       <mesh position={pos} {...props} ref={ref}>
         <Html center>
           <div {...bind()}>
@@ -235,7 +233,7 @@ export const Node = forwardRef(
           </div>
         </Html>
       </mesh>
-      
+
       // <Circle
       //   ref={ref}
       //   {...bind()}

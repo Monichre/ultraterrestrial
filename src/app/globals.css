@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -49,11 +48,7 @@
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
   }
-
-  
 }
-
-
 
 * {
   @apply border-border;
@@ -63,30 +58,23 @@ body {
 }
 
 @layer utilities {
- 
   .bg-card {
-
-   @apply bg-gradient-to-b from-card/70 to-secondary/50;
-  } 
+    @apply bg-gradient-to-b from-card/70 to-secondary/50;
+  }
 
   .gradient-background-style-transparent {
-
     @apply bg-gradient-to-b from-card/50 to-secondary/20;
-   }
+  }
 
-   .bg-dot {
+  .bg-dot {
+  }
+}
 
-   }
-  
- }
-
- @layer components {
-
+@layer components {
   .card {
     @apply bg-gradient-to-b from-card/70 to-secondary/50;
   }
-  
- }
+}
 
 /* @font-face {
   font-family: 'Futura';
@@ -208,27 +196,27 @@ body {
   
 } */
 
-
-
-
 /* background-image: url('https://user-images.githubusercontent.com/26748614/96337246-f14d4580-1085-11eb-8793-a86d929e034d.jpg'); */
 /* background: radial-gradient(circle at center, #004d4d, #003333, #001919); */
 body {
-background-color: #fff;
+  background-color: #fff;
   /* background-color: #0a0a0a; */
   /* background-image: radial-gradient(ellipse 80% 80% at 50% -20%,rgba(120,119,198,0.3),rgba(255,255,255,0)); */
-  
 }
 body::after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	background-image: repeating-linear-gradient(transparent, transparent 2px, #0000003d 3px);
-	background-size: auto 100%;
-	pointer-events: none;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 2px,
+    #0000003d 3px
+  );
+  background-size: auto 100%;
+  pointer-events: none;
 }
 /* 
 Cool effect 
@@ -266,7 +254,6 @@ Cool effect
 }
 
 h1 {
-  
   font-family: 'Ailerons';
   /* text-shadow: 1px 1px 1px #ddd; */
   /* font-family: 'Source Sans 3', sans-serif; */
@@ -290,7 +277,8 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2, h3 {
+h2,
+h3 {
   font-family: var(--font-ailerons);
 }
 canvas {
@@ -353,12 +341,21 @@ canvas {
   color: rgba(127, 255, 255, 0.75);
 }
 
-
-
-.entity-node > *, .root-node > * {
+.entity-node > *,
+.root-node > * {
   color: white;
 }
 
 a {
   /* font-family:  */
+}
+
+.mindmap-sidebar {
+  background-color: transparent !important;
+  background: transparent !important;
+  /* background-image: radial-gradient(
+    ellipse 80% 80% at 50% -20%,
+    rgba(120, 119, 198, 0.3),
+    rgba(255, 255, 255, 0)
+  ); */
 }

@@ -1,6 +1,5 @@
 'use client'
 
-import { GlowingStarsBackgroundCard } from '@/components/backgrounds/stars-background'
 import { ArrowIcon } from '@/components/ui/icons/arrow'
 import { cn } from '@/utils/cn'
 import Image from 'next/image'

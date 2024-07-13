@@ -5,7 +5,7 @@ import { useState, createRef, Suspense, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Nodes, Node } from './nodes'
 import type { DrawingBoardProps } from '@/features/3d/drawing-board/drawing-board'
-import { Spotlight } from '@/components/ui/animations/spotlight'
+import { Spotlight } from '@/components/animations/spotlight'
 import { DotGridBackground } from '@/components/ui/backgrounds'
 import { ArrowIcon } from '@/components/ui/icons/arrow'
 import { FloatingEntityMenu } from '@/features/3d/drawing-board/entity-menu'
@@ -30,8 +30,6 @@ export const DrawingBoardReactThreeFiberGraph: React.FC<DrawingBoardProps> = ({
   const { graph3d } = use3DGraph({ allEntityGraphData })
 
   const { root, events, ...rest } = graph3d
-  console.log('events: ', events)
-  console.log('rest: ', rest)
 
   const [rootNodes, setRootNodes] = useState(() =>
     [...root.nodes].map((node: any) => ({

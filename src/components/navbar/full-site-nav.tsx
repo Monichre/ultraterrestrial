@@ -1,6 +1,6 @@
 'use client'
 import React, { memo, useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
@@ -42,8 +42,10 @@ export const MenuItem = memo(
         className='relative'
         // onMouseLeave={handleMouseExit}
       >
-        <AnimatePresence initial={false}>
+        <LayoutGroup>
+          {/* <AnimatePresence> */}
           <motion.p
+            key={`${item}-p`}
             transition={{ duration: 0.3 }}
             className='cursor-pointer text-black hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
           >
@@ -51,26 +53,36 @@ export const MenuItem = memo(
           </motion.p>
           {visible && (
             <motion.div
-              key='item'
-              // initial={{ opacity: 0, scale: 0.85, y: 10 }}
+              key={item}
+              style={visible ? {} : { opacity: 0, scale: 0.85, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.85, y: 10 }}
-              transition={transition}
+              exit={{ opacity: 0, scale: 0.85, y: 20 }}
+              transition={{
+                staggerChildren: 0.1,
+                duration: 0.35,
+                ease: 'easeInOut',
+              }}
               layout
             >
               <motion.div
-                className='absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4'
-                transition={transition}
+                key={`${item}-div-1`}
+                className='absolute top-[calc(100%_+_1.2rem)] pt-4'
+                style={visible ? {} : { opacity: 0, scale: 0.5, y: 40 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
                 layout
               >
                 <motion.div
-                  transition={transition}
+                  key={`${item}-div-2`}
+                  style={visible ? {} : { opacity: 0, scale: 0.5, y: 40 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
                   layout
-                  // layoutId='active' // layoutId ensures smooth animation
                   className='bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl'
                 >
                   <motion.div
-                    // layout // layout ensures smooth animation
+                    key={`${item}-div-3`}
+                    layout // layout ensures smooth animation
                     className='w-max h-full p-4'
                   >
                     {children}
@@ -79,7 +91,8 @@ export const MenuItem = memo(
               </motion.div>
             </motion.div>
           )}
-        </AnimatePresence>
+        </LayoutGroup>
+        {/* </AnimatePresence> */}
       </div>
     )
   }

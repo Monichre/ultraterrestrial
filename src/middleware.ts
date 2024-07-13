@@ -44,6 +44,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/api/image', '/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 }
 export default clerkMiddleware()
