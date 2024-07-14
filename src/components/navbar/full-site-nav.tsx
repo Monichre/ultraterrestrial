@@ -58,31 +58,17 @@ export const MenuItem = memo(
           {visible && (
             <motion.div
               key={item}
-              style={visible ? {} : { opacity: 0, scale: 0.85, y: 20 }}
+              initial={{ opacity: 0, scale: 0.85, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.85, y: 20 }}
-              transition={{
-                staggerChildren: 0.1,
-                duration: 0.35,
-                ease: 'easeInOut',
-              }}
-              layout
+              // exit={{ opacity: 0, scale: 0.85, y: 20 }}
+              transition={transition}
             >
-              <motion.div
-                key={`${item}-div-1`}
-                className='absolute top-[calc(100%_+_1.2rem)] pt-4'
-                style={visible ? {} : { opacity: 0, scale: 0.5, y: 40 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                layout
-              >
+              <div className='absolute top-[calc(100%_+_1.2rem)] pt-4'>
                 <motion.div
                   key={`${item}-div-2`}
-                  style={visible ? {} : { opacity: 0, scale: 0.5, y: 40 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  layout
-                  className='bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl'
+                  transition={transition}
+                  layoutId='active' // layoutId ensures smooth animation
+                  className='bg-white backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] shadow-xl hover-menu'
                 >
                   <motion.div
                     key={`${item}-div-3`}
@@ -92,7 +78,7 @@ export const MenuItem = memo(
                     {children}
                   </motion.div>
                 </motion.div>
-              </motion.div>
+              </div>
             </motion.div>
           )}
         </LayoutGroup>
@@ -125,7 +111,7 @@ export const HoveredLink = ({ children, ...rest }: any) => {
   return (
     <Link
       {...rest}
-      className='text-white text-sm !font-jetbrains tracking-wide'
+      className='cursor-pointer text-black hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
     >
       {children}
     </Link>
@@ -173,9 +159,9 @@ export function FullSiteNav({ className }: { className?: string }) {
           item='Explore'
           key='Explore'
         >
-          <div className='flex flex-col space-y-4 text-sm'>
+          <div className='flex flex-col space-y-4'>
             <HoveredLink className='' href='/explore/ufology'>
-              Connect the dots for all things Ufology
+              Mindmap
             </HoveredLink>
             <HoveredLink className='' href='/explore/key-figures'>
               Key Figures
@@ -191,7 +177,7 @@ export function FullSiteNav({ className }: { className?: string }) {
           item='History'
           key='History'
         >
-          <div className='flex flex-col space-y-4 text-sm'>
+          <div className='flex flex-col space-y-4'>
             <HoveredLink className='' href='/history'>
               Timeline{' '}
             </HoveredLink>
@@ -209,7 +195,7 @@ export function FullSiteNav({ className }: { className?: string }) {
           item='Sightings'
           key='Sightings'
         >
-          <div className='flex flex-col space-y-4 text-sm'>
+          <div className='flex flex-col space-y-4'>
             <HoveredLink className='' href='/sightings'>
               Hobby
             </HoveredLink>
