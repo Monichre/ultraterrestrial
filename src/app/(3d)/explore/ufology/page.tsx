@@ -12,7 +12,8 @@ export default async function Index() {
 
   return (
     <Suspense fallback={null}>
-      <InAppNavbar />
+      <InAppNavbar color='white' />
+
       <UfologyProvider ufologyData={data}>
         <MindMap allEntityGraphData={graphData} />
       </UfologyProvider>

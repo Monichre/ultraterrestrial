@@ -218,6 +218,25 @@ body::after {
   background-size: auto 100%;
   pointer-events: none;
 }
+.hover-menu {
+  height: auto;
+  position: relative;
+}
+.hover-menu::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 2px,
+    #0000003d 3px
+  );
+  background-size: auto 100%;
+  pointer-events: none;
+}
 /* 
 Cool effect 
  demo: https://github.com/Monichre/LineTextHoverAnimations/blob/main/css/base.css
@@ -358,4 +377,21 @@ a {
     rgba(120, 119, 198, 0.3),
     rgba(255, 255, 255, 0)
   ); */
+}
+
+.site-tagline {
+  position: relative;
+  width: fit-content;
+  margin: auto;
+}
+
+.site-tagline:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 45%;
+  height: 2px;
+  width: 10%;
+  background: #000;
+  z-index: 2;
 }

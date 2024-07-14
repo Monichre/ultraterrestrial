@@ -105,7 +105,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     data,
     type,
   }
-  const date = dayjs(data?.date).format('DD/MMMM/YYYY')
+  const date = dayjs(data?.date).format('DD MMMM YYYY')
   const image: any = photos?.length
     ? photos[0]
     : { url: '/foofighters.webp', signedUrl: '/foofighters.webp' }
@@ -122,7 +122,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
       },
     },
   }
-  const animatedClass = expand ? 'w-[350px] h-fit' : 'w-[350px]'
+  const animatedClass = expand ? 'w-[450px] h-full' : 'w-[450px]'
   const duration = 100
 
   const [animatedTitle, setAnimatedTitle] = useState<string>('')
@@ -242,17 +242,16 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
           className='flex flex-row items-center align-center justify-between p-4'
           onClick={toggle}
         >
-          <h3 className='text-neutral-200 font-jetbrains'>{animatedTitle}</h3>
+          <h2 className='text-white uppercase font-centimaSans text-2xl'>
+            {animatedTitle}
+          </h2>
 
           <div className='w-fit ml-auto date'>
-            <span className='text-sm text-muted-foreground'>
+            <span className='text-1xl text-ehiter uppercase font-centimaSans'>
               {animatedDate}
             </span>
           </div>
         </CardHeader>
-        {/* <CardDescription>
-          Lipsum dolor sit amet, consectetur adipiscing elit
-        </CardDescription> */}
 
         {expand && (
           <motion.div
@@ -284,14 +283,14 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
               />
             </AnimatedCardContent>
             <motion.div
-              className='w-full flex justify-center p-2'
+              className='w-full flex justify-center py-4'
               key={`${id}-additional-info`}
               initial='closed'
               variants={variants3}
               animate={expand ? 'open' : 'closed'}
             >
-              <p className='text-sm font-jetbrains text-white text-justify'>
-                {truncate(description, 200)}
+              <p className='text-md font-jetbrains text-white text-left'>
+                {truncate(description, 300)}
               </p>
             </motion.div>
           </motion.div>

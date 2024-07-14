@@ -1,11 +1,12 @@
 'use client'
 
-import { Astronaut } from '../ui/home/astronaut/astronaut'
+import { Astronaut } from './astronaut/astronaut'
 import { Howl } from 'howler'
 import { useEffect } from 'react'
 // import { PlanetMenu } from '../planet-menu'
 import { CanvasCursor } from '@/components/ui/canvas-cursor'
-
+import { SiteTitle } from './SiteTitle'
+import { LovecraftQuote } from './LovecraftQuote'
 export interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => {
@@ -28,8 +29,11 @@ export const Home: React.FC<HomeProps> = () => {
   return (
     <div className='h-[100vh] w-[100vw] relative'>
       <CanvasCursor />
-
-      <Astronaut />
+      <div className='astronaut h-full w-full relative flex flex-col justify-end align-middle relative overflow-hidden items-center'>
+        <SiteTitle />
+        <LovecraftQuote />
+        <Astronaut />
+      </div>
     </div>
   )
 }

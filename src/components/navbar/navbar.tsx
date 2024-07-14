@@ -33,7 +33,8 @@ const navItems = [
   },
 ]
 
-export const InAppNavbar = ({ links = navItems }: any) => {
+export const InAppNavbar = ({ color = 'black', links = navItems }: any) => {
+  const textColor = `text-${color}`
   return (
     <div
       className={cn(
@@ -46,7 +47,8 @@ export const InAppNavbar = ({ links = navItems }: any) => {
             key={`link=${idx}`}
             href={navItem.link}
             className={cn(
-              'relative items-center flex space-x-1 text-black dark:hover:text-neutral-300 hover:text-neutral-500'
+              textColor,
+              'relative items-center flex space-x-1 dark:hover:text-neutral-300 hover:text-neutral-500 uppercase text-sm !font-jetbrains tracking-wide'
             )}
           >
             <span className='block sm:hidden'>{navItem.icon}</span>
@@ -56,19 +58,15 @@ export const InAppNavbar = ({ links = navItems }: any) => {
           </Link>
         ))}
       </div>
-      <button className='border self-end text-sm !font-jetbrains relative border-neutral-200 dark:border-white/[0.2] text-black px-4 py-2 rounded-full'>
-        <span>Login</span>
-        <span className='absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent h-px' />
-      </button>
     </div>
   )
 }
 
 export const NavBar = ({
-  navItems,
+  links = navItems,
   className,
 }: {
-  navItems: {
+  links: {
     name: string
     link: string
     icon?: JSX.Element
@@ -103,7 +101,7 @@ export const NavBar = ({
       )}
     >
       <div className='flex rounded-full border dark:border-neutral-900 border-neutral-950/20 items-center justify-center space-x-4 px-4 py-2 bg-gradient-to-b from-card/70 to-secondary/50'>
-        {navItems.map((navItem: any, idx: number) => (
+        {links.map((navItem: any, idx: number) => (
           <Link
             key={`link=${idx}`}
             href={navItem.link}
