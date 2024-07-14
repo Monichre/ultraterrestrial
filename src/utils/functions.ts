@@ -121,3 +121,8 @@ export function flattenArray(arr: any[]): any[] {
     return Array.isArray(val) ? acc.concat(flattenArray(val)) : acc.concat(val)
   }, [])
 }
+
+export function truncate(str: string | null, length: number) {
+  if (!str || str.length <= length) return str
+  return `${str.slice(0, length - 3)}...`
+}

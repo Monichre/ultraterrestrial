@@ -3,7 +3,7 @@
 
 import { useRef, useEffect, useCallback, useState } from 'react'
 import { debounce } from '../utils/debounce'
-const SplitType = require('split-type')
+import SplitType from 'split-type'
 
 export const useTextSplitter = (textElementRef, options: any) => {
   const [lines, setLines] = useState([])

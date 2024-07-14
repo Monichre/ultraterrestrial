@@ -8,8 +8,32 @@ import {
 } from 'framer-motion'
 import { cn } from '@/utils/cn'
 import Link from 'next/link'
+import { Sparkles, LibraryBig, Crosshair, Home as HomeIcon } from 'lucide-react'
 
-export const HomePageNav = ({ navItems }: any) => {
+const navItems = [
+  {
+    name: 'Home',
+    link: '/',
+    icon: <HomeIcon strokeWidth={1} />,
+  },
+  {
+    name: 'Explore',
+    link: '/explore',
+    icon: <Sparkles strokeWidth={1} />,
+  },
+  {
+    name: 'History',
+    link: '/history',
+    icon: <LibraryBig strokeWidth={1} />,
+  },
+  {
+    name: 'Sightings',
+    link: '/sightings',
+    icon: <Crosshair strokeWidth={1} />,
+  },
+]
+
+export const InAppNavbar = ({ links = navItems }: any) => {
   return (
     <div
       className={cn(
@@ -17,7 +41,7 @@ export const HomePageNav = ({ navItems }: any) => {
       )}
     >
       <div className='flex max-w-fit items-center space-between space-x-16 px-4 py-2 m-auto'>
-        {navItems.map((navItem: any, idx: number) => (
+        {links.map((navItem: any, idx: number) => (
           <Link
             key={`link=${idx}`}
             href={navItem.link}
@@ -93,10 +117,10 @@ export const NavBar = ({
             </span>
           </Link>
         ))}
-        <button className='border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full'>
+        {/* <button className='border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full'>
           <span>Login</span>
           <span className='absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px' />
-        </button>
+        </button> */}
       </div>
     </div>
   )

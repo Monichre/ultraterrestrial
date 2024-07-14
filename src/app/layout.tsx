@@ -27,6 +27,7 @@ import {
   fireCode,
   jetBrains,
 } from './fonts'
+import { FullSiteNav } from '@/components/navbar/full-site-nav'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -83,6 +84,7 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
+              <FullSiteNav />
               {/* <AnimationProvider> */}
               {/* <PageTransition> */}
               <main className='min-h-[100vh] min-w-screen relative'>

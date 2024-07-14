@@ -7,6 +7,8 @@ import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
 import { cn } from '@/utils'
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 
+import { usePathname } from 'next/navigation'
+
 const transition = {
   type: 'spring',
   mass: 0.5,
@@ -29,6 +31,7 @@ export const MenuItem = memo(
     children?: React.ReactNode
   }) => {
     const [visible, setVisible] = useState(item === active)
+
     const handleMouseEnter = () => {
       setActive(item)
     }
@@ -36,6 +39,7 @@ export const MenuItem = memo(
     useEffect(() => {
       setVisible(item === active)
     }, [active, item])
+
     return (
       <div
         onMouseEnter={handleMouseEnter}
@@ -152,7 +156,12 @@ const navItems = [
 ]
 export function FullSiteNav({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null)
-  console.log('active: ', active)
+
+  const pathname = usePathname()
+
+  if (pathname === '/explore/ufology') {
+    return null
+  }
   return (
     <div
       className={cn('fixed top-10 inset-x-0 max-w-2xl mx-auto z-50', className)}

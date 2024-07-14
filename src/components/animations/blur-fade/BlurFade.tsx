@@ -1,5 +1,5 @@
+'use client'
 import React from 'react'
-;('use client')
 
 import { useRef } from 'react'
 import { AnimatePresence, motion, useInView, Variants } from 'framer-motion'
@@ -34,8 +34,8 @@ export function BlurFade({
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin })
   const isInView = !inView || inViewResult
   const defaultVariants: Variants = {
-    hidden: { y: yOffset, opacity: 0, filter: `blur(${blur})` },
-    visible: { y: -yOffset, opacity: 1, filter: `blur(0px)` },
+    hidden: { y: 10, opacity: 0, filter: `blur(${blur})` },
+    visible: { y: 0, opacity: 1, filter: `blur(0px)` },
   }
   const combinedVariants = variant || defaultVariants
   return (
@@ -44,12 +44,12 @@ export function BlurFade({
         ref={ref}
         initial='hidden'
         animate={isInView ? 'visible' : 'hidden'}
-        exit='hidden'
+        // exit='hidden'
         variants={combinedVariants}
         transition={{
-          delay: 0.04 + delay,
+          delay: 0.5 + delay,
           duration,
-          ease: 'easeOut',
+          ease: 'easeIn',
         }}
         className={className}
       >

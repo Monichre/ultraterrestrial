@@ -35,6 +35,7 @@ import {
   MindmapSidebar,
   MindMapSidebarProvider,
 } from '@/components/mind-map/mindmap-sidebar'
+import { nextTick } from '@/utils'
 
 export function Graph(props: any) {
   const {
@@ -50,6 +51,7 @@ export function Graph(props: any) {
     fitView,
     initialNodes,
     getRootNodeChildren,
+    adjustViewport,
     zoomOut,
   } = useGraph()
   // const reactFlow = useReactFlow()
@@ -61,14 +63,19 @@ export function Graph(props: any) {
 
   const onNodeClick: any = useCallback(
     (event: any, node: any, ...rest: any) => {
-      console.log('rest: ', rest)
-      console.log('node: ', node)
-      console.log('event: ', event)
       const { target } = event
       // Ignore any other clicks to the node that are not the load button
       if (target.classList.contains('load-records-button')) {
-        getRootNodeChildren(node?.data.type)
-        zoomOut({ duration: 0.5 })
+        const { childNodes } = getRootNodeChildren(node?.data.type)
+        const childNode = childNodes[childNodes.length - 1]
+        console.log('childNode: ', childNode)
+
+        nextTick(10).then(() => {
+          zoomOut({
+            zoom: 0,
+            duration: 500,
+          })
+        })
       }
     },
     [getRootNodeChildren, zoomOut]
@@ -82,7 +89,7 @@ export function Graph(props: any) {
           className='-top-40 left-0 md:left-60 md:-top-20'
           fill='white'
         />
-        <div className='w-full absolute top-10 left-0 z-20 cursor-pointer flex justify-center'>
+        <div className='w-full absolute bottom-[40px] left-0 z-20 cursor-pointer flex justify-center'>
           <Toolbar />
         </div>
         <MindMapSidebarProvider>
