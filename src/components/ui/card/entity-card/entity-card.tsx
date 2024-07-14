@@ -22,13 +22,15 @@ import {
   useTransform,
 } from 'framer-motion'
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import { DotGridBackgroundBlack } from '@/components/ui/backgrounds'
-import { Toolbar } from '@/components/toolbar'
+
 import { EntityCardUtilityMenu } from '@/components/ui/card/entity-card/entity-card-utility-menu'
 import {
   MindmapSidebar,
   useMindMapSidebar,
 } from '@/components/mind-map/mindmap-sidebar'
+import { MagicCard } from 'react-magic-motion'
+import 'react-magic-motion/card.css'
+import { truncate } from '@/utils/functions'
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
@@ -61,6 +63,11 @@ export interface MindMapEntityCardProps {
 
 export const openSpring = { type: 'spring', stiffness: 200, damping: 30 }
 export const closeSpring = { type: 'spring', stiffness: 300, damping: 35 }
+export const AnimatedCardWithRef = forwardRef((props: any, ref: any) => (
+  <Card ref={ref} {...props} />
+))
+export const AnimatedCard = motion(AnimatedCardWithRef)
+AnimatedCard.displayName = 'AnimatedCard'
 
 export const AnimatedCardContentWithRef = forwardRef((props, ref: any) => (
   <CardContent ref={ref} {...props} />
@@ -188,19 +195,34 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   // onMouseLeave={handleMouseLeave}
 
   const variants = {
-    open: { opacity: 1, y: 0 },
-    closed: { opacity: 0, y: -40 },
+    open: { opacity: 1, height: 'auto' },
+    closed: { opacity: 0, height: 0 },
     transition: {
       ...openSpring,
+      duration: 0.5,
+      delayChildren: 0.5,
+      staggerChildren: 0.25,
+    },
+  }
+
+  const variants2 = {
+    open: { height: 'auto', opacity: 1, y: 0 },
+    closed: { height: 0, opacity: 0, y: 100 },
+    transition: {
+      type: 'spring',
+      damping: 10,
+      stiffness: 100,
       duration: 0.5,
     },
   }
-  const variants2 = {
-    open: { height: 210, opacity: 1, y: 0 },
-    closed: { height: 0, opacity: 0, y: -40 },
+
+  const variants3 = {
+    open: { opacity: 1, y: 0 },
+    closed: { opacity: 0, y: 100 },
     transition: {
-      ...openSpring,
-      duration: 0.5,
+      ease: 'ease-in-out',
+      delay: 0.5,
+      duration: 0.25,
     },
   }
   const truncateText = (text: string, maxLength: number): string => {
@@ -210,76 +232,76 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     return text.substring(0, maxLength) + '...'
   }
   return (
-    <div className='relative w-fit h-fit'>
-      <Card
-        className={`entity-card shadow relative ${animatedClass} rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
-      >
-        <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative'>
-          <EntityCardUtilityMenu node={node} onSave={() => {}} />
-          <CardHeader
-            className='flex flex-row items-center align-center justify-between p-4'
-            onClick={toggle}
-          >
-            <h3 className='text-neutral-200 font-jetbrains'>{animatedTitle}</h3>
+    <AnimatedCard
+      style={{ transition: 'all 0.5s ease-in-out' }}
+      className={`entity-card shadow relative ${animatedClass} rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
+    >
+      <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative'>
+        <EntityCardUtilityMenu node={node} onSave={() => {}} />
+        <CardHeader
+          className='flex flex-row items-center align-center justify-between p-4'
+          onClick={toggle}
+        >
+          <h3 className='text-neutral-200 font-jetbrains'>{animatedTitle}</h3>
 
-            <div className='w-fit ml-auto date'>
-              <span className='text-sm text-muted-foreground'>
-                {animatedDate}
-              </span>
-            </div>
-          </CardHeader>
-          {/* <CardDescription>
+          <div className='w-fit ml-auto date'>
+            <span className='text-sm text-muted-foreground'>
+              {animatedDate}
+            </span>
+          </div>
+        </CardHeader>
+        {/* <CardDescription>
           Lipsum dolor sit amet, consectetur adipiscing elit
         </CardDescription> */}
 
-          {expand && (
-            <motion.div
-              variants={variants}
-              key={`${id}-image-container`}
-              // initial={{ opacity: 0, y: -40 }}
-              animate={expand}
-              transition={{
-                ...openSpring,
-                staggerChildren: 0.05,
-                delayChildren: 0.05,
-                duration: 1,
-              }}
-              className='p-2'
+        {expand && (
+          <motion.div
+            variants={variants}
+            key={`${id}-image-container`}
+            initial={'closed'}
+            animate={expand ? 'open' : 'closed'}
+            className='p-2'
+          >
+            <AnimatedCardContent
+              key={`${id}-image-card`}
+              variants={variants2}
+              initial='closed'
+              animate={expand ? 'open' : 'closed'}
             >
-              <AnimatedCardContent
-                key={`${id}-image-card`}
-                variants={variants2}
-                animate={expand ? 'open' : 'closed'}
-              >
-                <AnimatedImageContent
-                  key={`${id}-image`}
-                  // initial={{ opacity: 0, height: 0, width: 0, y: -40 }}
-                  // animate={expand ? { opacity: 1, height: 300, width: 300, y: 0 }: { opacity: 0, height: 0, width: 0, y: -40 }}
+              <AnimatedImageContent
+                key={`${id}-image`}
+                // initial={{ opacity: 0, height: 0, width: 0, y: -40 }}
+                // animate={expand ? { opacity: 1, height: 300, width: 300, y: 0 }: { opacity: 0, height: 0, width: 0, y: -40 }}
 
-                  variants={variants}
-                  animate={expand ? 'open' : 'closed'}
-                  alt='Product image'
-                  className='w-[200px] h-[200px] rounded-md object-cover m-auto'
-                  height={200}
-                  src={image?.url}
-                  width={200}
-                />
-              </AnimatedCardContent>
-              <motion.div
-                className='w-full flex justify-center p-2'
-                key={`${id}-additional-info`}
-                variants={variants}
+                variants={variants2}
+                initial={false}
                 animate={expand ? 'open' : 'closed'}
-                transition={{
-                  ...openSpring,
-                }}
-              >
-                <p>{description}</p>
-              </motion.div>
+                alt='Product image'
+                className='w-full h-full rounded-md object-cover'
+                height={200}
+                src={image?.url}
+                width={200}
+              />
+            </AnimatedCardContent>
+            <motion.div
+              className='w-full flex justify-center p-2'
+              key={`${id}-additional-info`}
+              initial='closed'
+              variants={variants3}
+              animate={expand ? 'open' : 'closed'}
+            >
+              <p className='text-sm font-jetbrains text-white text-justify'>
+                {truncate(description, 200)}
+              </p>
             </motion.div>
-          )}
-        </div>
-      </Card>
-    </div>
+          </motion.div>
+        )}
+      </div>
+    </AnimatedCard>
   )
 }
+
+// #TODO: Add this card expansion animation:
+/* 
+https://www.react-magic-motion.com/applications/expandable-card
+*/

@@ -50,11 +50,34 @@ export async function GET(request: NextRequest) {
           : null
       const topicId = record?.topic?.id || null
       const subjectMatterExpert = smeId
-        ? await xata.db.personnel.read(smeId)
+        ? await xata.db.personnel
+            .select([
+              'name',
+              'bio',
+              'role',
+              'photo',
+              'photo.signedUrl',
+              'photo.enablePublicUrl',
+            ])
+            .read(smeId)
         : null
 
       const eventId = record?.event?.id || null
-      const event = eventId ? await xata.db.events.read(eventId) : null
+      const event = eventId
+        ? await xata.db.events
+            .select([
+              'name',
+              'description',
+              'location',
+              'latitude',
+              'photos',
+              'photos.signedUrl',
+              'photos.enablePublicUrl',
+              'longitude',
+              'date',
+            ])
+            .read(eventId)
+        : null
       const organization = record?.organization?.id
         ? await xata.db.organizations.read(record?.organization?.id)
         : null
@@ -78,7 +101,7 @@ export async function GET(request: NextRequest) {
     })
   )
   const sources = flattenArray(data.map(({ connections }) => connections))
-  console.log('sources: ', sources)
+
   /* The code snippet `const connections = await Promise.all(async (rec)` seems to have a syntax error.
   It looks like there is a missing closing parenthesis and curly braces. */
   // const connections = await Promise.all(async (rec)

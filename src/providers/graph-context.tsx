@@ -386,15 +386,6 @@ export const GraphProvider = ({
       setEdges((edges: any) => [...edges, ...incomingEdges])
       updateChildNodeBatchIndex(source)
 
-      setViewport(
-        {
-          x: positionedNodes[5].x, //
-          y: positionedNodes[5].y, //
-          zoom: 0.5,
-        },
-        { duration: 800 }
-      )
-
       return {
         childNodes,
         edges: incomingEdges,
@@ -407,7 +398,6 @@ export const GraphProvider = ({
       getNodes,
       graph,
       rootNodeState,
-      setViewport,
     ] // runForceSimulation
   )
 
@@ -430,8 +420,8 @@ export const GraphProvider = ({
   )
 
   const adjustViewport = useCallback(
-    ({ x, y }: any) => {
-      setViewport({ x, y, zoom: 0 }, { duration: 800 })
+    ({ x, y, zoom = 0, duration = 800 }: any) => {
+      setViewport({ x, y, zoom }, { duration })
     },
     [setViewport]
   )

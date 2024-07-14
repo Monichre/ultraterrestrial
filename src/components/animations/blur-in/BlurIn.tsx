@@ -1,40 +1,45 @@
 'use client'
 import * as React from 'react'
 
-import { motion } from 'framer-motion'
+import { motion, stagger } from 'framer-motion'
 
-import { cn } from '@/utils/index'
+import { cn } from '@/utils/cn'
+// const staggerMenuItems: any = stagger(0.1, { startDelay: 0.15 })
 
 interface BlurIntProps {
   word: string
   className?: string
-  variant?: {
-    hidden: { filter: string; opacity: number }
-    visible: { filter: string; opacity: number }
-  }
+  visible: boolean
   duration?: number
 }
-const BlurIn = ({ word, className, variant, duration = 1 }: BlurIntProps) => {
+export const BlurIn = ({
+  word,
+  className,
+  visible,
+  duration = 1,
+}: BlurIntProps) => {
   const defaultVariants = {
     hidden: { filter: 'blur(10px)', opacity: 0 },
-    visible: { filter: 'blur(0px)', opacity: 1 },
+    visible: (i: any) => ({
+      filter: 'blur(0px)',
+      opacity: 1,
+      transition: {
+        duration: 1,
+        delay: i * 1,
+      },
+    }),
   }
-  const combinedVariants = variant || defaultVariants
 
   return (
-    <motion.h1
-      initial='hidden'
-      animate='visible'
-      transition={{ duration }}
-      variants={combinedVariants}
+    <motion.p
+      animate={visible ? 'visible' : 'hidden'}
+      variants={defaultVariants}
       className={cn(
         className,
-        'font-display text-center text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]'
+        'font-jetbrains text-center font-bold tracking-[-0.02em] drop-shadow-sm md:leading-[5rem] !text-black'
       )}
     >
       {word}
-    </motion.h1>
+    </motion.p>
   )
 }
-
-export default BlurIn

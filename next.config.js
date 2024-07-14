@@ -1,6 +1,3 @@
-const MillionLint = require('@million/lint')
-/** @type {import('next').NextConfig} */
-
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'json', 'geojson'],
@@ -83,4 +80,4 @@ const nextConfig = {
   },
 }
 
-module.exports = MillionLint.next({ rsc: true })(nextConfig)
+module.exports = nextConfig
