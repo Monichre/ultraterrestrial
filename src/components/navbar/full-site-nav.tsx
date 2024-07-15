@@ -8,6 +8,7 @@ import { cn } from '@/utils'
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 
 import { usePathname } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 
 const transition = {
   type: 'spring',
@@ -150,61 +151,73 @@ export function FullSiteNav({ className }: { className?: string }) {
   }
   return (
     <div
-      className={cn('fixed top-10 inset-x-0 max-w-2xl mx-auto z-50', className)}
+      className={cn(
+        'fixed top-10 inset-x-0 z-50 w-full flex justify-center content-center items-center align-center',
+        className
+      )}
     >
-      <Menu setActive={setActive}>
-        <MenuItem
-          setActive={setActive}
-          active={active}
-          item='Explore'
-          key='Explore'
-        >
-          <div className='flex flex-col space-y-4'>
-            <HoveredLink className='' href='/explore/ufology'>
-              Mindmap
-            </HoveredLink>
-            <HoveredLink className='' href='/explore/key-figures'>
-              Key Figures
-            </HoveredLink>
-            <HoveredLink className='' href='/explore/visualizations'>
-              3D Visualizations
-            </HoveredLink>
-          </div>
-        </MenuItem>
-        <MenuItem
-          setActive={setActive}
-          active={active}
-          item='History'
-          key='History'
-        >
-          <div className='flex flex-col space-y-4'>
-            <HoveredLink className='' href='/history'>
-              Timeline{' '}
-            </HoveredLink>
-            <HoveredLink className='' href='/history/gallery'>
-              Team
-            </HoveredLink>
-            <HoveredLink className='' href='/history/events'>
-              Historical Events
-            </HoveredLink>
-          </div>
-        </MenuItem>
-        <MenuItem
-          setActive={setActive}
-          active={active}
-          item='Sightings'
-          key='Sightings'
-        >
-          <div className='flex flex-col space-y-4'>
-            <HoveredLink className='' href='/sightings'>
-              Hobby
-            </HoveredLink>
-          </div>
-        </MenuItem>
-      </Menu>
-      <div>
+      <div className='max-w-2xl mx-auto flex-auto'>
+        <Menu setActive={setActive}>
+          <MenuItem
+            setActive={setActive}
+            active={active}
+            item='Explore'
+            key='Explore'
+          >
+            <div className='flex flex-col space-y-4'>
+              <HoveredLink className='' href='/explore/ufology'>
+                Mindmap
+              </HoveredLink>
+              <HoveredLink className='' href='/explore/key-figures'>
+                Key Figures
+              </HoveredLink>
+              <HoveredLink className='' href='/explore/visualizations'>
+                3D Visualizations
+              </HoveredLink>
+            </div>
+          </MenuItem>
+          <MenuItem
+            setActive={setActive}
+            active={active}
+            item='History'
+            key='History'
+          >
+            <div className='flex flex-col space-y-4'>
+              <HoveredLink className='' href='/history'>
+                Timeline{' '}
+              </HoveredLink>
+              <HoveredLink className='' href='/history/gallery'>
+                Team
+              </HoveredLink>
+              <HoveredLink className='' href='/history/events'>
+                Historical Events
+              </HoveredLink>
+            </div>
+          </MenuItem>
+          <MenuItem
+            setActive={setActive}
+            active={active}
+            item='Sightings'
+            key='Sightings'
+          >
+            <div className='flex flex-col space-y-4'>
+              <HoveredLink className='' href='/sightings'>
+                Hobby
+              </HoveredLink>
+            </div>
+          </MenuItem>
+        </Menu>
+      </div>
+      <div className='absolute right-0 flex-initial w-fit items-center content-center justify-self-end sign-in-button'>
         <SignedOut>
-          <SignInButton />
+          <SignInButton>
+            <Button
+              className='cursor-pointer text-black hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
+              variant='ghost'
+            >
+              Sign In
+            </Button>
+          </SignInButton>
         </SignedOut>
         <SignedIn>
           <UserButton />

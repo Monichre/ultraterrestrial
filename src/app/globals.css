@@ -391,7 +391,17 @@ a {
   bottom: -8px;
   left: 45%;
   height: 2px;
-  width: 10%;
+  width: 0;
   background: #000;
+  transition: width 0.3s ease-in-out;
+  transition-delay: 1s;
   z-index: 2;
+}
+
+.in-view .site-tagline:after {
+  width: 10%;
+}
+
+.sign-in-button .cl-userButton-root {
+  margin-right: 12px;
 }

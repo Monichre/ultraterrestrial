@@ -1,4 +1,4 @@
-import { Home } from '@/components/home'
+import { Home } from '@/views/home'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
