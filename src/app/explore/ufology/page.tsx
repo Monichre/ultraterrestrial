@@ -2,7 +2,7 @@ import { getEntityNetworkGraphData, NetworkGraphPayload } from '@/lib/xata'
 
 import { Suspense } from 'react'
 
-import { MindMap } from '@/components/mind-map'
+import { MindMap } from '@/features/mindmap'
 import { UfologyProvider } from '@/providers/ufology-provider'
 import { InAppNavbar } from '@/components/navbar'
 export default async function Index() {
