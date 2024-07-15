@@ -1,7 +1,5 @@
 'use client'
 
-import { Graph } from '@/features/graph/graph'
-
 import type { NetworkGraphPayload } from '@/lib/xata'
 
 import { GraphProvider } from '@/providers/graph-context'

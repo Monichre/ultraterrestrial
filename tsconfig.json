@@ -20,9 +20,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@/utils/*": ["src/utils/*"],
-      "@/api/*": ["src/api/*"],
-      "@/ui/*": ["src/components/ui/*"]
     },
     "plugins": [
       {
