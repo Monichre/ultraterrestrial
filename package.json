@@ -17,10 +17,14 @@
     "download:xata": "bash scripts/xata-tables.sh",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "generate:content": "node ./src/lib/hygraph/index.js",
     "lint": "next lint"
   },
   "dependencies": {
     "3d-force-graph": "^1.73.3",
+    "@agentic/stdlib": "^6.2.4",
+    "@ai-sdk/openai": "^0.0.36",
+    "@browserbasehq/sdk": "^1.4.2",
     "@clerk/nextjs": "^5.2.2",
     "@copilotkit/react-core": "^0.22.0",
     "@copilotkit/react-textarea": "^0.32.0",
@@ -32,6 +36,7 @@
     "@deck.gl/mapbox": "^9.0.14",
     "@deck.gl/react": "^9.0.12",
     "@gsap/react": "^2.1.1",
+    "@hygraph/management-sdk": "^1.2.4",
     "@langchain/community": "^0.0.49",
     "@langchain/openai": "^0.0.28",
     "@liveblocks/client": "^1.11.1",
@@ -128,6 +133,7 @@
     "glsl-random": "^0.0.5",
     "graphology": "^0.25.4",
     "graphology-layout": "^0.6.1",
+    "graphql-request": "^7.1.0",
     "gsap": "^3.12.5",
     "howler": "^2.2.4",
     "lucide-react": "^0.363.0",
@@ -163,6 +169,7 @@
     "split-type": "^0.3.4",
     "storybook-vscode-component": "^1.0.9",
     "styled-components": "^6.1.8",
+    "swr": "^2.2.5",
     "tailwind-merge": "^2.2.2",
     "tailwindcss": "3.4.1",
     "tailwindcss-animate": "^1.0.7",
@@ -189,7 +196,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^1",
+    "@chromatic-com/storybook": "^1.6.1",
     "@slicemachine/adapter-next": "^0.3.38",
     "@storybook/addon-actions": "^8.2.2",
     "@storybook/addon-console": "^3.0.0",
