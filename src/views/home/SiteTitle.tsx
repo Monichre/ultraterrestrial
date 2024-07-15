@@ -1,4 +1,6 @@
 'use client'
+import { BlurFade } from '@/components/animations/blur-fade/BlurFade'
+import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion-3d'
 import * as React from 'react'
 import { useState, useEffect } from 'react'
@@ -38,23 +40,19 @@ export function SiteTitle(props: any) {
 
   return (
     <div
-      className={`flex self-center align-center w-full auto mb-[86px] relative flex-col`}
+      className={`flex self-center align-center w-full auto mb-[42px] relative flex-col`}
     >
       <div
         // mt-auto
         className={`flex justify-center self-center align-center center w-full  relative`}
       >
-        {letters.map((letter, i) => (
-          <motion.h1
-            key={`${letter}-${i}`}
-            variants={pullupVariant}
-            initial='hide'
-            animate={visible ? 'show' : 'hide'}
+        <BlurFade inView delay={0}>
+          <h1
             className={`text-center !font-ailerons text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] text-black`}
           >
-            {letter === ' ' ? <span>&nbsp;</span> : letter}
-          </motion.h1>
-        ))}
+            UltraTerrestrial
+          </h1>
+        </BlurFade>
       </div>
     </div>
   )

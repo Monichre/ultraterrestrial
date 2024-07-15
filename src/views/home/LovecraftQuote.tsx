@@ -28,7 +28,7 @@ export const LovecraftQuote = () => {
   return (
     <>
       <div className='text-black tracking-wide mx-auto p-8 text-center w-[800px]'>
-        <BlurFade inView delay={0}>
+        <BlurFade inView delay={0.25}>
           <h2 className='font-centimaSans text-black text-bold text-center text-lg relative site-tagline'>
             Tracking the State of Disclosure
             <br />
@@ -44,7 +44,7 @@ export const LovecraftQuote = () => {
             <BlurFade
               inView
               className='inline'
-              delay={index === 0 ? 0.2 : index * 0.25}
+              delay={index === 0 ? 0.5 : index * 0.5}
               key={`${line.replace(/ /g, '-')}-${index}`}
             >
               <span className='font-centimaSans text-black text-bold text-[16px]'>

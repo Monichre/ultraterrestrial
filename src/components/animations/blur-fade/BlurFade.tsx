@@ -3,6 +3,7 @@ import React from 'react'
 
 import { useRef } from 'react'
 import { AnimatePresence, motion, useInView, Variants } from 'framer-motion'
+import { cn } from '@/utils'
 
 interface BlurFadeProps {
   children: React.ReactNode
@@ -51,7 +52,7 @@ export function BlurFade({
           duration,
           ease: 'easeIn',
         }}
-        className={className}
+        className={cn(className, isInView ? 'in-view' : '')}
       >
         {children}
       </motion.div>

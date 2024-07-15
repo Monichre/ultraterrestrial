@@ -33,12 +33,12 @@ module.exports = {
       {
         type: 'add',
         path: `${basePath}/{{dashCase name}}/{{properCase name}}.tsx`,
-        templateFile: './templates/component/Component.hbs',
+        templateFile: './templates/component/component.hbs',
       },
       {
         type: 'add',
         path: 'src/stories/{{dashCase name}}/{{properCase name}}.stories.ts',
-        templateFile: './templates/component/Component.stories.hbs',
+        templateFile: './templates/component/component.stories.hbs',
       },
       {
         type: 'add',
