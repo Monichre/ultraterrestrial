@@ -1,4 +1,4 @@
-import { collide } from '@/features/graph/utils/collide'
+import { collide } from '@/features/mindmap/utils/collide'
 import { nextTick } from '@/utils'
 import {
   type ReactFlowState,

@@ -1,12 +1,12 @@
 import {
   type ILayoutReactflow,
   layoutReactflow,
-} from '@/features/graph/layouts'
+} from '@/features/mindmap/layouts'
 
 import { useState } from 'react'
 import { useReactFlow } from '@xyflow/react'
 import { nextTick } from '@/utils'
-import { getRootNode } from '@/features/graph/utils/node.utils'
+import { getRootNode } from '@/features/mindmap/utils/node.utils'
 
 export const layoutWithFlush = async (
   reactFlow: any,

@@ -7,7 +7,7 @@ import {
   CardFooter,
 } from '@/components/ui/card'
 import { OpenAILogo } from '@/components/ui/icons'
-import { CommandDemo } from '@/features/graph/nodes'
+import { CommandDemo } from '@/features/mindmap/nodes'
 
 import { cn, capitalize } from '@/utils'
 import { Switch } from '@radix-ui/react-switch'

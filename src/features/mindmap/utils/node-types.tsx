@@ -1,4 +1,4 @@
-import { EntityNode, RootNode, TestimonyNode } from '@/features/graph/nodes'
+import { EntityNode, RootNode, TestimonyNode } from '@/features/mindmap/nodes'
 
 export const nodeTypes: any = {
   rootNode: RootNode,

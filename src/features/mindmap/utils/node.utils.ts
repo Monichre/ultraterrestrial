@@ -1,5 +1,5 @@
 // import { nextId } from './id'
-import type { Reactflow } from '@/features/graph/layouts/types'
+import type { Reactflow } from '@/features/mindmap/layouts/types'
 import { Edge, MarkerType, Node, Position } from '@xyflow/react'
 // import dagre from 'dagre'
 // import { PaletteElement, PaletteElementNodeStyles } from './types'

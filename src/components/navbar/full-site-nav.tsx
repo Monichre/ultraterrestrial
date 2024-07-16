@@ -165,14 +165,14 @@ export function FullSiteNav({ className }: { className?: string }) {
             key='Explore'
           >
             <div className='flex flex-col space-y-4'>
-              <HoveredLink className='' href='/explore/ufology'>
-                Mindmap
+              <HoveredLink className='' href='/explore/disclosure'>
+                The State of Disclosure
               </HoveredLink>
               <HoveredLink className='' href='/explore/key-figures'>
                 Key Figures
               </HoveredLink>
               <HoveredLink className='' href='/explore/visualizations'>
-                3D Visualizations
+                3D Interactive Timeline
               </HoveredLink>
             </div>
           </MenuItem>
@@ -202,7 +202,7 @@ export function FullSiteNav({ className }: { className?: string }) {
           >
             <div className='flex flex-col space-y-4'>
               <HoveredLink className='' href='/sightings'>
-                Hobby
+                UFO Sightings
               </HoveredLink>
             </div>
           </MenuItem>

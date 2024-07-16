@@ -27,7 +27,7 @@ import { EntityCardUtilityMenu } from '@/components/ui/card/entity-card/entity-c
 import {
   MindmapSidebar,
   useMindMapSidebar,
-} from '@/components/mind-map/mindmap-sidebar'
+} from '@/features/mindmap/mindmap-sidebar'
 import { MagicCard } from 'react-magic-motion'
 import 'react-magic-motion/card.css'
 import { truncate } from '@/utils/functions'

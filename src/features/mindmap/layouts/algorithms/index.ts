@@ -1,18 +1,18 @@
 import {
   kD3DAGAlgorithms,
   type D3DAGLayoutAlgorithms,
-} from '@/features/graph/layouts/algorithms/d3-dag'
-import { layoutD3Hierarchy } from '@/features/graph/layouts/algorithms/d3-hierarchy'
-import { layoutDagreTree } from '@/features/graph/layouts/algorithms/dagre-tree'
+} from '@/features/mindmap/layouts/algorithms/d3-dag'
+import { layoutD3Hierarchy } from '@/features/mindmap/layouts/algorithms/d3-hierarchy'
+import { layoutDagreTree } from '@/features/mindmap/layouts/algorithms/dagre-tree'
 import {
   kElkAlgorithms,
   type ELKLayoutAlgorithms,
-} from '@/features/graph/layouts/algorithms/elk'
-import { layoutOrigin } from '@/features/graph/layouts/algorithms/origin'
+} from '@/features/mindmap/layouts/algorithms/elk'
+import { layoutOrigin } from '@/features/mindmap/layouts/algorithms/origin'
 import { type Node, type Edge } from '@xyflow/react'
 
 import { removeEmpty } from '@/utils'
-import type { Reactflow } from '@/features/graph/layouts/types'
+import type { Reactflow } from '@/features/mindmap/layouts/types'
 
 export type LayoutDirection = 'vertical' | 'horizontal'
 export type LayoutVisibility = 'visible' | 'hidden'

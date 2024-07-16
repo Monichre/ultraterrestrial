@@ -1,8 +1,8 @@
-import type { LayoutAlgorithm } from '@/features/graph/layouts/config'
+import type { LayoutAlgorithm } from '@/features/mindmap/layouts/config'
 import {
   getNodeLayouted,
   getEdgeLayouted,
-} from '@/features/graph/utils/node.utils'
+} from '@/features/mindmap/utils/node.utils'
 
 /**
  * Positions all nodes at the origin (0,0) in the layout.

@@ -1,9 +1,9 @@
-import { layoutAlgorithms } from '@/features/graph/layouts'
-import type { LayoutAlgorithmOptions } from '@/features/graph/layouts/algorithms'
+import { layoutAlgorithms } from '@/features/mindmap/layouts'
+import type { LayoutAlgorithmOptions } from '@/features/mindmap/layouts/algorithms'
 import {
   getSourceHandlePosition,
   getTargetHandlePosition,
-} from '@/features/graph/layouts/utils'
+} from '@/features/mindmap/layouts/utils'
 
 import {
   useReactFlow,

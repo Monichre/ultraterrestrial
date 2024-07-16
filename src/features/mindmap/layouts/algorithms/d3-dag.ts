@@ -1,13 +1,13 @@
 import type {
   LayoutAlgorithmProps,
   LayoutAlgorithm,
-} from '@/features/graph/layouts/algorithms'
-import type { ReactflowNodeWithData } from '@/features/graph/layouts/types'
+} from '@/features/mindmap/layouts/algorithms'
+import type { ReactflowNodeWithData } from '@/features/mindmap/layouts/types'
 import {
   getNodeSize,
   getNodeLayouted,
   getEdgeLayouted,
-} from '@/features/graph/utils/node.utils'
+} from '@/features/mindmap/utils/node.utils'
 import { getIncomers } from '@xyflow/react'
 import { graphStratify, sugiyama } from 'd3-dag'
 

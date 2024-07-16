@@ -39,7 +39,7 @@ import {
   ROOT_NODE_WIDTH,
 } from '@/utils/constants/nodes'
 import * as d3 from 'd3'
-// import { simulation } from '@/features/graph/utils/force-directed'
+// import { simulation } from '@/features/mindmap/utils/force-directed'
 
 const GraphContext: any = createContext({
   nodes: [],

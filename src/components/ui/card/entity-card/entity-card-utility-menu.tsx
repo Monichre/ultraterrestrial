@@ -26,8 +26,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { SheetTrigger } from '@/components/ui/sheet'
-import { useMindMapSidebar } from '@/components/mind-map/mindmap-sidebar'
+
+import { useMindMapSidebar } from '@/features/mindmap/mindmap-sidebar'
 
 interface EntityCardUtilityMenuProps {
   node: any

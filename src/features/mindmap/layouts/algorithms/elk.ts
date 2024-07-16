@@ -6,7 +6,7 @@ import {
   getEdgeLayouted,
   getNodeLayouted,
   getNodeSize,
-} from '@/features/graph/utils/node.utils'
+} from '@/features/mindmap/utils/node.utils'
 
 const algorithms: any = {
   'elk-layered': 'layered',
