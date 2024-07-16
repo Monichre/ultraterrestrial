@@ -13,7 +13,6 @@ import {
 } from '@xyflow/react'
 
 import { MindMapEntityCard } from '@/components/ui/card/entity-card/entity-card'
-import { MindMapSidebarProvider } from '@/components/mind-map/mindmap-sidebar/mindmap-sidebar-context'
 
 interface Photo {
   id: string

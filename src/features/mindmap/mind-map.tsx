@@ -1,5 +1,6 @@
 'use client'
 
+import { Graph } from '@/features/mindmap/graph'
 import type { NetworkGraphPayload } from '@/lib/xata'
 
 import { GraphProvider } from '@/providers/graph-context'

@@ -2,7 +2,7 @@ import {
   ChangeLogger,
   NodeInspector,
   ViewportLogger,
-} from '@/features/graph/loggers'
+} from '@/features/mindmap/loggers'
 import { Panel } from '@xyflow/react'
 import {
   useState,

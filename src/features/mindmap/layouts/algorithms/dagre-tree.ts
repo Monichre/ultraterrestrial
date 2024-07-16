@@ -3,12 +3,12 @@ edges in a tree-like structure. Here's a breakdown of what the code is doing: */
 import dagre from '@dagrejs/dagre'
 
 import { getIncomers } from '@xyflow/react'
-import type { LayoutAlgorithm } from '@/features/graph/layouts/algorithms'
+import type { LayoutAlgorithm } from '@/features/mindmap/layouts/algorithms'
 import {
   getNodeSize,
   getNodeLayouted,
   getEdgeLayouted,
-} from '@/features/graph/utils/node.utils'
+} from '@/features/mindmap/utils/node.utils'
 
 const dagreGraph = new dagre.graphlib.Graph()
 dagreGraph.setDefaultEdgeLabel(() => ({}))

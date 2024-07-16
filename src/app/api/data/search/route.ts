@@ -1,10 +1,11 @@
+import { Tables } from './../../../../lib/supabase/types'
 import { getXataClient } from '@/lib/xata'
 import { flattenArray } from '@/utils'
 
 import { NextRequest, NextResponse } from 'next/server'
 const xata: any = getXataClient()
 
-const objectMap = {
+const objectMap: any = {
   events: 'event',
   testimonies: 'testimony',
   personnel: 'personnel',
@@ -14,6 +15,68 @@ const objectMap = {
   // Add more mappings here as needed
 }
 
+const tables = [
+  'documents',
+
+  'event-subject-matter-experts',
+
+  'event-topic-subject-matter-experts',
+
+  'events',
+
+  'locations',
+
+  'organization-members',
+
+  'organizations',
+
+  'personnel',
+
+  'sightings',
+
+  'testimonies',
+
+  'topic-subject-matter-experts',
+
+  'topics',
+
+  'topics-testimonies',
+]
+
+const connectionMapByEntityType: any = {
+  events: [
+    { table: 'event-subject-matter-experts', target: 'event' },
+    { table: 'event-topic-subject-matter-experts', target: 'event' },
+    { table: 'testimonies', target: 'event' },
+  ],
+  testimonies: [{ table: 'topics-testimonies', target: 'testimony' }],
+  personnel: [
+    {
+      table: 'event-subject-matter-experts',
+      target: 'subject-matter-expert',
+    },
+    {
+      table: 'event-topic-subject-matter-experts',
+      target: 'subject-matter-expert',
+    },
+    { table: 'organization-members', target: 'member' },
+    {
+      table: 'topic-subject-matter-experts',
+      target: 'subject-matter-expert',
+    },
+    { table: 'testimonies', target: 'witness' },
+  ],
+  organizations: [
+    // #TODO: Might be more record relations here
+    { table: 'organization-members', target: 'organization' },
+  ],
+  topics: [
+    { table: 'topics-testimonies', target: 'topic' },
+    { table: 'topic-subject-matter-experts', target: 'topic' },
+    { table: 'event-topic-subject-matter-experts', target: 'topic' },
+  ],
+}
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   console.log('searchParams: ', searchParams)
@@ -21,20 +84,15 @@ export async function GET(request: NextRequest) {
   console.log('id: ', id)
   const type: any = searchParams.get('type')
   console.log('type: ', type)
-  const tables = searchParams.get('tables')?.split(',') || []
+  const tables: any = connectionMapByEntityType[type]
   console.log('tables: ', tables)
-  const singularType = objectMap[type] || type
-  console.log('singularType: ', singularType)
-  // const {}
-  // /api/data/search?query=connections&id=123456789012345678901234&type=events&tables=event-subject-matter-experts,event-topic-subject-matter-experts,testimonies
-  // console.log('query: ', query)
 
   const { totalCount, records } = await xata.search.all(`${id}`, {
     tables: [
-      ...tables.map((table) => {
+      ...tables.map(({ table, target }: { table: string; target: string }) => {
         return {
           table,
-          target: [singularType],
+          target,
         }
       }),
     ],
@@ -50,33 +108,29 @@ export async function GET(request: NextRequest) {
           : null
       const topicId = record?.topic?.id || null
       const subjectMatterExpert = smeId
-        ? await xata.db.personnel
-            .select([
-              'name',
-              'bio',
-              'role',
-              'photo',
-              'photo.signedUrl',
-              'photo.enablePublicUrl',
-            ])
-            .read(smeId)
+        ? await xata.db.personnel.read(smeId, [
+            'name',
+            'bio',
+            'role',
+            'photo',
+            'photo.signedUrl',
+            'photo.enablePublicUrl',
+          ])
         : null
 
       const eventId = record?.event?.id || null
       const event = eventId
-        ? await xata.db.events
-            .select([
-              'name',
-              'description',
-              'location',
-              'latitude',
-              'photos',
-              'photos.signedUrl',
-              'photos.enablePublicUrl',
-              'longitude',
-              'date',
-            ])
-            .read(eventId)
+        ? await xata.db.events.read(eventId, [
+            'name',
+            'description',
+            'location',
+            'latitude',
+            'photos',
+            'photos.signedUrl',
+            'photos.enablePublicUrl',
+            'longitude',
+            'date',
+          ])
         : null
       const organization = record?.organization?.id
         ? await xata.db.organizations.read(record?.organization?.id)

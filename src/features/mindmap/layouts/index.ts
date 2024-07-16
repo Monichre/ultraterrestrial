@@ -1,10 +1,10 @@
-import type { Reactflow } from '@/features/graph/layouts/types'
+import type { Reactflow } from '@/features/mindmap/layouts/types'
 import { removeEmpty } from '@/utils'
 import { D3DAGLayoutAlgorithms, kD3DAGAlgorithms } from './algorithms/d3-dag'
 import { layoutD3Hierarchy } from './algorithms/d3-hierarchy'
 import { layoutDagreTree } from './algorithms/dagre-tree'
 import { ELKLayoutAlgorithms, kElkAlgorithms } from './algorithms/elk'
-import { layoutOrigin } from '@/features/graph/layouts/algorithms/origin'
+import { layoutOrigin } from '@/features/mindmap/layouts/algorithms/origin'
 
 export type LayoutDirection = 'vertical' | 'horizontal'
 export type LayoutVisibility = 'visible' | 'hidden'

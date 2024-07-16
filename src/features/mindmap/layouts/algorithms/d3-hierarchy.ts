@@ -3,12 +3,12 @@
 import { stratify, tree } from 'd3-hierarchy'
 
 import { LayoutAlgorithm } from '..'
-import type { ReactflowNodeWithData } from '@/features/graph/layouts/types'
+import type { ReactflowNodeWithData } from '@/features/mindmap/layouts/types'
 import {
   getNodeSize,
   getNodeLayouted,
   getEdgeLayouted,
-} from '@/features/graph/utils/node.utils'
+} from '@/features/mindmap/utils/node.utils'
 import { getIncomers, type Node, type Edge } from '@xyflow/react'
 
 type NodeWithPosition = ReactflowNodeWithData & { x: number; y: number }

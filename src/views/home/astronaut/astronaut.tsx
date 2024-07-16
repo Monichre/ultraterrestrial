@@ -13,7 +13,7 @@ export const Astronaut: FunctionComponent<AstronautProps> = ({
   return (
     <div className='items-center align-bottom self-center mt-[48px]'>
       <Image
-        className='mx-auto md:h-[200px] sm:w-[200px] lg:h-full lg:w-full'
+        className='mx-auto md:h-[200px] sm:w-[200px] lg:h-[400px] lg:w-[400px] xl:h-full lg:w-full'
         height={600}
         width={600}
         alt='astronaut'

@@ -89,6 +89,7 @@ const tables = [
     revLinks: [
       { column: "organization", table: "organization-members" },
       { column: "organization", table: "testimonies" },
+      { column: "organization", table: "user-saved-organizations" },
     ],
   },
   {
@@ -108,6 +109,7 @@ const tables = [
       { name: "latitude", type: "float" },
       { name: "longitude", type: "float" },
     ],
+    revLinks: [{ column: "sighting", table: "user-saved-sightings" }],
   },
   {
     name: "event-subject-matter-experts",
@@ -211,6 +213,8 @@ const tables = [
       { column: "user", table: "user-saved-testimonies" },
       { column: "user", table: "user-saved-documents" },
       { column: "user", table: "user-theories" },
+      { column: "user", table: "user-saved-organizations" },
+      { column: "user", table: "user-saved-sightings" },
     ],
   },
   {
@@ -218,6 +222,8 @@ const tables = [
     columns: [
       { name: "user", type: "link", link: { table: "users" } },
       { name: "event", type: "link", link: { table: "events" } },
+      { name: "theory", type: "link", link: { table: "user-theories" } },
+      { name: "note", type: "text" },
     ],
   },
   {
@@ -225,6 +231,8 @@ const tables = [
     columns: [
       { name: "user", type: "link", link: { table: "users" } },
       { name: "topic", type: "link", link: { table: "topics" } },
+      { name: "theory", type: "link", link: { table: "user-theories" } },
+      { name: "note", type: "text" },
     ],
   },
   {
@@ -232,6 +240,8 @@ const tables = [
     columns: [
       { name: "user", type: "link", link: { table: "users" } },
       { name: "key-figure", type: "link", link: { table: "personnel" } },
+      { name: "theory", type: "link", link: { table: "user-theories" } },
+      { name: "note", type: "text" },
     ],
   },
   {
@@ -239,6 +249,8 @@ const tables = [
     columns: [
       { name: "user", type: "link", link: { table: "users" } },
       { name: "testimony", type: "link", link: { table: "testimonies" } },
+      { name: "theory", type: "link", link: { table: "user-theories" } },
+      { name: "note", type: "text" },
     ],
   },
   {
@@ -246,6 +258,8 @@ const tables = [
     columns: [
       { name: "user", type: "link", link: { table: "users" } },
       { name: "document", type: "link", link: { table: "documents" } },
+      { name: "theory", type: "link", link: { table: "user-theories" } },
+      { name: "note", type: "text" },
     ],
   },
   {
@@ -254,6 +268,39 @@ const tables = [
       { name: "user", type: "link", link: { table: "users" } },
       { name: "name", type: "string" },
       { name: "content", type: "text" },
+      { name: "synopsis", type: "text" },
+      {
+        name: "diagrams",
+        type: "file[]",
+        "file[]": { defaultPublicAccess: true },
+      },
+    ],
+    revLinks: [
+      { column: "theory", table: "user-saved-sightings" },
+      { column: "theory", table: "user-saved-testimonies" },
+      { column: "theory", table: "user-saved-topics" },
+      { column: "theory", table: "user-saved-personnel" },
+      { column: "theory", table: "user-saved-organizations" },
+      { column: "theory", table: "user-saved-events" },
+      { column: "theory", table: "user-saved-documents" },
+    ],
+  },
+  {
+    name: "user-saved-organizations",
+    columns: [
+      { name: "user", type: "link", link: { table: "users" } },
+      { name: "organization", type: "link", link: { table: "organizations" } },
+      { name: "theory", type: "link", link: { table: "user-theories" } },
+      { name: "note", type: "text" },
+    ],
+  },
+  {
+    name: "user-saved-sightings",
+    columns: [
+      { name: "user", type: "link", link: { table: "users" } },
+      { name: "sighting", type: "link", link: { table: "sightings" } },
+      { name: "theory", type: "link", link: { table: "user-theories" } },
+      { name: "note", type: "text" },
     ],
   },
 ] as const;
@@ -327,6 +374,12 @@ export type UserSavedDocumentsRecord = UserSavedDocuments & XataRecord;
 export type UserTheories = InferredTypes["user-theories"];
 export type UserTheoriesRecord = UserTheories & XataRecord;
 
+export type UserSavedOrganizations = InferredTypes["user-saved-organizations"];
+export type UserSavedOrganizationsRecord = UserSavedOrganizations & XataRecord;
+
+export type UserSavedSightings = InferredTypes["user-saved-sightings"];
+export type UserSavedSightingsRecord = UserSavedSightings & XataRecord;
+
 export type DatabaseSchema = {
   topics: TopicsRecord;
   personnel: PersonnelRecord;
@@ -348,6 +401,8 @@ export type DatabaseSchema = {
   "user-saved-testimonies": UserSavedTestimoniesRecord;
   "user-saved-documents": UserSavedDocumentsRecord;
   "user-theories": UserTheoriesRecord;
+  "user-saved-organizations": UserSavedOrganizationsRecord;
+  "user-saved-sightings": UserSavedSightingsRecord;
 };
 
 const DatabaseClient = buildClient();

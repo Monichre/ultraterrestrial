@@ -64,7 +64,7 @@ import {
 } from '@/components/ui/backgrounds'
 import { RootNodeCard } from '@/components/ui/card/root-node-card'
 import { motion } from 'framer-motion'
-// import { useLayoutedElements } from '@/features/graph/graph'
+// import { useLayoutedElements } from '@/features/mindmap/graph'
 
 export function CommandDemo() {
   return (

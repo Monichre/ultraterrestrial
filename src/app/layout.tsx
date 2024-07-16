@@ -2,7 +2,7 @@ import '@xyflow/react/dist/style.css'
 
 import './globals.css'
 
-import { ThemeProvider } from '@/providers'
+import { CopilotKitProvider, ThemeProvider } from '@/providers'
 import { AnimationProvider } from '@/providers/animation-provider'
 import { PageTransition } from '@/components/animations/page-transition'
 import DataLayer from '@/providers/data-layer'
@@ -28,6 +28,7 @@ import {
   jetBrains,
 } from './fonts'
 import { FullSiteNav } from '@/components/navbar/full-site-nav'
+import { CopilotPopup, CopilotSidebar } from '@copilotkit/react-ui'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -84,17 +85,20 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <FullSiteNav />
-              {/* <AnimationProvider> */}
-              {/* <PageTransition> */}
-              <main className='min-h-[100vh] min-w-screen relative'>
-                {/* <NavBar navItems={navItems} /> */}
-                {/* <HomePageNav navItems={navItems} /> */}
-                {/* <FullSiteNav className='top-2' /> */}
-                {children}
-              </main>
-              {/* </PageTransition> */}
-              {/* </AnimationProvider> */}
+              <CopilotKitProvider>
+                <FullSiteNav />
+                {/* <AnimationProvider> */}
+                {/* <PageTransition> */}
+                <main className='min-h-[100vh] min-w-screen relative'>
+                  {/* <NavBar navItems={navItems} /> */}
+                  {/* <HomePageNav navItems={navItems} /> */}
+                  {/* <FullSiteNav className='top-2' /> */}
+                  {children}
+                </main>
+
+                {/* </PageTransition> */}
+                {/* </AnimationProvider> */}
+              </CopilotKitProvider>
             </ThemeProvider>
           </DataLayer>
         </body>

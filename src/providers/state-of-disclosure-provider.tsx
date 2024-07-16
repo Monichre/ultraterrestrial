@@ -5,13 +5,13 @@ import { connections } from '@/stories/data/entity-data'
 import { ReactFlowProvider } from '@xyflow/react'
 import { createContext } from 'react'
 import { searchConnections } from '@/api/search'
-export type UfologyContextSchema = {
+export type StateOfDisclosureSchema = {
   records: NetworkGraphPayload['records']
   connections: NetworkGraphPayload['connections']
   getConnections: any
 }
 
-export const UfologyContext: any = createContext({
+export const StateOfDisclosureContext: any = createContext({
   records: {
     topics: [],
     events: [],
@@ -29,16 +29,15 @@ export const UfologyContext: any = createContext({
   // getConnections?: ({ id, type }: any) => {},
 })
 
-interface UfologyProvider {
+export interface StateOfDisclosureProviderProps {
   children: any
-  ufologyData: any
+  stateOfDisclosure: any
 }
 
-export const UfologyProvider: React.FC<UfologyProvider> = ({
-  ufologyData,
-  children,
-}) => {
-  const { records, connections } = ufologyData
+export const StateOfDisclosureProvider: React.FC<
+  StateOfDisclosureProviderProps
+> = ({ stateOfDisclosure, children }) => {
+  const { records, connections } = stateOfDisclosure
   const typeMap: any = {
     events: 'event',
     personnel: 'subject-matter-expert',
@@ -47,8 +46,8 @@ export const UfologyProvider: React.FC<UfologyProvider> = ({
   }
 
   return (
-    <UfologyContext.Provider value={{ records, connections }}>
+    <StateOfDisclosureContext.Provider value={{ records, connections }}>
       {children}
-    </UfologyContext.Provider>
+    </StateOfDisclosureContext.Provider>
   )
 }

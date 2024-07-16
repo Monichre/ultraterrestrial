@@ -5,7 +5,7 @@ import {
   DotGridBackground,
   DotGridBackgroundBlack,
 } from '@/components/ui/backgrounds'
-import { nodeTypes } from '@/features/graph/utils/node-types'
+import { nodeTypes } from '@/features/mindmap/utils/node-types'
 
 import {
   useCallback,
@@ -34,8 +34,9 @@ import { Toolbar } from '@/components/toolbar'
 import {
   MindmapSidebar,
   MindMapSidebarProvider,
-} from '@/components/mind-map/mindmap-sidebar'
+} from '@/features/mindmap/mindmap-sidebar'
 import { nextTick } from '@/utils'
+import { CopilotPopUpUI } from '@/features/copilot/Copilot'
 
 export function Graph(props: any) {
   const {
@@ -114,6 +115,7 @@ export function Graph(props: any) {
             <MiniMap />
           </ReactFlow>
         </MindMapSidebarProvider>
+        <CopilotPopUpUI />
       </DotGridBackgroundBlack>
     </div>
   )

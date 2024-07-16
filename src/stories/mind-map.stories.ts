@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { MindMap } from '@/components/mind-map'
-import { UfologyProvider } from '@/providers/ufology-provider'
+import { MindMap } from '@/features/mindmap'
+
 import { graphData as allEntityGraphData } from '@/stories/data/graph-data'
-import networkGraphData from "@/stories/data/network-graph-data.json"
+import networkGraphData from '@/stories/data/network-graph-data.json'
 // @ts-ignore
 const meta = {
   title: 'Components/MindMap',
@@ -17,14 +17,14 @@ const meta = {
     // @ts-ignore
     allEntityGraphData,
   },
-    decorators: [
-    (Story: any) => (
-      <UfologyProvider ufologyData={networkGraphData}>
-        <Story />
-      </UfologyProvider>
-    )
-  ]
-} satisfies Meta<typeof MindMap>
+  //   decorators: [
+  //   (Story: any) => (
+  //     <StateOfDisclosureProvider stateOfDisclosure={networkGraphData}>
+  //       {Story()}
+  //     </StateOfDisclosureProvider>
+  //   )
+  // ]
+}
 
 export default meta
 

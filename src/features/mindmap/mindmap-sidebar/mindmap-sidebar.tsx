@@ -26,10 +26,7 @@ import { useGSAP } from '@gsap/react'
 import { AnimatedList, AnimatedListItem } from '@/components/ui/animated-list'
 import { Waypoints } from 'lucide-react'
 import splitText from '@/utils/split-text.js'
-import {
-  UfologyContext,
-  UfologyContextSchema,
-} from '@/providers/ufology-provider'
+
 import { searchConnections } from '@/api/search'
 import {
   AnimatePresence,
@@ -144,8 +141,6 @@ export const MindmapSidebar: React.FC<MindmapSidebarProps> = ({
       const payload = await searchConnections({
         id,
         type,
-        tables:
-          'event-subject-matter-experts,testimonies,event-topic-subject-matter-experts',
       })
       console.log('payload: ', payload)
 
