@@ -36,6 +36,7 @@ import {
   usePresence,
 } from 'framer-motion'
 import { cn } from '@/utils'
+import { BlurFade } from '@/components/animations/blur-fade/BlurFade'
 
 gsap.registerPlugin(splitText)
 export interface MindmapSidebarProps {
@@ -62,33 +63,24 @@ const ConnectionCard = ({ connection }: any) => {
   )
 }
 
-interface Item {
-  name: string
-  description: string
-  icon: string
-  color: string
-  time: string
-}
-const staggerMenuItems = stagger(0.1, { startDelay: 0.5 })
+// function useMenuAnimation(connectionsPresent: boolean) {
+//   const [scope, animate] = useAnimate()
 
-function useMenuAnimation(connectionsPresent: boolean) {
-  const [scope, animate] = useAnimate()
+//   useEffect(() => {
+//     animate(
+//       '.connection-card',
+//       connectionsPresent
+//         ? { opacity: 1, scale: 1, filter: 'blur(0px)', y: 1 }
+//         : { opacity: 0, scale: 0.3, filter: 'blur(20px)', y: 0 },
+//       {
+//         duration: 0.5,
+//         delay: connectionsPresent ? staggerMenuItems : 1,
+//       }
+//     )
+//   }, [connectionsPresent])
 
-  useEffect(() => {
-    animate(
-      '.connection-card',
-      connectionsPresent
-        ? { opacity: 1, scale: 1, filter: 'blur(0px)', y: 1 }
-        : { opacity: 0, scale: 0.3, filter: 'blur(20px)', y: 0 },
-      {
-        duration: 0.5,
-        delay: connectionsPresent ? staggerMenuItems : 1,
-      }
-    )
-  }, [connectionsPresent])
-
-  return scope
-}
+//   return scope
+// }
 
 interface ConnectionListProps {
   connections: any
@@ -97,23 +89,33 @@ interface ConnectionListProps {
 const ConnectionList: React.FC<ConnectionListProps> = ({
   connections,
 }: any) => {
-  const [isPresent, safeToRemove] = usePresence()
-  const scope = useMenuAnimation(isPresent)
+  // const [isPresent, safeToRemove] = usePresence()
+  // const scope = useMenuAnimation(isPresent)
 
   return (
-    <div className='h-full w-full' ref={scope}>
-      <div className='connection-list'>
-        {connections.map((connection: any) => (
-          <div key={connection.id} className='w-full p-2 connection-card'>
-            <p className='cursor-pointer font-jetbrains text-white flex font-light text-sm align-center items-center tracking-wide'>
-              <span>
-                <Waypoints className='h-4 w-4' strokeWidth={'1'} color='#fff' />
-              </span>
-              <span className='ml-4'>
-                {connection?.name || connection?.title}
-              </span>
-            </p>
-          </div>
+    <div className='h-full w-full'>
+      <div className='connection-list mt-12'>
+        {connections.map((connection: any, index: number) => (
+          <BlurFade
+            inView
+            delay={index === 0 ? 0.5 : index * 0.5}
+            key={connection.id}
+          >
+            <div className='w-full p-2 connection-card'>
+              <p className='cursor-pointer font-jetbrains text-white flex font-light text-sm align-center items-center tracking-wide'>
+                <span>
+                  <Waypoints
+                    className='h-4 w-4'
+                    strokeWidth={'1'}
+                    color='#fff'
+                  />
+                </span>
+                <span className='ml-4'>
+                  {connection?.name || connection?.title}
+                </span>
+              </p>
+            </div>
+          </BlurFade>
         ))}
       </div>
 
@@ -175,7 +177,11 @@ export const MindmapSidebar: React.FC<MindmapSidebarProps> = ({
     <Sheet open={open} onOpenChange={handleOpen} className='mindmap-sidebar'>
       <SheetContent side={'left'} className='mindmap-sidebar'>
         <SheetHeader>
-          <SheetTitle>Connections</SheetTitle>
+          <SheetTitle>
+            <h3 className='font-centimaSans text-white text-bold text-[16px] tracking-wider'>
+              Connections
+            </h3>
+          </SheetTitle>
           <SheetDescription>
             Make changes to your profile here. Click save when you're done.
           </SheetDescription>
