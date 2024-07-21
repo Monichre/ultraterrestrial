@@ -7,8 +7,8 @@ https://magicui.design/docs/components/animated-beam
 'use client'
 
 import { cn } from '@/utils'
-import { motion } from 'framer-motion'
-import { RefObject, useEffect, useId, useState } from 'react'
+import { motion, useInView, useMotionValue, useTransform } from 'framer-motion'
+import { RefObject, useEffect, useId, useRef, useState } from 'react'
 
 export interface AnimatedBeamProps {
   className?: string
@@ -37,11 +37,11 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
   toRef,
   curvature = 0,
   reverse = false, // Include the reverse prop
-  duration = Math.random() * 3 + 4,
-  delay = 0,
-  pathColor = 'gray',
-  pathWidth = 2,
-  pathOpacity = 0.2,
+  duration = 1,
+  delay,
+  pathColor = '#fff',
+  pathWidth = 1,
+  pathOpacity = 0.5,
   gradientStartColor = '#ffaa40',
   gradientStopColor = '#9c40ff',
   startXOffset = 0,
@@ -127,8 +127,28 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
     endYOffset,
   ])
 
+  const svgRef: any = useRef()
+  const isInView = useInView(svgRef)
+  console.log('isInView: ', isInView)
+  const pathLength = useMotionValue(0)
+  const opacity = useTransform(pathLength, [0.05, 0.15], [0, 1])
+
+  const draw = {
+    hidden: { pathLength: 0, opacity: 0 },
+    visible: {
+      pathLength: 1,
+      opacity: 1,
+      transition: {
+        pathLength: { delay, type: 'spring', duration, bounce: 0 },
+        opacity: { delay, duration },
+        delay,
+      },
+    },
+  }
+
   return (
-    <svg
+    <motion.svg
+      ref={svgRef}
       fill='none'
       width={svgDimensions.width}
       height={svgDimensions.height}
@@ -138,20 +158,36 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         className
       )}
       viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
+      initial='hidden'
+      animate='visible'
+      transition={{
+        staggerChildren: 1,
+      }}
     >
-      <path
+      <motion.path
         d={pathD}
         stroke={pathColor}
         strokeWidth={pathWidth}
         strokeOpacity={pathOpacity}
         strokeLinecap='round'
+        className='animated-path-1'
+        variants={draw}
+        style={{ pathLength, opacity }}
+        custom={isInView}
+
+        // strokeDashoffset={'2px'}
       />
-      <path
+      <motion.path
         d={pathD}
         strokeWidth={pathWidth}
         stroke={`url(#${id})`}
         strokeOpacity='1'
         strokeLinecap='round'
+        className='animated-path-2'
+        variants={draw}
+        style={{ pathLength, opacity }}
+
+        // strokeDashoffset={'2px'}
       />
       <defs>
         <motion.linearGradient
@@ -172,7 +208,7 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
           }}
           transition={{
             delay,
-            duration,
+            duration: 4,
             ease: [0.16, 1, 0.3, 1], // https://easings.net/#easeOutExpo
             repeat: Infinity,
             repeatDelay: 0,
@@ -188,6 +224,6 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
           ></stop>
         </motion.linearGradient>
       </defs>
-    </svg>
+    </motion.svg>
   )
 }

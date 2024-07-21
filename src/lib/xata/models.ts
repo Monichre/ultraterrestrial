@@ -7,6 +7,11 @@ import {
   EventSubjectMatterExpertsRecord,
   PersonnelRecord,
   TopicSubjectMatterExpertsRecord,
+  type DocumentsRecord,
+  type OrganizationsRecord,
+  type SightingsRecord,
+  type TestimoniesRecord,
+  type TopicsRecord,
 } from './xata'
 
 export const generateDataNodes = async () => {
@@ -95,3 +100,16 @@ export const askAI = async (table: TableName = 'topics', question: string) => {
     },
   })
 }
+
+export type CoreModel =
+  | TopicsRecord
+  | PersonnelRecord
+  | EventsRecord
+  | TestimoniesRecord
+  | OrganizationsRecord
+  | SightingsRecord
+  | DocumentsRecord
+
+export type ConnectionModel =
+  | EventSubjectMatterExpertsRecord
+  | TopicSubjectMatterExpertsRecord

@@ -1,1 +1,1 @@
-export * from './blur-fade';
+export * from './BlurFade'

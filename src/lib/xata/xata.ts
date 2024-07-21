@@ -56,7 +56,7 @@ const tables = [
         column: "subject-matter-expert",
         table: "event-topic-subject-matter-experts",
       },
-      { column: "key-figure", table: "user-saved-personnel" },
+      { column: "key-figure", table: "user-saved-key-figure" },
     ],
   },
   {
@@ -209,7 +209,7 @@ const tables = [
     revLinks: [
       { column: "user", table: "user-saved-events" },
       { column: "user", table: "user-saved-topics" },
-      { column: "user", table: "user-saved-personnel" },
+      { column: "user", table: "user-saved-key-figure" },
       { column: "user", table: "user-saved-testimonies" },
       { column: "user", table: "user-saved-documents" },
       { column: "user", table: "user-theories" },
@@ -236,7 +236,7 @@ const tables = [
     ],
   },
   {
-    name: "user-saved-personnel",
+    name: "user-saved-key-figure",
     columns: [
       { name: "user", type: "link", link: { table: "users" } },
       { name: "key-figure", type: "link", link: { table: "personnel" } },
@@ -279,7 +279,7 @@ const tables = [
       { column: "theory", table: "user-saved-sightings" },
       { column: "theory", table: "user-saved-testimonies" },
       { column: "theory", table: "user-saved-topics" },
-      { column: "theory", table: "user-saved-personnel" },
+      { column: "theory", table: "user-saved-key-figure" },
       { column: "theory", table: "user-saved-organizations" },
       { column: "theory", table: "user-saved-events" },
       { column: "theory", table: "user-saved-documents" },
@@ -362,8 +362,8 @@ export type UserSavedEventsRecord = UserSavedEvents & XataRecord;
 export type UserSavedTopics = InferredTypes["user-saved-topics"];
 export type UserSavedTopicsRecord = UserSavedTopics & XataRecord;
 
-export type UserSavedPersonnel = InferredTypes["user-saved-personnel"];
-export type UserSavedPersonnelRecord = UserSavedPersonnel & XataRecord;
+export type UserSavedKeyFigure = InferredTypes["user-saved-key-figure"];
+export type UserSavedKeyFigureRecord = UserSavedKeyFigure & XataRecord;
 
 export type UserSavedTestimonies = InferredTypes["user-saved-testimonies"];
 export type UserSavedTestimoniesRecord = UserSavedTestimonies & XataRecord;
@@ -397,7 +397,7 @@ export type DatabaseSchema = {
   users: UsersRecord;
   "user-saved-events": UserSavedEventsRecord;
   "user-saved-topics": UserSavedTopicsRecord;
-  "user-saved-personnel": UserSavedPersonnelRecord;
+  "user-saved-key-figure": UserSavedKeyFigureRecord;
   "user-saved-testimonies": UserSavedTestimoniesRecord;
   "user-saved-documents": UserSavedDocumentsRecord;
   "user-theories": UserTheoriesRecord;

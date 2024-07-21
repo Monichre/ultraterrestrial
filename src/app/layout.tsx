@@ -2,18 +2,11 @@ import '@xyflow/react/dist/style.css'
 
 import './globals.css'
 
-import { CopilotKitProvider, ThemeProvider } from '@/providers'
-import { AnimationProvider } from '@/providers/animation-provider'
-import { PageTransition } from '@/components/animations/page-transition'
+import { ThemeProvider } from '@/providers'
+
 import DataLayer from '@/providers/data-layer'
 import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
 
 import {
   centima,
@@ -28,7 +21,6 @@ import {
   jetBrains,
 } from './fonts'
 import { FullSiteNav } from '@/components/navbar/full-site-nav'
-import { CopilotPopup, CopilotSidebar } from '@copilotkit/react-ui'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -85,20 +77,18 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <CopilotKitProvider>
-                <FullSiteNav />
-                {/* <AnimationProvider> */}
-                {/* <PageTransition> */}
-                <main className='min-h-[100vh] min-w-screen relative'>
-                  {/* <NavBar navItems={navItems} /> */}
-                  {/* <HomePageNav navItems={navItems} /> */}
-                  {/* <FullSiteNav className='top-2' /> */}
-                  {children}
-                </main>
+              <FullSiteNav />
+              {/* <AnimationProvider> */}
+              {/* <PageTransition> */}
+              <main className='min-h-[100vh] min-w-screen relative'>
+                {/* <NavBar navItems={navItems} /> */}
+                {/* <HomePageNav navItems={navItems} /> */}
+                {/* <FullSiteNav className='top-2' /> */}
+                {children}
+              </main>
 
-                {/* </PageTransition> */}
-                {/* </AnimationProvider> */}
-              </CopilotKitProvider>
+              {/* </PageTransition> */}
+              {/* </AnimationProvider> */}
             </ThemeProvider>
           </DataLayer>
         </body>
