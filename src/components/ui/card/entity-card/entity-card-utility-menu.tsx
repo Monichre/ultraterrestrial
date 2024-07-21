@@ -28,6 +28,7 @@ import {
 } from '@/components/ui/tooltip'
 
 import { useMindMapSidebar } from '@/features/mindmap/mindmap-sidebar'
+import { useAuth } from '@clerk/nextjs'
 
 interface EntityCardUtilityMenuProps {
   node: any
@@ -35,6 +36,10 @@ interface EntityCardUtilityMenuProps {
 }
 
 export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({ node }) => {
+  const { userId, sessionId, isLoaded } = useAuth()
+  console.log('userId: ', userId)
+  console.log('isLoaded: ', isLoaded)
+  console.log('sessionId: ', sessionId)
   const gradientOne =
     'bg-[radial-gradient(50%_86.9%_at_50%_100%,_rgba(255,_255,_255,_0.2)_0%,_rgba(255,_255,_255,_0)_100%)] bg-black'
   const gradientTwo =
@@ -106,64 +111,3 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({ node }) => {
 }
 EM.displayName = 'EntityCardUtilityMenu'
 export const EntityCardUtilityMenu = memo(EM)
-
-type Status = {
-  value: string
-  label: string
-}
-
-const statuses: Status[] = [
-  {
-    value: 'backlog',
-    label: 'Backlog',
-  },
-  {
-    value: 'todo',
-    label: 'Todo',
-  },
-  {
-    value: 'in progress',
-    label: 'In Progress',
-  },
-  {
-    value: 'done',
-    label: 'Done',
-  },
-  {
-    value: 'canceled',
-    label: 'Canceled',
-  },
-]
-
-function StatusList({
-  setOpen,
-  setSelectedStatus,
-}: {
-  setOpen: (open: boolean) => void
-  setSelectedStatus: (status: Status | null) => void
-}) {
-  return (
-    <Command>
-      <CommandInput placeholder='Filter status...' />
-      <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup>
-          {statuses.map((status) => (
-            <CommandItem
-              key={status.value}
-              value={status.value}
-              onSelect={(value) => {
-                setSelectedStatus(
-                  statuses.find((priority) => priority.value === value) || null
-                )
-                setOpen(false)
-              }}
-            >
-              {status.label}
-            </CommandItem>
-          ))}
-        </CommandGroup>
-      </CommandList>
-    </Command>
-  )
-}

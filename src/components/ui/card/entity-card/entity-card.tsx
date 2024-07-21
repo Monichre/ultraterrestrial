@@ -24,26 +24,14 @@ import {
 import { forwardRef, useEffect, useRef, useState } from 'react'
 
 import { EntityCardUtilityMenu } from '@/components/ui/card/entity-card/entity-card-utility-menu'
-import {
-  MindmapSidebar,
-  useMindMapSidebar,
-} from '@/features/mindmap/mindmap-sidebar'
-import { MagicCard } from 'react-magic-motion'
+
+import type { ImageProps } from '@/utils/image.utils'
 import 'react-magic-motion/card.css'
 import { truncate } from '@/utils/functions'
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
 
-type ImageProps = {
-  id: string
-  url: string
-  signedUrl?: string
-  attributes: {
-    height: number
-    width: number
-  }
-}
 export interface MindMapEntityCardProps {
   id: string
   data: {

@@ -7,14 +7,7 @@ import {
 } from '@/components/ui/backgrounds'
 import { nodeTypes } from '@/features/mindmap/utils/node-types'
 
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { useCallback } from 'react'
 import {
   ReactFlow,
   Controls,
@@ -36,7 +29,6 @@ import {
   MindMapSidebarProvider,
 } from '@/features/mindmap/mindmap-sidebar'
 import { nextTick } from '@/utils'
-import { CopilotPopUpUI } from '@/features/copilot/Copilot'
 
 export function Graph(props: any) {
   const {
@@ -81,6 +73,7 @@ export function Graph(props: any) {
     },
     [getRootNodeChildren, zoomOut]
   )
+
   // useForceLayout(childrenLoaded)
   // #NOTE: This might be an interesting way to enhance, bypass or hack any trouble with edges as the node connections get more complex: https://magicui.design/docs/components/animated-beam
   return (
@@ -115,7 +108,6 @@ export function Graph(props: any) {
             <MiniMap />
           </ReactFlow>
         </MindMapSidebarProvider>
-        <CopilotPopUpUI />
       </DotGridBackgroundBlack>
     </div>
   )

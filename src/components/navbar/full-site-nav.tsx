@@ -146,7 +146,7 @@ export function FullSiteNav({ className }: { className?: string }) {
 
   const pathname = usePathname()
 
-  if (pathname === '/explore/ufology') {
+  if (pathname === '/explore/disclosure') {
     return null
   }
   return (

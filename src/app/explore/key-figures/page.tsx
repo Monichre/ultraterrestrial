@@ -22,6 +22,6 @@ export default async function WhosWho() {
     })
     .getAll()
 
-  const personnel = await data.toSerializable()()
+  const personnel = data.toSerializable()
   return <WhosWhoGallery personnel={personnel} />
 }

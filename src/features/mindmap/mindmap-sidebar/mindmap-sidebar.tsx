@@ -28,102 +28,10 @@ import { Waypoints } from 'lucide-react'
 import splitText from '@/utils/split-text.js'
 
 import { searchConnections } from '@/api/search'
-import {
-  AnimatePresence,
-  motion,
-  stagger,
-  useAnimate,
-  usePresence,
-} from 'framer-motion'
-import { cn } from '@/utils'
-import { BlurFade } from '@/components/animations/blur-fade/BlurFade'
-
+import { ConnectionList } from './connection-list'
 gsap.registerPlugin(splitText)
 export interface MindmapSidebarProps {
   children?: any
-}
-
-const ConnectionCard = ({ connection }: any) => {
-  return (
-    <div className='bg-[radial-gradient(50%_86.9%_at_50%_100%,_rgba(255,_255,_255,_0.2)_0%,_rgba(255,_255,_255,_0)_100%)] w-full p-2 connection-card'>
-      <div className='flex w-full p-2'>
-        <span>
-          <Waypoints color='#fff' />
-        </span>
-        <span
-          className='cursor-pointer text-lg font-light px-1 pt-1 uppercase bg-gray-800'
-          style={{
-            fontKerning: 'none',
-          }}
-        >
-          {connection?.name || connection?.title}
-        </span>
-      </div>
-    </div>
-  )
-}
-
-// function useMenuAnimation(connectionsPresent: boolean) {
-//   const [scope, animate] = useAnimate()
-
-//   useEffect(() => {
-//     animate(
-//       '.connection-card',
-//       connectionsPresent
-//         ? { opacity: 1, scale: 1, filter: 'blur(0px)', y: 1 }
-//         : { opacity: 0, scale: 0.3, filter: 'blur(20px)', y: 0 },
-//       {
-//         duration: 0.5,
-//         delay: connectionsPresent ? staggerMenuItems : 1,
-//       }
-//     )
-//   }, [connectionsPresent])
-
-//   return scope
-// }
-
-interface ConnectionListProps {
-  connections: any
-}
-
-const ConnectionList: React.FC<ConnectionListProps> = ({
-  connections,
-}: any) => {
-  // const [isPresent, safeToRemove] = usePresence()
-  // const scope = useMenuAnimation(isPresent)
-
-  return (
-    <div className='h-full w-full'>
-      <div className='connection-list mt-12'>
-        {connections.map((connection: any, index: number) => (
-          <BlurFade
-            inView
-            delay={index === 0 ? 0.5 : index * 0.5}
-            key={connection.id}
-          >
-            <div className='w-full p-2 connection-card'>
-              <p className='cursor-pointer font-jetbrains text-white flex font-light text-sm align-center items-center tracking-wide'>
-                <span>
-                  <Waypoints
-                    className='h-4 w-4'
-                    strokeWidth={'1'}
-                    color='#fff'
-                  />
-                </span>
-                <span className='ml-4'>
-                  {connection?.name || connection?.title}
-                </span>
-              </p>
-            </div>
-          </BlurFade>
-        ))}
-      </div>
-
-      {/* <AnimatePresence>
- 
-    </AnimatePresence> */}
-    </div>
-  )
 }
 
 export const MindmapSidebar: React.FC<MindmapSidebarProps> = ({
@@ -174,9 +82,17 @@ export const MindmapSidebar: React.FC<MindmapSidebarProps> = ({
   }, [currentNode, open, connections])
 
   return (
-    <Sheet open={open} onOpenChange={handleOpen} className='mindmap-sidebar'>
-      <SheetContent side={'left'} className='mindmap-sidebar'>
-        <SheetHeader>
+    <Sheet
+      open={open}
+      onOpenChange={handleOpen}
+      className='mindmap-sidebar bg-slate-950 relative'
+    >
+      <div className='absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]'></div>
+      <SheetContent
+        side={'left'}
+        className='mindmap-sidebar h-[100vh] flex flex-col'
+      >
+        <SheetHeader className=''>
           <SheetTitle>
             <h3 className='font-centimaSans text-white text-bold text-[16px] tracking-wider'>
               Connections
@@ -186,7 +102,12 @@ export const MindmapSidebar: React.FC<MindmapSidebarProps> = ({
             Make changes to your profile here. Click save when you're done.
           </SheetDescription>
         </SheetHeader>
-        {connections && <ConnectionList connections={connections} />}
+        {connections && (
+          <ConnectionList
+            originalNode={currentNode}
+            connections={connections}
+          />
+        )}
       </SheetContent>
     </Sheet>
   )
