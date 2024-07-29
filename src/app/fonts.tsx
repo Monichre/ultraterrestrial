@@ -117,16 +117,23 @@ export const sourceSans = Source_Sans_3({
   variable: '--font-source-sans',
 })
 
-export const fireCode = Fira_Code({
+export const firaCode = Fira_Code({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   subsets: ['latin'],
-  variable: '--font-fire-code',
+  variable: '--font-fira-code',
 })
 
-export const jetBrains = JetBrains_Mono({
-  weight: ['300', '400', '500', '600', '700', '800'],
+// export const jetBrains = JetBrains_Mono({
+//   weight: ['300', '400', '500', '600', '700', '800'],
+//   display: 'swap',
+//   subsets: ['latin'],
+//   variable: '--font-jetbrains',
+// })
+
+export const jetBrains = localFont({
+  src: 'fonts/jetbrains/JetBrainsMono-VariableFont_wght.ttf',
+  // weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
-  subsets: ['latin'],
   variable: '--font-jetbrains',
 })

@@ -1,3 +1,5 @@
+'use server'
+
 import { writeLogToFile } from '@/utils/write-log'
 import {
   createGraphNode,
@@ -13,7 +15,7 @@ import {
   testimoniesRootNode,
   organizationsRootNode,
 } from '../graph/root-nodes'
-import { getXataClient } from './client'
+import { getXataClient } from '../xata'
 const xata = getXataClient()
 
 export type NetworkGraphPayload = {
@@ -58,9 +60,9 @@ export const getEntityNetworkGraphData = async () => {
       'longitude',
       'date',
     ])
-    .getAll({ consistency: 'eventual' })
+    .getAll()
 
-  const topics = await xata.db.topics.getAll({ consistency: 'eventual' })
+  const topics = await xata.db.topics.getAll()
 
   const testimonies = await xata.db.testimonies
     .select([
@@ -74,13 +76,9 @@ export const getEntityNetworkGraphData = async () => {
       'event.name',
       'event.date',
     ])
-    .getAll({
-      consistency: 'eventual',
-    })
+    .getAll()
 
-  const organizations = await xata.db.organizations.getAll({
-    consistency: 'eventual',
-  })
+  const organizations = await xata.db.organizations.getAll()
 
   const personnel = await xata.db.personnel
     .select([
@@ -98,27 +96,21 @@ export const getEntityNetworkGraphData = async () => {
       'credibility',
       'popularity',
     ])
-    .getAll({ consistency: 'eventual' })
+    .getAll()
 
-  const topicsExpertsConnections = await xata.db[
-    'topic-subject-matter-experts'
-  ].getAll({ consistency: 'eventual' })
-  const eventsExpertsConnections = await xata.db[
-    'event-subject-matter-experts'
-  ].getAll({ consistency: 'eventual' })
+  const topicsExpertsConnections =
+    await xata.db['topic-subject-matter-experts'].getAll()
+  const eventsExpertsConnections =
+    await xata.db['event-subject-matter-experts'].getAll()
 
-  const organizationsMembers = await xata.db['organization-members'].getAll({
-    consistency: 'eventual',
-  })
+  const organizationsMembers = await xata.db['organization-members'].getAll()
 
   // This is a 3 way link. How to handle?
-  const eventsTopicsExpertsConnections = await xata.db[
-    'event-topic-subject-matter-experts'
-  ].getAll({ consistency: 'eventual' })
+  const eventsTopicsExpertsConnections =
+    await xata.db['event-topic-subject-matter-experts'].getAll()
 
-  const topicsTestimoniesConnections = await xata.db[
-    'topics-testimonies'
-  ].getAll({ consistency: 'eventual' })
+  const topicsTestimoniesConnections =
+    await xata.db['topics-testimonies'].getAll()
 
   const records: any = {
     topics: topics.toSerializable(),

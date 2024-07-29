@@ -3,7 +3,7 @@
 import { Graph } from '@/features/mindmap/graph'
 import type { NetworkGraphPayload } from '@/lib/xata'
 
-import { GraphProvider } from '@/providers/graph-context'
+import { MindMapProvider } from '@/providers/mindmap-context'
 import { ReactFlowProvider } from '@xyflow/react'
 
 export interface MindMapProps {
@@ -15,9 +15,9 @@ export const MindMap: React.FC<MindMapProps> = ({
 }: MindMapProps) => {
   return (
     <ReactFlowProvider>
-      <GraphProvider allEntityGraphData={allEntityGraphData}>
+      <MindMapProvider allEntityGraphData={allEntityGraphData}>
         <Graph />
-      </GraphProvider>
+      </MindMapProvider>
     </ReactFlowProvider>
   )
 }

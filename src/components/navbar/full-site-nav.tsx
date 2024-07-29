@@ -5,7 +5,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
 import { cn } from '@/utils'
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useUser,
+} from '@clerk/nextjs'
 
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -52,7 +58,7 @@ export const MenuItem = memo(
           <motion.p
             key={`${item}-p`}
             transition={{ duration: 0.3 }}
-            className='cursor-pointer text-black hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
+            className='cursor-pointer text-black hover:opacity-[0.9] uppercase text-sm font-jetbrains tracking-wide'
           >
             {item}
           </motion.p>
@@ -145,14 +151,20 @@ export function FullSiteNav({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null)
 
   const pathname = usePathname()
+  const { user }: any = useUser()
+  console.log('user: ', user)
 
-  if (pathname === '/explore/disclosure') {
+  const role = user?.publicMetadata?.role || 'guest'
+  const isAdmin = role === 'admin'
+  const page = pathname.split('/')[pathname.split('/').length - 1]
+  if (pathname === '/explore/disclosure' || pathname === '/admin') {
     return null
   }
+  className = `${className} ${page}`
   return (
     <div
       className={cn(
-        'fixed top-10 inset-x-0 z-50 w-full flex justify-center content-center items-center align-center',
+        'fixed top-10 inset-x-0 z-50 w-full flex justify-center content-center items-center align-center fullsite-nav',
         className
       )}
     >
@@ -174,6 +186,31 @@ export function FullSiteNav({ className }: { className?: string }) {
               <HoveredLink className='' href='/explore/visualizations'>
                 3D Interactive Timeline
               </HoveredLink>
+              {isAdmin && (
+                <>
+                  <HoveredLink className='' href='/explore/visualizations'>
+                    3D Model Network Graph
+                  </HoveredLink>
+                  <HoveredLink
+                    className=''
+                    href='/explore/visualizations/3d-grid'
+                  >
+                    3D Grid
+                  </HoveredLink>
+                  <HoveredLink
+                    className=''
+                    href='/explore/visualizations/drawing-board'
+                  >
+                    Drawing Board
+                  </HoveredLink>
+                  <HoveredLink
+                    className=''
+                    href='/explore/visualizations/word-cloud'
+                  >
+                    Word Cloud
+                  </HoveredLink>
+                </>
+              )}
             </div>
           </MenuItem>
           <MenuItem
@@ -183,7 +220,7 @@ export function FullSiteNav({ className }: { className?: string }) {
             key='History'
           >
             <div className='flex flex-col space-y-4'>
-              <HoveredLink className='' href='/history'>
+              <HoveredLink className='' href='/history/events'>
                 Timeline{' '}
               </HoveredLink>
               <HoveredLink className='' href='/history/gallery'>
@@ -192,6 +229,13 @@ export function FullSiteNav({ className }: { className?: string }) {
               <HoveredLink className='' href='/history/events'>
                 Historical Events
               </HoveredLink>
+              {isAdmin && (
+                <>
+                  <HoveredLink className='' href='/history'>
+                    Scroll Through 3D
+                  </HoveredLink>
+                </>
+              )}
             </div>
           </MenuItem>
           <MenuItem
@@ -208,7 +252,7 @@ export function FullSiteNav({ className }: { className?: string }) {
           </MenuItem>
         </Menu>
       </div>
-      <div className='absolute right-0 flex-initial w-fit items-center content-center justify-self-end sign-in-button'>
+      <div className='absolute right-0 flex-initial w-fit flex items-center content-center justify-self-end align-middle sign-in-button'>
         <SignedOut>
           <SignInButton>
             <Button
@@ -219,9 +263,18 @@ export function FullSiteNav({ className }: { className?: string }) {
             </Button>
           </SignInButton>
         </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+        {isAdmin && (
+          <Button variant='ghost' className='mx-2'>
+            <HoveredLink className='' href='/admin'>
+              Admin
+            </HoveredLink>
+          </Button>
+        )}
+        <div className='mx-2'>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
       </div>
     </div>
   )

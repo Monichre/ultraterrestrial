@@ -24,7 +24,7 @@ export const formatModelWithImage = (model: ModelWithImage) => {
   }
   if (model?.photos?.length) {
     return {
-      ...module,
+      ...model,
       photo: model?.photos[0],
     }
   }

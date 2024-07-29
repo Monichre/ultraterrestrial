@@ -1,10 +1,8 @@
 'use client'
 import type { NetworkGraphPayload } from '@/lib/xata'
-import { GraphProvider } from '@/providers/graph-context'
-import { connections } from '@/stories/data/entity-data'
-import { ReactFlowProvider } from '@xyflow/react'
+
 import { createContext } from 'react'
-import { searchConnections } from '@/api/search'
+
 export type StateOfDisclosureSchema = {
   records: NetworkGraphPayload['records']
   connections: NetworkGraphPayload['connections']

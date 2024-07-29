@@ -5,6 +5,7 @@ import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
 import useMeasure from 'react-use-measure'
 
 import { cn } from '@/utils'
+import { Button } from '@/components/ui/button'
 
 type Tab = {
   id: number
@@ -72,7 +73,7 @@ function DirectionAwareTabs({
         )}
       >
         {tabs.map((tab) => (
-          <button
+          <Button
             key={tab.id}
             onClick={() => handleTabClick(tab.id)}
             className={cn(
@@ -94,7 +95,7 @@ function DirectionAwareTabs({
             )}
 
             {tab.label}
-          </button>
+          </Button>
         ))}
       </div>
       <MotionConfig transition={{ duration: 0.4, type: 'spring', bounce: 0.2 }}>

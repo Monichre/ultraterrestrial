@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+
 export const nextTick = async (frames = 1) => {
   const _nextTick = async (idx: number) => {
     return new Promise((resolve) => {
@@ -125,4 +127,55 @@ export function flattenArray(arr: any[]): any[] {
 export function truncate(str: string | null, length: number) {
   if (!str || str.length <= length) return str
   return `${str.slice(0, length - 3)}...`
+}
+
+export function calculateRadius(itemCount: number) {
+  // Calculate the approximate spacing between items on a sphere
+  const phi = Math.PI * (3 - Math.sqrt(5)) // golden angle in radians
+
+  // Calculate the radius based on the desired item count
+  // We start with a heuristic approach for uniform distribution
+  // and adjust the radius to ensure items are spread evenly.
+
+  // Estimate initial radius based on empirical observation
+  // The value 10 is chosen as a reasonable starting point
+  // You might need to adjust it based on your visual inspection or specific requirements
+  let radius = 30
+
+  // Optionally, use a loop to refine the radius based on a target density or other criteria
+  for (let i = 0; i < itemCount; i++) {
+    const y = 1 - (i / (itemCount - 1)) * 2 // y goes from 1 to -1
+    const radiusCorrection = Math.sqrt(1 - y * y)
+    const theta = phi * i
+
+    // Calculate position on the sphere
+    const x = Math.cos(theta) * radiusCorrection
+    const z = Math.sin(theta) * radiusCorrection
+
+    // Adjust radius based on distribution heuristic
+    radius = Math.max(radius, Math.sqrt(x * x + y * y + z * z))
+  }
+
+  return radius
+}
+
+export const computeWordRefsWithPosition = (
+  positionsByRecordId: any,
+  items: any[]
+) => {
+  const radius = calculateRadius(items.length)
+  console.log('radius: ', radius)
+  const positioned = items.map((item: any, idx: number) => {
+    console.log('item: ', item)
+    const phi = Math.acos(-1 + (2 * idx) / items.length)
+    const theta = Math.sqrt(items.length * Math.PI) * phi
+    const position = new THREE.Vector3().setFromSpherical(
+      new THREE.Spherical(radius, phi, theta)
+    )
+    positionsByRecordId[item?.id] = position
+    return [position, item]
+  })
+
+  console.log('positioned: ', positioned)
+  return positioned
 }

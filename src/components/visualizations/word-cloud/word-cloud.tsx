@@ -1,93 +1,205 @@
 'use client'
+import * as React from 'react'
+
 import * as THREE from 'three'
-import { useRef, useState, useMemo, useEffect, Suspense } from 'react'
+import {
+  useRef,
+  useState,
+  useMemo,
+  useEffect,
+  Suspense,
+  memo,
+  createRef,
+  forwardRef,
+  useCallback,
+} from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Billboard, Text, TrackballControls } from '@react-three/drei'
+import {
+  Billboard,
+  CubicBezierLine,
+  Html,
+  QuadraticBezierLine,
+  Text,
+  TrackballControls,
+} from '@react-three/drei'
 import { useRouter } from 'next/navigation'
-// generate random words
-function Word({ children, item, ...props }: any) {
-  const router = useRouter()
-  const color = new THREE.Color()
 
-  const ref: any = useRef()
-  const [hovered, setHovered] = useState(false)
-  const over = (e: { stopPropagation: () => any }) => (
-    e.stopPropagation(), setHovered(true)
-  )
-  const out = () => setHovered(false)
-  // Change the mouse cursor on hover¨
-  useEffect(() => {
-    if (hovered) {
-      document.body.style.cursor = 'pointer'
-    }
-    return () => {
-      document.body.style.cursor = 'auto'
-    }
-  }, [hovered])
-  // Tie component to the render-loop
-  useFrame(({ camera }) => {
-    ref.current.material.color.lerp(
-      color.set(hovered ? '#fa2720' : 'white'),
-      0.1
-    )
-  })
+import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
+import { capitalize } from '../../../utils/functions'
+import { FontLoader, TextGeometry } from 'three-stdlib'
+import { a, useTransition, useSpring } from '@react-spring/three'
+import type { AnyJson } from 'three/examples/jsm/nodes/core/constants'
+import {
+  ConnectionCard,
+  ModelAvatar,
+} from '@/features/mindmap/mindmap-sidebar/connection-list'
+import { cn } from '@/utils'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Loading } from '@/components/ui/loading'
+import { Card, CardHeader } from '@/components/ui/card'
+// import {
+//   StarsCard,
+//   StarsCardDescription,
+//   StarsCardTitle,
+// } from '@/components/ui/card/stars-card'
 
-  const goToPage = () => router.push(`/investigate/${item?.type}/${item?.id}`)
+{
+  /* <a
+  className="text-neutral-500 border-b-neutral-800 border-b-2 border-r-neutral-800 border-r-2 border-t-neutral-800 border-t-2 flex-col text-[0.63rem] uppercase flex w-2/4 h-[calc(-16px_+_50vw)] overflow-hidden p-2 bg-neutral-950 min-[600px]:w-1/4  min-[600px]:h-[calc(-16px_+_25vw)] min-[1440px]:w-56 min-[1440px]:h-56"
+  href="https://pancakeswap.finance/"
+  style={{
+    borderBottomStyle: "solid",
+    borderRightStyle: "solid",
+    borderTopStyle: "solid",
+  }}>
+  <div className="cursor-pointer flex-grow justify-between flex">DeFi</div>
+  <div className="items-center self-center cursor-pointer flex-grow flex">
+    
+  </div>
+  <div className="items-end self-end cursor-pointer flex-grow flex">PancakeSwap</div>
+</a> */
+}
 
-  const fontProps = {
-    fontFamily: 'Inria Sans',
-    fontSize: 1,
-    letterSpacing: -0.05,
-    lineHeight: 1,
-  }
+const Star = ({ isGlowing, delay }: { isGlowing: boolean; delay: number }) => {
   return (
-    <Billboard {...props}>
-      <Text
-        ref={ref}
-        onPointerOver={over}
-        onPointerOut={out}
-        onClick={goToPage}
-        {...fontProps}
-        children={children}
-      />
-    </Billboard>
+    <motion.div
+      key={delay}
+      initial={{
+        scale: 1,
+      }}
+      animate={{
+        scale: isGlowing ? [1, 1.2, 2.5, 2.2, 1.5] : 1,
+        background: isGlowing ? '#fff' : '#666',
+      }}
+      transition={{
+        duration: 2,
+        ease: 'easeInOut',
+        delay: delay,
+      }}
+      className={cn('bg-[#666] h-[1px] w-[1px] rounded-full relative z-20')}
+    ></motion.div>
   )
 }
 
-function Cloud({ items, radius = 20 }) {
-  const words = useMemo(() => {
-    return items.map((item, idx) => {
-      const phi = Math.acos(-1 + (2 * idx) / items.length)
-      const theta = Math.sqrt(items.length * Math.PI) * phi
-      return [
-        new THREE.Vector3().setFromSpherical(
-          new THREE.Spherical(radius, phi, theta)
-        ),
-        item.name,
-      ]
-    })
-  }, [items, radius])
+const Glow = ({ delay }: { delay: number }) => {
+  return (
+    <motion.div
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      transition={{
+        duration: 2,
+        ease: 'easeInOut',
+        delay: delay,
+      }}
+      exit={{
+        opacity: 0,
+      }}
+      className='absolute  left-1/2 -translate-x-1/2 z-10 h-[4px] w-[4px] rounded-full bg-blue-500 blur-[1px] shadow-2xl shadow-blue-400'
+    />
+  )
+}
 
-  return words.map(([pos, name], index) => (
-    <Word key={index} position={pos} children={name} item={items[index]} />
+// generate random words
+const Word = ({ children, item, ...props }: any): any => {
+  // updateWithRef
+  console.log('props: ', props)
+  console.log('children: ', children)
+  console.log('item: ', item)
+  const ref = useRef()
+  const { type, id }: any = item
+  const hex = DOMAIN_MODEL_COLORS[type]
+  console.log('hex: ', hex)
+  const router = useRouter()
+  const color = new THREE.Color()
+
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    // <Billboard >{/* </Billboard> */}
+    // <Billboard>
+    <Html {...props} occlude='blending' transform sprite ref={ref}>
+      <Card
+        className={`shadow relative rounded-lg dark:border-[${hex}] border-[${hex}] !border-[${hex}] rounded-[calc(var(--radius))] bg-dot-white/[0.2] p-1 z-50 bg-black`}
+      >
+        <div className={`bg-[${hex}]/60 w-full h-full`}>
+          <CardHeader className='flex flex-row items-center align-center justify-start p-1'>
+            <ModelAvatar model={item} />
+
+            <h3 className='!mt-0 ml-[12px] text-white tracking-wide font-light text-sm'>
+              {item?.name || item?.title}
+            </h3>
+          </CardHeader>
+        </div>
+      </Card>
+    </Html>
+    // </Billboard>
+  )
+}
+
+// const ConnectionLines = ({ connections }: any) => {
+//   const group: any = useRef()
+
+//   useFrame((_, delta) =>
+//     group.current.children.forEach(
+//       (group: {
+//         children: {
+//           material: { uniforms: { dashOffset: { value: number } } }
+//         }[]
+//       }) => (group.children[0].material.uniforms.dashOffset.value -= delta * 10)
+//     )
+//   )
+//   return (
+//     <group ref={group}>
+//       {connections.map((connection: any) => {
+//         return (
+//           <group key={connection.id}>
+//             <QuadraticBezierLine
+//               start={connection.start}
+//               end={connection.end}
+//               color='#27F1FF'
+//               dashed
+//               dashScale={50}
+//               gapSize={20}
+//             />
+//             <QuadraticBezierLine
+//               start={connection.start}
+//               end={connection.end}
+//               color='#27F1FF'
+//               lineWidth={0.5}
+//               transparent
+//               opacity={0.1}
+//             />
+//           </group>
+//         )
+//       })}
+//     </group>
+//   )
+// }
+
+function Cloud({ words }: any) {
+  return words.map(([position, item]: any, index: any) => (
+    <Word key={index} position={position} children={item.name} item={item} />
   ))
 }
 export type WordCloudProps = {
   events: any[]
 }
-export const WordCloud = ({ records }: any) => {
+export const WordCloud = ({ records, connections }: any) => {
   return (
-    <Canvas
-      dpr={[1, 2]}
-      camera={{ position: [0, 0, 35], fov: 90 }}
-      className='h-[100vh] wordcloud'
-    >
+    <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 35], fov: 90 }}>
       <fog attach='fog' args={['#202025', 0, 80]} />
-      <Suspense fallback={null}>
+      <Suspense fallback={<Loading />}>
         <group rotation={[10, 10.5, 10]}>
-          <Cloud items={records} radius={30} />
+          <Cloud words={records} />
         </group>
+
+        {/* <ConnectionLines connections={connections} /> */}
       </Suspense>
+
       <TrackballControls />
     </Canvas>
   )

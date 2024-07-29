@@ -29,7 +29,7 @@ export const NEONS = {
   yellow: `#FEED72`,
 }
 
-export const DOMAIN_MODEL_COLORS = {
+export const DOMAIN_MODEL_COLORS: any = {
   topics: NEONS.pink,
   events: NEONS.green,
   personnel: NEONS.blue,

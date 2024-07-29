@@ -40,7 +40,7 @@ const config = {
         source: ['var(--font-source-sans)'],
         ailerons: ['var(--font-ailerons)'],
         futura: ['var(--font-futura)'],
-        firaCode: ['var(--font-fire-code)'],
+        firaCode: ['var(--font-fira-code)'],
         centima: ['var(--font-centima})'],
         centimaSans: ['var(--font-centima-sans)'],
         eirene: ['var(--font-eirene})'],
@@ -91,6 +91,7 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         spotlight: 'spotlight 2s ease .75s 1 forwards',
+        'meteor-effect': 'meteor 5s linear infinite',
       },
       keyframes: {
         'accordion-down': {
@@ -111,6 +112,15 @@ const config = {
             // @ts-ignore
             opacity: 1,
             transform: 'translate(-50%,-40%) scale(1)',
+          },
+        },
+
+        meteor: {
+          '0%': { transform: 'rotate(215deg) translateX(0)', opacity: '1' },
+          '70%': { opacity: '1' },
+          '100%': {
+            transform: 'rotate(215deg) translateX(-500px)',
+            opacity: '0',
           },
         },
       },

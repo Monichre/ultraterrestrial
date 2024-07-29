@@ -93,7 +93,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     data,
     type,
   }
-  const date = dayjs(data?.date).format('DD MMMM YYYY')
+  const date = dayjs(data?.date).format('MMMM DD, YYYY')
   const image: any = photos?.length
     ? photos[0]
     : { url: '/foofighters.webp', signedUrl: '/foofighters.webp' }
@@ -110,7 +110,9 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
       },
     },
   }
-  const animatedClass = expand ? 'w-[450px] h-full' : 'w-[450px]'
+  const animatedClass = expand
+    ? 'w-auto min-w-[500px] h-full'
+    : 'w-auto min-w-[500px]'
   const duration = 100
 
   const [animatedTitle, setAnimatedTitle] = useState<string>('')
@@ -219,23 +221,68 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     }
     return text.substring(0, maxLength) + '...'
   }
+
+  const [showMenu, setShowMenu] = useState(false)
+  const handleHoverEnter = () => {
+    setShowMenu(true)
+  }
+  const handleHoverLeave = () => {
+    setShowMenu(false)
+  }
+
+  const transition = {
+    type: 'spring',
+    mass: 0.5,
+    damping: 11.5,
+    stiffness: 100,
+    restDelta: 0.001,
+    restSpeed: 0.001,
+  }
+
   return (
     <AnimatedCard
       style={{ transition: 'all 0.5s ease-in-out' }}
       className={`entity-card shadow relative ${animatedClass} rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
     >
-      <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative'>
-        <EntityCardUtilityMenu node={node} onSave={() => {}} />
+      <div
+        className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative '
+        onMouseEnter={handleHoverEnter}
+        onMouseLeave={handleHoverLeave}
+      >
+        <AnimatePresence>
+          {showMenu && (
+            <motion.div
+              key='utility-menu'
+              initial={{ opacity: 0, scale: 0.85, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.85, y: 20 }}
+              transition={transition}
+              className='absolute top-[-50px] z-[-2] w-full h-auto flex align-center items-center justify-center bg-none'
+            >
+              <EntityCardUtilityMenu node={node} onSave={() => {}} />
+            </motion.div>
+          )}
+        </AnimatePresence>
         <CardHeader
           className='flex flex-row items-center align-center justify-between p-4'
           onClick={toggle}
         >
-          <h2 className='text-white uppercase font-centimaSans text-2xl'>
+          <AnimatedImageContent
+            animate={{ opacity: 2, height: 50, width: 50, y: 0 }}
+            // animate={expand ? { opacity: 1, height: 300, width: 300, y: 0 }: { opacity: 0, height: 0, width: 0, y: -40 }}
+
+            alt={name}
+            className='rounded-md object-cover'
+            height={50}
+            src={image?.url}
+            width={50}
+          />
+          <h2 className='text-white uppercase font-centimaSans text-2xl mx-4'>
             {animatedTitle}
           </h2>
 
           <div className='w-fit ml-auto date'>
-            <span className='text-1xl text-ehiter uppercase font-centimaSans'>
+            <span className='text-1xl text-[#78efff] uppercase font-centimaSans'>
               {animatedDate}
             </span>
           </div>
@@ -264,14 +311,14 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
                 initial={false}
                 animate={expand ? 'open' : 'closed'}
                 alt='Product image'
-                className='w-full h-full rounded-md object-cover'
+                className='w-full h-full rounded-md object-cover max-w-[500px] max-h-[500px]'
                 height={200}
                 src={image?.url}
                 width={200}
               />
             </AnimatedCardContent>
             <motion.div
-              className='w-full flex justify-center py-4'
+              className='w-full flex justify-center py-4 px-2'
               key={`${id}-additional-info`}
               initial='closed'
               variants={variants3}
