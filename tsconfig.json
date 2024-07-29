@@ -3,23 +3,54 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "noEmit": true,
     "module": "esnext",
+    "lib": [
+      "es6",
+      "es7",
+      "esnext",
+      "dom"
+    ],
+    "allowJs": true,
+    "jsx": "preserve",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
     "incremental": true,
     "allowImportingTsExtensions": true,
-    "types": ["node", "three", "@types/node"], // Added "@types/node" package
+    "types": [
+      "node",
+      "three",
+      "@types/node"
+    ], // Added "@types/node" package
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": [
+        "src/*"
+      ],
+      "@/app/*": [
+        "src/app/*"
+      ],
+      "@/api/*": [
+        "src/api/*"
+      ],
+      "@/components/*": [
+        "src/components/*"
+      ],
+      "@/hooks/*": [
+        "src/hooks/*"
+      ],
+      "@/lib/*": [
+        "src/lib/*"
+      ],
+      "@/pages/*": [
+        "src/pages/*"
+      ],
+      "@/styles/*": [
+        "src/styles/*"
+      ]
     },
     "plugins": [
       {
@@ -27,23 +58,13 @@
       }
     ]
   },
-
   "include": [
-    "*.ts",
-    "*.tsx",
     "next-env.d.ts",
-    "global.d.ts",
-    "src",
-    "src/**/*",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS",
-     
-    }
-  }
+  "exclude": [
+    "node_modules"
+  ]
 }

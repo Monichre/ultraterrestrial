@@ -39,16 +39,17 @@ export function SiteTitle(props: any) {
   }, [])
 
   return (
+    // mt-[64px]
     <div
-      className={`flex self-center align-center w-full auto mb-[42px] relative flex-col`}
+      className={`flex self-center align-center w-full auto  relative flex-col`}
     >
       <div
         // mt-auto
-        className={`flex justify-center self-center align-center center w-full  relative`}
+        className={`flex justify-center self-center align-center center w-full relative`}
       >
         <BlurFade inView delay={0}>
           <h1
-            className={`text-center !font-ailerons text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] text-black`}
+            className={`text-center !font-ailerons text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] text-black `}
           >
             UltraTerrestrial
           </h1>

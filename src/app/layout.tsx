@@ -17,7 +17,7 @@ import {
   futura,
   oswald,
   sourceSans,
-  fireCode,
+  firaCode,
   jetBrains,
 } from './fonts'
 import { FullSiteNav } from '@/components/navbar/full-site-nav'
@@ -64,12 +64,10 @@ export default function RootLayout({
   // bg-[url("/8k_stars_milky_way.jpeg")] bg-center bg-cover dark
   return (
     <ClerkProvider>
-      <html
-        lang='en'
-        className={`${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${fireCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} dark`}
-        suppressHydrationWarning
-      >
-        <body className='bg-[#fff]'>
+      <html lang='en' suppressHydrationWarning>
+        <body
+          className={`bg-[#fff] ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} dark`}
+        >
           <DataLayer>
             <ThemeProvider
               attribute='class'

@@ -1,6 +1,0 @@
-export * from './actions.types'
-export * from './create-user-saved-sighting'
-export * from './create-user-saved-testimony'
-export * from './create-user-saved-topic'
-export * from './create-user-saved-key-figure'
-export * from './create-user-saved-event'

@@ -12,6 +12,7 @@
   "editor.tabCompletion": "on",
   "cody.autocomplete.formatOnAccept": true,
   "github.copilot.chat.terminalChatLocation": "quickChat",
+  "typescript.tsdk": "node_modules/typescript/lib",
   
   
   

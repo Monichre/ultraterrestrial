@@ -3,7 +3,8 @@ import * as React from 'react'
 
 import { useEffect, useRef } from 'react'
 import { motion, useAnimation, useInView } from 'framer-motion'
-import { Button } from '@/components/Button'
+import { Button } from '@/components/ui/button/button'
+
 interface BoxRevealProps {
   children: JSX.Element
   width?: 'fit-content' | '100%'

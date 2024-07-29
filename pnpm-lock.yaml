@@ -49,7 +49,7 @@ importers:
         version: 1.2.4(encoding@0.1.13)
       '@langchain/community':
         specifier: ^0.0.49
-        version: 0.0.49(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.4)(@xata.io/client@0.29.5(typescript@5.5.3))(encoding@0.1.13)(jsdom@23.2.0)(lodash@4.17.21)(typesense@1.8.2(@babel/runtime@7.24.4))(ws@8.18.0)
+        version: 0.0.49(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.4)(@xata.io/client@0.30.0(typescript@5.5.3))(encoding@0.1.13)(jsdom@23.2.0)(lodash@4.17.21)(typesense@1.8.2(@babel/runtime@7.24.4))(ws@8.18.0)
       '@langchain/openai':
         specifier: ^0.0.28
         version: 0.0.28(encoding@0.1.13)
@@ -212,6 +212,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.40.0
         version: 5.40.0(react@18.2.0)
+      '@tanstack/react-table':
+        specifier: ^8.19.3
+        version: 8.19.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trigger.dev/nextjs':
         specifier: ^2.3.18
         version: 2.3.18(@trigger.dev/sdk@2.3.18)(next@14.2.4(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4))
@@ -237,8 +240,8 @@ importers:
         specifier: ^10.3.1
         version: 10.3.1(react@18.2.0)
       '@xata.io/client':
-        specifier: ^0.29.5
-        version: 0.29.5(typescript@5.5.3)
+        specifier: ^0.30.0
+        version: 0.30.0(typescript@5.5.3)
       '@xyflow/react':
         specifier: 12.0.0-next.20
         version: 12.0.0-next.20(@types/react@18.2.48)(immer@10.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -248,6 +251,9 @@ importers:
       airtable:
         specifier: ^0.12.2
         version: 0.12.2(encoding@0.1.13)
+      animejs:
+        specifier: ^3.2.2
+        version: 3.2.2
       autoprefixer:
         specifier: 10.4.17
         version: 10.4.17(postcss@8.4.33)
@@ -389,6 +395,9 @@ importers:
       react-chrono:
         specifier: ^2.6.1
         version: 2.6.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react-copy-to-clipboard:
+        specifier: ^5.1.0
+        version: 5.1.0(react@18.2.0)
       react-d3-graph:
         specifier: ^2.6.0
         version: 2.6.0(d3@7.9.0)(react@18.2.0)
@@ -440,6 +449,9 @@ importers:
       reagraph:
         specifier: ^4.16.1
         version: 4.16.1(@types/react@18.2.48)(@types/three@0.163.0)(graphology-types@0.24.7)(immer@10.1.1)(react-dom@18.2.0(react@18.2.0))(react-native@0.73.6(@babel/core@7.24.7)(@babel/preset-env@7.24.7(@babel/core@7.24.7))(encoding@0.1.13)(react@18.2.0))(react@18.2.0)
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
       sigma:
         specifier: 3.0.0-beta.17
         version: 3.0.0-beta.17(graphology-types@0.24.7)
@@ -506,6 +518,9 @@ importers:
       twitter-api-v2:
         specifier: ^1.17.1
         version: 1.17.1
+      typed.js:
+        specifier: ^2.1.0
+        version: 2.1.0
       typescript:
         specifier: 5.5.3
         version: 5.5.3
@@ -5170,10 +5185,21 @@ packages:
     peerDependencies:
       react: ^18.0.0
 
+  '@tanstack/react-table@8.19.3':
+    resolution: {integrity: sha512-MtgPZc4y+cCRtU16y1vh1myuyZ2OdkWgMEBzyjYsoMWMicKZGZvcDnub3Zwb6XF2pj9iRMvm1SO1n57lS0vXLw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+
   '@tanstack/react-virtual@3.0.0-beta.54':
     resolution: {integrity: sha512-D1mDMf4UPbrtHRZZriCly5bXTBMhylslm4dhcHqTtDJ6brQcgGmk8YD9JdWBGWfGSWPKoh2x1H3e7eh+hgPXtQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  '@tanstack/table-core@8.19.3':
+    resolution: {integrity: sha512-IqREj9ADoml9zCAouIG/5kCGoyIxPFdqdyoxis9FisXFi5vT+iYfEfLosq4xkU/iDbMcEuAj+X8dWRLvKYDNoQ==}
+    engines: {node: '>=12'}
 
   '@tanstack/virtual-core@3.0.0-beta.54':
     resolution: {integrity: sha512-jtkwqdP2rY2iCCDVAFuaNBH3fiEi29aTn2RhtIoky8DTTiCdc48plpHHreLwmv1PICJ4AJUUESaq3xa8fZH8+g==}
@@ -6067,8 +6093,8 @@ packages:
     peerDependencies:
       react: ^18
 
-  '@xata.io/client@0.29.5':
-    resolution: {integrity: sha512-b55dmPVNVFOE5nj2F2G6t9l/d5yYBhIu5X5w3rznhhsriGHkrzn93tqJexIZPS77E7f/yDXcFz06KbvR3bHK5w==}
+  '@xata.io/client@0.30.0':
+    resolution: {integrity: sha512-+mVC4hnYZutcNg+ivBcsJxVXuBrcyidB/ogW6iDAsJtKXpPNbhGNL77v6sGXxzKYxjtDsK/EOntmYjZT3mgo7g==}
     peerDependencies:
       typescript: '>=4.5'
 
@@ -6233,6 +6259,9 @@ packages:
 
   an-array@1.0.0:
     resolution: {integrity: sha512-M175GYI7RmsYu24Ok383yZQa3eveDfNnmhTe3OQ3bm70bEovz2gWenH+ST/n32M8lrwLWk74hcPds5CDRPe2wg==}
+
+  animejs@3.2.2:
+    resolution: {integrity: sha512-Ao95qWLpDPXXM+WrmwcKbl6uNlC5tjnowlaRYtuVDHHoygjtIPfDUoK9NthrlZsQSKjZXlmji2TrBUAVbiH0LQ==}
 
   anser@1.4.10:
     resolution: {integrity: sha512-hCv9AqTQ8ycjpSd3upOJd7vFwW1JaoYQ7tpham03GJ1ca8/65rqn0RpaWpItOAd6ylW9wAw6luXYPJIyPFVOww==}
@@ -13459,6 +13488,9 @@ packages:
     resolution: {integrity: sha512-XGuRDNjXUijsUL0vl6nSD7cwURuzEgglbOaFuZM9g3kwDXOWVTck0jLzjPzGD+TazWbboZYu52/9/XPdUgne9g==}
     engines: {node: '>= 0.8.0'}
 
+  server-only@0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
+
   set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
 
@@ -14662,6 +14694,9 @@ packages:
   typed-array-length@1.0.6:
     resolution: {integrity: sha512-/OxDN6OtAk5KBpGb28T+HZc2M+ADtvRxXrKKbUwtsLgdoxgX13hyy7ek6bFRl5+aBs2yZzB0c4CnQfAtVypW/g==}
     engines: {node: '>= 0.4'}
+
+  typed.js@2.1.0:
+    resolution: {integrity: sha512-bDuXEf7YcaKN4g08NMTUM6G90XU25CK3bh6U0THC/Mod/QPKlEt9g/EjvbYB8x2Qwr2p6J6I3NrsoYaVnY6wsQ==}
 
   typedarray-to-buffer@3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
@@ -17771,7 +17806,7 @@ snapshots:
 
   '@juggle/resize-observer@3.4.0': {}
 
-  '@langchain/community@0.0.49(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.4)(@xata.io/client@0.29.5(typescript@5.5.3))(encoding@0.1.13)(jsdom@23.2.0)(lodash@4.17.21)(typesense@1.8.2(@babel/runtime@7.24.4))(ws@8.18.0)':
+  '@langchain/community@0.0.49(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.4)(@xata.io/client@0.30.0(typescript@5.5.3))(encoding@0.1.13)(jsdom@23.2.0)(lodash@4.17.21)(typesense@1.8.2(@babel/runtime@7.24.4))(ws@8.18.0)':
     dependencies:
       '@langchain/core': 0.1.58
       '@langchain/openai': 0.0.28(encoding@0.1.13)
@@ -17784,7 +17819,7 @@ snapshots:
     optionalDependencies:
       '@supabase/postgrest-js': 1.15.2
       '@supabase/supabase-js': 2.42.4
-      '@xata.io/client': 0.29.5(typescript@5.5.3)
+      '@xata.io/client': 0.30.0(typescript@5.5.3)
       jsdom: 23.2.0
       lodash: 4.17.21
       typesense: 1.8.2(@babel/runtime@7.24.4)
@@ -21152,10 +21187,18 @@ snapshots:
       '@tanstack/query-core': 5.40.0
       react: 18.2.0
 
+  '@tanstack/react-table@8.19.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@tanstack/table-core': 8.19.3
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+
   '@tanstack/react-virtual@3.0.0-beta.54(react@18.2.0)':
     dependencies:
       '@tanstack/virtual-core': 3.0.0-beta.54
       react: 18.2.0
+
+  '@tanstack/table-core@8.19.3': {}
 
   '@tanstack/virtual-core@3.0.0-beta.54': {}
 
@@ -22315,7 +22358,7 @@ snapshots:
       lodash: 4.17.21
       react: 18.2.0
 
-  '@xata.io/client@0.29.5(typescript@5.5.3)':
+  '@xata.io/client@0.30.0(typescript@5.5.3)':
     dependencies:
       typescript: 5.5.3
 
@@ -22513,6 +22556,8 @@ snapshots:
       zod: 3.23.8
 
   an-array@1.0.0: {}
+
+  animejs@3.2.2: {}
 
   anser@1.4.10: {}
 
@@ -31439,6 +31484,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  server-only@0.0.1: {}
+
   set-blocking@2.0.0: {}
 
   set-function-length@1.2.2:
@@ -32954,6 +33001,8 @@ snapshots:
       has-proto: 1.0.3
       is-typed-array: 1.1.13
       possible-typed-array-names: 1.0.0
+
+  typed.js@2.1.0: {}
 
   typedarray-to-buffer@3.1.5:
     dependencies:

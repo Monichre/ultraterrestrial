@@ -38,7 +38,7 @@ export const InAppNavbar = ({ color = 'black', links = navItems }: any) => {
   return (
     <div
       className={cn(
-        'fixed flex w-full justify-center top-10 inset-x-0 mx-auto z-[5000] p-1'
+        'fixed flex w-full justify-center top-10 inset-x-0 mx-auto z-20 p-1'
       )}
     >
       <div className='flex max-w-fit items-center space-between space-x-16 px-4 py-2 m-auto'>
@@ -97,7 +97,7 @@ export const NavBar = ({
   return (
     <div
       className={cn(
-        'fixed flex max-w-fit top-10 inset-x-0 mx-auto rounded-full border border-white/80 dark:border-border/80 z-[5000] p-1'
+        'fixed flex max-w-fit top-10 inset-x-0 mx-auto rounded-full border border-white/80 dark:border-border/80 z-20 p-1'
       )}
     >
       <div className='flex rounded-full border dark:border-neutral-900 border-neutral-950/20 items-center justify-center space-x-4 px-4 py-2 bg-gradient-to-b from-card/70 to-secondary/50'>
