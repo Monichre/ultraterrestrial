@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 'use client'
 import * as React from 'react'
-import { memo, useCallback, useEffect } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 
 import {
   Handle,
@@ -29,12 +29,33 @@ interface Photo {
 const EN = memo((props: any) => {
   const updateNodeInternals = useUpdateNodeInternals()
   updateNodeInternals(props.id)
+  const [handles, setHandles]: any = useState([])
+
+  useEffect(() => {
+    if (props?.data?.handles && props.data?.handles.length) {
+      const { data } = props
+
+      setHandles(data.handles)
+      updateNodeInternals(props.id)
+    }
+  }, [props, updateNodeInternals])
   return (
-    <>
+    <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative min-w-[300px] !w-[300px]'>
+      {handles && handles?.length
+        ? handles.map((id: string) => (
+            <Handle
+              key={id}
+              type='source'
+              position={Position.Bottom}
+              id={id}
+              isConnectable={true}
+            />
+          ))
+        : null}
       <Handle type='target' position={Position.Top} />
 
       <MindMapEntityCard {...props} key={props.id} />
-    </>
+    </div>
   )
 })
 

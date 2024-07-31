@@ -24,7 +24,7 @@ export const Home: React.FC<HomeProps> = () => {
     })
 
     sound.play()
-  }, [])
+  })
 
   return (
     <div className='h-[100vh] w-[100vw] relative'>

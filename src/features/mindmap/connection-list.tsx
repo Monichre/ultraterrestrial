@@ -147,7 +147,7 @@ export function ConnectionBeams({
       )}
       ref={containerRef}
     >
-      <div className='flex size-full h-full max-w-lg items-stretch justify-between gap-10'>
+      <div className='flex flex-col size-full h-full items-stretch justify-between gap-10'>
         <div className='flex flex-col justify-center'>
           <Circle
             ref={originalNodeRef}
@@ -158,7 +158,7 @@ export function ConnectionBeams({
             <ConnectionCard connection={originalNode.data} />
           </Circle>
         </div>
-        <div className='flex flex-col justify-evenly gap-y-4'>
+        <div className='flex flex-row justify-evenly gap-y-4 self-end place-self-end justify-self-end'>
           {refs.map(
             (ref: React.Ref<HTMLDivElement> | undefined, index: number) => (
               <Circle
@@ -206,7 +206,7 @@ export const ConnectionList: React.FC<ConnectionListProps> = ({
   // const scope = useMenuAnimation(isPresent)
 
   return (
-    <div className='h-[1200px] w-full grow h-max-[1200px]'>
+    <div className='w-full grow h-full'>
       <ConnectionBeams originalNode={originalNode} connections={connections} />
     </div>
   )

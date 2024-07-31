@@ -75,7 +75,9 @@ export const MindMapProvider = ({
     screenToFlowPosition,
     setViewport,
     zoomIn,
+    updateNode,
     zoomOut,
+    updateNodeData,
   } = useReactFlow()
   const store = useStoreApi()
 
@@ -166,6 +168,10 @@ export const MindMapProvider = ({
         parentId: `${data.type}-root-node`,
       },
       type: `${data.type}Node`,
+      style: {
+        height: 320,
+        width: 240,
+      },
       // type: 'entityNode',
     }
   }, [])
@@ -272,6 +278,7 @@ export const MindMapProvider = ({
       return childNodes.map((childNode) => {
         const positionedNode = {
           ...childNode,
+
           position: screenToFlowPosition({ x: currentX, y: currentY }),
         }
 
@@ -332,6 +339,7 @@ export const MindMapProvider = ({
       const source: any = `${type}-root-node`
 
       const nodeState = rootNodeState[source]
+      console.log('nodeState: ', nodeState)
 
       const { lastIndex } = nodeState
       // #TODO - add handling for if batch size is greater than remaining child nodes
@@ -536,6 +544,37 @@ export const MindMapProvider = ({
     []
   )
 
+  const findConnections = useCallback(
+    (node: any) => {
+      const { id } = node
+      const { links } = allEntityGraphData
+      const currentNodes = getNodes()
+      const nodeLinks = links
+        .filter((link: any) => link.target === id || link.source === id)
+        .map((link) => {
+          if (link.target === id) {
+            return link.source
+          }
+          if (link.source === id) {
+            return link.target
+          }
+        })
+      console.log('nodeLinks: ', nodeLinks)
+      const connections = currentNodes.filter((nodeOnMap: any) =>
+        nodeLinks.includes(nodeOnMap.id)
+      )
+      const handles = connections.map((connection: any) =>
+        createRootNodeEdge(node, connection)
+      )
+      console.log('connections: ', connections)
+      console.log('handles: ', handles)
+      updateNodeData(node.id, { ...node.data, handles })
+      addEdges(handles)
+      return connections
+    },
+    [addEdges, allEntityGraphData, getNodes, updateNodeData]
+  )
+
   const [showLocationVisualization, setShowLocationVisualization] =
     useState(false)
 
@@ -581,6 +620,8 @@ export const MindMapProvider = ({
         getEdges,
         initialNodes,
         store,
+        updateNode,
+        getNode,
         adjustViewport,
         zoomIn,
         zoomOut,
@@ -592,6 +633,7 @@ export const MindMapProvider = ({
         toggleLocationVisualization,
         locationsToVisualize,
         closeLocationVisualization,
+        findConnections,
       }}
     >
       {children}

@@ -19,17 +19,13 @@ import {
   MiniMap,
 } from '@xyflow/react'
 
-import '@xyflow/react/dist/style.css'
-
 import { useMindMap } from '@/providers/mindmap-context'
 
 import { Toolbar } from '@/components/toolbar'
-import {
-  MindmapSidebar,
-  MindMapSidebarProvider,
-} from '@/features/mindmap/mindmap-sidebar'
+
 import { nextTick } from '@/utils'
 import { LocationVisualization } from '@/components/location-visualization'
+import { Search } from '@/components/search'
 
 export function Graph(props: any) {
   const {
@@ -93,32 +89,33 @@ export function Graph(props: any) {
           fill='white'
         />
 
-        <div className='w-full absolute bottom-[40px] left-0 z-20 cursor-pointer flex justify-center'>
+        <div className='w-auto absolute top-[40px] left-[20px] z-20 cursor-pointer flex justify-center'>
           <Toolbar />
         </div>
         <LocationVisualization />
-        <MindMapSidebarProvider>
-          <MindmapSidebar />
-          <ReactFlow
-            colorMode='dark'
-            nodeTypes={nodeTypes}
-            // edgeTypes={{
-            //   entityEdge: EntityEdge,
+        <div className='w-full fixed bottom-[40px] left-0 z-50 cursor-pointer flex justify-center'>
+          <Search />
+        </div>
 
-            defaultEdgeOptions={edgeOptions}
-            nodes={nodes}
-            edges={edges}
-            defaultViewport={{ x: 0, y: 0, zoom: 0 }}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onNodeClick={onNodeClick}
-            onConnect={onConnect}
-            fitView
-          >
-            <Background />
-            <MiniMap />
-          </ReactFlow>
-        </MindMapSidebarProvider>
+        <ReactFlow
+          colorMode='dark'
+          nodeTypes={nodeTypes}
+          // edgeTypes={{
+          //   entityEdge: EntityEdge,
+
+          defaultEdgeOptions={edgeOptions}
+          nodes={nodes}
+          edges={edges}
+          defaultViewport={{ x: 0, y: 0, zoom: 0 }}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onNodeClick={onNodeClick}
+          onConnect={onConnect}
+          fitView
+        >
+          <Background />
+          <MiniMap />
+        </ReactFlow>
       </DotGridBackgroundBlack>
     </div>
   )

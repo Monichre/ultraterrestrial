@@ -3,6 +3,7 @@ import { flattenArray } from '@/utils/functions'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { objectMapToSingular, objectMapPlural } from '@/utils/model.utils'
+import { executeEntityRelationshipInquiry } from '@/lib/openai/assistants/disclosure'
 const xata: any = getXataClient()
 
 const connectionMapByEntityType: any = {
@@ -41,18 +42,20 @@ const connectionMapByEntityType: any = {
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
-  console.log('searchParams: ', searchParams)
+
   const id = searchParams.get('id')
-  console.log('id: ', id)
+
   const type: any = searchParams.get('type')
-  console.log('type: ', type)
+
   const tables: any = connectionMapByEntityType[type]
-  console.log('tables: ', tables)
+
   const originalRecordTypeSingular = objectMapToSingular[type]
+
+  const subject = await xata.db[type].read(id)
 
   const { totalCount, records } = await xata.search.all(`${id}`, {
     tables: tables.map(
-      ({ table, target }: { table: strng; target: string }) => {
+      ({ table, target }: { table: string; target: string }) => {
         return {
           table: `${table}`,
           target: [{ column: `${target}`, weight: 10 }],
@@ -65,11 +68,9 @@ export async function GET(request: NextRequest) {
 
   const connectionRecords: Set<any> = new Set()
   for (const item of records) {
-    console.log('item: ', item)
     const {
       record: { xata: xataObject, ...restOfRecord },
     } = item
-    console.log('restOfRecord: ', restOfRecord)
 
     if (
       restOfRecord[originalRecordTypeSingular] &&
@@ -78,20 +79,31 @@ export async function GET(request: NextRequest) {
       delete restOfRecord[originalRecordTypeSingular]
     }
     const { id: recordId, ...rest } = restOfRecord
-    console.log('rest: ', rest)
 
     const [connectionType] = Object.keys(rest)
-    console.log('connectionType: ', connectionType)
+
     const table = objectMapPlural[connectionType]
-    console.log('table: ', table)
 
     const connectionId = rest[connectionType].id
-    console.log('connectionId: ', connectionId)
+
     const connection: any = await xata.db[table].read(connectionId)
-    console.log('connection: ', connection)
+
     connectionRecords.add(connection)
   }
-  console.log('connectionRecords: ', Array.from(connectionRecords))
 
-  return NextResponse.json({ data: Array.from(connectionRecords), totalCount })
+  const { connections, error } = await executeEntityRelationshipInquiry({
+    subject,
+    relatedItems: Array.from(connectionRecords),
+  })
+  console.log('connections: ', connections)
+  if (error) {
+    return NextResponse.json({ data: error })
+  }
+
+  const merged = Array.from(connectionRecords).map((record) => {
+    return { ...record, evaluation: { ...connections[record.name] } }
+  })
+  console.log('merged: ', merged)
+
+  return NextResponse.json({ data: merged })
 }
