@@ -23,12 +23,13 @@ export function Toolbar() {
     toggleLocationVisualization,
   } = useMindMap()
   return (
-    <div className='flex shadow items-center justify-around rounded-full p-1 max-w-max m-auto border border-white/80 dark:border-neutral-700/80 text-neutral-500 bg-gradient-to-b from-card/70 rounded-[calc(var(--radius)-2px)]'>
-      <div className='flex  border-r border-zinc-600 pr-1'>
+    // max-w-max m-auto
+    <div className='flex flex-col shadow items-center justify-between rounded-full p-1  border border-white/80 dark:border-neutral-700/80 text-neutral-500 bg-gradient-to-b from-card/70 rounded-[calc(var(--radius)-2px)]'>
+      <div className='flex flex-col'>
         <Button
           variant='ghost'
           size='icon'
-          className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100 mx-2'
+          className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100 m-2'
         >
           <MessageCircleIcon className='h-5 w-5 stroke-1' />
           <span className='sr-only'>Create a comment</span>
@@ -40,7 +41,7 @@ export function Toolbar() {
               <Button
                 variant='ghost'
                 size='icon'
-                className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100 mx-2'
+                className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100 m-2'
               >
                 <LayersIcon className='h-5 w-5 stroke-1' />
                 <span className='sr-only'>Stack</span>
@@ -53,11 +54,11 @@ export function Toolbar() {
         </TooltipProvider>
       </div>
 
-      <div className='flex items-center '>
+      <div className='flex flex-col items-center '>
         <Button
           variant='ghost'
           size='icon'
-          className='text-zinc-100  hover:bg-gray-600 hover:text-zinc-100 mx-2'
+          className='text-zinc-100  hover:bg-gray-600 hover:text-zinc-100 m-2'
         >
           <ThinTwinklyStar />
 
@@ -66,7 +67,7 @@ export function Toolbar() {
         <Button
           variant='ghost'
           size='icon'
-          className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100'
+          className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100 m-2'
           onClick={toggleLocationVisualization}
         >
           <svg

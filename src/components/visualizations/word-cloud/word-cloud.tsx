@@ -29,10 +29,7 @@ import { capitalize } from '../../../utils/functions'
 import { FontLoader, TextGeometry } from 'three-stdlib'
 import { a, useTransition, useSpring } from '@react-spring/three'
 import type { AnyJson } from 'three/examples/jsm/nodes/core/constants'
-import {
-  ConnectionCard,
-  ModelAvatar,
-} from '@/features/mindmap/mindmap-sidebar/connection-list'
+import { ConnectionCard, ModelAvatar } from '@/features/mindmap/connection-list'
 import { cn } from '@/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Loading } from '@/components/ui/loading'

@@ -21,13 +21,21 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { forwardRef, useEffect, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 
+import { useAuth } from '@clerk/nextjs'
+
+import { objectMapToSingular } from '@/utils/model.utils'
+import { createUserSavedEvent } from '@/app/actions/user/create-user-saved-event'
 import { EntityCardUtilityMenu } from '@/components/ui/card/entity-card/entity-card-utility-menu'
 
 import type { ImageProps } from '@/utils/image.utils'
 import 'react-magic-motion/card.css'
 import { truncate } from '@/utils/functions'
+import { useMindMap } from '@/providers'
+import { searchConnections } from '@/features/ai/search'
+import { ConnectionList } from '@/features/mindmap/connection-list'
+
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
@@ -74,6 +82,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   id,
   ...rest
 }) => {
+  const { getNode, updateNode } = useMindMap()
   const {
     description,
     latitude,
@@ -88,18 +97,21 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     ...restOfData
   } = data
   console.log('restOfData: ', restOfData)
-  const node = {
+  const node: any = {
     id,
     data,
     type,
   }
-  const date = dayjs(data?.date).format('MMMM DD, YYYY')
+  const date = dayjs(data?.date).format('DD.MM.YY')
   const image: any = photos?.length
     ? photos[0]
     : { url: '/foofighters.webp', signedUrl: '/foofighters.webp' }
   console.log('image: ', image)
   const [expand, setExpand] = useState(false)
-  const toggle = () => setExpand(!expand)
+  const toggle = useCallback(() => {
+    // findConnections(node)
+    setExpand(!expand)
+  }, [expand])
 
   const animation = {
     hide: { opacity: 0 },
@@ -110,9 +122,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
       },
     },
   }
-  const animatedClass = expand
-    ? 'w-auto min-w-[500px] h-full'
-    : 'w-auto min-w-[500px]'
+  const animatedClass = expand ? 'h-[900x] w-[1000px]' : 'h-[282px] w-[312px]'
   const duration = 100
 
   const [animatedTitle, setAnimatedTitle] = useState<string>('')
@@ -185,7 +195,14 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   // onMouseLeave={handleMouseLeave}
 
   const variants = {
-    open: { opacity: 1, height: 'auto' },
+    open: {
+      opacity: 1,
+      height: '100%',
+      top: 0,
+      left: 0,
+      position: 'relative',
+      zIndex: 5,
+    },
     closed: { opacity: 0, height: 0 },
     transition: {
       ...openSpring,
@@ -195,8 +212,15 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     },
   }
 
-  const variants2 = {
-    open: { height: 'auto', opacity: 1, y: 0 },
+  const variants2: any = {
+    open: {
+      opacity: 1,
+      height: '100%',
+      top: 0,
+      left: 0,
+      position: 'relative',
+      zIndex: 5,
+    },
     closed: { height: 0, opacity: 0, y: 100 },
     transition: {
       type: 'spring',
@@ -205,7 +229,23 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
       duration: 0.5,
     },
   }
-
+  const variantsImage: any = {
+    open: {
+      opacity: 1,
+      height: '100%',
+      top: 0,
+      left: 0,
+      position: 'absolute',
+      zIndex: 0,
+    },
+    closed: { height: 0, opacity: 0, y: 100 },
+    transition: {
+      type: 'spring',
+      damping: 10,
+      stiffness: 100,
+      duration: 0.5,
+    },
+  }
   const variants3 = {
     open: { opacity: 1, y: 0 },
     closed: { opacity: 0, y: 100 },
@@ -222,14 +262,6 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     return text.substring(0, maxLength) + '...'
   }
 
-  const [showMenu, setShowMenu] = useState(false)
-  const handleHoverEnter = () => {
-    setShowMenu(true)
-  }
-  const handleHoverLeave = () => {
-    setShowMenu(false)
-  }
-
   const transition = {
     type: 'spring',
     mass: 0.5,
@@ -238,18 +270,85 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     restDelta: 0.001,
     restSpeed: 0.001,
   }
+  const { userId, sessionId, isLoaded }: any = useAuth()
+  const [connections, setConnections]: any = useState(null)
+  const getConnections = useCallback(async () => {
+    const payload = await searchConnections({
+      id,
+      type,
+    })
+    console.log('payload: ', payload)
 
+    setConnections(payload.data)
+  }, [id, type])
+
+  const [bookmarked, setBookmarked] = useState(false)
+  const handleSave = async () => {
+    setBookmarked(true)
+    const model = objectMapToSingular[node?.type]
+    console.log('model: ', model)
+    const saved = await createUserSavedEvent({ userId, event: node.id, note })
+    console.log('saved: ', saved)
+    // #TODO: Run some save logic (BIG ASK. Loaded Feature with zero configuration in place)
+  }
+
+  useEffect(() => {
+    if (expand) {
+      const fullNode = getNode(id)
+      console.log('fullNode: ', fullNode)
+
+      const updated = updateNode(id, {
+        ...fullNode,
+        height: 1200,
+        width: 1500,
+      })
+      console.log('updated: ', updated)
+    }
+  }, [expand, getNode, id, updateNode])
   return (
     <AnimatedCard
+      variants={{
+        open: { height: '900px', width: '1200px', transform: 'scale(1.5)' },
+        closed: { height: '282px', width: '312px', transform: 'scale(1)' },
+      }}
+      animate={expand ? 'open' : 'closed'}
       style={{ transition: 'all 0.5s ease-in-out' }}
-      className={`entity-card shadow relative ${animatedClass} rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
+      className={`entity-card shadow relative ${animatedClass} rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2] overflow-scroll`}
     >
-      <div
+      {expand && (
+        <AnimatePresence>
+          <>
+            <AnimatedImageContent
+              key={`${id}-image`}
+              // initial={{ opacity: 0, height: 0, width: 0, y: -40 }}
+              // animate={expand ? { opacity: 1, height: 300, width: 300, y: 0 }: { opacity: 0, height: 0, width: 0, y: -40 }}
+
+              variants={variantsImage}
+              initial={false}
+              animate={expand ? 'open' : 'closed'}
+              alt='Product image'
+              className='absolute top-0 left-0 z-[0] h-auto w-full bg-black/50 z-[0] max-h-[400px]'
+              height={200}
+              src={image?.url}
+              width={200}
+            />
+            <div
+              className='absolute top-0 left-0 h-full w-full z-[2] max-h-[400px]'
+              style={{
+                background:
+                  'linear-gradient(rgba(0, 0, 0, .9), rgba(0, 0, 0,.75), rgba(0, 0, 0, 0.25))',
+              }}
+            />
+          </>
+        </AnimatePresence>
+      )}
+      {/* <div
         className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative '
         onMouseEnter={handleHoverEnter}
         onMouseLeave={handleHoverLeave}
-      >
-        <AnimatePresence>
+      > */}
+
+      {/* <AnimatePresence>
           {showMenu && (
             <motion.div
               key='utility-menu'
@@ -262,75 +361,110 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
               <EntityCardUtilityMenu node={node} onSave={() => {}} />
             </motion.div>
           )}
-        </AnimatePresence>
-        <CardHeader
-          className='flex flex-row items-center align-center justify-between p-4'
-          onClick={toggle}
-        >
-          <AnimatedImageContent
-            animate={{ opacity: 2, height: 50, width: 50, y: 0 }}
-            // animate={expand ? { opacity: 1, height: 300, width: 300, y: 0 }: { opacity: 0, height: 0, width: 0, y: -40 }}
+        </AnimatePresence> */}
 
-            alt={name}
-            className='rounded-md object-cover'
-            height={50}
-            src={image?.url}
-            width={50}
-          />
-          <h2 className='text-white uppercase font-centimaSans text-2xl mx-4'>
+      <CardHeader
+        className={`flex ${expand ? 'flex-col align-start justify-start items-start' : ''} h-[282px] w-[312px] relative z-10`}
+        onClick={toggle}
+        // animate={{ top: 0, scale: 1, y: 0 }}
+      >
+        {expand ? null : (
+          <>
+            <AnimatedImageContent
+              animate={{ opacity: 2, height: 282, width: 312, y: 0 }}
+              // animate={expand ? { opacity: 1, height: 300, width: 300, y: 0 }: { opacity: 0, height: 0, width: 0, y: -40 }}
+
+              alt={name}
+              className='rounded-md object-cover absolute top-0 left-0 z-[1] mr-0'
+              height={282}
+              src={image?.url}
+              width={312}
+            />
+            <div
+              className='absolute top-0 left-0 h-[282px] w-[312px] z-[2] mt-0 m-0'
+              style={{
+                background: 'rgba(0, 0, 0, .8)',
+                // background:
+                // 'linear-gradient(rgba(0, 0, 0, .9), rgba(0, 0, 0,.75), rgba(0, 0, 0, 0.25))',
+              }}
+            />
+          </>
+        )}
+        <div className='relative z-10'>
+          <h2 className='text-white uppercase font-centimaSans text-2xl tracking-wider'>
             {animatedTitle}
           </h2>
 
-          <div className='w-fit ml-auto date'>
-            <span className='text-1xl text-[#78efff] uppercase font-centimaSans'>
-              {animatedDate}
-            </span>
-          </div>
-        </CardHeader>
-
-        {expand && (
-          <motion.div
-            variants={variants}
-            key={`${id}-image-container`}
-            initial={'closed'}
-            animate={expand ? 'open' : 'closed'}
-            className='p-2'
+          <p
+            className={`w-fit ${expand ? '' : ''} date text-1xl text-[#78efff] uppercase font-centimaSans tracking-wider`}
           >
-            <AnimatedCardContent
-              key={`${id}-image-card`}
-              variants={variants2}
-              initial='closed'
-              animate={expand ? 'open' : 'closed'}
-            >
-              <AnimatedImageContent
-                key={`${id}-image`}
-                // initial={{ opacity: 0, height: 0, width: 0, y: -40 }}
-                // animate={expand ? { opacity: 1, height: 300, width: 300, y: 0 }: { opacity: 0, height: 0, width: 0, y: -40 }}
-
-                variants={variants2}
-                initial={false}
-                animate={expand ? 'open' : 'closed'}
-                alt='Product image'
-                className='w-full h-full rounded-md object-cover max-w-[500px] max-h-[500px]'
-                height={200}
-                src={image?.url}
-                width={200}
-              />
-            </AnimatedCardContent>
-            <motion.div
-              className='w-full flex justify-center py-4 px-2'
-              key={`${id}-additional-info`}
-              initial='closed'
-              variants={variants3}
-              animate={expand ? 'open' : 'closed'}
-            >
-              <p className='text-md font-jetbrains text-white text-left'>
-                {truncate(description, 300)}
-              </p>
-            </motion.div>
-          </motion.div>
+            [{date}]
+          </p>
+        </div>
+        {expand && (
+          <>
+            <div className={`w-fit ${expand ? '' : 'ml-4'} `}>
+              <span className='text-1xl text-[#78efff] uppercase font-jetbrains text-white tracking-wider'>
+                {location}
+              </span>
+            </div>
+            <div className={`w-fit ${expand ? '' : 'ml-4'} `}>
+              <span className='text-1xl text-[#78efff] uppercase font-jetbrains text-white tracking-wider'>
+                [{latitude}, {longitude}]
+              </span>
+            </div>
+          </>
         )}
-      </div>
+      </CardHeader>
+
+      {expand && (
+        <motion.p
+          className='relative z-10 text-xl font-jetbrains text-white text-left p-2 px-4'
+          key={`${id}-additional-info`}
+          initial='closed'
+          variants={variants3}
+          animate={expand ? 'open' : 'closed'}
+        >
+          {truncate(description, 500)}
+        </motion.p>
+      )}
+
+      {/* {expand && (
+        <motion.div
+          variants={variants2}
+          key={`${id}-image-container`}
+          initial={'closed'}
+          animate={expand ? 'open' : 'closed'}
+          className='p-2 w-full relative z-10 h-auto flex flex-col justify-center'
+        >
+      
+          <motion.p
+            className='relative z-10 text-xl font-jetbrains text-white text-left'
+            key={`${id}-additional-info`}
+            initial='closed'
+            variants={variants3}
+            animate={expand ? 'open' : 'closed'}
+          >
+            {expand ? description : truncate(description, 300)}
+          </motion.p>
+
+          
+        </motion.div>
+      )} */}
+      {connections && (
+        <ConnectionList originalNode={node} connections={connections} />
+      )}
+      {expand && (
+        <CardFooter className='absolute top-[10px] right-[10px] z-10 flex flex-row justify-center'>
+          <div className='rounded-full border-slate-500'>
+            <EntityCardUtilityMenu
+              bookmarked={bookmarked}
+              getConnections={getConnections}
+              handleSave={handleSave}
+            />
+          </div>
+        </CardFooter>
+      )}
     </AnimatedCard>
   )
 }

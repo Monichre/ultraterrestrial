@@ -23,6 +23,8 @@ const quote = `The most merciful thing in the world, I think, is the inability o
   reality, and of our frightful position therein, that we shall either go
   mad from the revelation or flee from the deadly light into the peace and
   safety of a new dark age.`
+const end = quoteLines.length - 1
+const start = 0
 const words = quote.split(' ')
 export const LovecraftQuote = () => {
   return (
@@ -43,15 +45,35 @@ export const LovecraftQuote = () => {
           {quoteLines.map((line: string, index: number) => (
             <BlurFade
               inView
-              className='inline'
+              className={'inline'}
               delay={index === 0 ? 0.5 : index * 0.5}
               key={`${line.replace(/ /g, '-')}-${index}`}
             >
+              {index === start && (
+                <span
+                  className={`!font-ailerons text-6xl font-bold inline relative h-0 absolute`}
+                >
+                  "
+                </span>
+              )}
               <span className='font-centimaSans text-black text-bold text-[16px]'>
                 {line}{' '}
               </span>
+              {index === end && (
+                <span
+                  className={`!font-ailerons text-6xl font-bold inline absolute h-0`}
+                >
+                  "
+                </span>
+              )}
             </BlurFade>
           ))}
+
+          <BlurFade inView className='block mt-4' delay={0.99}>
+            <span className='font-centimaSans text-black text-bold text-[20px] relative site-tagline'>
+              H.P. Lovecraft
+            </span>
+          </BlurFade>
         </div>
       </div>
     </>

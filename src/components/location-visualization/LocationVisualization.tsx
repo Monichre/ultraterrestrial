@@ -1,7 +1,8 @@
 import { SlideFadeIn } from '@/components/animations/animated-wrappers'
 import { Button } from '@/components/ui/button/button'
 
-import { AdminDashboardGlobe } from '@/components/ui/globe'
+// import { AdminDashboardGlobe } from '@/components/ui/globe'
+import { Globeanime } from '@/components/ui/globe/globe-alt'
 import { useMindMap } from '@/providers'
 import { XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -34,26 +35,24 @@ export const LocationVisualization: React.FC<LocationVisualizationProps> = (
   }, [locationsToVisualize])
 
   if (showLocationVisualization) {
+    // bg-gradient-to-b from-transparent via-[#0a0a0a] to-black
     return (
-      <div className='fixed top-0 right-0 w-[28vw] z-50 bg-gradient-to-b from-transparent via-[#0a0a0a] to-black '>
-        <Button
+      <div className='fixed top-0 right-0 w-[32vw] z-50 p-4'>
+        {/* <Button
           variant='ghost'
           onClick={toggleLocationVisualization}
           className='absolute top-[10px] right-[10px]'
         >
           <XIcon className='w-5 h-5' />
-        </Button>
+        </Button> */}
+        <Globeanime markers={markers} />
         <div className='w-full flex-col align-middle justify-center items-center content-center'>
-          <div className='flex-col text-xs pt-3 uppercase flex'>
-            The omnichain future is here.
-          </div>
-
-          <AdminDashboardGlobe markers={markers} />
-          <div className='px4 w-full '>
+          {/* <AdminDashboardGlobe markers={markers} /> */}
+          {/* <div className='px4 w-full '>
             <div className='text-neutral-500  text-xs uppercase'>
               <span className='text-lime-300'>99</span> dapps
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     )
