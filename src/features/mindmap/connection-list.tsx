@@ -11,7 +11,7 @@ import React, {
   useCallback,
 } from 'react'
 
-import { AnimatedBeam } from '@/components/ui/animated-beam'
+import { AnimatedBeam } from '@/components/animations/animated-beam'
 
 // import gsap from 'gsap'
 // import { useGSAP } from '@gsap/react'
@@ -71,7 +71,7 @@ export const ConnectionCard = ({ connection }: any) => {
 
   return (
     <Card
-      className={`entity-card bg-black shadow relative rounded-lg border border-white/60 dark:border-border/60 rounded-[calc(var(--radius))] bg-dot-white/[0.2] p-1 z-50`}
+      className={`entity-card bg-black shadow relative rounded-lg border border-white/60 dark:border-border/60 rounded-[calc(var(--radius))] bg-dot-white/[0.2] p-1 z-50 !w-min`}
     >
       <CardHeader className='flex flex-row items-center align-center justify-start p-1'>
         <ModelAvatar model={connection} />
@@ -142,23 +142,22 @@ export function ConnectionBeams({
   return (
     <div
       className={cn(
-        'relative flex flex-col h-full w-full items-center justify-center overflow-hidden',
+        'relative flex flex-col min-h-[600px] h-full w-full items-center justify-center',
         className
       )}
       ref={containerRef}
     >
       <div className='flex flex-col size-full h-full items-stretch justify-between gap-10'>
-        <div className='flex flex-col justify-center'>
-          <Circle
-            ref={originalNodeRef}
-            delay={0}
-            inView
-            className='relative z-50'
-          >
-            <ConnectionCard connection={originalNode.data} />
-          </Circle>
-        </div>
-        <div className='flex flex-row justify-evenly gap-y-4 self-end place-self-end justify-self-end'>
+        <Circle
+          ref={originalNodeRef}
+          delay={0}
+          inView
+          className='relative z-50'
+        >
+          <ConnectionCard connection={originalNode.data} />
+        </Circle>
+
+        <div className='flex flex-col justify-evenly gap-y-4 self-end place-self-end justify-self-end'>
           {refs.map(
             (ref: React.Ref<HTMLDivElement> | undefined, index: number) => (
               <Circle
@@ -206,8 +205,6 @@ export const ConnectionList: React.FC<ConnectionListProps> = ({
   // const scope = useMenuAnimation(isPresent)
 
   return (
-    <div className='w-full grow h-full'>
-      <ConnectionBeams originalNode={originalNode} connections={connections} />
-    </div>
+    <ConnectionBeams originalNode={originalNode} connections={connections} />
   )
 }

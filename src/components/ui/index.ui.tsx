@@ -1,4 +1,4 @@
-export * from './animated-list'
+export * from '../animations/animated-list'
 export * from './button'
 export * from './card'
 export * from './switch'

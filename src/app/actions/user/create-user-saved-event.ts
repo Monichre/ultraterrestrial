@@ -2,13 +2,14 @@
 import { getXataClient } from '@/lib/xata'
 import type { EventsRecord } from '@/lib/xata'
 import type { CreateUserSavedItemBase } from './actions.types'
+
 const xata = getXataClient()
 export interface CreateUserSavedEventProps extends CreateUserSavedItemBase {
   event: EventsRecord['id']
 }
 
 export const createUserSavedEvent = async ({
-  note,
+  userNote,
   event,
   theory,
   userId,
@@ -16,12 +17,13 @@ export const createUserSavedEvent = async ({
   console.log('event: ', event)
   console.log('userId: ', userId)
   console.log('theory: ', theory)
-  console.log('note: ', note)
+
   const record = await xata.db[`user-saved-events`].create({
     user: userId,
     event,
     theory,
-    note,
+    note: userNote?.content,
+    'note-title': userNote?.title,
   })
 
   console.log('user-saved-events', record)

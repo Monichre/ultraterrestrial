@@ -7,6 +7,12 @@ import { useMindMap } from '@/providers'
 import { XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+// const ActiveNodeUI = (node) => {
+//   return (
+
+//   )
+// }
+
 export interface LocationVisualizationProps {}
 
 export const LocationVisualization: React.FC<LocationVisualizationProps> = (
@@ -16,6 +22,7 @@ export const LocationVisualization: React.FC<LocationVisualizationProps> = (
     showLocationVisualization,
     locationsToVisualize,
     toggleLocationVisualization,
+    activeNode,
   } = useMindMap()
   // bg-[#0a0a0a]
 
@@ -46,6 +53,7 @@ export const LocationVisualization: React.FC<LocationVisualizationProps> = (
           <XIcon className='w-5 h-5' />
         </Button> */}
         <Globeanime markers={markers} />
+
         <div className='w-full flex-col align-middle justify-center items-center content-center'>
           {/* <AdminDashboardGlobe markers={markers} /> */}
           {/* <div className='px4 w-full '>

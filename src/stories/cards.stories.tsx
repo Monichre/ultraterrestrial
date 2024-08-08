@@ -1,10 +1,10 @@
 import { Card } from '@/components/ui/card/card'
-import { ConnectionCard } from '@/components/ui/card/connection-card'
+import { ConnectionCard } from '@/features/mindmap/cards/connection-card'
 import {
   MindMapEntityCard,
   type MindMapEntityCardProps,
-} from '@/components/ui/card/entity-card/entity-card'
-import { RootNodeCard } from '@/components/ui/card/root-node-card'
+} from '@/features/mindmap/cards/entity-card/entity-card'
+import { RootNodeCard } from '@/features/mindmap/cards/root-node-card/root-node-card'
 import { StarsCard, type StarsCardProps } from '@/components/ui/card/stars-card'
 import type { StoryObj } from '@storybook/react'
 

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { memo } from 'react'
-import { TestimonyCard } from '../../../components/ui/card/testimony-card'
+import { TestimonyCard } from '../cards/testimony-card'
 
 import { Position, Handle, useUpdateNodeInternals } from '@xyflow/react'
 const TN = memo((props: any) => {

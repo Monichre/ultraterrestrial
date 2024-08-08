@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { AnimatedList } from '@/components/ui/animated-list'
+import { AnimatedList } from '@/components/animations/animated-list'
 
 const meta = {
   title: 'Components/AnimatedList',

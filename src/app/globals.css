@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-
+@import url('tldraw/tldraw.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -293,6 +293,7 @@ Cool effect
 --bg-blur: 0px;
 
 */
+
 .wordcloud {
   height: 100vh !important;
 }
@@ -327,18 +328,23 @@ h1 {
     transparent
   ); */
   /* color: #fff; */
+}
+
+#home-page-title {
+  color: #fff;
   letter-spacing: 2px !important;
   text-transform: uppercase;
   text-transform: uppercase;
-  background: radial-gradient(
+  /* background: radial-gradient(
       circle farthest-corner at center center,
       #000,
       #000
     )
     no-repeat;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent; */
 }
+
 h2,
 h3 {
   /* font-family: var(--font-ailerons); */
@@ -435,7 +441,7 @@ a {
   left: 45%;
   height: 2px;
   width: 0;
-  background: #000;
+  background: #fff;
   transition: width 0.3s ease-in-out;
   transition-delay: 1s;
   z-index: 2;
@@ -601,4 +607,8 @@ td p {
 
 .key-figures.fullsite-nav p {
   color: #fff !important;
+}
+
+.react-flow__background {
+  background-color: #000;
 }

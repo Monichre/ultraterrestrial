@@ -92,8 +92,40 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         spotlight: 'spotlight 2s ease .75s 1 forwards',
         'meteor-effect': 'meteor 5s linear infinite',
+        'text-reveal': 'text-reveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s',
+        'border-flip': 'flip 6s infinite steps(2, end)',
+        'border-rotate': 'rotate 3s linear infinite both',
+        'border-width': 'border-width 3s infinite alternate',
       },
       keyframes: {
+        'border-width': {
+          from: {
+            width: '10px',
+            opacity: '0',
+          },
+          to: {
+            width: '100px',
+            opacity: '1',
+          },
+        },
+        flip: {
+          to: {
+            transform: 'rotate(360deg)',
+          },
+        },
+        rotate: {
+          to: {
+            transform: 'rotate(90deg)',
+          },
+        },
+        'text-reveal': {
+          '0%': {
+            transform: 'translate(0, 100%)',
+          },
+          '100%': {
+            transform: 'translate(0, 0)',
+          },
+        },
         'accordion-down': {
           from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
