@@ -18,7 +18,7 @@ export const CanvasCursor = () => {
         xmlns='http://www.w3.org/2000/svg'
         version='1.1'
         width='800'
-        className='fixed'
+        className='fixed z-50'
       >
         <defs>
           <filter id='goo'>
@@ -35,7 +35,7 @@ export const CanvasCursor = () => {
       </svg>
 
       <canvas
-        className='pointer-events-none fixed inset-0'
+        className='pointer-events-none fixed inset-0 z-50'
         id='canvas'
         // style={{
         //   mixBlendMode: 'difference',

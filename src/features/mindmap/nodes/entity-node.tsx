@@ -12,7 +12,10 @@ import {
   NodeToolbar,
 } from '@xyflow/react'
 
-import { MindMapEntityCard } from '@/components/ui/card/entity-card/entity-card'
+import { MindMapEntityCard } from '@/features/mindmap/cards/entity-card/entity-card'
+import { GraphCard } from '@/features/mindmap/cards/graph-card'
+import { GraphNodeCard } from '@/components/ui/card/graph-node-card'
+import { BlurAppear } from '@/components/animations/animated-wrappers'
 
 interface Photo {
   id: string
@@ -27,21 +30,23 @@ interface Photo {
 }
 
 const EN = memo((props: any) => {
-  const updateNodeInternals = useUpdateNodeInternals()
-  updateNodeInternals(props.id)
-  const [handles, setHandles]: any = useState([])
+  // const updateNodeInternals = useUpdateNodeInternals()
+  // updateNodeInternals(props.id)
+  // const [handles, setHandles]: any = useState([])
 
-  useEffect(() => {
-    if (props?.data?.handles && props.data?.handles.length) {
-      const { data } = props
+  // useEffect(() => {
+  //   if (props?.data?.handles && props.data?.handles.length) {
+  //     const { data } = props
 
-      setHandles(data.handles)
-      updateNodeInternals(props.id)
-    }
-  }, [props, updateNodeInternals])
+  //     setHandles(data.handles)
+  //     updateNodeInternals(props.id)
+  //   }
+  // }, [props, updateNodeInternals])
+  // relative min-w-[300px] !w-[300px]
   return (
-    <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative min-w-[300px] !w-[300px]'>
-      {handles && handles?.length
+    <BlurAppear>
+      <div className='w-full border border-white/20 rounded-[calc(var(--radius)-2px)] !min-w-[450px] relative'>
+        {/* {handles && handles?.length
         ? handles.map((id: string) => (
             <Handle
               key={id}
@@ -51,11 +56,13 @@ const EN = memo((props: any) => {
               isConnectable={true}
             />
           ))
-        : null}
-      <Handle type='target' position={Position.Top} />
+        : null} */}
+        <Handle type='target' position={Position.Top} />
 
-      <MindMapEntityCard {...props} key={props.id} />
-    </div>
+        <GraphCard {...props} key={props.id} />
+        {/* <GraphNodeCard {...props} key={props.id} /> */}
+      </div>
+    </BlurAppear>
   )
 })
 

@@ -225,6 +225,7 @@ const tables = [
       { name: "event", type: "link", link: { table: "events" } },
       { name: "theory", type: "link", link: { table: "user-theories" } },
       { name: "note", type: "text" },
+      { name: "note-title", type: "string" },
     ],
   },
   {
@@ -234,6 +235,7 @@ const tables = [
       { name: "topic", type: "link", link: { table: "topics" } },
       { name: "theory", type: "link", link: { table: "user-theories" } },
       { name: "note", type: "text" },
+      { name: "note-title", type: "string" },
     ],
   },
   {
@@ -243,6 +245,7 @@ const tables = [
       { name: "key-figure", type: "link", link: { table: "personnel" } },
       { name: "theory", type: "link", link: { table: "user-theories" } },
       { name: "note", type: "text" },
+      { name: "note-title", type: "string" },
     ],
   },
   {
@@ -252,6 +255,7 @@ const tables = [
       { name: "testimony", type: "link", link: { table: "testimonies" } },
       { name: "theory", type: "link", link: { table: "user-theories" } },
       { name: "note", type: "text" },
+      { name: "note-title", type: "string" },
     ],
   },
   {
@@ -261,6 +265,7 @@ const tables = [
       { name: "document", type: "link", link: { table: "documents" } },
       { name: "theory", type: "link", link: { table: "user-theories" } },
       { name: "note", type: "text" },
+      { name: "note-title", type: "string" },
     ],
   },
   {
@@ -293,6 +298,7 @@ const tables = [
       { name: "organization", type: "link", link: { table: "organizations" } },
       { name: "theory", type: "link", link: { table: "user-theories" } },
       { name: "note", type: "text" },
+      { name: "note-title", type: "string" },
     ],
   },
   {
@@ -302,6 +308,7 @@ const tables = [
       { name: "sighting", type: "link", link: { table: "sightings" } },
       { name: "theory", type: "link", link: { table: "user-theories" } },
       { name: "note", type: "text" },
+      { name: "note-title", type: "string" },
     ],
   },
   {
@@ -319,6 +326,8 @@ const tables = [
       { name: "metadata", type: "json" },
     ],
   },
+  { name: "tags", columns: [] },
+  { name: "theories", columns: [] },
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -399,6 +408,12 @@ export type UserSavedSightingsRecord = UserSavedSightings & XataRecord;
 export type Artifacts = InferredTypes["artifacts"];
 export type ArtifactsRecord = Artifacts & XataRecord;
 
+export type Tags = InferredTypes["tags"];
+export type TagsRecord = Tags & XataRecord;
+
+export type Theories = InferredTypes["theories"];
+export type TheoriesRecord = Theories & XataRecord;
+
 export type DatabaseSchema = {
   topics: TopicsRecord;
   personnel: PersonnelRecord;
@@ -423,6 +438,8 @@ export type DatabaseSchema = {
   "user-saved-organizations": UserSavedOrganizationsRecord;
   "user-saved-sightings": UserSavedSightingsRecord;
   artifacts: ArtifactsRecord;
+  tags: TagsRecord;
+  theories: TheoriesRecord;
 };
 
 const DatabaseClient = buildClient();

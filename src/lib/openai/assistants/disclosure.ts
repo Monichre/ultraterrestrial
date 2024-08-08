@@ -45,13 +45,14 @@ const formatRelatedItems = (
 
 const createMessage = (items: string | any[]) =>
   items?.length && items?.length < 2 ? `How is` : 'How are'
-export const executeEntityRelationshipInquiry = async ({
+export const checkRelevanceWithAI = async ({
   subject,
   relatedItems,
 }: {
   subject: any
   relatedItems: any[]
 }) => {
+  console.log('subject: ', subject)
   await openai.beta.threads.messages.create(
     ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID,
     {
@@ -89,7 +90,7 @@ export const executeEntityRelationshipInquiry = async ({
   if (error) {
     return {
       error,
-      connections: null
+      connections: null,
     }
   }
 

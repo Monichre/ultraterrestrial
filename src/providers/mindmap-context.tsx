@@ -39,6 +39,7 @@ import {
   ROOT_NODE_WIDTH,
 } from '@/utils/constants/nodes'
 import * as d3 from 'd3'
+import { nextTick } from '@/utils/functions'
 // import { simulation } from '@/features/mindmap/utils/force-directed'
 
 const MindMapContext: any = createContext({
@@ -169,8 +170,8 @@ export const MindMapProvider = ({
       },
       type: `${data.type}Node`,
       style: {
-        height: 320,
-        width: 240,
+        // height: 320,
+        width: 350,
       },
       // type: 'entityNode',
     }
@@ -589,6 +590,11 @@ export const MindMapProvider = ({
     []
   )
 
+  const [activeNode, setActiveNode] = useState(null)
+  const updateActiveNode = (node: any) => {
+    setActiveNode(node)
+  }
+
   const [locationsToVisualize, setLocationsToVisualize]: any = useState([])
 
   const addLocationsToVisualize = useCallback((locations: any[]) => {
@@ -597,6 +603,39 @@ export const MindMapProvider = ({
       ...locations,
     ])
   }, [])
+
+  const onNodeClick: any = useCallback(
+    (node: any) => {
+      // const { target } = event
+      const {
+        data: { type },
+      } = node
+
+      const { childNodes } = getRootNodeChildren(node?.data.type)
+      const childNode = childNodes[childNodes.length - 1]
+      console.log('childNode: ', childNode)
+
+      if (type === 'events') {
+        addLocationsToVisualize(childNodes)
+      }
+
+      nextTick(10).then(() => {
+        zoomOut({
+          // @ts-ignore
+          zoom: 0,
+          duration: 500,
+        })
+      })
+      // // Ignore any other clicks to the node that are not the load button
+      // if (target.classList.contains('load-records-button')) {
+
+      // } else {
+      //   updateActiveNode(node)
+      // }
+    },
+    [addLocationsToVisualize, getRootNodeChildren, updateActiveNode, zoomOut]
+  )
+
   return (
     <MindMapContext.Provider
       value={{
@@ -634,6 +673,9 @@ export const MindMapProvider = ({
         locationsToVisualize,
         closeLocationVisualization,
         findConnections,
+        activeNode,
+        updateActiveNode,
+        onNodeClick,
       }}
     >
       {children}

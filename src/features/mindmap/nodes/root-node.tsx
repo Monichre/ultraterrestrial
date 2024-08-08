@@ -43,9 +43,10 @@ import {
   DotGridBackground,
   DotGridBackgroundBlack,
 } from '@/components/ui/backgrounds'
-import { RootNodeCard } from '@/components/ui/card/root-node-card'
+import { RootNodeCard } from '@/features/mindmap/cards/root-node-card/root-node-card'
 import { motion } from 'framer-motion'
 import { BlurFade } from '@/components/animations/blur-fade'
+import { BlurAppear } from '@/components/animations/animated-wrappers'
 // import { useLayoutedElements } from '@/features/mindmap/graph'
 
 type NumberNode = Node<{ number: number }, 'number'>
@@ -89,8 +90,8 @@ const RN = (node: RootNode) => {
     },
   }
   return (
-    <BlurFade>
-      <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative w-fit h-fit'>
+    <BlurAppear>
+      <div className='border border-white/50 rounded-[calc(var(--radius)-2px)] relative w-fit h-fit'>
         {handles && handles?.length
           ? handles.map((id: string) => (
               <Handle
@@ -104,7 +105,7 @@ const RN = (node: RootNode) => {
           : null}
         <RootNodeCard nodeData={node} />
       </div>
-    </BlurFade>
+    </BlurAppear>
   )
 }
 

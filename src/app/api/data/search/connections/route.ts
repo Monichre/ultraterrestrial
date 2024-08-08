@@ -3,7 +3,7 @@ import { flattenArray } from '@/utils/functions'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { objectMapToSingular, objectMapPlural } from '@/utils/model.utils'
-import { executeEntityRelationshipInquiry } from '@/lib/openai/assistants/disclosure'
+import { checkRelevanceWithAI } from '@/lib/openai/assistants/disclosure'
 const xata: any = getXataClient()
 
 const connectionMapByEntityType: any = {
@@ -67,6 +67,7 @@ export async function GET(request: NextRequest) {
   })
 
   const connectionRecords: Set<any> = new Set()
+
   for (const item of records) {
     const {
       record: { xata: xataObject, ...restOfRecord },
@@ -87,23 +88,35 @@ export async function GET(request: NextRequest) {
     const connectionId = rest[connectionType].id
 
     const connection: any = await xata.db[table].read(connectionId)
-
-    connectionRecords.add(connection)
+    if (!connectionRecords.has(connection)) {
+      connectionRecords.add(connection)
+    }
   }
+  console.log('connectionRecords: ', connectionRecords)
 
-  const { connections, error } = await executeEntityRelationshipInquiry({
-    subject,
-    relatedItems: Array.from(connectionRecords),
-  })
-  console.log('connections: ', connections)
-  if (error) {
-    return NextResponse.json({ data: error })
-  }
+  // This is taking a long time to get a response. The solution is probably to rendering the stream back to the client but Im lazy atm
+  // const { connections, error } = await checkRelevanceWithAI({
+  //   subject,
+  //   relatedItems: Array.from(connectionRecords),
+  // })
+  // console.log('connections: ', connections)
+  // if (error) {
+  //   return NextResponse.json({ data: error })
+  // }
+  // const data = Object.keys(connections).map((name) => {
+  //   const databasedRecord = Array.from(connectionRecords).find(
+  //     (record) => record.name === name
+  //   )
+  //   console.log('databasedRecord: ', databasedRecord)
+  //   const evaluatedRecord = {
+  //     ...databasedRecord,
+  //     evaluation: connections[name],
+  //   }
+  //   console.log('evaluatedRecord: ', evaluatedRecord)
+  //   return evaluatedRecord
+  // })
 
-  const merged = Array.from(connectionRecords).map((record) => {
-    return { ...record, evaluation: { ...connections[record.name] } }
-  })
-  console.log('merged: ', merged)
+  // console.log('data: ', data)
 
-  return NextResponse.json({ data: merged })
+  return NextResponse.json({ data: Array.from(connectionRecords) })
 }

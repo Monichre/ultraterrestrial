@@ -39,8 +39,8 @@ export const ROOT_NODE_POSITIONS: any = {
 
 export const ROOT_NODE_WIDTH = 148
 export const ROOT_NODE_HEIGHT = 129
-export const NODE_SPACE = 100
+export const NODE_SPACE = 20
 
 export const ROOT_DIMENSIONS = { width: 148, height: 129 }
 export const CHILD_DIMENSIONS = { width: 200, height: 100 }
-export const PADDING = 100
+export const PADDING = 20

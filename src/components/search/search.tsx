@@ -5,41 +5,126 @@ import Link from 'next/link'
 import * as Dialog from '@radix-ui/react-dialog'
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
-import { useCompletion } from 'ai/react'
+// import { useCompletion } from 'ai/react'
 import { useActions } from 'ai/rsc'
+import {
+  submitMessage,
+  type ClientMessage,
+} from '@/app/actions/assistant/actions'
+import { SearchIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button/button'
+import { Divider } from '@/features/user/note/ui/PopoverMenu'
 
 // import { useCompletion } from 'ai/react';
 
-import { type ClientMessage } from '@/app/actions/assistant/actions'
-import { Button } from '@/components/ui/button/button'
-import { SearchIcon } from 'lucide-react'
+const suggestions = [
+  'Tell me about the Roswell incident.',
+  `Give me the top 10 who's who of ufology?`,
+  'How can I get into Ufology and remain attractive to the opposite sex?',
+  'Who is the most credible key figure?',
+  'What data is there on ancient artifacts as they related to non human intelligence?',
+  'Is it true that your dick is green?',
+]
+
+export const SuggestedSearchItem = ({ value, onClick }: any) => {
+  const handleClick = () => {
+    onClick(value)
+  }
+  return (
+    <li onClick={handleClick}>
+      <span className='flex items-center rounded-lg px-2 py-1 text-sm leading-6 text-slate-700 outline-none focus-within:bg-slate-100 hover:bg-slate-100'>
+        <svg
+          className='w-4 h-4'
+          viewBox='0 0 82 84'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d='M41.5816 1.21606C39.7862 5.82482 40.3852 10.0977 40.5593 14.9633C40.7854 21.2812 40.9774 27.5593 41.4363 33.8661'
+            stroke='currentColor'
+            stroke-width='1.90596'
+            stroke-linecap='round'
+          />
+          <path
+            d='M41.0651 45.1798C39.7505 51.5096 40.3418 57.6794 40.8893 64.0791C41.4093 70.1568 42.1389 76.2117 42.8566 82.2682'
+            stroke='currentColor'
+            stroke-width='1.90596'
+            stroke-linecap='round'
+          />
+          <path
+            d='M1.13413 46.6647C5.16696 44.8703 8.96881 44.7974 13.3092 44.5029C19.8761 44.0572 26.2025 43.2089 32.656 41.952'
+            stroke='currentColor'
+            stroke-width='1.90596'
+            stroke-linecap='round'
+          />
+          <path
+            d='M47.2629 40.0959C58.4139 39.3819 69.3895 37.5305 80.4472 35.9965'
+            stroke='currentColor'
+            stroke-width='1.90596'
+            stroke-linecap='round'
+          />
+          <path
+            d='M49.3429 34.6508L52.917 28.1667'
+            stroke='currentColor'
+            stroke-width='1.90596'
+            stroke-linecap='round'
+          />
+          <path
+            d='M32.9786 50.3504L28.6387 54.6391'
+            stroke='currentColor'
+            stroke-width='1.90596'
+            stroke-linecap='round'
+          />
+          <path
+            d='M52.6361 48.6656L56.9506 51.5758'
+            stroke='currentColor'
+            stroke-width='1.90596'
+            stroke-linecap='round'
+          />
+          <path
+            d='M31.549 30.8471C26.8741 29.4323 22.7143 27.3543 18.2738 25.3586'
+            stroke='currentColor'
+            stroke-width='1.90596'
+            stroke-linecap='round'
+          />
+        </svg>
+        <span className='inline-block ml-2'>{value}</span>
+      </span>
+    </li>
+  )
+}
 
 export function Search() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [query, setQuery]: any = useState('')
 
   const [messages, setMessages] = useState<ClientMessage[]>([])
-  const { submitMessage } = useActions()
-  console.log('submitMessage: ', submitMessage)
   console.log('messages: ', messages)
+  const { handleSubmitMessage } = useActions()
+  // handleClick
+  // submitMessage
 
   const handleSubmission = async () => {
-    setMessages((currentMessages) => [
-      ...currentMessages,
-      {
-        id: '123',
-        status: 'user.message.created',
-        text: query,
-        gui: null,
-      },
-    ])
+    // setMessages((currentMessages) => [
+    //   ...currentMessages,
+    //   {
+    //     id: '123',
+    //     status: 'user.message.created',
+    //     text: query,
+    //     gui: null,
+    //   },
+    // ])
 
     const response = await submitMessage(query)
     console.log('response: ', response)
     setMessages((currentMessages) => [...currentMessages, response])
-    setQuery('')
+    // setQuery('')
   }
-
+  const handleSelection = async (suggestion: string) => {
+    setQuery(suggestion)
+    // setIsOpen(false)
+    await handleSubmission()
+  }
   const onChange = (event: any) => {
     setQuery(event.target.value)
   }
@@ -59,6 +144,7 @@ export function Search() {
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
+      setQuery('')
     }
   }, [isOpen])
 
@@ -149,119 +235,24 @@ export function Search() {
               <div className='space-y-4 px-2 py-4'>
                 <div>
                   <div className='mb-2 px-2 text-xs font-semibold uppercase text-gray-400'>
-                    Recent
-                  </div>
-                  <ul>
-                    <li>
-                      <Link
-                        className='flex items-center rounded-lg px-2 py-1 text-sm leading-6 text-slate-700 outline-none focus-within:bg-slate-100 hover:bg-slate-100'
-                        href='#0'
-                      >
-                        <svg
-                          className='mr-3 h-3 w-3 shrink-0 fill-slate-400'
-                          width='12'
-                          height='12'
-                          viewBox='0 0 12 12'
-                        >
-                          <path d='M11.953 4.29a.5.5 0 0 0-.454-.292H6.14L6.984.62A.5.5 0 0 0 6.12.173l-6 7a.5.5 0 0 0 .379.825h5.359l-.844 3.38a.5.5 0 0 0 .864.445l6-7a.5.5 0 0 0 .075-.534Z' />
-                        </svg>
-                        <span>Tell me about the Roswell incident.</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className='flex items-center rounded-lg px-2 py-1 text-sm leading-6 text-slate-700 outline-none focus-within:bg-slate-100 hover:bg-slate-100'
-                        href='#0'
-                      >
-                        <svg
-                          className='mr-3 h-3 w-3 shrink-0 fill-slate-400'
-                          width='12'
-                          height='12'
-                          viewBox='0 0 12 12'
-                        >
-                          <path d='M11.953 4.29a.5.5 0 0 0-.454-.292H6.14L6.984.62A.5.5 0 0 0 6.12.173l-6 7a.5.5 0 0 0 .379.825h5.359l-.844 3.38a.5.5 0 0 0 .864.445l6-7a.5.5 0 0 0 .075-.534Z' />
-                        </svg>
-                        <span>Give me the top 10 who's who of ufology?</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className='flex items-center rounded-lg px-2 py-1 text-sm leading-6 text-slate-700 outline-none focus-within:bg-slate-100 hover:bg-slate-100'
-                        href='#0'
-                      >
-                        <svg
-                          className='mr-3 h-3 w-3 shrink-0 fill-slate-400'
-                          width='12'
-                          height='12'
-                          viewBox='0 0 12 12'
-                        >
-                          <path d='M11.953 4.29a.5.5 0 0 0-.454-.292H6.14L6.984.62A.5.5 0 0 0 6.12.173l-6 7a.5.5 0 0 0 .379.825h5.359l-.844 3.38a.5.5 0 0 0 .864.445l6-7a.5.5 0 0 0 .075-.534Z' />
-                        </svg>
-                        <span>
-                          How can I get into Ufology and remain attractive to
-                          the opposite sex?
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className='flex items-center rounded-lg px-2 py-1 text-sm leading-6 text-slate-700 outline-none focus-within:bg-slate-100 hover:bg-slate-100'
-                        href='#0'
-                      >
-                        <svg
-                          className='mr-3 h-3 w-3 shrink-0 fill-slate-400'
-                          width='12'
-                          height='12'
-                          viewBox='0 0 12 12'
-                        >
-                          <path d='M11.953 4.29a.5.5 0 0 0-.454-.292H6.14L6.984.62A.5.5 0 0 0 6.12.173l-6 7a.5.5 0 0 0 .379.825h5.359l-.844 3.38a.5.5 0 0 0 .864.445l6-7a.5.5 0 0 0 .075-.534Z' />
-                        </svg>
-                        <span>Who is the most credible key figure?</span>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <div className='mb-2 px-2 text-xs font-semibold uppercase text-gray-400'>
                     Suggestions
                   </div>
                   <ul>
-                    <li>
-                      <Link
-                        className='flex items-center rounded-lg px-2 py-1 text-sm leading-6 text-slate-700 outline-none focus-within:bg-slate-100 hover:bg-slate-100'
-                        href='#0'
-                      >
-                        <svg
-                          className='mr-3 h-3 w-3 shrink-0 fill-slate-400'
-                          width='12'
-                          height='12'
-                          viewBox='0 0 12 12'
-                        >
-                          <path d='M11.953 4.29a.5.5 0 0 0-.454-.292H6.14L6.984.62A.5.5 0 0 0 6.12.173l-6 7a.5.5 0 0 0 .379.825h5.359l-.844 3.38a.5.5 0 0 0 .864.445l6-7a.5.5 0 0 0 .075-.534Z' />
-                        </svg>
-                        <span>
-                          What data is there on ancient artifacts as they
-                          related to non human intelligence?
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className='flex items-center rounded-lg px-2 py-1 text-sm leading-6 text-slate-700 outline-none focus-within:bg-slate-100 hover:bg-slate-100'
-                        href='#0'
-                      >
-                        <svg
-                          className='mr-3 h-3 w-3 shrink-0 fill-slate-400'
-                          width='12'
-                          height='12'
-                          viewBox='0 0 12 12'
-                        >
-                          <path d='M11.953 4.29a.5.5 0 0 0-.454-.292H6.14L6.984.62A.5.5 0 0 0 6.12.173l-6 7a.5.5 0 0 0 .379.825h5.359l-.844 3.38a.5.5 0 0 0 .864.445l6-7a.5.5 0 0 0 .075-.534Z' />
-                        </svg>
-                        <span>Is it true that your dick is green?</span>
-                      </Link>
-                    </li>
+                    {suggestions.map((suggestion) => (
+                      <SuggestedSearchItem
+                        onClick={handleSelection}
+                        key={suggestion}
+                        value={suggestion}
+                      />
+                    ))}
                   </ul>
+                  <Divider />
+                  <p className='text-black'>{query}</p>
+                  <div className='flex flex-row'>
+                    {messages.map((message) => (
+                      <>{message.text}</>
+                    ))}
+                  </div>
                 </div>
               </div>
             </ScrollArea.Viewport>

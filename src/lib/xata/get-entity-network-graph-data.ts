@@ -177,12 +177,21 @@ export const getEntityNetworkGraphData = async () => {
     ...connections.eventsExpertsConnections,
   ].map(({ id, ...rest }) => {
     const [sourceData, targetData] = Object.entries(rest)
+    console.log('targetData: ', targetData)
+    console.log('sourceData: ', sourceData)
 
     const [sourceType, sourceNode]: any = sourceData
+    console.log('sourceNode: ', sourceNode)
     const [targetType, targetNode]: any = targetData
+    console.log('targetNode: ', targetNode)
 
-    const sourceNodeExists = nodes.find((node) => node.id === sourceNode.id)
-    const targetNodeExists = nodes.find((node) => node.id === targetNode.id)
+    // Check if source and target nodes exist because occassionally a join record can exist in either table while missing the record referenced by the foreign key
+    const sourceNodeExists = sourceNode
+      ? nodes.find((node) => node.id === sourceNode.id)
+      : null
+    const targetNodeExists = targetNode
+      ? nodes.find((node) => node.id === targetNode.id)
+      : null
 
     if (sourceNodeExists && targetNodeExists) {
       return createGraphLink({ id, sourceNode, targetNode })
@@ -196,7 +205,10 @@ export const getEntityNetworkGraphData = async () => {
     ...rootTestimoniesConnections,
     ...rootOrganizationsConnections,
     ...connectionLinks,
-  ].filter((link) => link.source && link.target)
+  ].filter((link) => {
+    console.log('link: ', link)
+    return link && link.source && link.target
+  })
 
   const graphData = {
     nodes,
