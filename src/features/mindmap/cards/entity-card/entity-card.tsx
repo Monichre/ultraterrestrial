@@ -272,7 +272,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   }
   const { userId, sessionId, isLoaded }: any = useAuth()
   const [connections, setConnections]: any = useState(null)
-  const getConnections = useCallback(async () => {
+  const searchRelatedDataPoints = useCallback(async () => {
     const payload = await searchConnections({
       id,
       type,
@@ -459,7 +459,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
           <div className='rounded-full border-slate-500'>
             <EntityCardUtilityMenu
               bookmarked={bookmarked}
-              getConnections={getConnections}
+              searchRelatedDataPoints={searchRelatedDataPoints}
               handleSave={handleSave}
             />
           </div>

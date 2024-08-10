@@ -1,6 +1,6 @@
 'use client'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
-import { useRef } from 'react'
+import { forwardRef, Suspense, useRef } from 'react'
 
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { motion } from 'framer-motion-3d'
@@ -26,12 +26,19 @@ const RotatingComponent = () => {
     </motion.mesh>
   )
 }
-export const Earth = () => {
+export const Earth = forwardRef((props: any, ref: any) => {
+  console.log('ref: ', ref)
   return (
-    <Canvas>
+    <Canvas ref={ref}>
       <ambientLight intensity={0.1} />
       <directionalLight intensity={3.5} position={[1, 0, -0.25]} />
-      <RotatingComponent />
+      <Suspense
+        fallback={() => (
+          <img alt='earth2' src='/assets/earth2/placeholder.png'></img>
+        )}
+      >
+        <RotatingComponent />
+      </Suspense>
     </Canvas>
   )
-}
+})

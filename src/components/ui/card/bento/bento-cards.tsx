@@ -1,16 +1,10 @@
 'use client'
 import { cn } from '@/utils'
 import React from 'react'
-import { BentoGrid, BentoGridItem } from '../ui/bento-grid'
-import {
-  IconBoxAlignRightFilled,
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
-} from '@tabler/icons-react'
+
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { BentoGrid, BentoGridItem } from '@/components/ui/card/bento/bento-grid'
 
 export function BentoGridThirdDemo() {
   return (
@@ -29,7 +23,7 @@ export function BentoGridThirdDemo() {
   )
 }
 
-const SkeletonOne = () => {
+export const BentoCardOne = () => {
   const variants = {
     initial: {
       x: 0,
@@ -85,7 +79,7 @@ const SkeletonOne = () => {
     </motion.div>
   )
 }
-const SkeletonTwo = () => {
+export const BentoCardTwo = () => {
   const variants = {
     initial: {
       width: 0,
@@ -124,7 +118,7 @@ const SkeletonTwo = () => {
     </motion.div>
   )
 }
-const SkeletonThree = () => {
+export const BentoCardThree = () => {
   const variants = {
     initial: {
       backgroundPosition: '0 50%',
@@ -154,7 +148,7 @@ const SkeletonThree = () => {
     </motion.div>
   )
 }
-const SkeletonFour = () => {
+export const BentoCardImage = ({ children }) => {
   const first = {
     initial: {
       x: 20,
@@ -236,7 +230,7 @@ const SkeletonFour = () => {
     </motion.div>
   )
 }
-const SkeletonFive = () => {
+export const BentoCardFive = () => {
   const variants = {
     initial: {
       x: 0,
@@ -302,9 +296,9 @@ const items = [
         Experience the power of AI in generating unique content.
       </span>
     ),
-    header: <SkeletonOne />,
+    header: <BentoCardOne />,
     className: 'md:col-span-1',
-    icon: <IconClipboardCopy className='h-4 w-4 text-neutral-500' />,
+    icon: null,
   },
   {
     title: 'Automated Proofreading',
@@ -313,9 +307,9 @@ const items = [
         Let AI handle the proofreading of your documents.
       </span>
     ),
-    header: <SkeletonTwo />,
+    header: <BentoCardTwo />,
     className: 'md:col-span-1',
-    icon: <IconFileBroken className='h-4 w-4 text-neutral-500' />,
+    icon: null,
   },
   {
     title: 'Contextual Suggestions',
@@ -324,9 +318,9 @@ const items = [
         Get AI-powered suggestions based on your writing context.
       </span>
     ),
-    header: <SkeletonThree />,
+    header: <BentoCardThree />,
     className: 'md:col-span-1',
-    icon: <IconSignature className='h-4 w-4 text-neutral-500' />,
+    icon: null,
   },
   {
     title: 'Sentiment Analysis',
@@ -335,9 +329,9 @@ const items = [
         Understand the sentiment of your text with AI analysis.
       </span>
     ),
-    header: <SkeletonFour />,
+    header: <BentoCardFour />,
     className: 'md:col-span-2',
-    icon: <IconTableColumn className='h-4 w-4 text-neutral-500' />,
+    icon: null,
   },
 
   {
@@ -347,8 +341,8 @@ const items = [
         Summarize your lengthy documents with AI technology.
       </span>
     ),
-    header: <SkeletonFive />,
+    header: <BentoCardFive />,
     className: 'md:col-span-1',
-    icon: <IconBoxAlignRightFilled className='h-4 w-4 text-neutral-500' />,
+    icon: null,
   },
 ]

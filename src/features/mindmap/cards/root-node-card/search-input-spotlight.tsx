@@ -5,6 +5,7 @@ export const InputBorderSpotlight = ({
   onSubmit,
   type,
   value,
+  className,
 }: any) => {
   const divRef = useRef<HTMLInputElement>(null)
   const [isFocused, setIsFocused] = useState(false)
@@ -40,7 +41,7 @@ export const InputBorderSpotlight = ({
 
   return (
     <>
-      <div className='relative w-full my-2'>
+      <div className={`relative w-full my-4 px-2 ${className}`}>
         <input
           onMouseMove={handleMouseMove}
           onFocus={handleFocus}

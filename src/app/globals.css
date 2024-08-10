@@ -260,6 +260,7 @@ p {
   font-family: 'JetBrains Mono', monospace;
   font-size: 14px;
   line-height: 21px;
+  font-weight: 300;
 }
 .hover-menu {
   height: auto;
@@ -466,6 +467,7 @@ a {
       no-repeat center center / cover,
     rgba(9 9 11 0.5); */
 }
+/* shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)]  */
 /* 
 .animated-path-1 {
   stroke-dasharray: 1px, 5px;

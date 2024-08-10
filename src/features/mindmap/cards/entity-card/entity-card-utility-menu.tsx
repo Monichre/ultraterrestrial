@@ -1,6 +1,6 @@
 'use  client'
 
-import { Command, Bold, Italic, Underline } from 'lucide-react'
+import { Command, Bold, Italic, Underline, ScanSearch } from 'lucide-react'
 import React, { memo, useState, type FunctionComponent } from 'react'
 
 import {
@@ -26,8 +26,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { AddNote } from '@/components/animations/note/AddNote'
+
 import { DoubleDonut, SketchyGlobe } from '@/components/icons'
+import { AddNote } from '@/components/note/AddNote'
 
 interface EntityCardUtilityMenuProps {
   handleSave: any
@@ -35,6 +36,7 @@ interface EntityCardUtilityMenuProps {
 
   saveNote: any
   userNote: any
+  findNodeConnections: any
 }
 
 export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
@@ -42,6 +44,7 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
   userNote,
   bookmarked,
   saveNote,
+  findNodeConnections,
 }) => {
   const gradientOne =
     'bg-[radial-gradient(50%_86.9%_at_50%_100%,_rgba(255,_255,_255,_0.2)_0%,_rgba(255,_255,_255,_0)_100%)] bg-black'
@@ -50,6 +53,11 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
 
   return (
     <>
+      <div>
+        <Button variant='ghost' size='icon' onClick={findNodeConnections}>
+          <ScanSearch />
+        </Button>
+      </div>
       <div>
         <TooltipProvider>
           <Tooltip>
