@@ -17,11 +17,12 @@ export async function POST(req: any) {
     id: subject.id,
     type,
   })
+  const relatedItems = Array.from(databaseRecords)
   console.log('databaseRecords: ', databaseRecords)
   const { text, assistantAnswer, connections, payload } =
     await checkRelevanceWithAI({
       subject,
-      relatedItems: Array.from(databaseRecords),
+      relatedItems,
     })
   console.log('payload: ', payload)
   console.log('connections: ', connections)
@@ -29,6 +30,34 @@ export async function POST(req: any) {
   console.log('text: ', text)
 
   const { relevant, irrelevant } = filterConnectionsByRelevance(connections)
+  const evaluatedRecords = Object.keys(relevant).map((name) => {
+    const databasedRecord = relatedItems.find(
+      (record: any) => record.name === name
+    )
+    console.log('databasedRecord: ', databasedRecord)
+    const evaluatedRecord = databasedRecord
+      ? {
+          ...databasedRecord,
+          evaluation: connections[name],
+        }
+      : null
+    console.log('evaluatedRecord: ', evaluatedRecord)
+    return evaluatedRecord
+  })
+  // const deleteTheseRecords = Object.keys(irrelevant).map((name) => {
+  //   const databasedRecord = relatedItems.find(
+  //     (record: any) => record.name === name
+  //   )
+
+  //   const evaluatedRecord = databasedRecord
+  //     ? {
+  //         ...databasedRecord,
+  //         evaluation: connections[name],
+  //       }
+  //     : null
+
+  //   return evaluatedRecord
+  // })
   // const result = await xata.db.Tutorial.ask('<question>', {
   //   rules: [
   //     // ...array of strings with the rules for the model...,

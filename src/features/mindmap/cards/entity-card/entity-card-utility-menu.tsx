@@ -1,25 +1,10 @@
 'use  client'
 
-import { Command, Bold, Italic, Underline, ScanSearch } from 'lucide-react'
+import { ScanSearch } from 'lucide-react'
 import React, { memo, useState, type FunctionComponent } from 'react'
 
-import {
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-} from 'cmdk'
-import {
-  ArrowRightIcon,
-  BookmarkIcon,
-  BookmarkFilledIcon,
-  DrawingPinFilledIcon,
-  DotsVerticalIcon,
-  Pencil2Icon,
-  Share1Icon,
-} from '@radix-ui/react-icons'
-import { Button } from '@/components/ui/button'
+import { BookmarkIcon, BookmarkFilledIcon } from '@radix-ui/react-icons'
+
 import {
   Tooltip,
   TooltipContent,
@@ -27,8 +12,8 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 
-import { DoubleDonut, SketchyGlobe } from '@/components/icons'
 import { AddNote } from '@/components/note/AddNote'
+import { Button } from '@/components/ui/button/button'
 
 interface EntityCardUtilityMenuProps {
   handleSave: any
@@ -36,7 +21,7 @@ interface EntityCardUtilityMenuProps {
 
   saveNote: any
   userNote: any
-  findNodeConnections: any
+  findConnectedNodes: any
 }
 
 export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
@@ -44,7 +29,7 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
   userNote,
   bookmarked,
   saveNote,
-  findNodeConnections,
+  findConnectedNodes,
 }) => {
   const gradientOne =
     'bg-[radial-gradient(50%_86.9%_at_50%_100%,_rgba(255,_255,_255,_0.2)_0%,_rgba(255,_255,_255,_0)_100%)] bg-black'
@@ -54,7 +39,7 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
   return (
     <>
       <div>
-        <Button variant='ghost' size='icon' onClick={findNodeConnections}>
+        <Button variant='ghost' size='icon' onClick={findConnectedNodes}>
           <ScanSearch />
         </Button>
       </div>

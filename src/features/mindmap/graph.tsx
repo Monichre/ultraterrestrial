@@ -26,6 +26,7 @@ import { Toolbar } from '@/components/toolbar'
 import { nextTick } from '@/utils'
 import { LocationVisualization } from '@/components/location-visualization'
 import { Search } from '@/components/search'
+import { edgeTypes } from '@/features/mindmap/edges'
 
 export function Graph(props: any) {
   const {
@@ -86,10 +87,10 @@ export function Graph(props: any) {
   // #NOTE: This might be an interesting way to enhance, bypass or hack any trouble with edges as the node connections get more complex: https://magicui.design/docs/components/animated-beam
   return (
     <div className='relative h-[100vh] w-[100vw] bg-black bg-dot-white/[0.3] '>
-      {/* <Spotlight
-          className='-top-40 left-0 md:left-60 md:-top-20'
-          fill='white'
-        /> */}
+      <Spotlight
+        className='-top-40 left-0 md:left-60 md:-top-20'
+        fill='white'
+      />
 
       <div className='w-auto absolute top-[40px] left-[20px] z-20 cursor-pointer flex justify-center'>
         <Toolbar />
@@ -102,22 +103,18 @@ export function Graph(props: any) {
       <ReactFlow
         colorMode='dark'
         nodeTypes={nodeTypes}
-        // edgeTypes={{
-        //   entityEdge: EntityEdge,
-
+        edgeTypes={edgeTypes}
+        snapToGrid={true}
         defaultEdgeOptions={edgeOptions}
         nodes={nodes}
         edges={edges}
         defaultViewport={{ x: 0, y: 0, zoom: 0 }}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        // onNodeClick={onNodeClick}
         onConnect={onConnect}
         fitView
         style={{ backgroundColor: 'transparent' }}
-      >
-        {/* <Background /> */}
-      </ReactFlow>
+      ></ReactFlow>
     </div>
   )
 }

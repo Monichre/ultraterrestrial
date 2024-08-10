@@ -13,6 +13,8 @@ import { useInView } from 'framer-motion'
 import { nextTick } from '@/utils'
 import { Earth } from '@/components/earth'
 import { Moon, MoonScene } from '@/components/moon'
+import { Particles } from '@/components/animations/particles'
+
 // // import { Earth } from '@/components/earth'
 // const Earth = dynamic(
 //   () => import('@/components/earth').then((mod) => mod.Earth),
@@ -61,7 +63,7 @@ export const Home: React.FC<HomeProps> = () => {
 
   return (
     <div className='h-[100vh] w-[100vw] relative'>
-      <div className='absolute top-20 left-20   h-[30vh] w-[40vw] z-0'>
+      <div className='absolute top-20 left-20 h-[30vh] w-[40vw] z-0'>
         <Moon />
       </div>
       <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full z-0'>
