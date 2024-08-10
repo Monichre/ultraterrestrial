@@ -31,7 +31,10 @@ export const LovecraftQuote = () => {
     <>
       <div className='text-white tracking-wide mx-auto p-8 text-center w-[800px]'>
         <BlurFade inView delay={0.25}>
-          <h2 className='font-centimaSans text-white text-bold text-center text-lg relative site-tagline'>
+          <h2
+            className='font-centimaSans text-white text-bold text-center text-lg relative site-tagline'
+            style={{ letterSpacing: '2px' }}
+          >
             Tracking the State of Disclosure
             <br />
             {/* <i>
@@ -41,7 +44,7 @@ export const LovecraftQuote = () => {
           </i> */}
           </h2>
         </BlurFade>
-        <div className='mt-8 leading-7'>
+        <div className='mt-8 leading-7 w-[80%] mx-auto text-center'>
           {quoteLines.map((line: string, index: number) => (
             <BlurFade
               inView
@@ -51,17 +54,17 @@ export const LovecraftQuote = () => {
             >
               {index === start && (
                 <span
-                  className={`!font-ailerons text-6xl font-bold inline relative h-0 top-[15px]`}
+                  className={`!font-ailerons lg:text-4xl 2xl:text-6xl font-bold inline relative h-0 top-[15px]`}
                 >
                   "
                 </span>
               )}
-              <span className='font-centimaSans text-white text-bold text-[18px] tracking-wider '>
+              <span className='font-centimaSans text-white text-bold text-md lg:text-[14px] 4xl:text-[18px] tracking-wider '>
                 {line}{' '}
               </span>
               {index === end && (
                 <span
-                  className={`!font-ailerons text-6xl font-bold inline absolute h-0 bottom-[33px]`}
+                  className={`!font-ailerons lg:text-4xl 2xl:text-6xl font-bold inline absolute h-0 bottom-[33px]`}
                 >
                   "
                 </span>
@@ -70,7 +73,10 @@ export const LovecraftQuote = () => {
           ))}
 
           <BlurFade inView className='block mt-4' delay={1} key={'Author'}>
-            <span className='font-centimaSans text-white text-bold text-[20px] relative site-tagline'>
+            <span
+              className='font-centimaSans text-white text-bold text-md lg:text-[14px] 4xl:text-[18px] relative site-tagline'
+              style={{ letterSpacing: '2px' }}
+            >
               H.P. Lovecraft
             </span>
           </BlurFade>

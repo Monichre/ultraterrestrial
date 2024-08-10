@@ -35,3 +35,12 @@
 
 <!-- For help with structuring streaming repsonse? -->
 <https://github.com/instructor-ai/instructor-js>
+
+# Mem0
+
+<https://docs.mem0.ai/integrations/multion>
+<https://app.mem0.ai/dashboard/events>
+
+# OpenSearch
+
+<https://opensearch-ai.pages.dev/>

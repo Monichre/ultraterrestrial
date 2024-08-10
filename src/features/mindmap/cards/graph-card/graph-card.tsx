@@ -58,7 +58,7 @@ export function GraphCard({ data, id, ...rest }: any) {
     label,
     fill,
   } = node
-  const date = dayjs(data?.date).format('MMMM, DD, YYYY')
+  const date = dayjs(data?.date).format('MMM DD, YYYY')
   const image: any = photos?.length
     ? photos[0]
     : photo?.length
@@ -129,9 +129,13 @@ export function GraphCard({ data, id, ...rest }: any) {
     setRelatedDataPoints(payload.data)
   }, [id, type])
 
-  const findNodeConnections = async () => {
-    const payload = await searchAndEnrichConnections({
-      subject: node,
+  const findConnectedNodes = async () => {
+    // const payload = await searchAndEnrichConnections({
+    //   subject: node,
+    //   type,
+    // })
+    const payload = await searchConnections({
+      id,
       type,
     })
     const searchResults = payload.data
@@ -178,7 +182,7 @@ export function GraphCard({ data, id, ...rest }: any) {
     setShowMMenu(false)
   }
 
-  // const modelColor = DOMAIN_MODEL_COLORS[type]
+  const modelColor = DOMAIN_MODEL_COLORS[type]
   // ;<button className='group relative grid overflow-hidden rounded-full px-4 py-1 shadow-[0_1000px_0_0_hsl(0_0%_20%)_inset] transition-colors duration-200'>
   //   <span>
   //     <span className="spark mask-gradient absolute inset-0 h-[100%] w-[100%] animate-flip overflow-hidden rounded-full [mask:linear-gradient(white,_transparent_50%)] before:absolute before:aspect-square before:w-[200%] before:rotate-[-90deg] before:animate-rotate before:bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] before:content-[''] before:[inset:0_auto_auto_50%] before:[translate:-50%_-15%]" />
@@ -215,7 +219,7 @@ export function GraphCard({ data, id, ...rest }: any) {
                 saveNote={saveNote}
                 userNote={userNote}
                 bookmarked={bookmarked}
-                findNodeConnections={findNodeConnections}
+                findConnectedNodes={findConnectedNodes}
               />
             </motion.div>
           )}
@@ -228,43 +232,46 @@ export function GraphCard({ data, id, ...rest }: any) {
             damping: 24,
           }}
         >
-          <span className='absolute top-4 left-4 z-30'>
-            <SketchyGlobe className='stroke-1 h-12 w-12' fill='#78efff' />
-          </span>
-
           <DialogTrigger
             style={{
               borderRadius: '4px',
             }}
-            className='dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] pt-6 pl-6'
+            className='dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] px-4 py-4'
           >
-            <div className='flex w-full justify-start align-middle items-center center-content mt-4'>
-              {type === 'personnel' && (
-                <DialogImage
-                  src={image.url || image.src}
-                  alt='What I Talk About When I Talk About Running - book cover'
-                  className='h-12 w-12 object-cover object-center'
-                  style={{
-                    borderRadius: '4px',
-                  }}
-                />
-              )}
-              <DialogTitle className='flex w-full justify-between align-middle items-center center-content'>
-                <h2 className='text-white font-centimaSans text-xl whitespace-normal w-content'>
-                  {name}
-                </h2>
-                <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-content'>
-                  {date}
-                </p>
-              </DialogTitle>
-            </div>
+            <div
+              className={`relative w-full h-full px-4`}
+              style={{ borderLeft: `1px solid ${modelColor}` }}
+            >
+              <div
+                className={`flex w-full justify-start align-middle items-center center-content relative `}
+              >
+                {type === 'personnel' && (
+                  <DialogImage
+                    src={image.url || image.src}
+                    alt='What I Talk About When I Talk About Running - book cover'
+                    className='h-12 w-12 object-cover object-center'
+                    style={{
+                      borderRadius: '4px',
+                    }}
+                  />
+                )}
+                <DialogTitle className='flex w-full justify-between align-middle items-center center-content'>
+                  <h2 className='text-white font-centimaSans text-xl whitespace-normal w-content'>
+                    {name}
+                  </h2>
+                  <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-content'>
+                    {date}
+                  </p>
+                </DialogTitle>
+              </div>
 
-            <DialogSubtitle className='my-3'>
-              <p className='font-jetbrains text-white tracking-wider '>
-                {node?.location || role}
-              </p>
-              {/* text-[10px] text-gray-600 sm:text-xs */}
-            </DialogSubtitle>
+              <DialogSubtitle className='my-3'>
+                <p className='font-jetbrains text-white tracking-wider '>
+                  {node?.location || role}
+                </p>
+                {/* text-[10px] text-gray-600 sm:text-xs */}
+              </DialogSubtitle>
+            </div>
           </DialogTrigger>
 
           <DialogContainer>

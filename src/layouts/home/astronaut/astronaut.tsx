@@ -40,7 +40,7 @@ export const Astronaut: FunctionComponent<AstronautProps> = () => {
     <div className=' w-full h-auto absolute bottom-0 left-0'>
       <BlurFade inView delay={1.5} key={'astronaught'}>
         <Image
-          className='mx-auto sm:h-[200px] sm:w-[200px] md:h-[300px] md:w-[300px] xl:h-[400px] lg:h-[300px] lg:w-[300px] xl:h-auto xl:w-auto relative z-40'
+          className='mx-auto sm:h-[200px] sm:w-[200px] md:h-[300px] md:w-[300px]  lg:h-[300px] lg:w-[300px] 3xl:h-[400px] 3xl:w-[400px] relative z-40'
           height={size}
           width={size}
           alt='astronaut'

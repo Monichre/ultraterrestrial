@@ -40,6 +40,7 @@ import {
 } from '@/utils/constants/nodes'
 import * as d3 from 'd3'
 import { nextTick } from '@/utils/functions'
+import { DOMAIN_MODEL_COLORS } from '@/utils'
 // import { simulation } from '@/features/mindmap/utils/force-directed'
 
 const MindMapContext: any = createContext({
@@ -134,12 +135,27 @@ export const MindMapProvider = ({
   const createRootNodeEdge = (rootNodeChildNode: any, source: any) => {
     const { id: target, data } = rootNodeChildNode
     const id = `${source}:${target}`
-
+    const type = source.split('-')[0]
+    const types = [
+      'personnel',
+      'events',
+      'topics',
+      'testimonies',
+      'organizations',
+    ]
+    const edgeType = types.includes(type) ? 'rootEdge' : 'siblingEdge'
     return {
       id,
       source,
       target,
       animated: true,
+      style: {
+        stroke: DOMAIN_MODEL_COLORS[type],
+      },
+      type: edgeType,
+      data: {
+        label: data.label || type,
+      },
       // type: 'entityEdge',
       sourceHandle: `handle:${id}`,
     }
@@ -486,6 +502,8 @@ export const MindMapProvider = ({
     ({ source, searchResults }: any) => {
       const siblingSourceNode: any = getNode(source.id)
 
+      // !#TODO: Need to add logic to check if some connected records already have nodes on the graph and then add the new nodes to the existing nodes
+
       const incomingNodes: any = []
       const incomingRootEdges: any = []
       const incomingSiblingEdges: any = []
@@ -507,17 +525,16 @@ export const MindMapProvider = ({
         let node = graph[type].nodes.find(
           (node: { id: any }) => node?.id === result.id
         )
-        console.log('node: ', node)
+
         const [positionedNode] = assignPositionsToChildNodes(parentNode, [node])
-        console.log('positionedNode: ', positionedNode)
+
         const [siblingEdge] = createRootNodeEdges(
           [positionedNode],
           siblingSourceNode.id
         )
-        console.log('siblingEdge: ', siblingEdge)
+
         const [rootEdge] = createRootNodeEdges([positionedNode], rootNode.id)
-        console.log('rootEdge: ', rootEdge)
-        console.log('positionedNode: ', positionedNode)
+
         incomingNodes.push(positionedNode)
         incomingSiblingEdges.push(siblingEdge)
         incomingRootEdges.push(rootEdge)

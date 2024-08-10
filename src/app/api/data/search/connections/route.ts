@@ -1,5 +1,4 @@
 import { getXataClient, searchRelatedRecords } from '@/lib/xata'
-import { flattenArray } from '@/utils/functions'
 
 import { NextRequest, NextResponse } from 'next/server'
 import {
@@ -7,8 +6,8 @@ import {
   objectMapPlural,
   connectionMapByEntityType,
 } from '@/utils/model.utils'
-import { checkRelevanceWithAI } from '@/lib/openai/assistants/disclosure'
-const xata: any = getXataClient()
+// import { checkRelevanceWithAI } from '@/lib/openai/assistants/disclosure'
+// const xata: any = getXataClient()
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams

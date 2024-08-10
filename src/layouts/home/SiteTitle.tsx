@@ -39,7 +39,7 @@ export function SiteTitle(props: any) {
     setVisible(true)
   }, [])
 
-  const theClass = `text-center !font-ailerons text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] !text-white lg:text-9xl`
+  const theClass = `text-center !font-ailerons text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] !text-white 3xl:text-9xl`
   {
     /* <h1 className={theClass} id='home-page-title'> */
   }
