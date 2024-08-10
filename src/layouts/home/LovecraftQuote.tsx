@@ -69,7 +69,7 @@ export const LovecraftQuote = () => {
             </BlurFade>
           ))}
 
-          <BlurFade inView className='block mt-4' delay={0.99}>
+          <BlurFade inView className='block mt-4' delay={1} key={'Author'}>
             <span className='font-centimaSans text-white text-bold text-[20px] relative site-tagline'>
               H.P. Lovecraft
             </span>

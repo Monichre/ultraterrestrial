@@ -17,8 +17,8 @@ export const CanvasCursor = () => {
         id='goo-svg'
         xmlns='http://www.w3.org/2000/svg'
         version='1.1'
-        width='800'
-        className='fixed z-50'
+        width='100'
+        className='fixed z-50 w-min bottom-0'
       >
         <defs>
           <filter id='goo'>

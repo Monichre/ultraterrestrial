@@ -6,7 +6,7 @@ import { createContext } from 'react'
 export type StateOfDisclosureSchema = {
   records: NetworkGraphPayload['records']
   connections: NetworkGraphPayload['connections']
-  getConnections: any
+  searchRelatedDataPoints: any
 }
 
 export const StateOfDisclosureContext: any = createContext({
@@ -24,7 +24,7 @@ export const StateOfDisclosureContext: any = createContext({
     topicsTestimoniesConnections: [],
     organizationsPersonnelConnections: [],
   },
-  // getConnections?: ({ id, type }: any) => {},
+  // searchRelatedDataPoints?: ({ id, type }: any) => {},
 })
 
 export interface StateOfDisclosureProviderProps {

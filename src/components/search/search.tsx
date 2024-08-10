@@ -14,6 +14,8 @@ import {
 import { SearchIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button/button'
 import { Divider } from '@/features/user/note/ui/PopoverMenu'
+import { Message, useAssistant } from 'ai/react'
+import { inputRegex } from '@tiptap/extension-highlight'
 
 // import { useCompletion } from 'ai/react';
 
@@ -96,38 +98,40 @@ export const SuggestedSearchItem = ({ value, onClick }: any) => {
 
 export function Search() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [query, setQuery]: any = useState('')
+  // const [query, setQuery]: any = useState('')
 
-  const [messages, setMessages] = useState<ClientMessage[]>([])
+  // const [messages, setMessages] = useState<ClientMessage[]>([])
+  const { status, messages, input, submitMessage, handleInputChange } =
+    useAssistant({ api: '/api/assistants/disclosure' })
   console.log('messages: ', messages)
-  const { handleSubmitMessage } = useActions()
+  // const { handleSubmitMessage } = useActions()
   // handleClick
   // submitMessage
 
-  const handleSubmission = async () => {
-    // setMessages((currentMessages) => [
-    //   ...currentMessages,
-    //   {
-    //     id: '123',
-    //     status: 'user.message.created',
-    //     text: query,
-    //     gui: null,
-    //   },
-    // ])
+  // const handleSubmission = async () => {
+  //   // setMessages((currentMessages) => [
+  //   //   ...currentMessages,
+  //   //   {
+  //   //     id: '123',
+  //   //     status: 'user.message.created',
+  //   //     text: query,
+  //   //     gui: null,
+  //   //   },
+  //   // ])
 
-    const response = await submitMessage(query)
-    console.log('response: ', response)
-    setMessages((currentMessages) => [...currentMessages, response])
-    // setQuery('')
-  }
-  const handleSelection = async (suggestion: string) => {
-    setQuery(suggestion)
-    // setIsOpen(false)
-    await handleSubmission()
-  }
-  const onChange = (event: any) => {
-    setQuery(event.target.value)
-  }
+  //   const response = await submitMessage(query)
+  //   console.log('response: ', response)
+  //   setMessages((currentMessages) => [...currentMessages, response])
+  //   // setQuery('')
+  // }
+  // const handleSelection = async (suggestion: string) => {
+  //   setQuery(suggestion)
+  //   // setIsOpen(false)
+  //   await handleSubmission()
+  // }
+  // const onChange = (event: any) => {
+  //   setQuery(event.target.value)
+  // }
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // event.preventDefault()
@@ -144,7 +148,7 @@ export function Search() {
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
-      setQuery('')
+      // setQuery('')
     }
   }, [isOpen])
 
@@ -197,7 +201,7 @@ export function Search() {
             </Dialog.Description>
           </VisuallyHidden.Root>
           <div className='border-b border-slate-200'>
-            <div className='flex items-center'>
+            <form className='flex items-center' onSubmit={submitMessage}>
               <VisuallyHidden.Root>
                 <label htmlFor='search-modal'>
                   Ask Party Martian, the AI warden of Ultraterrestrial
@@ -217,42 +221,48 @@ export function Search() {
                 className='[&::-webkit-search-decoration]:none [&::-webkit-search-results-button]:none [&::-webkit-search-results-decoration]:none [&::-webkit-search-cancel-button]:hidden w-full appearance-none border-0 bg-white py-3 pl-2 pr-4 text-sm placeholder-slate-400 text-black focus:outline-none'
                 type='search'
                 placeholder='Search'
-                onChange={onChange}
-                value={query}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter') {
-                    handleSubmission()
-                  }
-                }}
+                onChange={handleInputChange}
+                value={input}
+                // onKeyDown={(event) => {
+                //   if (event.key === 'Enter') {
+                //     submitMessage()
+                //   }
+                // }}
               />
-              <Button onClick={handleSubmission} variant='ghost'>
+              <Button type='submit' variant='ghost'>
                 Send
               </Button>
-            </div>
+            </form>
           </div>
+
           <ScrollArea.Root className='max-h-[calc(85vh-44px)]'>
             <ScrollArea.Viewport className='h-full w-full'>
               <div className='space-y-4 px-2 py-4'>
+                <div className='p-2'>status: {status}</div>
                 <div>
+                  <div className='flex flex-col p-2 gap-2'>
+                    {messages.map((message: Message) => (
+                      <div key={message.id} className='flex flex-row gap-2'>
+                        <div className='w-24 text-black-500'>{`${message.role}: `}</div>
+                        <div className='w-full text-black'>
+                          {message.content}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                   <div className='mb-2 px-2 text-xs font-semibold uppercase text-gray-400'>
                     Suggestions
                   </div>
                   <ul>
                     {suggestions.map((suggestion) => (
                       <SuggestedSearchItem
-                        onClick={handleSelection}
+                        // onClick={handleSelection}
                         key={suggestion}
                         value={suggestion}
                       />
                     ))}
                   </ul>
                   <Divider />
-                  <p className='text-black'>{query}</p>
-                  <div className='flex flex-row'>
-                    {messages.map((message) => (
-                      <>{message.text}</>
-                    ))}
-                  </div>
                 </div>
               </div>
             </ScrollArea.Viewport>

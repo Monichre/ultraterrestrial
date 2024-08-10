@@ -261,6 +261,12 @@ function DialogTitle({ children, className, style }: DialogTitleProps) {
       className={className}
       style={style}
       layout
+      initial='initial'
+      animate='animate'
+      exit='exit'
+      // initial={{ opacity: 0 }}
+      //       animate={{ opacity: 1 }}
+      //       exit={{ opacity: 0 }}
     >
       {children}
     </motion.div>
@@ -341,8 +347,12 @@ function DialogImage({ src, alt, className, style }: DialogImageProps) {
     <motion.img
       src={src}
       alt={alt}
-      className={cn(className)}
+      className={className}
+      initial='initial'
+      animate='animate'
+      exit='exit'
       layoutId={`dialog-img-${uniqueId}`}
+      layout
       style={style}
     />
   )

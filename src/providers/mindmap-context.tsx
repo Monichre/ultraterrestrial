@@ -227,10 +227,8 @@ export const MindMapProvider = ({
       y: number
     }
   }
-
-  const assignPositionsToChildNodes = useCallback(
-    // #TODO: Refactor this function to incorporate the childNodeDirection logic
-    /*
+  // #TODO: Refactor this function to incorporate the childNodeDirection logic
+  /*
     const assignPositionsToChildNodes = useCallback(
   (parentNode: NodePosition, childNodes: any[]): any[] => {
     let currentX = parentNode.position.x
@@ -272,10 +270,12 @@ export const MindMapProvider = ({
   [screenToFlowPosition]
 );
     */
+
+  const assignPositionsToChildNodes = useCallback(
     (parentNode: any, childNodes: any[]): any[] => {
       let currentX = parentNode.position.x
       let currentY = parentNode.position.y + ROOT_DIMENSIONS.height + PADDING
-      const { childNodeDirection } = parentNode
+      // const { childNodeDirection } = parentNode
       return childNodes.map((childNode) => {
         const positionedNode = {
           ...childNode,
@@ -414,8 +414,6 @@ export const MindMapProvider = ({
     ({ type, searchResults }: any) => {
       const source: any = `${type}-root-node`
 
-      const nodeState = rootNodeState[source]
-
       const { x, y, childNodeDirection } = ROOT_NODE_POSITIONS[type]
       const parentNode = {
         position: {
@@ -482,6 +480,102 @@ export const MindMapProvider = ({
       graph,
       rootNodeState,
     ] // runForceSimulation
+  )
+
+  const addConnectionNodesFromSearch = useCallback(
+    ({ source, searchResults }: any) => {
+      const siblingSourceNode: any = getNode(source.id)
+
+      const incomingNodes: any = []
+      const incomingRootEdges: any = []
+      const incomingSiblingEdges: any = []
+      const rootNodeIds: any = []
+      const rootNodeMap: any = {}
+
+      searchResults.forEach((result: any) => {
+        const { type } = result
+        const routeSource: any = `${type}-root-node`
+        const rootNode: any = getNode(routeSource)
+        const { x, y, childNodeDirection } = ROOT_NODE_POSITIONS[type]
+        const parentNode = {
+          position: {
+            x,
+            y,
+          },
+          childNodeDirection,
+        }
+        let node = graph[type].nodes.find(
+          (node: { id: any }) => node?.id === result.id
+        )
+        console.log('node: ', node)
+        const [positionedNode] = assignPositionsToChildNodes(parentNode, [node])
+        console.log('positionedNode: ', positionedNode)
+        const [siblingEdge] = createRootNodeEdges(
+          [positionedNode],
+          siblingSourceNode.id
+        )
+        console.log('siblingEdge: ', siblingEdge)
+        const [rootEdge] = createRootNodeEdges([positionedNode], rootNode.id)
+        console.log('rootEdge: ', rootEdge)
+        console.log('positionedNode: ', positionedNode)
+        incomingNodes.push(positionedNode)
+        incomingSiblingEdges.push(siblingEdge)
+        incomingRootEdges.push(rootEdge)
+        rootNodeIds.push(rootNode.id)
+        rootNodeMap[rootNode.id] = rootNode
+      })
+
+      const incomingSiblingHandles: any = incomingSiblingEdges.map(
+        (edge: any) => edge.sourceHandle
+      )
+      const incomingRootHandles: any = incomingRootEdges.map(
+        (edge: any) => edge.sourceHandle
+      )
+
+      // We then need to replace/mutate the corresponding root node is the current state of the graph in order to have Reactflow update the node accordingly
+      const initialNodes = [
+        ...getNodes().filter(
+          (node: any) =>
+            node.id !== siblingSourceNode.id && !rootNodeIds.includes(node.id)
+        ),
+        {
+          ...siblingSourceNode,
+          data: {
+            ...siblingSourceNode.data,
+            handles: siblingSourceNode.data?.handles?.length
+              ? [...siblingSourceNode.data.handles, ...incomingSiblingHandles]
+              : incomingSiblingHandles,
+          },
+        },
+      ]
+      rootNodeIds.forEach((id: any) => {
+        const rootNodeTemp = {
+          ...rootNodeMap[id],
+          data: {
+            ...rootNodeMap[id].data,
+            handles: rootNodeMap[id].data?.handles?.length
+              ? [...rootNodeMap[id].data.handles, ...incomingRootHandles]
+              : incomingRootHandles,
+          },
+        }
+        initialNodes.push(rootNodeTemp)
+      })
+
+      // So now we set the root nodes with the relevant root node having updated handles, then set the rest of the existing nodes, and then the newest positioned child nodes
+      setNodes((nds: any) => [...initialNodes, ...incomingNodes])
+
+      setEdges((edges: any) => [
+        ...edges,
+        ...incomingRootEdges,
+        ...incomingSiblingEdges,
+      ])
+
+      return {
+        siblingNodes: incomingNodes,
+        edges: incomingSiblingEdges,
+      }
+    },
+    [assignPositionsToChildNodes, createRootNodeEdges, getNode, getNodes, graph] // runForceSimulation
   )
 
   //  Graph State Functions --------------------------------------------------------------------------------------
@@ -552,7 +646,7 @@ export const MindMapProvider = ({
       const currentNodes = getNodes()
       const nodeLinks = links
         .filter((link: any) => link.target === id || link.source === id)
-        .map((link) => {
+        .map((link: any) => {
           if (link.target === id) {
             return link.source
           }
@@ -633,7 +727,7 @@ export const MindMapProvider = ({
       //   updateActiveNode(node)
       // }
     },
-    [addLocationsToVisualize, getRootNodeChildren, updateActiveNode, zoomOut]
+    [addLocationsToVisualize, getRootNodeChildren, zoomOut]
   )
 
   return (
@@ -650,6 +744,7 @@ export const MindMapProvider = ({
         graph,
         createRootNodeEdges,
         getRootNodeChildren,
+        addConnectionNodesFromSearch,
         onNodesChange,
         onEdgesChange,
         onConnect,

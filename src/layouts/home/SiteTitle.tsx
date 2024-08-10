@@ -1,5 +1,6 @@
 'use client'
 import { BlurFade } from '@/components/animations/blur-fade/BlurFade'
+import { TextEffect } from '@/components/animations/text-effect'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion-3d'
 import * as React from 'react'
@@ -38,6 +39,14 @@ export function SiteTitle(props: any) {
     setVisible(true)
   }, [])
 
+  const theClass = `text-center !font-ailerons text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] !text-white lg:text-9xl`
+  {
+    /* <h1 className={theClass} id='home-page-title'> */
+  }
+
+  {
+    /* </h1> */
+  }
   return (
     // mt-[64px]
     <div
@@ -47,14 +56,12 @@ export function SiteTitle(props: any) {
         // mt-auto
         className={`flex justify-center self-center align-center center w-full relative`}
       >
-        <BlurFade inView delay={0} className='text-white'>
-          <h1
-            className={`text-center !font-ailerons text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] !text-white`}
-            id='home-page-title'
-          >
-            UltraTerrestrial
-          </h1>
-        </BlurFade>
+        <TextEffect per='char' preset='fade' className={theClass}>
+          UltraTerrestrial
+        </TextEffect>
+        {/* <BlurFade inView delay={0.5} className='text-white'>
+      
+        </BlurFade> */}
       </div>
     </div>
   )

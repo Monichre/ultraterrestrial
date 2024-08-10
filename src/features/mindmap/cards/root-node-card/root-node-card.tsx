@@ -11,7 +11,7 @@ import { OpenAILogo } from '@/components/ui/icons'
 
 import { cn, capitalize, ROOT_NODE_POSITIONS } from '@/utils'
 
-import { Button } from '@/components/ui/button'
+import { Button, ShinyButton } from '@/components/ui/button'
 import '@/components/ui/card/cards.css'
 import { Switch } from '@/components/ui/switch'
 import { useNodesData } from '@xyflow/react'
@@ -46,7 +46,6 @@ const LoadedStats = memo(({ length, childCount, label }: any) => (
   </>
 ))
 export const RootNodeCard = memo(({ nodeData }: any) => {
-  console.log('nodeData: ', nodeData)
   const {
     addChildNodesFromSearch,
     showLocationVisualization,
@@ -62,7 +61,6 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
 
   const [searchResults, setSearchResults] = useState([])
   const updateSearchTerm = (event: any) => {
-    console.log('event: ', event)
     const { value } = event.target
 
     setSearchTerm(value)
@@ -170,64 +168,32 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent className='mt-2 p-2 w-full relative z-20'>
+      <CardContent className="mt-2 p-2 w-full relative z-20 after:content-[''] after:absolute after:w-[20%] after:left-[8px] after:bottom-[-4px] after:h-[1px] after:bg-[#78efff]">
         {type === 'events' && (
           <p>
-            Looking for something specific? Search our event records below.
-            Otherwise {type} will be loaded in batches of 10 in chronological
-            order from the present.
+            Looking for something specific? Search our event records below. Try
+            "Roswell" or "USS Nimitz"
           </p>
         )}
-
-        <InputBorderSpotlight
-          onChange={updateSearchTerm}
-          onSubmit={runSearch}
-          type={type}
-          value={searchTerm}
-        />
-
-        {/* <Command className='rounded-lg border shadow-md bg-black text-white cmd'>
-          <CommandInput
-            // @ts-ignore
-
-            onSubmit={runSearch}
-            className='text-xs text-white'
-            placeholder='Filter Commands...'
-          />
-          <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup>
-              <CommandItem className='text-xs text-white'>
-                <span className='text-xs text-white'>Ask Party Martian</span>
-              </CommandItem>
-            </CommandGroup>
-            <CommandSeparator />
-            <CommandGroup>
-              <CommandItem className='text-xs text-white'>
-                <span className='text-xs text-white'>
-                  Visualize Relevant Data Connections
-                </span>
-              </CommandItem>
-            </CommandGroup>
-            <CommandSeparator />
-            <CommandGroup>
-              <CommandItem className='text-xs text-white'>
-                <Settings className='mr-2 h-2 w-2' />
-                <span className='text-xs text-white'>Ask AI</span>
-                <CommandShortcut>⌘S</CommandShortcut>
-              </CommandItem>
-            </CommandGroup>
-          </CommandList>
-        </Command> */}
+        {type === 'personnel' && <p>Try "Bob Lazar" or "Gordon Cooper"</p>}
+        <p>
+          Records will be loaded in batches of 10.{' '}
+          <i>(Chronologically when appropriate)</i>
+        </p>
       </CardContent>
-      <CardFooter className='p-2 relative z-20 flex justify-center align-middle items-center'>
-        <Button
+      <InputBorderSpotlight
+        onChange={updateSearchTerm}
+        onSubmit={runSearch}
+        type={type}
+        value={searchTerm}
+      />
+      <CardFooter className='p-2 flex justify-center align-middle items-center mt-2'>
+        <ShinyButton
           onClick={handleLoadingRecords}
-          className='load-records-button border rounded-lg border shadow-md bg-black text-white m-auto '
-          variant='outline'
+          className='load-records-button cursor-pointer'
         >
           Load {capitalize(label)}
-        </Button>
+        </ShinyButton>
       </CardFooter>
     </Card>
   )

@@ -211,7 +211,7 @@ importers:
         version: 3.0.0-beta.9(sigma@3.0.0-beta.17(graphology-types@0.24.7))
       '@storybook/addon-devkit':
         specifier: ^1.4.2
-        version: 1.4.2(@storybook/addons@6.5.16(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@storybook/react@8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 1.4.2(@storybook/addons@6.5.16(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@storybook/react@8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@studio-freight/lenis':
         specifier: ^1.0.42
         version: 1.0.42
@@ -530,6 +530,9 @@ importers:
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      next-view-transitions:
+        specifier: ^0.3.0
+        version: 0.3.0(next@14.2.5(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       openai:
         specifier: ^4.38.5
         version: 4.38.5(encoding@0.1.13)
@@ -721,41 +724,41 @@ importers:
         specifier: ^0.3.38
         version: 0.3.38(@prismicio/client@7.4.1)(@prismicio/types@0.2.8)(@types/uuid@9.0.8)(next@14.2.5(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4))(react@18.2.0)(uuid@10.0.0)
       '@storybook/addon-actions':
-        specifier: ^8.2.2
-        version: 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^8.2.8
+        version: 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/addon-console':
         specifier: ^3.0.0
-        version: 3.0.0(@storybook/addon-actions@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)))(react@18.2.0)
+        version: 3.0.0(@storybook/addon-actions@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)))(react@18.2.0)
       '@storybook/addon-essentials':
-        specifier: ^8.2.2
-        version: 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^8.2.8
+        version: 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/addon-interactions':
-        specifier: ^8.2.2
-        version: 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^8.2.8
+        version: 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/addon-links':
-        specifier: ^8.2.2
-        version: 8.2.2(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^8.2.8
+        version: 8.2.8(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/addon-mdx-gfm':
-        specifier: ^8.2.2
-        version: 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^8.2.8
+        version: 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/addon-onboarding':
-        specifier: ^8.2.2
-        version: 8.2.2(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^8.2.8
+        version: 8.2.8(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/addon-storysource':
-        specifier: ^8.2.2
-        version: 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^8.2.8
+        version: 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/blocks':
-        specifier: ^8.2.2
-        version: 8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^8.2.8
+        version: 8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/nextjs':
-        specifier: ^8.2.2
-        version: 8.2.2(@swc/core@1.3.107(@swc/helpers@0.5.5))(babel-plugin-macros@3.1.0)(esbuild@0.20.2)(next@14.2.5(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(type-fest@4.21.0)(typescript@5.5.3)(webpack-hot-middleware@2.26.1)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
+        specifier: ^8.2.8
+        version: 8.2.8(@swc/core@1.3.107(@swc/helpers@0.5.5))(babel-plugin-macros@3.1.0)(esbuild@0.20.2)(next@14.2.5(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(type-fest@4.21.0)(typescript@5.5.3)(webpack-hot-middleware@2.26.1)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
       '@storybook/react':
-        specifier: ^8.2.2
-        version: 8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
+        specifier: ^8.2.8
+        version: 8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
       '@storybook/test':
-        specifier: ^8.2.2
-        version: 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^8.2.8
+        version: 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@types/axios':
         specifier: ^0.14.0
         version: 0.14.0
@@ -814,8 +817,8 @@ importers:
         specifier: ^1.26.0
         version: 1.26.0(@prismicio/client@7.4.1)(@prismicio/types@0.2.8)(@types/express@4.17.21)(@types/react-dom@18.2.18)(@types/react@18.2.48)(@types/uuid@9.0.8)(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(uuid@10.0.0)
       storybook:
-        specifier: ^8.2.2
-        version: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+        specifier: ^8.2.8
+        version: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       url-loader:
         specifier: ^4.1.1
         version: 4.1.1(file-loader@6.2.0(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)))(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
@@ -5182,15 +5185,15 @@ packages:
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
 
-  '@storybook/addon-actions@8.2.2':
-    resolution: {integrity: sha512-SN4cSRt3f0qXi5te+yhMseSdQuZntA8lGlASbRmN77YQTpIaGsNiH88xFoky0s9qz531hiRfU1R0ZSMylBwSKw==}
+  '@storybook/addon-actions@8.2.8':
+    resolution: {integrity: sha512-dyajqsMNAUktpi7aiml0Fsm4ey8Nh2YwRyTDuTJZ1iJFcFyARqfr5iKH4/qElq80y0FYXGgGRJB+dKJsCdefLw==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-backgrounds@8.2.2':
-    resolution: {integrity: sha512-m/xJe7uKL+kfJx7pQcHwAeIvJ3tdLIpDGrMAVDNDJHcAxfe44cFjIInaV/1HKf3y5Awap+DZFW66ekkxuI9zzA==}
+  '@storybook/addon-backgrounds@8.2.8':
+    resolution: {integrity: sha512-OqXGpq8KzWwAAQWPnby/v4ayWuUAB18Twgi6zeb+QNLEQdFnSp7kz6+4mP8ZVg8RS3ACGXD31nnvvlF7GYoJjQ==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
   '@storybook/addon-console@3.0.0':
     resolution: {integrity: sha512-2pD2c9KNWuPIWlprqmWoZYrNQnG2qoDg7fAAXXNK6YDc5x/ZpK0cfOyfz/Gpdeje4QUmttZKAVjH0nOZDuxfvw==}
@@ -5198,10 +5201,10 @@ packages:
       '@storybook/addon-actions': '*'
       react: '*'
 
-  '@storybook/addon-controls@8.2.2':
-    resolution: {integrity: sha512-y241aOANGzT5XBADUIvALwG/xF5eC6UItzmWJaFvOzSBCq74GIA0+Hu9atyFdvFQbXOrdvPWC4jR+9iuBFRxAA==}
+  '@storybook/addon-controls@8.2.8':
+    resolution: {integrity: sha512-adhg68CSFaR/r95rgyKU4ZzWwZz+MU0c4vr9hqrR1UGvg/zl33IZQQzb5j5v3Axo0O31yPMaY6LRty7pOv3+/Q==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
   '@storybook/addon-devkit@1.4.2':
     resolution: {integrity: sha512-ggy34eCzmiKOwgV7xYNjlPClGpmtnYODPJv0vkCKiDyPeVLHocq2UZ7ZkOhQ5GO7TM7aLeeC1JBS00tZId9oLA==}
@@ -5211,69 +5214,69 @@ packages:
       react: '*'
       react-dom: '*'
 
-  '@storybook/addon-docs@8.2.2':
-    resolution: {integrity: sha512-qk/yjAR9RpsSrKLLbeCgb6u58c8TmYqyJSnXgbAozZZNKHBWlIpvZ/hTNYud8qo0coPlxnLdjnZf32TykWGlAg==}
+  '@storybook/addon-docs@8.2.8':
+    resolution: {integrity: sha512-8hqUYYveJjR3e/XdXt0vduA7TxFRIFWgXoa9jN5axa63kqfiHcfkpFYPjM8jCRhsfDIRgdrwe2qxsA0wewO1pA==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-essentials@8.2.2':
-    resolution: {integrity: sha512-yN//BFMbSvNV0+Sll2hcKmgJX06TUKQDm6pZimUjkXczFtOmK7K/UdDmKjWS+qjhfJdWpxdRoEpxoHvvRmNfsA==}
+  '@storybook/addon-essentials@8.2.8':
+    resolution: {integrity: sha512-NRbFv2ociM1l/Oi/1go/ZC5bUU41n9aKD1DzIbguEKBhUs/TGAES+f5x+7DvYnt3Hvd925/FyTXuMU+vNUeiUA==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-highlight@8.2.2':
-    resolution: {integrity: sha512-yDTRzzL+IJAymgY32xoZl09BGBVmPOUV2wVNGYcZkkBLvz2GSQMTfUe1/7F4jAx//+rFBu48/MQzsTC7Bk8kPw==}
+  '@storybook/addon-highlight@8.2.8':
+    resolution: {integrity: sha512-IM1pPx6CCZbHV0bv3oB1qBCGDsr8soq7XLl93tc7mc4hstWSDFfNn7rx4CWycSlCqXlNTKh8cEkbrPrhV9cwbg==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-interactions@8.2.2':
-    resolution: {integrity: sha512-zRRuUwm/l41JtTUgjIoQTUgLT99Hsdz9cqKca/8NYo1MGBdEcKE41DH4aBIzKaOKFu7p9q00/o/X1EqYX4LMUA==}
+  '@storybook/addon-interactions@8.2.8':
+    resolution: {integrity: sha512-ggctlrSlK72xMfhviHHRslZF5tr9aHr1VFwCG/tjF7s1lM3S7OGqgHLJpcja/wNREvq9GMEvX95ZSu5NMh5CtA==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-links@8.2.2':
-    resolution: {integrity: sha512-eGh7O7SgTJMtnuXC0HlRPOegu1njcJS2cnVqjbzjvjxsPSBhbHpdYMi9Q9E7al/FKuqMUOjIR9YLIlmK1AJaqA==}
+  '@storybook/addon-links@8.2.8':
+    resolution: {integrity: sha512-2igEaSdKAFjKjioT6LGdBxZulpbVCzmlmV//sTu3sQiVnnxRjjGFt77sEeLMajrsSvg9DB1RMbDsvJ4FJTzXfQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.2.2
+      storybook: ^8.2.8
     peerDependenciesMeta:
       react:
         optional: true
 
-  '@storybook/addon-mdx-gfm@8.2.2':
-    resolution: {integrity: sha512-JrI994U+BUJwSK0vEf0ocdZYGeiHdLxJSwFTC+krzHGrLeAL8pXnhWxLST3rv4FQty0wo5BZ4o6ayTC3mBj8LA==}
+  '@storybook/addon-mdx-gfm@8.2.8':
+    resolution: {integrity: sha512-PthYeCsYwgFl3cyXL8csdylea/XzPnzBnR+FfX+1koYOIZ3dWM0CXP6vPP1prdbqG2dSnfMNVkxpg8gq2buIgw==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-measure@8.2.2':
-    resolution: {integrity: sha512-3rCo/aMltt5FrBVdr2dYlD8HlE2q9TLKGJZnwh9on4QyL6ArHbdYw0LmyHe/LrFahJ49w1XQZBMSJcAdRkkS7w==}
+  '@storybook/addon-measure@8.2.8':
+    resolution: {integrity: sha512-oqZiX571F9NNy8o/oVyM1Pe2cJz3WJ/OpL0lVbepHrV4ir1f+SDYZdMI58jGBAtoM52cwFc2ZPbzXKQs7a513A==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-onboarding@8.2.2':
-    resolution: {integrity: sha512-dCdE8Mt/JW6cq6dY7co35Sul/bAkUT3ixaxBrUagFUYUQ/PTYM6p4/B+45RURD5S9z8LVHH1rVgmEeScm3U78w==}
+  '@storybook/addon-onboarding@8.2.8':
+    resolution: {integrity: sha512-fKy3uwggIZKFQL9qo4niVYnAhMAdO/xBsEzJNj2ueTaWoJYO6c0jDWhVQW3pxlMw6yq/WdYT6tW/lsbHKFBUVQ==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-outline@8.2.2':
-    resolution: {integrity: sha512-Y+PQtfTNO8GLX5nz+3x5AMfHNvdGvBXazJ29+Rl1ygYN1+Q9ZhRJDE1kAK0wLxb7CG14peAgdYEaQb3Rduv7HQ==}
+  '@storybook/addon-outline@8.2.8':
+    resolution: {integrity: sha512-Cbk4Z0ojggiXjpbS2c4WUP56yikQdT4O7+8AuBNNjVUHNvJQADWYovi6SvDmrS5dH1iyIkB+4saXMr0syp+BDw==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-storysource@8.2.2':
-    resolution: {integrity: sha512-7oV70oJtXiOTXJyZMPXZumkThhikkacUCKN/EBOIp6HfP/uP4voeK38OSgu1oc+ursKe5XV+PVd1hdLuI5tDoQ==}
+  '@storybook/addon-storysource@8.2.8':
+    resolution: {integrity: sha512-xHH3gJttrfCXxGT6fQ2FBKreF1LFzUarX1YGxuRvZXXRSIYTUyAAlUCQT+/MskfuS6WNcpiao+4c3LCg+cx21Q==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-toolbars@8.2.2':
-    resolution: {integrity: sha512-JGOueOc3EPljlCl9dVSQee0aMYoqGNvN0UH+R6wYJ3bDZ+tUG/iYpsZVPUOvS8vzp3Imk5Is1kzQbQYJtzdGLg==}
+  '@storybook/addon-toolbars@8.2.8':
+    resolution: {integrity: sha512-k64G3FUpX3H/mhJ7AG1r/4Drsk6cdUtxI3yVdgWb7O3Ka7v/OFZexRXRSiV03n5q/kaqVKDu96Tuog57+7EB4w==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/addon-viewport@8.2.2':
-    resolution: {integrity: sha512-gkZ8bsjGGP0NuevkT2iKC+szezSy+w4BrBDknf490mRU2K/B2e7TGojf/j/AtxzILMzD4IKzKUXbE/zwcqjZvA==}
+  '@storybook/addon-viewport@8.2.8':
+    resolution: {integrity: sha512-/JZeIgB33yhryUvWaNO+3t9akcS8nGLyAUmlljPFr3LUDDYrO/0H9tE4CgjLqtwCXBq3k3s0HLzEJOrKI9Tmbw==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
   '@storybook/addons@6.5.16':
     resolution: {integrity: sha512-p3DqQi+8QRL5k7jXhXmJZLsE/GqHqyY6PcoA1oNTJr0try48uhTGUOYkgzmqtDaa/qPFO5LP+xCPzZXckGtquQ==}
@@ -5287,22 +5290,22 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  '@storybook/blocks@8.2.2':
-    resolution: {integrity: sha512-av0Tryg4toDl2L/d1ABErtsAk9wvM1su6+M4wq5/Go50sk5IjGTldhbZFa9zNOohxLkZwaj0Q5xAgJ1Y+m5KrQ==}
+  '@storybook/blocks@8.2.8':
+    resolution: {integrity: sha512-AHBXu9s73Xv9r1JageIL7C4eGf5XYEByai4Y6NYQsE+jF7b7e8oaSUoLW6fWSyLGuqvjRx+5P7GMNI2K1EngBA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.2.2
+      storybook: ^8.2.8
     peerDependenciesMeta:
       react:
         optional: true
       react-dom:
         optional: true
 
-  '@storybook/builder-webpack5@8.2.2':
-    resolution: {integrity: sha512-ud6a3pRusbC/TvT1ed15INxSivyL2y2zI61O/MWQZmM8sZOIC6ObdHLtzU4+535IIqiXhPoQ/QiOBbejqjgZvw==}
+  '@storybook/builder-webpack5@8.2.8':
+    resolution: {integrity: sha512-1eH8OYcsjkFtpodJNsrrgDsR7oDPLpo7FdoF67S9g/mRxTl1RCwhMVdeBHgtfge9kHQ1TlpK9tTXine4G3uA3Q==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
       typescript: '*'
     peerDependenciesMeta:
       typescript:
@@ -5320,8 +5323,13 @@ packages:
   '@storybook/client-logger@8.0.8':
     resolution: {integrity: sha512-a4BKwl9NLFcuRgMyI7S4SsJeLFK0LCQxIy76V6YyrE1DigoXz4nA4eQxdjLf7JVvU0EZFmNSfbVL/bXzzWKNXA==}
 
-  '@storybook/codemod@8.2.2':
-    resolution: {integrity: sha512-wRUVKLHVUhbLJYKW3QOufUxJGwaUT4jTCD8+HOGpHPdJO3NrwXu186xt4tuPZO2Y/NnacPeCQPsaK5ok4O8o7A==}
+  '@storybook/codemod@8.2.8':
+    resolution: {integrity: sha512-dqD4j6JTsS8BM2y1yHBIe5fHvsGM08qpJQXkE77aXJIm5UfUeuWC7rY0xAheX3fU5G98l3BJk0ySUGspQL5pNg==}
+
+  '@storybook/components@8.2.8':
+    resolution: {integrity: sha512-d4fI7Clogx4rgLAM7vZVr9L2EFtAkGXvpkZFuB0H0eyYaxZSbuZYvDCzRglQGQGsqD8IA8URTgPVSXC3L3k6Bg==}
+    peerDependencies:
+      storybook: ^8.2.8
 
   '@storybook/core-events@6.5.16':
     resolution: {integrity: sha512-qMZQwmvzpH5F2uwNUllTPg6eZXr2OaYZQRRN8VZJiuorZzDNdAFmiVWMWdkThwmyLEJuQKXxqCL8lMj/7PPM+g==}
@@ -5329,27 +5337,24 @@ packages:
   '@storybook/core-events@8.0.8':
     resolution: {integrity: sha512-PtuvR7vS4glDEdCfKB4f1k3Vs1C3rTWP2DNbF+IjjPhNLMBznCdzTAPcz+NUIBvpjjGnhKwWikJ0yj931YjSVg==}
 
-  '@storybook/core-webpack@8.2.2':
-    resolution: {integrity: sha512-M5wzgNbotVXcfo7WkXIuDxcBl7tTjnQ27lmlSBk+cu63pDvNn4UMDan621FcvxWq2DbjgIj+PASZ4DzM5O+ovA==}
+  '@storybook/core-webpack@8.2.8':
+    resolution: {integrity: sha512-IvrhsDNM/4aTIfUEtYorz9N9S+9gCVkUuUVTNiX0N9a24BFLTcPebtJZYXbguZqxN/NeJMMfk1k7YLU2cBmdjw==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/core@8.2.2':
-    resolution: {integrity: sha512-L4ojYI+Os/i5bCReDIlFgEDQSS94mbJlNU9WRzEGZpqNC5/hbFEC9Tip7P1MiRx9NrewkzU7b+UCP7mi3e4drQ==}
+  '@storybook/core@8.2.8':
+    resolution: {integrity: sha512-Wwm/Txh87hbxqU9OaxXwdGAmdRBjDn7rlZEPjNBx0tt43SQ11fKambY7nVWrWuw46YsJpdF9V/PQr4noNEXXEA==}
 
-  '@storybook/csf-plugin@8.2.2':
-    resolution: {integrity: sha512-3K2RUpDDvq3DT46qAIj2VBC+fzTTebRUcZUsRfS6G1AzaX9p25iClEHiwcJacFkgQKhkci8A/Ly3Z4JJ3b4Pgw==}
+  '@storybook/csf-plugin@8.2.8':
+    resolution: {integrity: sha512-CEHY7xloBPE8d8h0wg2AM2kRaZkHK8/vkYMNZPbccqAYj6PQIdTuOcXZIBAhAGydyIBULZmsmmsASxM9RO5fKA==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
   '@storybook/csf@0.0.2--canary.4566f4d.1':
     resolution: {integrity: sha512-9OVvMVh3t9znYZwb0Svf/YQoxX2gVOeQTGe2bses2yj+a3+OJnCrUF3/hGv6Em7KujtOdL2LL+JnG49oMVGFgQ==}
 
   '@storybook/csf@0.1.11':
     resolution: {integrity: sha512-dHYFQH3mA+EtnCkHXzicbLgsvzYjcDJ1JWsogbItZogkPHgSJM/Wr71uMkcvw8v9mmCyP4NpXJuu6bPoVsOnzg==}
-
-  '@storybook/csf@0.1.4':
-    resolution: {integrity: sha512-B9UI/lsQMjF+oEfZCI6YXNoeuBcGZoOP5x8yKbe2tIEmsMjSztFKkpPzi5nLCnBk/MBtl6QJeI3ksJnbsWPkOw==}
 
   '@storybook/global@5.0.0':
     resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
@@ -5361,22 +5366,27 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  '@storybook/instrumenter@8.2.2':
-    resolution: {integrity: sha512-refwnHqKHhya45MgqakhMG0jKhTiEIAl0aOwAaQy9+zf9ncMIYQAXRQsSZ2Z188lFWE24wbeHKteb62a5ZfWwQ==}
+  '@storybook/instrumenter@8.2.8':
+    resolution: {integrity: sha512-6Gk3CzoYQQXBXpW86PKqYSozOB/C9dSYiFvwPRo4XsEfjARDi8yglqkbOtG+FVqKDL66I5krcveB8bTWigqc9g==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
   '@storybook/manager-api@8.0.8':
     resolution: {integrity: sha512-1HU4nfLRi0sD2uw229gb8EQyufNWrLvMNpg013kBsBXRd+Dj4dqF3v+KrYFNtteY7riC4mAJ6YcQ4tBUNYZDug==}
 
-  '@storybook/nextjs@8.2.2':
-    resolution: {integrity: sha512-yjQwsbGsrwb8icl2aNqWN5BvbW7lx5niH3hVfdDxlhRFhTKaiLYo0gntJdr4MYBeejyxNFrqeYgQe3igkoOq+w==}
+  '@storybook/manager-api@8.2.8':
+    resolution: {integrity: sha512-wzfRu3vrD9a99pN3W/RJXVtgNGNsy9PyvetjUfgQVtUZ9eXXDuA+tM7ITTu3xvONtV/rT2YEBwzOpowa+r1GNQ==}
+    peerDependencies:
+      storybook: ^8.2.8
+
+  '@storybook/nextjs@8.2.8':
+    resolution: {integrity: sha512-j7ip8JzLGuw1AzRkPZC/dCymYUAj4kVyS3CNmlGEms7h4pAaPr3oTuIRO0AMzRfR3DId4DRho3P4eTLHF5QdIA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       next: ^13.5.0 || ^14.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.2.2
+      storybook: ^8.2.8
       typescript: '*'
       webpack: ^5.0.0
     peerDependenciesMeta:
@@ -5385,13 +5395,13 @@ packages:
       webpack:
         optional: true
 
-  '@storybook/preset-react-webpack@8.2.2':
-    resolution: {integrity: sha512-GJkDtw4Ac8icD66fotGXYE3rmZkIwASpNLOeGzyP4eMMNaf5vlvTDxwkY551cGbnA5P7r4UkGjDiWinB9XE4VQ==}
+  '@storybook/preset-react-webpack@8.2.8':
+    resolution: {integrity: sha512-mFeuoKXn2mielz8rix11QcOZr5sNWIIKZ8Le6PG2jPRfLmLWNgL8vJEVPy8y4lWPfzo+Q2tnNefLbMombtga5w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.2.2
+      storybook: ^8.2.8
       typescript: '*'
     peerDependenciesMeta:
       typescript:
@@ -5400,26 +5410,31 @@ packages:
   '@storybook/preview-api@8.0.8':
     resolution: {integrity: sha512-khgw2mNiBrSZS3KNGQPzjneL3Csh3BOq0yLAtJpT7CRSrI/YjlE7jjcTkKzoxW+UCgvNTnLvsowcuzu82e69fA==}
 
+  '@storybook/preview-api@8.2.8':
+    resolution: {integrity: sha512-BDt1lo5oEWAaTVCsl6JUHCBFtIWI/Za4qvIdn2Lx9eCA+Ae6IDliosmu273DcvGD9R4OPF6sm1dML3TXILGGcA==}
+    peerDependencies:
+      storybook: ^8.2.8
+
   '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0':
     resolution: {integrity: sha512-KUqXC3oa9JuQ0kZJLBhVdS4lOneKTOopnNBK4tUAgoxWQ3u/IjzdueZjFr7gyBrXMoU6duutk3RQR9u8ZpYJ4Q==}
     peerDependencies:
       typescript: '>= 4.x'
       webpack: '>= 4'
 
-  '@storybook/react-dom-shim@8.2.2':
-    resolution: {integrity: sha512-4fb1/yT9WXHzHjs0In6orIEZxga5eXd9UaXEFGudBgowCjDUVP9LabDdKTbGusz20lfaAkATsRG/W+EcSLoh8w==}
+  '@storybook/react-dom-shim@8.2.8':
+    resolution: {integrity: sha512-2my3dGBOpBe30+FsSdQOIYCfxMyT68+SEq0qcXxfuax0BkhhJnZLpwvpqOna6EOVTgBD+Tk1TKmjpGwxuwp4rg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/react@8.2.2':
-    resolution: {integrity: sha512-U4p/RV78yhjEwEzem8U7wE5/3sSpnqreGsPdAHMCIHd69e9tVeF0rwrTJGp917RClPjBKgEcfelCuvOlby4MrA==}
+  '@storybook/react@8.2.8':
+    resolution: {integrity: sha512-Nln0DDTQ930P4J+SEkWbLSgaDe8eDd5gP6h3l4b5RwT7sRuSyHtTtYHPCnU9U7sLQ3AbMsclgtJukHXDitlccg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^8.2.2
+      storybook: ^8.2.8
       typescript: '>= 4.2.x'
     peerDependenciesMeta:
       typescript:
@@ -5439,15 +5454,15 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  '@storybook/source-loader@8.2.2':
-    resolution: {integrity: sha512-1Pr5G8EK6OYbkp7wE3ErXPk5td/UKxLwQm+nveitL5cOl5fMX5Cx5kzuQvUxQCGcUIviS3Xa7D87bzHnxS9BWg==}
+  '@storybook/source-loader@8.2.8':
+    resolution: {integrity: sha512-0KGuRfk0PGj4+eO8eXFG0TUZQzHz8K2s7ududkH7PNqjy513/aPfqYpwW+5XfJWT+fM8RmlajgSgI5Kzl8ciDQ==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
-  '@storybook/test@8.2.2':
-    resolution: {integrity: sha512-X2qAKErjTh1X7XLAZqCMtU0ZK8JuwdKmgiqU0oXWxIDmCX6/Dm9ZIcdMZHs/S+K/UnIByjNlQpTShLVfRUeN1w==}
+  '@storybook/test@8.2.8':
+    resolution: {integrity: sha512-Lbt4DHP8WhnakTPw981kP85DeoONKN+zVLjFPa5ptllyT+jazZANjIdGhNUlBdIzOw3oyDXhGlWIdtqztS3pSA==}
     peerDependencies:
-      storybook: ^8.2.2
+      storybook: ^8.2.8
 
   '@storybook/theming@6.5.16':
     resolution: {integrity: sha512-hNLctkjaYLRdk1+xYTkC1mg4dYz2wSv6SqbLpcKMbkPHTE0ElhddGPHQqB362md/w9emYXNkt1LSMD8Xk9JzVQ==}
@@ -5465,6 +5480,11 @@ packages:
         optional: true
       react-dom:
         optional: true
+
+  '@storybook/theming@8.2.8':
+    resolution: {integrity: sha512-jt5oUO82LN3z5aygNdHucBZcErSicIAwzhR5Kz9E/C9wUbhyZhbWsWyhpZaytu8LJUj2YWAIPS8kq/jGx+qLZA==}
+    peerDependencies:
+      storybook: ^8.2.8
 
   '@storybook/types@8.0.8':
     resolution: {integrity: sha512-NGsgCsXnWlaZmHenHDgHGs21zhweZACkqTNsEQ7hvsiF08QeiKAdgJLQg3YeGK73h9mFDRP9djprUtJYab6vnQ==}
@@ -6797,9 +6817,6 @@ packages:
 
   '@vitest/spy@1.6.0':
     resolution: {integrity: sha512-leUTap6B/cqi/bQkXUu6bQV5TZPx7pmMBKBQiI0rJA8c3pB56ZsaTbREnF7CJfmvAS4V2cXIBAh/3rVwrrCYgw==}
-
-  '@vitest/utils@1.5.3':
-    resolution: {integrity: sha512-rE9DTN1BRhzkzqNQO+kw8ZgfeEBCLXiHJwetk668shmNBpSagQxneT5eSqEBLP+cqSiAeecvQmbpFfdMyLcIQA==}
 
   '@vitest/utils@1.6.0':
     resolution: {integrity: sha512-21cPiuGMoMZwiOHa2i4LXkMkMkCGzA+MVFV70jRwHo95dL4x/ts5GZhML1QWuy7yfp3WzK3lRvZi3JnXTYqrBw==}
@@ -12544,6 +12561,13 @@ packages:
   next-tick@1.1.0:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
 
+  next-view-transitions@0.3.0:
+    resolution: {integrity: sha512-EfMG4sQR48Q40apCl0rWqTvpDNk4TcdlFjcsGd2ZOBJMNlwfuB8lnwhOL5A0kKWnZwXlMgDPFXY7qwoOY+NhtQ==}
+    peerDependencies:
+      next: ^14.0.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+
   next@14.2.5:
     resolution: {integrity: sha512-0f8aRfBVL+mpzfBjYfQuLWh2WyAwtJXCRfkPF4UJ5qd2YwrHczsrSzXU4tRMV0OAxR8ZJZWPFn6uhSC56UTsLA==}
     engines: {node: '>=18.17.0'}
@@ -14667,11 +14691,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  semver@7.6.2:
-    resolution: {integrity: sha512-FNAIBWCx9qcRhoHcgcJ0gvU7SN1lYU2ZXuSfl04bSC5OpvDHFyJCjdNHomPXxjQlCBU67YW64PzY7/VIEH7F2w==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   semver@7.6.3:
     resolution: {integrity: sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==}
     engines: {node: '>=10'}
@@ -15092,8 +15111,8 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
-  storybook@8.2.2:
-    resolution: {integrity: sha512-xDT9gyzAEFQNeK7P+Mj/8bNzN+fbm6/4D6ihdSzmczayjydpNjMs74HDHMY6S4Bfu6tRVyEK2ALPGnr6ZVofBA==}
+  storybook@8.2.8:
+    resolution: {integrity: sha512-sh4CNCXkieVgJ5GXrCOESS0BjRbQ9wG7BVnurQPl6izNnB9zR8rag+aUmjPZWBwbj55V1BFA5A/vEsCov21qjg==}
     hasBin: true
 
   stream-browserify@3.0.0:
@@ -22077,94 +22096,94 @@ snapshots:
 
   '@stencil/core@4.18.3': {}
 
-  '@storybook/addon-actions@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-actions@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/global': 5.0.0
       '@types/uuid': 9.0.8
       dequal: 2.0.3
       polished: 4.3.1
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       uuid: 9.0.1
 
-  '@storybook/addon-backgrounds@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-backgrounds@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/global': 5.0.0
       memoizerific: 1.11.3
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       ts-dedent: 2.2.0
 
-  '@storybook/addon-console@3.0.0(@storybook/addon-actions@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)))(react@18.2.0)':
+  '@storybook/addon-console@3.0.0(@storybook/addon-actions@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)))(react@18.2.0)':
     dependencies:
-      '@storybook/addon-actions': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/addon-actions': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/global': 5.0.0
       react: 18.2.0
 
-  '@storybook/addon-controls@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-controls@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       dequal: 2.0.3
       lodash: 4.17.21
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       ts-dedent: 2.2.0
 
-  '@storybook/addon-devkit@1.4.2(@storybook/addons@6.5.16(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@storybook/react@8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@storybook/addon-devkit@1.4.2(@storybook/addons@6.5.16(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@storybook/react@8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@reach/rect': 0.2.1(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/addons': 6.5.16(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/core-events': 6.5.16
-      '@storybook/react': 8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
+      '@storybook/react': 8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
       '@storybook/theming': 6.5.16(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       deep-equal: 2.2.3
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@storybook/addon-docs@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-docs@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@babel/core': 7.24.7
       '@mdx-js/react': 3.0.1(@types/react@18.2.48)(react@18.2.0)
-      '@storybook/blocks': 8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/csf-plugin': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/blocks': 8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/csf-plugin': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/global': 5.0.0
-      '@storybook/react-dom-shim': 8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/react-dom-shim': 8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@types/react': 18.2.48
-      fs-extra: 11.1.1
+      fs-extra: 11.2.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       rehype-external-links: 3.0.0
       rehype-slug: 6.0.0
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/addon-essentials@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-essentials@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
-      '@storybook/addon-actions': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/addon-backgrounds': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/addon-controls': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/addon-docs': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/addon-highlight': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/addon-measure': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/addon-outline': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/addon-toolbars': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/addon-viewport': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      '@storybook/addon-actions': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/addon-backgrounds': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/addon-controls': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/addon-docs': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/addon-highlight': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/addon-measure': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/addon-outline': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/addon-toolbars': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/addon-viewport': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/addon-highlight@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-highlight@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
 
-  '@storybook/addon-interactions@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-interactions@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/global': 5.0.0
-      '@storybook/instrumenter': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/test': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/instrumenter': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/test': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       polished: 4.3.1
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - '@jest/globals'
@@ -22173,57 +22192,57 @@ snapshots:
       - jest
       - vitest
 
-  '@storybook/addon-links@8.2.2(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-links@8.2.8(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/csf': 0.1.11
       '@storybook/global': 5.0.0
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       ts-dedent: 2.2.0
     optionalDependencies:
       react: 18.2.0
 
-  '@storybook/addon-mdx-gfm@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-mdx-gfm@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       remark-gfm: 4.0.0
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/addon-measure@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-measure@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       tiny-invariant: 1.3.3
 
-  '@storybook/addon-onboarding@8.2.2(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-onboarding@8.2.8(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       react-confetti: 6.1.0(react@18.2.0)
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
     transitivePeerDependencies:
       - react
 
-  '@storybook/addon-outline@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-outline@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       ts-dedent: 2.2.0
 
-  '@storybook/addon-storysource@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-storysource@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
-      '@storybook/source-loader': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/source-loader': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       estraverse: 5.3.0
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       tiny-invariant: 1.3.3
 
-  '@storybook/addon-toolbars@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-toolbars@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
 
-  '@storybook/addon-viewport@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/addon-viewport@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       memoizerific: 1.11.3
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
 
   '@storybook/addons@6.5.16(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -22263,7 +22282,7 @@ snapshots:
       ts-dedent: 2.2.0
       util-deprecate: 1.0.2
 
-  '@storybook/blocks@8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/blocks@8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/csf': 0.1.11
       '@storybook/global': 5.0.0
@@ -22276,7 +22295,7 @@ snapshots:
       memoizerific: 1.11.3
       polished: 4.3.1
       react-colorful: 5.6.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       telejson: 7.2.0
       ts-dedent: 2.2.0
       util-deprecate: 1.0.2
@@ -22284,9 +22303,9 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@storybook/builder-webpack5@8.2.2(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)':
+  '@storybook/builder-webpack5@8.2.8(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)':
     dependencies:
-      '@storybook/core-webpack': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/core-webpack': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@types/node': 18.19.31
       '@types/semver': 7.5.8
       browser-assert: 1.2.1
@@ -22297,13 +22316,13 @@ snapshots:
       es-module-lexer: 1.5.2
       express: 4.19.2
       fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.5.3)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
-      fs-extra: 11.1.1
+      fs-extra: 11.2.0
       html-webpack-plugin: 5.6.0(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
       magic-string: 0.30.10
       path-browserify: 1.0.1
       process: 0.11.10
-      semver: 7.6.2
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      semver: 7.6.3
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       style-loader: 3.3.4(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
       terser-webpack-plugin: 5.3.10(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
       ts-dedent: 2.2.0
@@ -22347,12 +22366,12 @@ snapshots:
     dependencies:
       '@storybook/global': 5.0.0
 
-  '@storybook/codemod@8.2.2(bufferutil@4.0.8)(utf-8-validate@6.0.4)':
+  '@storybook/codemod@8.2.8(bufferutil@4.0.8)(utf-8-validate@6.0.4)':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/preset-env': 7.24.7(@babel/core@7.24.7)
       '@babel/types': 7.24.7
-      '@storybook/core': 8.2.2(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      '@storybook/core': 8.2.8(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       '@storybook/csf': 0.1.11
       '@types/cross-spawn': 6.0.6
       cross-spawn: 7.0.3
@@ -22367,6 +22386,10 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@storybook/components@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+    dependencies:
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+
   '@storybook/core-events@6.5.16':
     dependencies:
       core-js: 3.37.1
@@ -22375,13 +22398,13 @@ snapshots:
     dependencies:
       ts-dedent: 2.2.0
 
-  '@storybook/core-webpack@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/core-webpack@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@types/node': 18.19.31
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       ts-dedent: 2.2.0
 
-  '@storybook/core@8.2.2(bufferutil@4.0.8)(utf-8-validate@6.0.4)':
+  '@storybook/core@8.2.8(bufferutil@4.0.8)(utf-8-validate@6.0.4)':
     dependencies:
       '@storybook/csf': 0.1.11
       '@types/express': 4.17.21
@@ -22399,9 +22422,9 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@storybook/csf-plugin@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/csf-plugin@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       unplugin: 1.10.1
 
   '@storybook/csf@0.0.2--canary.4566f4d.1':
@@ -22412,10 +22435,6 @@ snapshots:
     dependencies:
       type-fest: 2.19.0
 
-  '@storybook/csf@0.1.4':
-    dependencies:
-      type-fest: 2.19.0
-
   '@storybook/global@5.0.0': {}
 
   '@storybook/icons@1.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -22423,11 +22442,11 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@storybook/instrumenter@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/instrumenter@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/global': 5.0.0
-      '@vitest/utils': 1.5.3
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      '@vitest/utils': 1.6.0
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       util: 0.12.5
 
   '@storybook/manager-api@8.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -22435,7 +22454,7 @@ snapshots:
       '@storybook/channels': 8.0.8
       '@storybook/client-logger': 8.0.8
       '@storybook/core-events': 8.0.8
-      '@storybook/csf': 0.1.4
+      '@storybook/csf': 0.1.11
       '@storybook/global': 5.0.0
       '@storybook/icons': 1.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@storybook/router': 8.0.8
@@ -22451,7 +22470,11 @@ snapshots:
       - react
       - react-dom
 
-  '@storybook/nextjs@8.2.2(@swc/core@1.3.107(@swc/helpers@0.5.5))(babel-plugin-macros@3.1.0)(esbuild@0.20.2)(next@14.2.5(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(type-fest@4.21.0)(typescript@5.5.3)(webpack-hot-middleware@2.26.1)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))':
+  '@storybook/manager-api@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+    dependencies:
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+
+  '@storybook/nextjs@8.2.8(@swc/core@1.3.107(@swc/helpers@0.5.5))(babel-plugin-macros@3.1.0)(esbuild@0.20.2)(next@14.2.5(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(type-fest@4.21.0)(typescript@5.5.3)(webpack-hot-middleware@2.26.1)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.24.7)
@@ -22467,16 +22490,16 @@ snapshots:
       '@babel/preset-typescript': 7.24.7(@babel/core@7.24.7)
       '@babel/runtime': 7.24.4
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.13(react-refresh@0.14.2)(type-fest@4.21.0)(webpack-hot-middleware@2.26.1)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
-      '@storybook/builder-webpack5': 8.2.2(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
-      '@storybook/preset-react-webpack': 8.2.2(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
-      '@storybook/react': 8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
-      '@storybook/test': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/builder-webpack5': 8.2.8(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
+      '@storybook/preset-react-webpack': 8.2.8(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
+      '@storybook/react': 8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
+      '@storybook/test': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@types/node': 18.19.31
       '@types/semver': 7.5.8
       babel-loader: 9.1.3(@babel/core@7.24.7)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
       css-loader: 6.11.0(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
       find-up: 5.0.0
-      fs-extra: 11.1.1
+      fs-extra: 11.2.0
       image-size: 1.1.1
       loader-utils: 3.2.1
       next: 14.2.5(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4)
@@ -22489,8 +22512,8 @@ snapshots:
       react-refresh: 0.14.2
       resolve-url-loader: 5.0.0
       sass-loader: 12.6.0(sass@1.69.4)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
-      semver: 7.6.2
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      semver: 7.6.3
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       style-loader: 3.3.4(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
       styled-jsx: 5.1.1(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react@18.2.0)
       ts-dedent: 2.2.0
@@ -22524,22 +22547,22 @@ snapshots:
       - webpack-hot-middleware
       - webpack-plugin-serve
 
-  '@storybook/preset-react-webpack@8.2.2(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)':
+  '@storybook/preset-react-webpack@8.2.8(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)':
     dependencies:
-      '@storybook/core-webpack': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
-      '@storybook/react': 8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
+      '@storybook/core-webpack': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/react': 8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)
       '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(typescript@5.5.3)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))
       '@types/node': 18.19.31
       '@types/semver': 7.5.8
       find-up: 5.0.0
-      fs-extra: 11.1.1
+      fs-extra: 11.2.0
       magic-string: 0.30.10
       react: 18.2.0
       react-docgen: 7.0.3
       react-dom: 18.2.0(react@18.2.0)
       resolve: 1.22.8
-      semver: 7.6.2
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      semver: 7.6.3
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       tsconfig-paths: 4.2.0
       webpack: 5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)
     optionalDependencies:
@@ -22556,7 +22579,7 @@ snapshots:
       '@storybook/channels': 8.0.8
       '@storybook/client-logger': 8.0.8
       '@storybook/core-events': 8.0.8
-      '@storybook/csf': 0.1.4
+      '@storybook/csf': 0.1.11
       '@storybook/global': 5.0.0
       '@storybook/types': 8.0.8
       '@types/qs': 6.9.15
@@ -22567,6 +22590,10 @@ snapshots:
       tiny-invariant: 1.3.3
       ts-dedent: 2.2.0
       util-deprecate: 1.0.2
+
+  '@storybook/preview-api@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+    dependencies:
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
 
   '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(typescript@5.5.3)(webpack@5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2))':
     dependencies:
@@ -22582,16 +22609,20 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@storybook/react-dom-shim@8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/react-dom-shim@8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
 
-  '@storybook/react@8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)':
+  '@storybook/react@8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))(typescript@5.5.3)':
     dependencies:
+      '@storybook/components': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@storybook/global': 5.0.0
-      '@storybook/react-dom-shim': 8.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/manager-api': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/preview-api': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/react-dom-shim': 8.2.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/theming': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@types/escodegen': 0.0.6
       '@types/estree': 0.0.51
       '@types/node': 18.19.31
@@ -22605,8 +22636,8 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-element-to-jsx-string: 15.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      semver: 7.6.2
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      semver: 7.6.3
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       util-deprecate: 1.0.2
@@ -22634,24 +22665,24 @@ snapshots:
       core-js: 3.37.1
       find-up: 4.1.0
 
-  '@storybook/source-loader@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/source-loader@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/csf': 0.1.11
       estraverse: 5.3.0
       lodash: 4.17.21
       prettier: 3.2.5
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
 
-  '@storybook/test@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+  '@storybook/test@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
     dependencies:
       '@storybook/csf': 0.1.11
-      '@storybook/instrumenter': 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+      '@storybook/instrumenter': 8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       '@testing-library/dom': 10.1.0
       '@testing-library/jest-dom': 6.4.5
       '@testing-library/user-event': 14.5.2(@testing-library/dom@10.1.0)
       '@vitest/expect': 1.6.0
       '@vitest/spy': 1.6.0
-      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       util: 0.12.5
     transitivePeerDependencies:
       - '@jest/globals'
@@ -22678,6 +22709,10 @@ snapshots:
     optionalDependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+
+  '@storybook/theming@8.2.8(storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4))':
+    dependencies:
+      storybook: 8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4)
 
   '@storybook/types@8.0.8':
     dependencies:
@@ -24052,7 +24087,7 @@ snapshots:
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
-      semver: 7.6.2
+      semver: 7.6.3
       ts-api-utils: 1.3.0(typescript@5.5.3)
     optionalDependencies:
       typescript: 5.5.3
@@ -24240,13 +24275,6 @@ snapshots:
   '@vitest/spy@1.6.0':
     dependencies:
       tinyspy: 2.2.1
-
-  '@vitest/utils@1.5.3':
-    dependencies:
-      diff-sequences: 29.6.3
-      estree-walker: 3.0.3
-      loupe: 2.3.7
-      pretty-format: 29.7.0
 
   '@vitest/utils@1.6.0':
     dependencies:
@@ -25799,7 +25827,7 @@ snapshots:
       json-schema-typed: 7.0.3
       onetime: 5.1.2
       pkg-up: 3.1.0
-      semver: 7.6.2
+      semver: 7.6.3
 
   configstore@5.0.1:
     dependencies:
@@ -26020,7 +26048,7 @@ snapshots:
       postcss-modules-scope: 3.2.0(postcss@8.4.39)
       postcss-modules-values: 4.0.0(postcss@8.4.39)
       postcss-value-parser: 4.2.0
-      semver: 7.6.2
+      semver: 7.6.3
     optionalDependencies:
       webpack: 5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)
 
@@ -27923,7 +27951,7 @@ snapshots:
       minimatch: 3.1.2
       node-abort-controller: 3.1.1
       schema-utils: 3.3.0
-      semver: 7.6.2
+      semver: 7.6.3
       tapable: 2.2.1
       typescript: 5.5.3
       webpack: 5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)
@@ -29705,7 +29733,7 @@ snapshots:
       jws: 3.2.2
       lodash: 4.17.21
       ms: 2.1.3
-      semver: 7.6.2
+      semver: 7.6.3
 
   jsprim@1.4.2:
     dependencies:
@@ -31120,6 +31148,12 @@ snapshots:
 
   next-tick@1.1.0: {}
 
+  next-view-transitions@0.3.0(next@14.2.5(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      next: 14.2.5(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+
   next@14.2.5(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.69.4):
     dependencies:
       '@next/env': 14.2.5
@@ -32100,7 +32134,7 @@ snapshots:
       cosmiconfig: 9.0.0(typescript@5.5.3)
       jiti: 1.21.0
       postcss: 8.4.39
-      semver: 7.6.2
+      semver: 7.6.3
     optionalDependencies:
       webpack: 5.91.0(@swc/core@1.3.107(@swc/helpers@0.5.5))(esbuild@0.20.2)
     transitivePeerDependencies:
@@ -33908,8 +33942,6 @@ snapshots:
     dependencies:
       lru-cache: 6.0.0
 
-  semver@7.6.2: {}
-
   semver@7.6.3: {}
 
   send@0.18.0:
@@ -34021,7 +34053,7 @@ snapshots:
       detect-libc: 2.0.3
       node-addon-api: 6.1.0
       prebuild-install: 7.1.2
-      semver: 7.6.2
+      semver: 7.6.3
       simple-get: 4.0.1
       tar-fs: 3.0.6
       tunnel-agent: 0.6.0
@@ -34030,7 +34062,7 @@ snapshots:
     dependencies:
       color: 4.2.3
       detect-libc: 2.0.3
-      semver: 7.6.2
+      semver: 7.6.3
     optionalDependencies:
       '@img/sharp-darwin-arm64': 0.33.3
       '@img/sharp-darwin-x64': 0.33.3
@@ -34430,12 +34462,12 @@ snapshots:
     transitivePeerDependencies:
       - react-dom
 
-  storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4):
+  storybook@8.2.8(@babel/preset-env@7.24.7(@babel/core@7.24.7))(bufferutil@4.0.8)(utf-8-validate@6.0.4):
     dependencies:
       '@babel/core': 7.24.7
       '@babel/types': 7.24.7
-      '@storybook/codemod': 8.2.2(bufferutil@4.0.8)(utf-8-validate@6.0.4)
-      '@storybook/core': 8.2.2(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      '@storybook/codemod': 8.2.8(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      '@storybook/core': 8.2.8(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       '@types/semver': 7.5.8
       '@yarnpkg/fslib': 2.10.3
       '@yarnpkg/libzip': 2.3.0
@@ -34447,7 +34479,7 @@ snapshots:
       execa: 5.1.1
       fd-package-json: 1.2.0
       find-up: 5.0.0
-      fs-extra: 11.1.1
+      fs-extra: 11.2.0
       giget: 1.2.3
       globby: 14.0.2
       jscodeshift: 0.15.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))
@@ -34455,7 +34487,7 @@ snapshots:
       ora: 5.4.1
       prettier: 3.2.5
       prompts: 2.4.2
-      semver: 7.6.2
+      semver: 7.6.3
       strip-json-comments: 3.1.1
       tempy: 3.1.0
       tiny-invariant: 1.3.3

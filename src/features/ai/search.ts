@@ -19,6 +19,24 @@ export const searchConnections = async ({ id, type }: any) => {
   }
 }
 
+export const searchAndEnrichConnections = async ({ subject, type }: any) => {
+  try {
+    const response = await axios.post('/api/data/enrich', {
+      data: {
+        subject,
+        type,
+      },
+    })
+    console.log('response: ', response)
+    // Handle the response data here
+    console.log(response.data)
+    return response.data
+  } catch (error) {
+    // Handle the error here
+    console.error(error)
+  }
+}
+
 export const searchTable = async ({
   keyword,
   table,

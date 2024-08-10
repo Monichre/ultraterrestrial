@@ -23,6 +23,7 @@ export function parseApiResponse({ text }: any): object | null {
   // Parse the JSON string into an object
   try {
     const parsedObject = JSON.parse(jsonString)
+    console.log('parsedObject: ', parsedObject)
     return parsedObject
   } catch (error) {
     console.error('Error parsing JSON string:', error)
@@ -42,7 +43,21 @@ const formatRelatedItems = (
 ) => {
   return items.map((item) => `${item.name} - ${item.role || ''}`).join('\n')
 }
-
+export const filterConnectionsByRelevance = (connections: any) => {
+  const relevant: any = {}
+  const irrelevant: any = {}
+  for (const key in connections) {
+    if (connections[key]['Relevance Score'] > 5) {
+      relevant[key] = connections[key]
+    } else {
+      irrelevant[key] = connections[key]
+    }
+  }
+  return {
+    relevant,
+    irrelevant,
+  }
+}
 const createMessage = (items: string | any[]) =>
   items?.length && items?.length < 2 ? `How is` : 'How are'
 export const checkRelevanceWithAI = async ({
@@ -94,24 +109,20 @@ export const checkRelevanceWithAI = async ({
     }
   }
 
-  console.log('payload: ', payload)
   console.log('assistantAnswer: ', assistantAnswer)
 
   const { content } = assistantAnswer
   const [data] = content
   const { text } = data
 
-  const { connections: results }: any = parseApiResponse({ text })
-  const connections: any = {}
-  for (const key in results) {
-    if (results[key]['Relevance Score'] > 5) {
-      connections[key] = results[key]
-    }
-  }
+  const { connections }: any = parseApiResponse({ text })
 
   console.log('connections: ', connections)
   return {
+    text,
+    assistantAnswer,
     connections,
+    payload,
   }
 }
 

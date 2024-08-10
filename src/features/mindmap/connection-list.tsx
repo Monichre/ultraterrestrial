@@ -142,22 +142,22 @@ export function ConnectionBeams({
   return (
     <div
       className={cn(
-        'relative flex flex-col min-h-[600px] h-full w-full items-center justify-center',
+        'relative flex flex-col min-h-[600px] h-full w-full items-center justify-center mt-2',
         className
       )}
       ref={containerRef}
     >
-      <div className='flex flex-col size-full h-full items-stretch justify-between gap-10'>
+      <div className='flex flex-col size-full h-full min-h-[600px] items-stretch justify-between gap-10'>
         <Circle
           ref={originalNodeRef}
           delay={0}
           inView
-          className='relative z-50'
+          className='relative z-50 w-min mx-auto'
         >
           <ConnectionCard connection={originalNode.data} />
         </Circle>
 
-        <div className='flex flex-col justify-evenly gap-y-4 self-end place-self-end justify-self-end'>
+        <div className='flex flex-row justify-evenly gap-y-4 self-end place-self-end justify-self-end'>
           {refs.map(
             (ref: React.Ref<HTMLDivElement> | undefined, index: number) => (
               <Circle
@@ -203,7 +203,15 @@ export const ConnectionList: React.FC<ConnectionListProps> = ({
 }: any) => {
   // const [isPresent, safeToRemove] = usePresence()
   // const scope = useMenuAnimation(isPresent)
-
+  // const [connections, setConnections] = useState(null)
+  // searchRelatedDataPoints
+  // useEffect(() =>
+  // {
+  //   searchRelatedDataPoints().then(res => {
+  //     console.log('res: ', res);
+  //     setConnections(res.data)
+  //   })
+  // }, [])
   return (
     <ConnectionBeams originalNode={originalNode} connections={connections} />
   )

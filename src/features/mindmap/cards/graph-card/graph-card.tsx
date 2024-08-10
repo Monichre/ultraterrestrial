@@ -10,9 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/animated/core/dialog'
-import { searchConnections } from '@/features/ai/search'
+import {
+  searchAndEnrichConnections,
+  searchConnections,
+} from '@/features/ai/search'
 import { EntityCardUtilityMenu } from '@/features/mindmap/cards/entity-card'
-import { DOMAIN_MODEL_COLORS, objectMapToSingular } from '@/utils'
+import { DOMAIN_MODEL_COLORS, objectMapToSingular, truncate } from '@/utils'
 import { useAuth } from '@clerk/nextjs'
 import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { isStreamStringEqualToType } from 'ai'
@@ -21,16 +24,22 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { imageConfigDefault } from 'next/dist/shared/lib/image-config'
 import { type } from 'os'
 import { useState, useEffect, useCallback } from 'react'
-import { userNames } from '../../user/note/lib/constants'
+import { userNames } from '../../../user/note/lib/constants'
 import { ConnectionList } from '@/features/mindmap/connection-list'
 import { HoverExpandButton } from '@/features/user/note/ui/Button'
 import { ShinyButton } from '@/components/ui/button'
+import { AnimatedTabs } from '@/components/ui/animated/animated-tabs'
+import { Tabs } from '@/components/animations/animated-tabs/AnimatedTabs'
+import { GraphCardBG } from '@/features/mindmap/cards/graph-card/graph-card-bg'
+import { DialogDescription } from '@radix-ui/react-dialog'
+import { useMindMap } from '@/providers'
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
 
 export function GraphCard({ data, id, ...rest }: any) {
+  const { addChildNodesFromSearch, addConnectionNodesFromSearch } = useMindMap()
   const node: any = {
     ...data,
     id,
@@ -108,16 +117,39 @@ export function GraphCard({ data, id, ...rest }: any) {
   }
 
   const { userId, sessionId, isLoaded }: any = useAuth()
-  const [connections, setConnections]: any = useState(null)
-  console.log('connections: ', connections)
-  const getConnections = useCallback(async () => {
+  const [relatedDataPoints, setRelatedDataPoints]: any = useState(null)
+  console.log('relatedDataPoints: ', relatedDataPoints)
+
+  const searchRelatedDataPoints = useCallback(async () => {
     const payload = await searchConnections({
       id,
       type,
     })
 
-    setConnections(payload.data)
+    setRelatedDataPoints(payload.data)
   }, [id, type])
+
+  const findNodeConnections = async () => {
+    const payload = await searchAndEnrichConnections({
+      subject: node,
+      type,
+    })
+    const searchResults = payload.data
+    console.log('searchResults: ', searchResults)
+    const res = addConnectionNodesFromSearch({ source: node, searchResults })
+    // const nodeConnections = connections.map((connection: any) => {
+    //   console.log('connection: ', connection)
+    //   const { type = null, ...rest } = connection
+    //   if (type && id) {
+    //     const result = addChildNodesFromSearch({
+    //       type,
+    //       searchResults: [connection],
+    //     })
+    //     console.log('result: ', result)
+    //   }
+    // })
+    console.log('res: ', res)
+  }
 
   const [bookmarked, setBookmarked] = useState(false)
 
@@ -154,6 +186,7 @@ export function GraphCard({ data, id, ...rest }: any) {
   //   <span className='backdrop absolute inset-[1px] rounded-full bg-neutral-950 transition-colors duration-200 group-hover:bg-neutral-800' />
   //   <span className='z-10 py-0.5 text-sm text-neutral-100'>Get notified</span>
   // </button>
+
   return (
     <>
       <div
@@ -182,6 +215,7 @@ export function GraphCard({ data, id, ...rest }: any) {
                 saveNote={saveNote}
                 userNote={userNote}
                 bookmarked={bookmarked}
+                findNodeConnections={findNodeConnections}
               />
             </motion.div>
           )}
@@ -194,13 +228,17 @@ export function GraphCard({ data, id, ...rest }: any) {
             damping: 24,
           }}
         >
+          <span className='absolute top-4 left-4 z-30'>
+            <SketchyGlobe className='stroke-1 h-12 w-12' fill='#78efff' />
+          </span>
+
           <DialogTrigger
             style={{
               borderRadius: '4px',
             }}
-            className='dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] p-3'
+            className='dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] pt-6 pl-6'
           >
-            <div className='flex w-full justify-start align-middle items-center center-content'>
+            <div className='flex w-full justify-start align-middle items-center center-content mt-4'>
               {type === 'personnel' && (
                 <DialogImage
                   src={image.url || image.src}
@@ -211,23 +249,17 @@ export function GraphCard({ data, id, ...rest }: any) {
                   }}
                 />
               )}
-              <DialogTitle className='flex w-full justify-start align-middle items-center center-content'>
-                {type === 'event' && (
-                  <SketchyGlobe
-                    className='stroke-1 h-12 w-12 block'
-                    fill='#78efff'
-                  />
-                )}
-                <h2 className='text-white font-centimaSans text-xl whitespace-normal w-full ml-2'>
+              <DialogTitle className='flex w-full justify-between align-middle items-center center-content'>
+                <h2 className='text-white font-centimaSans text-xl whitespace-normal w-content'>
                   {name}
                 </h2>
-                <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider ml-2'>
+                <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-content'>
                   {date}
                 </p>
               </DialogTitle>
             </div>
 
-            <DialogSubtitle className='my-3 ml-3'>
+            <DialogSubtitle className='my-3'>
               <p className='font-jetbrains text-white tracking-wider '>
                 {node?.location || role}
               </p>
@@ -240,7 +272,7 @@ export function GraphCard({ data, id, ...rest }: any) {
               style={{
                 borderRadius: '12px',
               }}
-              className='relative h-auto w-[50vw] border border-gray-100 bg-black-opacity-80 overflow-scroll'
+              className='relative h-[95vh] w-[80vw] bg-black overflow-scroll shadow-2xl shadow-blue-500/20 transition-all duration-1000'
             >
               <ScrollArea className='h-full overflow-scroll' type='scroll'>
                 <div className='relative p-6'>
@@ -251,45 +283,48 @@ export function GraphCard({ data, id, ...rest }: any) {
                       className='h-auto w-auto'
                     />
                   </div>
-                  <div className=''>
+                  <div className='relative h-auto'>
                     <div className='flex w-full justify-between'>
                       <DialogTitle className='text-white font-centimaSans tracking-wider uppercase'>
                         {name}
                       </DialogTitle>
-
-                      <ShinyButton onClick={getConnections}>
-                        Connections
-                      </ShinyButton>
+                      <div className='flex justify-end'>
+                        <ShinyButton onClick={searchRelatedDataPoints}>
+                          Connections
+                        </ShinyButton>
+                        <EntityCardUtilityMenu
+                          handleSave={handleSave}
+                          userNote={userNote}
+                          saveNote={saveNote}
+                          bookmarked={bookmarked}
+                        />
+                      </div>
                     </div>
-                    <DialogSubtitle className='font-light text-gray-400 mt-2'>
-                      {date}
+                    <DialogSubtitle>
+                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                        {date}
+                      </p>
+                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                        {location}
+                      </p>
+                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                        {latitude}, {longitude}
+                      </p>
                     </DialogSubtitle>
-                    <DialogSubtitle className='font-light text-gray-400 mt-2'>
-                      {location}
-                    </DialogSubtitle>
-                    <DialogSubtitle className='font-light text-gray-400 mt-2'>
-                      {latitude}, {longitude}
-                    </DialogSubtitle>
+
                     <div className='mt-4 text-sm text-white font-jetbrains'>
-                      <p>{node?.description}</p>
+                      <p>{truncate(node?.description, 400)}</p>
                     </div>
                   </div>
-
-                  {connections && (
+                  {relatedDataPoints && (
                     <ConnectionList
                       originalNode={node}
-                      connections={connections}
+                      connections={relatedDataPoints}
                     />
                   )}
-
-                  <div className='w-full flex justify-end items-center '>
-                    <EntityCardUtilityMenu
-                      handleSave={handleSave}
-                      userNote={userNote}
-                      saveNote={saveNote}
-                      bookmarked={bookmarked}
-                    />
-                  </div>
+                  {/* <div className='w-full flex justify-end items-center '>
+                   
+                  </div> */}
                 </div>
               </ScrollArea>
               <DialogClose className='text-zinc-500' />

@@ -1,6 +1,7 @@
 import '@xyflow/react/dist/style.css'
 
 import './globals.css'
+import { ViewTransitions } from 'next-view-transitions'
 
 import { ThemeProvider } from '@/providers'
 
@@ -63,34 +64,36 @@ export default function RootLayout({
 }) {
   // bg-[url("/8k_stars_milky_way.jpeg")] bg-center bg-cover dark
   return (
-    <ClerkProvider>
-      <html lang='en' suppressHydrationWarning>
-        <body
-          className={`bg-[#fff] ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} dark`}
-        >
-          <DataLayer>
-            <ThemeProvider
-              attribute='class'
-              defaultTheme='dark'
-              enableSystem
-              disableTransitionOnChange
-            >
-              <FullSiteNav />
-              {/* <AnimationProvider> */}
-              {/* <PageTransition> */}
-              <main className='min-h-[100vh] min-w-screen relative'>
-                {/* <NavBar navItems={navItems} /> */}
-                {/* <HomePageNav navItems={navItems} /> */}
-                {/* <FullSiteNav className='top-2' /> */}
-                {children}
-              </main>
+    <ViewTransitions>
+      <ClerkProvider>
+        <html lang='en' suppressHydrationWarning>
+          <body
+            className={`bg-[#fff] ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} dark`}
+          >
+            <DataLayer>
+              <ThemeProvider
+                attribute='class'
+                defaultTheme='dark'
+                enableSystem
+                disableTransitionOnChange
+              >
+                <FullSiteNav />
+                {/* <AnimationProvider> */}
+                {/* <PageTransition> */}
+                <main className='min-h-[100vh] min-w-screen relative'>
+                  {/* <NavBar navItems={navItems} /> */}
+                  {/* <HomePageNav navItems={navItems} /> */}
+                  {/* <FullSiteNav className='top-2' /> */}
+                  {children}
+                </main>
 
-              {/* </PageTransition> */}
-              {/* </AnimationProvider> */}
-            </ThemeProvider>
-          </DataLayer>
-        </body>
-      </html>
-    </ClerkProvider>
+                {/* </PageTransition> */}
+                {/* </AnimationProvider> */}
+              </ThemeProvider>
+            </DataLayer>
+          </body>
+        </html>
+      </ClerkProvider>
+    </ViewTransitions>
   )
 }

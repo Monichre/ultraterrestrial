@@ -13,7 +13,7 @@ import {
 } from '@xyflow/react'
 
 import { MindMapEntityCard } from '@/features/mindmap/cards/entity-card/entity-card'
-import { GraphCard } from '@/features/mindmap/cards/graph-card'
+import { GraphCard } from '@/features/mindmap/cards/graph-card/graph-card'
 import { GraphNodeCard } from '@/components/ui/card/graph-node-card'
 import { BlurAppear } from '@/components/animations/animated-wrappers'
 
@@ -30,33 +30,33 @@ interface Photo {
 }
 
 const EN = memo((props: any) => {
-  // const updateNodeInternals = useUpdateNodeInternals()
-  // updateNodeInternals(props.id)
-  // const [handles, setHandles]: any = useState([])
+  const updateNodeInternals = useUpdateNodeInternals()
+  updateNodeInternals(props.id)
+  const [handles, setHandles]: any = useState([])
 
-  // useEffect(() => {
-  //   if (props?.data?.handles && props.data?.handles.length) {
-  //     const { data } = props
+  useEffect(() => {
+    if (props?.data?.handles && props.data?.handles.length) {
+      const { data } = props
 
-  //     setHandles(data.handles)
-  //     updateNodeInternals(props.id)
-  //   }
-  // }, [props, updateNodeInternals])
+      setHandles(data.handles)
+      updateNodeInternals(props.id)
+    }
+  }, [props, updateNodeInternals])
   // relative min-w-[300px] !w-[300px]
   return (
     <BlurAppear>
       <div className='w-full border border-white/20 rounded-[calc(var(--radius)-2px)] !min-w-[450px] relative'>
-        {/* {handles && handles?.length
-        ? handles.map((id: string) => (
-            <Handle
-              key={id}
-              type='source'
-              position={Position.Bottom}
-              id={id}
-              isConnectable={true}
-            />
-          ))
-        : null} */}
+        {handles && handles?.length
+          ? handles.map((id: string) => (
+              <Handle
+                key={id}
+                type='source'
+                position={Position.Bottom}
+                id={id}
+                isConnectable={true}
+              />
+            ))
+          : null}
         <Handle type='target' position={Position.Top} />
 
         <GraphCard {...props} key={props.id} />
