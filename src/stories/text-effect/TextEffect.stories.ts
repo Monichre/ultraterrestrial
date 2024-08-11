@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { TextEffect } from '@/components/text-effect';
+import { TextEffect } from '@/components/animations'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'Components/TextEffect',
@@ -10,19 +10,15 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  args: {
+  args: {},
+} satisfies Meta<typeof TextEffect>
 
-  },
-} satisfies Meta<typeof TextEffect>;
+export default meta
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
   args: {
-
+    children: 'Text Effect',
   },
-};
-
-
+}

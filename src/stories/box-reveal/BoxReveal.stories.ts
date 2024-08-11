@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { BoxReveal } from '@/components/BoxReveal';
+import type { Meta, StoryObj } from '@storybook/react'
+import { BoxReveal } from '@/components/animations/box-reveal'
 
 const meta = {
   title: 'Components/BoxReveal',
@@ -10,19 +10,13 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  args: {
+  args: {},
+} satisfies Meta<typeof BoxReveal>
 
-  },
-} satisfies Meta<typeof BoxReveal>;
+export default meta
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
-  args: {
-
-  },
-};
-
-
+  args: {},
+}

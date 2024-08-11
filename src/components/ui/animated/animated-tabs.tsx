@@ -1,5 +1,5 @@
-import { Home, PhoneCall, Settings, User } from 'lucide-react';
-import AnimatedBackground from '@/components/core/animated-background';
+import AnimatedBackground from '@/components/ui/animated/core/animated-background'
+import { Home, PhoneCall, Settings, User } from 'lucide-react'
 
 export function AnimatedTabs() {
   const TABS = [
@@ -19,7 +19,7 @@ export function AnimatedTabs() {
       label: 'Contact',
       icon: <PhoneCall className='h-5 w-5' />,
     },
-  ];
+  ]
 
   return (
     <div className='absolute bottom-8'>
@@ -46,5 +46,5 @@ export function AnimatedTabs() {
         </AnimatedBackground>
       </div>
     </div>
-  );
+  )
 }

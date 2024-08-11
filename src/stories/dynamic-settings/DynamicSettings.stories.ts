@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { DynamicSettings } from '@/components/dynamic-settings';
+import DynamicSettings from '@/components/ui/animated/dynamic-settings/DynamicSettings'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'Components/DynamicSettings',
@@ -10,19 +10,13 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  args: {
+  args: {},
+} satisfies Meta<typeof DynamicSettings>
 
-  },
-} satisfies Meta<typeof DynamicSettings>;
+export default meta
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
-  args: {
-
-  },
-};
-
-
+  args: {},
+}

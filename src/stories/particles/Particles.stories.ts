@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Particles } from '@/components/particles';
+import { Particles } from '@/components/animations/particles/Particles'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'Components/Particles',
@@ -10,19 +10,13 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  args: {
+  args: {},
+} satisfies Meta<typeof Particles>
 
-  },
-} satisfies Meta<typeof Particles>;
+export default meta
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
-  args: {
-
-  },
-};
-
-
+  args: {},
+}
