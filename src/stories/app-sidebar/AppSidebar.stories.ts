@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { AppSidebar } from '@/components/app-sidebar';
+import type { Meta, StoryObj } from '@storybook/react'
+import { AppSidebar } from '@/components/app-sidebar'
 
 const meta = {
   title: 'Components/AppSidebar',
@@ -10,19 +10,16 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  args: {
+  args: {},
+} satisfies Meta<typeof AppSidebar>
 
-  },
-} satisfies Meta<typeof AppSidebar>;
+export default meta
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
+  // @ts-ignore
   args: {
-
+    open: false,
   },
-};
-
-
+}

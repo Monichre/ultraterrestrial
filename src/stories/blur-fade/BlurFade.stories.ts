@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { BlurFade } from '@/components/blur-fade';
+import type { Meta, StoryObj } from '@storybook/react'
+import { BlurFade } from '@/components/animations/blur-fade'
 
 const meta = {
   title: 'Components/BlurFade',
@@ -10,19 +10,13 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  args: {
+  args: {},
+} satisfies Meta<typeof BlurFade>
 
-  },
-} satisfies Meta<typeof BlurFade>;
+export default meta
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
-  args: {
-
-  },
-};
-
-
+  args: {},
+}

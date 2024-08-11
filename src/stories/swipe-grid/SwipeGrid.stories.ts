@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { SwipeGrid } from '@/components/swipe-grid';
+import SwipeGrid from '@/components/animations/swipe-grid/SwipeGrid'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'Components/SwipeGrid',
@@ -10,19 +10,13 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  args: {
+  args: {},
+} satisfies Meta<typeof SwipeGrid>
 
-  },
-} satisfies Meta<typeof SwipeGrid>;
+export default meta
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
-  args: {
-
-  },
-};
-
-
+  args: {},
+}

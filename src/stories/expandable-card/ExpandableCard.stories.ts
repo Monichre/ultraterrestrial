@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { ExpandableCard } from '@/components/expandable-card';
+import ExpandableCard from '@/components/ui/card/ExpandableCard'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   title: 'Components/ExpandableCard',
@@ -10,19 +10,13 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  args: {
+  args: {},
+} satisfies Meta<typeof ExpandableCard>
 
-  },
-} satisfies Meta<typeof ExpandableCard>;
+export default meta
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
-  args: {
-
-  },
-};
-
-
+  args: {},
+}

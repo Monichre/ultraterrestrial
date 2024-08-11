@@ -2,10 +2,13 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-import { CardHeader, Card } from '@/components/ui/card/card'
+import { CardHeader, Card, CardFooter } from '@/components/ui/card/card'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { CardContent, CardTitle } from '@/components/ui/card'
+import { BlurAppear } from '@/components/animations'
+import { TextEffect } from '@/components/animations/text-effect'
+import { ModelAvatar } from '@/features/mindmap/connection-list'
 
 type TestimonyCardProps = {
   data: {
@@ -45,28 +48,28 @@ export function TestimonyCard({ data }: TestimonyCardProps) {
 
   const { claim } = data
 
-  const [animatedClaim, setAnimatedClaim] = useState<string>('')
-  // const [animatedDate, setAnimatedDate] = useState<string>('')
-  const [titleFinished, setTitleFinished] = useState(false)
-  const [t, setT] = useState<number>(0)
-  const [i, setI] = useState<number>(0)
+  // const [animatedClaim, setAnimatedClaim] = useState<string>('')
+  // // const [animatedDate, setAnimatedDate] = useState<string>('')
+  // const [titleFinished, setTitleFinished] = useState(false)
+  // const [t, setT] = useState<number>(0)
+  // const [i, setI] = useState<number>(0)
 
-  useEffect(() => {
-    const typingEffect = setInterval(() => {
-      if (t < claim.length) {
-        setAnimatedClaim(claim.substring(0, t + 1))
-        setT(t + 1)
-      } else {
-        clearInterval(typingEffect)
+  // useEffect(() => {
+  //   const typingEffect = setInterval(() => {
+  //     if (t < claim.length) {
+  //       setAnimatedClaim(claim.substring(0, t + 1))
+  //       setT(t + 1)
+  //     } else {
+  //       clearInterval(typingEffect)
 
-        // setTitleFinished(true)
-      }
-    }, 100)
+  //       // setTitleFinished(true)
+  //     }
+  //   }, 100)
 
-    return () => {
-      clearInterval(typingEffect)
-    }
-  }, [claim, t])
+  //   return () => {
+  //     clearInterval(typingEffect)
+  //   }
+  // }, [claim, t])
 
   // useEffect(() => {
   //   const typingEffectTwo = setInterval(() => {
@@ -86,24 +89,31 @@ export function TestimonyCard({ data }: TestimonyCardProps) {
   // }, [date, date.length, i, name, t, titleFinished])
 
   return (
-    <Card
-      className={`entity-card shadow relative w-[450px] rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
-    >
-      <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative p-2'>
-        <CardHeader className='flex flex-row items-center align-center justify-between space-y-0 p-2'>
-          <div className='flex p-2 justify-start align-middle content-center items-center'>
-            <Avatar className='mr-2'>
-              {/* @ts-ignore */}
-              <AvatarImage src={data?.witness?.photo[0]?.signedUrl} />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <p>{data?.witness?.name}</p>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <h3 className='text-neutral-200 m-2'>{animatedClaim}</h3>
-        </CardContent>
-      </div>
-    </Card>
+    <BlurAppear>
+      <Card
+        className={`entity-card shadow relative w-[450px] rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
+      >
+        <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative p-2'>
+          <CardHeader className='p-2'>
+            <div className='text-neutral-200 m-2 text-center'>
+              {data?.claim && (
+                <TextEffect
+                  per='word'
+                  preset='fade'
+                  children={`"${data?.claim}"`}
+                />
+              )}
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className='flex p-2 justify-start align-middle content-center items-center'>
+              <ModelAvatar model={data?.witness} />
+              <p className='ml-3'>{data?.witness?.name}</p>
+            </div>
+          </CardContent>
+          <CardFooter></CardFooter>
+        </div>
+      </Card>
+    </BlurAppear>
   )
 }

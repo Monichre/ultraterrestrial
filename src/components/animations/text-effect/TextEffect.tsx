@@ -5,7 +5,7 @@ import React from 'react'
 type PresetType = 'blur' | 'shake' | 'scale' | 'fade' | 'slide'
 
 type TextEffectProps = {
-  children: string
+  children: any
   per?: 'word' | 'char'
   as?: keyof JSX.IntrinsicElements
   variants?: {
