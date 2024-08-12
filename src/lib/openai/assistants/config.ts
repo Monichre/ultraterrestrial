@@ -11,3 +11,4 @@ export const metadata = {
   instructions: INSTRUCTIONS,
   user: 'system',
 }
+export const UFO_VECTOR_DATA_STORE_ID: any = process.env.OPENAI_VECTOR_STORE_ID
