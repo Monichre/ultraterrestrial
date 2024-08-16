@@ -1,4 +1,7 @@
 'use server'
+
+import 'server-only'
+
 import { getXataClient } from '@/lib/xata'
 import type { EventsRecord } from '@/lib/xata'
 import type { CreateUserSavedItemBase } from './actions.types'

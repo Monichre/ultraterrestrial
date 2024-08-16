@@ -57,12 +57,13 @@ update the rotation of the `meshRef` and `light` elements in the scene. */
 export interface MoonProps {}
 
 export const Moon: React.FC<MoonProps> = (props: MoonProps) => {
+  // 1, 0, -0.25
   return (
     <Canvas gl={{ antialias: false }}>
       {/* <color attach='background' args={['#101015']} /> */}
       {/* <PerspectiveCamera makeDefault position={[0, -0.5, 5]} fov={50} /> */}
       <ambientLight intensity={0.01} />
-      <directionalLight intensity={3.5} position={[1, 0, -0.25]} />
+      <directionalLight intensity={5} position={[1, 5, -2]} />
       <Suspense fallback={null}>
         <MoonScene />
       </Suspense>

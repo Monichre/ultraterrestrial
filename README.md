@@ -44,3 +44,5 @@
 # OpenSearch
 
 <https://opensearch-ai.pages.dev/>
+
+postgresql://kgubvq:xau_UrsqYt3kKCT3sOqUomoTNmTC9BQvsFlB0@us-east-1.sql.xata.sh/ultraterrestrial-postgres:main?sslmode=require

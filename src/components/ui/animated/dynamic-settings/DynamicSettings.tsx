@@ -27,7 +27,7 @@ const menuCategories = [
   { label: 'Add Note', slug: 'note', menuWidth: 320, menuHeight: 240 },
 ] as const
 
-export default function DynamicSettingsVariant1() {
+export function DynamicSettings() {
   const [isOpen, setIsOpen] = useState(false)
   const [subMenuSelected, setSubMenuSelected] = useState('dimensions')
   const handleOpenSettings = () => {

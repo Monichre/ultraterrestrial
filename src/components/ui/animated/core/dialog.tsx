@@ -235,6 +235,7 @@ function DialogContainer({ children }: DialogContainerProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ staggerChildren: 0.1 }}
           />
           <div className='fixed inset-0 z-50 flex items-center justify-center'>
             {children}
@@ -261,12 +262,16 @@ function DialogTitle({ children, className, style }: DialogTitleProps) {
       className={className}
       style={style}
       layout
-      initial='initial'
-      animate='animate'
-      exit='exit'
-      // initial={{ opacity: 0 }}
-      //       animate={{ opacity: 1 }}
-      //       exit={{ opacity: 0 }}
+      /* The lines `initial='initial'`, `animate='animate'`, and `exit='exit'` are setting initial,
+   animate, and exit properties for animations in the Framer Motion library. These properties define
+   the animation variants for the component. */
+      // initial='initial'
+      // animate='animate'
+      // exit='exit'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ staggerChildren: 0.1 }}
     >
       {children}
     </motion.div>
