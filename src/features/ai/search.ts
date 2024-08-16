@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-import type { SchemaTables } from '@/lib/xata'
 export const searchConnections = async ({ id, type }: any) => {
   try {
     const response = await axios.get('/api/data/search/connections', {

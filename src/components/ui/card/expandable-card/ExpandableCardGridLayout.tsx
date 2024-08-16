@@ -168,7 +168,7 @@ export function ExpandableCardGridLayout() {
   )
 }
 
-export const CloseIcon = () => {
+const CloseIcon = () => {
   return (
     <motion.svg
       initial={{

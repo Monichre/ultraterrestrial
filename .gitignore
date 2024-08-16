@@ -41,3 +41,5 @@ next-env.d.ts
 *storybook.log
 # Million Lint
 .million
+
+/src/stories/data

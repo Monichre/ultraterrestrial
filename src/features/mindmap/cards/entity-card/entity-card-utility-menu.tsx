@@ -21,7 +21,7 @@ interface EntityCardUtilityMenuProps {
 
   saveNote: any
   userNote: any
-  findConnectedNodes: any
+  findConnectedNodes?: any
 }
 
 export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
@@ -38,11 +38,13 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
 
   return (
     <>
-      <div>
-        <Button variant='ghost' size='icon' onClick={findConnectedNodes}>
-          <ScanSearch />
-        </Button>
-      </div>
+      {findConnectedNodes && (
+        <div>
+          <Button variant='ghost' size='icon' onClick={findConnectedNodes}>
+            <ScanSearch />
+          </Button>
+        </div>
+      )}
       <div>
         <TooltipProvider>
           <Tooltip>

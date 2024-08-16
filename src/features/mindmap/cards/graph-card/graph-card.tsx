@@ -1,5 +1,7 @@
+'use client'
+
 import { createUserSavedEvent } from '@/app/actions/user/create-user-saved-event'
-import { SketchyGlobe } from '@/components/icons'
+
 import {
   Dialog,
   DialogClose,
@@ -18,20 +20,14 @@ import { EntityCardUtilityMenu } from '@/features/mindmap/cards/entity-card'
 import { DOMAIN_MODEL_COLORS, objectMapToSingular, truncate } from '@/utils'
 import { useAuth } from '@clerk/nextjs'
 import { ScrollArea } from '@radix-ui/react-scroll-area'
-import { isStreamStringEqualToType } from 'ai'
-import { transition } from 'd3'
+
 import { AnimatePresence, motion } from 'framer-motion'
-import { imageConfigDefault } from 'next/dist/shared/lib/image-config'
-import { type } from 'os'
+
 import { useState, useEffect, useCallback } from 'react'
-import { userNames } from '../../../user/note/lib/constants'
+
 import { ConnectionList } from '@/features/mindmap/connection-list'
 import { HoverExpandButton } from '@/features/user/note/ui/Button'
 import { ShinyButton } from '@/components/ui/button'
-import { AnimatedTabs } from '@/components/ui/animated/animated-tabs'
-import { Tabs } from '@/components/animations/animated-tabs/AnimatedTabs'
-import { GraphCardBG } from '@/features/mindmap/cards/graph-card/graph-card-bg'
-import { DialogDescription } from '@radix-ui/react-dialog'
 import { useMindMap } from '@/providers'
 
 const dayjs = require('dayjs')
@@ -130,29 +126,20 @@ export function GraphCard({ data, id, ...rest }: any) {
   }, [id, type])
 
   const findConnectedNodes = async () => {
-    // const payload = await searchAndEnrichConnections({
-    //   subject: node,
-    //   type,
-    // })
-    const payload = await searchConnections({
-      id,
+    const payload = await searchAndEnrichConnections({
+      subject: node,
       type,
     })
+    console.log('payload: ', payload)
+    // const payload = await searchConnections({
+    //   id,
+    //   type,
+    // })
     const searchResults = payload.data
     console.log('searchResults: ', searchResults)
-    const res = addConnectionNodesFromSearch({ source: node, searchResults })
-    // const nodeConnections = connections.map((connection: any) => {
-    //   console.log('connection: ', connection)
-    //   const { type = null, ...rest } = connection
-    //   if (type && id) {
-    //     const result = addChildNodesFromSearch({
-    //       type,
-    //       searchResults: [connection],
-    //     })
-    //     console.log('result: ', result)
-    //   }
-    // })
-    console.log('res: ', res)
+    // const res = addConnectionNodesFromSearch({ source: node, searchResults })
+
+    // console.log('res: ', res)
   }
 
   const [bookmarked, setBookmarked] = useState(false)
@@ -190,16 +177,17 @@ export function GraphCard({ data, id, ...rest }: any) {
   //   <span className='backdrop absolute inset-[1px] rounded-full bg-neutral-950 transition-colors duration-200 group-hover:bg-neutral-800' />
   //   <span className='z-10 py-0.5 text-sm text-neutral-100'>Get notified</span>
   // </button>
+  // {
+  //   /* <div
+  //   className={`absolute -inset-2 rounded-lg bg-gradient-to-r from-[#78efff] via-[#E393E6] to-[${color}] opacity-75 blur`}
+  // ></div> */
+  // }
 
   return (
     <>
       <div
         className={`absolute -inset-2 rounded-lg bg-gradient-to-r from-[#78efff] via-[#E393E6] to-[${color}] opacity-50 blur w-full h-full`}
       ></div>
-
-      {/* <div
-    className={`absolute -inset-2 rounded-lg bg-gradient-to-r from-[#78efff] via-[#E393E6] to-[${color}] opacity-75 blur`}
-  ></div> */}
       <div
         className={`relative z-50 w-content h-content rounded-[calc(var(--radius)-2px)] p-[1px] bg-black`}
         style={{ border: `1px solid ${color}` }}
@@ -224,7 +212,6 @@ export function GraphCard({ data, id, ...rest }: any) {
             </motion.div>
           )}
         </AnimatePresence>
-
         <Dialog
           transition={{
             type: 'spring',
@@ -236,10 +223,10 @@ export function GraphCard({ data, id, ...rest }: any) {
             style={{
               borderRadius: '4px',
             }}
-            className='dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] px-4 py-4'
+            className='relative z-50 dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] px-3 py-4'
           >
             <div
-              className={`relative w-full h-full px-4`}
+              className={`relative w-full h-full pl-3`}
               style={{ borderLeft: `1px solid ${modelColor}` }}
             >
               <div
@@ -256,10 +243,13 @@ export function GraphCard({ data, id, ...rest }: any) {
                   />
                 )}
                 <DialogTitle className='flex w-full justify-between align-middle items-center center-content'>
-                  <h2 className='text-white font-centimaSans text-xl whitespace-normal w-content'>
+                  <h2
+                    className='text-white font-centimaSans text-xl whitespace-normal w-fit capitalize '
+                    style={{ textWrap: 'pretty' }}
+                  >
                     {name}
                   </h2>
-                  <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-content'>
+                  <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-fit'>
                     {date}
                   </p>
                 </DialogTitle>
@@ -284,7 +274,7 @@ export function GraphCard({ data, id, ...rest }: any) {
               <ScrollArea className='h-full overflow-scroll' type='scroll'>
                 <div className='relative p-6'>
                   <div className='flex justify-center py-10'>
-                    <DialogImage
+                    <img
                       src={image.url || image.src}
                       alt='What I Talk About When I Talk About Running - book cover'
                       className='h-auto w-auto'
@@ -292,9 +282,10 @@ export function GraphCard({ data, id, ...rest }: any) {
                   </div>
                   <div className='relative h-auto'>
                     <div className='flex w-full justify-between'>
-                      <DialogTitle className='text-white font-centimaSans tracking-wider uppercase'>
+                      <h2 className='text-white font-centimaSans tracking-wider uppercase'>
                         {name}
-                      </DialogTitle>
+                      </h2>
+
                       <div className='flex justify-end'>
                         <ShinyButton onClick={searchRelatedDataPoints}>
                           Connections
@@ -307,17 +298,16 @@ export function GraphCard({ data, id, ...rest }: any) {
                         />
                       </div>
                     </div>
-                    <DialogSubtitle>
-                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
-                        {date}
-                      </p>
-                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
-                        {location}
-                      </p>
-                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
-                        {latitude}, {longitude}
-                      </p>
-                    </DialogSubtitle>
+
+                    <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                      {date}
+                    </p>
+                    <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                      {location}
+                    </p>
+                    <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                      {latitude}, {longitude}
+                    </p>
 
                     <div className='mt-4 text-sm text-white font-jetbrains'>
                       <p>{truncate(node?.description, 400)}</p>

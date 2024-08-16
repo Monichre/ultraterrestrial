@@ -67,7 +67,6 @@ export const checkRelevanceWithAI = async ({
   subject: any
   relatedItems: any[]
 }) => {
-  console.log('subject: ', subject)
   await openai.beta.threads.messages.create(
     ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID,
     {

@@ -24,10 +24,6 @@ export async function POST(req: any) {
       subject,
       relatedItems,
     })
-  console.log('payload: ', payload)
-  console.log('connections: ', connections)
-  console.log('assistantAnswer: ', assistantAnswer)
-  console.log('text: ', text)
 
   const { relevant, irrelevant } = filterConnectionsByRelevance(connections)
   const evaluatedRecords = Object.keys(relevant).map((name) => {
@@ -44,6 +40,7 @@ export async function POST(req: any) {
     console.log('evaluatedRecord: ', evaluatedRecord)
     return evaluatedRecord
   })
+  console.log('evaluatedRecords: ', evaluatedRecords)
   // const deleteTheseRecords = Object.keys(irrelevant).map((name) => {
   //   const databasedRecord = relatedItems.find(
   //     (record: any) => record.name === name
@@ -85,7 +82,12 @@ export async function POST(req: any) {
   //   },
   // })
 
-  return Response.json({ text, assistantAnswer, connections, payload })
+  return Response.json({
+    text,
+    assistantAnswer,
+    connections: evaluatedRecords,
+    payload,
+  })
 }
 
 // pages/api/contact.js

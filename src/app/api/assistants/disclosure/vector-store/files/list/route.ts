@@ -36,6 +36,6 @@ export async function GET() {
   }
 
   console.log('files: ', files)
-  await writeLogToFile(files, 'vector-store-files.json')
+  // await writeLogToFile(files, 'vector-store-files.json')
   return Response.json({ files })
 }

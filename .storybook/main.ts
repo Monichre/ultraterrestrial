@@ -22,12 +22,11 @@ const config: StorybookConfig = {
       name: '@storybook/addon-storysource',
       options: {
         sourceLoaderOptions: {
-          injectStoryParameters: false,
+          injectStoryParameters: true,
         },
       },
     },
     '@storybook/addon-mdx-gfm',
-    '@chromatic-com/storybook',
   ],
 
   framework: {

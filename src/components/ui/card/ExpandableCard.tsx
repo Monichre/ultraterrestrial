@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const ExpandableCard1 = () => {
+export const ExpandableCard1 = () => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const handleToggle = () => {
@@ -36,10 +36,15 @@ const ExpandableCard1 = () => {
         onClick={!isExpanded ? handleToggle : null}
         initial={false}
         animate={{
-          width: isExpanded ? (isMobile ? '350px' : '400px') : '300px',
+          width: isExpanded ? '400px' : '300px',
           height: isExpanded ? '330px' : '120px',
         }}
-        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        transition={{
+          type: 'spring',
+          stiffness: 300,
+          damping: 20,
+          staggerChildren: 0.05,
+        }}
       >
         <div
           className={`flex ${isExpanded ? 'flex-col items-center' : 'items-center'}`}
@@ -53,21 +58,25 @@ const ExpandableCard1 = () => {
               width: isExpanded ? '80px' : '64px',
               height: isExpanded ? '80px' : '64px',
             }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            transition={{
+              type: 'spring',
+              stiffness: 300,
+              damping: 20,
+              staggerChildren: 0.05,
+            }}
           />
-          <div
+          <motion.div
             className={`${isExpanded ? 'text-center mt-4' : 'text-left'} ${isExpanded ? 'ml-0' : 'ml-4'}`}
           >
             <motion.h2 className='text-lg font-semibold'>
               Alexandre Buée
             </motion.h2>
-            <div
+            <motion.div
               className={`flex items-center ${isExpanded ? 'justify-center' : 'justify-start'} text-gray-600 mt-1`}
             >
-              <HiOutlineLocationMarker className='text-teal-500 mr-1' />
               <motion.span>Paris, France</motion.span>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
 
         <AnimatePresence>
@@ -76,15 +85,16 @@ const ExpandableCard1 = () => {
               initial={false}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
+              transition={{
+                staggerChildren: 0.05,
+              }}
               className='mt-4 w-full'
             >
               <div className='flex flex-col items-center space-y-4'>
                 <button className='bg-teal-500 text-white px-4 py-2 w-64 sm:w-full flex items-center justify-center rounded-lg hover:bg-teal-600'>
-                  <HiOutlineUserAdd className='mr-2' />
                   Follow
                 </button>
                 <button className='bg-slate-900 text-white px-4 py-2 rounded-lg w-64 sm:w-full flex items-center justify-center hover:bg-gray-300 hover:text-slate-900'>
-                  <HiOutlineMail className='mr-2' />
                   Contact
                 </button>
               </div>
@@ -95,13 +105,3 @@ const ExpandableCard1 = () => {
     </div>
   )
 }
-
-function App() {
-  return (
-    <div className='h-screen text-center'>
-      <ExpandableCard1 />
-    </div>
-  )
-}
-
-export default App

@@ -88,6 +88,8 @@ const config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       animation: {
+        'radar-spin': 'radar-spin 10s linear infinite',
+
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         spotlight: 'spotlight 2s ease .75s 1 forwards',
@@ -98,6 +100,14 @@ const config = {
         'border-width': 'border-width 3s infinite alternate',
       },
       keyframes: {
+        'radar-spin': {
+          from: {
+            transform: 'rotate(20deg)',
+          },
+          to: {
+            transform: 'rotate(380deg)',
+          },
+        },
         'border-width': {
           from: {
             width: '10px',

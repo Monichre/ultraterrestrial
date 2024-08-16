@@ -6,9 +6,16 @@ import {
 } from '@/features/mindmap/cards/entity-card/entity-card'
 import { RootNodeCard } from '@/features/mindmap/cards/root-node-card/root-node-card'
 import { StarsCard, type StarsCardProps } from '@/components/ui/card/stars-card'
-import type { StoryObj } from '@storybook/react'
 
+import type { Meta, StoryObj } from '@storybook/react'
 import type { JSX, HTMLAttributes, RefAttributes } from 'react'
+
+const CardStories = ({ children }: any) => (
+  <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'>
+    {children}
+    poop
+  </div>
+)
 const mindmapProps: any = {
   data: {
     name: 'Roswell UFO Sighting',
@@ -24,26 +31,29 @@ const mindmapProps: any = {
 }
 
 const meta = {
-  title: 'Components/Cards',
-  component: ConnectionCard,
-  subcomponents: {
-    // @ts-ignore
-    StarsCard,
-    // @ts-ignore
-    MindMapEntityCard,
-    RootNodeCard,
+  title: 'Components/Card Stories',
+  component: CardStories,
+  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
+  tags: ['autodocs'],
+  parameters: {
+    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
+    layout: 'fullscreen',
   },
-  render: ({ ...args }) => (
+  args: {},
+} satisfies Meta<typeof CardStories>
+
+export default meta
+type Story = StoryObj<typeof meta>
+export const CardStoriesStory: Story = {
+  args: {},
+  render: (args: any) => (
     <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'>
       <ConnectionCard />
       <MindMapEntityCard {...mindmapProps} />
       <StarsCard />
     </div>
   ),
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
 }
-
-export default meta
 
 // type Story = StoryObj<typeof ConnectionCard>
 

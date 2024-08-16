@@ -1,7 +1,14 @@
+import { cn } from '@/utils'
 import * as React from 'react'
+export type IconProps = React.HTMLAttributes<HTMLOrSVGElement> & {
+  stroke?: string
+  className?: string
+  onClick?: any
+}
 
-export const HandDrawnArrowRight = () => (
+export const HandDrawnArrowRight = (props: IconProps) => (
   <svg
+    {...props}
     width='150'
     height='82'
     viewBox='0 0 150 82'
@@ -17,8 +24,9 @@ export const HandDrawnArrowRight = () => (
   </svg>
 )
 
-export const HandDrawnArrowDown = () => (
+export const HandDrawnArrowDown = (props: IconProps) => (
   <svg
+    {...props}
     width='48'
     height='218'
     viewBox='0 0 48 218'
@@ -35,8 +43,9 @@ export const HandDrawnArrowDown = () => (
 )
 
 // https://svgdoodles.com/
-export const Star = () => (
+export const Star = (props: IconProps) => (
   <svg
+    {...props}
     className='w-10 h-10'
     viewBox='0 0 79 78'
     fill='none'
@@ -59,9 +68,10 @@ export const Star = () => (
 )
 
 // https://svgdoodles.com/
-export const ThinTwinklyStar = () => (
+export const ThinTwinklyStar = ({ className, ...rest }: IconProps) => (
   <svg
-    className='w-10 h-10'
+    {...rest}
+    className={cn('w-10 h-10', className)}
     viewBox='0 0 75 75'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -81,9 +91,10 @@ export const ThinTwinklyStar = () => (
     />
   </svg>
 )
-export const ScratchyX = () => (
+export const ScratchyX = ({ className, ...rest }: IconProps) => (
   <svg
-    className='w-10 h-10'
+    {...rest}
+    className={cn('w-10 h-10', className)}
     viewBox='0 0 64 64'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -100,9 +111,10 @@ export const ScratchyX = () => (
   </svg>
 )
 
-export const DoubleX = () => (
+export const DoubleX = ({ className, ...rest }: IconProps) => (
   <svg
-    className='w-10 h-10'
+    {...rest}
+    className={cn('w-10 h-10', className)}
     viewBox='0 0 68 79'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -127,8 +139,9 @@ export const DoubleX = () => (
   </svg>
 )
 
-export const DoubleDonut = () => (
+export const DoubleDonut = (props: IconProps) => (
   <svg
+    {...props}
     className='w-10 h-10'
     viewBox='0 0 156 160'
     fill='none'
@@ -864,8 +877,9 @@ export const DoubleDonut = () => (
   </svg>
 )
 
-export const HandDrawnArrowDownDoogle = () => (
+export const HandDrawnArrowDownDoogle = (props: IconProps) => (
   <svg
+    {...props}
     className='w-10 h-10'
     viewBox='0 0 246 345'
     fill='none'
@@ -882,8 +896,9 @@ export const HandDrawnArrowDownDoogle = () => (
   </svg>
 )
 
-export const HandDrawnArrowRightDoodle = () => (
+export const HandDrawnArrowRightDoodle = (props: IconProps) => (
   <svg
+    {...props}
     className='w-10 h-10'
     viewBox='0 0 110 33'
     fill='none'
@@ -904,8 +919,9 @@ export const HandDrawnArrowRightDoodle = () => (
   </svg>
 )
 
-export const MyFavoriteStarIllustration = () => (
+export const MyFavoriteStarIllustration = (props: IconProps) => (
   <svg
+    {...props}
     className='w-10 h-10'
     viewBox='0 0 84 87'
     fill='none'
@@ -1229,3 +1245,61 @@ export const SketchyGlobe = ({ fill = '#9D9D9D' }: any) => (
             />
           </svg>
 */
+
+export const HandrawnArrowRight = ({
+  stroke = 'currentColor',
+  onClick,
+  className,
+}: any) => (
+  <svg
+    className={cn('w-10 h-10', className)}
+    viewBox='0 0 110 33'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+    onClick={onClick}
+  >
+    <path
+      d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
+      stroke={stroke}
+      stroke-width='2'
+      stroke-linecap='round'
+    />
+    <path
+      d='M105.295 7.55369C103.251 6.41332 98.0697 4.73081 97.3989 2.01718C97.3762 1.92544 97.3095 1.31771 97.3374 1.37859C98.1737 3.20315 97.6004 7.32036 97.4208 9.32238C97.3735 9.84973 96.396 15.3811 96.8612 15.1485C101.235 12.9619 105.361 8.83254 109.442 6.05271'
+      stroke='currentColor'
+      stroke-width='2'
+      stroke-linecap='round'
+    />
+  </svg>
+)
+
+export const HandrawnArrowLeft = ({
+  stroke = 'currentColor',
+  onClick,
+  className,
+}: any) => (
+  <svg
+    className={cn('w-10 h-10', className)}
+    viewBox='0 0 110 33'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+    onClick={onClick}
+    style={{
+      transform: 'rotate(180deg)',
+      transformOrigin: 'center',
+    }}
+  >
+    <path
+      d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
+      stroke={stroke}
+      stroke-width='2'
+      stroke-linecap='round'
+    />
+    <path
+      d='M105.295 7.55369C103.251 6.41332 98.0697 4.73081 97.3989 2.01718C97.3762 1.92544 97.3095 1.31771 97.3374 1.37859C98.1737 3.20315 97.6004 7.32036 97.4208 9.32238C97.3735 9.84973 96.396 15.3811 96.8612 15.1485C101.235 12.9619 105.361 8.83254 109.442 6.05271'
+      stroke='currentColor'
+      stroke-width='2'
+      stroke-linecap='round'
+    />
+  </svg>
+)
