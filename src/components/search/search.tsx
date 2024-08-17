@@ -246,6 +246,7 @@ export const SuggestedSearchItem = ({ value, onClick }: any) => {
 
 export function Search() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [initial, setInitial] = useState<boolean>(true)
   // const [query, setQuery]: any = useState('')
 
   // const [messages, setMessages] = useState<ClientMessage[]>([])
@@ -285,6 +286,7 @@ export function Search() {
       role: 'user',
       content: suggestion,
     })
+    setInitial(false)
   }
   // const onChange = (event: any) => {
   //   setQuery(event.target.value)
@@ -308,6 +310,12 @@ export function Search() {
       // setQuery('')
     }
   }, [isOpen])
+
+  useEffect(() => {
+    if (messages?.length && initial) {
+      setInitial(false)
+    }
+  }, [messages, initial])
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
@@ -412,7 +420,7 @@ export function Search() {
                         { text: 'Make a snack' },
                       ]}
                     />
-                  ) : (
+                  ) : initial ? (
                     <div>
                       <div className='mb-2 px-2 text-xs font-semibold uppercase text-gray-400'>
                         Suggestions
@@ -428,7 +436,7 @@ export function Search() {
                       </ul>
                       <Divider />
                     </div>
-                  )}
+                  ) : null}
 
                   {messages?.length && (
                     <div className='flex flex-col p-2 gap-2'>
@@ -436,6 +444,7 @@ export function Search() {
                         if (message.role === 'assistant') {
                           return (
                             <MemoizedMarkdown
+                              key={message.id}
                               rehypePlugins={[
                                 [rehypeExternalLinks, { target: '_blank' }],
                               ]}

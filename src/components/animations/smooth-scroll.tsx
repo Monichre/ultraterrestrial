@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import Lenis from '@studio-freight/lenis'
 
-export const smoothScroll = ({ children }: any) => {
+export const useSmoothScroll = ({ children }: any) => {
   useEffect(() => {
     window.scrollTo(0, 0)
 

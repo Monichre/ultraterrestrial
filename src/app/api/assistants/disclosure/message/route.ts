@@ -1,6 +1,6 @@
 import OpenAI from 'openai'
 import { AssistantResponse } from 'ai'
-import { DISCLOSURE_ASSISTANT_ID } from '@/lib/openai/assistants/config'
+import { DISCLOSURE_ASSISTANT_ID } from '@/lib/openai/config'
 import { openai } from '@/lib/openai/openai.client'
 
 export async function POST(req: Request) {
