@@ -1,7 +1,7 @@
-import { openai } from '@/app/openai'
+import { openai } from '@/lib/openai/openai.client'
 
 // download file by file ID
-export async function GET(_request, { params: { fileId } }) {
+export async function GET(_request, { params: { fileId } }: any) {
   const [file, fileContent] = await Promise.all([
     openai.files.retrieve(fileId),
     openai.files.content(fileId),
