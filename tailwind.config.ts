@@ -6,6 +6,12 @@ const {
   default: flattenColorPalette,
 } = require('tailwindcss/lib/util/flattenColorPalette')
 
+const storyPaths = [
+  './src/**/*.mdx',
+  './src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+  './src/**/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+]
+
 function addVariablesForColors({ addBase, theme }: any) {
   let allColors = flattenColorPalette(theme('colors'))
   let newVars = Object.fromEntries(
@@ -24,6 +30,8 @@ const config = {
     './src/app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
     './src/stories/*.{ts,tsx}',
+    './src/stories/**/*.stories.{ts,tsx}',
+    ...storyPaths,
   ],
   prefix: '',
   theme: {

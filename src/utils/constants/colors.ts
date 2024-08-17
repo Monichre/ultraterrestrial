@@ -51,7 +51,75 @@ export const palette: Record<string, string> = {
   khaki: `#B2A581`,
   ...NEONS,
 }
+export const dataVizPaletteTwo = {
+  indigoBlue: '#464782',
+  steelBlue: '#516c8f',
+  darkLavender: '#8e6fcf',
+  boringBlue: '#3ea8f7',
+  electricBlue: '#33c9fb',
+  cyan: '#42f4fe',
+}
+export const dataVizPaletteBase = {
+  violet: '#803583',
+  slate: '#58768d',
+  blurple: '#7c89b9',
+  lavender: '#b391dd',
+  lilac: '#cba6fa',
+  skyBlue: '#7ae0fb',
+  aquaMint: '#79ffe1',
+  ...dataVizPaletteTwo,
+}
+export const entityDataVizPaletteBase = {
+  topics: dataVizPaletteBase.blurple,
+  events: dataVizPaletteBase.skyBlue,
+  personnel: dataVizPaletteBase.lavender,
+  organizations: dataVizPaletteBase.violet,
+  testimonies: dataVizPaletteBase.slate,
+  artifacts: dataVizPaletteBase.lilac,
+}
 
+const maybe = {
+  1: {
+    'Majorelle Gardens': '#387468',
+    Spearmint: '#55cfba',
+    Treetop: '#66dcc7',
+    Mauvelous: '#72d2c0',
+    'Electric Blue': '#7fcab8',
+    'Aqua Mint': '#97c9af',
+  },
+  2: {
+    'Majorelle Gardens': '#3e7a67',
+    Spearmint: '#55bc9d',
+    Treetop: '#97baae',
+    Mauvelous: '#cab0bc',
+    'Elastic Pink': '#f2a3c9',
+    'Roseate Spoonbill': '#d8a8be',
+  },
+  3: {
+    'Sea Lion': '#858e9b',
+    'Puffy Cloud': '#d4e1f7',
+    'Foundation White': '#e4e7fd',
+    'Minute Mauve': '#f0e7fc',
+    'Strawberry Bonbon': '#f9e7fb',
+    'Delicate Cloud': '#d9dee9',
+  },
+  4: {
+    'Night Owl': '#607e89',
+    Wavelet: '#89c7d4',
+    'Water Nymph': '#80cfde',
+    'Summer of ’82': '#72d2e3',
+    'Splashing Wave': '#67d5e8',
+    'Gentle Sky': '#99c4d9',
+  },
+  5: {
+    'Muted Berry': '#967884',
+    'Cherry Blossom': '#f0bcd1',
+    'LA Vibes': '#eccfe1',
+    'Velvet Scarf': '#e1deed',
+    'Freezing Vapor': '#d4ebf7',
+    'Cold Wave': '#c1e0e2',
+  },
+}
 // Dark palette option
 /*
 $black: #010000ff;

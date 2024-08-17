@@ -170,19 +170,17 @@ export const Globeanime = ({ markers }) => {
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
   }
+  //   -left-2
+  //   sm:-left-32
+  // md:-left-44
+  // lg:-left-10
+  // xl:-left-32
 
   return (
     <div
       ref={ref}
       id='functions-hero'
-      className='
-        absolute inset-0
-        -left-28 top-4 w-[150%] md:w-[150%] aspect-[978/678]
-        sm:-left-32 sm:-top-2
-        md:-left-44
-        lg:-left-10 lg:-top-10 lg:w-[130%]
-        xl:-left-32 xl:w-[130%]
-      '
+      className='absolute inset-0 8 top-4 w-[150%] md:w-[150%] aspect-[978/678] sm:-top-2 right-0 lg:-top-10 lg:w-[130%] xl:w-[130%]'
     >
       {/* Snippet element */}
       <div
@@ -227,17 +225,20 @@ export const Globeanime = ({ markers }) => {
               {/* Define colors for both light and dark modes */}
               <stop
                 offset='0'
-                stopColor={darkMode ? '#000000' : '#FFFFFF'}
+                stopColor={darkMode ? '#99c4d9' : '#99c4d9'}
                 stopOpacity='0'
               />
+              {/* pink: `#E393E6`,
+  green: `#79FFE1`,
+  blue: `#27F1FF`, */}
               <stop
                 offset='0.5'
-                stopColor={darkMode ? '#000000' : '#FFFFFF'}
+                stopColor={darkMode ? '#99c4d9' : '#99c4d9'}
                 stopOpacity='0.6'
               />
               <stop
                 offset='1'
-                stopColor={darkMode ? '#000000' : '#FFFFFF'}
+                stopColor={darkMode ? '#99c4d9' : '#99c4d9'}
                 stopOpacity='0'
               />
             </linearGradient>
@@ -257,9 +258,12 @@ export const Globeanime = ({ markers }) => {
           <span className='absolute w-4/5 h-4/5 rounded-full bg-black dark:bg-white bg-opacity-90' />
         </div>
       ))}
-      <div className='absolute left-[51.15%] top-[10%] w-px h-[20%] overflow-hidden'>
+      {/* <div
+        className='absolute left-[51.15%] top-[10%] w-px h-[20%] overflow-hidden'
+        id='wtf'
+      >
         <span className='absolute inset-0 w-full bg-gradient-to-t from-current to-transparent h-full delay-1200 animate-slide-in' />
-      </div>
+      </div> */}
       {/* Globe background */}
 
       <Image

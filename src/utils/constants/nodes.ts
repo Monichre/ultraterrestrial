@@ -14,22 +14,22 @@ export const ROOT_NODE_POSITIONS: any = {
     childNodeDirection: 'left',
   },
   topics: {
-    x: 500,
+    x: 300,
     y: 0,
     childNodeDirection: 'below',
   },
   personnel: {
-    x: 1000,
+    x: 600,
     y: 0,
     childNodeDirection: 'above',
   },
   testimonies: {
-    x: 1500,
+    x: 900,
     y: 0,
     childNodeDirection: 'below',
   },
   organizations: {
-    x: 2000,
+    x: 1200,
     y: 0,
     childNodeDirection: 'right',
   },
@@ -37,10 +37,19 @@ export const ROOT_NODE_POSITIONS: any = {
 
 // !TODO: Make this responsive
 
-export const ROOT_NODE_WIDTH = 148
-export const ROOT_NODE_HEIGHT = 129
-export const NODE_SPACE = 20
+export const ROOT_NODE_WIDTH = 225
+export const ROOT_NODE_HEIGHT = 200
 
-export const ROOT_DIMENSIONS = { width: 148, height: 129 }
-export const CHILD_DIMENSIONS = { width: 200, height: 100 }
-export const PADDING = 20
+export const BASE_ENTITY_NODE_WIDTH = 300
+export const BASE_ENTITY_NODE_HEIGHT = 100
+export const NODE_SPACE = 50
+
+export const ROOT_DIMENSIONS = {
+  width: ROOT_NODE_WIDTH,
+  height: ROOT_NODE_HEIGHT,
+}
+export const CHILD_DIMENSIONS = {
+  width: BASE_ENTITY_NODE_WIDTH,
+  height: BASE_ENTITY_NODE_HEIGHT,
+}
+export const PADDING = 75

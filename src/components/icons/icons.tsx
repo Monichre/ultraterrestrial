@@ -1,4 +1,4 @@
-import { cn } from '@/utils'
+import { cn, NEONS } from '@/utils'
 import * as React from 'react'
 export type IconProps = React.HTMLAttributes<HTMLOrSVGElement> & {
   stroke?: string
@@ -39,6 +39,129 @@ export const HandDrawnArrowDown = (props: IconProps) => (
       d='M43.6953 0.553886C43.2025 1.04659 43.1086 1.32814 43.1086 2.64201C43.1086 3.6978 43.2729 4.54243 43.6484 5.41053C44.1412 6.63055 44.1647 6.84171 44.1412 14.8657C44.1178 23.4294 43.9535 28.0514 42.9913 45.601C41.7006 68.8753 40.668 81.0521 38.7671 95.3404C36.8193 110.075 32.6656 130.745 29.1219 143.555C26.6344 152.447 19.9696 172.765 16.9422 180.601C14.1496 187.828 9.92543 196.72 8.35309 198.691L7.88374 199.277L8.02454 196.227C8.30615 190.197 8.23576 173.727 7.93068 173.187C7.60213 172.53 6.49915 171.944 5.65432 171.944C4.66868 171.944 3.54224 173.234 3.23716 174.759C3.09635 175.463 2.86167 179.264 2.74433 183.206C2.36885 195.101 1.89949 200.849 0.749579 207.723C-0.165658 213.19 -0.21259 214.316 0.444503 215.56C1.2424 217.085 1.99337 217.554 3.87078 217.648C5.11457 217.718 5.84206 217.624 7.27359 217.132C9.69075 216.311 15.5811 213.472 22.6683 209.694C32.3839 204.509 31.9381 204.791 31.3983 204.251C30.8116 203.665 19.2655 206.527 11.1692 209.272C8.89285 210.023 6.96851 210.656 6.87464 210.656C6.80423 210.656 6.73382 210.304 6.73382 209.882C6.73382 209.295 7.08585 208.709 8.28269 207.254C14.9475 199.136 19.5706 189.165 26.6344 167.721C33.4165 147.121 35.599 138.98 39.0018 121.266C44.1412 94.6131 46.136 73.0281 47.1451 33.0957C47.3563 24.4148 47.3563 20.3793 47.1216 15.0065C46.6757 4.16704 46.2768 1.11697 45.1738 0.319265C44.4698 -0.149975 44.3524 -0.126513 43.6953 0.553886Z'
       fill='#080405'
     />
+  </svg>
+)
+
+export const StarDoodle = ({ stroke = NEONS.blue }: any) => (
+  <svg
+    // className='w-30 h-30'
+    // viewBox='0 0 82 84'
+    className='w-30 h-30' // Increase the size of the SVG
+    viewBox='-20 -20 122 124'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path
+      d='M41.5816 1.21606C39.7862 5.82482 40.3852 10.0977 40.5593 14.9633C40.7854 21.2812 40.9774 27.5593 41.4363 33.8661'
+      stroke={stroke}
+      stroke-width='1.90596'
+      stroke-linecap='round'
+    />
+    <path
+      d='M41.0651 45.1798C39.7505 51.5096 40.3418 57.6794 40.8893 64.0791C41.4093 70.1568 42.1389 76.2117 42.8566 82.2682'
+      stroke={stroke}
+      stroke-width='1.90596'
+      stroke-linecap='round'
+    />
+    <path
+      d='M1.13413 46.6647C5.16696 44.8703 8.96881 44.7974 13.3092 44.5029C19.8761 44.0572 26.2025 43.2089 32.656 41.952'
+      stroke={stroke}
+      stroke-width='1.90596'
+      stroke-linecap='round'
+    />
+    <path
+      d='M47.2629 40.0959C58.4139 39.3819 69.3895 37.5305 80.4472 35.9965'
+      stroke={stroke}
+      stroke-width='1.90596'
+      stroke-linecap='round'
+    />
+    <path
+      d='M49.3429 34.6508L52.917 28.1667'
+      stroke={stroke}
+      stroke-width='1.90596'
+      stroke-linecap='round'
+    />
+    <path
+      d='M32.9786 50.3504L28.6387 54.6391'
+      stroke={stroke}
+      stroke-width='1.90596'
+      stroke-linecap='round'
+    />
+    <path
+      d='M52.6361 48.6656L56.9506 51.5758'
+      stroke={stroke}
+      stroke-width='1.90596'
+      stroke-linecap='round'
+    />
+    <path
+      d='M31.549 30.8471C26.8741 29.4323 22.7143 27.3543 18.2738 25.3586'
+      stroke={stroke}
+      stroke-width='1.90596'
+      stroke-linecap='round'
+    />
+    <circle cx='41' cy='42' fill='none' r='60' stroke={stroke} stroke-width='1'>
+      <animate
+        attributeName='r'
+        from='20'
+        to='60'
+        dur='1.5s'
+        begin='0s'
+        repeatCount='indefinite'
+      />
+      <animate
+        attributeName='opacity'
+        from='1'
+        to='0'
+        dur='1.5s'
+        begin='0s'
+        repeatCount='indefinite'
+      />
+    </circle>
+    <circle
+      cx='41'
+      cy='42'
+      fill='rgba(255,255,255, .5)'
+      r='60'
+      stroke={stroke}
+      stroke-width='1'
+    >
+      <animate
+        attributeName='r'
+        from='20'
+        to='60'
+        dur='1.5s'
+        begin='0s'
+        repeatCount='indefinite'
+      />
+      <animate
+        attributeName='opacity'
+        from='.2'
+        to='0'
+        dur='1.5s'
+        begin='0s'
+        repeatCount='indefinite'
+      />
+    </circle>
+
+    {/* <circle cx='41' cy='42' fill='none' r='30' stroke={stroke} stroke-width='1'>
+      <animate
+        attributeName='r'
+        from='8'
+        to='20'
+        dur='1.5s'
+        begin='0s'
+        repeatCount='indefinite'
+      />
+      <animate
+        attributeName='opacity'
+        from='1'
+        to='0'
+        dur='1.5s'
+        begin='0s'
+        repeatCount='indefinite'
+      />
+    </circle>
+    <circle cx='41' cy='42' fill={stroke} r='10' /> */}
   </svg>
 )
 

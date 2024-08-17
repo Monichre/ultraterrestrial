@@ -14,6 +14,7 @@ import {
 
 import { AddNote } from '@/components/note/AddNote'
 import { Button } from '@/components/ui/button/button'
+import { DynamicSettings } from '@/components/ui/animated/dynamic-settings'
 
 interface EntityCardUtilityMenuProps {
   handleSave: any
@@ -21,7 +22,7 @@ interface EntityCardUtilityMenuProps {
 
   saveNote: any
   userNote: any
-  findConnectedNodes?: any
+  findConnectedDataPointsAndRenderTheirNodes?: any
 }
 
 export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
@@ -29,7 +30,7 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
   userNote,
   bookmarked,
   saveNote,
-  findConnectedNodes,
+  findConnectedDataPointsAndRenderTheirNodes,
 }) => {
   const gradientOne =
     'bg-[radial-gradient(50%_86.9%_at_50%_100%,_rgba(255,_255,_255,_0.2)_0%,_rgba(255,_255,_255,_0)_100%)] bg-black'
@@ -38,15 +39,23 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
 
   return (
     <>
-      {findConnectedNodes && (
-        <div>
-          <Button variant='ghost' size='icon' onClick={findConnectedNodes}>
-            <ScanSearch />
-          </Button>
-        </div>
+      {findConnectedDataPointsAndRenderTheirNodes && (
+        <Button
+          variant='ghost'
+          size='icon'
+          onClick={findConnectedDataPointsAndRenderTheirNodes}
+        >
+          <ScanSearch />
+        </Button>
       )}
-      <div>
-        <TooltipProvider>
+      {/* 
+      <DynamicSettings
+        handleSave={handleSave}
+        saveNote={saveNote}
+        userNote={userNote}
+      /> */}
+      <AddNote saveNote={saveNote} userNote={userNote} />
+      {/* <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant='ghost' size='icon' onClick={handleSave}>
@@ -61,12 +70,12 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
               <p>Bookmark Node</p>
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
-      </div>
+        </TooltipProvider> */}
 
+      {/* 
       <div>
-        <AddNote saveNote={saveNote} userNote={userNote} />
-      </div>
+        
+      </div> */}
     </>
   )
 }

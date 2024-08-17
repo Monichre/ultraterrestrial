@@ -27,34 +27,12 @@ const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
 
-const navItems = [
-  {
-    name: 'Home',
-    link: '/',
-    icon: <Home strokeWidth={1} />,
-  },
-  {
-    name: 'Explore',
-    link: '/explore',
-    icon: <Sparkles strokeWidth={1} />,
-  },
-  {
-    name: 'History',
-    link: '/history',
-    icon: <LibraryBig strokeWidth={1} />,
-  },
-  {
-    name: 'Sightings',
-    link: '/sightings',
-    icon: <Crosshair strokeWidth={1} />,
-  },
-]
-
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'UltraTerrestrial',
+  title: 'Ultraterrestrial',
   description:
-    'Tracking the State of Disclosure. Striving to document, explore and disseminate the past, present and future of the UFO topic and its bearing on humanity, the universe and our place within it.',
+    'Tracking the state of Disclosure. A visually rich and collaborative effort that strives to document, explore and synthesize the past, present and future of the UFO phenomenon, not only in its own regard but particularly as it concerns the origins of humanity, the fundamental nature of reality and the relationship between the two.', // and the space between?
+  // We must first understand what it is before we can understand what it means.  What tradeoffs known or unbeknownst to us may exist in attempting to answer the two questions in parallel? Is there really any other option?
 }
 
 export default function RootLayout({
@@ -70,27 +48,27 @@ export default function RootLayout({
           <body
             className={`bg-[#fff] ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} dark`}
           >
-            <DataLayer>
-              <ThemeProvider
-                attribute='class'
-                defaultTheme='dark'
-                enableSystem
-                disableTransitionOnChange
-              >
-                <FullSiteNav />
-                {/* <AnimationProvider> */}
-                {/* <PageTransition> */}
-                <main className='min-h-[100vh] min-w-screen relative'>
-                  {/* <NavBar navItems={navItems} /> */}
-                  {/* <HomePageNav navItems={navItems} /> */}
-                  {/* <FullSiteNav className='top-2' /> */}
-                  {children}
-                </main>
+            {/* <DataLayer> */}
+            <ThemeProvider
+              attribute='class'
+              defaultTheme='dark'
+              enableSystem
+              disableTransitionOnChange
+            >
+              <FullSiteNav />
+              {/* <AnimationProvider> */}
+              {/* <PageTransition> */}
+              <main className='min-h-[100vh] min-w-screen relative'>
+                {/* <NavBar navItems={navItems} /> */}
+                {/* <HomePageNav navItems={navItems} /> */}
+                {/* <FullSiteNav className='top-2' /> */}
+                {children}
+              </main>
 
-                {/* </PageTransition> */}
-                {/* </AnimationProvider> */}
-              </ThemeProvider>
-            </DataLayer>
+              {/* </PageTransition> */}
+              {/* </AnimationProvider> */}
+            </ThemeProvider>
+            {/* </DataLayer> */}
           </body>
         </html>
       </ClerkProvider>

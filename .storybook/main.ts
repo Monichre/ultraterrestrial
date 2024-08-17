@@ -8,6 +8,8 @@ const config: StorybookConfig = {
     '../src/**/*.mdx',
     '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
     '../src/**/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../src/stories/**/*.stories.@(ts|tsx)',
+    '../src/stories/*.stories.@(ts|tsx)',
   ],
 
   addons: [
@@ -31,7 +33,12 @@ const config: StorybookConfig = {
 
   framework: {
     name: '@storybook/nextjs',
-    options: {},
+
+    options: {
+      builder: {
+        useSWC: true, // Enables SWC support
+      },
+    },
   },
 
   docs: {},
