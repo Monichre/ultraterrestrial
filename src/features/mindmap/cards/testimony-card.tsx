@@ -9,6 +9,7 @@ import { CardContent, CardTitle } from '@/components/ui/card'
 import { BlurAppear } from '@/components/animations'
 import { TextEffect } from '@/components/animations/text-effect'
 import { ModelAvatar } from '@/features/mindmap/connection-list'
+import { BlockQuote } from '@/components/blockquote'
 
 type TestimonyCardProps = {
   data: {
@@ -30,78 +31,16 @@ type TestimonyCardProps = {
 }
 
 export function TestimonyCard({ data }: TestimonyCardProps) {
-  // useEffect(() => {
-  //   const fetchWitnessData = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `/api/personnel/query?=${data.witness.id}`
-  //       )
-  //       console.log('response: ', response)
-  //       setWitness(response.data)
-  //     } catch (error) {
-  //       console.error('Error fetching witness data:', error)
-  //     }
-  //   }
-
-  //   fetchWitnessData()
-  // }, [data])
-
-  const { claim } = data
-
-  // const [animatedClaim, setAnimatedClaim] = useState<string>('')
-  // // const [animatedDate, setAnimatedDate] = useState<string>('')
-  // const [titleFinished, setTitleFinished] = useState(false)
-  // const [t, setT] = useState<number>(0)
-  // const [i, setI] = useState<number>(0)
-
-  // useEffect(() => {
-  //   const typingEffect = setInterval(() => {
-  //     if (t < claim.length) {
-  //       setAnimatedClaim(claim.substring(0, t + 1))
-  //       setT(t + 1)
-  //     } else {
-  //       clearInterval(typingEffect)
-
-  //       // setTitleFinished(true)
-  //     }
-  //   }, 100)
-
-  //   return () => {
-  //     clearInterval(typingEffect)
-  //   }
-  // }, [claim, t])
-
-  // useEffect(() => {
-  //   const typingEffectTwo = setInterval(() => {
-  //     if (titleFinished) {
-  //       if (i < date.length) {
-  //         setAnimatedDate(date.substring(0, i + 1))
-  //         setI(i + 1)
-  //       } else {
-  //         clearInterval(typingEffectTwo)
-  //       }
-  //     }
-  //   }, 100)
-
-  //   return () => {
-  //     clearInterval(typingEffectTwo)
-  //   }
-  // }, [date, date.length, i, name, t, titleFinished])
-
   return (
     <BlurAppear>
       <Card
-        className={`entity-card shadow relative w-[450px] rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-dot-white/[0.2]`}
+        className={`shadow relative w-[450px] rounded-lg border border-white/60 dark:border-border/30 rounded-[calc(var(--radius))] bg-gray-900`}
       >
         <div className='border border-white/20 rounded-[calc(var(--radius)-2px)] relative p-2'>
           <CardHeader className='p-2'>
             <div className='text-neutral-200 m-2 text-center'>
-              {data?.claim && (
-                <TextEffect
-                  per='word'
-                  preset='fade'
-                  children={`"${data?.claim}"`}
-                />
+              {data?.claim && data?.witness?.name && (
+                <BlockQuote quote={data?.claim} author={data?.witness?.name} />
               )}
             </div>
           </CardHeader>
@@ -111,7 +50,6 @@ export function TestimonyCard({ data }: TestimonyCardProps) {
               <p className='ml-3'>{data?.witness?.name}</p>
             </div>
           </CardContent>
-          <CardFooter></CardFooter>
         </div>
       </Card>
     </BlurAppear>

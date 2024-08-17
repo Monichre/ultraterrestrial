@@ -6,60 +6,16 @@ import {
   DISCLOSURE_ASSISTANT_ID,
   INSTRUCTIONS,
 } from '@/lib/openai/assistants/config.ts'
+import {
+  createMessage,
+  formatRelatedItems,
+  parseApiResponse,
+} from '@/lib/openai/assistants/assistant.utils.ts'
+import { AssistantResponse } from 'ai'
 
 // Generate generic type for any kind of DatabaseSchema
 type AnyDatabaseSchema = DatabaseSchema[keyof DatabaseSchema]
-export function parseApiResponse({ text }: any): object | null {
-  // Extract the message value
-  const messageValue = text.value
 
-  // Locate the JSON-like string start and end positions
-  const jsonStartIndex = messageValue.indexOf('```json\n') + 8
-  const jsonEndIndex = messageValue.indexOf('```', jsonStartIndex)
-
-  // Extract the JSON-like string
-  const jsonString = messageValue.substring(jsonStartIndex, jsonEndIndex)
-
-  // Parse the JSON string into an object
-  try {
-    const parsedObject = JSON.parse(jsonString)
-    console.log('parsedObject: ', parsedObject)
-    return parsedObject
-  } catch (error) {
-    console.error('Error parsing JSON string:', error)
-    return null
-  }
-}
-// Rest of the code...
-
-const formatRelatedItems = (
-  items: {
-    type: string
-    name: string
-    role?: string
-    bio?: string
-    description?: string
-  }[]
-) => {
-  return items.map((item) => `${item.name} - ${item.role || ''}`).join('\n')
-}
-export const filterConnectionsByRelevance = (connections: any) => {
-  const relevant: any = {}
-  const irrelevant: any = {}
-  for (const key in connections) {
-    if (connections[key]['Relevance Score'] > 5) {
-      relevant[key] = connections[key]
-    } else {
-      irrelevant[key] = connections[key]
-    }
-  }
-  return {
-    relevant,
-    irrelevant,
-  }
-}
-const createMessage = (items: string | any[]) =>
-  items?.length && items?.length < 2 ? `How is` : 'How are'
 export const checkRelevanceWithAI = async ({
   subject,
   relatedItems,
@@ -128,44 +84,128 @@ export const checkRelevanceWithAI = async ({
 export const sendMessageInThreadToDisclosureAssistant = async ({
   threadId,
   content,
-}: any) => {
+}: {
+  threadId?: string
+  content: string
+}) => {
   console.log('threadId: ', threadId)
   console.log('content: ', content)
+  if (threadId) {
+    const createdMessage = await openai.beta.threads.messages.create(threadId, {
+      role: 'user',
+      content,
+    })
 
-  await openai.beta.threads.messages.create(threadId, {
-    role: 'user',
-    content,
-  })
+    return AssistantResponse(
+      { threadId, messageId: createdMessage.id },
+      async ({ forwardStream, sendDataMessage }: any) => {
+        // Run the assistant on the thread
+        const runStream = openai.beta.threads.runs.stream(threadId, {
+          assistant_id:
+            process.env.ASSISTANT_ID ??
+            (() => {
+              throw new Error('ASSISTANT_ID is not set')
+            })(),
+        })
 
-  const stream = openai.beta.threads.runs.stream(threadId, {
-    assistant_id: DISCLOSURE_ASSISTANT_ID,
-  })
+        // forward run status would stream message deltas
+        let runResult = await forwardStream(runStream)
 
-  let assistantAnswer: any
+        // status can be: queued, in_progress, requires_action, cancelling, cancelled, failed, completed, or expired
+        while (
+          runResult?.status === 'requires_action' &&
+          runResult.required_action?.type === 'submit_tool_outputs'
+        ) {
+          const tool_outputs =
+            runResult.required_action.submit_tool_outputs.tool_calls.map(
+              (toolCall: any) => {
+                const parameters = JSON.parse(toolCall.function.arguments)
 
-  for await (const step of stream) {
-    if (step.event === 'thread.message.completed') assistantAnswer = step.data
+                switch (toolCall.function.name) {
+                  // configure your tool calls here
+
+                  default:
+                    throw new Error(
+                      `Unknown tool call function: ${toolCall.function.name}`
+                    )
+                }
+              }
+            )
+
+          runResult = await forwardStream(
+            openai.beta.threads.runs.submitToolOutputsStream(
+              threadId,
+              runResult.id,
+              { tool_outputs }
+            )
+          )
+        }
+      }
+    )
   }
-  return assistantAnswer
 }
 
-export const sendNewMessageToDisclosureAssistant = async ({ content }: any) => {
+export const sendNewMessageToDisclosureAssistant = async ({
+  threadId: idOfThread,
+  content,
+}: {
+  threadId?: string
+  content: string
+}) => {
   // const thread = await openai.beta.threads.create()
-  const thread = await openai.beta.threads.create({
-    messages: [{ role: 'user', content }],
+  const threadId = idOfThread ?? (await openai.beta.threads.create({})).id
+
+  // Add a message to the thread
+  const createdMessage = await openai.beta.threads.messages.create(threadId, {
+    role: 'user',
+    content: content,
   })
-  const { id } = thread
 
-  const stream = await openai.beta.threads.runs.stream(id, {
-    assistant_id: DISCLOSURE_ASSISTANT_ID,
-  })
+  return AssistantResponse(
+    { threadId, messageId: createdMessage.id },
+    async ({ forwardStream, sendDataMessage }: any) => {
+      // Run the assistant on the thread
+      const runStream = openai.beta.threads.runs.stream(threadId, {
+        assistant_id:
+          process.env.ASSISTANT_ID ??
+          (() => {
+            throw new Error('ASSISTANT_ID is not set')
+          })(),
+      })
 
-  let assistantAnswer: any
+      // forward run status would stream message deltas
+      let runResult = await forwardStream(runStream)
 
-  for await (const step of stream) {
-    // @ts-ignore
+      // status can be: queued, in_progress, requires_action, cancelling, cancelled, failed, completed, or expired
+      while (
+        runResult?.status === 'requires_action' &&
+        runResult.required_action?.type === 'submit_tool_outputs'
+      ) {
+        const tool_outputs =
+          runResult.required_action.submit_tool_outputs.tool_calls.map(
+            (toolCall: any) => {
+              const parameters = JSON.parse(toolCall.function.arguments)
 
-    if (step.event === 'thread.message.completed') assistantAnswer = step.data
-  }
-  return assistantAnswer
+              switch (toolCall.function.name) {
+                // configure your tool calls here
+
+                default:
+                  throw new Error(
+                    `Unknown tool call function: ${toolCall.function.name}`
+                  )
+              }
+            }
+          )
+
+        runResult = await forwardStream(
+          openai.beta.threads.runs.submitToolOutputsStream(
+            threadId,
+            runResult.id,
+            { tool_outputs }
+          )
+        )
+      }
+    }
+  )
 }
+// sendNewMessageToDisclosureAssistant

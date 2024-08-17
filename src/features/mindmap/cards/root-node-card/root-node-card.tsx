@@ -9,7 +9,7 @@ import {
 import { NumberTicker } from '@/components/animations/number-ticker'
 import { OpenAILogo } from '@/components/ui/icons'
 
-import { cn, capitalize, ROOT_NODE_POSITIONS } from '@/utils'
+import { cn, capitalize, ROOT_NODE_POSITIONS, nextTick } from '@/utils'
 
 import { Button, ShinyButton } from '@/components/ui/button'
 import '@/components/ui/card/cards.css'
@@ -32,6 +32,7 @@ import { searchTable } from '@/features/ai/search'
 import { useMindMap } from '@/providers/mindmap-context'
 import { SketchyGlobe } from '@/components/icons'
 import { InputBorderSpotlight } from '@/features/mindmap/cards/root-node-card/search-input-spotlight'
+import { useLayoutedElements } from '@/features/mindmap/graph'
 
 const Description = memo(({ childCount, label }: any) => (
   <>
@@ -53,6 +54,7 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
     toggleLocationVisualization,
     onNodeClick,
   } = useMindMap()
+
   const nodeState = useNodesData(nodeData?.id)
   console.log('nodeState: ', nodeState)
   const type = nodeData?.data?.type
@@ -119,10 +121,11 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
   //   }
   // }, [addChildNodesFromSearch, searchResults, type])
 
-  const handleLoadingRecords = () => {
+  const handleLoadingRecords = useCallback(() => {
     const res = onNodeClick(nodeData)
-    console.log('res: ', res)
-  }
+    // toggle()
+  }, [nodeData, onNodeClick])
+
   return (
     <Card
       {...nodeProps}

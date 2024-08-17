@@ -196,6 +196,7 @@ function DialogContent({ children, className, style }: DialogContent) {
     <motion.div
       ref={containerRef}
       layoutId={`dialog-${uniqueId}`}
+      layoutScroll
       className={cn('overflow-hidden', className)}
       style={style}
       role='dialog'

@@ -6,4 +6,5 @@ export const nodeTypes: any = {
   testimoniesNode: TestimonyNode,
   personnelNode: EntityNode,
   topicsNode: EntityNode,
+  organizationsNode: EntityNode,
 }

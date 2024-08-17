@@ -1,5 +1,8 @@
 'use client'
 
+import rehypeExternalLinks from 'rehype-external-links'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import * as Dialog from '@radix-ui/react-dialog'
@@ -16,8 +19,153 @@ import { Button } from '@/components/ui/button/button'
 import { Divider } from '@/features/user/note/ui/PopoverMenu'
 import { Message, useAssistant } from 'ai/react'
 import { inputRegex } from '@tiptap/extension-highlight'
+import { AnimatePresence, motion } from 'framer-motion'
+import { cn } from '@/utils'
+import { MemoizedMarkdown } from '@/features/ai/markdown'
 
 // import { useCompletion } from 'ai/react';
+
+const CheckIcon = ({ className }: { className?: string }) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      fill='none'
+      viewBox='0 0 24 24'
+      strokeWidth={1.5}
+      stroke='currentColor'
+      className={cn('w-6 h-6 ', className)}
+    >
+      <path d='M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z' />
+    </svg>
+  )
+}
+
+const CheckFilled = ({ className }: { className?: string }) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      fill='currentColor'
+      className={cn('w-6 h-6 ', className)}
+    >
+      <path
+        fillRule='evenodd'
+        d='M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z'
+        clipRule='evenodd'
+      />
+    </svg>
+  )
+}
+
+type LoadingState = {
+  text: string
+}
+
+const LoaderCore = ({
+  loadingStates,
+  value = 0,
+}: {
+  loadingStates: LoadingState[]
+  value?: number
+}) => {
+  return (
+    <div className='flex relative justify-start max-w-xl mx-auto flex-col mt-40'>
+      {loadingStates.map((loadingState, index) => {
+        const distance = Math.abs(index - value)
+        const opacity = Math.max(1 - distance * 0.2, 0) // Minimum opacity is 0, keep it 0.2 if you're sane.
+
+        return (
+          <motion.div
+            key={index}
+            className={cn('text-left flex gap-2 mb-4')}
+            initial={{ opacity: 0, y: -(value * 40) }}
+            animate={{ opacity: opacity, y: -(value * 40) }}
+            transition={{ duration: 0.5 }}
+          >
+            <div>
+              {index > value && (
+                <CheckIcon className='text-black dark:text-white' />
+              )}
+              {index <= value && (
+                <CheckFilled
+                  className={cn(
+                    'text-black dark:text-white',
+                    value === index &&
+                      'text-black dark:text-lime-500 opacity-100'
+                  )}
+                />
+              )}
+            </div>
+            <span
+              className={cn(
+                'text-black dark:text-white',
+                value === index && 'text-black dark:text-lime-500 opacity-100'
+              )}
+            >
+              {loadingState.text}
+            </span>
+          </motion.div>
+        )
+      })}
+    </div>
+  )
+}
+
+export const LoadingSequence = ({
+  loadingStates,
+  loading,
+  duration = 2000,
+  loop = true,
+}: {
+  loadingStates: LoadingState[]
+  loading?: boolean
+  duration?: number
+  loop?: boolean
+}) => {
+  const [currentState, setCurrentState] = useState(0)
+
+  useEffect(() => {
+    if (!loading) {
+      setCurrentState(0)
+      return
+    }
+    const timeout = setTimeout(() => {
+      setCurrentState((prevState) =>
+        loop
+          ? prevState === loadingStates.length - 1
+            ? 0
+            : prevState + 1
+          : Math.min(prevState + 1, loadingStates.length - 1)
+      )
+    }, duration)
+
+    return () => clearTimeout(timeout)
+  }, [currentState, loading, loop, loadingStates.length, duration])
+  return (
+    <AnimatePresence mode='wait'>
+      {loading && (
+        <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          exit={{
+            opacity: 0,
+          }}
+          className='w-full h-full fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-2xl'
+        >
+          <div className='h-96  relative'>
+            <LoaderCore value={currentState} loadingStates={loadingStates} />
+          </div>
+
+          <div className='bg-gradient-to-t inset-x-0 z-20 bottom-0 bg-white dark:bg-black h-full absolute [mask-image:radial-gradient(900px_at_center,transparent_30%,white)]' />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
 
 const suggestions = [
   'Tell me about the Roswell incident.',
@@ -101,8 +249,15 @@ export function Search() {
   // const [query, setQuery]: any = useState('')
 
   // const [messages, setMessages] = useState<ClientMessage[]>([])
-  const { status, messages, input, submitMessage, handleInputChange } =
-    useAssistant({ api: '/api/assistants/disclosure' })
+  const {
+    status,
+    error,
+    messages,
+    input,
+    submitMessage,
+    handleInputChange,
+    append,
+  } = useAssistant({ api: '/api/assistants/disclosure/message' })
   console.log('messages: ', messages)
   // const { handleSubmitMessage } = useActions()
   // handleClick
@@ -124,11 +279,13 @@ export function Search() {
   //   setMessages((currentMessages) => [...currentMessages, response])
   //   // setQuery('')
   // }
-  // const handleSelection = async (suggestion: string) => {
-  //   setQuery(suggestion)
-  //   // setIsOpen(false)
-  //   await handleSubmission()
-  // }
+  const handleSelection = (suggestion: string) => {
+    console.log('suggestion: ', suggestion)
+    append({
+      role: 'user',
+      content: suggestion,
+    })
+  }
   // const onChange = (event: any) => {
   //   setQuery(event.target.value)
   // }
@@ -238,31 +395,105 @@ export function Search() {
           <ScrollArea.Root className='max-h-[calc(85vh-44px)]'>
             <ScrollArea.Viewport className='h-full w-full'>
               <div className='space-y-4 px-2 py-4'>
-                <div className='p-2'>status: {status}</div>
                 <div>
-                  <div className='flex flex-col p-2 gap-2'>
-                    {messages.map((message: Message) => (
-                      <div key={message.id} className='flex flex-row gap-2'>
-                        <div className='w-24 text-black-500'>{`${message.role}: `}</div>
-                        <div className='w-full text-black'>
-                          {message.content}
-                        </div>
+                  <div className='p-2'>status: {status}</div>
+                  {status === 'in_progress' ? (
+                    <LoadingSequence
+                      loadingStates={[
+                        {
+                          text: 'Consulting Party Martian, Warden of Ultraterrestrial...',
+                        },
+                        {
+                          text: `Give it a second, we're literally calling Zeta Reticuli`,
+                        },
+                        {
+                          text: 'I know, I know, why is an ET from Zeta Reticul called Party Martian? Why are native americans called Indians bro?',
+                        },
+                        { text: 'Make a snack' },
+                      ]}
+                    />
+                  ) : (
+                    <div>
+                      <div className='mb-2 px-2 text-xs font-semibold uppercase text-gray-400'>
+                        Suggestions
                       </div>
-                    ))}
-                  </div>
-                  <div className='mb-2 px-2 text-xs font-semibold uppercase text-gray-400'>
-                    Suggestions
-                  </div>
-                  <ul>
-                    {suggestions.map((suggestion) => (
-                      <SuggestedSearchItem
-                        // onClick={handleSelection}
-                        key={suggestion}
-                        value={suggestion}
-                      />
-                    ))}
-                  </ul>
-                  <Divider />
+                      <ul>
+                        {suggestions.map((suggestion) => (
+                          <SuggestedSearchItem
+                            onClick={handleSelection}
+                            key={suggestion}
+                            value={suggestion}
+                          />
+                        ))}
+                      </ul>
+                      <Divider />
+                    </div>
+                  )}
+
+                  {messages?.length && (
+                    <div className='flex flex-col p-2 gap-2'>
+                      {messages.map((message: Message) => {
+                        if (message.role === 'assistant') {
+                          return (
+                            <MemoizedMarkdown
+                              rehypePlugins={[
+                                [rehypeExternalLinks, { target: '_blank' }],
+                              ]}
+                              remarkPlugins={[remarkGfm]}
+                              className='prose-sm prose-neutral prose-a:text-accent-foreground/50'
+                              components={{
+                                code({
+                                  node,
+                                  inline,
+                                  className,
+                                  children,
+                                  ...props
+                                }: any) {
+                                  if (children.length) {
+                                    if (children[0] == '▍') {
+                                      return (
+                                        <span className='mt-1 cursor-default animate-pulse'>
+                                          ▍
+                                        </span>
+                                      )
+                                    }
+
+                                    children[0] = (
+                                      children[0] as string
+                                    ).replace('`▍`', '▍')
+                                  }
+
+                                  const match = /language-(\w+)/.exec(
+                                    className || ''
+                                  )
+
+                                  if (inline) {
+                                    return (
+                                      <code className={className} {...props}>
+                                        {children}
+                                      </code>
+                                    )
+                                  }
+
+                                  return null
+                                },
+                              }}
+                            >
+                              {message.content}
+                            </MemoizedMarkdown>
+                          )
+                        }
+                        return (
+                          <div key={message.id} className='flex flex-row gap-2'>
+                            <div className='w-24 text-black-500'>{`${message.role}: `}</div>
+                            <div className='w-full text-black'>
+                              {message.content}
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             </ScrollArea.Viewport>

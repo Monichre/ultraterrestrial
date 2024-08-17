@@ -1,11 +1,9 @@
 'use client'
 
-import * as React from 'react'
-
-import { BackgroundGlobe } from './globe/background-globe'
+import { Static } from '@/components/animations/static'
 
 export const Loading = () => (
-  <div className='h-screen w-screen flex flex-col justify-center'>
-    <BackgroundGlobe />
+  <div className='h-screen w-screen relative'>
+    <Static />
   </div>
 )

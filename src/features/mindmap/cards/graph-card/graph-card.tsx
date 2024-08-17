@@ -54,6 +54,7 @@ export function GraphCard({ data, id, ...rest }: any) {
     label,
     fill,
   } = node
+  console.log('node: ', node)
   const date = dayjs(data?.date).format('MMM DD, YYYY')
   const image: any = photos?.length
     ? photos[0]
@@ -103,6 +104,10 @@ export function GraphCard({ data, id, ...rest }: any) {
   //   }
   // }, [date, date.length, i, name, t, titleFinished])
 
+  // !IMPORTANT: This is for the connectionList UI only
+  const [connectionListConnections, setConnectionListConnections]: any =
+    useState()
+
   const [userNote, setUserNote] = useState({
     title: '',
     content: '',
@@ -116,7 +121,7 @@ export function GraphCard({ data, id, ...rest }: any) {
   const [relatedDataPoints, setRelatedDataPoints]: any = useState(null)
   console.log('relatedDataPoints: ', relatedDataPoints)
 
-  const searchRelatedDataPoints = useCallback(async () => {
+  const searchRelatedDataPointsForConnectionList = useCallback(async () => {
     const payload = await searchConnections({
       id,
       type,
@@ -125,19 +130,19 @@ export function GraphCard({ data, id, ...rest }: any) {
     setRelatedDataPoints(payload.data)
   }, [id, type])
 
-  const findConnectedNodes = async () => {
-    const payload = await searchAndEnrichConnections({
-      subject: node,
-      type,
-    })
-    console.log('payload: ', payload)
-    // const payload = await searchConnections({
-    //   id,
+  const findConnectedDataPointsAndRenderTheirNodes = async () => {
+    // const payload = await searchAndEnrichConnections({
+    //   subject: node,
     //   type,
     // })
+
+    const payload = await searchConnections({
+      id,
+      type,
+    })
     const searchResults = payload.data
     console.log('searchResults: ', searchResults)
-    // const res = addConnectionNodesFromSearch({ source: node, searchResults })
+    const res = addConnectionNodesFromSearch({ source: node, searchResults })
 
     // console.log('res: ', res)
   }
@@ -192,12 +197,12 @@ export function GraphCard({ data, id, ...rest }: any) {
         className={`relative z-50 w-content h-content rounded-[calc(var(--radius)-2px)] p-[1px] bg-black`}
         style={{ border: `1px solid ${color}` }}
         onMouseEnter={handleHoverEnter}
-        onMouseLeave={handleHoverLeave}
+        // onMouseLeave={handleHoverLeave}
       >
         <AnimatePresence>
           {showMenu && (
             <motion.div
-              className='flex justify-center items-center left-[40%] absolute bg-black'
+              className='flex justify-center items-center w-full absolute bg-transparent w-auto top-0 left-0'
               animate={{ opacity: 1, top: -50 }}
               initial={{ opacity: 0, top: 50 }}
               exit={{ opacity: 0, top: 50 }}
@@ -207,7 +212,9 @@ export function GraphCard({ data, id, ...rest }: any) {
                 saveNote={saveNote}
                 userNote={userNote}
                 bookmarked={bookmarked}
-                findConnectedNodes={findConnectedNodes}
+                findConnectedDataPointsAndRenderTheirNodes={
+                  findConnectedDataPointsAndRenderTheirNodes
+                }
               />
             </motion.div>
           )}
@@ -236,31 +243,35 @@ export function GraphCard({ data, id, ...rest }: any) {
                   <DialogImage
                     src={image.url || image.src}
                     alt='What I Talk About When I Talk About Running - book cover'
-                    className='h-12 w-12 object-cover object-center'
+                    className='h-[75px] w-[75px] object-cover object-center p-1 mr-4'
                     style={{
                       borderRadius: '4px',
                     }}
                   />
                 )}
-                <DialogTitle className='flex w-full justify-between align-middle items-center center-content'>
-                  <h2
-                    className='text-white font-centimaSans text-xl whitespace-normal w-fit capitalize '
-                    style={{ textWrap: 'pretty' }}
-                  >
-                    {name}
-                  </h2>
-                  <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-fit'>
-                    {date}
-                  </p>
-                </DialogTitle>
-              </div>
 
-              <DialogSubtitle className='my-3'>
-                <p className='font-jetbrains text-white tracking-wider '>
-                  {node?.location || role}
-                </p>
-                {/* text-[10px] text-gray-600 sm:text-xs */}
-              </DialogSubtitle>
+                <div className='flex w-full justify-between align-middle items-center center-content'>
+                  <DialogTitle>
+                    <h2
+                      className='text-white font-centimaSans text-xl whitespace-normal w-fit capitalize '
+                      style={{ textWrap: 'pretty' }}
+                    >
+                      {name}
+                    </h2>
+                    <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-auto ml-auto'>
+                      {type === 'personnel'
+                        ? node?.credibility || node?.rank
+                        : date}
+                    </p>
+                  </DialogTitle>
+                  <DialogSubtitle className='my-3'>
+                    <p className='font-jetbrains text-white tracking-wider '>
+                      {node?.location || role}
+                    </p>
+                    {/* text-[10px] text-gray-600 sm:text-xs */}
+                  </DialogSubtitle>
+                </div>
+              </div>
             </div>
           </DialogTrigger>
 
@@ -287,7 +298,9 @@ export function GraphCard({ data, id, ...rest }: any) {
                       </h2>
 
                       <div className='flex justify-end'>
-                        <ShinyButton onClick={searchRelatedDataPoints}>
+                        <ShinyButton
+                          onClick={searchRelatedDataPointsForConnectionList}
+                        >
                           Connections
                         </ShinyButton>
                         <EntityCardUtilityMenu

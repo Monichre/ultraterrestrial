@@ -1,40 +1,47 @@
 'use client'
-import { AnimatePresence, type HTMLMotionProps, motion } from 'framer-motion'
+import {
+  AnimatePresence,
+  type HTMLMotionProps,
+  motion,
+  MotionConfig,
+} from 'framer-motion'
 
 import { PlusIcon, SquareIcon } from 'lucide-react'
-import { type HTMLAttributes, useState } from 'react'
+import { type HTMLAttributes, useId, useState } from 'react'
 import { toast } from 'sonner'
+
 import { cn } from '@/utils/cn'
 import { Button } from '@/components/ui/button'
-
+import { BookmarkIcon, BookmarkFilledIcon } from '@radix-ui/react-icons'
 //TODO : Improve by refactoring the different sections into their own components
 //TODO : Improve by adding a dark version
 //TODO : Add dimensions section with sliders
 
 const menuCategories = [
   {
-    label: 'Connections',
-    slug: 'connections',
+    label: 'Bookmark',
+    slug: 'bookmark',
     menuWidth: 320,
     menuHeight: 240,
   },
   {
-    label: 'Save',
-    slug: 'save',
+    label: 'Note',
+    slug: 'note',
     menuWidth: 320,
-    menuHeight: 188,
+    menuHeight: 240,
   },
-  { label: 'Add Note', slug: 'note', menuWidth: 320, menuHeight: 240 },
 ] as const
 
-export function DynamicSettings() {
+export function DynamicSettings({ handleSave, saveNote, userNote }: any) {
+  const unique = useId()
   const [isOpen, setIsOpen] = useState(false)
-  const [subMenuSelected, setSubMenuSelected] = useState('dimensions')
+  const [subMenuSelected, setSubMenuSelected] = useState('bookmark')
   const handleOpenSettings = () => {
     setIsOpen(!isOpen)
   }
   return (
     <motion.div
+      layoutId='DynamicSettings'
       animate={{
         height: isOpen
           ? menuCategories.find((item) => item.slug === subMenuSelected)
@@ -52,19 +59,19 @@ export function DynamicSettings() {
         // stiffness: 120,
       }}
       className={cn(
-        'overflow-hidden justify-between bg-neutral-900 rounded-2xl items-center text-neutral-50 p-2 shadow-lg',
+        'overflow-hidden justify-between rounded-2xl',
         !isOpen && 'hover:bg-neutral-800'
       )}
     >
       <div className='h-full'>
         <div
           className={cn(
-            'transition-all duration-300 flex flex-col justify-between gap-2 h-full'
+            'transition-all duration-300 flex flex-col justify-between gap-2 h-full transform-gpu'
           )}
         >
           <div
             className={cn(
-              'transition-all duration-300 flex items-center justify-between gap-2 group'
+              'transition-all duration-300 flex items-center justify-between gap-2 group transform-gpu'
             )}
           >
             {isOpen ? (
@@ -74,40 +81,34 @@ export function DynamicSettings() {
               />
             ) : (
               <button
-                type='button'
-                className={cn(
-                  'flex gap-2 p-2 transition-all text-nowrap font-medium text-neutral-500 group-hover:text-neutral-50 text-sm'
-                )}
                 onClick={() => setIsOpen(true)}
+                type='button'
+                className='size-8 text-neutral-400 hover:text-neutral-300 transition-colors duration-500 transform-gpu'
               >
-                Add Style
+                <PlusIcon
+                  className={cn(
+                    ' transition-transform duration-300 transform-gpu',
+                    isOpen ? 'rotate-45' : 'rotate-0'
+                  )}
+                />
               </button>
             )}
-            <Button
-              onClick={() => handleOpenSettings()}
-              type='button'
-              className='size-8 text-neutral-400 hover:text-neutral-300 transition-colors duration-500'
-            >
-              <PlusIcon
-                className={cn(
-                  ' transition-transform duration-300',
-                  isOpen ? 'rotate-45' : 'rotate-0'
-                )}
-              />
+            <Button onClick={() => setIsOpen(true)} variant='ghost'>
+              <PlusIcon className={cn('h-4 w-4 stroke-1')} />
             </Button>
           </div>
-          {isOpen && subMenuSelected === 'aspect-ratio' && (
+          {isOpen && subMenuSelected === 'bookmark' && (
             <motion.div
               initial={{ opacity: 0, filter: 'blur(4px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
               transition={{ duration: 1.2, type: 'spring' }}
               className='flex flex-col gap-4 justify-between'
             >
-              <AspectRatioSection />
+              <BookmarkSection handleSave={handleSave} />
               <div className='flex justify-between'>
                 <div className='flex items-center gap-2 ml-2'>
                   <div className='rounded-full size-2 bg-yellow-200' />
-                  <p className='text-sm text-neutral-500'>Changes</p>
+                  <p className='text-sm text-neutral-500'>Editing</p>
                 </div>
                 <button
                   type='submit'
@@ -119,12 +120,12 @@ export function DynamicSettings() {
                     })
                   }}
                 >
-                  Apply Changes
+                  Save
                 </button>
               </div>
             </motion.div>
           )}
-          {isOpen && subMenuSelected === 'prompt' && (
+          {isOpen && subMenuSelected === 'note' && (
             <motion.div
               initial={{ opacity: 0, filter: 'blur(4px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
@@ -138,7 +139,7 @@ export function DynamicSettings() {
               <div className='flex justify-between'>
                 <div className='flex items-center gap-2 ml-2'>
                   <div className='rounded-full size-2 bg-yellow-200' />
-                  <p className='text-sm text-neutral-500'>Changes</p>
+                  <p className='text-sm text-neutral-500'>Editing</p>
                 </div>
                 <button
                   type='submit'
@@ -150,12 +151,12 @@ export function DynamicSettings() {
                     })
                   }}
                 >
-                  Apply Changes
+                  Save
                 </button>
               </div>
             </motion.div>
           )}
-          {isOpen && subMenuSelected === 'dimensions' && (
+          {/* {isOpen && subMenuSelected === 'dimensions' && (
             <motion.div
               initial={{ opacity: 0, filter: 'blur(4px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
@@ -165,7 +166,7 @@ export function DynamicSettings() {
               <div className='flex justify-between'>
                 <div className='flex items-center gap-2 ml-2'>
                   <div className='rounded-full size-2 bg-yellow-200' />
-                  <p className='text-sm text-neutral-500'>Changes</p>
+                  <p className='text-sm text-neutral-500'>Editing</p>
                 </div>
                 <button
                   type='submit'
@@ -177,11 +178,11 @@ export function DynamicSettings() {
                     })
                   }}
                 >
-                  Apply Changes
+                  Save
                 </button>
               </div>
             </motion.div>
-          )}
+          )} */}
         </div>
       </div>
     </motion.div>
@@ -220,6 +221,23 @@ function AspectRatioSection() {
     </div>
   )
 }
+
+function BookmarkSection({ handleSave }: any) {
+  const [bookmarked, setBookmarked] = useState<any>(false)
+  return (
+    <div className='flex gap-2 flex-wrap'>
+      <Button variant='ghost' size='icon' onClick={handleSave}>
+        {bookmarked ? (
+          <BookmarkFilledIcon className='h-5 w-5 text-neutral-200 stroke-1' />
+        ) : (
+          <BookmarkIcon className='h-5 w-5 text-neutral-200 stroke-1' />
+        )}
+      </Button>
+      <span>Bookmark</span>
+    </div>
+  )
+}
+
 // function SliderRow() {
 //   return (
 //     <div className="flex items-center gap-2">

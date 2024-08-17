@@ -12,13 +12,11 @@
   "editor.tabCompletion": "on",
   "cody.autocomplete.formatOnAccept": true,
   "github.copilot.chat.terminalChatLocation": "quickChat",
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "js/ts.implicitProjectConfig.target": "ESNext",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "typescript.tsdk": "./node_modules/typescript/lib",
   
   
-  
-  
-  
-  
-
 
 }

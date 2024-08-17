@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/backgrounds'
 import { nodeTypes } from '@/features/mindmap/utils/node-types'
 
-import { useCallback } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   ReactFlow,
   Controls,
@@ -17,6 +17,7 @@ import {
   useReactFlow,
   useStore,
   MiniMap,
+  useNodesInitialized,
 } from '@xyflow/react'
 
 import { useMindMap } from '@/providers/mindmap-context'
@@ -26,8 +27,87 @@ import { Toolbar } from '@/components/toolbar'
 import { nextTick } from '@/utils'
 import { LocationVisualization } from '@/components/location-visualization'
 import { Search } from '@/components/search'
-import { edgeTypes } from '@/features/mindmap/edges'
+import { edgeTypes } from '@/features/mindmap/utils/edge-types'
+import * as d3F from 'd3-force'
+import collide from '@/features/mindmap/utils/collide'
+const simulation = d3F
+  .forceSimulation()
+  .force('charge', d3F.forceManyBody().strength(-1000))
+  .force('x', d3F.forceX().x(0).strength(0.05))
+  .force('y', d3F.forceY().y(0).strength(0.05))
+  .force('collide', collide())
+  .alphaTarget(0.05)
+  .stop()
 
+export const useLayoutedElements = () => {
+  const { getNodes, setNodes, getEdges, fitView } = useMindMap()
+  const initialized = useNodesInitialized()
+  const [running, setRunning] = useState(false)
+
+  const tick = useCallback(() => {
+    let nodes = getNodes()
+
+    nodes.forEach((node, i) => {
+      const dragging = Boolean(
+        document.querySelector(`[data-id="${node.id}"].dragging`)
+      )
+
+      nodes[i].fx = dragging ? node.position.x : node.x
+      nodes[i].fy = dragging ? node.position.y : node.y
+    })
+
+    simulation.tick()
+
+    setNodes(
+      nodes.map((node) => ({ ...node, position: { x: node.x, y: node.y } }))
+    )
+
+    window.requestAnimationFrame(() => {
+      fitView()
+      if (running) tick() // Continue the simulation if it's still running
+    })
+  }, [getNodes, setNodes, fitView, running])
+
+  useEffect(() => {
+    if (!initialized || getNodes().length === 0) {
+      return
+    }
+
+    let nodes = getNodes().map((node) => ({
+      ...node,
+      x: node.position?.x || node.x,
+      y: node.position?.y || node.y,
+    }))
+
+    let edges = getEdges().map((edge) => edge)
+
+    simulation.nodes(nodes).force(
+      'link',
+      d3F
+        .forceLink(edges)
+        .id((d) => d.id)
+        .strength(0.05)
+        .distance(100)
+    )
+
+    if (running) {
+      simulation.alpha(1).restart()
+      window.requestAnimationFrame(tick)
+    }
+
+    return () => {
+      simulation.stop() // Stop the simulation when the component unmounts or when dependencies change
+    }
+  }, [initialized, running, tick, getNodes, getEdges])
+
+  const toggle = useCallback(() => {
+    setRunning((prev) => !prev)
+  }, [])
+
+  const isRunning = useCallback(() => running, [running])
+
+  return [true, { toggle, isRunning }]
+}
 export function Graph(props: any) {
   const {
     nodes,
@@ -46,42 +126,22 @@ export function Graph(props: any) {
     zoomOut,
     addLocationsToVisualize,
     updateActiveNode,
+    detectNodeOverlap,
+    updateMindMapInstance,
+    saveMindMap,
+    restore,
   } = useMindMap()
   // const reactFlow = useReactFlow()
+  useLayoutedElements()
 
   const edgeOptions = {
     animated: true,
     style: { stroke: 'white' },
   }
 
-  // const onNodeClick: any = useCallback(
-  //   (event: any, node: any, ...rest: any) => {
-  //     const { target } = event
-  //     const {
-  //       data: { type },
-  //     } = node
-  //     // Ignore any other clicks to the node that are not the load button
-  //     if (target.classList.contains('load-records-button')) {
-  //       const { childNodes } = getRootNodeChildren(node?.data.type)
-  //       const childNode = childNodes[childNodes.length - 1]
-  //       console.log('childNode: ', childNode)
-
-  //       if (type === 'events') {
-  //         addLocationsToVisualize(childNodes)
-  //       }
-
-  //       nextTick(10).then(() => {
-  //         zoomOut({
-  //           zoom: 0,
-  //           duration: 500,
-  //         })
-  //       })
-  //     } else {
-  //       updateActiveNode(node)
-  //     }
-  //   },
-  //   [addLocationsToVisualize, getRootNodeChildren, updateActiveNode, zoomOut]
-  // )
+  useEffect(() => {
+    saveMindMap()
+  }, [nodes, edges, saveMindMap])
 
   // useForceLayout(childrenLoaded)
   // #NOTE: This might be an interesting way to enhance, bypass or hack any trouble with edges as the node connections get more complex: https://magicui.design/docs/components/animated-beam
@@ -92,19 +152,19 @@ export function Graph(props: any) {
         fill='white'
       />
 
-      <div className='w-auto absolute top-[40px] left-[20px] z-20 cursor-pointer flex justify-center'>
+      {/* <div className='w-auto absolute top-[40px] left-[20px] z-20 cursor-pointer flex justify-center'>
         <Toolbar />
       </div>
       <LocationVisualization />
       <div className='w-full fixed bottom-[40px] left-0 z-50 cursor-pointer flex justify-center'>
         <Search />
-      </div>
+      </div> */}
 
       <ReactFlow
         colorMode='dark'
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        snapToGrid={true}
+        // snapToGrid={true}
         defaultEdgeOptions={edgeOptions}
         nodes={nodes}
         edges={edges}
@@ -113,8 +173,23 @@ export function Graph(props: any) {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         fitView
+        onInit={updateMindMapInstance}
         style={{ backgroundColor: 'transparent' }}
-      ></ReactFlow>
+      >
+        <Panel position='top-left'>
+          <div className='ml-2 mt-2'>
+            <Toolbar />
+          </div>
+        </Panel>
+        <Panel position='top-right'>
+          <LocationVisualization />
+        </Panel>
+        <Panel position='bottom-center'>
+          <div className='w-full fixed bottom-[40px] left-0 z-50 cursor-pointer flex justify-center'>
+            <Search />
+          </div>
+        </Panel>
+      </ReactFlow>
     </div>
   )
 }

@@ -47,7 +47,7 @@ const EN = memo((props: any) => {
     /* // <BlurAppear> */
   }
   return (
-    <div className='w-full border border-white/20 rounded-[calc(var(--radius)-2px)] !min-w-[450px] relative h-auto '>
+    <div className='w-full border border-white/20 rounded-[calc(var(--radius)-2px)] !min-w-[450px] relative h-auto max-w-[400px]'>
       {handles && handles?.length
         ? handles.map((id: string) => (
             <Handle

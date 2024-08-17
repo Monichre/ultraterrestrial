@@ -201,17 +201,6 @@ export const ConnectionList: React.FC<ConnectionListProps> = ({
   connections,
   originalNode,
 }: any) => {
-  // const [isPresent, safeToRemove] = usePresence()
-  // const scope = useMenuAnimation(isPresent)
-  // const [connections, setConnections] = useState(null)
-  // searchRelatedDataPoints
-  // useEffect(() =>
-  // {
-  //   searchRelatedDataPoints().then(res => {
-  //     console.log('res: ', res);
-  //     setConnections(res.data)
-  //   })
-  // }, [])
   return (
     <ConnectionBeams originalNode={originalNode} connections={connections} />
   )
