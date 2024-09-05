@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { MindMap } from '@/features/mindmap'
 import { StateOfDisclosureProvider } from '@/providers'
 
-import { graphData as allEntityGraphData } from '@/stories/data/graph-data'
 import networkGraphData from '@/stories/data/network-graph-data.json'
 // @ts-ignore
 const meta = {
@@ -18,22 +17,17 @@ const meta = {
     // @ts-ignore
     allEntityGraphData,
   },
-    decorators: [
+  decorators: [
     (Story: any) => (
       <StateOfDisclosureProvider stateOfDisclosure={networkGraphData}>
         {Story()}
       </StateOfDisclosureProvider>
     ),
-  ]
+  ],
 }
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Demo: Story = {
-  args: {
-    // @ts-ignore
-    allEntityGraphData,
-  },
-}
+export const Demo: Story = {}

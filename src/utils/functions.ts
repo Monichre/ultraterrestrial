@@ -11,6 +11,15 @@ export const nextTick = async (frames = 1) => {
   }
 }
 
+// utils/wait.js
+export const wait = async (seconds: number) => {
+  return new Promise((resolve: any) => {
+    setTimeout(() => {
+      resolve()
+    }, seconds * 1000) // Convert seconds to milliseconds
+  })
+}
+
 export const firstOf = <T = any>(datas?: T[]) =>
   datas ? (datas.length < 1 ? undefined : datas[0]) : undefined
 

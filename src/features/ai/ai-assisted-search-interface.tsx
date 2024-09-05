@@ -22,7 +22,7 @@ import { inputRegex } from '@tiptap/extension-highlight'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/utils'
 import { MemoizedMarkdown } from '@/features/ai/markdown'
-
+import { Answer } from './prompts/Answer'
 // import { useCompletion } from 'ai/react';
 
 const CheckIcon = ({ className }: { className?: string }) => {
@@ -83,23 +83,20 @@ const LoaderCore = ({
             transition={{ duration: 0.5 }}
           >
             <div>
-              {index > value && (
-                <CheckIcon className='text-black dark:text-white' />
-              )}
+              {index > value && <CheckIcon className=' text-white' />}
               {index <= value && (
                 <CheckFilled
                   className={cn(
-                    'text-black dark:text-white',
-                    value === index &&
-                      'text-black dark:text-lime-500 opacity-100'
+                    ' text-white',
+                    value === index && ' dark:text-lime-500 opacity-100'
                   )}
                 />
               )}
             </div>
             <span
               className={cn(
-                'text-black dark:text-white',
-                value === index && 'text-black dark:text-lime-500 opacity-100'
+                ' text-white',
+                value === index && ' dark:text-lime-500 opacity-100'
               )}
             >
               {loadingState.text}
@@ -160,7 +157,7 @@ export const LoadingSequence = ({
             <LoaderCore value={currentState} loadingStates={loadingStates} />
           </div>
 
-          <div className='bg-gradient-to-t inset-x-0 z-20 bottom-0 bg-white dark:bg-black h-full absolute [mask-image:radial-gradient(900px_at_center,transparent_30%,white)]' />
+          <div className='bg-gradient-to-t inset-x-0 z-20 bottom-0 bg-black dark:bg-black h-full absolute [mask-image:radial-gradient(900px_at_center,transparent_30%,white)]' />
         </motion.div>
       )}
     </AnimatePresence>
@@ -173,7 +170,6 @@ const suggestions = [
   'How can I get into Ufology and remain attractive to the opposite sex?',
   'Who is the most credible key figure?',
   'What data is there on ancient artifacts as they related to non human intelligence?',
-  'Is it true that your dick is green?',
 ]
 
 export const SuggestedSearchItem = ({ value, onClick }: any) => {
@@ -244,7 +240,7 @@ export const SuggestedSearchItem = ({ value, onClick }: any) => {
   )
 }
 
-export function Search() {
+export function AiAssistedSearch() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [initial, setInitial] = useState<boolean>(true)
   // const [query, setQuery]: any = useState('')
@@ -256,6 +252,7 @@ export function Search() {
     messages,
     input,
     submitMessage,
+
     handleInputChange,
     append,
   } = useAssistant({ api: '/api/assistants/disclosure/message' })
@@ -311,17 +308,23 @@ export function Search() {
     }
   }, [isOpen])
 
+  console.log('status: ', status)
   useEffect(() => {
-    if (messages?.length && initial) {
+    if ((messages?.length && initial) || status === 'in_progress') {
       setInitial(false)
     }
-  }, [messages, initial])
+  }, [messages, initial, status])
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog.Root
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      // @ts-ignore
+      id='ai-search-interface'
+    >
       <div className='text-center'>
         <Dialog.Trigger asChild>
-          {/* border border-slate-300 bg-white py-3.5 pl-4 pr-3 text-sm text-slate-400 outline-none hover:border-slate-400 focus-visible:border-indigo-400 focus-visible:bg-white  */}
+          {/* border border-slate-300 bg-black py-3.5 pl-4 pr-3 text-sm text-slate-400 outline-none hover:border-slate-400 focus-visible:border-indigo-400 focus-visible:bg-black  */}
           <button className='relative inline-flex w-[300px] rounded-full max-w-xs items-center justify-between whitespace-nowrap border-slate-300 bg-black py-3.5 pl-4 pr-3 text-sm border border-neutral-700/80 text-neutral-500 bg-gradient-to-b from-card/70 rounded-[calc(var(--radius)-2px)] focus-visible:ring-2 focus-visible:ring-indigo-100'>
             <div className='flex items-center justify-center'>
               <SearchIcon className='h-5 w-5 stroke-1' />
@@ -330,7 +333,7 @@ export function Search() {
               </span>
             </div>
             <div className='ml-3 flex gap-1'>
-              <div className='flex h-6 w-6 items-center justify-center rounded bg-black text-black-400 shadow-sm'>
+              <div className='flex h-6 w-6 items-center justify-center rounded bg-black -400 shadow-sm'>
                 <svg
                   className='fill-current'
                   xmlns='http://www.w3.org/2000/svg'
@@ -358,14 +361,13 @@ export function Search() {
       </div>
       <Dialog.Portal>
         <Dialog.Overlay className='data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50' />
-        <Dialog.Content className='data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed left-[50%] top-[50%] z-50 grid max-h-[85vh] w-[90vw] max-w-lg translate-x-[-50%] translate-y-[-50%] overflow-hidden border bg-white shadow-lg duration-200 sm:rounded-lg'>
+        <Dialog.Content className='data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed left-[50%] top-[50%] z-50 grid max-h-[85vh] w-[90vw] max-w-lg translate-x-[-50%] translate-y-[-50%] overflow-hidden border bg-black shadow-lg duration-200 sm:rounded-lg'>
           <VisuallyHidden.Root>
-            <Dialog.Title>Search</Dialog.Title>
-            <Dialog.Description>
-              Start typing to search the documentation
-            </Dialog.Description>
+            <Dialog.Title>Get Weird With It</Dialog.Title>
           </VisuallyHidden.Root>
-          <div className='border-b border-slate-200'>
+          <div
+            className={`border-b border-slate-200 flex flex-col ${initial ? '' : 'flex-col-reverse'}`}
+          >
             <form className='flex items-center' onSubmit={submitMessage}>
               <VisuallyHidden.Root>
                 <label htmlFor='search-modal'>
@@ -383,9 +385,9 @@ export function Search() {
               </svg>
               <input
                 id='search-modal'
-                className='[&::-webkit-search-decoration]:none [&::-webkit-search-results-button]:none [&::-webkit-search-results-decoration]:none [&::-webkit-search-cancel-button]:hidden w-full appearance-none border-0 bg-white py-3 pl-2 pr-4 text-sm placeholder-slate-400 text-black focus:outline-none'
+                className='[&::-webkit-search-decoration]:none [&::-webkit-search-results-button]:none [&::-webkit-search-results-decoration]:none [&::-webkit-search-cancel-button]:hidden w-full appearance-none border-0 bg-black py-3 pl-2 pr-4 text-sm placeholder-slate-400  focus:outline-none'
                 type='search'
-                placeholder='Search'
+                placeholder='Message'
                 onChange={handleInputChange}
                 value={input}
                 // onKeyDown={(event) => {
@@ -398,128 +400,137 @@ export function Search() {
                 Send
               </Button>
             </form>
-          </div>
 
-          <ScrollArea.Root className='max-h-[calc(85vh-44px)]'>
-            <ScrollArea.Viewport className='h-full w-full'>
-              <div className='space-y-4 px-2 py-4'>
-                <div>
-                  <div className='p-2'>status: {status}</div>
-                  {status === 'in_progress' ? (
-                    <LoadingSequence
-                      loadingStates={[
-                        {
-                          text: 'Consulting Party Martian, Warden of Ultraterrestrial...',
-                        },
-                        {
-                          text: `Give it a second, we're literally calling Zeta Reticuli`,
-                        },
-                        {
-                          text: 'I know, I know, why is an ET from Zeta Reticul called Party Martian? Why are native americans called Indians bro?',
-                        },
-                        { text: 'Make a snack' },
-                      ]}
-                    />
-                  ) : initial ? (
+            <div className='prompt-ui-responses'>
+              <ScrollArea.Root className='max-h-[calc(85vh-44px)]'>
+                <ScrollArea.Viewport className='h-full w-full'>
+                  <div className='space-y-4 px-2 py-4'>
                     <div>
-                      <div className='mb-2 px-2 text-xs font-semibold uppercase text-gray-400'>
-                        Suggestions
-                      </div>
-                      <ul>
-                        {suggestions.map((suggestion) => (
-                          <SuggestedSearchItem
-                            onClick={handleSelection}
-                            key={suggestion}
-                            value={suggestion}
-                          />
-                        ))}
-                      </ul>
-                      <Divider />
-                    </div>
-                  ) : null}
-
-                  {messages?.length && (
-                    <div className='flex flex-col p-2 gap-2'>
-                      {messages.map((message: Message) => {
-                        if (message.role === 'assistant') {
-                          return (
-                            <MemoizedMarkdown
-                              key={message.id}
-                              rehypePlugins={[
-                                [rehypeExternalLinks, { target: '_blank' }],
-                              ]}
-                              remarkPlugins={[remarkGfm]}
-                              className='prose-sm prose-neutral prose-a:text-accent-foreground/50'
-                              components={{
-                                code({
-                                  node,
-                                  inline,
-                                  className,
-                                  children,
-                                  ...props
-                                }: any) {
-                                  if (children.length) {
-                                    if (children[0] == '▍') {
-                                      return (
-                                        <span className='mt-1 cursor-default animate-pulse'>
-                                          ▍
-                                        </span>
-                                      )
-                                    }
-
-                                    children[0] = (
-                                      children[0] as string
-                                    ).replace('`▍`', '▍')
-                                  }
-
-                                  const match = /language-(\w+)/.exec(
-                                    className || ''
-                                  )
-
-                                  if (inline) {
-                                    return (
-                                      <code className={className} {...props}>
-                                        {children}
-                                      </code>
-                                    )
-                                  }
-
-                                  return null
-                                },
-                              }}
-                            >
-                              {message.content}
-                            </MemoizedMarkdown>
-                          )
-                        }
-                        return (
-                          <div key={message.id} className='flex flex-row gap-2'>
-                            <div className='w-24 text-black-500'>{`${message.role}: `}</div>
-                            <div className='w-full text-black'>
-                              {message.content}
-                            </div>
+                      <div className='p-2'>status: {status}</div>
+                      {status === 'in_progress' ? (
+                        <LoadingSequence
+                          loadingStates={[
+                            {
+                              text: 'Consulting Party Martian, Warden of Ultraterrestrial...',
+                            },
+                            {
+                              text: `Give it a second, we're literally calling Zeta Reticuli`,
+                            },
+                            {
+                              text: 'I know, I know, why is an ET from Zeta Reticul called Party Martian? Why are native americans called Indians bro?',
+                            },
+                            { text: 'Make a snack' },
+                          ]}
+                        />
+                      ) : initial ? (
+                        <div>
+                          <div className='mb-2 px-2 text-xs font-semibold uppercase text-gray-400'>
+                            Suggestions
                           </div>
-                        )
-                      })}
+                          <ul>
+                            {suggestions.map((suggestion) => (
+                              <SuggestedSearchItem
+                                onClick={handleSelection}
+                                key={suggestion}
+                                value={suggestion}
+                              />
+                            ))}
+                          </ul>
+                          <Divider />
+                        </div>
+                      ) : null}
+
+                      {messages?.length && (
+                        <div className='flex flex-col p-2 gap-2'>
+                          {messages.map((message: any) => {
+                            return (
+                              <Answer
+                                key={message.id}
+                                prompt={
+                                  message?.role === 'user'
+                                    ? message.content
+                                    : null
+                                }
+                                answer={
+                                  message.role === 'assistant' ? (
+                                    <MemoizedMarkdown
+                                      rehypePlugins={[
+                                        [
+                                          rehypeExternalLinks,
+                                          { target: '_blank' },
+                                        ],
+                                      ]}
+                                      remarkPlugins={[remarkGfm]}
+                                      className='prose-sm prose-neutral prose-a:text-accent-foreground/50'
+                                      components={{
+                                        code({
+                                          node,
+                                          inline,
+                                          className,
+                                          children,
+                                          ...props
+                                        }: any) {
+                                          if (children.length) {
+                                            if (children[0] == '▍') {
+                                              return (
+                                                <span className='mt-1 cursor-default animate-pulse'>
+                                                  ▍
+                                                </span>
+                                              )
+                                            }
+
+                                            children[0] = (
+                                              children[0] as string
+                                            ).replace('`▍`', '▍')
+                                          }
+
+                                          const match = /language-(\w+)/.exec(
+                                            className || ''
+                                          )
+
+                                          if (inline) {
+                                            return (
+                                              <code
+                                                className={className}
+                                                {...props}
+                                              >
+                                                {children}
+                                              </code>
+                                            )
+                                          }
+
+                                          return null
+                                        },
+                                      }}
+                                    >
+                                      {message.content}
+                                    </MemoizedMarkdown>
+                                  ) : null
+                                }
+                              />
+                            )
+                          })}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
-            </ScrollArea.Viewport>
-            <ScrollArea.Scrollbar
-              className='flex h-full w-2 touch-none select-none border-l border-l-transparent p-[1px] transition-colors'
-              orientation='vertical'
-            >
-              <ScrollArea.Thumb className='relative flex-1 rounded-full bg-slate-300' />
-            </ScrollArea.Scrollbar>
-            <ScrollArea.Scrollbar
-              className='flex h-2.5 touch-none select-none flex-col border-t border-t-transparent p-[1px] transition-colors'
-              orientation='horizontal'
-            >
-              <ScrollArea.Thumb className='relative flex-1 rounded-full bg-slate-300' />
-            </ScrollArea.Scrollbar>
-            <ScrollArea.Corner className='bg-blackA5' />
-          </ScrollArea.Root>
+                  </div>
+                </ScrollArea.Viewport>
+                <ScrollArea.Scrollbar
+                  className='flex h-full w-2 touch-none select-none border-l border-l-transparent p-[1px] transition-colors'
+                  orientation='vertical'
+                >
+                  <ScrollArea.Thumb className='relative flex-1 rounded-full bg-slate-300' />
+                </ScrollArea.Scrollbar>
+                <ScrollArea.Scrollbar
+                  className='flex h-2.5 touch-none select-none flex-col border-t border-t-transparent p-[1px] transition-colors'
+                  orientation='horizontal'
+                >
+                  <ScrollArea.Thumb className='relative flex-1 rounded-full bg-slate-300' />
+                </ScrollArea.Scrollbar>
+                <ScrollArea.Corner className='bg-blackA5' />
+              </ScrollArea.Root>
+            </div>
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

@@ -1,0 +1,1 @@
+{"columns":[{"name":"id","type":"text"},{"name":"xata.version","type":"int4"},{"name":"xata.createdAt","type":"timestamptz"},{"name":"xata.updatedAt","type":"timestamptz"},{"name":"user","type":"text"},{"name":"name","type":"text"},{"name":"content","type":"text"},{"name":"synopsis","type":"text"},{"name":"diagrams","type":"jsonb"}],"records":[],"total":0}

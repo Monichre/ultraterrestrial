@@ -5,7 +5,6 @@ import {
   DotGridBackground,
   DotGridBackgroundBlack,
 } from '@/components/ui/backgrounds'
-import { nodeTypes } from '@/features/mindmap/utils/node-types'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -26,95 +25,21 @@ import { Toolbar } from '@/components/toolbar'
 
 import { nextTick } from '@/utils'
 import { LocationVisualization } from '@/components/location-visualization'
-import { Search } from '@/components/search'
-import { edgeTypes } from '@/features/mindmap/utils/edge-types'
+
+import { edgeTypes } from '@/features/mindmap/config/edge-types'
 import * as d3F from 'd3-force'
 import collide from '@/features/mindmap/utils/collide'
-const simulation = d3F
-  .forceSimulation()
-  .force('charge', d3F.forceManyBody().strength(-1000))
-  .force('x', d3F.forceX().x(0).strength(0.05))
-  .force('y', d3F.forceY().y(0).strength(0.05))
-  .force('collide', collide())
-  .alphaTarget(0.05)
-  .stop()
+import { nodeTypes, rootNodes } from '@/features/mindmap/config/index.config'
+import { AiAssistedSearch } from '@/features/ai'
+import { CardStack } from '@/features/mindmap/cards/card-stack/card-stack'
+// import { useForceLayout } from '@/features/mindmap/hooks/useForceLayout'
 
-export const useLayoutedElements = () => {
-  const { getNodes, setNodes, getEdges, fitView } = useMindMap()
-  const initialized = useNodesInitialized()
-  const [running, setRunning] = useState(false)
-
-  const tick = useCallback(() => {
-    let nodes = getNodes()
-
-    nodes.forEach((node, i) => {
-      const dragging = Boolean(
-        document.querySelector(`[data-id="${node.id}"].dragging`)
-      )
-
-      nodes[i].fx = dragging ? node.position.x : node.x
-      nodes[i].fy = dragging ? node.position.y : node.y
-    })
-
-    simulation.tick()
-
-    setNodes(
-      nodes.map((node) => ({ ...node, position: { x: node.x, y: node.y } }))
-    )
-
-    window.requestAnimationFrame(() => {
-      fitView()
-      if (running) tick() // Continue the simulation if it's still running
-    })
-  }, [getNodes, setNodes, fitView, running])
-
-  useEffect(() => {
-    if (!initialized || getNodes().length === 0) {
-      return
-    }
-
-    let nodes = getNodes().map((node) => ({
-      ...node,
-      x: node.position?.x || node.x,
-      y: node.position?.y || node.y,
-    }))
-
-    let edges = getEdges().map((edge) => edge)
-
-    simulation.nodes(nodes).force(
-      'link',
-      d3F
-        .forceLink(edges)
-        .id((d) => d.id)
-        .strength(0.05)
-        .distance(100)
-    )
-
-    if (running) {
-      simulation.alpha(1).restart()
-      window.requestAnimationFrame(tick)
-    }
-
-    return () => {
-      simulation.stop() // Stop the simulation when the component unmounts or when dependencies change
-    }
-  }, [initialized, running, tick, getNodes, getEdges])
-
-  const toggle = useCallback(() => {
-    setRunning((prev) => !prev)
-  }, [])
-
-  const isRunning = useCallback(() => running, [running])
-
-  return [true, { toggle, isRunning }]
-}
 export function Graph(props: any) {
   const {
     nodes,
     edges,
     onNodesChange,
-    updateNodes,
-    addRootNodeChildren,
+
     onEdgesChange,
     setNodes,
     setEdges,
@@ -131,8 +56,62 @@ export function Graph(props: any) {
     saveMindMap,
     restore,
   } = useMindMap()
+
   // const reactFlow = useReactFlow()
-  useLayoutedElements()
+
+  // const simRef = useForceLayout()
+
+  // Enable drop effect on drag over
+  // const onDragOver = useCallback((event) => {
+  //   event.preventDefault();
+  //   event.dataTransfer.dropEffect = "move";
+  // }, []);
+
+  // // Handle drop event to add a new node
+  // const onDrop = useCallback(
+  //   (event) => {
+  //     event.preventDefault();
+
+  //     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+  //     const type = event.dataTransfer.getData("application/reactflow");
+
+  //     if (typeof type === "undefined" || !type) {
+  //       return;
+  //     }
+
+  //     const position = reactFlowInstance.project({
+  //       x: event.clientX - reactFlowBounds.left,
+  //       y: event.clientY - reactFlowBounds.top,
+  //     });
+  //     const newNode = {
+  //       id: getId(),
+  //       type,
+  //       position,
+  //       data: { label: `${type}` },
+  //     };
+
+  //     console.log("Node created: ", newNode);
+  //     setNodes((nds) => nds.concat(newNode));
+  //   },
+  //   [reactFlowInstance]
+  // );
+
+  //   //node panel
+  // const onDragStart = (event, nodeType) => {
+  //   event.dataTransfer.setData("application/reactflow", nodeType);
+  //   event.dataTransfer.effectAllowed = "move";
+  // };
+
+  //   <>
+  //   <h3 className="text-xl mb-4 text-blue-900">Nodes Panel</h3>
+  //   <div
+  //     className="bg-white p-3 border-2 border-blue-500 rounded cursor-move flex justify-center items-center text-blue-500 hover:bg-blue-500 hover:text-white transition-colors duration-200"
+  //     onDragStart={(event) => onDragStart(event, "textnode")}
+  //     draggable
+  //   >
+  //     Message Node
+  //   </div>
+  // </>
 
   const edgeOptions = {
     animated: true,
@@ -164,7 +143,7 @@ export function Graph(props: any) {
         colorMode='dark'
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        // snapToGrid={true}
+        snapToGrid={true}
         defaultEdgeOptions={edgeOptions}
         nodes={nodes}
         edges={edges}
@@ -186,9 +165,15 @@ export function Graph(props: any) {
         </Panel>
         <Panel position='bottom-center'>
           <div className='w-full fixed bottom-[40px] left-0 z-50 cursor-pointer flex justify-center'>
-            <Search />
+            <AiAssistedSearch />
           </div>
         </Panel>
+        {/* <Panel
+          position='bottom-left'
+          className='absolute bottom-[40%] left-0  h-[680px] w-[250px] nodrag'
+        >
+          <CardStack mindmapCards={rootNodes} />
+        </Panel> */}
       </ReactFlow>
     </div>
   )

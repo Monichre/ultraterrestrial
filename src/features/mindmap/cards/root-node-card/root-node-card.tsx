@@ -9,30 +9,20 @@ import {
 import { NumberTicker } from '@/components/animations/number-ticker'
 import { OpenAILogo } from '@/components/ui/icons'
 
-import { cn, capitalize, ROOT_NODE_POSITIONS, nextTick } from '@/utils'
+import { cn, capitalize, nextTick } from '@/utils'
 
 import { Button, ShinyButton } from '@/components/ui/button'
 import '@/components/ui/card/cards.css'
 import { Switch } from '@/components/ui/switch'
 import { useNodesData } from '@xyflow/react'
-import { AnimatedSearchInput } from '@/components/search'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
-} from '@/components/ui/command'
+
 import { useEffect, useState, useCallback, memo } from 'react'
 import { Pin, Settings } from 'lucide-react'
 import { searchTable } from '@/features/ai/search'
 import { useMindMap } from '@/providers/mindmap-context'
 import { SketchyGlobe } from '@/components/icons'
-import { InputBorderSpotlight } from '@/features/mindmap/cards/root-node-card/search-input-spotlight'
-import { useLayoutedElements } from '@/features/mindmap/graph'
+
+import { RootNodeToolbar } from '@/features/mindmap/cards/root-node-card/RootNodeToolbar'
 
 const Description = memo(({ childCount, label }: any) => (
   <>
@@ -49,14 +39,15 @@ const LoadedStats = memo(({ length, childCount, label }: any) => (
 export const RootNodeCard = memo(({ nodeData }: any) => {
   const {
     addChildNodesFromSearch,
-    showLocationVisualization,
-    locationsToVisualize,
+    conciseViewActive,
+    renderRootNodeConciseLayout,
+
     toggleLocationVisualization,
     onNodeClick,
   } = useMindMap()
 
-  const nodeState = useNodesData(nodeData?.id)
-  console.log('nodeState: ', nodeState)
+  const nodeState: any = useNodesData(nodeData?.id)
+
   const type = nodeData?.data?.type
 
   const [searchTerm, setSearchTerm]: any = useState('')
@@ -69,30 +60,13 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
   }
 
   const runSearch = useCallback(async () => {
-    console.log('running search')
     const keyword = searchTerm
     const table = type
 
     const { results } = await searchTable({ table, keyword })
-    console.log('results: ', results)
+
     addChildNodesFromSearch({ type, searchResults: results })
     setSearchTerm('')
-    // setSearchResults((searchResults: any) => {
-    //   const uniqueResults = results.filter((result: any) => {
-    //     return !searchResults.some((existingResult: any) => {
-    //       return existingResult.id === result.id
-    //     })
-    //   })
-    //   return [...searchResults, ...uniqueResults]
-    // })
-
-    // Update the node data with the search results
-    // nodeState.updateData({
-    //   searchResults: {
-    //     resultstotalCount,
-    //     records,
-    //   },
-    // })
   }, [searchTerm, type, addChildNodesFromSearch])
   const {
     data: { childCount, label },
@@ -101,30 +75,15 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
 
   const nodeProps = {
     ...rest,
-    zIndex: 5000,
   }
-  console.log('nodeProps: ', nodeProps)
-  // 'bg-black',
 
-  // const handleEnterKeyPress = (
-  //   event: React.KeyboardEvent<HTMLInputElement>
-  // ) => {
-  //   if (event.key === 'Enter') {
-  //     // Execute your function here
-  //     console.log('Enter key pressed')
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (searchResults.length > 0) {
-  //     addChildNodesFromSearch({ type, searchResults })
-  //   }
-  // }, [addChildNodesFromSearch, searchResults, type])
-
-  const handleLoadingRecords = useCallback(() => {
-    const res = onNodeClick(nodeData)
-    // toggle()
+  const handleLoadingRecords = useCallback(async () => {
+    await onNodeClick(nodeData)
   }, [nodeData, onNodeClick])
+
+  const interim = (label || type).toLowerCase()
+  const title =
+    interim === 'personnel' ? 'Subject Matter Experts' : capitalize(interim)
 
   return (
     <Card
@@ -147,7 +106,7 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
       >
         <div className='flex align-middle content-center items-center justify-between'>
           <h3 className={`!font-centimaSans tracking-wider uppercase`}>
-            {capitalize(label) || capitalize(type)}
+            {title}
           </h3>
           <Button
             variant='ghost'
@@ -171,20 +130,8 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent className="mt-2 p-2 w-full relative z-20 after:content-[''] after:absolute after:w-[20%] after:left-[8px] after:bottom-[-4px] after:h-[1px] after:bg-[#78efff]">
-        {type === 'events' && (
-          <p>
-            Looking for something specific? Search our event records below. Try
-            "Roswell" or "USS Nimitz"
-          </p>
-        )}
-        {type === 'personnel' && <p>Try "Bob Lazar" or "Gordon Cooper"</p>}
-        <p>
-          Records will be loaded in batches of 10.{' '}
-          <i>(Chronologically when appropriate)</i>
-        </p>
-      </CardContent>
-      <InputBorderSpotlight
+
+      <RootNodeToolbar
         onChange={updateSearchTerm}
         onSubmit={runSearch}
         type={type}

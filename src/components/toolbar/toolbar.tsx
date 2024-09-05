@@ -14,14 +14,28 @@ import {
   TooltipContent,
 } from '@radix-ui/react-tooltip'
 import { PlusIcon } from 'lucide-react'
-import type { JSX, SVGProps } from 'react'
+import { useEffect, useState, type JSX, type SVGProps } from 'react'
 
 export function Toolbar() {
   const {
     showLocationVisualization,
     locationsToVisualize,
     toggleLocationVisualization,
+    conciseViewActive,
+    toggleConciseView,
   } = useMindMap()
+
+  const [isConcise, setIsConcise] = useState(conciseViewActive)
+  const pressed = isConcise
+    ? {
+        color: `rgb(244 244 245 / var(--tw-text-opacity)) `,
+        backgroundColor: `rgb(75 85 99 / var (--tw-bg-opacity))`,
+      }
+    : {}
+
+  useEffect(() => {
+    setIsConcise(conciseViewActive)
+  }, [conciseViewActive])
   return (
     // max-w-max m-auto
     <div className='flex flex-col shadow items-center justify-between rounded-full p-1  border border-white/80 dark:border-neutral-700/80 text-neutral-500 bg-gradient-to-b from-card/70 rounded-[calc(var(--radius)-2px)]'>
@@ -40,8 +54,10 @@ export function Toolbar() {
             <TooltipTrigger asChild>
               <Button
                 variant='ghost'
+                style={pressed}
                 size='icon'
                 className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100 m-2'
+                onClick={toggleConciseView}
               >
                 <LayersIcon className='h-5 w-5 stroke-1' />
                 <span className='sr-only'>Stack</span>

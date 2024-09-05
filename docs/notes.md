@@ -129,3 +129,7 @@ Sebastian Lague
 [https://a-fresh.website/](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbXh5NG9xMTBJcVh0SXRCN0VRbTNNWS1FNUFkZ3xBQ3Jtc0ttcnczTFR4TTJQUDJmUkRiVU9Vc0FUbXVaRGtZaDlkUUFjZFdfMjItcWZXOFJKLTJZU3BGQk5yY1hrRWxlWVRrU0JPeFJyYW9ab2p0RXFMQ1JOMDE5eWJZRXU4MXpyaDhnMmJuQU1SNnBjMFZDUEdHYw&q=https%3A%2F%2Fa-fresh.website%2F&v=wQA8vi9z5cU)
 
 [https://unboundbydefault.com/](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbUtSN2tYYWs2alFqWTR6aGt3M3JZQ21YbjNMZ3xBQ3Jtc0tuZFlCLVNRZEdmNmtIY1dSREJWT0ItZVdDa3dSN0JBcnc2WHJSWHp0d2lac0JZbUdLLTYzZWxIZEdWcXgwMTc0T1FlcVFCNHU4ODZhbGh4bnFMekNjY1RnbTJZZDBZTFVxcU9JZVZSOGxMTVpFUWx5NA&q=https%3A%2F%2Funboundbydefault.com%2F&v=wQA8vi9z5cU)
+
+### DESIGN UI INSPO
+
+<https://tympanus.net/Tutorials/BreathingDots/#/demo2>

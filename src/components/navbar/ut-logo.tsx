@@ -1,8 +1,9 @@
+'use client'
 import { Link } from 'next-view-transitions'
 
 export const UltraterrestrialLogo = () => {
   return (
-    <Link href='/' className='cursor-pointer relative z-50'>
+    <Link href='/' className='cursor-pointer'>
       <svg
         className='w-10 h-10 stroke-2'
         stroke='#000'

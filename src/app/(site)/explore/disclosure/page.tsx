@@ -8,6 +8,7 @@ import { MindMap } from '@/features/mindmap'
 
 import { StateOfDisclosureProvider } from '@/providers'
 import { Loading } from '@/components/ui/loading'
+import { MindMapCursor } from '@/features/mindmap/mindmap-cursor'
 
 export default async function Index() {
   const data: NetworkGraphPayload = await getEntityNetworkGraphData()

@@ -1,7 +1,10 @@
 import { collide } from '@/features/mindmap/utils/collide'
+import { useMindMap } from '@/providers'
 import { nextTick } from '@/utils'
 import {
   type ReactFlowState,
+  useEdges,
+  useNodes,
   useNodesInitialized,
   useReactFlow,
   useStore,
@@ -15,6 +18,7 @@ import {
   forceLink,
   forceX,
   forceY,
+  forceCenter,
 } from 'd3-force'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
@@ -23,56 +27,17 @@ type UseForceLayoutOptions = {
   distance: number
 }
 
-type SimNodeType = SimulationNodeDatum & Node
-
 const strength = 30
 const distance = 1
 
-const runForceSimulation = (nodes: any[], edges: any[], setNodes: any) => {
-  console.log('nodes: ', nodes)
-  const simulationNodes: any[] = nodes.map(
-    (node: { position: { x: any; y: any } }) => ({
-      ...node,
-      x: node.position.x,
-      y: node.position.y,
-    })
-  )
+export const useForceLayout = () => {
+  const { setNodes, getEdges, getNodes } = useMindMap()
+  const edges = getEdges()
+  const nodes = getNodes()
+  const [layoutedNodes, setLayoutedNodes] = useState(nodes)
 
-  const simulationLinks: SimulationLinkDatum<SimNodeType>[] = edges.map(
-    (edge: any) => edge
-  )
-
-  const simulation = forceSimulation()
-    .nodes(simulationNodes)
-    .force('charge', forceManyBody().strength(strength))
-    .force('x', forceX().x(0).strength(0.05))
-    .force('y', forceY().y(0).strength(0.05))
-    .on('tick', () => {
-      setNodes(
-        simulationNodes.map((node) => ({
-          ...node,
-          position: { x: node.x ?? 0, y: node.y ?? 0 },
-        }))
-      )
-    })
-  // .force(
-  //   'link',
-  //   forceLink(simulationLinks)
-  //     .id((d: any) => d.id)
-  //     .strength(0.05)
-  //     .distance(distance)
-  // )
-  // .force('x', forceX().x(0).strength(0.05))
-  // .force('y', forceY().y(0).strength(0.05))
-  return simulation
-}
-
-export function useForceLayout(loadChildNodes = false) {
-  const { setNodes, getNodes, getEdges } = useReactFlow()
-  const nodesInitialized = useNodesInitialized()
-  const [layoutedNodes, setLayoutedNodes] = useState(getNodes())
   console.log('layoutedNodes: ', layoutedNodes)
-  const simulationRef = useRef()
+  const simulationRef: any = useRef()
   // const runIt = () => {
   //   const simulation = runForceSimulation(getNodes(), getEdges(), setNodes)
   //   console.log('simulation: ', simulation)
@@ -83,23 +48,73 @@ export function useForceLayout(loadChildNodes = false) {
   //   })
   //   return simulation
   // }
-  useEffect(() => {
-    if (loadChildNodes) {
-      const simulation = runForceSimulation(getNodes(), getEdges(), setNodes)
-      console.log('simulation: ', simulation)
-      // simulationRef.current = simulation
 
-      nextTick(10).then(() => {
-        simulation.stop()
-      })
-    }
+  const runForceSimulation = useMemo(
+    () => (nodes: any[], edges: any[], setNodes: any) => {
+      const simulation = forceSimulation(nodes)
+        .force('charge', forceManyBody().strength(60))
+        .force('x', forceX().x(0).strength(0.05))
+        .force('y', forceY().y(0).strength(0.05))
+        .force(
+          'link',
+          forceLink(edges)
+            .id((d: any) => d.id)
+            .strength(5)
+            .distance(100)
+        )
+        .on('tick', () => {
+          setNodes(
+            nodes.map((node) => ({
+              ...node,
+              position: {
+                x: node.x ?? node.positionAbsoluteX,
+                y: node.y ?? node.positionAbsoluteY,
+              },
+            }))
+          )
+        })
+
+      // const simulation = forceSimulation()
+      //   .nodes(simulationNodes)
+      //   .force('charge', forceManyBody().strength(strength))
+      //   .force('x', forceX().x(0).strength(0.05))
+      //   .force('y', forceY().y(0).strength(0.05))
+      // .on('tick', () => {
+      //   setNodes(
+      //     simulationNodes.map((node) => ({
+      //       ...node,
+      //       position: { x: node.x ?? 0, y: node.y ?? 0 },
+      //     }))
+      //   )
+      // })
+      // .force(
+      //   'link',
+      //   forceLink(simulationLinks)
+      //     .id((d: any) => d.id)
+      //     .strength(0.05)
+      //     .distance(distance)
+      // )
+      //   .force('x', forceX().x(0).strength(0.05))
+      //   .force('y', forceY().y(0).strength(0.05))
+      simulation.stop()
+      return simulation
+    },
+    []
+  )
+
+  useEffect(() => {
+    simulationRef.current = runForceSimulation(nodes, edges, setNodes)
+
+    // simulationRef.current = simulation
 
     // .force('collide', collide())
 
     // return () => {
     //   simulation.stop()
     // }
-  }, [getEdges, setNodes, getNodes, loadChildNodes])
+  }, [nodes, layoutedNodes, runForceSimulation, edges, setNodes])
+
+  return simulationRef.current
 }
 
 // const simulationRef: any = useRef<d3.Simulation<any, undefined>>(null)

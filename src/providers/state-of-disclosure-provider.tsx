@@ -1,7 +1,7 @@
 'use client'
 import type { NetworkGraphPayload } from '@/lib/xata'
 
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
 export type StateOfDisclosureSchema = {
   records: NetworkGraphPayload['records']
@@ -24,6 +24,10 @@ export const StateOfDisclosureContext: any = createContext({
     topicsTestimoniesConnections: [],
     organizationsPersonnelConnections: [],
   },
+  mindMapIntialGraphState: {
+    nodes: [],
+    links: [],
+  },
   // searchRelatedDataPoints?: ({ id, type }: any) => {},
 })
 
@@ -35,7 +39,11 @@ export interface StateOfDisclosureProviderProps {
 export const StateOfDisclosureProvider: React.FC<
   StateOfDisclosureProviderProps
 > = ({ stateOfDisclosure, children }) => {
-  const { records, connections } = stateOfDisclosure
+  const {
+    records,
+    connections,
+    graphData: mindMapIntialGraphState,
+  } = stateOfDisclosure
   const typeMap: any = {
     events: 'event',
     personnel: 'subject-matter-expert',
@@ -44,8 +52,19 @@ export const StateOfDisclosureProvider: React.FC<
   }
 
   return (
-    <StateOfDisclosureContext.Provider value={{ records, connections }}>
+    <StateOfDisclosureContext.Provider
+      value={{ records, connections, mindMapIntialGraphState }}
+    >
       {children}
     </StateOfDisclosureContext.Provider>
   )
+}
+
+export const useStateOfDisclosure: any = () => {
+  const context = useContext(StateOfDisclosureContext)
+
+  if (!context) {
+    throw new Error('useGraph must be used within a UfologyProvider')
+  }
+  return context
 }

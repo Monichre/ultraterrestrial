@@ -1,4 +1,4 @@
-CREATE TABLE topics (
+CREATE TABLE "topics" (
   id VARCHAR(255) PRIMARY KEY,
   name VARCHAR(255),
   summary TEXT,
@@ -6,7 +6,7 @@ CREATE TABLE topics (
   photos TEXT[]
 );
 
-CREATE TABLE personnel (
+CREATE TABLE "personnel" (
   id VARCHAR(255) PRIMARY KEY,
   bio TEXT,
   role VARCHAR(255),
@@ -21,7 +21,7 @@ CREATE TABLE personnel (
   name VARCHAR(255) UNIQUE
 );
 
-CREATE TABLE events (
+CREATE TABLE "events" (
   id VARCHAR(255) PRIMARY KEY,
   name TEXT,
   description TEXT,
@@ -32,7 +32,7 @@ CREATE TABLE events (
   photos TEXT[]
 );
 
-CREATE TABLE organizations (
+CREATE TABLE "organizations" (
   id VARCHAR(255) PRIMARY KEY,
   name VARCHAR(255),
   specialization VARCHAR(255),
@@ -41,7 +41,7 @@ CREATE TABLE organizations (
   image VARCHAR(255)
 );
 
-CREATE TABLE sightings (
+CREATE TABLE "sightings" (
   id VARCHAR(255) PRIMARY KEY,
   date TIMESTAMP,
   description VARCHAR(255),
@@ -57,6 +57,59 @@ CREATE TABLE sightings (
   latitude FLOAT,
   longitude FLOAT
 );
+
+
+CREATE TABLE "documents" (
+  id VARCHAR(255) PRIMARY KEY,
+  file TEXT[],
+  content TEXT,
+  embedding FLOAT[],
+  title VARCHAR(255)
+);
+
+CREATE TABLE "locations" (
+  id VARCHAR(255) PRIMARY KEY,
+  name VARCHAR(255),
+  coordinates VARCHAR(255),
+  "google-maps-location-id" TEXT,
+  city VARCHAR(255),
+  state VARCHAR(255),
+  latitude FLOAT,
+  longitude FLOAT
+);
+
+
+CREATE TABLE "users" (
+  id VARCHAR(255) PRIMARY KEY,
+  email VARCHAR(255) UNIQUE,
+  name VARCHAR(255),
+  photo VARCHAR(255),
+  "profile_image_url" VARCHAR(255),
+  "external_id" VARCHAR(255)
+);
+CREATE TABLE "artifacts" (
+  id VARCHAR(255) PRIMARY KEY,
+  photos TEXT[],
+  name VARCHAR(255),
+  description TEXT,
+  date TIMESTAMP,
+  author VARCHAR(255) REFERENCES personnel(id),
+  metadata JSONB
+);
+
+CREATE TABLE testimonies (
+  id VARCHAR(255) PRIMARY KEY,
+  claim TEXT,
+  event VARCHAR(255) REFERENCES events(id),
+  summary TEXT,
+  witness VARCHAR(255) REFERENCES personnel(id),
+  documentation TEXT[],
+  date TIMESTAMP,
+  organization VARCHAR(255) REFERENCES organizations(id)
+);
+
+
+
 
 CREATE TABLE "event-subject-matter-experts" (
   id VARCHAR(255) PRIMARY KEY,
@@ -76,16 +129,7 @@ CREATE TABLE "organization-members" (
   organization VARCHAR(255) REFERENCES organizations(id)
 );
 
-CREATE TABLE testimonies (
-  id VARCHAR(255) PRIMARY KEY,
-  claim TEXT,
-  event VARCHAR(255) REFERENCES events(id),
-  summary TEXT,
-  witness VARCHAR(255) REFERENCES personnel(id),
-  documentation TEXT[],
-  date TIMESTAMP,
-  organization VARCHAR(255) REFERENCES organizations(id)
-);
+
 
 CREATE TABLE "topics-testimonies" (
   id VARCHAR(255) PRIMARY KEY,
@@ -93,24 +137,7 @@ CREATE TABLE "topics-testimonies" (
   testimony VARCHAR(255) REFERENCES testimonies(id)
 );
 
-CREATE TABLE documents (
-  id VARCHAR(255) PRIMARY KEY,
-  file TEXT[],
-  content TEXT,
-  embedding FLOAT[],
-  title VARCHAR(255)
-);
 
-CREATE TABLE locations (
-  id VARCHAR(255) PRIMARY KEY,
-  name VARCHAR(255),
-  coordinates VARCHAR(255),
-  "google-maps-location-id" TEXT,
-  city VARCHAR(255),
-  state VARCHAR(255),
-  latitude FLOAT,
-  longitude FLOAT
-);
 
 CREATE TABLE "event-topic-subject-matter-experts" (
   id VARCHAR(255) PRIMARY KEY,
@@ -119,14 +146,7 @@ CREATE TABLE "event-topic-subject-matter-experts" (
   "subject-matter-expert" VARCHAR(255) REFERENCES personnel(id)
 );
 
-CREATE TABLE users (
-  id VARCHAR(255) PRIMARY KEY,
-  email VARCHAR(255) UNIQUE,
-  name VARCHAR(255),
-  photo VARCHAR(255),
-  "profile_image_url" VARCHAR(255),
-  "external_id" VARCHAR(255)
-);
+
 
 CREATE TABLE "user-saved-events" (
   id VARCHAR(255) PRIMARY KEY,
@@ -191,14 +211,4 @@ CREATE TABLE "user-saved-sightings" (
   sighting VARCHAR(255) REFERENCES sightings(id),
   theory VARCHAR(255) REFERENCES "user-theories"(id),
   note TEXT
-);
-
-CREATE TABLE artifacts (
-  id VARCHAR(255) PRIMARY KEY,
-  photos TEXT[],
-  name VARCHAR(255),
-  description TEXT,
-  date TIMESTAMP,
-  author VARCHAR(255) REFERENCES personnel(id),
-  metadata JSONB
 );

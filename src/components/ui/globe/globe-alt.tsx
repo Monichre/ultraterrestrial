@@ -182,18 +182,6 @@ export const Globeanime = ({ markers }) => {
       id='functions-hero'
       className='absolute inset-0 8 top-4 w-[150%] md:w-[150%] aspect-[978/678] sm:-top-2 right-0 lg:-top-10 lg:w-[130%] xl:w-[130%]'
     >
-      {/* Snippet element */}
-      <div
-        className='
-          opacity-0 animate-fade-in absolute z-20 flex-1 flex items-center justify-center h-auto
-          w-[60%] left-[25%] top-[2%]
-          sm:w-[35%] sm:left-[34%] sm:top-[6%]
-          md:left-[33.5%] md:w-[35%] md:top-[6%]
-          lg:left-[26%] lg:w-[52%] lg:top-[3%]
-          xl:left-[28%] xl:w-[48%] xl:top-[3%]
-          2xl:left-[32%] 2xl:w-[40%] 2xl:top-[3%]
-        '
-      ></div>
       {/* Animated svgs in globe */}
       {svgs.map((s) => (
         <svg

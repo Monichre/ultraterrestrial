@@ -24,7 +24,7 @@ function addVariablesForColors({ addBase, theme }: any) {
 }
 
 const config = {
-  darkMode: 'class',
+  darkMode: 'selector',
   content: [
     './src/components/**/*.{ts,tsx}',
     './src/app/**/*.{ts,tsx}',
@@ -97,7 +97,7 @@ const config = {
       },
       animation: {
         'radar-spin': 'radar-spin 10s linear infinite',
-
+        shine: 'shine 2s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         spotlight: 'spotlight 2s ease .75s 1 forwards',
@@ -106,8 +106,34 @@ const config = {
         'border-flip': 'flip 6s infinite steps(2, end)',
         'border-rotate': 'rotate 3s linear infinite both',
         'border-width': 'border-width 3s infinite alternate',
+        'zoom-in': 'zoom-in linear both',
       },
       keyframes: {
+        'zoom-in': {
+          '0%': {
+            transform: 'translateZ(-1000px)',
+            opacity: '0',
+            filter: 'blur(5px)',
+          },
+          '50%': {
+            transform: 'translateZ(0px)',
+            opacity: '1',
+            filter: 'blur(0px)',
+          },
+          '100%': {
+            transform: 'translateZ(1000px)',
+            opacity: '0',
+            filter: 'blur(5px)',
+          },
+        },
+        shine: {
+          from: {
+            backgroundPosition: '0 0',
+          },
+          to: {
+            backgroundPosition: '-200% 0',
+          },
+        },
         'radar-spin': {
           from: {
             transform: 'rotate(20deg)',

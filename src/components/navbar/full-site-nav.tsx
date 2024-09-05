@@ -253,7 +253,7 @@ export function FullSiteNav({ className }: { className?: string }) {
         className
       )}
     >
-      <div className='absolute left-10 z-50 flex-initial w-fit flex items-center content-center justify-self-end align-middle'>
+      <div className='absolute left-10 z-[100] flex-initial w-fit flex items-center content-center justify-self-end align-middle'>
         <UltraterrestrialLogo />
       </div>
       <div className='max-w-2xl mx-auto flex-auto'>
