@@ -6,16 +6,12 @@ import type { NetworkGraphPayload } from '@/lib/xata'
 import { MindMapProvider } from '@/providers/mindmap-context'
 import { ReactFlowProvider } from '@xyflow/react'
 
-export interface MindMapProps {
-  allEntityGraphData: NetworkGraphPayload['graphData']
-}
+export interface MindMapProps {}
 
-export const MindMap: React.FC<MindMapProps> = ({
-  allEntityGraphData,
-}: MindMapProps) => {
+export const MindMap: React.FC<MindMapProps> = () => {
   return (
     <ReactFlowProvider>
-      <MindMapProvider allEntityGraphData={allEntityGraphData}>
+      <MindMapProvider>
         <Graph />
       </MindMapProvider>
     </ReactFlowProvider>

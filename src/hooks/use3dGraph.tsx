@@ -33,10 +33,10 @@ export type GraphState = {
 }
 
 export type UseGraphProps = {
-  allEntityGraphData: NetworkGraphPayload['graphData']
+  mindMapIntialGraphState: NetworkGraphPayload['graphData']
 }
 
-export const use3DGraph = ({ allEntityGraphData }: UseGraphProps) => {
+export const use3DGraph = ({ mindMapIntialGraphState }: UseGraphProps) => {
   const [graph, setGraph] = useState({
     root: {
       nodes: [],
@@ -91,11 +91,11 @@ export const use3DGraph = ({ allEntityGraphData }: UseGraphProps) => {
         links: [],
       },
     }
-    if (allEntityGraphData.nodes?.length) {
-      const rootNodes = allEntityGraphData.nodes.filter(
+    if (mindMapIntialGraphState.nodes?.length) {
+      const rootNodes = mindMapIntialGraphState.nodes.filter(
         (node: { id: string | string[] }) => node?.id.includes('root')
       )
-      const restOfNodes = allEntityGraphData.nodes.filter(
+      const restOfNodes = mindMapIntialGraphState.nodes.filter(
         (node: any) => !rootNodes.includes(node)
       )
 
@@ -116,7 +116,7 @@ export const use3DGraph = ({ allEntityGraphData }: UseGraphProps) => {
       })
 
       restOfNodes.forEach((node: any) => {
-        let childNodes = allEntityGraphData.links.filter(
+        let childNodes = mindMapIntialGraphState.links.filter(
           (link: { source: any }) => link.source === node.id
         )
         let nodeWithLinks = {
@@ -132,7 +132,7 @@ export const use3DGraph = ({ allEntityGraphData }: UseGraphProps) => {
 
       setGraph(data)
     }
-  }, [allEntityGraphData.links, allEntityGraphData.nodes])
+  }, [mindMapIntialGraphState.links, mindMapIntialGraphState.nodes])
 
   return { graph3d: graph }
 }

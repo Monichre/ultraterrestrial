@@ -7,7 +7,19 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 
 //optional hook for smooth scrolling
 
-const SwipeGrid = ({ items, children }: any) => {
+export type SwipeGridItem = {
+  name: string
+  content: string
+  src: any
+}
+
+const SwipeGrid = ({
+  items,
+  children,
+}: {
+  items: SwipeGridItem[]
+  children: any
+}) => {
   const grid = useRef<any>(null)
   const gridWrap = useRef<any>(null)
 

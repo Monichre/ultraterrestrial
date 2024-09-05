@@ -59,6 +59,7 @@ export type RootNode = Node<{
     label: string
     url: string
     handles: string[]
+    concise?: boolean
   }
   handles?: string[]
 }>
@@ -75,6 +76,10 @@ const RN = (node: RootNode) => {
       setHandles(data.handles)
       updateNodeInternals(node.id)
     }
+
+    // if (node?.data?.concise) {
+    //   updateNodeInternals(node.id)
+    // }
   }, [node, updateNodeInternals])
   const container = {
     hidden: { opacity: 0, height: 0, width: 0 },

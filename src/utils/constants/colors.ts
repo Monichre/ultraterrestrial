@@ -59,7 +59,7 @@ export const dataVizPaletteTwo = {
   electricBlue: '#33c9fb',
   cyan: '#42f4fe',
 }
-export const dataVizPaletteBase = {
+export const DATA_VIZ_COLOR_PALETTE = {
   violet: '#803583',
   slate: '#58768d',
   blurple: '#7c89b9',
@@ -69,13 +69,14 @@ export const dataVizPaletteBase = {
   aquaMint: '#79ffe1',
   ...dataVizPaletteTwo,
 }
-export const entityDataVizPaletteBase = {
-  topics: dataVizPaletteBase.blurple,
-  events: dataVizPaletteBase.skyBlue,
-  personnel: dataVizPaletteBase.lavender,
-  organizations: dataVizPaletteBase.violet,
-  testimonies: dataVizPaletteBase.slate,
-  artifacts: dataVizPaletteBase.lilac,
+
+export const ENTITY_DATA_VIZ_COLOR_PALETTE: any = {
+  topics: DATA_VIZ_COLOR_PALETTE.blurple,
+  events: DATA_VIZ_COLOR_PALETTE.skyBlue,
+  personnel: DATA_VIZ_COLOR_PALETTE.lavender,
+  organizations: DATA_VIZ_COLOR_PALETTE.violet,
+  testimonies: DATA_VIZ_COLOR_PALETTE.slate,
+  artifacts: DATA_VIZ_COLOR_PALETTE.lilac,
 }
 
 const maybe = {

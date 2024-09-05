@@ -27,7 +27,6 @@
     --ring: 224 71.4% 4.1%;
     --radius: 0.75rem;
   }
-
   .dark {
     /* old */
     --background: 224 71.4% 4.1%;
@@ -52,12 +51,9 @@
   }
 }
 
-* {
+/* * {
   @apply border-border;
-}
-body {
-  @apply bg-background text-foreground;
-}
+} */
 
 @layer utilities {
   .bg-card {
@@ -70,12 +66,39 @@ body {
 
   .bg-dot {
   }
+  @supports (animation-timeline: scroll()) {
+    .grid-item {
+      @apply animate-zoom-in;
+      animation-timeline: scroll(root block);
+      will-change: transform, opacity, filter;
+    }
+  }
+
+  /* ...continue for all other nth-of-type selectors... */
 }
 
 @layer components {
   .card {
     @apply bg-gradient-to-b from-card/70 to-secondary/50;
   }
+  /* .stuck-grid {
+    @apply block  grid grid-rows-4 grid-cols-4 place-items-center sticky top-0 overflow-hidden;
+  } */
+  /* transform-style-3d */
+  /* h-[100svh] perspective-[1000px] */
+  .grid-item {
+    /* @apply font-light no-wrap; */
+    /* transform-style-3d */
+    /* text-[5vmin] */
+  }
+
+  /* .special.special {
+    @apply row-span-2 col-span-2;
+  } */
+}
+
+body {
+  @apply bg-background text-foreground;
 }
 
 /* @font-face {
@@ -349,12 +372,17 @@ h1 {
 }
 
 h2,
-h3 {
+h3,
+.card h3,
+.header-style {
   /* font-family: var(--font-ailerons); */
   font-family: var(--font-centima-sans);
 }
-.card h3 {
-  font-family: var(--font-centima-sans);
+.header-style {
+  letter-spacing: 1px;
+  /* text-transform: uppercase; */
+  font-weight: 400;
+  color: #fff;
 }
 canvas {
   background: none !important;
@@ -615,4 +643,10 @@ td p {
 
 .react-flow__background {
   background-color: #000;
+}
+
+.react-flow__pane {
+  height: 650px;
+  width: 550px;
+  draggable: false;
 }

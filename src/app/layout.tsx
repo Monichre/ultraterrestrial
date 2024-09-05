@@ -46,19 +46,20 @@ export default function RootLayout({
       <ClerkProvider>
         <html lang='en' suppressHydrationWarning>
           <body
-            className={`bg-[#fff] ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} dark`}
+            className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable}`}
           >
-            {/* <DataLayer> */}
             <ThemeProvider
               attribute='class'
               defaultTheme='dark'
               enableSystem
-              disableTransitionOnChange
+              // disableTransitionOnChange
             >
+              {/* <DataLayer> */}
+
               <FullSiteNav />
               {/* <AnimationProvider> */}
               {/* <PageTransition> */}
-              <main className='min-h-[100vh] min-w-screen relative'>
+              <main className='min-h-[100vh] min-w-screen relative dark'>
                 {/* <NavBar navItems={navItems} /> */}
                 {/* <HomePageNav navItems={navItems} /> */}
                 {/* <FullSiteNav className='top-2' /> */}
@@ -68,8 +69,8 @@ export default function RootLayout({
               {/* </PageTransition> */}
               {/* </AnimationProvider> */}
             </ThemeProvider>
-            {/* </DataLayer> */}
           </body>
+          {/* </DataLayer> */}
         </html>
       </ClerkProvider>
     </ViewTransitions>

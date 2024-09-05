@@ -21,8 +21,8 @@ export const LocationVisualization: React.FC<LocationVisualizationProps> = (
   const {
     showLocationVisualization,
     locationsToVisualize,
-    toggleLocationVisualization,
-    activeNode,
+    // toggleLocationVisualization,
+    // activeNode,
   } = useMindMap()
   // bg-[#0a0a0a]
 
@@ -41,7 +41,7 @@ export const LocationVisualization: React.FC<LocationVisualizationProps> = (
     }
   }, [locationsToVisualize])
 
-  if (showLocationVisualization) {
+  if (markers?.length) {
     // bg-gradient-to-b from-transparent via-[#0a0a0a] to-black
     return (
       <div className='fixed top-0 right-0 w-[32vw] z-30 p-4'>

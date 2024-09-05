@@ -47,23 +47,25 @@ const EN = memo((props: any) => {
     /* // <BlurAppear> */
   }
   return (
-    <div className='w-full border border-white/20 rounded-[calc(var(--radius)-2px)] !min-w-[450px] relative h-auto max-w-[400px]'>
-      {handles && handles?.length
-        ? handles.map((id: string) => (
-            <Handle
-              key={id}
-              type='source'
-              position={Position.Bottom}
-              id={id}
-              isConnectable={true}
-            />
-          ))
-        : null}
-      <Handle type='target' position={Position.Top} />
+    <BlurAppear>
+      <div className='w-full border border-white/20 rounded-[calc(var(--radius)-2px)] !min-w-[450px] relative h-auto max-w-[400px]'>
+        {handles && handles?.length
+          ? handles.map((id: string) => (
+              <Handle
+                key={id}
+                type='source'
+                position={Position.Bottom}
+                id={id}
+                isConnectable={true}
+              />
+            ))
+          : null}
+        <Handle type='target' position={Position.Top} />
 
-      <GraphCard {...props} key={props.id} />
-      {/* <GraphNodeCard {...props} key={props.id} /> */}
-    </div>
+        <GraphCard {...props} key={props.id} />
+        {/* <GraphNodeCard {...props} key={props.id} /> */}
+      </div>
+    </BlurAppear>
   )
 })
 

@@ -4,9 +4,9 @@ import * as React from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 
-export function Answer({ answer }: { answer: string }) {
+export function Answer({ prompt, answer }: { prompt: any; answer: any }) {
   return (
-    <div className='container flex h-auto w-full shrink-0 gap-4 rounded-lg border border-solid border-[#C2C2C2] bg-white p-5 lg:p-10'>
+    <div className='container flex h-auto w-full shrink-0 gap-4 rounded-lg border border-solid border-[#C2C2C2] bg-white p-5 '>
       <div className='hidden lg:block'>
         <Image
           unoptimized
@@ -27,12 +27,19 @@ export function Answer({ answer }: { answer: string }) {
               height={24}
               className='block lg:hidden'
             />
-            <h3 className='text-base font-bold uppercase text-black'>
-              Answer:{' '}
-            </h3>
+            {prompt && (
+              <h3 className='text-base font-bold uppercase text-black'>
+                Question:{prompt}
+              </h3>
+            )}
+            {answer && (
+              <h3 className='text-base font-bold uppercase text-black'>
+                Answer:
+              </h3>
+            )}
           </div>
           {answer && (
-            <div className='flex items-center gap-3'>
+            <div className='flex items-center gap-1'>
               {/* <Image unoptimized
                 src="/img/link.svg"
                 alt="footer"
@@ -66,16 +73,7 @@ export function Answer({ answer }: { answer: string }) {
         </div>
         <div className='flex flex-wrap content-center items-center gap-[15px]'>
           <div className='w-full whitespace-pre-wrap text-base font-light leading-[152.5%] text-black'>
-            {answer ? (
-              answer.trim()
-            ) : (
-              <div className='flex w-full flex-col gap-2'>
-                <div className='h-6 w-full animate-pulse rounded-md bg-gray-300' />
-                <div className='h-6 w-full animate-pulse rounded-md bg-gray-300' />
-                <div className='h-6 w-full animate-pulse rounded-md bg-gray-300' />
-                <div className='h-6 w-full animate-pulse rounded-md bg-gray-300' />
-              </div>
-            )}
+            {answer}
           </div>
         </div>
       </div>

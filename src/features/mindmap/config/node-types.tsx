@@ -1,4 +1,9 @@
-import { EntityNode, RootNode, TestimonyNode } from '@/features/mindmap/nodes'
+import {
+  EntityGroupNode,
+  EntityNode,
+  RootNode,
+  TestimonyNode,
+} from '@/features/mindmap/nodes'
 
 export const nodeTypes: any = {
   rootNode: RootNode,
@@ -7,4 +12,5 @@ export const nodeTypes: any = {
   personnelNode: EntityNode,
   topicsNode: EntityNode,
   organizationsNode: EntityNode,
+  entityGroupNode: EntityGroupNode,
 }

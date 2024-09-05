@@ -8,7 +8,28 @@ import { Particles } from '@/components/animations/particles/Particles'
 import { BoxReveal } from '@/components/animations/box-reveal'
 import { Button } from '@/components/ui/button/button'
 import { BlurFade } from '@/components/animations/blur-fade'
+import { TextEffect } from '@/components/animations/text-effect'
+import { cn } from '@/utils'
+import { Loading } from '@/components/ui/loading'
 
+type photo = {
+  signedUrl: string
+  enablePublicUrl: boolean
+}
+type KeyFigure = {
+  name: string
+  bio: string
+  role: string
+  photo: photo | photo[]
+  facebook: string
+  twitter: string
+  website: string
+  instagram: string
+  rank: number
+  credibility: number
+  popularity: number
+}
+export type KeyFiguresArray = KeyFigure[]
 export default async function Index() {
   const xata = getXataClient()
   const data: any = await xata.db.personnel
@@ -32,8 +53,28 @@ export default async function Index() {
   const personnel = data.toSerializable()
   console.log('personnel: ', personnel)
   return (
-    <Suspense fallback={null}>
-      <div className='key-figures'>
+    <Suspense fallback={<Loading />}>
+      <div className='key-figures relative'>
+        <div
+          className={cn(
+            `fixed`,
+            'top-[100px]',
+            'left-[50px]',
+
+            'w-min',
+            'h-min',
+            'z-50'
+          )}
+        >
+          <TextEffect
+            per='char'
+            preset='fade'
+            className='text-white text-6xl header-style'
+            as='h1'
+          >
+            Key Figures
+          </TextEffect>
+        </div>
         <SwipeGrid items={personnel}>
           {/* <BoxReveal boxColor={'#5046e6'} duration={0.5}>
             <p className='text-[3.5rem] font-semibold'>

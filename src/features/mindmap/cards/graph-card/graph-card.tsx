@@ -29,6 +29,10 @@ import { ConnectionList } from '@/features/mindmap/connection-list'
 import { HoverExpandButton } from '@/features/user/note/ui/Button'
 import { ShinyButton } from '@/components/ui/button'
 import { useMindMap } from '@/providers'
+import {
+  PanelMenu,
+  TransitionPanel,
+} from '@/components/animations/transition-panel'
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
@@ -54,7 +58,7 @@ export function GraphCard({ data, id, ...rest }: any) {
     label,
     fill,
   } = node
-  console.log('node: ', node)
+
   const date = dayjs(data?.date).format('MMM DD, YYYY')
   const image: any = photos?.length
     ? photos[0]
@@ -112,14 +116,13 @@ export function GraphCard({ data, id, ...rest }: any) {
     title: '',
     content: '',
   })
-  console.log('userNote: ', userNote)
+
   const saveNote = ({ title, content }: any) => {
     setUserNote({ title, content })
   }
 
   const { userId, sessionId, isLoaded }: any = useAuth()
   const [relatedDataPoints, setRelatedDataPoints]: any = useState(null)
-  console.log('relatedDataPoints: ', relatedDataPoints)
 
   const searchRelatedDataPointsForConnectionList = useCallback(async () => {
     const payload = await searchConnections({
@@ -141,10 +144,10 @@ export function GraphCard({ data, id, ...rest }: any) {
       type,
     })
     const searchResults = payload.data
-    console.log('searchResults: ', searchResults)
+
     const res = addConnectionNodesFromSearch({ source: node, searchResults })
 
-    // console.log('res: ', res)
+    //
   }
 
   const [bookmarked, setBookmarked] = useState(false)
@@ -152,13 +155,13 @@ export function GraphCard({ data, id, ...rest }: any) {
   const handleSave = async () => {
     setBookmarked(true)
     const model = objectMapToSingular[node?.type]
-    console.log('model: ', model)
+
     const saved = await createUserSavedEvent({
       userId,
       event: node.id,
       userNote,
     })
-    console.log('saved: ', saved)
+
     // #TODO: Run some save logic (BIG ASK. Loaded Feature with zero configuration in place)
   }
   {
@@ -167,7 +170,6 @@ export function GraphCard({ data, id, ...rest }: any) {
 
   const [showMenu, setShowMMenu] = useState(false)
   const handleHoverEnter = () => {
-    console.log('hovering')
     setShowMMenu(true)
   }
   const handleHoverLeave = () => {
@@ -175,31 +177,47 @@ export function GraphCard({ data, id, ...rest }: any) {
   }
 
   const modelColor = DOMAIN_MODEL_COLORS[type]
-  // ;<button className='group relative grid overflow-hidden rounded-full px-4 py-1 shadow-[0_1000px_0_0_hsl(0_0%_20%)_inset] transition-colors duration-200'>
-  //   <span>
-  //     <span className="spark mask-gradient absolute inset-0 h-[100%] w-[100%] animate-flip overflow-hidden rounded-full [mask:linear-gradient(white,_transparent_50%)] before:absolute before:aspect-square before:w-[200%] before:rotate-[-90deg] before:animate-rotate before:bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] before:content-[''] before:[inset:0_auto_auto_50%] before:[translate:-50%_-15%]" />
-  //   </span>
-  //   <span className='backdrop absolute inset-[1px] rounded-full bg-neutral-950 transition-colors duration-200 group-hover:bg-neutral-800' />
-  //   <span className='z-10 py-0.5 text-sm text-neutral-100'>Get notified</span>
-  // </button>
-  // {
-  //   /* <div
-  //   className={`absolute -inset-2 rounded-lg bg-gradient-to-r from-[#78efff] via-[#E393E6] to-[${color}] opacity-75 blur`}
-  // ></div> */
-  // }
+
+  const [activeIndex, setActiveIndex] = useState(0)
+  const updateActiveIndex = (index: number) => {
+    setActiveIndex(index)
+  }
+
+  const items = [
+    {
+      title: 'Details',
+      render: () => (
+        <div className='mt-4 text-sm text-white font-jetbrains'>
+          <p>{truncate(node?.description, 400)}</p>
+        </div>
+      ),
+    },
+
+    {
+      button: 'Connections',
+      render: () => (
+        <ConnectionList originalNode={node} connections={relatedDataPoints} />
+      ),
+
+      onClick: () => {
+        handleSave()
+        setShowMMenu(false)
+      },
+    },
+  ]
 
   return (
     <>
-      <div
+      {/* <div
         className={`absolute -inset-2 rounded-lg bg-gradient-to-r from-[#78efff] via-[#E393E6] to-[${color}] opacity-50 blur w-full h-full`}
-      ></div>
+      ></div> */}
       <div
         className={`relative z-50 w-content h-content rounded-[calc(var(--radius)-2px)] p-[1px] bg-black`}
         style={{ border: `1px solid ${color}` }}
         onMouseEnter={handleHoverEnter}
         // onMouseLeave={handleHoverLeave}
       >
-        <AnimatePresence>
+        {/* <AnimatePresence>
           {showMenu && (
             <motion.div
               className='flex justify-center items-center w-full absolute bg-transparent w-auto top-0 left-0'
@@ -218,7 +236,7 @@ export function GraphCard({ data, id, ...rest }: any) {
               />
             </motion.div>
           )}
-        </AnimatePresence>
+        </AnimatePresence> */}
         <Dialog
           transition={{
             type: 'spring',
@@ -233,13 +251,19 @@ export function GraphCard({ data, id, ...rest }: any) {
             className='relative z-50 dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] px-3 py-4'
           >
             <div
-              className={`relative w-full h-full pl-3`}
+              className={`relative w-full h-full pl-3 flex justify-start-center items-center`}
               style={{ borderLeft: `1px solid ${modelColor}` }}
             >
-              <div
-                className={`flex w-full justify-start align-middle items-center center-content relative `}
-              >
-                {type === 'personnel' && (
+              <DialogImage
+                src={image.url || image.src}
+                alt='What I Talk About When I Talk About Running - book cover'
+                className='h-[75px] w-[75px] object-cover object-center p-1 mr-4'
+                style={{
+                  borderRadius: '4px',
+                }}
+              />
+              <div className={`w-auto relative`}>
+                {/* {type === 'personnel' && (
                   <DialogImage
                     src={image.url || image.src}
                     alt='What I Talk About When I Talk About Running - book cover'
@@ -248,29 +272,29 @@ export function GraphCard({ data, id, ...rest }: any) {
                       borderRadius: '4px',
                     }}
                   />
-                )}
+                )} */}
 
-                <div className='flex w-full justify-between align-middle items-center center-content'>
-                  <DialogTitle>
-                    <h2
-                      className='text-white font-centimaSans text-xl whitespace-normal w-fit capitalize '
-                      style={{ textWrap: 'pretty' }}
-                    >
-                      {name}
-                    </h2>
-                    <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-auto ml-auto'>
-                      {type === 'personnel'
-                        ? node?.credibility || node?.rank
+                <DialogTitle>
+                  <h2
+                    className='text-white font-centimaSans text-xl whitespace-normal w-fit capitalize '
+                    style={{ textWrap: 'pretty' }}
+                  >
+                    {name}
+                  </h2>
+                </DialogTitle>
+
+                <DialogSubtitle className=''>
+                  <p className='font-jetbrains text-white tracking-wider '>
+                    {node?.location || truncate(role, 50)}
+                  </p>
+                  <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-auto ml-auto mt-1'>
+                    {type === 'personnel' && node?.credibility
+                      ? `Credibility Score: ${node?.credibility}`
+                      : type === 'personnel' && node.rank
+                        ? `Platform Ranking: ${node?.rank}`
                         : date}
-                    </p>
-                  </DialogTitle>
-                  <DialogSubtitle className='my-3'>
-                    <p className='font-jetbrains text-white tracking-wider '>
-                      {node?.location || role}
-                    </p>
-                    {/* text-[10px] text-gray-600 sm:text-xs */}
-                  </DialogSubtitle>
-                </div>
+                  </p>
+                </DialogSubtitle>
               </div>
             </div>
           </DialogTrigger>
@@ -284,54 +308,77 @@ export function GraphCard({ data, id, ...rest }: any) {
             >
               <ScrollArea className='h-full overflow-scroll' type='scroll'>
                 <div className='relative p-6'>
-                  <div className='flex justify-center py-10'>
-                    <img
-                      src={image.url || image.src}
-                      alt='What I Talk About When I Talk About Running - book cover'
-                      className='h-auto w-auto'
-                    />
-                  </div>
-                  <div className='relative h-auto'>
-                    <div className='flex w-full justify-between'>
-                      <h2 className='text-white font-centimaSans tracking-wider uppercase'>
-                        {name}
-                      </h2>
+                  <div>
+                    <div className='flex justify-center py-10'>
+                      <img
+                        src={image.url || image.src}
+                        alt='What I Talk About When I Talk About Running - book cover'
+                        className='h-auto w-auto'
+                      />
+                    </div>
+                    <div className='relative h-auto'>
+                      <div className='flex w-full justify-between'>
+                        <h2 className='text-white font-centimaSans tracking-wider uppercase'>
+                          {name}
+                        </h2>
 
-                      <div className='flex justify-end'>
-                        <ShinyButton
-                          onClick={searchRelatedDataPointsForConnectionList}
-                        >
-                          Connections
-                        </ShinyButton>
+                        {/* <div className='flex justify-end'>
+                       
                         <EntityCardUtilityMenu
                           handleSave={handleSave}
                           userNote={userNote}
                           saveNote={saveNote}
                           bookmarked={bookmarked}
                         />
+                      </div> */}
                       </div>
+
+                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                        {date}
+                      </p>
+                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                        {location}
+                      </p>
+                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                        {latitude}, {longitude}
+                      </p>
                     </div>
 
-                    <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
-                      {date}
-                    </p>
-                    <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
-                      {location}
-                    </p>
-                    <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
-                      {latitude}, {longitude}
-                    </p>
-
-                    <div className='mt-4 text-sm text-white font-jetbrains'>
-                      <p>{truncate(node?.description, 400)}</p>
+                    <div className='overflow-hidden border-t border-zinc-200 dark:border-zinc-700'>
+                      <div className='mb-4 flex space-x-2'>
+                        <ShinyButton onClick={() => updateActiveIndex(0)}>
+                          Details
+                        </ShinyButton>
+                        <ShinyButton
+                          onClick={() => {
+                            searchRelatedDataPointsForConnectionList()
+                            updateActiveIndex(1)
+                          }}
+                        >
+                          Connections
+                        </ShinyButton>
+                      </div>
+                      <TransitionPanel
+                        activeIndex={activeIndex}
+                        transition={{ duration: 0.2, ease: 'easeInOut' }}
+                        variants={{
+                          enter: { opacity: 0, y: -50, filter: 'blur(4px)' },
+                          center: { opacity: 1, y: 0, filter: 'blur(0px)' },
+                          exit: { opacity: 0, y: 50, filter: 'blur(4px)' },
+                        }}
+                      >
+                        {items.map((item, index) => (
+                          <div key={index} className='py-2'>
+                            <h3 className='mb-2 font-medium text-zinc-800 dark:text-zinc-100'>
+                              {item.title}
+                            </h3>
+                            {item.render()}
+                          </div>
+                        ))}
+                      </TransitionPanel>
                     </div>
                   </div>
-                  {relatedDataPoints && (
-                    <ConnectionList
-                      originalNode={node}
-                      connections={relatedDataPoints}
-                    />
-                  )}
+
                   {/* <div className='w-full flex justify-end items-center '>
                    
                   </div> */}

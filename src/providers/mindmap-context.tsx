@@ -9,11 +9,14 @@ import React, {
   useMemo,
 } from 'react'
 import { use3DGraph, type UseGraphProps } from '@/hooks/use3dGraph'
+
 import {
   type Node,
   type Edge,
   useReactFlow,
   useStore,
+  getNodesBounds,
+  getStraightPath,
   applyEdgeChanges,
   applyNodeChanges,
   type EdgeChange,
@@ -29,19 +32,19 @@ import {
   MarkerType,
   Position,
 } from '@xyflow/react'
+import { useNodesData } from '@xyflow/react'
+
+import { nextTick, wait } from '@/utils/functions'
+import { DOMAIN_MODEL_COLORS } from '@/utils'
 import {
   CHILD_DIMENSIONS,
-  NODE_SPACE,
   PADDING,
   ROOT_DIMENSIONS,
-  ROOT_NODE_HEIGHT,
+  ROOT_NODE_IDS,
   ROOT_NODE_POSITIONS,
-  ROOT_NODE_WIDTH,
-} from '@/utils/constants/nodes'
-import * as d3 from 'd3'
-import { nextTick } from '@/utils/functions'
-import { DOMAIN_MODEL_COLORS } from '@/utils'
-import { useUser } from '@clerk/nextjs'
+} from '@/features/mindmap/config/index.config'
+import { useStateOfDisclosure } from '@/providers/state-of-disclosure-provider'
+
 // import { simulation } from '@/features/mindmap/utils/force-directed'
 
 const MindMapContext: any = createContext({
@@ -63,10 +66,8 @@ export type RootNodeKey =
 
 export const MindMapProvider = ({
   children,
-  allEntityGraphData,
 }: {
   children: React.ReactNode
-  allEntityGraphData: any
 }) => {
   const {
     getNodes,
@@ -82,15 +83,18 @@ export const MindMapProvider = ({
     zoomOut,
     updateNodeData,
     getIntersectingNodes,
+    isNodeIntersecting,
   } = useReactFlow()
+
+  const { mindMapIntialGraphState } = useStateOfDisclosure()
 
   const store = useStoreApi()
 
-  const { graph3d }: any = use3DGraph({ allEntityGraphData })
+  const { graph3d }: any = use3DGraph({ mindMapIntialGraphState })
   const [nodes, setNodes]: any = useState<Node[]>([])
   const [edges, setEdges]: any = useState<Edge[]>([])
   const [graph, setGraph]: any = useState({})
-  const [initialNodes, setInitialNodes]: any = useState()
+
   const [rootNodeState, setRootNodeState]: any = useState({
     'events-root-node': {
       lastIndex: 0,
@@ -106,7 +110,12 @@ export const MindMapProvider = ({
     },
   })
   const [mindMapInstance, setMindMapInstance]: any = useState(null)
-  // const user = useUser()
+  const [conciseViewActive, setConciseViewActive]: any = useState(true)
+
+  const toggleConciseView = () =>
+    setConciseViewActive((conciseViewActive: any) => !conciseViewActive)
+  const turnOffConciseView = () => setConciseViewActive(false)
+  const turnOnConciseView = () => setConciseViewActive(true)
 
   const updateMindMapInstance = (instance: any) => setMindMapInstance(instance)
 
@@ -195,18 +204,18 @@ export const MindMapProvider = ({
         if (currentX + CHILD_DIMENSIONS.width > parentNode.position.x + 500) {
           // Adjust this value if needed for different layouts
           currentX = parentNode.position.x
-          currentY += CHILD_DIMENSIONS.height
+          currentY += CHILD_DIMENSIONS.height + PADDING
         }
         const positionedNode = {
           ...childNode,
 
-          position: screenToFlowPosition({ x: currentX, y: currentY }),
+          position: { x: currentX, y: currentY },
         }
 
         return positionedNode
       })
     },
-    [screenToFlowPosition]
+    []
   )
 
   const createRootNode = useCallback((node: any, index: number) => {
@@ -229,14 +238,12 @@ export const MindMapProvider = ({
 
   const createRootNodeEdge = useCallback(
     (rootNodeChildNode: any, source: string) => {
-      console.log('source: ', source)
-      console.log('rootNodeChildNode: ', rootNodeChildNode)
       const sourceNode = getNode(source)
-      console.log('sourceNode: ', sourceNode)
-      const firstNodeType = rootNodeChildNode.data.type
-      const sourceType: any = sourceNode?.data?.type || source.split('-')[0]
 
       const { id: target, data } = rootNodeChildNode
+      const firstNodeType = rootNodeChildNode?.data?.type
+      const sourceType: any = sourceNode?.data?.type || source.split('-')[0]
+
       const id = `${source}:${target}`
       const sourceIsRootNode = source.includes('root')
 
@@ -244,7 +251,7 @@ export const MindMapProvider = ({
         sourceIsRootNode || firstNodeType.includes('root')
           ? 'rootEdge'
           : 'siblingEdge'
-      console.log('edgeType: ', edgeType)
+
       const connectionLabel = `${rootNodeChildNode.data.name}::${sourceNode?.data.name}`
       return {
         id,
@@ -388,83 +395,8 @@ export const MindMapProvider = ({
     }
   }
 
-  const getRootNodeChildren = useCallback(
-    (type: any) => {
-      const source: any = `${type}-root-node`
-
-      const nodeState = rootNodeState[source]
-      console.log('nodeState: ', nodeState)
-
-      const { lastIndex } = nodeState
-      // #TODO - add handling for if batch size is greater than remaining child nodes
-      const childNodes = graph[type].nodes.slice(
-        lastIndex,
-        lastIndex + childNodeBatchSize
-      )
-
-      const { x, y, childNodeDirection } = ROOT_NODE_POSITIONS[type]
-      const parentNode = {
-        position: {
-          x,
-          y,
-        },
-        childNodeDirection,
-      }
-
-      const positionedNodes = assignPositionsToChildNodes(
-        parentNode,
-        childNodes
-      )
-
-      const incomingEdges = createRootNodeEdges(positionedNodes, source)
-
-      // Note: This is to update the root node that has been clicked with the respective amount of handles to support the edge linking
-      const rootNode: any = getNode(source)
-      const incomingHandles: any = incomingEdges.map(
-        (edge) => edge.sourceHandle
-      )
-      // const restOfNodes = getNodes().filter(
-      //   (node) => !initialNodes.includes(node)
-      // )
-      // We then need to replace/mutate the corresponding root node is the current state of the graph in order to have Reactflow update the node accordingly
-      const initialRootNodes = [
-        ...getNodes().filter((node: any) => node.id !== rootNode.id),
-        {
-          ...rootNode,
-          data: {
-            ...rootNode.data,
-            handles: rootNode.data?.handles?.length
-              ? [...rootNode.data.handles, ...incomingHandles]
-              : incomingHandles,
-          },
-        },
-      ]
-
-      // So now we set the root nodes with the relevant root node having updated handles, then set the rest of the existing nodes, and then the newest positioned child nodes
-      setNodes((nds: any) => [...initialRootNodes, ...positionedNodes])
-      // const handleTransform = useCallback(() => {
-      //   setViewport({ x: positionedNodes[positionedNodes?.length - 1].x, y: positionedNodes[positionedNodes?.length - 1].y, zoom: 1 }, { duration: 800 });
-      // }, [setViewport]);
-
-      setEdges((edges: any) => [...edges, ...incomingEdges])
-      updateChildNodeBatchIndex(source)
-
-      return {
-        childNodes,
-        edges: incomingEdges,
-      }
-    },
-    [
-      assignPositionsToChildNodes,
-      createRootNodeEdges,
-      getNode,
-      getNodes,
-      graph,
-      rootNodeState,
-    ] // runForceSimulation
-  )
   const addChildNodesFromSearch = useCallback(
-    ({ type, searchResults }: any) => {
+    async ({ type, searchResults }: any) => {
       const source: any = `${type}-root-node`
 
       const { x, y, childNodeDirection } = ROOT_NODE_POSITIONS[type]
@@ -483,7 +415,7 @@ export const MindMapProvider = ({
         return node
       })
 
-      const positionedChildNodes = assignPositionsToChildNodes(
+      const positionedChildNodes: any = assignPositionsToChildNodes(
         parentNode,
         childNodes
       )
@@ -513,7 +445,16 @@ export const MindMapProvider = ({
       ]
 
       // So now we set the root nodes with the relevant root node having updated handles, then set the rest of the existing nodes, and then the newest positioned child nodes
-      setNodes((nds: any) => [...initialRootNodes, ...positionedChildNodes])
+      // setNodes((nds: any) => [...initialRootNodes, ...positionedChildNodes])
+      setNodes((nds: any) => [...initialRootNodes])
+
+      await Promise.all(
+        positionedChildNodes.forEach(async (node: any) => {
+          await nextTick(10)
+          addNodes(node)
+        })
+      )
+
       // const handleTransform = useCallback(() => {
       //   setViewport({ x: positionedNodes[positionedNodes?.length - 1].x, y: positionedNodes[positionedNodes?.length - 1].y, zoom: 1 }, { duration: 800 });
       // }, [setViewport]);
@@ -525,7 +466,14 @@ export const MindMapProvider = ({
         edges: incomingEdges,
       }
     },
-    [assignPositionsToChildNodes, createRootNodeEdges, getNode, getNodes, graph] // runForceSimulation
+    [
+      addNodes,
+      assignPositionsToChildNodes,
+      createRootNodeEdges,
+      getNode,
+      getNodes,
+      graph,
+    ] // runForceSimulation
   )
 
   const addConnectionNodesFromSearch = useCallback(
@@ -625,6 +573,394 @@ export const MindMapProvider = ({
     [assignPositionsToChildNodes, createRootNodeEdges, getNode, getNodes, graph] // runForceSimulation
   )
 
+  const animateRootNodeConcision = useMemo(
+    () =>
+      ({
+        targetX,
+
+        childlessRootNodes,
+      }: any) => {
+        const animations = childlessRootNodes.map((rootNode: any) => {
+          console.log('rootNode: ', rootNode)
+          const selector = `.react-flow__node[data-id="${rootNode.id}"]`
+          const domNode: any = document.querySelector(selector)
+          console.log('domNode: ', domNode)
+
+          const [path, labelX, labelY, offsetX, offsetY, ...restOfPath] =
+            getStraightPath({
+              sourceX: rootNode.position.x,
+              sourceY: rootNode.position.y,
+              targetX: targetX,
+              targetY: 0,
+            })
+          console.log('labelX: ', labelX)
+          console.log('restOfPath: ', restOfPath)
+          console.log('offsetX: ', offsetX)
+          console.log('path: ', path)
+
+          domNode.style.offsetPath = `path('${path}')`
+          domNode.style.offsetRotate = '0deg'
+          // This property is fairly new and not all versions of TypeScript have it
+          // in the lib.dom.d.ts file. If you get an error here, you can either
+          // ignore it or add the property to the CSSStyleDeclaration interface
+          // yourself.
+          //
+
+          // domNode.style.offsetAnchor = 'center'
+          const keyframes = [
+            { offsetDistance: '0%' },
+            { offsetDistance: '100%' },
+          ]
+
+          // updateNode(rootNode.id, {
+          //   ...rootNode,
+          //   // data: {
+          //   //   ...rootNode.data,
+          //   //   concise: true,
+          //   // },
+          //   position: {
+          //     x: targetX,
+          //     y: 0
+          //   },
+          // })
+          // animateRootNodeConcision
+
+          // const keyframes = [
+          //   { transform: `translateX(-${offsetX}px)`, opacity: 0.75 }, // Initial state
+          //   { transform: `translateX(${offsetX}px)`, opacity: 1 }, // Final state
+          // ]
+          const animation: any = {
+            duration: 2000,
+            easing: 'ease-in-out',
+            iterations: 1,
+          }
+
+          return {
+            id: rootNode.id,
+            domNode,
+            keyframes,
+            animation,
+          }
+          // domNode.animate(keyframes, animation)
+
+          // position: screenToFlowPosition({
+          //   x: event.clientX,
+          //   y: event.clientY,
+          // }),
+          // updateNodeData(rootNode.id, {
+          //   ...rootNode,
+          //   data: {
+          //     ...rootNode.data,
+          //     concise: true,
+          //   },
+          // })
+          // screenToFlowPosition
+        })
+
+        const start = () => {
+          animations.forEach((animation: any) => {
+            const anim = animation.domNode.animate(
+              animation.keyframes,
+              animation.animation
+            )
+            // anim.stop()
+          })
+        }
+
+        return { start, animations }
+      },
+    []
+  )
+  const renderRootNodeConciseLayout = useMemo(
+    () => (childlessRootNodes: any[]) => {
+      const firstChildlessNode = childlessRootNodes[0]
+      console.log('firstChildlessNode: ', firstChildlessNode)
+
+      const {
+        position: { x },
+      } = firstChildlessNode
+
+      const targetX = x || 0
+      console.log('targetX: ', targetX)
+      const targetY = 0
+
+      const positionedChildlessNodes = childlessRootNodes.map(
+        (childlessRootNode, i) => ({
+          ...childlessRootNode,
+          zIndex: i + 1,
+          // selectable: false,
+          // draggable: false,
+          // isConnectable: false,
+          // position: {
+          //   x: targetX,
+          //   y: 0,
+          // },
+        })
+      )
+
+      const sequence = animateRootNodeConcision({
+        targetX,
+        targetY,
+        childlessRootNodes,
+      })
+      // const rootNodes = childlessRootNodeIds.map((id: string) => getNode(id))
+      // const conciseAsFuck = childlessRootNodes.every((node: any) => node.data.concise)
+      // console.log('conciseAsFuck: ', conciseAsFuck)
+      // if (conciseAsFuck){
+      //   return childlessRootNodes
+      // } else {
+
+      // }
+      // console.log('rootNodes: ', rootNodes)
+      // const bounds = getNodesBounds(rootNodes)
+      // console.log('bounds: ', bounds)
+
+      console.log('childlessRootNodes: ', childlessRootNodes)
+      return {
+        positionedChildlessNodes,
+        sequence,
+      }
+    },
+    [animateRootNodeConcision]
+  )
+
+  const createGroupNodeLayout = useCallback(
+    ({ groupId, rootNode, childNodes }: any) => {
+      const initialConfig = {
+        id: groupId,
+        type: 'entityGroupNode',
+        initialHeight: 420,
+        initialWidth: 420,
+        style: {
+          width: 420,
+          height: 420,
+          backgroundColor: 'rgba(208, 192, 247, 0.2)',
+        },
+        data: {
+          label: groupId,
+          name: groupId,
+          type: 'group',
+        },
+      }
+      const [{ position }]: any = assignPositionsToChildNodes(rootNode, [
+        initialConfig,
+      ])
+      console.log('position: ', position)
+      const groupNode: any = {
+        ...initialConfig,
+        position,
+      }
+      console.log('groupNode: ', groupNode)
+      const groupNodeChildren = childNodes.map(
+        (childNode: any, index: any) => ({
+          ...childNode,
+          position: {
+            x: 0,
+            y: 0,
+          },
+          hidden: true,
+          zIndex: index,
+          parentId: groupId,
+          extent: 'parent',
+        })
+      )
+
+      groupNode.data.children = [...groupNodeChildren]
+      console.log('groupNodeChildren: ', groupNodeChildren)
+
+      return { groupNode, groupNodeChildren }
+    },
+    [assignPositionsToChildNodes]
+  )
+
+  const getRootNodeChildren = useCallback(
+    async (type: any) => {
+      const source: any = `${type}-root-node`
+
+      const nodeState = rootNodeState[source]
+      console.log('nodeState: ', nodeState)
+
+      const { lastIndex } = nodeState
+      // #TODO - add handling for if batch size is greater than remaining child nodes
+      const childNodes = graph[type].nodes.slice(
+        lastIndex,
+        lastIndex + childNodeBatchSize
+      )
+
+      // const { x, y, childNodeDirection } = ROOT_NODE_POSITIONS[type]
+      const rootNode: any = getNode(source)
+      console.log('rootNode: ', rootNode)
+
+      const groupId = `${type}-group-${lastIndex}`
+      console.log('groupId: ', groupId)
+      const { groupNode, groupNodeChildren }: any = createGroupNodeLayout({
+        groupId,
+        rootNode,
+        childNodes,
+      })
+      console.log('groupNode: ', groupNode)
+      // const positionedNodes: any = assignPositionsToChildNodes(
+      //   parentNode,
+      //   childNodes
+      // )
+
+      const incomingEdges = createRootNodeEdges([groupNode], source)
+      console.log('incomingEdges: ', incomingEdges)
+
+      // const childlessRootNodes = renderRootNodeConciseLayout(source)
+
+      // Note: This is to update the root node that has been clicked with the respective amount of handles to support the edge linking
+
+      // const restOfRootNodeIds = ROOT_NODE_IDS.filter((id) => id !== source)
+      // const childlessRootNodes = restOfRootNodeIds
+      //   .map((id: string) => getNode(id))
+      //   .filter(
+      //     (node: any) => !node.data.handles || node.data.handles.length === 0
+      //   )
+      // const { sequence, positionedChildlessNodes } =
+      //   renderRootNodeConciseLayout(childlessRootNodes)
+
+      // console.log('positionedChildlessNodes: ', positionedChildlessNodes)
+      const incomingHandles: any = incomingEdges.map(
+        (edge) => edge.sourceHandle
+      )
+      console.log('incomingHandles: ', incomingHandles)
+      // const restOfNodes = getNodes().filter(
+      //   (node) => !initialNodes.includes(node)
+      // )
+      // We then need to replace/mutate the corresponding root node is the current state of the graph in order to have Reactflow update the node accordingly
+      const initialRootNodes = [
+        ...getNodes().filter(
+          (node: any) => node.id !== source
+          // node.id.includes('root')
+          // && !restOfRootNodeIds.includes(node.id)
+        ),
+        {
+          ...rootNode,
+          data: {
+            ...rootNode.data,
+            handles: rootNode.data?.handles?.length
+              ? [...rootNode.data.handles, ...incomingHandles]
+              : incomingHandles,
+          },
+        },
+        // ...positionedChildlessNodes,
+      ]
+
+      // So now we set the root nodes with the relevant root node having updated handles, then set the rest of the existing nodes, and then the newest positioned child nodes
+      setNodes((nds: any) => [
+        ...initialRootNodes,
+        groupNode,
+        ...groupNodeChildren,
+      ])
+      // setNodes((nds: any) => [...initialRootNodes])
+
+      setEdges((edges: any) => [...edges, ...incomingEdges])
+
+      // async function processNodes(array: any) {
+      //   for (const item of array) {
+      //     console.log('item: ', item)
+      //     await wait(1)
+      //     const added = addNodes(item)
+      //     console.log('added: ', added)
+      //   }
+      // }
+      // await processNodes(positionedNodes)
+      updateChildNodeBatchIndex(source)
+
+      // const handleTransform = useCallback(() => {
+      //   setViewport({ x: positionedNodes[positionedNodes?.length - 1].x, y: positionedNodes[positionedNodes?.length - 1].y, zoom: 1 }, { duration: 800 });
+      // }, [setViewport]);
+
+      // const bounds = getNodesBounds(nodes);
+      return {
+        childNodes: {
+          groupNode,
+          groupNodeChildren,
+        },
+        edges: incomingEdges,
+        // sequence,
+        // positionedChildlessNodes,
+      }
+    },
+    [
+      createGroupNodeLayout,
+      createRootNodeEdges,
+      getNode,
+      getNodes,
+      graph,
+      rootNodeState,
+    ] // runForceSimulation
+  )
+
+  const [showLocationVisualization, setShowLocationVisualization] =
+    useState(false)
+
+  const closeLocationVisualization = useCallback(() => {
+    setShowLocationVisualization(false)
+  }, [])
+  const toggleLocationVisualization = useCallback(
+    () =>
+      setShowLocationVisualization(
+        (showLocationVisualization) => !showLocationVisualization
+      ),
+    []
+  )
+
+  const [activeNode, setActiveNode] = useState(null)
+  const updateActiveNode = (node: any) => {
+    setActiveNode(node)
+  }
+
+  const [locationsToVisualize, setLocationsToVisualize]: any = useState([])
+
+  const addLocationsToVisualize = useCallback((locations: any[]) => {
+    setLocationsToVisualize((locationsToVisualize: any[]) => [
+      ...locationsToVisualize,
+      ...locations,
+    ])
+  }, [])
+
+  const onNodeClick: any = useCallback(
+    (node: any) => {
+      // const { target } = event
+      console.log('node: ', node)
+      const {
+        data: { type },
+      } = node
+      console.log('type: ', type)
+
+      const { childNodes } = getRootNodeChildren(node?.data.type)
+
+      if (type === 'events') {
+        // addLocationsToVisualize(childNodes)
+      }
+
+      nextTick(10).then(() => {
+        // positionedChildlessNodes.forEach((rePositionedRootNode: any) => {
+        //   updateNode(rePositionedRootNode.id, {
+        //     ...rePositionedRootNode,
+        //   })
+        // })
+        // sequence.start()
+        zoomOut({
+          // @ts-ignore
+          zoom: 0,
+          duration: 500,
+        })
+      })
+
+      // return { sequence, childNodes }
+      // // Ignore any other clicks to the node that are not the load button
+      // if (target.classList.contains('load-records-button')) {
+
+      // } else {
+      //   updateActiveNode(node)
+      // }
+    },
+    [getRootNodeChildren, zoomOut]
+  )
+
   //  Graph State Functions --------------------------------------------------------------------------------------
 
   const onNodesChange: OnNodesChange = useCallback(
@@ -659,7 +995,7 @@ export const MindMapProvider = ({
   const findConnections = useCallback(
     (node: any) => {
       const { id } = node
-      const { links } = allEntityGraphData
+      const { links } = mindMapIntialGraphState
       const currentNodes = getNodes()
       const nodeLinks = links
         .filter((link: any) => link.target === id || link.source === id)
@@ -684,67 +1020,13 @@ export const MindMapProvider = ({
       addEdges(handles)
       return connections
     },
-    [addEdges, allEntityGraphData, createRootNodeEdge, getNodes, updateNodeData]
-  )
-
-  const [showLocationVisualization, setShowLocationVisualization] =
-    useState(false)
-
-  const closeLocationVisualization = useCallback(() => {
-    setShowLocationVisualization(false)
-  }, [])
-  const toggleLocationVisualization = useCallback(
-    () =>
-      setShowLocationVisualization(
-        (showLocationVisualization) => !showLocationVisualization
-      ),
-    []
-  )
-
-  const [activeNode, setActiveNode] = useState(null)
-  const updateActiveNode = (node: any) => {
-    setActiveNode(node)
-  }
-
-  const [locationsToVisualize, setLocationsToVisualize]: any = useState([])
-
-  const addLocationsToVisualize = useCallback((locations: any[]) => {
-    setLocationsToVisualize((locationsToVisualize: any[]) => [
-      ...locationsToVisualize,
-      ...locations,
-    ])
-  }, [])
-
-  const onNodeClick: any = useCallback(
-    (node: any) => {
-      // const { target } = event
-      const {
-        data: { type },
-      } = node
-
-      const { childNodes } = getRootNodeChildren(node?.data.type)
-      const childNode = childNodes[childNodes.length - 1]
-      console.log('childNode: ', childNode)
-
-      if (type === 'events') {
-        addLocationsToVisualize(childNodes)
-      }
-
-      nextTick(10).then(() => {
-        zoomOut({
-          // @ts-ignore
-          zoom: 0,
-          duration: 500,
-        })
-      })
-      // // Ignore any other clicks to the node that are not the load button
-      // if (target.classList.contains('load-records-button')) {
-
-      // } else {
-      //   updateActiveNode(node)
-      // }
-    },
-    [addLocationsToVisualize, getRootNodeChildren, zoomOut]
+    [
+      addEdges,
+      createRootNodeEdge,
+      getNodes,
+      mindMapIntialGraphState,
+      updateNodeData,
+    ]
   )
 
   //  useEffects --------------------------------------------------------------------------------------
@@ -773,7 +1055,7 @@ export const MindMapProvider = ({
 
     const IN = graph3d.root.nodes.map(createRootNode)
     setNodes(IN)
-    setInitialNodes(IN)
+    // setInitialNodes(IN)
     setEdges([])
   }, [createRootNode, createRootNodeChild, graph3d])
 
@@ -799,7 +1081,8 @@ export const MindMapProvider = ({
         fitView,
         setNodes,
         getEdges,
-        initialNodes,
+        // initialNodes,
+        useNodesData,
         store,
         updateNode,
         getNode,
@@ -822,6 +1105,13 @@ export const MindMapProvider = ({
         updateMindMapInstance,
         saveMindMap,
         restore,
+        getIntersectingNodes,
+        isNodeIntersecting,
+        toggleConciseView,
+        turnOffConciseView,
+        turnOnConciseView,
+        conciseViewActive,
+        renderRootNodeConciseLayout,
       }}
     >
       {children}
