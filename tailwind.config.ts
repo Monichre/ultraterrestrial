@@ -54,6 +54,10 @@ const config = {
         eirene: ['var(--font-eirene})'],
         stellar: ['var(--font-stellar})'],
         jetbrains: ['var(--font-jetbrains)'],
+        nunito: ['var(--font-nunito})'],
+        sentient: ['var(--font-sentient)'],
+        bebasNeue: ['var(--font-bebas-neue)'],
+        commitMono: ['var(--font-commit-mono)'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -106,7 +110,7 @@ const config = {
         'border-flip': 'flip 6s infinite steps(2, end)',
         'border-rotate': 'rotate 3s linear infinite both',
         'border-width': 'border-width 3s infinite alternate',
-        'zoom-in': 'zoom-in linear both',
+        'zoom-in': 'zoom-in',
       },
       keyframes: {
         'zoom-in': {

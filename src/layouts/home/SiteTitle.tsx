@@ -1,6 +1,6 @@
 'use client'
-import { BlurFade } from '@/components/animations/blur-fade/BlurFade'
-import { TextEffect } from '@/components/animations/text-effect'
+import { BlurFade } from '@/components/animated/blur-fade/BlurFade'
+import { TextEffect } from '@/components/animated/text-effect'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion-3d'
 import * as React from 'react'

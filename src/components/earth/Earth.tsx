@@ -6,11 +6,13 @@ import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { motion } from 'framer-motion-3d'
 import * as THREE from 'three'
 
-const RotatingComponent = () => {
+const RotatingComponent = ({ spin }: any) => {
   const earthRef: any = useRef<THREE.Mesh>(null!)
 
   useFrame((state, delta) => {
-    return (earthRef.current.rotation.y += delta / 10)
+    if (spin) {
+      return (earthRef.current.rotation.y += delta / 10)
+    }
   })
 
   const [color, normal, aoMap] = useLoader(TextureLoader, [

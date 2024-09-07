@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/utils/cn'
-import { Illustration } from '@/components/ui/backgrounds/stars-background'
+import { Illustration } from '@/components/backgrounds/stars-background'
 
 export type StarsCardProps = {
   className?: string

@@ -2,25 +2,131 @@
 import * as React from 'react'
 
 import './timeline.css'
+import dayjs from 'dayjs'
+import {
+  motion,
+  inView,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'framer-motion'
+import { index } from 'd3'
 
-export const SpatialTimeline = ({ events }: any) => {
-  console.log('events: ', events)
+// const TimelineItem = (props: any) => {
+//   const { scrollYProgress } = useScroll()
+// const scaleX = useSpring(scrollYProgress)
+//   return (
+//     <div
+//     className='timeline-item'
+//     key={index}
+//     // animate={computeTranslateZ(index * 2)}
+//     // transition={{
+//     //   duration: 2,
+//     //   ease: 'linear',
+//     // }}
+//   >
+//     <h1 className='text-white'>{event.name}</h1>
+//     <p className='text-white'>
+//       {dayjs(event.date).format('MMM DD, YYYY')}
+//     </p>
+//     <p className='text-white'>{event.location}</p>
+//     <p className='text-white'>{event.location}</p>
+//   </div>
+//   )
+// }
+
+export const SpatialTimeline = ({ eventsByYear, years }: any) => {
+  console.log('eventsByYear: ', eventsByYear)
+
+  // Function to compute translateZ based on index
+  const y = useTransform(x, (latest) => latest * 2)
+  const opacityOutput = [0, 1, 0]
+  const colorOutput = ['#f00', '#fff', '#0f0']
+
+  const opacity = useTransform(x, xInput, opacityOutput)
+  const computeTranslateZ = (index: number) => ({
+    transform: [
+      `translateZ(${-(index + 1) * 1000}px)`,
+      `translateZ(0px)`,
+      `translateZ(${(index + 1) * 1000}px)`,
+    ],
+    opacity: [0, 1, 0],
+    filter: ['blur(5px)', 'blur(0px)', 'blur(5px)'],
+  })
+  const today = dayjs(new Date()).format('MMM DD, YYYY')
+  // stuck-grid
+
+  React.useEffect(() => {
+    const setAnimationRanges = (
+      element: {
+        style: { setProperty: (arg0: string, arg1: string) => void }
+        animate: (
+          arg0: { opacity: number; transform: string }[],
+          arg1: {
+            duration: number
+            easing: string
+            fill: string
+            delay: number
+          }
+        ) => void
+      },
+      index: number,
+      totalElements: number
+    ) => {
+      const start = 20 + index * 5 // Example start percentage logic
+      const end = start + 10 // Example: each animation spans 10%
+
+      element.style.setProperty('--animation-start', `${start}%`)
+      element.style.setProperty('--animation-end', `${end}%`)
+
+      // Use Scroll-driven animations or manually update keyframes
+      element.animate(
+        [
+          { opacity: 0, transform: `translateZ(-100px)` },
+          { opacity: 1, transform: `translateZ(0)` },
+          { opacity: 0, transform: `translateZ(100px)` },
+        ],
+        {
+          duration: 1000,
+          easing: 'linear',
+          fill: 'both',
+          delay: (index / totalElements) * 1000, // Adjust the delay based on index
+        }
+      )
+    }
+  }, [])
   return (
     <div className='stuck-grid'>
-      <div className='grid-item'>oklch()</div>
-      <div className='grid-item'>scroll()</div>
-      <div className='grid-item'>text-box-trim</div>
-      <div className='grid-item'>pow()</div>
-      <div className='grid-item'>@property</div>
-      <div className='grid-item'>top-layer</div>
-      <div className='grid-item'>@view-transition</div>
-      <div className='grid-item'>var()</div>
-      <div className='grid-item'>clamp()</div>
-      <div className='grid-item'>view()</div>
-      <div className='grid-item special'>
-        <b>CSS</b>
-      </div>
-      <div className='grid-item'>@layer</div>
+      {years.map((year: any, index: any) => {
+        return (
+          <div className='grid-item' key={year}>
+            {eventsByYear[year].map((event: any, index: any) => (
+              <div
+                className='timeline-item'
+                key={`${year}-${event.id}`}
+                // animate={computeTranslateZ(index * 2)}
+                // transition={{
+                //   duration: 2,
+                //   ease: 'linear',
+                // }}
+              >
+                <h1 className='text-white'>{event.name}</h1>
+                <p className='text-white'>
+                  {dayjs(event.date).format('MMM DD, YYYY')}
+                </p>
+                <p className='text-white'>{event.location}</p>
+                <p className='text-white'>{event.location}</p>
+              </div>
+            ))}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+{
+  /* <div className='grid-item'>@layer</div>
       <div className='grid-item'>@swash</div>
       <div className='grid-item'>subgrid</div>
       <div className='grid-item'>in oklab</div>
@@ -58,7 +164,5 @@ export const SpatialTimeline = ({ events }: any) => {
       <div className='grid-item'>image-set()</div>
       <div className='grid-item'>env()</div>
       <div className='grid-item'>place-content</div>
-      <div className='grid-item'>gap</div>
-    </div>
-  )
+      <div className='grid-item'>gap</div> */
 }

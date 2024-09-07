@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-@import url('tldraw/tldraw.css');
+@import url('https://api.fontshare.com/v2/css?f[]=bebas-neue@400&f[]=sentient@400&display=swap');
+/* @import url('https://api.fontshare.com/v2/css?f[]=bebas-neue@400&f[]=sentient@400&f[]=nunito@400&display=swap'rel='stylesheet'); */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -51,10 +52,6 @@
   }
 }
 
-/* * {
-  @apply border-border;
-} */
-
 @layer utilities {
   .bg-card {
     @apply bg-gradient-to-b from-card/70 to-secondary/50;
@@ -95,10 +92,6 @@
   /* .special.special {
     @apply row-span-2 col-span-2;
   } */
-}
-
-body {
-  @apply bg-background text-foreground;
 }
 
 /* @font-face {
@@ -220,7 +213,10 @@ body {
   src: url('./fonts/ailerons.woff2');
   
 } */
-
+/* font-family: 'Bebas Neue', sans-serif;
+font-family: 'Nunito', sans-serif; */
+/* Bebas Neue Regular + Nunito Regular */
+/* https://www.fontshare.com/pairs?user-filter=shortlisted */
 @font-face {
   font-family: 'JetBrains Mono', monospace;
   src: url('/src/app/fonts/jetbrains/JetBrainsMono-VariableFront_wght.ttf')
@@ -237,13 +233,35 @@ body {
 
 /* background-image: url('https://user-images.githubusercontent.com/26748614/96337246-f14d4580-1085-11eb-8793-a86d929e034d.jpg'); */
 /* background: radial-gradient(circle at center, #004d4d, #003333, #001919); */
+/* font-family: 'Bebas Neue', sans-serif;
+font-family: 'Sentient', serif;
+font-family: 'Nunito', sans-serif; */
 body {
+  block-size: 100%;
+  @apply bg-background text-foreground;
+  /* font-family: 'JetBrains Mono', monospace; */
+  font-family: var(--font-fira-code);
+  position: relative;
+  /* font-family: 'Sentient', serif; */
+}
+/* body {
   background-color: #fff;
   /* background-color: #0a0a0a; */
-  /* background-image: radial-gradient(ellipse 80% 80% at 50% -20%,rgba(120,119,198,0.3),rgba(255,255,255,0)); */
+/* background-image: radial-gradient(ellipse 80% 80% at 50% -20%,rgba(120,119,198,0.3),rgba(255,255,255,0)); 
   font-family: 'JetBrains Mono', monospace;
   position: relative;
+} */
+
+body.dark {
+  background-color: #000;
 }
+body .timeline-page {
+  min-block-size: 400vh;
+  height: 100vh;
+  position: relative;
+  background: #000;
+}
+
 .word-cloud-page {
   /* background-color: #0a0a0a; */
   /* background: linear-gradient(
@@ -256,7 +274,7 @@ body {
 }
 
 body::after {
-  content: '';
+  /* content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -269,7 +287,7 @@ body::after {
     #0000003d 3px
   );
   background-size: auto 100%;
-  pointer-events: none;
+  pointer-events: none; */
 }
 
 h2,
@@ -282,10 +300,14 @@ h3 {
 }
 
 p {
-  font-family: 'JetBrains Mono', monospace;
+  /* font-family: 'JetBrains Mono', monospace; */
+  /* font-family: 'Sentient', serif; */
+  /* font-family: 'JetBrains Mono', monospace; */
+  font-family: var(--font-fira-code);
   font-size: 14px;
   line-height: 21px;
-  font-weight: 300;
+  /* font-weight: 300; */
+  /* font-family: 'Nunito', sans-serif; */
 }
 .hover-menu {
   height: auto;
@@ -649,4 +671,27 @@ td p {
   height: 650px;
   width: 550px;
   draggable: false;
+}
+
+.ai-response-markup {
+}
+
+.ai-response-markup * {
+  margin-bottom: 12px;
+}
+
+.ai-response-markup h3,
+.ai-response-markup h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  /* font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+    letter-spacing: 1.5px; */
+}
+
+/* font-size: 24px; */
+
+.ai-response-markup p,
+.ai-response-markup ul li {
+  font-family: 'Nunito', sans-serif;
 }

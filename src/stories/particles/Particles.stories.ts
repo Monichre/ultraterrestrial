@@ -1,4 +1,4 @@
-import { Particles } from '@/components/animations/particles/Particles'
+import { Particles } from '@/components/animated/particles/Particles'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

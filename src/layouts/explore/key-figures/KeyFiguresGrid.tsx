@@ -2,7 +2,7 @@ import type { KeyFiguresArray } from '@/app/(site)/explore/key-figures/page'
 import { TextEffect } from '@/components/animations'
 import SwipeGrid, {
   type SwipeGridItem,
-} from '@/components/animations/swipe-grid/SwipeGrid'
+} from '@/components/animated/swipe-grid/SwipeGrid'
 import { cn } from '@/utils'
 import { Particles } from '@tsparticles/engine'
 

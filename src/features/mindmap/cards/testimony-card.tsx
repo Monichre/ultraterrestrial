@@ -7,7 +7,7 @@ import { CardHeader, Card, CardFooter } from '@/components/ui/card/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { CardContent, CardTitle } from '@/components/ui/card'
 import { BlurAppear } from '@/components/animations'
-import { TextEffect } from '@/components/animations/text-effect'
+import { TextEffect } from '@/components/animated/text-effect'
 import { ModelAvatar } from '@/features/mindmap/connection-list'
 import { BlockQuote } from '@/components/blockquote'
 

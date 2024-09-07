@@ -8,12 +8,16 @@ import { CanvasCursor } from '@/components/ui/canvas-cursor'
 import { SiteTitle } from './SiteTitle'
 import { LovecraftQuote } from './LovecraftQuote'
 import dynamic from 'next/dynamic'
-import { BlurAppear } from '@/components/animations'
+// import { BlurAppear } from '@/components/animations'
 import { useInView } from 'framer-motion'
 import { nextTick } from '@/utils'
 import { Earth } from '@/components/earth'
 import { Moon, MoonScene } from '@/components/moon'
-import { Particles } from '@/components/animations/particles'
+import { Particles } from '@/components/animated/particles'
+import {
+  ShootingStars,
+  StarsBackground,
+} from '@/components/backgrounds/shooting-stars'
 
 // // import { Earth } from '@/components/earth'
 // const Earth = dynamic(
@@ -63,10 +67,10 @@ export const Home: React.FC<HomeProps> = () => {
 
   return (
     <div className='h-[100vh] w-[100vw] relative'>
-      <div className='absolute top-1 left-1 h-[60vh] w-[60vw] z-0'>
+      <div className='absolute top-1 left-1 h-[60vh] w-[60vw] z-1'>
         <Moon />
       </div>
-      <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full z-0'>
+      <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1'>
         <Earth ref={earthRef} />
       </div>
 
@@ -78,10 +82,12 @@ export const Home: React.FC<HomeProps> = () => {
               <SiteTitle />
               <LovecraftQuote />
             </div>
-            <Astronaut />
+            {/* <Astronaut /> */}
           </>
         )}
       </div>
+      <ShootingStars />
+      <StarsBackground />
     </div>
   )
 }

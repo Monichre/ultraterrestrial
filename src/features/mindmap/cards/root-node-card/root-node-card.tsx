@@ -1,12 +1,12 @@
 import { Card } from '@/components/ui/card'
-import { DotGridBackgroundBlack } from '@/components/ui/backgrounds'
+import { DotGridBackgroundBlack } from '@/components/backgrounds'
 import {
   CardHeader,
   CardDescription,
   CardContent,
   CardFooter,
 } from '@/components/ui/card'
-import { NumberTicker } from '@/components/animations/number-ticker'
+import { NumberTicker } from '@/components/animated/number-ticker'
 import { OpenAILogo } from '@/components/ui/icons'
 
 import { cn, capitalize, nextTick } from '@/utils'
@@ -23,6 +23,7 @@ import { useMindMap } from '@/providers/mindmap-context'
 import { SketchyGlobe } from '@/components/icons'
 
 import { RootNodeToolbar } from '@/features/mindmap/cards/root-node-card/RootNodeToolbar'
+import { InputWithVanishAnimation } from '@/features/mindmap/cards/root-node-card/InputWithVanishAnimation'
 
 const Description = memo(({ childCount, label }: any) => (
   <>
@@ -65,7 +66,11 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
 
     const { results } = await searchTable({ table, keyword })
 
-    addChildNodesFromSearch({ type, searchResults: results })
+    addChildNodesFromSearch({
+      type,
+      searchResults: results,
+      searchTerm: keyword.trim().replace(/ /g, ''),
+    })
     setSearchTerm('')
   }, [searchTerm, type, addChildNodesFromSearch])
   const {
@@ -108,14 +113,6 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
           <h3 className={`!font-centimaSans tracking-wider uppercase`}>
             {title}
           </h3>
-          <Button
-            variant='ghost'
-            size='icon'
-            className='ml-auto'
-            onClick={toggleLocationVisualization}
-          >
-            <SketchyGlobe className='stroke-1 h-5 w-5 block' fill='#78efff' />
-          </Button>
         </div>
 
         <CardDescription className='text-xs relative z-20'>
@@ -131,12 +128,20 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
         </CardDescription>
       </CardHeader>
 
-      <RootNodeToolbar
+      <CardContent className='my-2'>
+        <InputWithVanishAnimation
+          onSubmit={runSearch}
+          type={type}
+          placeholders={['Roswell', 'USS Nimitz']}
+        />
+      </CardContent>
+
+      {/* <RootNodeToolbar
         onChange={updateSearchTerm}
         onSubmit={runSearch}
         type={type}
         value={searchTerm}
-      />
+      /> */}
       <CardFooter className='p-2 flex justify-center align-middle items-center mt-2'>
         <ShinyButton
           onClick={handleLoadingRecords}

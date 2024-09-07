@@ -2,13 +2,13 @@ import * as React from 'react'
 
 import { getXataClient } from '@/lib/xata/client'
 
-import SwipeGrid from '@/components/animations/swipe-grid/SwipeGrid'
+import SwipeGrid from '@/components/animated/swipe-grid/SwipeGrid'
 import { Suspense } from 'react'
-import { Particles } from '@/components/animations/particles/Particles'
-import { BoxReveal } from '@/components/animations/box-reveal'
+import { Particles } from '@/components/animated/particles/Particles'
+import { BoxReveal } from '@/components/animated/box-reveal'
 import { Button } from '@/components/ui/button/button'
-import { BlurFade } from '@/components/animations/blur-fade'
-import { TextEffect } from '@/components/animations/text-effect'
+import { BlurFade } from '@/components/animated/blur-fade'
+import { TextEffect } from '@/components/animated/text-effect'
 import { cn } from '@/utils'
 import { Loading } from '@/components/ui/loading'
 

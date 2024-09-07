@@ -103,6 +103,33 @@ export const futura = localFont({
   variable: '--font-futura',
 })
 
+export const commitMono = localFont({
+  src: [
+    {
+      path: 'fonts/CommitMono/CommitMono-400-Regular.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/CommitMono/CommitMono-700-Regular.otf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/CommitMono/CommitMono-700-Regular.otf',
+      weight: '700',
+      style: 'normal',
+    },
+
+    {
+      path: 'fonts/CommitMono/CommitMono-700-Italic.otf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-futura',
+})
+
 export const oswald = Oswald({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
@@ -136,4 +163,40 @@ export const jetBrains = localFont({
   // weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
   variable: '--font-jetbrains',
+})
+
+export const nunito = localFont({
+  src: [
+    {
+      path: 'fonts/Nunito/Fonts/WEB/fonts/Nunito-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-nunito',
+})
+
+export const sentient = localFont({
+  src: [
+    {
+      path: 'fonts/Sentient/Fonts/WEB/fonts/Sentient-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-sentient',
+})
+
+export const bebasNeue = localFont({
+  src: [
+    {
+      path: 'fonts/BebasNeue/Fonts/WEB/fonts/BebasNeue-Regular.eot',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-bebas-neue',
 })

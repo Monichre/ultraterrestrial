@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { BoxReveal } from '@/components/animations/box-reveal'
+import { BoxReveal } from '@/components/animated/box-reveal'
 
 const meta = {
   title: 'Components/BoxReveal',

@@ -13,6 +13,19 @@ export const Globeanime = ({ markers }) => {
   const [copied, setCopied] = useState(false)
   const [darkMode, setDarkMode] = useState(false) // State to manage dark mode
 
+  // Need logic to transform coordinates into pixel values:
+  // use resized dimensions
+  // but fall back to getBoundingClientRect, if no dimensions yet.
+  // https://github.com/muratkemaldar/using-react-hooks-with-d3/blob/12-geo/src/GeoChart.js
+  // https://www.youtube.com/watch?v=gGORNzKIXL4&list=PLy69_Zq2Cz86_BJj9yIeABgt_GEWn3AZo
+  // const { width, height } =
+  //   dimensions || wrapperRef.current.getBoundingClientRect();
+
+  // // projects geo-coordinates on a 2D plane
+  // const projection = geoMercator()
+  //   .fitSize([width, height], selectedCountry || data)
+  //   .precision(100);
+
   const handleCopy = () => {
     setCopied(true)
     setTimeout(() => {

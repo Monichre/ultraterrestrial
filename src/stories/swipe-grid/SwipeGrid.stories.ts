@@ -1,4 +1,4 @@
-import SwipeGrid from '@/components/animations/swipe-grid/SwipeGrid'
+import SwipeGrid from '@/components/animated/swipe-grid/SwipeGrid'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

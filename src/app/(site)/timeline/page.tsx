@@ -22,5 +22,9 @@ export default async function Index() {
     ])
     .getAll()
     .then((data) => data.toSerializable())
-  return <EventChronologyTimeline events={events} />
+  return (
+    <div className='timeline-page'>
+      <EventChronologyTimeline events={events} />
+    </div>
+  )
 }

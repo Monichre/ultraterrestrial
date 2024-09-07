@@ -42,7 +42,7 @@ import {
   flexRender,
   type ColumnDef,
 } from '@tanstack/react-table'
-import { AnimatedGridPatternBackground } from '@/components/ui/backgrounds/animated-grid-pattern'
+import { AnimatedGridPatternBackground } from '@/components/backgrounds/animated-grid-pattern'
 import { Input } from '@/components/ui/input'
 
 export function RecordsTable({

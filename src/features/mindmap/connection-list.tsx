@@ -11,7 +11,7 @@ import React, {
   useCallback,
 } from 'react'
 
-import { AnimatedBeam } from '@/components/animations/animated-beam'
+import { AnimatedBeam } from '@/components/animated/animated-beam'
 
 // import gsap from 'gsap'
 // import { useGSAP } from '@gsap/react'
@@ -27,8 +27,8 @@ import {
   usePresence,
 } from 'framer-motion'
 import { cn } from '@/utils/cn'
-import { BlurFade } from '@/components/animations/blur-fade/BlurFade'
-import { DotPattern } from '@/components/ui/backgrounds/dot-pattern'
+import { BlurFade } from '@/components/animated/blur-fade/BlurFade'
+import { DotPattern } from '@/components/backgrounds/dot-pattern'
 import { formatModelWithImage } from '@/utils/image.utils'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import type { AnyComponent } from 'styled-components/dist/types'

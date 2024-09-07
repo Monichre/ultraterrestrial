@@ -2,20 +2,36 @@
 
 import { CardStackUI } from '@/features/mindmap/cards/card-stack/cards'
 
-export const CardStack = ({ mindmapCards }: { mindmapCards: any }) => {
-  const [root, ...rest] = mindmapCards
-  console.log('mindmapCards: ', mindmapCards)
-  const sanitizedCards = rest.map(({ position, id, type, ...rest }: any) => {
-    const { data } = rest
-    console.log('data: ', data)
-    const title = data?.label
-    return {
-      id: `panel-${id}`,
-      title,
-      ...data,
-    }
-  })
+export const formatNodesForCardDisplay = (nodes: any) => {
+  console.log('nodes: ', nodes)
+  return nodes.map((node) => {
+    const { id, ...rest } = node
+    const nodeData = node?.data || rest
 
-  console.log('sanitizedCards: ', sanitizedCards)
-  return <CardStackUI mindmapCards={sanitizedCards} />
+    const data = {
+      id,
+      ...nodeData,
+    }
+    console.log('data: ', data)
+
+    return data
+  })
+}
+
+export const CardStack = ({
+  mindmapCards,
+  stacked,
+  toggleStack,
+}: {
+  mindmapCards: any
+  stacked: any
+  toggleStack: any
+}) => {
+  return (
+    <CardStackUI
+      mindmapCards={mindmapCards}
+      stacked={stacked}
+      toggleStack={toggleStack}
+    />
+  )
 }

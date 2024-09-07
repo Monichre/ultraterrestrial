@@ -32,18 +32,15 @@ import { useMindMap } from '@/providers'
 import {
   PanelMenu,
   TransitionPanel,
-} from '@/components/animations/transition-panel'
+} from '@/components/animated/transition-panel'
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
 
-export function GraphCard({ data, id, ...rest }: any) {
+export function GraphCard({ card }: any) {
   const { addChildNodesFromSearch, addConnectionNodesFromSearch } = useMindMap()
-  const node: any = {
-    ...data,
-    id,
-  }
+
   const {
     description,
     latitude,
@@ -53,13 +50,15 @@ export function GraphCard({ data, id, ...rest }: any) {
     photo,
     name,
     role,
+    date: unformatted,
     color,
     type,
     label,
     fill,
-  } = node
+    id,
+  } = card
 
-  const date = dayjs(data?.date).format('MMM DD, YYYY')
+  const date = dayjs(unformatted?.date).format('MMM DD, YYYY')
   const image: any = photos?.length
     ? photos[0]
     : photo?.length
@@ -145,7 +144,7 @@ export function GraphCard({ data, id, ...rest }: any) {
     })
     const searchResults = payload.data
 
-    const res = addConnectionNodesFromSearch({ source: node, searchResults })
+    const res = addConnectionNodesFromSearch({ source: card, searchResults })
 
     //
   }
@@ -154,11 +153,11 @@ export function GraphCard({ data, id, ...rest }: any) {
 
   const handleSave = async () => {
     setBookmarked(true)
-    const model = objectMapToSingular[node?.type]
+    const model = objectMapToSingular[card?.type]
 
     const saved = await createUserSavedEvent({
       userId,
-      event: node.id,
+      event: card.id,
       userNote,
     })
 
@@ -188,7 +187,7 @@ export function GraphCard({ data, id, ...rest }: any) {
       title: 'Details',
       render: () => (
         <div className='mt-4 text-sm text-white font-jetbrains'>
-          <p>{truncate(node?.description, 400)}</p>
+          <p>{truncate(card?.description, 400)}</p>
         </div>
       ),
     },
@@ -196,7 +195,7 @@ export function GraphCard({ data, id, ...rest }: any) {
     {
       button: 'Connections',
       render: () => (
-        <ConnectionList originalNode={node} connections={relatedDataPoints} />
+        <ConnectionList originalNode={card} connections={relatedDataPoints} />
       ),
 
       onClick: () => {
@@ -212,7 +211,7 @@ export function GraphCard({ data, id, ...rest }: any) {
         className={`absolute -inset-2 rounded-lg bg-gradient-to-r from-[#78efff] via-[#E393E6] to-[${color}] opacity-50 blur w-full h-full`}
       ></div> */}
       <div
-        className={`relative z-50 w-content h-content rounded-[calc(var(--radius)-2px)] p-[1px] bg-black`}
+        className={`relative z-50 rounded-[calc(var(--radius)-2px)] p-[1px] bg-black w`}
         style={{ border: `1px solid ${color}` }}
         onMouseEnter={handleHoverEnter}
         // onMouseLeave={handleHoverLeave}
@@ -285,13 +284,13 @@ export function GraphCard({ data, id, ...rest }: any) {
 
                 <DialogSubtitle className=''>
                   <p className='font-jetbrains text-white tracking-wider '>
-                    {node?.location || truncate(role, 50)}
+                    {card?.location || truncate(role, 50)}
                   </p>
                   <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-auto ml-auto mt-1'>
-                    {type === 'personnel' && node?.credibility
-                      ? `Credibility Score: ${node?.credibility}`
-                      : type === 'personnel' && node.rank
-                        ? `Platform Ranking: ${node?.rank}`
+                    {type === 'personnel' && card?.credibility
+                      ? `Credibility Score: ${card?.credibility}`
+                      : type === 'personnel' && card.rank
+                        ? `Platform Ranking: ${card?.rank}`
                         : date}
                   </p>
                 </DialogSubtitle>

@@ -1,5 +1,8 @@
 'use client'
 
+import { AnimatedMiniCard } from '@/features/mindmap/cards/card-stack/animated-mini-card'
+import { MiniCard } from '@/features/mindmap/cards/card-stack/mini-card'
+import { GraphCard } from '@/features/mindmap/cards/graph-card'
 import { LuxeCard } from '@/features/mindmap/cards/luxe-card'
 import { RootNodeCard } from '@/features/mindmap/cards/root-node-card'
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion'
@@ -32,7 +35,7 @@ function CardRotate({ children, cardId, onSendToBack }: CardRotateProps) {
         y.set(0)
       }
     },
-    [onSendToBack, cardId]
+    [onSendToBack, cardId, x, y]
   )
 
   return (
@@ -51,13 +54,7 @@ function CardRotate({ children, cardId, onSendToBack }: CardRotateProps) {
   )
 }
 
-// const StackCard = () => {
-//   return (
-
-//   )
-// }
-
-export function CardStackUI({ mindmapCards }: { mindmapCards: any }) {
+const CardStackSwipeable = ({ mindmapCards }: any) => {
   const [cards, setCards] = useState(mindmapCards)
   // const handleShuffle = ( ) => {
 
@@ -82,7 +79,7 @@ export function CardStackUI({ mindmapCards }: { mindmapCards: any }) {
       {cards.map((card: any, index: any) => {
         return (
           <CardRotate
-            key={`panel-${card.id}`}
+            key={`panel-${card.id}-${index}`}
             cardId={card.id}
             onSendToBack={sendToBack}
           >
@@ -99,11 +96,74 @@ export function CardStackUI({ mindmapCards }: { mindmapCards: any }) {
               transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             >
               {/* <RootNodeCard nodeData={card} /> */}
-              <LuxeCard title={card.title} />
+              {/* <LuxeCard title={card.title} /> */}
+              <GraphCard card={card} />
             </motion.div>
           </CardRotate>
         )
       })}
     </div>
+  )
+}
+
+// const StackCard = () => {
+//   return (
+
+//   )
+// }
+
+const CardStackVerticalStack = ({
+  mindmapCards,
+  stacked,
+  toggleStacked,
+}: any) => {
+  // const [open, setOpen] = useState(stacked
+  const CARD_OFFSET = 10
+  const SCALE_FACTOR = 0.06
+
+  return (
+    <div className='flex h-[600px] w-full flex-col items-center justify-center overflow-scroll'>
+      <div
+        className='relative flex h-full w-full flex-col items-center justify-center px-4'
+        style={{
+          perspective: '600px',
+        }}
+      >
+        {mindmapCards.map((card: any, i: any) => {
+          const rotateZ = mindmapCards.length - i - 1
+          return (
+            <AnimatedMiniCard
+              stacked={stacked}
+              key={`panel-${card.id}-${i}`}
+              i={i}
+              rotateZ={rotateZ}
+            >
+              <MiniCard card={card} />
+            </AnimatedMiniCard>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+export const CardStackUI = ({
+  mindmapCards,
+  swipeable = false,
+  toggleStack,
+  stacked,
+}: {
+  mindmapCards: any
+  swipeable: boolean
+  toggleStack: any
+  stacked: boolean
+}) => {
+  return swipeable ? (
+    <CardStackSwipeable mindmapCards={mindmapCards} />
+  ) : (
+    <CardStackVerticalStack
+      mindmapCards={mindmapCards}
+      toggleStack={toggleStack}
+      stacked={stacked}
+    />
   )
 }

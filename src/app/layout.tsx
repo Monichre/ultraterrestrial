@@ -20,6 +20,10 @@ import {
   sourceSans,
   firaCode,
   jetBrains,
+  nunito,
+  sentient,
+  bebasNeue,
+  commitMono,
 } from './fonts'
 import { FullSiteNav } from '@/components/navbar/full-site-nav'
 
@@ -46,7 +50,7 @@ export default function RootLayout({
       <ClerkProvider>
         <html lang='en' suppressHydrationWarning>
           <body
-            className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable}`}
+            className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} dark`}
           >
             <ThemeProvider
               attribute='class'
@@ -59,7 +63,7 @@ export default function RootLayout({
               <FullSiteNav />
               {/* <AnimationProvider> */}
               {/* <PageTransition> */}
-              <main className='min-h-[100vh] min-w-screen relative dark'>
+              <main className='min-h-[100vh] min-w-screen relative site dark'>
                 {/* <NavBar navItems={navItems} /> */}
                 {/* <HomePageNav navItems={navItems} /> */}
                 {/* <FullSiteNav className='top-2' /> */}

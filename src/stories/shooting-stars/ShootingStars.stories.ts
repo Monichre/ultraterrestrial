@@ -1,4 +1,4 @@
-import { ShootingStars } from '@/components/ui/backgrounds/shooting-stars'
+import { ShootingStars } from '@/components/backgrounds/shooting-stars'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

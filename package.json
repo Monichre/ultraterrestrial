@@ -30,6 +30,7 @@
     "@cosmograph/react": "^1.4.0",
     "@dagrejs/dagre": "^1.1.4",
     "@deck.gl/core": "^9.0.27",
+    "@deck.gl/geo-layers": "^9.0.29",
     "@deck.gl/layers": "^9.0.27",
     "@deck.gl/mapbox": "^9.0.27",
     "@deck.gl/react": "^9.0.27",

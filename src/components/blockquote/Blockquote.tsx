@@ -1,5 +1,5 @@
 import { BlurAppear } from '@/components/animations'
-import { TextEffect } from '@/components/animations/text-effect'
+import { TextEffect } from '@/components/animated/text-effect'
 import { AvatarImage } from '@/components/ui/avatar'
 import { QuoteIcon } from 'lucide-react'
 

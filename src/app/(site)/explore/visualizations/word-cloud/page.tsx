@@ -13,11 +13,11 @@ const WordCloud = dynamic(() =>
 )
 
 const Spotlight = dynamic(() =>
-  import('@/components/animations/spotlight').then((mod) => mod.Spotlight)
+  import('@/components/animated/spotlight').then((mod) => mod.Spotlight)
 )
 
 const StarsBackground = dynamic(() =>
-  import('@/components/ui/backgrounds/shooting-stars').then(
+  import('@/components/backgrounds/shooting-stars').then(
     (mod) => mod.StarsBackground
   )
 )

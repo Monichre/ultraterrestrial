@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { MatrixBackground } from '@/components/ui/backgrounds/matrix-background'
+import { MatrixBackground } from '@/components/backgrounds/matrix-background'
 import type { AnyConstructors } from 'three/examples/jsm/nodes/shadernode/ShaderNode'
 
 const meta = {
