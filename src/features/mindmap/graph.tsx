@@ -1,10 +1,10 @@
 'use client'
 
-import { Spotlight } from '@/components/animations/spotlight'
+import { Spotlight } from '@/components/animated/spotlight'
 import {
   DotGridBackground,
   DotGridBackgroundBlack,
-} from '@/components/ui/backgrounds'
+} from '@/components/backgrounds'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -17,6 +17,7 @@ import {
   useStore,
   MiniMap,
   useNodesInitialized,
+  SelectionMode,
 } from '@xyflow/react'
 
 import { useMindMap } from '@/providers/mindmap-context'
@@ -143,14 +144,19 @@ export function Graph(props: any) {
         colorMode='dark'
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        snapToGrid={true}
+        // snapToGrid={true}
         defaultEdgeOptions={edgeOptions}
         nodes={nodes}
         edges={edges}
-        defaultViewport={{ x: 0, y: 0, zoom: 0 }}
+        defaultViewport={{ x: 0, y: 0, zoom: -1 }}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        panOnScroll
+        selectionOnDrag
+        panOnDrag
+        zoomOnScroll={false}
+        // elevateNodesOnSelect={true}
         fitView
         onInit={updateMindMapInstance}
         style={{ backgroundColor: 'transparent' }}

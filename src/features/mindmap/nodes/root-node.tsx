@@ -42,11 +42,11 @@ type CardProps = React.ComponentProps<typeof Card>
 import {
   DotGridBackground,
   DotGridBackgroundBlack,
-} from '@/components/ui/backgrounds'
+} from '@/components/backgrounds'
 import { RootNodeCard } from '@/features/mindmap/cards/root-node-card/root-node-card'
 import { motion } from 'framer-motion'
-import { BlurFade } from '@/components/animations/blur-fade'
-import { BlurAppear } from '@/components/animations/animated-wrappers'
+import { BlurFade } from '@/components/animated/blur-fade'
+import { BlurAppear } from '@/components/animated/animated-wrappers'
 // import { useLayoutedElements } from '@/features/mindmap/graph'
 
 type NumberNode = Node<{ number: number }, 'number'>

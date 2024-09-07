@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { ImageSwiper } from '@/components/animations/image-swiper'
+import { ImageSwiper } from '@/components/animated/image-swiper'
 
 const meta = {
   title: 'Components/ImageSwiper',

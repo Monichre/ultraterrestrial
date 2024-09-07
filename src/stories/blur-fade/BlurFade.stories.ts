@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { BlurFade } from '@/components/animations/blur-fade'
+import { BlurFade } from '@/components/animated/blur-fade'
 
 const meta = {
   title: 'Components/BlurFade',

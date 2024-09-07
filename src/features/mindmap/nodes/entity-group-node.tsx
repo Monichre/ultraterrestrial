@@ -15,10 +15,26 @@ import {
 import { MindMapEntityCard } from '@/features/mindmap/cards/entity-card/entity-card'
 import { GraphCard } from '@/features/mindmap/cards/graph-card/graph-card'
 import { GraphNodeCard } from '@/components/ui/card/graph-node-card'
-import { BlurAppear } from '@/components/animations/animated-wrappers'
+import { BlurAppear } from '@/components/animated/animated-wrappers'
 import { useMindMap } from '@/providers'
-import { useMotionValue, motion, useMotionTemplate } from 'framer-motion'
-import { Layers, Layers3, Maximize2, Minimize2 } from 'lucide-react'
+import {
+  useMotionValue,
+  motion,
+  useMotionTemplate,
+  useTransform,
+} from 'framer-motion'
+import { Layers, Layers3, LayersIcon, Maximize2, Minimize2 } from 'lucide-react'
+import {
+  CardStack,
+  formatNodesForCardDisplay,
+} from '@/features/mindmap/cards/card-stack/card-stack'
+import { TimelineSidebar } from '@/layouts/timeline/TimlineSidebarUI'
+import { Button } from '@/components/ui/button'
+import { SketchyGlobe } from '@/components/icons'
+import { extractUniqueYearsFromEvents } from '@/utils'
+import { GROUP_NODE_DIMENSIONS } from '@/features/mindmap/config/nodes.config'
+import { CanvasRevealEffect } from '@/features/mindmap/cards/entity-group-card/entity-group-card-bg'
+
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
@@ -34,18 +50,70 @@ interface Photo {
   url: string
 }
 
+function CardRotate({ children, onSendToBack }: any) {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const rotateX = useTransform(y, [-100, 100], [60, -60])
+  const rotateY = useTransform(x, [-100, 100], [-60, 60])
+
+  function handleDragEnd(_: any, info: any) {
+    const threshold = 180
+    if (
+      Math.abs(info.offset.x) > threshold ||
+      Math.abs(info.offset.y) > threshold
+    ) {
+      onSendToBack()
+    } else {
+      x.set(0)
+      y.set(0)
+    }
+  }
+
+  return (
+    <motion.div
+      className='absolute h-52 w-52 cursor-grab'
+      style={{ x, y, rotateX, rotateY }}
+      drag
+      dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
+      dragElastic={0.6}
+      whileTap={{ cursor: 'grabbing' }}
+      onDragEnd={handleDragEnd}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 const GN = memo((node: any) => {
-  const { getIntersectingNodes, useNodesData } = useMindMap()
+  const { getIntersectingNodes, useNodesData, toggleLocationVisualization } =
+    useMindMap()
   const groupNodeData = useNodesData(node.id)
-  const [groupCards, setGroupCards] = useState(groupNodeData?.data.children)
-  console.log('groupNodeData: ', groupNodeData)
-  console.log('node: ', node)
+  const [groupCards, setGroupCards]: any = useState(
+    formatNodesForCardDisplay(groupNodeData?.data.children)
+  )
+
+  const [groupEntityType] = node.id.split('-')
+
+  const years =
+    groupEntityType === 'events'
+      ? extractUniqueYearsFromEvents(groupCards)
+      : null
+
   const updateNodeInternals = useUpdateNodeInternals()
   updateNodeInternals(node.id)
   const [handles, setHandles]: any = useState([])
 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
+  // const sendToBack = (id: number) => {
+  //   setGroupCards((prev) => {
+  //     const newCards = [...prev]
+  //     const index = newCards.findIndex((card) => card.id === id)
+  //     const [card] = newCards.splice(index, 1)
+  //     newCards.unshift(card)
+  //     return newCards
+  //   })
+  // }
 
   const [isMaximized, setIsMaximized] = React.useState(false)
   const [isStacked, setIsStacked] = React.useState(false)
@@ -54,6 +122,8 @@ const GN = memo((node: any) => {
 
   const [stackedHeight, setStackedHeight] = React.useState(0)
   const itemRefs = React.useRef<(HTMLDivElement | null)[]>([])
+
+  const toggleStack = () => setIsStacked(!isStacked)
 
   useEffect(() => {
     if (node?.data?.handles && node.data?.handles.length) {
@@ -70,7 +140,7 @@ const GN = memo((node: any) => {
         'groupNodeData?.data.children: ',
         groupNodeData?.data.children
       )
-      setGroupCards(groupNodeData?.data.children)
+      setGroupCards(formatNodesForCardDisplay(groupNodeData?.data.children))
       // const intersections = getIntersectingNodes(node)
       // console.log('intersections: ', intersections)
     }
@@ -85,11 +155,8 @@ const GN = memo((node: any) => {
       const totalHeight = itemHeight + itemPadding * (groupCards.length - 1)
       setStackedHeight(totalHeight)
     }
-  }, [isStacked])
-  // relative min-w-[300px] !w-[300px]
-  {
-    /* // <BlurAppear> */
-  }
+  }, [groupCards.length, isStacked])
+
   return (
     <BlurAppear>
       {handles && handles?.length
@@ -104,161 +171,97 @@ const GN = memo((node: any) => {
           ))
         : null}
       <Handle type='target' position={Position.Top} />
-      <div className='absolute right-5 top-0 h-px w-80 bg-gradient-to-l from-transparent via-white/30 via-10% to-transparent' />
       <div
-        className={`absolute -inset-2 rounded-lg bg-gradient-to-r from-[#78efff] via-[#E393E6] to-[#79FFE1] opacity-50 blur w-full h-full`}
-      />
-
-      <div
-        className='w-[420px] h-[420px] border border-white/20 rounded-[calc(var(--radius)-2px)] relative group overflow-hidden rounded-xl bg-neutral-950'
-        onMouseMove={(e) => {
-          const { left, top } = e.currentTarget.getBoundingClientRect()
-
-          mouseX.set(e.clientX - left)
-          mouseY.set(e.clientY - top)
-        }}
+        className={`relative h-[${GROUP_NODE_DIMENSIONS.height}] w-[${GROUP_NODE_DIMENSIONS.width}]  shadow relative border border-white/60 dark:border-border/30 bg-black nowheel`}
       >
-        <div className='absolute right-5 top-0 h-px w-80 bg-gradient-to-l from-transparent via-white/30 via-10% to-transparent' />
-        <motion.div
-          className='pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100'
-          style={{
-            background: useMotionTemplate`
-						radial-gradient(200px circle at ${mouseX}px ${mouseY}px, rgba(38, 38, 38, 0.4), transparent 80%)
-					`,
-          }}
-        />
-        <div className='relative h-full  w-full rounded-xl border border-white/10 px-4 py-5'>
-          <motion.div
-            className='w-full flex items-center justify-center'
-            style={{
-              flexDirection: isMaximized ? 'column' : 'row',
-              gap: isMaximized ? '8px' : '0px',
-              height: isStacked ? stackedHeight : 'auto',
-            }}
-            layout
+        {/* <div className='h-full w-full absolute top-0 left-0 z-0'>
+          <CanvasRevealEffect
+            animationSpeed={3}
+            containerClassName='bg-black'
+            colors={[
+              [236, 72, 153],
+              [232, 121, 249],
+            ]}
+            dotSize={2}
+          />
+        </div> */}
+
+        <div className='text-bg-emerald-300 items-center cursor-pointer text-xs left-[12px] absolute uppercase top-[12px] z-10 flex'>
+          <svg
+            className='w-4 h-4'
+            fill='none'
+            height='1em'
+            stroke='currentColor'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            viewBox='0 0 24 24'
+            xmlns='http://www.w3.org/2000/svg'
           >
-            {groupCards.map((item: any, index: any) => {
-              const {
-                data: {
-                  description,
-                  latitude,
-                  location,
-                  longitude,
-                  date: unformattedDate,
-                  photos,
-                  photo,
-                  name,
-                  role,
-                  color,
-                  type,
-                  label,
-                  fill,
-                },
-              } = item
+            <circle cx='12' cy='12' fill='none' r='7' stroke='currentColor' />
+            <polyline
+              fill='none'
+              points='12 9 12 12 13.5 13.5'
+              stroke='currentColor'
+            />
+            <path
+              d='M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83'
+              fill='none'
+              stroke='currentColor'
+            />
+          </svg>
 
-              const date = dayjs(unformattedDate).format('MMM DD, YYYY')
-              const image: any = photos?.length
-                ? photos[0]
-                : photo?.length
-                  ? photo[0]
-                  : { url: '/foofighters.webp', signedUrl: '/foofighters.webp' }
-
-              image.src - image.url
-              return (
-                <motion.div
-                  ref={(el) => (itemRefs.current[index] = el)}
-                  key={name}
-                  className='relative flex items-start space-x-4 border p-4 rounded-2xl bg-white'
-                  layout
-                  style={{
-                    position: isStacked ? 'absolute' : 'static',
-                    width: isStacked ? `calc(100% - ${index * 20}px)` : 'auto',
-                    zIndex: isMaximized ? groupCards.length - index : 1,
-                    top: isStacked ? `${index * 10}px` : 'auto',
-                    border: isMaximized ? '1px solid #f0f0f0' : 'none',
-                    overflow: isMaximized ? 'hidden' : 'visible',
-                  }}
-                >
-                  <motion.div
-                    className={`relative flex items-center justify-center w-10 h-10 sm:w-16 sm:h-16 shrink-0`}
-                    style={{
-                      borderRadius: '14px',
-                    }}
-                    layout
-                    onMouseEnter={() => setIsHoveredLogo(index)}
-                    onMouseLeave={() => setIsHoveredLogo(null)}
-                  >
-                    <motion.img
-                      src={image.src}
-                      alt={item.name}
-                      className='w-full h-full object-cover'
-                      style={{
-                        borderRadius: '14px',
-                      }}
-                      layout
-                    />
-                    {isHoveredLogo === index && !isMaximized && !isStacked && (
-                      <motion.div
-                        className='absolute bottom-full mb-1 px-2 py-1.5 text-xs text-white bg-zinc-900 font-medium rounded-lg'
-                        initial={{ scale: 0, y: 10 }}
-                        animate={{ scale: 1, y: 0 }}
-                        exit={{ scale: 0, y: 10 }}
-                      >
-                        {name}
-                      </motion.div>
-                    )}
-                  </motion.div>
-                  <motion.div
-                    style={{
-                      display: isMaximized ? 'block' : 'none',
-                      width: isMaximized ? '100%' : '0',
-                      opacity: isMaximized ? 1 : 0,
-                      height: isMaximized ? 'auto' : '0',
-                    }}
-                    className='overflow-hidden'
-                  >
-                    <div className='flex items-center justify-start gap-2'>
-                      <h2 className='text-lg sm:text-xl font-semibold'>
-                        {name}
-                      </h2>
-                      <span className='w-1 h-1 rounded-full bg-slate-800 line-clamp-1'></span>
-                      {/* <p className='text-sm text-gray-600 line-clamp-1'>
-                      {enterprise}
-                    </p> */}
-                    </div>
-                    <p className='text-xs sm:text-sm text-gray-500 mt-1 mb-2 line-clamp-2'>
-                      {description}
-                    </p>
-                    <p className='text-xs text-gray-400 w-full text-right pr-4'>
-                      {date}
-                    </p>
-                  </motion.div>
-                </motion.div>
-              )
-            })}
-          </motion.div>
-          <motion.div className='flex items-center gap-4' layout>
-            <button
-              className='z-10 p-3 bg-zinc-900 text-white rounded-full shadow-md active:scale-90 duration-300 transition-transform disabled:opacity-50'
-              disabled={isStacked}
-              onClick={() => {
-                setIsMaximized((prev) => !prev)
-              }}
-            >
-              {isMaximized ? <Minimize2 /> : <Maximize2 />}
-            </button>
-            <button
-              className='z-10 p-3 bg-zinc-900 text-white rounded-full shadow-md active:scale-90 duration-300 transition-transform disabled:opacity-50'
-              disabled={!isMaximized}
-              onClick={() => {
-                setIsStacked((prev) => !prev)
-              }}
-            >
-              {isStacked ? <Layers3 /> : <Layers />}
-            </button>
-          </motion.div>
+          {years && `${years[0]} - ${years[years.length - 1]}`}
         </div>
+        <div className='text-bg-emerald-green-300 cursor-pointer text-xs right-[0.75rem] absolute uppercase right-[12px] bottom-[12px] z-10'>
+          <Button
+            variant='ghost'
+            size='icon'
+            className='text-bg-emerald-green-300 m-2'
+            onClick={toggleStack}
+          >
+            <LayersIcon className='h8 w-8 stroke-1' />
+          </Button>
+        </div>
+
+        <div className='flex justify-stretch w-full h-full relative'>
+          {years && (
+            <div className='w-[70px] h-auto flex flex-col justify-center align-center content-center items-center '>
+              <TimelineSidebar years={years} />
+            </div>
+          )}
+          <div
+            className='relative h-full flex flex-col justify-center justify-self-end'
+            style={{ perspective: 600, width: 'calc(100% - 70px)' }}
+          >
+            <CardStack
+              mindmapCards={groupCards}
+              stacked={isStacked}
+              toggleStack={toggleStack}
+            />
+          </div>
+        </div>
+
+        <div className='text-neutral-400 cursor-pointer absolute right-[12px] top-[12px] z-10 w-8 h-8'>
+          <Button
+            variant='ghost'
+            size='icon'
+            className='ml-auto'
+            onClick={toggleLocationVisualization}
+          >
+            <SketchyGlobe className='stroke-1 h-5 w-5 block' fill='#78efff' />
+          </Button>
+        </div>
+        <span className='bg-emerald-300 cursor-pointer left-[-2px] absolute top-[-2px] z-10 w-[1px] h-3' />
+        <span className='bg-emerald-300 cursor-pointer left-[-2px] absolute top-[-2px] z-10 w-3 h-[1px]' />
+        <span className='bg-emerald-300 bottom-[-2px] cursor-pointer absolute right-[-2px] z-10 w-[1px] h-3' />
+        <span className='bg-emerald-300 bottom-[-2px] cursor-pointer absolute right-[-2px] z-10 w-3 h-[1px]' />
+        <span className='bg-emerald-300 bottom-[-2px] cursor-pointer left-[-2px] absolute z-10 w-[1px] h-3' />
+        <span className='bg-emerald-300 bottom-[-2px] cursor-pointer left-[-2px] absolute z-10 w-3 h-[1px]' />
+        <span className='bg-emerald-300 cursor-pointer absolute right-[-2px] top-[-2px] z-10 w-[1px] h-3' />
+        <span className='bg-emerald-300 cursor-pointer absolute right-[-2px] top-[-2px] z-10 w-3 h-[1px]' />
       </div>
+
+      {/* <div className='absolute right-5 top-0 h-px w-80 bg-gradient-to-l from-transparent via-white/30 via-10% to-transparent' /> */}
     </BlurAppear>
   )
 })

@@ -1,4 +1,4 @@
-import { DotGridBackgroundBlack } from '@/components/ui/backgrounds'
+import { DotGridBackgroundBlack } from '@/components/backgrounds'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { useState, useEffect } from 'react'
 const dayjs = require('dayjs')

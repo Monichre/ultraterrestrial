@@ -178,7 +178,7 @@ export const SuggestedSearchItem = ({ value, onClick }: any) => {
   }
   return (
     <li onClick={handleClick}>
-      <span className='flex items-center rounded-lg px-2 py-1 text-sm leading-6 text-slate-700 outline-none focus-within:bg-slate-100 hover:bg-slate-100'>
+      <span className='flex items-center rounded-lg px-2 py-1 text-sm leading-6 text-white outline-none focus-within:bg-slate-100 hover:bg-slate-100'>
         <svg
           className='w-4 h-4'
           viewBox='0 0 82 84'
@@ -402,12 +402,12 @@ export function AiAssistedSearch() {
             </form>
 
             <div className='prompt-ui-responses'>
-              <ScrollArea.Root className='max-h-[calc(85vh-44px)]'>
+              <ScrollArea.Root className='max-h-[calc(85vh-44px)] overflow-scroll'>
                 <ScrollArea.Viewport className='h-full w-full'>
                   <div className='space-y-4 px-2 py-4'>
-                    <div>
-                      <div className='p-2'>status: {status}</div>
-                      {status === 'in_progress' ? (
+                    {status === 'in_progress' ? (
+                      <>
+                        <div className='p-2'>status: {status}</div>
                         <LoadingSequence
                           loadingStates={[
                             {
@@ -422,97 +422,97 @@ export function AiAssistedSearch() {
                             { text: 'Make a snack' },
                           ]}
                         />
-                      ) : initial ? (
-                        <div>
-                          <div className='mb-2 px-2 text-xs font-semibold uppercase text-gray-400'>
-                            Suggestions
-                          </div>
-                          <ul>
-                            {suggestions.map((suggestion) => (
-                              <SuggestedSearchItem
-                                onClick={handleSelection}
-                                key={suggestion}
-                                value={suggestion}
-                              />
-                            ))}
-                          </ul>
-                          <Divider />
+                      </>
+                    ) : initial ? (
+                      <div>
+                        <div className='mb-2 px-2 text-xs font-semibold uppercase text-white'>
+                          Suggestions
                         </div>
-                      ) : null}
+                        <ul>
+                          {suggestions.map((suggestion) => (
+                            <SuggestedSearchItem
+                              onClick={handleSelection}
+                              key={suggestion}
+                              value={suggestion}
+                            />
+                          ))}
+                        </ul>
+                        <Divider />
+                      </div>
+                    ) : null}
 
-                      {messages?.length && (
-                        <div className='flex flex-col p-2 gap-2'>
-                          {messages.map((message: any) => {
-                            return (
-                              <Answer
-                                key={message.id}
-                                prompt={
-                                  message?.role === 'user'
-                                    ? message.content
-                                    : null
-                                }
-                                answer={
-                                  message.role === 'assistant' ? (
-                                    <MemoizedMarkdown
-                                      rehypePlugins={[
-                                        [
-                                          rehypeExternalLinks,
-                                          { target: '_blank' },
-                                        ],
-                                      ]}
-                                      remarkPlugins={[remarkGfm]}
-                                      className='prose-sm prose-neutral prose-a:text-accent-foreground/50'
-                                      components={{
-                                        code({
-                                          node,
-                                          inline,
-                                          className,
-                                          children,
-                                          ...props
-                                        }: any) {
-                                          if (children.length) {
-                                            if (children[0] == '▍') {
-                                              return (
-                                                <span className='mt-1 cursor-default animate-pulse'>
-                                                  ▍
-                                                </span>
-                                              )
-                                            }
-
-                                            children[0] = (
-                                              children[0] as string
-                                            ).replace('`▍`', '▍')
-                                          }
-
-                                          const match = /language-(\w+)/.exec(
-                                            className || ''
-                                          )
-
-                                          if (inline) {
+                    {messages?.length ? (
+                      <div className='flex flex-col p-2 gap-2'>
+                        {messages.map((message: any) => {
+                          return (
+                            <Answer
+                              key={message.id}
+                              prompt={
+                                message?.role === 'user'
+                                  ? message.content
+                                  : null
+                              }
+                              answer={
+                                message.role === 'assistant' ? (
+                                  <MemoizedMarkdown
+                                    rehypePlugins={[
+                                      [
+                                        rehypeExternalLinks,
+                                        { target: '_blank' },
+                                      ],
+                                    ]}
+                                    remarkPlugins={[remarkGfm]}
+                                    className='prose-sm prose-neutral prose-a:text-accent-foreground/50'
+                                    components={{
+                                      code({
+                                        node,
+                                        inline,
+                                        className,
+                                        children,
+                                        ...props
+                                      }: any) {
+                                        if (children.length) {
+                                          if (children[0] == '▍') {
                                             return (
-                                              <code
-                                                className={className}
-                                                {...props}
-                                              >
-                                                {children}
-                                              </code>
+                                              <span className='mt-1 cursor-default animate-pulse'>
+                                                ▍
+                                              </span>
                                             )
                                           }
 
-                                          return null
-                                        },
-                                      }}
-                                    >
-                                      {message.content}
-                                    </MemoizedMarkdown>
-                                  ) : null
-                                }
-                              />
-                            )
-                          })}
-                        </div>
-                      )}
-                    </div>
+                                          children[0] = (
+                                            children[0] as string
+                                          ).replace('`▍`', '▍')
+                                        }
+
+                                        const match = /language-(\w+)/.exec(
+                                          className || ''
+                                        )
+
+                                        if (inline) {
+                                          return (
+                                            <code
+                                              className={className}
+                                              {...props}
+                                            >
+                                              {children}
+                                            </code>
+                                          )
+                                        }
+
+                                        return null
+                                      },
+                                    }}
+                                  >
+                                    {message.content}
+                                  </MemoizedMarkdown>
+                                ) : null
+                              }
+                            />
+                          )
+                        })}
+                      </div>
+                    ) : null}
                   </div>
                 </ScrollArea.Viewport>
                 <ScrollArea.Scrollbar
@@ -527,7 +527,7 @@ export function AiAssistedSearch() {
                 >
                   <ScrollArea.Thumb className='relative flex-1 rounded-full bg-slate-300' />
                 </ScrollArea.Scrollbar>
-                <ScrollArea.Corner className='bg-blackA5' />
+                <ScrollArea.Corner className='bg-black' />
               </ScrollArea.Root>
             </div>
           </div>

@@ -30,7 +30,7 @@ import {
 
 import { RecordsTable } from '@/features/admin/ui/RecordsTable'
 import { SelectedRecordsList } from './ui/SelectedRecordsList'
-import { AnimatedGridPatternBackground } from '@/components/ui/backgrounds/animated-grid-pattern'
+import { AnimatedGridPatternBackground } from '@/components/backgrounds/animated-grid-pattern'
 import {
   getTopics,
   getKeyFigures,
@@ -66,7 +66,7 @@ import {
   CardFooter,
   CardDescription,
 } from '@/components/ui/card'
-import { DotPattern, Meteors } from '@/components/ui/backgrounds'
+import { DotPattern, Meteors } from '@/components/backgrounds'
 import { AdminDashboardGlobe } from '@/components/ui/globe'
 
 export const Logo = () => {

@@ -15,7 +15,7 @@ import {
 import { MindMapEntityCard } from '@/features/mindmap/cards/entity-card/entity-card'
 import { GraphCard } from '@/features/mindmap/cards/graph-card/graph-card'
 import { GraphNodeCard } from '@/components/ui/card/graph-node-card'
-import { BlurAppear } from '@/components/animations/animated-wrappers'
+import { BlurAppear } from '@/components/animated/animated-wrappers'
 
 interface Photo {
   id: string
@@ -30,6 +30,7 @@ interface Photo {
 }
 
 const EN = memo((props: any) => {
+  console.log('props: ', props)
   const updateNodeInternals = useUpdateNodeInternals()
   updateNodeInternals(props.id)
   const [handles, setHandles]: any = useState([])
@@ -62,7 +63,13 @@ const EN = memo((props: any) => {
           : null}
         <Handle type='target' position={Position.Top} />
 
-        <GraphCard {...props} key={props.id} />
+        <GraphCard
+          card={{
+            id: props.id,
+            ...props.data,
+          }}
+          key={props.id}
+        />
         {/* <GraphNodeCard {...props} key={props.id} /> */}
       </div>
     </BlurAppear>

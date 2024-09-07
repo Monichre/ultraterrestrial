@@ -2,21 +2,8 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import { motion } from 'framer-motion'
 
-function removeLeadingZero(str) {
-  return str.replace(/^0+/, '')
-}
-
-export const TimelineSidebar = React.memo(({ events }: any) => {
-  const years = useMemo(() => {
-    return Array.from(
-      new Set(
-        events.map(({ date }) => {
-          return removeLeadingZero(date.split('-')[0])
-        })
-      )
-    )
-  }, [events])
-
+export const TimelineSidebar = React.memo(({ years }: any) => {
+  console.log('years: ', years)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [selected, setSelected] = useState<number | null>(null)
 
@@ -59,42 +46,41 @@ export const TimelineSidebar = React.memo(({ events }: any) => {
   }
 
   return (
-    <div className='h-[80vh] w-full'>
-      <div className='flex flex-col justify-center'>
-        {years.map((year, i) => {
-          const isSelected = selected === i
+    <div className='flex flex-col justify-center'>
+      {years.map((year, i) => {
+        console.log('year: ', year)
+        const isSelected = selected === i
 
-          return (
-            <button
-              key={year}
-              className='relative inline-flex items-end justify-center py-1'
-              onMouseEnter={() => handleMouseEnter(i)}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => setSelected(i)}
-              onTouchStart={() => handleMouseEnter(i)}
-              onTouchEnd={handleMouseLeave}
-            >
-              <motion.div
-                className={`h-[2px] w-10 rounded-[4px] bg-white`}
-                custom={i}
-                variants={scaleVariants}
+        return (
+          <button
+            key={year}
+            className='relative inline-flex items-end justify-center py-1'
+            onMouseEnter={() => handleMouseEnter(i)}
+            onMouseLeave={handleMouseLeave}
+            onClick={() => setSelected(i)}
+            onTouchStart={() => handleMouseEnter(i)}
+            onTouchEnd={handleMouseLeave}
+          >
+            <motion.div
+              className={`h-[2px] w-10 rounded-[4px] bg-white`}
+              custom={i}
+              variants={scaleVariants}
+              initial='initial'
+              animate='animate'
+            />
+            {hoveredIndex === i ? (
+              <motion.span
+                className={`absolute -top-0.5 left-12 text-[11px] text-white `}
+                variants={textVariants}
                 initial='initial'
                 animate='animate'
-              />
-              {hoveredIndex === i ? (
-                <motion.span
-                  className={`absolute -top-0.5 left-12 text-[11px] text-white `}
-                  variants={textVariants}
-                  initial='initial'
-                  animate='animate'
-                >
-                  {year}
-                </motion.span>
-              ) : null}
-            </button>
-          )
-        })}
-      </div>
+              >
+                {year}
+              </motion.span>
+            ) : null}
+          </button>
+        )
+      })}
     </div>
   )
 })

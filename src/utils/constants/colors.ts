@@ -38,6 +38,15 @@ export const DOMAIN_MODEL_COLORS: any = {
   root: '#27F1FF',
 }
 
+export const paletteBlue = {
+  Nocturnal: '#74797f',
+  Skyscraper: '#d1d9e2',
+  'Cotton Boll': '#e5effa',
+  'First Snow': '#e5effb',
+  'Freeze Up': '#e0ebf9',
+  'Cold Shoulder': '#cddbeb',
+}
+
 export const palette: Record<string, string> = {
   forest: `#407663`,
   darkBlue: `#09101D`,

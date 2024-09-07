@@ -1,4 +1,4 @@
-import { SlideFadeIn } from '@/components/animations/animated-wrappers'
+import { SlideFadeIn } from '@/components/animated/animated-wrappers'
 import { Button } from '@/components/ui/button/button'
 
 // import { AdminDashboardGlobe } from '@/components/ui/globe'
@@ -41,10 +41,10 @@ export const LocationVisualization: React.FC<LocationVisualizationProps> = (
     }
   }, [locationsToVisualize])
 
-  if (markers?.length) {
+  if (showLocationVisualization) {
     // bg-gradient-to-b from-transparent via-[#0a0a0a] to-black
     return (
-      <div className='fixed top-0 right-0 w-[32vw] z-30 p-4'>
+      <div className='absolute top-0 right-0 w-[32vw] min-h-[600px] z-30 p-4'>
         {/* <Button
           variant='ghost'
           onClick={toggleLocationVisualization}

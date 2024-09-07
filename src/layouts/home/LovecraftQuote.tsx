@@ -1,7 +1,7 @@
 'use client'
 import * as React from 'react'
 
-import { BlurFade } from '@/components/animations/blur-fade/BlurFade'
+import { BlurFade } from '@/components/animated/blur-fade/BlurFade'
 
 const quoteLines = [
   `The most merciful thing in the world, I think, is the inability of the`,

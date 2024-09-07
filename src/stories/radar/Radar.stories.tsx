@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Radar } from '@/components/animations/radar/Radar'
-import { RadarLayout } from '@/components/animations/radar/RadarLayout'
-import { RadarPulseBeams } from '@/components/animations/radar'
+import { Radar } from '@/components/animated/radar/Radar'
+import { RadarLayout } from '@/components/animated/radar/RadarLayout'
+import { RadarPulseBeams } from '@/components/animated/radar'
 
 const meta = {
   title: 'Components/Radar',

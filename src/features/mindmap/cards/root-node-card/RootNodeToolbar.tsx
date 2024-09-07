@@ -45,8 +45,8 @@ export function RootNodeToolbar({ handleSubmit, type, value, onChange }: any) {
 
   return (
     <MotionConfig transition={transition}>
-      <div className='w-full ' ref={containerRef}>
-        <div className='h-auto w-full  flex justify-end'>
+      <div className='' ref={containerRef}>
+        <div className='flex justify-end'>
           <motion.div
             animate={{
               // @todo: here I want to remove the width
@@ -54,12 +54,10 @@ export function RootNodeToolbar({ handleSubmit, type, value, onChange }: any) {
             }}
             initial={false}
           >
-            <div className='overflow-hidden p-2 rounded-xl relative rounded-lg px-6 py-2 font-sm backdrop-blur-xl transition-[box-shadow] duration-300 ease-in-out hover:shadow bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/10%)_0%,transparent_60%)] dark:hover:shadow-[0_0_20px_hsl(var(--primary)/10%)]'>
+            <div className='overflow-hidden p-2 rounded-xl relative rounded-lg px-4 font-sm transition-[box-shadow] duration-300 ease-in-out hover:shadow'>
               {!isOpen ? (
                 <div className='flex'>
-                  {/* <Button disabled ariaLabel='User profile'>
-                    <User className='h-5 w-5' />
-                  </Button> */}
+                  {/* {children} */}
                   <Button
                     onClick={() => setIsOpen(true)}
                     ariaLabel='Search notes'

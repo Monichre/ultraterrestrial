@@ -21,6 +21,7 @@ import {
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { UltraterrestrialLogo } from '@/components/navbar/ut-logo'
+import { UltraLogoAlt } from '@/components/navbar/ut-logo-alt'
 
 const transition = {
   type: 'spring',
@@ -64,7 +65,7 @@ export const MenuItem = memo(
           <motion.p
             key={`${item}-p`}
             transition={{ duration: 0.3 }}
-            className='cursor-pointer text-black hover:opacity-[0.9] uppercase text-sm font-jetbrains tracking-wide'
+            className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm font-jetbrains tracking-wide'
           >
             {item}
           </motion.p>
@@ -81,7 +82,7 @@ export const MenuItem = memo(
                   key={`${item}-div-2`}
                   transition={transition}
                   layoutId='active' // layoutId ensures smooth animation
-                  className='bg-white backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] shadow-xl hover-menu'
+                  className='bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] shadow-xl hover-menu'
                 >
                   <motion.div
                     key={`${item}-div-3`}
@@ -124,7 +125,7 @@ export const HoveredLink = ({ children, ...rest }: any) => {
   return (
     <Link
       {...rest}
-      className='cursor-pointer text-black hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
+      className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
     >
       {children}
     </Link>
@@ -150,7 +151,7 @@ export const SideMenuBtn = ({ open }: any) => {
         <motion.div
           style={{
             width: '20px',
-            borderTop: '2px solid var(--neutral-500)',
+            borderTop: '2px solid #fff',
             transformOrigin: 'center',
           }}
           initial={{ translateY: '-3px' }}
@@ -165,7 +166,7 @@ export const SideMenuBtn = ({ open }: any) => {
           transition={{ bounce: 0, duration: 0.1 }}
           style={{
             width: '20px',
-            borderTop: '2px solid var(--neutral-500)',
+            borderTop: '2px solid #fff',
             transformOrigin: 'center',
           }}
           initial={{ translateY: '3px' }}
@@ -188,7 +189,7 @@ export function DropdownMenuDemo({ isAdmin }: any) {
       <SideMenuBtn open={open} />
 
       <DropdownMenuContent
-        className='w-56 bg-white text-black'
+        className='w-56 bg-white dark:bg-black text-black dark:text-white'
         align='end'
         alignOffset={0}
       >
@@ -196,7 +197,7 @@ export function DropdownMenuDemo({ isAdmin }: any) {
           <DropdownMenuItem>
             <SignInButton>
               <Button
-                className='cursor-pointer text-black hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
+                className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
                 variant='ghost'
               >
                 Sign In
@@ -255,6 +256,8 @@ export function FullSiteNav({ className }: { className?: string }) {
     >
       <div className='absolute left-10 z-[100] flex-initial w-fit flex items-center content-center justify-self-end align-middle'>
         <UltraterrestrialLogo />
+        {/* Remove or comment out the UltraLogoAlt component if it's not defined */}
+        {/* <UltraLogoAlt /> */}
       </div>
       <div className='max-w-2xl mx-auto flex-auto'>
         <Menu setActive={setActive}>
@@ -345,7 +348,7 @@ export function FullSiteNav({ className }: { className?: string }) {
         {/* <SignedOut>
           <SignInButton>
             <Button
-              className='cursor-pointer text-black hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
+              className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
               variant='ghost'
             >
               Sign In

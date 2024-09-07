@@ -14,12 +14,12 @@ module.exports = {
     {
       type: 'confirm',
       name: 'ui',
-      message: 'is this a UI component?',
+      message: 'is this a core UI component? Ex: button, input, etc.',
     },
   ],
   actions: function (data) {
     const subDir = data.animation
-      ? 'components/animations'
+      ? 'components/animated'
       : data?.ui
         ? 'components/ui'
         : 'components'

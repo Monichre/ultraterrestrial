@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { DotGridBackground } from '@/components/ui/backgrounds'
+import { DotGridBackground } from '@/components/backgrounds'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { a, useTransition, useSpring } from '@react-spring/three'
 import {
@@ -26,7 +26,7 @@ import {
   useAspect,
 } from '@react-three/drei'
 import * as THREE from 'three'
-import { Spotlight } from '@/components/animations/spotlight'
+import { Spotlight } from '@/components/animated/spotlight'
 import { motion } from 'framer-motion'
 
 import { Flex, Box } from '@react-three/flex'

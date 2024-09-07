@@ -1,4 +1,4 @@
-import { NumberTicker } from '@/components/animations/number-ticker'
+import { NumberTicker } from '@/components/animated/number-ticker'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
