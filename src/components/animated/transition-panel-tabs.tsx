@@ -1,9 +1,9 @@
-'use client';
-import React, { useState } from 'react';
-import { TransitionPanel } from '@/components/core/transition-panel';
+'use client'
+import React, { useState } from 'react'
+import { TransitionPanel } from '@/components/animated/core/transition-panel'
 
 export function TabsTransitionPanel() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0)
 
   const ITEMS = [
     {
@@ -24,7 +24,7 @@ export function TabsTransitionPanel() {
       content:
         'Gain proficiency in advanced techniques such as physics-based animations, 3D transformations, and complex sequencing to elevate your design skills and implementation.',
     },
-  ];
+  ]
 
   return (
     <div>
@@ -64,5 +64,5 @@ export function TabsTransitionPanel() {
         </TransitionPanel>
       </div>
     </div>
-  );
+  )
 }

@@ -13,7 +13,7 @@ import { MindMapCursor } from '@/features/mindmap/mindmap-cursor'
 export default async function Index() {
   const data: NetworkGraphPayload = await getEntityNetworkGraphData()
 
-  const { graphData } = data
+  const { graphData }: any = data
 
   return (
     <Suspense fallback={<Loading />}>

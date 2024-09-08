@@ -6,7 +6,7 @@ import { VFX } from '@vfx-js/core'
 const vfx = new VFX()
 
 import Image from 'next/image'
-import { BlurFade } from '@/components/animations'
+import { BlurFade } from '@/components/animated'
 
 interface AstronautProps {}
 

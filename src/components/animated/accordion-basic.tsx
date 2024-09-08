@@ -3,7 +3,7 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from '@/components/core/accordion';
+} from '@/components/animated/core/accordion'
 
 export function AccordionBasic() {
   return (
@@ -65,5 +65,5 @@ export function AccordionBasic() {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  );
+  )
 }

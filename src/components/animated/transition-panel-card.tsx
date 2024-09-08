@@ -1,14 +1,14 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { TransitionPanel } from '@/components/core/transition-panel';
-import useMeasure from 'react-use-measure';
+'use client'
+import React, { useEffect, useState } from 'react'
+import { TransitionPanel } from '@/components/animated/core/transition-panel'
+import useMeasure from 'react-use-measure'
 
 function Button({
   onClick,
   children,
 }: {
-  onClick: () => void;
-  children: React.ReactNode;
+  onClick: () => void
+  children: React.ReactNode
 }) {
   return (
     <button
@@ -18,12 +18,12 @@ function Button({
     >
       {children}
     </button>
-  );
+  )
 }
 export function TransitionPanelCard() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
-  const [ref, bounds] = useMeasure();
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [direction, setDirection] = useState(1)
+  const [ref, bounds] = useMeasure()
 
   const FEATURES = [
     {
@@ -46,17 +46,17 @@ export function TransitionPanelCard() {
       description:
         'Develop a design system that unifies your brand identity, ensuring consistency across all platforms and products.',
     },
-  ];
+  ]
 
   const handleSetActiveIndex = (newIndex: number) => {
-    setDirection(newIndex > activeIndex ? 1 : -1);
-    setActiveIndex(newIndex);
-  };
+    setDirection(newIndex > activeIndex ? 1 : -1)
+    setActiveIndex(newIndex)
+  }
 
   useEffect(() => {
-    if (activeIndex < 0) setActiveIndex(0);
-    if (activeIndex >= FEATURES.length) setActiveIndex(FEATURES.length - 1);
-  }, [activeIndex]);
+    if (activeIndex < 0) setActiveIndex(0)
+    if (activeIndex >= FEATURES.length) setActiveIndex(FEATURES.length - 1)
+  }, [activeIndex])
 
   const variants = {
     enter: (direction: number) => ({
@@ -77,7 +77,7 @@ export function TransitionPanelCard() {
       left: 0,
       width: '100%',
     }),
-  };
+  }
 
   return (
     <div className='w-[364px] overflow-hidden rounded-xl border border-zinc-950/10 bg-white dark:bg-zinc-700'>
@@ -140,5 +140,5 @@ export function TransitionPanelCard() {
         </Button>
       </div>
     </div>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { SVGProps } from 'react';
-import { Cursor } from '@/components/core/cursor';
+import { SVGProps } from 'react'
+import { Cursor } from '@/components/animated/core/cursor'
 
 const MouseIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
@@ -27,8 +27,8 @@ const MouseIcon = (props: SVGProps<SVGSVGElement>) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export function Cursor2() {
   return (
@@ -61,5 +61,5 @@ export function Cursor2() {
         />
       </div>
     </div>
-  );
+  )
 }

@@ -8,8 +8,8 @@ import {
   DialogClose,
   DialogDescription,
   DialogContainer,
-} from '@/components/core/dialog';
-import { PlusIcon } from 'lucide-react';
+} from '@/components/animated/core/dialog'
+import { PlusIcon } from 'lucide-react'
 
 export function DialogBasicOne() {
   return (
@@ -100,5 +100,5 @@ export function DialogBasicOne() {
         </DialogContent>
       </DialogContainer>
     </Dialog>
-  );
+  )
 }

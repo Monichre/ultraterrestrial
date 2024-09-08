@@ -1,4 +1,4 @@
-import AnimatedBackground from '@/components/ui/animated/core/animated-background'
+import AnimatedBackground from '@/components/animated/core/animated-background'
 import { Home, PhoneCall, Settings, User } from 'lucide-react'
 
 export function AnimatedTabs() {

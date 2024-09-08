@@ -1,4 +1,4 @@
-import AnimatedBackground from '@/components/core/animated-background';
+import AnimatedBackground from '@/components/animated/core/animated-background'
 
 export function AnimatedCardBackgroundHover() {
   const ITEMS = [
@@ -32,7 +32,7 @@ export function AnimatedCardBackgroundHover() {
       title: 'Swipe to Delete',
       description: 'Delete items with swipe gestures.',
     },
-  ];
+  ]
 
   return (
     <div className='grid grid-cols-2 p-10 md:grid-cols-3'>
@@ -59,5 +59,5 @@ export function AnimatedCardBackgroundHover() {
         ))}
       </AnimatedBackground>
     </div>
-  );
+  )
 }

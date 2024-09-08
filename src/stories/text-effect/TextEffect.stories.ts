@@ -1,4 +1,4 @@
-import { TextEffect } from '@/components/animations'
+import { TextEffect } from '@/components/animated'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

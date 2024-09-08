@@ -1,4 +1,4 @@
-import AnimatedBackground from '@/components/core/animated-background';
+import AnimatedBackground from '@/components/animated/core/animated-background'
 
 export function SegmentedControl() {
   return (
@@ -21,9 +21,9 @@ export function SegmentedControl() {
             >
               {label}
             </button>
-          );
+          )
         })}
       </AnimatedBackground>
     </div>
-  );
+  )
 }

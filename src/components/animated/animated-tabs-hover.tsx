@@ -1,7 +1,7 @@
-import AnimatedBackground from '@/components/core/animated-background';
+import AnimatedBackground from '@/components/animated/core/animated-background'
 
 export function AnimatedTabsHover() {
-  const TABS = ['Home', 'About', 'Services', 'Contact'];
+  const TABS = ['Home', 'About', 'Services', 'Contact']
 
   return (
     <div className='flex flex-row'>
@@ -27,5 +27,5 @@ export function AnimatedTabsHover() {
         ))}
       </AnimatedBackground>
     </div>
-  );
+  )
 }

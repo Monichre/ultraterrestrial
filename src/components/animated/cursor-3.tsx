@@ -1,4 +1,4 @@
-import { Cursor } from '@/components/core/cursor';
+import { Cursor } from '@/components/animated/core/cursor'
 
 export function Cursor3() {
   return (
@@ -30,5 +30,5 @@ export function Cursor3() {
         Christian Church, Eastern Europe
       </div>
     </div>
-  );
+  )
 }
