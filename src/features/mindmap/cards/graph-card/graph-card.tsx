@@ -3,16 +3,6 @@
 import { createUserSavedEvent } from '@/app/actions/user/create-user-saved-event'
 
 import {
-  Dialog,
-  DialogClose,
-  DialogContainer,
-  DialogContent,
-  DialogImage,
-  DialogSubtitle,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/animated/core/dialog'
-import {
   searchAndEnrichConnections,
   searchConnections,
 } from '@/features/ai/search'
@@ -33,6 +23,18 @@ import {
   PanelMenu,
   TransitionPanel,
 } from '@/components/animated/transition-panel'
+import {
+  DialogImage,
+  DialogSubtitle,
+  DialogContainer,
+} from '@/components/animated/core/dialog'
+import {
+  Dialog,
+  DialogTrigger,
+  DialogTitle,
+  DialogContent,
+  DialogClose,
+} from '@radix-ui/react-dialog'
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')

@@ -5,8 +5,8 @@ import {
   DialogClose,
   DialogImage,
   DialogContainer,
-} from '@/components/core/dialog';
-import { XIcon } from 'lucide-react';
+} from '@/components/animated/core/dialog'
+import { XIcon } from 'lucide-react'
 
 export function DialogBasicImage() {
   return (
@@ -46,5 +46,5 @@ export function DialogBasicImage() {
         </DialogClose>
       </DialogContainer>
     </Dialog>
-  );
+  )
 }

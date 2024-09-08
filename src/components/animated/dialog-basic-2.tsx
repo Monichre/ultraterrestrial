@@ -7,8 +7,8 @@ import {
   DialogSubtitle,
   DialogClose,
   DialogContainer,
-} from '@/components/core/dialog';
-import { ScrollArea } from '@/components/website/scroll-area';
+} from '@/components/animated/core/dialog'
+import { ScrollArea } from '@radix-ui/react-scroll-area'
 
 export function DialogBasicTwo() {
   return (
@@ -105,5 +105,5 @@ export function DialogBasicTwo() {
         </DialogContent>
       </DialogContainer>
     </Dialog>
-  );
+  )
 }

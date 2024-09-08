@@ -1,5 +1,5 @@
 import type { KeyFiguresArray } from '@/app/(site)/explore/key-figures/page'
-import { TextEffect } from '@/components/animations'
+import { TextEffect } from '@/components/animated'
 import SwipeGrid, {
   type SwipeGridItem,
 } from '@/components/animated/swipe-grid/SwipeGrid'

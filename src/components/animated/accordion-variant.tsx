@@ -3,8 +3,8 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from '@/components/core/accordion';
-import { ChevronRight } from 'lucide-react';
+} from '@/components/animated/core/accordion'
+import { ChevronRight } from 'lucide-react'
 
 export function AccordionVariant() {
   return (
@@ -94,5 +94,5 @@ export function AccordionVariant() {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  );
+  )
 }

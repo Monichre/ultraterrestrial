@@ -1,21 +1,21 @@
-'use client';
-import { useRef, useState } from 'react';
-import { Cursor } from '@/components/core/cursor';
-import { AnimatePresence, motion } from 'framer-motion';
-import { PlusIcon } from 'lucide-react';
+'use client'
+import { useRef, useState } from 'react'
+import { Cursor } from '@/components/animated/core/cursor'
+import { AnimatePresence, motion } from 'framer-motion'
+import { PlusIcon } from 'lucide-react'
 
 export function Cursor1() {
-  const [isHovering, setIsHovering] = useState(false);
-  const targetRef = useRef<HTMLDivElement>(null);
+  const [isHovering, setIsHovering] = useState(false)
+  const targetRef = useRef<HTMLDivElement>(null)
 
   const handlePositionChange = (x: number, y: number) => {
     if (targetRef.current) {
-      const rect = targetRef.current.getBoundingClientRect();
+      const rect = targetRef.current.getBoundingClientRect()
       const isInside =
-        x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
-      setIsHovering(isInside);
+        x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
+      setIsHovering(isInside)
     }
-  };
+  }
 
   return (
     <div className='flex h-[400px] w-full items-center justify-center'>
@@ -66,5 +66,5 @@ export function Cursor1() {
         />
       </div>
     </div>
-  );
+  )
 }

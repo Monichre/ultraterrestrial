@@ -3,8 +3,8 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from '@/components/core/accordion';
-import { ChevronUp } from 'lucide-react';
+} from '@/components/animated/core/accordion'
+import { ChevronUp } from 'lucide-react'
 
 export function AccordionIcons() {
   return (
@@ -81,5 +81,5 @@ export function AccordionIcons() {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  );
+  )
 }
