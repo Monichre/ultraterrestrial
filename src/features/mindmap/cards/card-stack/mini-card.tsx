@@ -5,11 +5,11 @@ import { EntityCardUtilityMenu } from '@/features/mindmap/cards/entity-card'
 import { useMindMap } from '@/providers/mindmap-context'
 import { objectMapToSingular } from '@/utils'
 import { useAuth } from '@clerk/nextjs'
-import dayjs from 'dayjs'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useCallback, useState } from 'react'
+import { format, compareAsc } from 'date-fns'
 
-export const MiniCard = ({ card }: any) => {
+export const MiniCard = ({ card, removeChildCardClone }: any) => {
   const {
     addChildNodesFromSearch,
     addConnectionNodesFromSearch,
@@ -17,6 +17,8 @@ export const MiniCard = ({ card }: any) => {
     addNodes,
     screenToFlowPosition,
     updateNode,
+    useNodesBounds,
+    createSearchResultsLayout,
   } = useMindMap()
   const {
     description,
@@ -27,7 +29,7 @@ export const MiniCard = ({ card }: any) => {
     photo,
     name,
     role,
-    date: unformatted,
+    date,
     color,
     type,
     label,
@@ -36,7 +38,8 @@ export const MiniCard = ({ card }: any) => {
   } = card
 
   console.log('photos: ', photos)
-  const date = dayjs(unformatted?.date).format('MMM DD, YYYY')
+
+  console.log('date: ', date)
   const image: any = photos?.length
     ? photos[0]
     : photo?.length
@@ -46,12 +49,6 @@ export const MiniCard = ({ card }: any) => {
   image.src - image.url
 
   const [showMenu, setShowMMenu] = useState(false)
-  const handleHoverEnter = () => {
-    setShowMMenu(true)
-  }
-  const handleHoverLeave = () => {
-    setShowMMenu(false)
-  }
 
   const [connectionListConnections, setConnectionListConnections]: any =
     useState()
@@ -79,27 +76,31 @@ export const MiniCard = ({ card }: any) => {
 
   const addEntitySourceCardToMindMap = (cardId: any) => {
     const siblingSourceNode: any = getNode(cardId)
+    console.log('siblingSourceNode: ', siblingSourceNode)
     const domId = `entity-group-node-child-card-${cardId}`
+    console.log('domId: ', domId)
     const element: any = document.getElementById(domId) // Select your element
     console.log('element: ', element)
     const rect = element.getBoundingClientRect()
+
     console.log('rect: ', rect)
     const x = rect.left // X position
     const y = rect.top // Y position
-    // const cardNode = {
-    //   ...siblingSourceNode,
-    //   hidden: false,
-    //   position: screenToFlowPosition({
-    //     x,
-    //     y,
-    //   }),
-    // }
-    const updatedNode = {
+    const cardNode = {
       ...siblingSourceNode,
       hidden: false,
+      position: screenToFlowPosition({
+        x,
+        y,
+      }),
     }
-    updateNode(cardId, updatedNode)
-    return updatedNode
+    // getNodesBounds
+    // const updatedNode = {s
+    //   ...siblingSourceNode,
+    //   hidden: false,
+    // }
+    updateNode(cardId, cardNode)
+    return cardNode
   }
 
   const findConnectedDataPointsAndRenderTheirNodes = useCallback(async () => {
@@ -107,20 +108,55 @@ export const MiniCard = ({ card }: any) => {
     //   subject: node,
     //   type,
     // })
-    const source = addEntitySourceCardToMindMap(card.id)
 
-    console.log('source: ', source)
+    // console.log('card.id: ', card.id)
+    // updateNode(card.id, {
+    //   hidden: false,
+    // })
+    // // const siblingSourceNode: any = addEntitySourceCardToMindMap(card.id)
+    // const clickedElDomNode = `entity-group-node-child-card-${card.id}`
+    // // get parentNode
+
+    // const element: any = document.getElementById(clickedElDomNode) // Select your element
+    // console.log('element: ', element)
+    // const top = element.offsetTop // Distance from the parent's top
+    // console.log('top: ', top)
+    // const left = element.offsetLeft
+    // console.log('left: ', left)
+    // // const childRect = element.getBoundingClientRect()
+    // // const wrapper: any = document.getElementById(`mindmap-container`)
+    // // const wrapperRect = wrapper.getBoundingClientRect()
+    // // console.log('wrapperRect: ', wrapperRect)
+
+    // const position = {
+    //   x: left,
+    //   y: top,
+    // }
+    // console.log('position: ', position)
+    const siblingSourceNode: any = getNode(card.id)
+    // console.log('siblingSourceNode: ', siblingSourceNode)
+
+    // updateNode(card.id, {
+    //   ...siblingSourceNode,
+    //   hidden: false,
+    //   position,
+    // })
+
     const payload = await searchConnections({
-      id: source.id,
-      type: source.data.type,
+      id: siblingSourceNode.id,
+      type: siblingSourceNode.data.type,
     })
     const searchResults = payload.data
     console.log('searchResults: ', searchResults)
-
-    const res = addConnectionNodesFromSearch({ source, searchResults })
+    createSearchResultsLayout({ originNode: siblingSourceNode, searchResults })
+    // const res = addConnectionNodesFromSearch({
+    //   source: siblingSourceNode,
+    //   searchResults,
+    // })
+    // removeChildCardClone && removeChildCardClone(card.id)
 
     //
-  }, [])
+  }, [card.id, getNode])
 
   const [bookmarked, setBookmarked] = useState(false)
 
@@ -136,10 +172,8 @@ export const MiniCard = ({ card }: any) => {
   }
   return (
     <div
-      className={`relative rounded-[calc(var(--radius)-2px)] p-[1px] bg-black !w-[350px] h-[${MINI_CARD_DEFAULT_HEIGHT}px] entity-group-node-child-card`}
+      className={`relative rounded-[calc(var(--radius)-2px)] p-[1px] bg-black !w-[350px] h-[220px] entity-group-node-child-card`}
       style={{ border: `1px solid ${color}` }}
-      onMouseEnter={handleHoverEnter}
-      onMouseLeave={handleHoverLeave}
       id={`entity-group-node-child-card-${id}`}
     >
       <div
@@ -159,61 +193,54 @@ export const MiniCard = ({ card }: any) => {
               className='h-full w-full'
             />
           </motion.div>
-          <motion.div className='absolute top-0 left-0 w-full h-full z-1 flex justify-start items-center p-4'>
-            <div className={`w-full`}>
-              <div>
-                <h2
-                  className='text-white font-centimaSans text-xl whitespace-normal w-fit capitalize '
-                  style={{ textWrap: 'pretty' }}
-                >
-                  {name}
-                </h2>
-
-                {type === 'personnel' && (
-                  <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-auto ml-auto mt-1'>
-                    {card?.credibility
-                      ? `Credibility Score: ${card?.credibility}`
-                      : card.rank
-                        ? `Platform Ranking: ${card?.rank}`
-                        : ''}
-                  </p>
-                )}
-                {date && (
-                  <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
-                    {date}
-                  </p>
-                )}
-                {location && (
-                  <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
-                    {location}
-                  </p>
-                )}
-                {latitude && longitude && (
-                  <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
-                    {latitude}, {longitude}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <motion.div
-              className='flex  flex-col justify-center items-center w-auto h-full absolute bg-transparent w-auto top-0 right-0'
-              animate={{ opacity: 1, top: -50 }}
-              initial={{ opacity: 0, top: 50 }}
-              exit={{ opacity: 0, top: 50 }}
+          <motion.div className='absolute top-0 left-0 w-full h-full z-1 flex flex-col justify-start p-4'>
+            <h2
+              className='text-white font-centimaSans text-xl whitespace-normal w-fit capitalize '
+              style={{ textWrap: 'pretty' }}
             >
-              <EntityCardUtilityMenu
-                handleSave={handleSave}
-                saveNote={saveNote}
-                userNote={userNote}
-                bookmarked={bookmarked}
-                findConnectedDataPointsAndRenderTheirNodes={
-                  findConnectedDataPointsAndRenderTheirNodes
-                }
-              />
-            </motion.div>
+              {name}
+            </h2>
+
+            {type === 'personnel' && (
+              <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-auto ml-auto mt-1'>
+                {card?.credibility
+                  ? `Credibility Score: ${card?.credibility}`
+                  : card.rank
+                    ? `Platform Ranking: ${card?.rank}`
+                    : ''}
+              </p>
+            )}
+
+            <div className='w-full mt-4'>
+              {date && (
+                <p className='font-light text-[#78efff] font-centimaSans tracking-wider text-sm mr-auto'>
+                  {format(date, 'MMMM dd, yyyy')}
+                </p>
+              )}
+              {location && (
+                <p className='font-light text-[#78efff] font-centimaSans tracking-wider  text-sm'>
+                  {location}
+                </p>
+              )}
+            </div>
           </motion.div>
         </div>
+        <motion.div
+          className='flex justify-end items-center h-auto absolute bg-transparent w-full bottom-0 left-0'
+          animate={{ opacity: 1, top: -50 }}
+          initial={{ opacity: 0, top: 50 }}
+          exit={{ opacity: 0, top: 50 }}
+        >
+          <EntityCardUtilityMenu
+            handleSave={handleSave}
+            saveNote={saveNote}
+            userNote={userNote}
+            bookmarked={bookmarked}
+            findConnectedDataPointsAndRenderTheirNodes={
+              findConnectedDataPointsAndRenderTheirNodes
+            }
+          />
+        </motion.div>
       </div>
     </div>
   )

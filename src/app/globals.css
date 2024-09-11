@@ -695,3 +695,7 @@ td p {
 .ai-response-markup ul li {
   font-family: 'Nunito', sans-serif;
 }
+
+.react-flow__edges svg {
+  z-index: 1!important;
+}

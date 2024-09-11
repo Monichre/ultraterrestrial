@@ -7,6 +7,8 @@ import {
   useReactFlow,
 } from '@xyflow/react'
 import { NEONS } from '@/utils'
+import { useMindMap } from '@/providers'
+import { getEdgeParams } from '@/features/mindmap/graph'
 
 type SiblingEdgeProps = {
   data: { sourceType: string; targetType: string }
@@ -58,6 +60,8 @@ export const SiblingEdge = ({
   sourceX,
   sourceY,
   targetX,
+  target,
+  source,
   targetY,
   sourcePosition,
   targetPosition,
@@ -66,20 +70,53 @@ export const SiblingEdge = ({
   },
   label = '::',
 }: EdgeProps & SiblingEdgeProps) => {
+  console.log('target: ', target)
+  console.log('source: ', source)
   console.log('style: ', style)
+  const { useInternalNode } = useMindMap()
+  const sourceNode = useInternalNode(source)
+  console.log('sourceNode: ', sourceNode)
+  const targetNode = useInternalNode(target)
+  console.log('targetNode: ', targetNode)
+
+  if (!sourceNode || !targetNode) {
+    return null
+  }
+
+  const { sx, sy, tx, ty, sourcePos, targetPos } = getEdgeParams(
+    sourceNode,
+    targetNode
+  )
+
+  // const [edgePath, labelX, labelY] = getBezierPath({
+  //   sourceX,
+  //   sourceY,
+  //   sourcePosition,
+  //   targetX,
+  //   targetY,
+  //   targetPosition,
+  // })
+
   const [edgePath, labelX, labelY] = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
+    sourceX: sx,
+    sourceY: sy,
+    sourcePosition: sourcePos,
+    targetPosition: targetPos,
+    targetX: tx,
+    targetY: ty,
   })
   // @ts-ignore
   const [sourceLabel, targetLabel] = label?.split('::')
   return (
     <>
-      <BaseEdge path={edgePath} style={style} markerEnd={'custom-marker'} />
+      <BaseEdge
+        path={edgePath}
+        style={{
+          ...style,
+          zIndex: 1,
+        }}
+        markerEnd={'custom-marker'}
+      />
 
       <EdgeLabelRenderer>
         <div

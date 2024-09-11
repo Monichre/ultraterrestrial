@@ -8,7 +8,7 @@ import Link from 'next/link'
 import * as Dialog from '@radix-ui/react-dialog'
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
-// import { useCompletion } from 'ai/react'
+import { nodeTypes, rootNodes } from '@/features/mindmap/config/index.config'
 import { useActions } from 'ai/rsc'
 import {
   submitMessage,
@@ -23,6 +23,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/utils'
 import { MemoizedMarkdown } from '@/features/ai/markdown'
 import { Answer } from './prompts/Answer'
+import { EntityMenu } from './entity-menu'
+import { MindMapEntityLoaderCard } from './mindmap-entity-loader-card'
 // import { useCompletion } from 'ai/react';
 
 const CheckIcon = ({ className }: { className?: string }) => {
@@ -69,7 +71,7 @@ const LoaderCore = ({
   value?: number
 }) => {
   return (
-    <div className='flex relative justify-start max-w-xl mx-auto flex-col mt-40'>
+    <div className='flex relative justify-start max-w-xxl mx-auto flex-col mt-40'>
       {loadingStates.map((loadingState, index) => {
         const distance = Math.abs(index - value)
         const opacity = Math.max(1 - distance * 0.2, 0) // Minimum opacity is 0, keep it 0.2 if you're sane.
@@ -361,7 +363,7 @@ export function AiAssistedSearch() {
       </div>
       <Dialog.Portal>
         <Dialog.Overlay className='data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50' />
-        <Dialog.Content className='data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed left-[50%] top-[50%] z-50 grid max-h-[85vh] w-[90vw] max-w-lg translate-x-[-50%] translate-y-[-50%] overflow-hidden border bg-black shadow-lg duration-200 sm:rounded-lg'>
+        <Dialog.Content className='data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] fixed left-[50%] top-[50%] z-50 grid max-h-[85vh] w-[90vw] max-w-xxl translate-x-[-50%] translate-y-[-50%] overflow-hidden border bg-black shadow-lg duration-200 sm:rounded-lg'>
           <VisuallyHidden.Root>
             <Dialog.Title>Get Weird With It</Dialog.Title>
           </VisuallyHidden.Root>
@@ -529,6 +531,14 @@ export function AiAssistedSearch() {
                 </ScrollArea.Scrollbar>
                 <ScrollArea.Corner className='bg-black' />
               </ScrollArea.Root>
+            </div>
+            <div className='w-full flex justify-evenly'>
+              {/* <EntityMenu /> */}
+              <MindMapEntityLoaderCard type='events' />
+              <MindMapEntityLoaderCard type='personnel' />
+              <MindMapEntityLoaderCard type='organizations' />
+              <MindMapEntityLoaderCard type='topics' />
+              <MindMapEntityLoaderCard type='testimonies' />
             </div>
           </div>
         </Dialog.Content>

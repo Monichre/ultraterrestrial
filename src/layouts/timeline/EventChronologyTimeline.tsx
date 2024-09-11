@@ -21,7 +21,9 @@ export const EventChronologyTimeline = ({ events }: any) => {
       result[year] = events.filter((event) => event.date.includes(year))
     }
     return result
-  }, [])
+  }, [events, years])
+  console.log('years: ', years)
+  console.log('eventsByYear: ', eventsByYear)
   const earthRef = useRef(null)
   return (
     <>

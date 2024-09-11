@@ -15,4 +15,5 @@ export const REMOTE_RESOURCES = [
   'https://nufohrc.org/',
   'https://drive.google.com/drive/folders/1rgRvJf2qwDypmFaMa67s2405qyMbUe__',
   'https://www.mufog.co.uk/',
+  'https://uapswiki.wpenginepowered.com/links/',
 ]

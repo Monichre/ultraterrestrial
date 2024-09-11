@@ -11,11 +11,9 @@ import {
   useUpdateNodeInternals,
   NodeToolbar,
 } from '@xyflow/react'
-
-import { MindMapEntityCard } from '@/features/mindmap/cards/entity-card/entity-card'
-import { GraphCard } from '@/features/mindmap/cards/graph-card/graph-card'
-import { GraphNodeCard } from '@/components/ui/card/graph-node-card'
-import { BlurAppear } from '@/components/animated/animated-wrappers'
+import { BlurAppear } from '@/components/animated'
+import { MiniCard } from '@/features/mindmap/cards/card-stack/mini-card'
+import { createPortal } from 'react-dom'
 
 interface Photo {
   id: string
@@ -29,7 +27,7 @@ interface Photo {
   url: string
 }
 
-const EN = memo((props: any) => {
+const ENC = memo((props: any) => {
   console.log('props: ', props)
   const updateNodeInternals = useUpdateNodeInternals()
   updateNodeInternals(props.id)
@@ -43,13 +41,14 @@ const EN = memo((props: any) => {
       updateNodeInternals(props.id)
     }
   }, [props, updateNodeInternals])
-  // relative min-w-[300px] !w-[300px]
-  {
-    /* // <BlurAppear> */
-  }
-  return (
+  const domNode: any = document.querySelector(
+    `.react-flow__node[data-id="${props.parentId}"]`
+  )
+  console.log('domNode: ', domNode)
+
+  const markUp = (
     <BlurAppear
-      className={`w-full border border-white/20 rounded-[calc(var(--radius)-2px)] !min-w-[450px] relative h-auto max-w-[400px] ${props.parentId}`}
+      className={`rounded-[calc(var(--radius)-2px)] relative h-auto ${props.parentId} ${props.className} w-full`}
     >
       {handles && handles?.length
         ? handles.map((id: string) => (
@@ -64,16 +63,21 @@ const EN = memo((props: any) => {
         : null}
       <Handle type='target' position={Position.Top} />
 
-      <GraphCard
+      <MiniCard
         card={{
           id: props.id,
           ...props.data,
         }}
         key={props.id}
       />
-      {/* <GraphNodeCard {...props} key={props.id} /> */}
     </BlurAppear>
   )
+
+  // if (domNode) {
+  //   return createPortal(markUp, domNode)
+  // }
+
+  return markUp
 })
 
-export const EntityNode = memo(EN)
+export const EntityGroupNodeChild = memo(ENC)

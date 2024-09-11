@@ -52,8 +52,8 @@ export const ROOT_DIMENSIONS = {
 }
 
 export const GROUP_NODE_DIMENSIONS = {
-  height: 650,
-  width: 650,
+  height: 900,
+  width: 700,
 }
 export const CHILD_DIMENSIONS = {
   width: BASE_ENTITY_NODE_WIDTH,

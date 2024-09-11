@@ -14,7 +14,6 @@ import {
 
 import { AddNote } from '@/components/note/AddNote'
 import { Button } from '@/components/ui/button/button'
-import { DynamicSettings } from '@/components/ui/animated/dynamic-settings'
 
 interface EntityCardUtilityMenuProps {
   handleSave: any
