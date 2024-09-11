@@ -1,7 +1,3 @@
-const dayjs = require('dayjs')
-const utc = require('dayjs/plugin/utc')
-dayjs.extend(utc)
-
 export const objectMapToSingular: any = {
   events: 'event',
   testimonies: 'testimony',
@@ -57,24 +53,29 @@ export const connectionMapByEntityType: any = {
 }
 
 export function removeLeadingZero(str: string) {
-  if (str.startsWith('0')) {
+  if (!str) return str
+  if (str?.startsWith('0')) {
     return str.replace(/^0+/, '')
   }
   return str
 }
 
 export const extractUniqueYearsFromEvents = (events: any[]) => {
-  console.log('events: ', events)
   const years = new Set()
+  events.sort((a, b) => {
+    const dateA = new Date(a.date)
+
+    const dateB = new Date(b.date)
+    return dateB.getTime() - dateA.getTime()
+  })
   for (let event of events) {
-    console.log('event: ', event)
     // @ts-ignore
     const year: any = removeLeadingZero(event?.date?.split('-')[0])
-    console.log('year: ', year)
+
     if (!years.has(year)) {
       years.add(year)
     }
   }
-  console.log('years: ', years)
+
   return Array.from(years)
 }

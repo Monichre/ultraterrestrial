@@ -192,11 +192,11 @@ export const sentient = localFont({
 export const bebasNeue = localFont({
   src: [
     {
-      path: 'fonts/BebasNeue/Fonts/WEB/fonts/BebasNeue-Regular.eot',
+      path: 'fonts/BebasNeue/Fonts/WEB/fonts/BebasNeue-Regular.ttf',
       weight: '400',
       style: 'normal',
     },
   ],
   display: 'swap',
-  variable: '--font-bebas-neue',
+  variable: '--font-bebasNeue',
 })

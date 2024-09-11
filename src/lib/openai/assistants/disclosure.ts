@@ -1,17 +1,18 @@
 import { openai } from '../openai.client.ts'
 import { DatabaseSchema } from '../../xata/xata'
 import { metadata } from '@/app/layout.tsx'
-import {
-  ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID,
-  DISCLOSURE_ASSISTANT_ID,
-  INSTRUCTIONS,
-} from '@/lib/openai/assistants/config.ts'
+
 import {
   createMessage,
   formatRelatedItems,
   parseApiResponse,
 } from '@/lib/openai/assistants/assistant.utils.ts'
 import { AssistantResponse } from 'ai'
+import {
+  DISCLOSURE_ASSISTANT_ID,
+  ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID,
+  INSTRUCTIONS,
+} from '@/lib/openai/index.ts'
 
 // Generate generic type for any kind of DatabaseSchema
 type AnyDatabaseSchema = DatabaseSchema[keyof DatabaseSchema]

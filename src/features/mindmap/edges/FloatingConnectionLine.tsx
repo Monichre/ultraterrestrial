@@ -1,9 +1,9 @@
 'use client'
 import React from 'react'
 import { getBezierPath } from '@xyflow/react'
-import { getEdgeParams } from '@/features/mindmap/mindmap.config'
+import { getEdgeParams } from '@/features/mindmap/graph'
 
-export function FloatingConnectionLine({
+export const FloatingConnectionLine: any = ({
   toX,
   toY,
   fromPosition,
@@ -13,8 +13,8 @@ export function FloatingConnectionLine({
 }: {
   toX: number
   toY: number
-  fromPosition: string // Replace 'any' with the appropriate type
-  toPosition: string
+  fromPosition: any // Replace 'any' with the appropriate type
+  toPosition: any
   fromNode: any // Replace 'any' with the appropriate type
   targetNode: {
     id: string
@@ -26,7 +26,7 @@ export function FloatingConnectionLine({
       positionAbsolute: { x: number; y: number }
     }
   }
-}) {
+}) => {
   if (!fromNode) {
     return null
   }

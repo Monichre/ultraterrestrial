@@ -3,7 +3,7 @@
   "github.copilot.advanced": {
 
   },
-  "CodeGPT.apiKey": "OpenAI",
+  "CodeGPT.apiKey": "Anthropic",
   "github.copilot.preferredAccount": "Monichre",
   "debug.console.acceptSuggestionOnEnter": "on",
   "emmet.showSuggestionsAsSnippets": true,

@@ -37,7 +37,6 @@ export const AnimatedMiniCard = ({ stacked, children, i, rotateZ }: any) => {
         damping: 30,
       }}
     >
-      {/* <GraphCard card={card} /> */}
       {children}
     </motion.div>
   )

@@ -1,6 +1,6 @@
 import Loading from '@/app/loading'
 import { Suspense } from 'react'
-import { DeckGlGlobe } from '@/features/data-viz/components/globes/deckgl-globe'
+import { SightingsGlobe } from '@/features/data-viz/sightings/sightings-globe'
 
 export default async function Index() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `http://localhost:3000`
@@ -12,7 +12,7 @@ export default async function Index() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <DeckGlGlobe sightings={data} />
+      <SightingsGlobe sightings={data} />
     </Suspense>
   )
 }

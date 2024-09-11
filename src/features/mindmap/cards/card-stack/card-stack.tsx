@@ -1,6 +1,7 @@
 'use client'
 
 import { CardStackUI } from '@/features/mindmap/cards/card-stack/cards'
+import type { AnyCommands } from '@tiptap/core'
 
 export const formatNodesForCardDisplay = (nodes: any) => {
   console.log('nodes: ', nodes)
@@ -22,16 +23,19 @@ export const CardStack = ({
   mindmapCards,
   stacked,
   toggleStack,
+  removeChildCardClone,
 }: {
   mindmapCards: any
   stacked: any
   toggleStack: any
+  removeChildCardClone: any
 }) => {
   return (
     <CardStackUI
       mindmapCards={mindmapCards}
       stacked={stacked}
       toggleStack={toggleStack}
+      removeChildCardClone={removeChildCardClone}
     />
   )
 }

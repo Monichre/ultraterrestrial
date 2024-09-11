@@ -39,11 +39,11 @@ export const SpatialTimeline = ({ eventsByYear, years }: any) => {
   console.log('eventsByYear: ', eventsByYear)
 
   // Function to compute translateZ based on index
-  const y = useTransform(x, (latest) => latest * 2)
+  // const y = useTransform(x, (latest) => latest * 2)
   const opacityOutput = [0, 1, 0]
   const colorOutput = ['#f00', '#fff', '#0f0']
 
-  const opacity = useTransform(x, xInput, opacityOutput)
+  // const opacity = useTransform(x, xInput, opacityOutput)
   const computeTranslateZ = (index: number) => ({
     transform: [
       `translateZ(${-(index + 1) * 1000}px)`,

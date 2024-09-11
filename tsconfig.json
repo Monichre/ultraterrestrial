@@ -1,25 +1,25 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "target": "esnext",
-    "module": "esnext",
     "lib": [
-      "es6",
-      "es7",
-      "esnext",
-      "dom"
+      "ESNext"
     ],
-    "allowJs": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleDetection": "force",
     "jsx": "preserve",
-    "strict": true,
+    "allowJs": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
     "noEmit": true,
+    "strict": true,
     "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "allowImportingTsExtensions": true,
     "types": [
       "node",
       "three",
@@ -29,8 +29,7 @@
     "paths": {
       "@/*": [
         "src/*"
-      ],
-  
+      ]
     },
     "plugins": [
       {

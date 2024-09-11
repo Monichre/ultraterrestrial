@@ -311,7 +311,7 @@ export function FullSiteNav({ className }: { className?: string }) {
             key='History'
           >
             <div className='flex flex-col space-y-4'>
-              <HoveredLink className='' href='/history/events'>
+              <HoveredLink className='' href='/timeline'>
                 Timeline{' '}
               </HoveredLink>
               <HoveredLink className='' href='/history/gallery'>

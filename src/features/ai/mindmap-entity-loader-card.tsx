@@ -1,3 +1,6 @@
+'use client'
+import * as React from 'react'
+
 import { Card } from '@/components/ui/card'
 import { DotGridBackgroundBlack } from '@/components/backgrounds'
 import {
@@ -25,32 +28,8 @@ import { SketchyGlobe } from '@/components/icons'
 import { RootNodeToolbar } from '@/features/mindmap/cards/root-node-card/RootNodeToolbar'
 import { InputWithVanishAnimation } from '@/features/mindmap/cards/root-node-card/InputWithVanishAnimation'
 
-const Description = memo(({ childCount, label }: any) => (
-  <>
-    There are <NumberTicker value={childCount} /> {capitalize(label)}
-  </>
-))
-const LoadedStats = memo(({ length, childCount, label }: any) => (
-  <>
-    {/* @ts-ignore */}
-    Loaded <NumberTicker value={length} /> of
-    <NumberTicker value={childCount} /> {capitalize(label)}{' '}
-  </>
-))
-
-export const RootNodeCard = memo(({ nodeData }: any) => {
-  const {
-    addChildNodesFromSearch,
-    conciseViewActive,
-    renderRootNodeConciseLayout,
-
-    toggleLocationVisualization,
-    onNodeClick,
-  } = useMindMap()
-
-  const nodeState: any = useNodesData(nodeData?.id)
-
-  const type = nodeData?.data?.type
+export const MindMapEntityLoaderCard = memo(({ type }: any) => {
+  const { addChildNodesFromSearch, onNodeClick } = useMindMap()
 
   const [searchTerm, setSearchTerm]: any = useState('')
 
@@ -74,26 +53,17 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
     })
     setSearchTerm('')
   }, [searchTerm, type, addChildNodesFromSearch])
-  const {
-    data: { childCount, label },
-    ...rest
-  } = nodeData
-
-  const nodeProps = {
-    ...rest,
-  }
 
   const handleLoadingRecords = useCallback(async () => {
-    await onNodeClick(nodeData)
-  }, [nodeData, onNodeClick])
+    await onNodeClick({ data: { type } })
+  }, [type, onNodeClick])
 
-  const interim = (label || type).toLowerCase()
+  const interim = type.toLowerCase()
   const title =
     interim === 'personnel' ? 'Subject Matter Experts' : capitalize(interim)
 
   return (
     <Card
-      {...nodeProps}
       className={cn(
         'w-[280px]',
         'relative',
@@ -116,8 +86,8 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
           </h3>
         </div>
 
-        <CardDescription className='text-xs relative z-20'>
-          {nodeState?.data?.handles?.length ? (
+        {/* <CardDescription className='text-xs relative z-20'> */}
+        {/* {nodeState?.data?.handles?.length ? (
             <LoadedStats
               length={nodeState?.data?.handles?.length}
               childCount={childCount}
@@ -126,7 +96,7 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
           ) : (
             <Description childCount={childCount} label={label} />
           )}
-        </CardDescription>
+        </CardDescription> */}
       </CardHeader>
 
       <CardContent className='my-2'>
@@ -137,18 +107,12 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
         />
       </CardContent>
 
-      {/* <RootNodeToolbar
-        onChange={updateSearchTerm}
-        onSubmit={runSearch}
-        type={type}
-        value={searchTerm}
-      /> */}
       <CardFooter className='p-2 flex justify-center align-middle items-center mt-2'>
         <ShinyButton
           onClick={handleLoadingRecords}
           className='load-records-button cursor-pointer'
         >
-          Load {capitalize(label)}
+          Go
         </ShinyButton>
       </CardFooter>
     </Card>

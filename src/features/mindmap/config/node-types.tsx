@@ -1,5 +1,6 @@
 import {
   EntityGroupNode,
+  EntityGroupNodeChild,
   EntityNode,
   RootNode,
   TestimonyNode,
@@ -13,4 +14,5 @@ export const nodeTypes: any = {
   topicsNode: EntityNode,
   organizationsNode: EntityNode,
   entityGroupNode: EntityGroupNode,
+  entityGroupNodeChild: EntityGroupNodeChild,
 }

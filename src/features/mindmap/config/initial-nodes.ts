@@ -5,20 +5,6 @@ import {
 } from '@/features/mindmap/config/index.config'
 import { ENTITY_DATA_VIZ_COLOR_PALETTE } from '@/utils'
 
-const rootContainerNode = {
-  id: 'root',
-  type: 'group',
-  position: {
-    x: 0,
-    y: 0,
-  },
-  style: {
-    border: '1px solid #eee',
-    borderRadius: '5px',
-    padding: '10px',
-  },
-}
-
 const entityRootNodes = ROOT_NODE_IDS.map((id) => {
   const [kind] = id.split('-')
   const type = `${kind}Node`
@@ -36,8 +22,7 @@ const entityRootNodes = ROOT_NODE_IDS.map((id) => {
     id,
     type, // Custom Node Type
     position,
-    parentId: rootContainerNode.id,
-    extent: 'parent',
+
     initialWidth: ROOT_DIMENSIONS.width,
     initialHeight: ROOT_DIMENSIONS.height,
     data: {
@@ -47,4 +32,4 @@ const entityRootNodes = ROOT_NODE_IDS.map((id) => {
     },
   }
 })
-export const rootNodes = [rootContainerNode, ...entityRootNodes]
+export const rootNodes = [...entityRootNodes]

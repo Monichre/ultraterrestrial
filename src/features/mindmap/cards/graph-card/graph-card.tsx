@@ -216,9 +216,9 @@ export function GraphCard({ card }: any) {
         className={`relative z-50 rounded-[calc(var(--radius)-2px)] p-[1px] bg-black w`}
         style={{ border: `1px solid ${color}` }}
         onMouseEnter={handleHoverEnter}
-        // onMouseLeave={handleHoverLeave}
+        onMouseLeave={handleHoverLeave}
       >
-        {/* <AnimatePresence>
+        <AnimatePresence>
           {showMenu && (
             <motion.div
               className='flex justify-center items-center w-full absolute bg-transparent w-auto top-0 left-0'
@@ -237,15 +237,15 @@ export function GraphCard({ card }: any) {
               />
             </motion.div>
           )}
-        </AnimatePresence> */}
-        <Dialog
+        </AnimatePresence>
+        <motion.div
           transition={{
             type: 'spring',
             stiffness: 200,
             damping: 24,
           }}
         >
-          <DialogTrigger
+          <motion.div
             style={{
               borderRadius: '4px',
             }}
@@ -255,7 +255,7 @@ export function GraphCard({ card }: any) {
               className={`relative w-full h-full pl-3 flex justify-start-center items-center`}
               style={{ borderLeft: `1px solid ${modelColor}` }}
             >
-              <DialogImage
+              <motion.img
                 src={image.url || image.src}
                 alt='What I Talk About When I Talk About Running - book cover'
                 className='h-[75px] w-[75px] object-cover object-center p-1 mr-4'
@@ -275,16 +275,16 @@ export function GraphCard({ card }: any) {
                   />
                 )} */}
 
-                <DialogTitle>
+                <motion.div>
                   <h2
                     className='text-white font-centimaSans text-xl whitespace-normal w-fit capitalize '
                     style={{ textWrap: 'pretty' }}
                   >
                     {name}
                   </h2>
-                </DialogTitle>
+                </motion.div>
 
-                <DialogSubtitle className=''>
+                <motion.div className=''>
                   <p className='font-jetbrains text-white tracking-wider '>
                     {card?.location || truncate(role, 50)}
                   </p>
@@ -295,10 +295,10 @@ export function GraphCard({ card }: any) {
                         ? `Platform Ranking: ${card?.rank}`
                         : date}
                   </p>
-                </DialogSubtitle>
+                </motion.div>
               </div>
             </div>
-          </DialogTrigger>
+            {/* </motion.div>
 
           <DialogContainer>
             <DialogContent
@@ -323,15 +323,8 @@ export function GraphCard({ card }: any) {
                           {name}
                         </h2>
 
-                        {/* <div className='flex justify-end'>
-                       
-                        <EntityCardUtilityMenu
-                          handleSave={handleSave}
-                          userNote={userNote}
-                          saveNote={saveNote}
-                          bookmarked={bookmarked}
-                        />
-                      </div> */}
+                      >
+                      
                       </div>
 
                       <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
@@ -380,15 +373,14 @@ export function GraphCard({ card }: any) {
                     </div>
                   </div>
 
-                  {/* <div className='w-full flex justify-end items-center '>
-                   
-                  </div> */}
+          
                 </div>
               </ScrollArea>
               <DialogClose className='text-zinc-500' />
             </DialogContent>
-          </DialogContainer>
-        </Dialog>
+          </DialogContainer> */}
+          </motion.div>
+        </motion.div>
       </div>
     </>
   )

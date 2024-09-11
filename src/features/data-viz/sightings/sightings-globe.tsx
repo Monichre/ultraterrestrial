@@ -72,7 +72,7 @@ const MapGL: any = ReactMapboxGl({
   accessToken: process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN || '',
 })
 
-export const DeckGlGlobe: React.FC<any> = ({ sightings }) => {
+export const SightingsGlobe: React.FC<any> = ({ sightings }) => {
   const [deckGlLayer, setDeckGlLayer]: any = useState(null)
   const defaultCenter = useMemo(
     () => [-125.148032, 19.613688] as unknown as [number, number],

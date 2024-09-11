@@ -116,13 +116,14 @@ const CardStackVerticalStack = ({
   mindmapCards,
   stacked,
   toggleStacked,
+  removeChildCardClone,
 }: any) => {
   // const [open, setOpen] = useState(stacked
   const CARD_OFFSET = 10
   const SCALE_FACTOR = 0.06
 
   return (
-    <div className='flex h-[600px] w-full flex-col items-center justify-center overflow-scroll'>
+    <div className='flex h-[800px] w-full flex-col items-center justify-center overflow-scroll'>
       <div
         className='relative flex h-full w-full flex-col items-center justify-center px-4'
         style={{
@@ -138,7 +139,10 @@ const CardStackVerticalStack = ({
               i={i}
               rotateZ={rotateZ}
             >
-              <MiniCard card={card} />
+              <MiniCard
+                card={card}
+                removeChildCardClone={removeChildCardClone}
+              />
             </AnimatedMiniCard>
           )
         })}
@@ -151,16 +155,19 @@ export const CardStackUI = ({
   swipeable = false,
   toggleStack,
   stacked,
+  removeChildCardClone,
 }: {
   mindmapCards: any
   swipeable: boolean
   toggleStack: any
   stacked: boolean
+  removeChildCardClone: any
 }) => {
   return swipeable ? (
     <CardStackSwipeable mindmapCards={mindmapCards} />
   ) : (
     <CardStackVerticalStack
+      removeChildCardClone={removeChildCardClone}
       mindmapCards={mindmapCards}
       toggleStack={toggleStack}
       stacked={stacked}
