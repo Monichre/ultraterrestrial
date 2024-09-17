@@ -1,5 +1,5 @@
 import { assistantId } from '@/lib/openai/assistants/config'
-import openai from 'openai'
+import { openai } from '@/lib/openai/openai.client'
 
 export const runtime = 'nodejs'
 

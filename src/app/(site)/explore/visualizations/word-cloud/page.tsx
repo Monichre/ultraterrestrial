@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 
 const Loading = dynamic(() =>
-  import('@/components/ui/loading').then((mod) => mod.Loading)
+  import('@/components/loaders/loading').then((mod) => mod.Loading)
 )
 
 const WordCloud = dynamic(() =>

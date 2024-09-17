@@ -32,7 +32,7 @@ import type { AnyJson } from 'three/examples/jsm/nodes/core/constants'
 import { ConnectionCard, ModelAvatar } from '@/features/mindmap/connection-list'
 import { cn } from '@/utils'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Loading } from '@/components/ui/loading'
+import { Loading } from '@/components/loaders/loading'
 import { Card, CardHeader } from '@/components/ui/card'
 // import {
 //   StarsCard,

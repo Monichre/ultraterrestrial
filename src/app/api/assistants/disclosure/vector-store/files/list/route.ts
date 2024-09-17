@@ -1,4 +1,4 @@
-import { UFO_VECTOR_DATA_STORE_ID } from '@/lib/openai/assistants/config'
+import { UFO_VECTOR_DATA_STORE_ID } from '@/lib/openai'
 import { openai } from '@/lib/openai/openai.client'
 import { writeLogToFile } from '@/utils'
 
