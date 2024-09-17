@@ -59,12 +59,12 @@ export const LovecraftQuote = () => {
                   "
                 </span>
               )}
-              <span className='font-centimaSans text-white text-bold text-md lg:text-[14px] 4xl:text-[18px] tracking-wider '>
+              <span className='font-centimaSans text-white text-bold text-md lg:text-[14px] xl:text-[18px] 4xl:text-[22px] tracking-wider '>
                 {line}{' '}
               </span>
               {index === end && (
                 <span
-                  className={`!font-ailerons lg:text-4xl 2xl:text-6xl font-bold inline absolute h-0 bottom-[33px]`}
+                  className={`!font-ailerons lg:text-4xl xl:text-6xl font-bold inline absolute h-0 bottom-[33px]`}
                 >
                   "
                 </span>

@@ -697,5 +697,33 @@ td p {
 }
 
 .react-flow__edges svg {
-  z-index: 1!important;
+  z-index: 2 !important;
+}
+
+.cl-rootBox.cl-signIn-root.cl-internal-phfxlr {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.mapboxgl-popup-tip {
+  border-right-color: #000 !important;
+}
+.mapboxgl-popup-content {
+  background: #000 !important;
+}
+
+.mapboxgl-popup-tip {
+  /* background: #000; */
+  /* background-color: #000; */
+}
+.mapboxgl-popup {
+  /* background: #000; */
+  /* background-color: #000; */
+}
+.mapboxgl-popup-anchor-bottom.mapboxgl-popup-content {
+  /* background: #000; */
+  /* background-color: #000; */
 }

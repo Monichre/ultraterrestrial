@@ -142,13 +142,18 @@ export const MiniCard = ({ card, removeChildCardClone }: any) => {
     //   position,
     // })
 
+    //cc:xata-ai-search#1;button-click
     const payload = await searchConnections({
       id: siblingSourceNode.id,
       type: siblingSourceNode.data.type,
     })
+    console.log('payload: ', payload)
     const searchResults = payload.data
     console.log('searchResults: ', searchResults)
-    createSearchResultsLayout({ originNode: siblingSourceNode, searchResults })
+    addConnectionNodesFromSearch({
+      source: siblingSourceNode,
+      searchResults,
+    })
     // const res = addConnectionNodesFromSearch({
     //   source: siblingSourceNode,
     //   searchResults,
@@ -156,7 +161,7 @@ export const MiniCard = ({ card, removeChildCardClone }: any) => {
     // removeChildCardClone && removeChildCardClone(card.id)
 
     //
-  }, [card.id, getNode])
+  }, [addConnectionNodesFromSearch, card.id, getNode, searchConnections])
 
   const [bookmarked, setBookmarked] = useState(false)
 

@@ -1,4 +1,4 @@
-import { DynamicSettings } from '@/components/ui/animated/dynamic-settings/DynamicSettings'
+import { DynamicSettings } from '@/components/animated/dynamic-settings/DynamicSettings'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

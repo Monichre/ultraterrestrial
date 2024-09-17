@@ -10,31 +10,16 @@ import React, {
 } from 'react'
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
 import { X } from 'lucide-react'
-
+import { Button } from '@/components/ui/button'
 import { cn } from '@/utils'
+import { useOutsideClick } from '@/hooks/useOutsideClick'
+
+const CultButton = motion(Button)
 
 const TRANSITION = {
   type: 'spring',
   bounce: 0.05,
   duration: 0.3,
-}
-
-function useClickOutside(
-  ref: React.RefObject<HTMLElement>,
-  handler: () => void
-) {
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        handler()
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [ref, handler])
 }
 
 interface CultUIPopoverContextType {
@@ -91,11 +76,19 @@ export function CultUIPopoverRoot({
   className,
 }: CultUIPopoverRootProps) {
   const popoverLogic = useCultUIPopoverLogic()
+  const ref: any = useRef()
+
+  useOutsideClick(ref, () => {
+    if (popoverLogic?.isOpen) {
+      popoverLogic?.closeCultUIPopover()
+    }
+  })
 
   return (
     <CultUIPopoverContext.Provider value={popoverLogic}>
       <MotionConfig transition={TRANSITION}>
         <div
+          ref={ref}
           className={cn(
             'relative flex items-center justify-center isolate',
             className
@@ -111,17 +104,20 @@ export function CultUIPopoverRoot({
 interface CultUIPopoverTriggerProps {
   children: React.ReactNode
   className?: string
+  variant?: string
 }
 
 export function CultUIPopoverTrigger({
   children,
   className,
+  variant,
 }: CultUIPopoverTriggerProps) {
   const { openCultUIPopover, uniqueId } = useCultUIPopover()
 
   return (
-    <motion.button
+    <CultButton
       key='button'
+      variant={variant}
       layoutId={`popover-${uniqueId}`}
       className={cn(
         'flex h-9 items-center border border-zinc-950/10 bg-white px-3 text-zinc-950 dark:border-zinc-50/10 dark:bg-zinc-700 dark:text-zinc-50',
@@ -135,7 +131,7 @@ export function CultUIPopoverTrigger({
       <motion.span layoutId={`popover-label-${uniqueId}`} className='text-sm'>
         {children}
       </motion.span>
-    </motion.button>
+    </CultButton>
   )
 }
 
@@ -151,7 +147,7 @@ export function CultUIPopoverContent({
   const { isOpen, closeCultUIPopover, uniqueId } = useCultUIPopover()
   const formContainerRef = useRef<HTMLDivElement>(null)
 
-  useClickOutside(formContainerRef, closeCultUIPopover)
+  useOutsideClick(formContainerRef, closeCultUIPopover)
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -174,13 +170,13 @@ export function CultUIPopoverContent({
           ref={formContainerRef}
           layoutId={`popover-${uniqueId}`}
           className={cn(
-            'absolute h-[200px] w-[364px] overflow-hidden border border-zinc-950/10 bg-white outline-none dark:bg-zinc-700 z-50', // Changed z-90 to z-50
+            'absolute h-[200px] w-[364px] overflow-hidden border border-zinc-950/10 bg-white outline-none dark:bg-black z-50 r-0', // Changed z-90 to z-50
             className
           )}
           style={{
             borderRadius: 12,
             top: 'auto', // Remove any top positioning
-            left: 'auto', // Remove any left positioning
+            left: '100%', // Remove any left positioning
             transform: 'none', // Remove any transform
           }}
         >

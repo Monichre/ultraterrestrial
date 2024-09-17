@@ -1,6 +1,9 @@
 import OpenAI from 'openai'
 import { AssistantResponse } from 'ai'
-import { DISCLOSURE_ASSISTANT_ID } from '@/lib/openai/config'
+import {
+  DISCLOSURE_ASSISTANT_ID,
+  ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID,
+} from '@/lib/openai/config'
 import { openai } from '@/lib/openai/openai.client'
 
 export async function POST(req: Request) {
@@ -9,7 +12,7 @@ export async function POST(req: Request) {
     message: string
   } = await req.json()
 
-  const threadId = input.threadId ?? (await openai.beta.threads.create({})).id
+  const threadId = ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID // input.threadId ?? (await openai.beta.threads.create({})).id
 
   const createdMessage = await openai.beta.threads.messages.create(threadId, {
     role: 'user',

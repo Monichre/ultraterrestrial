@@ -11,6 +11,7 @@ import {
 export const searchRelatedRecords = async ({ id, type }: any) => {
   const tables: any = connectionMapByEntityType[type]
   const originalRecordTypeSingular = objectMapToSingular[type]
+  
 
   const { totalCount, records } = await xata.search.all(`${id}`, {
     tables: tables.map(

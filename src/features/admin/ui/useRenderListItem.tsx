@@ -7,7 +7,10 @@ import { AnimatePresence, LayoutGroup, motion, useInView } from 'framer-motion'
 import { Plus, RepeatIcon, Settings2Icon, XIcon } from 'lucide-react'
 import { cn } from '@/utils'
 import { Button } from '@/components/ui/button'
-import { type Item, SortableListItem } from '@/components/ui/sortable-list'
+import {
+  type Item,
+  SortableListItem,
+} from '@/components/animated/cult-ui/sortable-list'
 export const useRenderListItem = ({
   handleAddItem,
   handleCloseOnDrag,

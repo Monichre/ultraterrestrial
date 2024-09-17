@@ -9,6 +9,6 @@ export const metadata = {
   assistant_id: DISCLOSURE_ASSISTANT_ID,
   internal_thread_key: ENTITY_RELATION_RELEVANCE_THREAD,
   instructions: INSTRUCTIONS,
-  user: 'system',
+  role: 'system',
 }
 export const UFO_VECTOR_DATA_STORE_ID: any = process.env.OPENAI_VECTOR_STORE_ID

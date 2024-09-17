@@ -1,10 +1,11 @@
 import { openai } from '../openai.client.ts'
-import { DatabaseSchema } from '../../xata/xata'
+import type { DatabaseSchema } from '../../xata/xata'
 import { metadata } from '@/app/layout.tsx'
 
 import {
   createMessage,
   formatRelatedItems,
+  formatSubject,
   parseApiResponse,
 } from '@/lib/openai/assistants/assistant.utils.ts'
 import { AssistantResponse } from 'ai'
@@ -17,6 +18,74 @@ import {
 // Generate generic type for any kind of DatabaseSchema
 type AnyDatabaseSchema = DatabaseSchema[keyof DatabaseSchema]
 
+export const askDisclosureAgentToFindRelatedRecords = async ({
+  subject,
+  type,
+}: any) => {
+  const threadId = ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID
+  const createdMessage = await openai.beta.threads.messages.create(
+    ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID,
+    {
+      role: 'user',
+      content: `Provide a list of the most interesting related data points that you know of regarding ${JSON.stringify(subject)}. Look across topics, events, key figures, sightings, documents any additional resources at your disposal. Return your response in JSON with each item containing the fields: "Relation to Subject:", "Evidence:", "Relevance Score:"`,
+    }
+  )
+
+  // const existingRuns = await openai.beta.threads.runs.list(
+  //   ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID
+  // )
+
+  return AssistantResponse(
+    { threadId, messageId: createdMessage.id },
+    async ({ forwardStream, sendDataMessage }) => {
+      // Run the assistant on the thread
+      const runStream = await openai.beta.threads.runs.stream(
+        ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID,
+        {
+          assistant_id: DISCLOSURE_ASSISTANT_ID,
+          metadata,
+          additional_instructions: INSTRUCTIONS,
+        }
+      )
+
+      // forward run status would stream message deltas
+      let runResult = await forwardStream(runStream)
+      console.log('runResult: ', runResult)
+
+      // status can be: queued, in_progress, requires_action, cancelling, cancelled, failed, completed, or expired
+      // while (
+      //   runResult?.status === 'requires_action' &&
+      //   runResult.required_action?.type === 'submit_tool_outputs'
+      // ) {
+      //   const tool_outputs =
+      //     runResult.required_action.submit_tool_outputs.tool_calls.map(
+      //       (toolCall: any) => {
+      //         const parameters = JSON.parse(toolCall.function.arguments)
+      //         console.log('parameters: ', parameters)
+
+      //         switch (toolCall.function.name) {
+      //           // configure your tool calls here
+
+      //           default:
+      //             throw new Error(
+      //               `Unknown tool call function: ${toolCall.function.name}`
+      //             )
+      //         }
+      //       }
+      //     )
+
+      //   runResult = await forwardStream(
+      //     openai.beta.threads.runs.submitToolOutputsStream(
+      //       threadId,
+      //       runResult.id,
+      //       { tool_outputs }
+      //     )
+      //   )
+      // }
+    }
+  )
+}
+
 export const checkRelevanceWithAI = async ({
   subject,
   relatedItems,
@@ -24,62 +93,31 @@ export const checkRelevanceWithAI = async ({
   subject: any
   relatedItems: any[]
 }) => {
-  await openai.beta.threads.messages.create(
+  const createdMessage = await openai.beta.threads.messages.create(
     ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID,
     {
       role: 'user',
       content: `${createMessage(relatedItems)} ${formatRelatedItems(relatedItems)} related to ${subject?.name}? Return your response in JSON with each item containing the fields: "Relation to Subject:", "Evidence:", "Relevance Score:"`,
     }
   )
+  const threadId = ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID
 
-  const stream = await openai.beta.threads.runs.stream(
-    ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID,
-    {
-      assistant_id: DISCLOSURE_ASSISTANT_ID,
-      metadata,
-      additional_instructions: INSTRUCTIONS,
+  return AssistantResponse(
+    { threadId, messageId: createdMessage.id },
+    async ({ forwardStream }) => {
+      const runStream = openai.beta.threads.runs.stream(threadId, {
+        assistant_id:
+          DISCLOSURE_ASSISTANT_ID ??
+          (() => {
+            throw new Error('ASSISTANT_ID environment is not set')
+          })(),
+        metadata,
+        additional_instructions: INSTRUCTIONS,
+      })
+
+      await forwardStream(runStream)
     }
   )
-
-  let answer: any
-  let payload = []
-
-  let assistantAnswer: any
-  let error
-
-  for await (const step of stream) {
-    payload.push(step.data)
-
-    if (step.event === 'thread.run.completed') answer = step.data
-    if (step.event === 'thread.message.completed') assistantAnswer = step.data
-    if (step.event.includes('error')) {
-      console.error('Error occurred:', step.data)
-      error = step.data
-    }
-  }
-
-  if (error) {
-    return {
-      error,
-      connections: null,
-    }
-  }
-
-  console.log('assistantAnswer: ', assistantAnswer)
-
-  const { content } = assistantAnswer
-  const [data] = content
-  const { text } = data
-
-  const { connections }: any = parseApiResponse({ text })
-
-  console.log('connections: ', connections)
-  return {
-    text,
-    assistantAnswer,
-    connections,
-    payload,
-  }
 }
 
 export const sendMessageInThreadToDisclosureAssistant = async ({

@@ -42,7 +42,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/**/*"
+    "src/**/*",
+    "src/stories/**/*.stories.ts",
+    "src/stories/**/*.stories.tsx",
+    "src/stories/*.stories.ts",
+
   ],
   "exclude": [
     "node_modules"
