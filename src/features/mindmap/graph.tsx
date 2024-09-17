@@ -1,10 +1,6 @@
 'use client'
 
 import { Spotlight } from '@/components/animated/spotlight'
-import {
-  DotGridBackground,
-  DotGridBackgroundBlack,
-} from '@/components/backgrounds'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -13,11 +9,6 @@ import {
   Background,
   Panel,
   type NodeOrigin,
-  useReactFlow,
-  useStore,
-  MiniMap,
-  useNodesInitialized,
-  SelectionMode,
 } from '@xyflow/react'
 
 import { useMindMap } from '@/providers/mindmap-context'
@@ -253,7 +244,6 @@ export function Graph(props: any) {
         defaultEdgeOptions={edgeOptions}
         nodes={nodes}
         edges={edges}
-        defaultViewport={{ x: 0, y: 0, zoom: -1 }}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
@@ -275,10 +265,13 @@ export function Graph(props: any) {
         <Panel position='top-right'>
           <LocationVisualization />
         </Panel>
+
         <Panel position='bottom-center'>
-          <div className='w-full fixed bottom-[40px] left-0 z-50 cursor-pointer flex justify-center'>
+          <div className='ml-2 mt-2 min-h-[100px] w-[250px]'>
             <AiAssistedSearch />
           </div>
+
+          {/* <QuickLoadEntityMenu /> */}
         </Panel>
         {/* <Panel
           position='bottom-left'

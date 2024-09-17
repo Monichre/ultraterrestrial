@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { FloatingPanel } from '@/components/floating-panel';
+import type { Meta, StoryObj } from '@storybook/react'
+import * as FloatingPanel from '@/components/cult-ui'
 
 const meta = {
   title: 'Components/FloatingPanel',
@@ -10,19 +10,13 @@ const meta = {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  args: {
+  args: {},
+} satisfies Meta<typeof FloatingPanel>
 
-  },
-} satisfies Meta<typeof FloatingPanel>;
+export default meta
 
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
-  args: {
-
-  },
-};
-
-
+  args: {},
+}

@@ -5,7 +5,6 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF, PerspectiveCamera } from '@react-three/drei'
 import { EffectComposer, Bloom, TiltShift2 } from '@react-three/postprocessing'
 import { mergeRefs } from 'react-merge-refs'
-import { easing } from 'maath'
 
 // useGLTF.preload('/assets/moon/moon.glb')
 export const MoonScene = ({ offset = 0, ...props }: any) => {

@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+//cc:xata-ai-search#2;searchConnections function call
 export const searchConnections = async ({ id, type }: any) => {
   try {
     const response = await axios.get('/api/data/search/connections', {

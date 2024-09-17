@@ -207,7 +207,7 @@ const FadeInStaggerContext = createContext(false)
 
 const viewport = { once: true, margin: '0px 0px -200px' }
 
-export function FadeIn(props: any) {
+export function DynamicFadeIn(props: any) {
   let shouldReduceMotion = useReducedMotion()
   let isInStaggerGroup = useContext(FadeInStaggerContext)
 
@@ -230,7 +230,7 @@ export function FadeIn(props: any) {
   )
 }
 
-export function FadeInStagger({ faster = false, ...props }) {
+export function DynamicFadeInStagger({ faster = false, ...props }) {
   return (
     <FadeInStaggerContext.Provider value={true}>
       <motion.div

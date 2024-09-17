@@ -1,4 +1,5 @@
 import { getXataClient, searchRelatedRecords } from '@/lib/xata'
+const xata: any = getXataClient()
 
 import { NextRequest, NextResponse } from 'next/server'
 import {
@@ -6,16 +7,98 @@ import {
   objectMapPlural,
   connectionMapByEntityType,
 } from '@/utils/model.utils'
+import {
+  askDisclosureAgentToFindRelatedRecords,
+  checkRelevanceWithAI,
+} from '@/lib/openai'
+import { filterConnectionsByRelevance } from '@/lib/openai/assistants/assistant.utils'
+import { rememberEntityConnections } from '@/lib/mem0'
 // import { checkRelevanceWithAI } from '@/lib/openai/assistants/disclosure'
 // const xata: any = getXataClient()
 
 export async function GET(request: NextRequest) {
+  //cc:xata-ai-search#3;searchConnections API route
   const searchParams = request.nextUrl.searchParams
 
   const id = searchParams.get('id')
+  console.log('id: ', id)
 
   const type: any = searchParams.get('type')
+  console.log('type: ', type)
+  const source = await xata.db[`${type}`].read(id)
+  console.log('source: ', source)
+
   const connectionRecords = await searchRelatedRecords({ id, type })
+  console.log('connectionRecords: ', connectionRecords)
+  const relatedItems = Array.from(connectionRecords)
+  if (relatedItems.length === 0) {
+    console.log('No related items found, running search with disclosure agent')
+    const assistantAnswer = await askDisclosureAgentToFindRelatedRecords({
+      subject: source,
+      type,
+    })
+    console.log('assistantAnswer: ', assistantAnswer)
+    // const memory = await rememberEntityConnections({
+    //   type,
+    //   source,
+    //   assistantAnswer,
+    // })
+
+    return NextResponse.json({
+      data: [],
+      assistantAnswer: assistantAnswer,
+    })
+  } else {
+    // const { connections, assistantAnswer } = await checkRelevanceWithAI({
+    //   subject: source,
+    //   relatedItems,
+    // })
+
+    // console.log('assistantAnswer: ', assistantAnswer)
+    // const { relevant, irrelevant } = filterConnectionsByRelevance(connections)
+    // console.log('relevant: ', relevant)
+    // const evaluatedRecords = Object.keys(relevant).map((name) => {
+    //   const databasedRecord = relatedItems.find(
+    //     (record: any) => record.name === name
+    //   )
+    //   console.log('databasedRecord: ', databasedRecord)
+    //   const evaluatedRecord = databasedRecord
+    //     ? {
+    //         ...databasedRecord,
+    //         evaluation: connections[name],
+    //       }
+    //     : null
+    //   console.log('evaluatedRecord: ', evaluatedRecord)
+    //   return evaluatedRecord
+    // })
+
+    // const memory = await rememberEntityConnections({
+    //   type,
+    //   source,
+    //   connections: relevant,
+    // })
+    // console.log('memory: ', memory)
+    return NextResponse.json({
+      data: relatedItems,
+      assistantAnswer: null,
+    })
+  }
+  // const messages = [
+  //   {
+  //     role: 'system',
+  //     content:
+  //       'You are an AI tutor with a personality. Give yourself a name for the user.',
+  //   },
+  //   {
+  //     role: 'assistant',
+  //     content:
+  //       "Understood. I'm an AI tutor with a personality. My name is Alice.",
+  //   },
+  // ]
+  // client
+  //   .add(messages, { agent_id: 'ai-tutor', output_format: 'v1.1' })
+  //   .then((response) => console.log(response))
+  //   .catch((error) => console.error(error))
   // const tables: any = connectionMapByEntityType[type]
 
   // const originalRecordTypeSingular = objectMapToSingular[type]
@@ -61,7 +144,6 @@ export async function GET(request: NextRequest) {
   //     connectionRecords.add({ ...connection, type: table })
   //   }
   // }
-  console.log('connectionRecords: ', connectionRecords)
 
   // This is taking a long time to get a response. The solution is probably to rendering the stream back to the client but Im lazy atm
   // const { connections, error } = await checkRelevanceWithAI({
@@ -86,6 +168,4 @@ export async function GET(request: NextRequest) {
   // })
 
   // console.log('data: ', data)
-
-  return NextResponse.json({ data: Array.from(connectionRecords) })
 }

@@ -293,12 +293,12 @@ export function AiAssistedSearch() {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // event.preventDefault()
-      if (event.key === '/' && !isOpen) {
-        event.preventDefault()
+      if (event.metaKey && event.key === 'k' && !isOpen) {
         setIsOpen(true)
       }
-      if (event.metaKey && event.key === 'k') {
-        setIsOpen(true)
+      // event.preventDefault()
+      if (event.metaKey && event.key === 'k' && isOpen) {
+        setIsOpen(false)
       }
     }
 
@@ -531,14 +531,6 @@ export function AiAssistedSearch() {
                 </ScrollArea.Scrollbar>
                 <ScrollArea.Corner className='bg-black' />
               </ScrollArea.Root>
-            </div>
-            <div className='w-full flex justify-evenly'>
-              {/* <EntityMenu /> */}
-              <MindMapEntityLoaderCard type='events' />
-              <MindMapEntityLoaderCard type='personnel' />
-              <MindMapEntityLoaderCard type='organizations' />
-              <MindMapEntityLoaderCard type='topics' />
-              <MindMapEntityLoaderCard type='testimonies' />
             </div>
           </div>
         </Dialog.Content>

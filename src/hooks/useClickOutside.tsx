@@ -14,11 +14,13 @@ export function useClickOutside<T extends HTMLElement>(
     }
 
     document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('click', handleClickOutside)
     document.addEventListener('touchstart', handleClickOutside)
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('touchstart', handleClickOutside)
+      document.addEventListener('click', handleClickOutside)
     }
   }, [ref, handler])
 }

@@ -1,4 +1,4 @@
-import { Loading as LoadingScreen } from '@/components/ui/loading.tsx'
+import { Loading as LoadingScreen } from '@/components/loaders'
 
 export default function Loading() {
   return <LoadingScreen />

@@ -11,7 +11,7 @@ import {
   DialogSubtitle,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/animated/core/dialog'
+} from '@/components/animated/core/dialog'
 import { searchConnections } from '@/features/ai/search'
 import { EntityCardUtilityMenu } from '@/features/mindmap/cards/entity-card'
 import { DOMAIN_MODEL_COLORS, objectMapToSingular, truncate } from '@/utils'

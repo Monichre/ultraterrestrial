@@ -406,7 +406,7 @@ export const MindMapProvider = ({
         type: 'entityGroupNode',
         initialHeight: GROUP_NODE_DIMENSIONS.height,
         initialWidth: GROUP_NODE_DIMENSIONS.width,
-
+        zIndex: 1,
         style: {
           width: `${GROUP_NODE_DIMENSIONS.width}px`,
           height: `${GROUP_NODE_DIMENSIONS.height}px`,
@@ -452,6 +452,7 @@ export const MindMapProvider = ({
           style: {
             // transform: `rotateZ(${childNodes.length - index - 1}deg)`,
           },
+          zIndex: 2,
           hidden: false,
           parentId: groupId,
           className: groupId,
@@ -460,7 +461,6 @@ export const MindMapProvider = ({
       )
 
       groupNode.data.children = [...groupNodeChildren]
-      console.log('groupNodeChildren: ', groupNodeChildren)
 
       return { groupNode, groupNodeChildren }
     },

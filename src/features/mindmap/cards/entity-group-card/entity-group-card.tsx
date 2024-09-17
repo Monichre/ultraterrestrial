@@ -175,7 +175,7 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
       console.log('formattedYears: ', formattedYears)
       setYears(formattedYears)
     }
-  }, [groupNodeData, document])
+  }, [groupNodeData])
 
   // useEffect(() => {
   //   const domNodes = Array.from(
@@ -211,6 +211,15 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
       }}
       ref={ref}
     >
+      <div
+        className='absolute top-0 left-0 z-0 h-full w-full'
+        style={{
+          // background: `radial-gradient(36.46% 50% at 50% 50%, rgba(123, 143, 221, 0.08) 0%, rgba(5, 5, 11, 0.00) 100%), radial-gradient(38.81% 50% at 50% 50%, rgba(123, 143, 221, 0.12) 0%, rgba(5, 5, 11, 0.00) 100%)`,
+
+          background: `radial-gradient(75% 75% at 50% 91.9%, #121212 0%, #0D0D0D 100%)`,
+          boxShadow: `0px 1.5px 0.5px 2.5px rgba(0, 0, 0, 0.40), 0px 0px 0.5px 1px #000, 0px 2px 1px 1px rgba(0, 0, 0, 0.25) inset, 0px 1px 1px 1px rgba(255, 255, 255, 0.20) inset`,
+        }}
+      />
       <CardTop>
         <h3 className='text-sm italic'>
           Events:{' '}
@@ -228,7 +237,7 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
             className='text-bg-emerald-green-300 m-2'
             onClick={toggleStack}
           >
-            <LayersIcon className='h8 w-8 stroke-1' />
+            <LayersIcon className='h8 w-8 stroke-1 stroke-white text-white' />
           </Button>
         </div>
       </CardTop>

@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button/button'
 import { BlurFade } from '@/components/animated/blur-fade'
 import { TextEffect } from '@/components/animated/text-effect'
 import { cn } from '@/utils'
-import { Loading } from '@/components/ui/loading'
+import { Loading } from '@/components/loaders/loading'
 
 type photo = {
   signedUrl: string

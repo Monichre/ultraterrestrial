@@ -50,3 +50,44 @@ export const traumaDrumpPartyMartiansMemories = async () => {
 
   return trauma
 }
+
+export const withMemoryCustomization = async ({ messages, includes }: any) => {
+  const customizedMemory = await mem0AI.add(messages, {
+    includes,
+    agent_id: DISCLOSURE_ASSISTANT_ID,
+  })
+}
+
+export const rememberEntityConnections = async ({
+  type,
+  source,
+  assistantAnswer,
+}: any) => {
+  const customCategories = {
+    events: 'event-connections',
+    personnel: 'personnel-connections',
+    topics: 'topic-connections',
+    testimonies: 'testimony-connections',
+    organizations: 'organization-connections',
+  }
+  const category =
+    customCategories[type as keyof typeof customCategories] || type // }source, connections
+  const memory = await mem0AI.add({
+    messages: [assistantAnswer.content[0].text],
+    // @ts-ignore
+    metadata: {
+      source,
+      assistantAnswer,
+    },
+    // @ts-ignore
+    custom_categories: {
+      ...category,
+    },
+    // @ts-ignore
+    agent_id: DISCLOSURE_ASSISTANT_ID,
+    // @ts-ignore
+    includes: `${source.id}-connections`,
+  })
+  console.log('memory: ', memory)
+  return memory
+}

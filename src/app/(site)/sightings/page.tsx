@@ -4,15 +4,19 @@ import { SightingsGlobe } from '@/features/data-viz/sightings/sightings-globe'
 
 export default async function Index() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `http://localhost:3000`
-  const payload = await fetch(`${baseUrl}/api/data/sightings`)
+  const sightingsPayload = await fetch(`${baseUrl}/api/data/sightings`)
 
-  console.log('payload: ', payload)
-  const { data } = await payload.json()
-  console.log('data payload: ', data)
+  const {
+    data: { sightings, militaryBases, ufoPosts },
+  } = await sightingsPayload.json()
 
   return (
     <Suspense fallback={<Loading />}>
-      <SightingsGlobe sightings={data} />
+      <SightingsGlobe
+        sightings={sightings}
+        militaryBases={militaryBases}
+        ufoPosts={ufoPosts}
+      />
     </Suspense>
   )
 }

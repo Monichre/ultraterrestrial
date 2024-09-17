@@ -1,10 +1,8 @@
 import { getXataClient, searchRelatedRecords } from '@/lib/xata'
 const xata: any = getXataClient()
-import {
-  checkRelevanceWithAI,
-  filterConnectionsByRelevance,
-} from '@/lib/openai/assistants/disclosure'
+import { checkRelevanceWithAI } from '@/lib/openai/assistants/disclosure'
 import { connectionMapByEntityType, objectMapToSingular } from '@/utils'
+import { filterConnectionsByRelevance } from '@/lib/openai/assistants/assistant.utils'
 export async function POST(req: any) {
   const { data } = await req.json()
   console.log('data: ', data)

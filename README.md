@@ -46,3 +46,13 @@
 <https://opensearch-ai.pages.dev/>
 
 postgresql://kgubvq:xau_UrsqYt3kKCT3sOqUomoTNmTC9BQvsFlB0@us-east-1.sql.xata.sh/ultraterrestrial-postgres:main?sslmode=require
+
+cc (stands for "CodeCrumb") is a prefix which used by the parser; check example of parameters in the table below:
+
+Example Description Use case
+//cc:remember place simple breadcrumb, remember place is a title of our first breadcrumb Mark an important place to not forget where it was
+//cc:here is bug;well, seems like a bug in logic simple breadcrumb, well, seems like a bug in logic is details for breadcrumb, separated by ; Add extra information, will be rendered in popups
+//cc:signin#3;enable route trail of breadcrumbs,signin is the trail ID, #3 is order number of step, enable route is a title describing the step. A sequence of codecrumbs, use to describe some data flow (e.g. user login, or form submit, etc.).
+//cc:signin#1;firebase sign in;+2;do call to firebase with credentials trail of breadcrumbs,+2 is number of lines to highlight, separated by ; Use number of lines to highlight the code related to breadcrumb
+
+[twin.macro](https://github.com/ben-rogerson/twin.macro)

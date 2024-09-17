@@ -52,3 +52,13 @@ export const filterConnectionsByRelevance = (connections: any) => {
 }
 export const createMessage = (items: string | any[]) =>
   items?.length && items?.length < 2 ? `How is` : 'How are'
+
+export const formatSubject = (items: any[]) => {
+  const values = items.map((item: any) => {
+    const nonNullValues = Object.entries(item)
+      .filter(([key, value]) => value !== undefined && value !== null)
+      .map(([key, value]) => `${key}: ${value}`)
+    return nonNullValues.join(' - ')
+  })
+  return values.join(', ')
+}

@@ -1,4 +1,4 @@
-import { AnimatedTabs } from '@/components/ui/animated/animated-tabs'
+import { AnimatedTabs } from '@/components/animated/animated-tabs'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

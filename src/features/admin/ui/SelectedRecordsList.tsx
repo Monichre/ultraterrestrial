@@ -11,7 +11,7 @@ import {
   SortableList,
   type Item,
   SortableListItem,
-} from '@/components/ui/sortable-list'
+} from '@/components/animated/cult-ui/sortable-list'
 
 export function SelectedRecordsList({ selectedRecords }: any) {
   const [items, setItems] = useState<Item[]>(selectedRecords)
