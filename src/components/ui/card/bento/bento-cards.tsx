@@ -329,7 +329,7 @@ const items = [
         Understand the sentiment of your text with AI analysis.
       </span>
     ),
-    header: <BentoCardFour />,
+    header: <BentoCardImage children={undefined} />,
     className: 'md:col-span-2',
     icon: null,
   },

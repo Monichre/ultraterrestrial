@@ -1,10 +1,9 @@
 import type { KeyFiguresArray } from '@/app/(site)/explore/key-figures/page'
-import { TextEffect } from '@/components/animated'
+import { Particles, TextEffect } from '@/components/animated'
 import SwipeGrid, {
   type SwipeGridItem,
 } from '@/components/animated/swipe-grid/SwipeGrid'
 import { cn } from '@/utils'
-import { Particles } from '@tsparticles/engine'
 
 const formatKeyFigures = (keyFigures: KeyFiguresArray) => {
   // @ts-ignore
@@ -19,7 +18,7 @@ const formatKeyFigures = (keyFigures: KeyFiguresArray) => {
           : figure.photo
             ? figure.photo
             : '/atro-4.png' || '/atro-4.png',
-      content: <>{/* Add the JSX content for each swipe grid item */}</>.toString(),
+      // content: <>{/* Add the JSX content for each swipe grid item */}</>.toString(),
     }
   })
 }
@@ -29,7 +28,7 @@ export const KeyFiguresGrid = ({
 }: {
   keyFigures: KeyFiguresArray
 }) => {
-  const items:any  = formatKeyFigures(keyFigures)
+  const items: any = formatKeyFigures(keyFigures)
   return (
     <div className='key-figures relative'>
       <div

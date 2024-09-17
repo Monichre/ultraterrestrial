@@ -5,7 +5,11 @@ import { CalendarIcon, HomeIcon, MailIcon, PencilIcon } from 'lucide-react'
 import { cn } from '@/utils/cn'
 import { DockIcon } from 'lucide-react'
 import { Dock } from './Dock'
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/ui/tooltip'
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from '@/components/ui/tooltip'
 import { Separator } from '@/components/ui/separator'
 export type IconProps = React.HTMLAttributes<SVGElement>
 
@@ -95,13 +99,7 @@ export function DockDemo() {
           <DockIcon key={item.label}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    buttonVariants({ variant: 'ghost', size: 'icon' }),
-                    'size-12 rounded-full'
-                  )}
-                >
+                <Link href={item.href} className={cn('size-12 rounded-full')}>
                   <item.icon className='size-4' />
                 </Link>
               </TooltipTrigger>
@@ -132,9 +130,7 @@ export function DockDemo() {
         <Separator orientation='vertical' className='h-full py-2' />
         <DockIcon>
           <Tooltip>
-            <TooltipTrigger asChild>
-              <ModeToggle className='rounded-full' />
-            </TooltipTrigger>
+            <TooltipTrigger asChild></TooltipTrigger>
             <TooltipContent>
               <p>Theme</p>
             </TooltipContent>
