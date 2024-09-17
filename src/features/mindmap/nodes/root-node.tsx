@@ -2,13 +2,7 @@
 'use client'
 
 import { memo, useCallback, useEffect, useState } from 'react'
-import {
-  Handle,
-  Position,
-  type Node,
-  type NodeProps,
-  useUpdateNodeInternals,
-} from '@xyflow/react'
+import { Handle, Position, type Node, type NodeProps } from '@xyflow/react'
 
 import { Input } from '@/components/ui/input'
 
@@ -47,6 +41,7 @@ import { RootNodeCard } from '@/features/mindmap/cards/root-node-card/root-node-
 import { motion } from 'framer-motion'
 import { BlurFade } from '@/components/animated/blur-fade'
 import { BlurAppear } from '@/components/animated/animated-wrappers'
+import { useMindMap } from '@/providers'
 // import { useLayoutedElements } from '@/features/mindmap/graph'
 
 type NumberNode = Node<{ number: number }, 'number'>
@@ -66,8 +61,11 @@ export type RootNode = Node<{
 
 const RN = (node: RootNode) => {
   console.log('node: ', node)
+  const { useUpdateNodeInternals, useNodesData } = useMindMap()
   const updateNodeInternals = useUpdateNodeInternals()
   const [handles, setHandles]: any = useState([])
+  const nodeData = useNodesData(node.id)
+  console.log('nodeData: ', nodeData)
 
   useEffect(() => {
     if (node?.data?.handles && node.data?.handles.length) {
@@ -80,7 +78,7 @@ const RN = (node: RootNode) => {
     // if (node?.data?.concise) {
     //   updateNodeInternals(node.id)
     // }
-  }, [node, updateNodeInternals])
+  }, [node, updateNodeInternals, nodeData])
   const container = {
     hidden: { opacity: 0, height: 0, width: 0 },
     show: {

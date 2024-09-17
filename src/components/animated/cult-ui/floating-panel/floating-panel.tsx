@@ -125,7 +125,7 @@ export function FloatingPanelTrigger({
       ref={triggerRef}
       layoutId={`floating-panel-trigger-${uniqueId}`}
       className={cn(
-        'flex h-9 items-center border border-zinc-950/10 bg-white px-3 text-zinc-950 dark:border-zinc-50/10 dark:bg-black dark:text-zinc-50',
+        'flex h-9 items-center px-3 dark:bg-black dark:text-white',
         className
       )}
       style={{ borderRadius: 8 }}
@@ -456,13 +456,18 @@ export function FloatingPanelButton({
   onClick,
   className,
 }: FloatingPanelButtonProps) {
+  const { closeFloatingPanel } = useFloatingPanel()
+  const handleClick = () => {
+    onClick && onClick()
+    closeFloatingPanel()
+  }
   return (
     <motion.button
       className={cn(
-        'flex w-full items-center gap-2 rounded-md px-4 py-2 text-left text-sm hover:bg-zinc-100 dark:hover:bg-zinc-700',
+        'flex w-full items-center gap-2 rounded-md py-2 text-left text-sm my-2',
         className
       )}
-      onClick={onClick}
+      onClick={handleClick}
       whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}
       whileTap={{ scale: 0.98 }}
     >

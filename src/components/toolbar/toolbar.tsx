@@ -39,44 +39,69 @@ import {
 } from '@radix-ui/react-tooltip'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ImageIcon, Paintbrush, Plus, PlusIcon } from 'lucide-react'
-import { useEffect, useState, type JSX, type SVGProps } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type JSX,
+  type SVGProps,
+} from 'react'
 
 const QuickActionsFloatingPanel = () => {
+  const { onNodeClick } = useMindMap()
+  const handleLoadingRecords = useCallback(
+    async (rootNodeSim: any) => {
+      // const
+      await onNodeClick(rootNodeSim)
+    },
+    [onNodeClick]
+  )
+
   const actions = [
     {
       icon: <EventsIcon className='w-4 h-4' />,
       label: 'Add Events',
-      action: () => console.log('New File'),
+      action: async () => {
+        await handleLoadingRecords({ data: { type: 'events' } })
+      },
     },
     {
       icon: <TopicsIcon className='w-4 h-4' />,
       label: 'Add Topics',
-      action: () => console.log('Upload Image'),
+      action: async () => {
+        await handleLoadingRecords({ data: { type: 'topics' } })
+      },
     },
     {
       icon: <KeyFiguresIcon className='w-4 h-4' />,
       label: 'Add KeyFigures',
-      action: () => console.log('Edit Colors'),
+      action: async () => {
+        await handleLoadingRecords({ data: { type: 'personnel' } })
+      },
     },
     {
       icon: <TestimoniesIcon className='w-4 h-4' />,
       label: 'Add Testimonies',
-      action: () => console.log('Edit Colors'),
+      action: async () => {
+        await handleLoadingRecords({ data: { type: 'testimonies' } })
+      },
     },
     {
       icon: <OrganizationsIcon className='w-4 h-4' />,
       label: 'Add Organizations',
-      action: () => console.log('Edit Colors'),
+      action: async () => {
+        await handleLoadingRecords({ data: { type: 'organizations' } })
+      },
     },
   ]
 
   return (
     <FloatingPanelRoot>
       <FloatingPanelTrigger
-        title='Quick Actions'
-        className='flex items-center space-x-2 px-4 py-2 dark:bg-black text-white rounded-md hover:bg-accent/90 transition-colors'
+        title='Entity Menu'
+        className='flex items-center space-x-4 px-4 py-2 dark:bg-black text-white rounded-md transition-colors text-center'
       >
-        <Plus className='w-5 h-5' />
+        <Plus className='w-5 h-5 stroke-1' />
       </FloatingPanelTrigger>
       <FloatingPanelContent className='w-56 bg-black'>
         <FloatingPanelBody>
@@ -91,7 +116,7 @@ const QuickActionsFloatingPanel = () => {
               >
                 <FloatingPanelButton
                   onClick={action.action}
-                  className='w-full flex items-center space-x-2 px-2 py-1'
+                  className='w-full flex items-center space-x-1 space-y-2 px-2 py-1 bg-black text-white'
                 >
                   {action.icon}
                   <span>{action.label}</span>

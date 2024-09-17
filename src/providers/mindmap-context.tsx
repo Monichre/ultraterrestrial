@@ -32,6 +32,7 @@ import {
   MarkerType,
   useHandleConnections,
   Position,
+  useUpdateNodeInternals,
   useNodesData,
   getOutgoers,
   useInternalNode,
@@ -298,7 +299,7 @@ export const MindMapProvider = ({
           ? 'rootEdge'
           : 'siblingEdge'
       console.log('edgeType: ', edgeType)
-      const connectionLabel = `${rootNodeChildNode.data.name}::${sourceNode?.data.name}`
+      const connectionLabel = `${rootNodeChildNode.data.name}::${sourceNode?.data.id}`
       console.log('connectionLabel: ', connectionLabel)
       return {
         id,
@@ -801,6 +802,7 @@ export const MindMapProvider = ({
   const getRootNodeChildren = useCallback(
     async (type: any) => {
       const source: any = `${type}-root-node`
+      console.log('source: ', source)
       const nodeState = rootNodeState[source]
 
       const { lastIndex } = nodeState
@@ -812,6 +814,7 @@ export const MindMapProvider = ({
 
       // const { x, y, childNodeDirection } = ROOT_NODE_POSITIONS[type]
       const rootNode: any = getNode(source)
+      console.log('rootNode: ', rootNode)
       const groupId = `${type}-group-${lastIndex}`
 
       const { groupNode, groupNodeChildren }: any = createGroupNodeLayout({
@@ -841,6 +844,8 @@ export const MindMapProvider = ({
       const incomingHandles: any = incomingEdges.map(
         (edge) => edge.sourceHandle
       )
+      console.log('incomingHandles: ', incomingHandles)
+      // rootNode.
       rootNode.data = {
         ...rootNode.data,
 
@@ -851,6 +856,8 @@ export const MindMapProvider = ({
           ? [...rootNode?.data?.children, groupNode]
           : [groupNode],
       }
+
+      updateNodeData(rootNode.id, { ...rootNode.data })
 
       // const restOfNodes = getNodes().filter(
       //   (node) => !initialNodes.includes(node)
@@ -888,6 +895,7 @@ export const MindMapProvider = ({
       getNode,
       getNodes,
       graph,
+      updateNodeData,
       rootNodeState,
     ] // runForceSimulation
   )
@@ -1045,6 +1053,7 @@ export const MindMapProvider = ({
         onEdgesChange,
         onConnect,
         getNodes,
+        useUpdateNodeInternals,
         fitView,
         setNodes,
         getEdges,
@@ -1066,6 +1075,7 @@ export const MindMapProvider = ({
         toggleLocationVisualization,
         locationsToVisualize,
         closeLocationVisualization,
+
         findConnections,
         activeNode,
         updateActiveNode,
