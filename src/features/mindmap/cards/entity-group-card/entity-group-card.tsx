@@ -222,7 +222,7 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
       />
       <CardTop>
         <h3 className='text-sm italic'>
-          Events:{' '}
+          {groupNodeData?.id.split('-')[0]}:{' '}
           {years && (
             <span className=''>
               {' '}
