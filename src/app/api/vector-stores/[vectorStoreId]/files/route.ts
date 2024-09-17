@@ -1,5 +1,4 @@
-import OpenAI from 'openai'
-const openai = new OpenAI()
+import { openai } from '@/lib/openai/openai.client'
 
 // #TODO: Fix this
 
@@ -11,5 +10,5 @@ export async function POST(req) {
     }
   )
   console.log(myVectorStoreFile)
-  return Response.json({ record })
+  // return Response.json({ record })
 }

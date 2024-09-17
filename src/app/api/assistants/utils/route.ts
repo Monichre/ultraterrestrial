@@ -1,7 +1,4 @@
-import OpenAI from 'openai'
-
-const openai: any = new OpenAI()
-
+import { openai } from '@/lib/openai/openai.client'
 export const runtime = 'nodejs'
 
 // Create a new assistant
