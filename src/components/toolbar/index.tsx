@@ -1,3 +1,5 @@
-export * from './toolbar'
+export * from './mindmap-toolbar'
 export * from './ui-lab-toolbar'
 export * from './icon-toolbar'
+export * from './mini-toolbar'
+export * from './vercel-toolbar'

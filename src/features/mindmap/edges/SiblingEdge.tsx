@@ -9,11 +9,13 @@ import {
 import { NEONS } from '@/utils'
 import { useMindMap } from '@/providers'
 import { getEdgeParams } from '@/features/mindmap/graph'
+import { motion } from 'framer-motion'
 
 type SiblingEdgeProps = {
   data: { sourceType: string; targetType: string }
 }
 
+const MotionBaseEdge: any = motion(BaseEdge)
 const TwoWayArrows = ({ stroke, children }: any) => (
   <svg
     className='w-7 h-7'
@@ -107,6 +109,7 @@ export const SiblingEdge = ({
   })
   // @ts-ignore
   const [sourceLabel, targetLabel] = label?.split('::')
+  const [visible, setVisible] = React.useState(false)
   return (
     <>
       <BaseEdge
@@ -119,8 +122,10 @@ export const SiblingEdge = ({
       />
 
       <EdgeLabelRenderer>
-        <div
+        <motion.div
           className={`absolute nodrag nopan rounded-full p-4 w-[200px] h-[200px]`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: visible ? 1 : 0 }}
           style={{
             // backgroundImage: `url('data:image/svg+xml,%3Csvg xmlns%3D%22http%3A//www.w3.org/2000/svg%22 viewBox%3D%220 0 74 73%22 fill%3D%22none%22%3E%3Cpath d%3D%22M19.9069 10.1838C17.928 10.8822 16.2006 11.5097 14.6661 12.1855M14.6661 12.1855C10.4645 14.0361 7.70931 16.2487 5.1987 21.2697C3.51783 24.6312 2.53544 28.3007 1.6944 31.9536C-0.47777 41.3882 2.96668 48.3206 8.81366 55.5478C17.4313 66.1997 32.0549 74.7462 46.1869 71.9102C56.471 69.8465 65.8503 61.8258 70.2 52.5065C74.0539 44.2498 73.2839 36.0446 72.0244 27.2754C69.1235 7.07819 50.5864 -2.9112 32.0297 1.92921C26.679 3.32492 22.0101 5.76761 17.877 9.43193C16.8071 10.3805 15.7698 11.3221 14.6661 12.1855ZM14.6661 12.1855C14.0026 12.7047 13.3151 13.1955 12.5821 13.6428C8.04578 16.4106 6.57043 22.6692 4.82841 27.2122%22 stroke%3D%22currentColor%22 stroke-width%3D%220.8751%22 stroke-dasharray%3D%221.75 1.75%22/%3E%3C/svg%3E')`,
             // backgroundSize: 'contain',
@@ -179,7 +184,7 @@ export const SiblingEdge = ({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </EdgeLabelRenderer>
     </>
   )

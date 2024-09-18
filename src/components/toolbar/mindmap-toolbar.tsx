@@ -4,12 +4,6 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 import {
-  CultUIPopoverRoot,
-  CultUIPopoverTrigger,
-  CultUIPopoverContent,
-  CultUIPopoverHeader,
-  CultUIPopoverBody,
-  CultUIPopoverButton,
   FloatingPanelBody,
   FloatingPanelButton,
   FloatingPanelCloseButton,
@@ -56,7 +50,6 @@ const QuickActionsFloatingPanel = () => {
     },
     [onNodeClick]
   )
-
   const actions = [
     {
       icon: <EventsIcon className='w-4 h-4' />,
@@ -133,7 +126,7 @@ const QuickActionsFloatingPanel = () => {
   )
 }
 
-export function Toolbar() {
+export function MindMapToolbar() {
   const {
     showLocationVisualization,
     locationsToVisualize,
@@ -207,19 +200,6 @@ export function Toolbar() {
       </div>
 
       <div className='flex flex-col items-center '>
-        {/* <CultUIPopoverTrigger>
-            <Plus className='w-4 h-4' />,
-          </CultUIPopoverTrigger>
-          <CultUIPopoverContent className='w-48 h-48'>
-            <CultUIPopoverHeader>Quick Actions</CultUIPopoverHeader>
-            <CultUIPopoverBody>
-              {actions.map((action, index) => (
-                <CultUIPopoverButton key={index} onClick={action.action}>
-                  <span>{action.label}</span>
-                </CultUIPopoverButton>
-              ))}
-            </CultUIPopoverBody>
-          </CultUIPopoverContent> */}
         <QuickActionsFloatingPanel />
         <Button
           variant='ghost'

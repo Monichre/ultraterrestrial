@@ -1,3 +1,3 @@
-export * from './floating-panel/floating-panel'
-export * from './popover/popover'
+export * from './floating-panel'
+export * from './popover'
 export * from './sortable-list'
