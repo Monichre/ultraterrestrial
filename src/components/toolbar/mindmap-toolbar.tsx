@@ -42,13 +42,13 @@ import {
 } from 'react'
 
 const QuickActionsFloatingPanel = () => {
-  const { onNodeClick } = useMindMap()
+  const { addDataToMindMap } = useMindMap()
   const handleLoadingRecords = useCallback(
     async (rootNodeSim: any) => {
       // const
-      await onNodeClick(rootNodeSim)
+      await addDataToMindMap(rootNodeSim)
     },
-    [onNodeClick]
+    [addDataToMindMap]
   )
   const actions = [
     {

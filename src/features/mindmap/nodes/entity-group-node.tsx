@@ -52,12 +52,11 @@ interface Photo {
 }
 
 const GN = memo((node: any) => {
-  const { getIntersectingNodes, useNodesData, toggleLocationVisualization } =
-    useMindMap()
-
+  const { useUpdateNodeInternals, useNodesData } = useMindMap()
   const updateNodeInternals = useUpdateNodeInternals()
-  updateNodeInternals(node.id)
   const [handles, setHandles]: any = useState([])
+  const nodeData = useNodesData(node.id)
+  console.log('nodeData: ', nodeData)
 
   useEffect(() => {
     if (node?.data?.handles && node.data?.handles.length) {
@@ -66,7 +65,11 @@ const GN = memo((node: any) => {
       setHandles(data.handles)
       updateNodeInternals(node.id)
     }
-  }, [node, updateNodeInternals])
+
+    // if (node?.data?.concise) {
+    //   updateNodeInternals(node.id)
+    // }
+  }, [node, updateNodeInternals, nodeData])
 
   return (
     <BlurAppear className=''>

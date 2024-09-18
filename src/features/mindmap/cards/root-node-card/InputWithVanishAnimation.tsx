@@ -178,7 +178,7 @@ export function InputWithVanishAnimation({
     <form
       className={cn(
         'w-full relative max-w-xl mx-auto h-10 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200 backdrop-blur-xl transition-[box-shadow] duration-300 ease-in-out hover:shadow bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/10%)_0%,transparent_60%)] dark:hover:shadow-[0_0_20px_hsl(var(--primary)/10%)]',
-        value && 'bg-gray-50'
+        value && 'border-gray-200 dark:border-gray-700 border-2'
       )}
       onSubmit={handleSubmit}
     >
@@ -200,7 +200,7 @@ export function InputWithVanishAnimation({
         value={value}
         type='text'
         className={cn(
-          'w-full relative pl-4 text-sm sm:text-white z-50 border-none dark:text-black bg-transparent h-full rounded-full focus:outline-none focus:ring-0  pr-20',
+          'w-full relative text-sm sm:text-white z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-10 pr-20',
           animating && 'text-transparent dark:text-transparent'
         )}
       />

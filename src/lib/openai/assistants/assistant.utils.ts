@@ -62,3 +62,43 @@ export const formatSubject = (items: any[]) => {
   })
   return values.join(', ')
 }
+
+export const searchDatabaseFunction: any = {
+  type: 'function',
+  function: {
+    name: 'search_database',
+    description:
+      'Search a specified table in the Xata (Postgres) database using provided search terms.',
+    parameters: {
+      type: 'object',
+      properties: {
+        table: {
+          type: 'string',
+          description:
+            'The dynamic name of the table to search in the database.',
+        },
+        search_terms: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+          description: 'List of search terms to use in the query.',
+        },
+        search_fields: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+          description:
+            'Fields to search within the table. If omitted, all text fields are searched.',
+        },
+        limit: {
+          type: 'integer',
+          description: 'Maximum number of records to retrieve.',
+          default: 10,
+        },
+      },
+      required: ['table', 'search_terms'],
+    },
+  },
+}

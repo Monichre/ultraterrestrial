@@ -16,6 +16,7 @@ import { MindMapEntityCard } from '@/features/mindmap/cards/entity-card/entity-c
 import { GraphCard } from '@/features/mindmap/cards/graph-card/graph-card'
 import { GraphNodeCard } from '@/components/ui/card/graph-node-card'
 import { BlurAppear } from '@/components/animated/animated-wrappers'
+import { useMindMap } from '@/providers'
 
 interface Photo {
   id: string
@@ -29,27 +30,33 @@ interface Photo {
   url: string
 }
 
-const EN = memo((props: any) => {
-  console.log('props: ', props)
+const EN = memo((node: any) => {
+  console.log('node: ', node)
+  const { useUpdateNodeInternals, useNodesData } = useMindMap()
   const updateNodeInternals = useUpdateNodeInternals()
-  updateNodeInternals(props.id)
   const [handles, setHandles]: any = useState([])
+  const nodeData = useNodesData(node.id)
+  console.log('nodeData: ', nodeData)
 
   useEffect(() => {
-    if (props?.data?.handles && props.data?.handles.length) {
-      const { data } = props
+    if (node?.data?.handles && node.data?.handles.length) {
+      const { data } = node
 
       setHandles(data.handles)
-      updateNodeInternals(props.id)
+      updateNodeInternals(node.id)
     }
-  }, [props, updateNodeInternals])
+
+    // if (node?.data?.concise) {
+    //   updateNodeInternals(node.id)
+    // }
+  }, [node, updateNodeInternals, nodeData])
   // relative min-w-[300px] !w-[300px]
   {
     /* // <BlurAppear> */
   }
   return (
     <BlurAppear
-      className={`w-full border border-white/20 rounded-[calc(var(--radius)-2px)] !min-w-[450px] relative h-auto max-w-[400px] ${props.parentId}`}
+      className={`w-full border border-white/20 rounded-[calc(var(--radius)-2px)] !min-w-[450px] relative h-auto max-w-[400px] ${node.parentId}`}
     >
       {handles && handles?.length
         ? handles.map((id: string) => (
@@ -66,12 +73,12 @@ const EN = memo((props: any) => {
 
       <GraphCard
         card={{
-          id: props.id,
-          ...props.data,
+          id: node.id,
+          ...node.data,
         }}
-        key={props.id}
+        key={node.id}
       />
-      {/* <GraphNodeCard {...props} key={props.id} /> */}
+      {/* <GraphNodeCard {...node} key={node.id} /> */}
     </BlurAppear>
   )
 })

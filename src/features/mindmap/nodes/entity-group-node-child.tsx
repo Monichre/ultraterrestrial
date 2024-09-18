@@ -14,6 +14,7 @@ import {
 import { BlurAppear } from '@/components/animated'
 import { MiniCard } from '@/features/mindmap/cards/card-stack/mini-card'
 import { createPortal } from 'react-dom'
+import { useMindMap } from '@/providers'
 
 interface Photo {
   id: string
@@ -27,28 +28,33 @@ interface Photo {
   url: string
 }
 
-const ENC = memo((props: any) => {
-  console.log('props: ', props)
+const ENC = memo((node: any) => {
+  const { useUpdateNodeInternals, useNodesData } = useMindMap()
   const updateNodeInternals = useUpdateNodeInternals()
-  updateNodeInternals(props.id)
   const [handles, setHandles]: any = useState([])
+  const nodeData = useNodesData(node.id)
+  console.log('nodeData: ', nodeData)
 
   useEffect(() => {
-    if (props?.data?.handles && props.data?.handles.length) {
-      const { data } = props
+    if (node?.data?.handles && node.data?.handles.length) {
+      const { data } = node
 
       setHandles(data.handles)
-      updateNodeInternals(props.id)
+      updateNodeInternals(node.id)
     }
-  }, [props, updateNodeInternals])
+
+    // if (node?.data?.concise) {
+    //   updateNodeInternals(node.id)
+    // }
+  }, [node, updateNodeInternals, nodeData])
   const domNode: any = document.querySelector(
-    `.react-flow__node[data-id="${props.parentId}"]`
+    `.react-flow__node[data-id="${node.parentId}"]`
   )
   console.log('domNode: ', domNode)
 
   const markUp = (
     <BlurAppear
-      className={`rounded-[calc(var(--radius)-2px)] relative h-auto ${props.parentId} ${props.className} w-full`}
+      className={`rounded-[calc(var(--radius)-2px)] relative h-auto ${node.parentId} ${node.className} w-full`}
     >
       {handles && handles?.length
         ? handles.map((id: string) => (
@@ -65,10 +71,10 @@ const ENC = memo((props: any) => {
 
       <MiniCard
         card={{
-          id: props.id,
-          ...props.data,
+          id: node.id,
+          ...node.data,
         }}
-        key={props.id}
+        key={node.id}
       />
     </BlurAppear>
   )

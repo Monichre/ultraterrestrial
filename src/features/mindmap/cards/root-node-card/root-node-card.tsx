@@ -45,7 +45,7 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
     renderRootNodeConciseLayout,
 
     toggleLocationVisualization,
-    onNodeClick,
+    addDataToMindMap,
   } = useMindMap()
 
   const nodeState: any = useNodesData(nodeData?.id)
@@ -84,8 +84,8 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
   }
 
   const handleLoadingRecords = useCallback(async () => {
-    await onNodeClick(nodeData)
-  }, [nodeData, onNodeClick])
+    await addDataToMindMap(nodeData)
+  }, [nodeData, addDataToMindMap])
 
   const interim = (label || type).toLowerCase()
   const title =

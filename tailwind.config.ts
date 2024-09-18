@@ -111,8 +111,18 @@ const config = {
         'border-rotate': 'rotate 3s linear infinite both',
         'border-width': 'border-width 3s infinite alternate',
         'zoom-in': 'zoom-in',
+        moveUp: 'moveUp 1.4s ease forwards',
+        appear: 'appear 1s 1s forwards',
       },
       keyframes: {
+        moveUp: {
+          '0%': { transform: 'translateY(5%)', opacity: '0' },
+          '100%': { transform: 'translateY(0%)', opacity: '1' },
+        },
+        appear: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
         'zoom-in': {
           '0%': {
             transform: 'translateZ(-1000px)',

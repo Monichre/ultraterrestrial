@@ -4,8 +4,8 @@
 import { useRef, useEffect, useCallback } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { useTextSplitter } from './useTextSplitter.js'
-import { SplitText } from 'gsap/SplitText'
+import { useTextSplitter } from './useTextSplitter'
+import SplitText from 'gsap'
 gsap.registerPlugin(SplitText)
 const lettersAndSymbols = [
   'a',

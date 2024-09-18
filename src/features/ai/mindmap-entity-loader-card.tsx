@@ -29,7 +29,7 @@ import { RootNodeToolbar } from '@/features/mindmap/cards/root-node-card/RootNod
 import { InputWithVanishAnimation } from '@/features/mindmap/cards/root-node-card/InputWithVanishAnimation'
 
 export const MindMapEntityLoaderCard = memo(({ type }: any) => {
-  const { addChildNodesFromSearch, onNodeClick } = useMindMap()
+  const { addChildNodesFromSearch, addDataToMindMap } = useMindMap()
 
   const [searchTerm, setSearchTerm]: any = useState('')
 
@@ -55,8 +55,8 @@ export const MindMapEntityLoaderCard = memo(({ type }: any) => {
   }, [searchTerm, type, addChildNodesFromSearch])
 
   const handleLoadingRecords = useCallback(async () => {
-    await onNodeClick({ data: { type } })
-  }, [type, onNodeClick])
+    await addDataToMindMap({ data: { type } })
+  }, [type, addDataToMindMap])
 
   const interim = type.toLowerCase()
   const title =

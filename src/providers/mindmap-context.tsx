@@ -7,6 +7,7 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
+  useRef,
 } from 'react'
 import { use3DGraph, type UseGraphProps } from '@/hooks/use3dGraph'
 
@@ -27,6 +28,7 @@ import {
   type OnEdgesChange,
   type OnNodesChange,
   useOnViewportChange,
+  useNodes,
   type Viewport,
   useStoreApi,
   MarkerType,
@@ -38,7 +40,7 @@ import {
   useInternalNode,
 } from '@xyflow/react'
 
-import { nextTick, wait } from '@/utils/functions'
+import { capitalize, nextTick, wait } from '@/utils/functions'
 import { DOMAIN_MODEL_COLORS } from '@/utils'
 import {
   CHILD_DIMENSIONS,
@@ -49,6 +51,8 @@ import {
   ROOT_NODE_POSITIONS,
 } from '@/features/mindmap/config/index.config'
 import { useStateOfDisclosure } from '@/providers/state-of-disclosure-provider'
+import { forceSimulation } from 'd3-force'
+import { forceLink, forceManyBody, forceCenter, forceCollide } from 'd3-force'
 
 // import { simulation } from '@/features/mindmap/utils/force-directed'
 
@@ -99,6 +103,8 @@ export const MindMapProvider = ({
   const [nodes, setNodes]: any = useState<Node[]>([])
   const [edges, setEdges]: any = useState<Edge[]>([])
   const [graph, setGraph]: any = useState({})
+  // const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
+  // const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
 
   const [rootNodeState, setRootNodeState]: any = useState({
     'events-root-node': {
@@ -111,6 +117,9 @@ export const MindMapProvider = ({
       lastIndex: 0,
     },
     'topics-root-node': {
+      lastIndex: 0,
+    },
+    'organizations-root-node': {
       lastIndex: 0,
     },
   })
@@ -178,14 +187,18 @@ export const MindMapProvider = ({
     ])
   }, [])
 
-  const updateChildNodeBatchIndex = (type: RootNodeKey) => {
+  const updateChildNodeBatchIndex = useCallback((type: RootNodeKey) => {
+    // if (rootNodeState[type]) {
+    //   const { lastIndex } = rootNodeState[type]
+    //   const newIndex = lastIndex + childNodeBatchSize
+    // }
     setRootNodeState((rootNodeState: any) => ({
       ...rootNodeState,
       [type]: {
         lastIndex: rootNodeState[type].lastIndex + childNodeBatchSize,
       },
     }))
-  }
+  }, [])
 
   const detectNodeOverlap = (node: { id: string }) => {
     const source: any = getNode(node.id)
@@ -269,7 +282,7 @@ export const MindMapProvider = ({
       markerEnd: 'custom-marker',
       style: {
         stroke: '#fff',
-        zIndex: 20,
+        // zIndex: 20,
       },
 
       // type: 'entityEdge',
@@ -278,42 +291,53 @@ export const MindMapProvider = ({
   }, [])
 
   const createRootNodeEdge = useCallback(
-    (rootNodeChildNode: any, source: string) => {
+    (rootNodeChildNode: any, source: any) => {
+      console.log('rootNodeChildNode: ', rootNodeChildNode)
       console.log('source: ', source)
-      const sourceNode = getNode(source)
+      const isObject = typeof source === 'object'
+      console.log('isObject: ', isObject)
+      const isString = typeof source === 'string'
+      console.log('isString: ', isString)
+      const sourceNode: any = isString
+        ? getNode(source)
+        : isObject
+          ? source
+          : getNode(source.id)
+      const sourceId = sourceNode.id
       console.log('sourceNode: ', sourceNode)
+      // console.log('sourceNode: ', sourceNode)
 
       const { id: target, data } = rootNodeChildNode
-      console.log('target: ', target)
-      const firstNodeType = rootNodeChildNode?.data?.type
-      const sourceType: any = sourceNode?.data?.type || source.split('-')[0]
-      console.log('sourceType: ', sourceType)
+      // console.log('target: ', target)
+      // const firstNodeType = rootNodeChildNode?.data?.type
+      // const sourceType: any = sourceNode?.data?.type || source.split('-')[0]
+      // console.log('sourceType: ', sourceType)
 
-      const id = `${source}:${target}`
-      console.log('id: ', id)
-      console.log('id: ', id)
-      const sourceIsRootNode = source.includes('root')
+      const id = `${sourceId}:${target}`
+      // console.log('id: ', id)
+      // console.log('id: ', id)
+      // const sourceIsRootNode = source.includes('root')
 
-      const edgeType =
-        sourceIsRootNode || firstNodeType.includes('root')
-          ? 'rootEdge'
-          : 'siblingEdge'
-      console.log('edgeType: ', edgeType)
-      const connectionLabel = `${rootNodeChildNode.data.name}::${sourceNode?.data.id}`
-      console.log('connectionLabel: ', connectionLabel)
+      const edgeType = 'siblingEdge'
+      // sourceIsRootNode || firstNodeType.includes('root')
+      //   ? 'rootEdge'
+      //   : 'siblingEdge'
+      // console.log('edgeType: ', edgeType)
+      const connectionLabel = `${rootNodeChildNode.data?.label || rootNodeChildNode.data?.name}::${source?.data?.name || source?.data?.label}`
+
       return {
         id,
-        source,
+        source: sourceId,
         target,
         animated: true,
 
         type: edgeType,
         markerEnd: 'custom-marker',
         style: {
-          stroke: DOMAIN_MODEL_COLORS[sourceType],
-          zIndex: 1,
+          stroke: DOMAIN_MODEL_COLORS[sourceNode?.data?.type],
+          // zIndex: 2,
         },
-        label: sourceIsRootNode ? sourceType : connectionLabel,
+        label: connectionLabel || null,
         // type: 'entityEdge',
         sourceHandle: `handle:${id}`,
       }
@@ -400,72 +424,38 @@ export const MindMapProvider = ({
     return Array.from(unique.values())
   }
 
-  const createGroupNodeLayout = useCallback(
-    ({ groupId, rootNode, childNodes }: any) => {
-      const initialConfig = {
-        id: groupId,
-        type: 'entityGroupNode',
-        initialHeight: GROUP_NODE_DIMENSIONS.height,
-        initialWidth: GROUP_NODE_DIMENSIONS.width,
-        zIndex: 1,
-        style: {
-          width: `${GROUP_NODE_DIMENSIONS.width}px`,
-          height: `${GROUP_NODE_DIMENSIONS.height}px`,
-          // height: 'auto',
-          // width: 'auto',
-        },
-        data: {
-          label: groupId,
-          name: groupId,
-          type: 'group',
-        },
-      }
-      const [{ position }]: any = assignPositionsToChildNodes(rootNode, [
-        initialConfig,
-      ])
+  const assignNodePositions = useCallback(
+    (childNodes: any[]) => {
+      // Get the bounds of all existing nodes
+      const allNodes = getNodes()
+      const existingBounds = getNodesBounds(allNodes)
+      console.log('existingBounds:', existingBounds)
 
-      const groupNode: any = {
-        ...initialConfig,
-        position,
-      }
-      const childNodeWidth = 366.27 // As per the dimensions you provided
-      const childNodeHeight = 230.23
-      const parentWidth = GROUP_NODE_DIMENSIONS.width
-      const parentHeight = GROUP_NODE_DIMENSIONS.height
-      // Horizontal centering (same for all child nodes)
-      const centerX = (parentWidth - childNodeWidth) / 2
+      // Decide starting position based on existing bounds
+      const startX = existingBounds.x + existingBounds.width + PADDING
+      const startY = existingBounds.y
 
-      // Vertical stacking with spacing (let's assume 20px of spacing between child nodes)
-      const verticalSpacing = 20
-      const totalHeight =
-        childNodeHeight * childNodes.length +
-        verticalSpacing * (childNodes.length - 1)
-      const startY = (parentHeight - totalHeight) / 2
+      let currentX = startX
+      let currentY = startY
 
-      const groupNodeChildren = childNodes.map(
-        (childNode: any, index: any) => ({
+      const newKids = childNodes.map((childNode: any) => {
+        const positionedNode = {
           ...childNode,
-          type: 'entityGroupNodeChild',
-          position: {
-            x: centerX, // All child nodes are horizontally centered
-            y: startY + index * (childNodeHeight + verticalSpacing), // Vertical stacking with spacing
-          },
-          style: {
-            // transform: `rotateZ(${childNodes.length - index - 1}deg)`,
-          },
-          zIndex: 2,
-          hidden: false,
-          parentId: groupId,
-          className: groupId,
-          extent: 'parent',
-        })
-      )
+          position: { x: currentX, y: currentY },
+        }
 
-      groupNode.data.children = [...groupNodeChildren]
-
-      return { groupNode, groupNodeChildren }
+        // Update currentX and currentY for the next node
+        currentX += CHILD_DIMENSIONS.width + PADDING
+        if (currentX + CHILD_DIMENSIONS.width > startX + MAX_WIDTH) {
+          // Adjust MAX_WIDTH as needed
+          currentX = startX
+          currentY += CHILD_DIMENSIONS.height + PADDING
+        }
+        return positionedNode
+      })
+      return newKids
     },
-    [assignPositionsToChildNodes]
+    [getNodes]
   )
 
   const createSearchResultsLayout = useCallback(
@@ -524,115 +514,228 @@ export const MindMapProvider = ({
     }
   }
 
+  // const addConnectionNodesFromSearch = useCallback(
+  //   ({ source, searchResults }: any) => {
+  //     const siblingSourceNode: any = getNode(source.id)
+
+  //     // !#TODO: Need to add logic to check if some connected records already have nodes on the graph and then add the new nodes to the existing nodes
+
+  //     const incomingNodes: any = []
+  //     const incomingRootEdges: any = []
+  //     const incomingSiblingEdges: any = []
+  //     const rootNodeIds: any = []
+  //     const rootNodeMap: any = {}
+
+  //     searchResults.forEach((result: any, i: any) => {
+  //       const { type } = result
+  //       const routeSource: any = `${type}-root-node`
+  //       const rootNode: any = getNode(routeSource)
+  //       // Should not be position search results relative to their entity type but instead
+  //       // to the source node that triggered the search
+  //       // const { x, y, childNodeDirection } = ROOT_NODE_POSITIONS[type]
+  //       // const parentNode = {
+  //       //   id: routeSource,
+  //       //   position: rootNode.position || {
+  //       //     x,
+  //       //     y,
+  //       //   },
+  //       //   childNodeDirection,
+  //       // }
+  //       let node = graph[type].nodes.find(
+  //         (node: { id: any }) => node?.id === result.id
+  //       )
+
+  //       const degrees = i * (360 / 8)
+  //       const radians = degrees * (Math.PI / 180)
+  //       const x = 250 * Math.cos(radians) + siblingSourceNode.position.x
+  //       const y = 250 * Math.sin(radians) + siblingSourceNode.position.y
+  //       const positionedNode = {
+  //         ...node,
+  //         position: {
+  //           x,
+  //           y,
+  //         },
+  //       }
+  //       // const [positionedNode] = assignPositionsToChildNodes(parentNode, [node])
+
+  //       const [siblingEdge] = createRootNodeEdges(
+  //         [positionedNode],
+  //         siblingSourceNode.id
+  //       )
+
+  //       // const [rootEdge] = createRootNodeEdges([positionedNode], rootNode.id)
+
+  //       incomingNodes.push(positionedNode)
+  //       incomingSiblingEdges.push(siblingEdge)
+  //       // incomingRootEdges.push(rootEdge)
+  //       // rootNodeIds.push(rootNode.id)
+  //       // rootNodeMap[rootNode.id] = rootNode
+  //     })
+
+  //     const incomingSiblingHandles: any = incomingSiblingEdges.map(
+  //       (edge: any) => edge.sourceHandle
+  //     )
+  //     // const incomingRootHandles: any = incomingRootEdges.map(
+  //     //   (edge: any) => edge.sourceHandle
+  //     // )
+
+  //     // We then need to replace/mutate the corresponding root node is the current state of the graph in order to have Reactflow update the node accordingly
+  //     // const initialNodes = [
+  //     //   ...getNodes().filter(
+  //     //     (node: any) =>
+  //     //       node.id !== siblingSourceNode.id && !rootNodeIds.includes(node.id)
+  //     //   ),
+  //     //   {
+  //     //     ...siblingSourceNode,
+  //     //     data: {
+  //     //       ...siblingSourceNode.data,
+  //     //       handles: siblingSourceNode.data?.handles?.length
+  //     //         ? [...siblingSourceNode.data.handles, ...incomingSiblingHandles]
+  //     //         : incomingSiblingHandles,
+  //     //     },
+  //     //   },
+  //     // ]
+  // const existingNodes = [
+  //   ...getNodes().filter((node: any) => node.id !== siblingSourceNode.id),
+  //   {
+  //     ...siblingSourceNode,
+  //     data: {
+  //       ...siblingSourceNode.data,
+  //       handles: siblingSourceNode.data?.handles?.length
+  //         ? [...siblingSourceNode.data.handles, ...incomingSiblingHandles]
+  //         : incomingSiblingHandles,
+  //     },
+  //   },
+  // ]
+
+  //     // rootNodeIds.forEach((id: any) => {
+  //     //   const rootNodeTemp = {
+  //     //     ...rootNodeMap[id],
+  //     //     data: {
+  //     //       ...rootNodeMap[id].data,
+  //     //       handles: rootNodeMap[id].data?.handles?.length
+  //     //         ? [...rootNodeMap[id].data.handles, ...incomingRootHandles]
+  //     //         : incomingRootHandles,
+  //     //     },
+  //     //   }
+  //     //   initialNodes.push(rootNodeTemp)
+  //     // })
+
+  //     // So now we set the root nodes with the relevant root node having updated handles, then set the rest of the existing nodes, and then the newest positioned child nodes
+  // setNodes((nds: any) => [...existingNodes, ...incomingNodes])
+
+  // setEdges((edges: any) => [
+  //   ...edges,
+  //   // ...incomingRootEdges,
+  //   ...incomingSiblingEdges,
+  // ])
+
+  //     return {
+  //       siblingNodes: incomingNodes,
+  //       edges: incomingSiblingEdges,
+  //     }
+  //   },
+  //   [createRootNodeEdges, getNode, getNodes, graph] // runForceSimulation
+  // )
+
   const addConnectionNodesFromSearch = useCallback(
     ({ source, searchResults }: any) => {
       const siblingSourceNode: any = getNode(source.id)
 
-      // !#TODO: Need to add logic to check if some connected records already have nodes on the graph and then add the new nodes to the existing nodes
-
       const incomingNodes: any = []
-      const incomingRootEdges: any = []
-      const incomingSiblingEdges: any = []
-      const rootNodeIds: any = []
-      const rootNodeMap: any = {}
+      const incomingEdges: any = []
+      const existingNodes = [
+        ...getNodes().filter((node: any) => node.id !== siblingSourceNode.id),
+      ]
+      const nodeRadius = 50 // Radius of the node (adjust as needed)
+      const circleRadius = 250 // Radius of the circle around the source node
 
-      searchResults.forEach((result: any, i: any) => {
+      searchResults.forEach((result: { id?: any; type?: any }, i: number) => {
         const { type } = result
-        const routeSource: any = `${type}-root-node`
-        const rootNode: any = getNode(routeSource)
-        // Should not be position search results relative to their entity type but instead
-        // to the source node that triggered the search
-        // const { x, y, childNodeDirection } = ROOT_NODE_POSITIONS[type]
-        // const parentNode = {
-        //   id: routeSource,
-        //   position: rootNode.position || {
-        //     x,
-        //     y,
-        //   },
-        //   childNodeDirection,
-        // }
+
         let node = graph[type].nodes.find(
           (node: { id: any }) => node?.id === result.id
         )
 
-        const degrees = i * (360 / 8)
-        const radians = degrees * (Math.PI / 180)
-        const x = 250 * Math.cos(radians) + siblingSourceNode.position.x
-        const y = 250 * Math.sin(radians) + siblingSourceNode.position.y
+        // Calculate initial angle
+        const totalNodes = searchResults.length
+        const angleIncrement = (2 * Math.PI) / totalNodes
+        let angle = i * angleIncrement
+
+        // Initialize position
+        let x: number = 0
+        let y: number = 0 // Initialize y with a default value
+        let positionFound = false
+        let attempts = 0
+        const maxAttempts = 10 // To prevent infinite loops
+
+        while (!positionFound && attempts < maxAttempts) {
+          // Calculate position around the circle
+          x = circleRadius * Math.cos(angle) + siblingSourceNode.position.x
+          y = circleRadius * Math.sin(angle) + siblingSourceNode.position.y
+
+          // Check for overlap
+          const overlaps = existingNodes.some((existingNode) => {
+            const dx = existingNode.position.x - x
+            const dy = existingNode.position.y - y
+            const distance = Math.sqrt(dx * dx + dy * dy)
+            return distance < nodeRadius * 2 // Adjust if nodes are larger
+          })
+
+          if (!overlaps) {
+            positionFound = true
+          } else {
+            // Adjust angle to try a new position
+            angle += angleIncrement / 2
+            attempts++
+          }
+        }
+
         const positionedNode = {
           ...node,
           position: {
-            x,
-            y,
+            x: x,
+            y: y,
           },
         }
-        // const [positionedNode] = assignPositionsToChildNodes(parentNode, [node])
 
+        // const edge = createRootNodeEdge(siblingSourceNode, positionedNode)
         const [siblingEdge] = createRootNodeEdges(
           [positionedNode],
           siblingSourceNode.id
         )
-
-        const [rootEdge] = createRootNodeEdges([positionedNode], rootNode.id)
+        console.log('siblingEdge: ', siblingEdge)
 
         incomingNodes.push(positionedNode)
-        incomingSiblingEdges.push(siblingEdge)
-        incomingRootEdges.push(rootEdge)
-        rootNodeIds.push(rootNode.id)
-        rootNodeMap[rootNode.id] = rootNode
+        incomingEdges.push(siblingEdge)
+
+        // Add the new node to existingNodes for future overlap checks
       })
 
-      const incomingSiblingHandles: any = incomingSiblingEdges.map(
-        (edge: any) => edge.sourceHandle
-      )
-      const incomingRootHandles: any = incomingRootEdges.map(
+      const incomingSiblingHandles: any = incomingEdges.map(
         (edge: any) => edge.sourceHandle
       )
 
-      // We then need to replace/mutate the corresponding root node is the current state of the graph in order to have Reactflow update the node accordingly
-      const initialNodes = [
-        ...getNodes().filter(
-          (node: any) =>
-            node.id !== siblingSourceNode.id && !rootNodeIds.includes(node.id)
-        ),
-        {
-          ...siblingSourceNode,
-          data: {
-            ...siblingSourceNode.data,
-            handles: siblingSourceNode.data?.handles?.length
-              ? [...siblingSourceNode.data.handles, ...incomingSiblingHandles]
-              : incomingSiblingHandles,
-          },
+      existingNodes.push({
+        ...siblingSourceNode,
+        data: {
+          ...siblingSourceNode.data,
+          handles: siblingSourceNode.data?.handles?.length
+            ? [...siblingSourceNode.data.handles, ...incomingSiblingHandles]
+            : incomingSiblingHandles,
         },
-      ]
-      rootNodeIds.forEach((id: any) => {
-        const rootNodeTemp = {
-          ...rootNodeMap[id],
-          data: {
-            ...rootNodeMap[id].data,
-            handles: rootNodeMap[id].data?.handles?.length
-              ? [...rootNodeMap[id].data.handles, ...incomingRootHandles]
-              : incomingRootHandles,
-          },
-        }
-        initialNodes.push(rootNodeTemp)
       })
 
-      // So now we set the root nodes with the relevant root node having updated handles, then set the rest of the existing nodes, and then the newest positioned child nodes
-      setNodes((nds: any) => [...initialNodes, ...incomingNodes])
+      setNodes((nds: any) => [...existingNodes, ...incomingNodes])
 
-      setEdges((edges: any) => [
-        ...edges,
-        ...incomingRootEdges,
-        ...incomingSiblingEdges,
-      ])
+      setEdges((edges: any) => [...edges, ...incomingEdges])
 
       return {
         siblingNodes: incomingNodes,
-        edges: incomingSiblingEdges,
+        edges: incomingEdges,
       }
     },
-    [createRootNodeEdges, getNode, getNodes, graph] // runForceSimulation
+    [createRootNodeEdges, getNode, getNodes, graph]
   )
 
   const animateRootNodeConcision = useMemo(
@@ -712,7 +815,7 @@ export const MindMapProvider = ({
       const positionedChildlessNodes = childlessRootNodes.map(
         (childlessRootNode, i) => ({
           ...childlessRootNode,
-          zIndex: i + 1,
+          // zIndex: i + 1,
         })
       )
 
@@ -728,6 +831,146 @@ export const MindMapProvider = ({
       }
     },
     [animateRootNodeConcision]
+  )
+
+  const createGroupNodeLayoutWithoutRootNode = useCallback(
+    ({ groupId, childNodes }: any) => {
+      const initialConfig = {
+        id: groupId,
+        type: 'entityGroupNode',
+        initialHeight: GROUP_NODE_DIMENSIONS.height,
+        initialWidth: GROUP_NODE_DIMENSIONS.width,
+        // zIndex: 1,
+        style: {
+          width: `${GROUP_NODE_DIMENSIONS.width}px`,
+          height: `${GROUP_NODE_DIMENSIONS.height}px`,
+        },
+        data: {
+          label: groupId,
+          name: groupId,
+          type: 'group',
+        },
+      }
+
+      const allNodes = getNodes()
+      const bounds = getNodesBounds(allNodes)
+
+      // Decide position of the group node based on existing bounds
+      const groupNodePosition = {
+        x: bounds.x + bounds.width + PADDING,
+        y: bounds.y,
+      }
+
+      const groupNode: any = {
+        ...initialConfig,
+        position: groupNodePosition,
+      }
+
+      // Position the child nodes within the group node
+      const childNodeWidth = 366.27 // As per the dimensions you provided
+      const childNodeHeight = 230.23
+      const parentWidth = GROUP_NODE_DIMENSIONS.width
+      const parentHeight = GROUP_NODE_DIMENSIONS.height
+      const centerX = (parentWidth - childNodeWidth) / 2
+      const verticalSpacing = 20
+      const totalHeight =
+        childNodeHeight * childNodes.length +
+        verticalSpacing * (childNodes.length - 1)
+      const startY = (parentHeight - totalHeight) / 2
+
+      const type = capitalize(groupId.split('-')[0])
+      const groupNodeChildren = childNodes.map(
+        (childNode: any, index: number) => ({
+          ...childNode,
+          type: `entityGroupNodeChild${type}`,
+          position: {
+            x: centerX, // Horizontally centered within the group node
+            y: startY + index * (childNodeHeight + verticalSpacing),
+          },
+          // zIndex: 2,
+          hidden: false,
+          parentId: groupId,
+          className: groupId,
+          extent: 'parent',
+        })
+      )
+
+      groupNode.data.children = [...groupNodeChildren]
+
+      return { groupNode, groupNodeChildren }
+    },
+    [getNodes]
+  )
+  const createGroupNodeLayout = useCallback(
+    ({ groupId, rootNode, childNodes }: any) => {
+      const initialConfig = {
+        id: groupId,
+        type: 'entityGroupNode',
+        initialHeight: GROUP_NODE_DIMENSIONS.height,
+        initialWidth: GROUP_NODE_DIMENSIONS.width,
+        // zIndex: 1,
+        style: {
+          width: `${GROUP_NODE_DIMENSIONS.width}px`,
+          height: `${GROUP_NODE_DIMENSIONS.height}px`,
+          // height: 'auto',
+          // width: 'auto',
+        },
+        data: {
+          label: groupId,
+          name: groupId,
+          type: 'group',
+        },
+      }
+      const allNodes = getNodes()
+      const bounds = getNodesBounds(allNodes)
+      console.log('bounds: ', bounds)
+
+      const [{ position }]: any = assignPositionsToChildNodes(rootNode, [
+        initialConfig,
+      ])
+
+      const groupNode: any = {
+        ...initialConfig,
+        position,
+      }
+      const childNodeWidth = 366.27 // As per the dimensions you provided
+      const childNodeHeight = 230.23
+      const parentWidth = GROUP_NODE_DIMENSIONS.width
+      const parentHeight = GROUP_NODE_DIMENSIONS.height
+      // Horizontal centering (same for all child nodes)
+      const centerX = (parentWidth - childNodeWidth) / 2
+
+      // Vertical stacking with spacing (let's assume 20px of spacing between child nodes)
+      const verticalSpacing = 20
+      const totalHeight =
+        childNodeHeight * childNodes.length +
+        verticalSpacing * (childNodes.length - 1)
+      const startY = (parentHeight - totalHeight) / 2
+
+      const groupNodeChildren = childNodes.map(
+        (childNode: any, index: any) => ({
+          ...childNode,
+          type: 'entityGroupNodeChild',
+          position: {
+            x: centerX, // All child nodes are horizontally centered
+            y: startY + index * (childNodeHeight + verticalSpacing), // Vertical stacking with spacing
+          },
+          style: {
+            // transform: `rotateZ(${childNodes.length - index - 1}deg)`,
+          },
+          // zIndex: 2,
+          hidden: false,
+          parentId: groupId,
+          className: groupId,
+          extent: 'parent',
+        })
+      )
+
+      groupNode.data.children = [...groupNodeChildren]
+
+      return { groupNode, groupNodeChildren }
+    },
+    [assignPositionsToChildNodes, getNodes]
   )
 
   // NOTE: This runs when a user searches from within a root node card
@@ -817,13 +1060,16 @@ export const MindMapProvider = ({
       console.log('rootNode: ', rootNode)
       const groupId = `${type}-group-${lastIndex}`
 
-      const { groupNode, groupNodeChildren }: any = createGroupNodeLayout({
-        groupId,
-        rootNode,
-        childNodes,
-      })
-      console.log('groupNodeChildren: ', groupNodeChildren)
-      console.log('groupNode: ', groupNode)
+      // const { groupNode, groupNodeChildren }: any = createGroupNodeLayout({
+      //   groupId,
+      //   rootNode,
+      //   childNodes,
+      // })
+      const { groupNode, groupNodeChildren }: any =
+        createGroupNodeLayoutWithoutRootNode({
+          groupId,
+          childNodes,
+        })
 
       const incomingEdges = createRootNodeEdges([groupNode], source)
 
@@ -890,17 +1136,68 @@ export const MindMapProvider = ({
       }
     },
     [
-      createGroupNodeLayout,
-      createRootNodeEdges,
-      getNode,
-      getNodes,
-      graph,
-      updateNodeData,
       rootNodeState,
+      graph,
+      getNode,
+      createGroupNodeLayoutWithoutRootNode,
+      createRootNodeEdges,
+      updateNodeData,
+      getNodes,
+      updateChildNodeBatchIndex,
     ] // runForceSimulation
   )
 
-  const onNodeClick: any = useCallback(
+  const renderDataAsNodes = useCallback(
+    (type: any) => {
+      // Retrieve the lastIndex for the given type from your state management
+      const source: any = `${type}-root-node`
+      console.log('source: ', source)
+
+      const nodeState = rootNodeState[source]
+      console.log('nodeState: ', nodeState)
+      const { lastIndex } = nodeState
+
+      // Fetch the next batch of child nodes
+      const childNodes = graph[type].nodes.slice(
+        lastIndex,
+        lastIndex + childNodeBatchSize
+      )
+
+      const groupId = `${type}-group-${lastIndex}`
+
+      // Create the group node layout without referencing a root node
+      const { groupNode, groupNodeChildren } =
+        createGroupNodeLayoutWithoutRootNode({
+          groupId,
+          childNodes,
+        })
+
+      console.log('groupNodeChildren:', groupNodeChildren)
+      console.log('groupNode:', groupNode)
+
+      // Add the group node and its children to the graph
+      setNodes((nds: any) => [...nds, groupNode, ...groupNodeChildren])
+
+      // Update the lastIndex for the given type
+
+      updateChildNodeBatchIndex(source) // Ensure this function accepts 'type' as an argument
+
+      return {
+        childNodes: {
+          groupNode,
+          groupNodeChildren,
+        },
+      }
+    },
+    [
+      rootNodeState,
+      graph,
+      createGroupNodeLayoutWithoutRootNode,
+      updateChildNodeBatchIndex,
+    ]
+  )
+
+  const addDataToMindMap: any = useCallback(
     (node: any) => {
       // const { target } = event
       console.log('node: ', node)
@@ -909,13 +1206,16 @@ export const MindMapProvider = ({
       } = node
       console.log('type: ', type)
 
+      // const {
+      //   childNodes: { groupdNodeChildren },
+      // }: any = getRootNodeChildren(node?.data.type)
       const {
         childNodes: { groupdNodeChildren },
-      }: any = getRootNodeChildren(node?.data.type)
+      }: any = renderDataAsNodes(node?.data.type)
 
-      if (type === 'events') {
-        addLocationsToVisualize(groupdNodeChildren)
-      }
+      // if (type === 'events') {
+      //   addLocationsToVisualize(groupdNodeChildren)
+      // }
 
       nextTick(10).then(() => {
         zoomOut({
@@ -933,32 +1233,7 @@ export const MindMapProvider = ({
       //   updateActiveNode(node)
       // }
     },
-    [addLocationsToVisualize, getRootNodeChildren, zoomOut]
-  )
-
-  //  Graph State Functions --------------------------------------------------------------------------------------
-
-  const onNodesChange: OnNodesChange = useCallback(
-    (chs) => {
-      setNodes((nds: Node[]) => applyNodeChanges(chs, nds))
-    },
-    [setNodes]
-  )
-
-  const onEdgesChange: OnEdgesChange = useCallback((chs) => {
-    setEdges((eds: Edge[]) => applyEdgeChanges(chs, eds))
-  }, [])
-
-  const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds: any) => addEdge(params, eds)),
-    []
-  )
-
-  const adjustViewport = useCallback(
-    ({ x, y, zoom = 0, duration = 800 }: any) => {
-      setViewport({ x, y, zoom }, { duration })
-    },
-    [setViewport]
+    [renderDataAsNodes, zoomOut]
   )
 
   const [keepLoadedOnMap, setKeepLoadedOnMap] = useState(false)
@@ -1029,11 +1304,126 @@ export const MindMapProvider = ({
     setGraph(formattedGraphNodesObject)
 
     const IN = graph3d.root.nodes.map(createRootNode)
-    setNodes(IN)
+    // setNodes([])
     // setInitialNodes(IN)
     setEdges([])
   }, [createRootNode, createRootNodeChild, graph3d])
 
+  //  Graph State Functions --------------------------------------------------------------------------------------
+
+  const onNodesChange: OnNodesChange = useCallback(
+    (chs) => {
+      setNodes((nds: Node[]) => applyNodeChanges(chs, nds))
+    },
+    [setNodes]
+  )
+
+  const onEdgesChange: OnEdgesChange = useCallback((chs) => {
+    setEdges((eds: Edge[]) => applyEdgeChanges(chs, eds))
+  }, [])
+
+  const onConnect: OnConnect = useCallback(
+    (params) => setEdges((eds: any) => addEdge(params, eds)),
+    []
+  )
+
+  const adjustViewport = useCallback(
+    ({ x, y, zoom = 0, duration = 800 }: any) => {
+      setViewport({ x, y, zoom }, { duration })
+    },
+    [setViewport]
+  )
+  // useEffect(() => {
+  //   if (nodes.length === 0) return
+
+  //   // Filter out nodes with a parentId
+  //   const nodesWithoutParent = nodes.filter((node) => !node.parentId)
+
+  //   // Clone nodes to avoid mutating state
+  //   const simulationNodes = nodesWithoutParent.map((node) => ({
+  //     ...node,
+  //     x: node.position.x,
+  //     y: node.position.y,
+  //   }))
+
+  //   // Edges should only connect nodes that are part of the simulation
+  //   const simulationEdges = edges.filter(
+  //     (edge) =>
+  //       nodesWithoutParent.find((node) => node.id === edge.source) &&
+  //       nodesWithoutParent.find((node) => node.id === edge.target)
+  //   )
+
+  //   const simulation = forceSimulation(simulationNodes)
+  //     .force(
+  //       'link',
+  //       forceLink(simulationEdges)
+  //         .id((d) => d.id)
+  //         .distance(200)
+  //         .strength(1)
+  //     )
+  //     .force('charge', forceManyBody().strength(-500))
+  //     .force('center', forceCenter(0, 0))
+  //     .force('collision', forceCollide().radius(50)) // Adjust radius as needed
+  //     .on('tick', () => {
+  //       setNodes((nds) =>
+  //         nds.map((node) => {
+  //           // Only update positions of nodes without parentId
+  //           if (!node.parentId) {
+  //             const simNode = simulationNodes.find((n) => n.id === node.id)
+  //             console.log('simNode: ', simNode)
+  //             return {s
+  //               ...node,
+  //               position: {
+  //                 x: simNode?.x || simNode?.position.x,
+  //                 y: simNode?.y || simNode?.position.y,
+  //               },
+  //             }
+  //           }
+  //           // Nodes with parentId remain at their current positions
+  //           return node
+  //         })
+  //       )
+  //     })
+
+  //   // Start the simulation
+  //   simulation.alpha(1).restart()
+
+  //   // Optional: Fit view when the simulation ends
+  //   simulation.on('end', () => {
+  //     fitView()
+  //   })
+
+  //   // Cleanup on unmount
+  //   return () => {
+  //     simulation.stop()
+  //   }
+  // }, [nodes.length, edges.length])
+  // const workerRef = useRef(null)
+
+  // useEffect(() => {
+  //   if (nodes.length === 0) return
+
+  //   // Initialize the Web Worker
+  //   if (!workerRef.current) {
+  //     workerRef.current = new Worker('/simulationWorker.js')
+  //   }
+
+  //   const worker: any = workerRef.current
+
+  //   worker.postMessage({ nodes, edges })
+
+  //   worker.onmessage = (event) => {
+  //     const updatedNodes = event.data
+  //     setNodes(updatedNodes)
+  //     fitView()
+  //   }
+
+  //   // Cleanup
+  //   return () => {
+  //     worker.terminate()
+  //     workerRef.current = null
+  //   }
+  // }, [nodes.length, edges.length])
   return (
     <MindMapContext.Provider
       value={{
@@ -1058,6 +1448,7 @@ export const MindMapProvider = ({
         setNodes,
         getEdges,
         useInternalNode,
+        useNodes,
         screenToFlowPosition,
         useNodesData,
         getOutgoers,
@@ -1079,7 +1470,7 @@ export const MindMapProvider = ({
         findConnections,
         activeNode,
         updateActiveNode,
-        onNodeClick,
+        addDataToMindMap,
         detectNodeOverlap,
         updateMindMapInstance,
         mindMapInstance,
