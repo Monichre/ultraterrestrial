@@ -41,10 +41,9 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
       {findConnectedDataPointsAndRenderTheirNodes && (
         <Button
           variant='ghost'
-          size='icon'
           onClick={findConnectedDataPointsAndRenderTheirNodes}
         >
-          <ScanSearch />
+          <ScanSearch className='h-5 w-5 text-white stroke-1' />
         </Button>
       )}
       {/* 

@@ -184,7 +184,7 @@ export function InputWithVanishAnimation({
     >
       <canvas
         className={cn(
-          'absolute pointer-events-none  text-base transform scale-50 top-[20%] left-2 sm:left-8 origin-top-left filter invert dark:invert-0 pr-20',
+          'absolute pointer-events-none  text-base transform scale-50 top-[20%] left-0 origin-top-left filter invert dark:invert-0 pr-20',
           !animating ? 'opacity-0' : 'opacity-100'
         )}
         ref={canvasRef}
@@ -200,7 +200,7 @@ export function InputWithVanishAnimation({
         value={value}
         type='text'
         className={cn(
-          'w-full relative text-sm sm:text-white z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-10 pr-20',
+          'w-full relative pl-4 text-sm sm:text-white z-50 border-none dark:text-black bg-transparent h-full rounded-full focus:outline-none focus:ring-0  pr-20',
           animating && 'text-transparent dark:text-transparent'
         )}
       />
@@ -244,7 +244,7 @@ export function InputWithVanishAnimation({
         </motion.svg>
       </button>
 
-      <div className='absolute inset-0 flex items-center rounded-full pointer-events-none'>
+      <div className='absolute inset-0 left-0 flex justify-start items-center rounded-full pointer-events-none'>
         <AnimatePresence mode='wait'>
           {!value && (
             <motion.p
@@ -265,7 +265,7 @@ export function InputWithVanishAnimation({
                 duration: 0.3,
                 ease: 'linear',
               }}
-              className='dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate'
+              className='dark:text-zinc-500 text-sm sm:text-base font-normal text-neutral-500 pl-0  text-left w-[calc(100%-2rem)] truncate'
             >
               {placeholders[currentPlaceholder]}
             </motion.p>

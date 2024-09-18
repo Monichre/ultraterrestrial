@@ -231,10 +231,10 @@ export const MiniCard = ({ card, removeChildCardClone }: any) => {
           </motion.div>
         </div>
         <motion.div
-          className='flex justify-end items-center h-auto absolute bg-transparent w-full bottom-0 left-0'
-          animate={{ opacity: 1, top: -50 }}
-          initial={{ opacity: 0, top: 50 }}
-          exit={{ opacity: 0, top: 50 }}
+          className='absolute bg-transparent bottom-2 right-0 flex'
+          animate={{ opacity: 1, bottom: 10 }}
+          initial={{ opacity: 0, bottom: -5 }}
+          exit={{ opacity: 0, bottom: -5 }}
         >
           <EntityCardUtilityMenu
             handleSave={handleSave}

@@ -13,7 +13,7 @@ import {
 
 import { useMindMap } from '@/providers/mindmap-context'
 
-import { Toolbar } from '@/components/toolbar'
+import { MindMapToolbar } from '@/components/toolbar/mindmap-toolbar'
 
 import { nextTick } from '@/utils'
 import { LocationVisualization } from '@/components/location-visualization'
@@ -27,6 +27,7 @@ import { CardStack } from '@/features/mindmap/cards/card-stack/card-stack'
 
 import { Position, MarkerType } from '@xyflow/react'
 import { FloatingConnectionLine } from '@/features/mindmap/edges/FloatingConnectionLine'
+import { VercelToolbar } from '../../components/toolbar/vercel-toolbar/VercelToolbar'
 
 // this helper function returns the intersection point
 // of the line between the center of the intersectionNode and the target node
@@ -259,7 +260,7 @@ export function Graph(props: any) {
       >
         <Panel position='top-left'>
           <div className='ml-2 mt-2'>
-            <Toolbar />
+            <MindMapToolbar />
           </div>
         </Panel>
         <Panel position='top-right'>
@@ -267,9 +268,10 @@ export function Graph(props: any) {
         </Panel>
 
         <Panel position='bottom-center'>
-          <div className='ml-2 mt-2 min-h-[100px] w-[250px]'>
-            <AiAssistedSearch />
-          </div>
+          {/* <div className='ml-2 mt-2 min-h-[100px] w-[250px]'> */}
+          {/* <AiAssistedSearch /> */}
+          <VercelToolbar />
+          {/* </div> */}
 
           {/* <QuickLoadEntityMenu /> */}
         </Panel>
