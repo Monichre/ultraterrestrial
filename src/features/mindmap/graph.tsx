@@ -10,7 +10,7 @@ import {
   Panel,
   type NodeOrigin,
 } from '@xyflow/react'
-
+import * as d3 from 'd3-force'
 import { useMindMap } from '@/providers/mindmap-context'
 
 import { MindMapToolbar } from '@/components/toolbar/mindmap-toolbar'
@@ -28,6 +28,7 @@ import { CardStack } from '@/features/mindmap/cards/card-stack/card-stack'
 import { Position, MarkerType } from '@xyflow/react'
 import { FloatingConnectionLine } from '@/features/mindmap/edges/FloatingConnectionLine'
 import { VercelToolbar } from '../../components/toolbar/vercel-toolbar/VercelToolbar'
+import { FloatingNodeMenu } from '@/features/mindmap/node-menu/floating-node-menu'
 
 // this helper function returns the intersection point
 // of the line between the center of the intersectionNode and the target node
@@ -147,11 +148,11 @@ export function Graph(props: any) {
     onNodesChange,
 
     onEdgesChange,
-    setNodes,
-    setEdges,
+    // setNodes,
+    // setEdges,
     onConnect,
     fitView,
-    initialNodes,
+    // initialNodes,
     getRootNodeChildren,
     adjustViewport,
     zoomOut,
@@ -163,6 +164,8 @@ export function Graph(props: any) {
     restore,
   } = useMindMap()
 
+  // const [nodes, setNodes] = useState(initialNodes)
+  // const [edges, setEdges] = useState(initialEdges)
   // const reactFlow = useReactFlow()
 
   // const simRef = useForceLayout()
@@ -228,14 +231,88 @@ export function Graph(props: any) {
     saveMindMap()
   }, [nodes, edges, saveMindMap])
 
+  // useEffect(() => {
+  //   if (nodes.length === 0) return
+
+  //   // Clone nodes to avoid mutating state directly
+  //   const simulationNodes = nodes.map((node: any) => ({ ...node }))
+  //   const simulationEdges = edges.map((edge: any) => ({ ...edge }))
+
+  //   const simulation = d3
+  //     .forceSimulation(simulationNodes)
+  //     .force(
+  //       'link',
+  //       d3
+  //         .forceLink(simulationEdges)
+  //         .id((d: { id: any }) => d.id)
+  //         .distance(150)
+  //     )
+  //     .force('charge', d3.forceManyBody().strength(-400))
+  //     .force(
+  //       'center',
+  //       d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)
+  //     )
+  //     .force('collision', d3.forceCollide(50))
+
+  //   simulation.on('tick', () => {
+  //     setNodes((ns: any[]) =>
+  //       ns.map((node: { id: any }) => {
+  //         const simNode = simulationNodes.find(
+  //           (n: { id: any }) => n.id === node.id
+  //         )
+  //         return {
+  //           ...node,
+  //           position: {
+  //             x: simNode.x,
+  //             y: simNode.y,
+  //           },
+  //         }
+  //       })
+  //     )
+  //   })
+
+  //   return () => simulation.stop()
+  // }, [nodes.length, edges])
+
+  // const onNodeDrag = (
+  //   event: any,
+  //   node: { id: any; position: { x: any; y: any } }
+  // ) => {
+  //   setNodes((nds: any[]) =>
+  //     nds.map((n: { id: any; position: any; fx: any; fy: any }) => {
+  //       if (n.id === node.id) {
+  //         n.position = node.position
+  //         n.fx = node.position.x // Fix the node position in the simulation
+  //         n.fy = node.position.y
+  //       }
+  //       return n
+  //     })
+  //   )
+  // }
+
+  // const onNodeDragStop = (event: any, node: { id: any }) => {
+  //   setNodes((nds: any[]) =>
+  //     nds.map((n: { id: any; fx: null; fy: null }) => {
+  //       if (n.id === node.id) {
+  //         n.fx = null // Release the node to be affected by forces again
+  //         n.fy = null
+  //       }
+  //       return n
+  //     })
+  //   )
+  // }
+
   // useForceLayout(childrenLoaded)
   // #NOTE: This might be an interesting way to enhance, bypass or hack any trouble with edges as the node connections get more complex: https://magicui.design/docs/components/animated-beam
   return (
-    <div className='relative h-[100vh] w-[100vw] bg-black bg-dot-white/[0.3] '>
-      <Spotlight
+    <div
+      className='relative h-[100vh] w-[100vw] bg-black bg-dot-white/[0.3] bg-repeat'
+      style={{ backgroundSize: '20px 20px' }}
+    >
+      {/* <Spotlight
         className='-top-40 left-0 md:left-60 md:-top-20'
         fill='white'
-      />
+      /> */}
 
       <ReactFlow
         colorMode='dark'
@@ -248,10 +325,12 @@ export function Graph(props: any) {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        panOnScroll
-        selectionOnDrag
-        panOnDrag
-        zoomOnScroll={false}
+        // onNodeDrag={onNodeDrag}
+        // onNodeDragStop={onNodeDragStop}
+        // panOnScroll
+        // selectionOnDrag
+        // panOnDrag
+        // zoomOnScroll={false}
         connectionLineComponent={FloatingConnectionLine}
         elevateNodesOnSelect={true}
         fitView
@@ -262,6 +341,7 @@ export function Graph(props: any) {
           <div className='ml-2 mt-2'>
             <MindMapToolbar />
           </div>
+          {/* <FloatingNodeMenu /> */}
         </Panel>
         <Panel position='top-right'>
           <LocationVisualization />
@@ -269,8 +349,8 @@ export function Graph(props: any) {
 
         <Panel position='bottom-center'>
           {/* <div className='ml-2 mt-2 min-h-[100px] w-[250px]'> */}
-          {/* <AiAssistedSearch /> */}
           <VercelToolbar />
+
           {/* </div> */}
 
           {/* <QuickLoadEntityMenu /> */}

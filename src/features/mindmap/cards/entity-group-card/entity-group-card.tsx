@@ -8,6 +8,7 @@ import {
   formatNodesForCardDisplay,
   CardStack,
 } from '@/features/mindmap/cards/card-stack/card-stack'
+import { LightsBackground } from '@/features/mindmap/cards/entity-group-card/lights-background'
 import { GROUP_NODE_DIMENSIONS } from '@/features/mindmap/config/nodes.config'
 import { TimelineSidebar } from '@/layouts/timeline/TimlineSidebarUI'
 import { useMindMap } from '@/providers'
@@ -204,20 +205,45 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
 
   return (
     <div
-      className={`relative h-min-[${GROUP_NODE_DIMENSIONS.height}] w--[${GROUP_NODE_DIMENSIONS.width}] shadow relative border border-white/60 dark:border-border/30 bg-black nowheel`}
+      className={`relative h-min-[${GROUP_NODE_DIMENSIONS.height}] w--[${GROUP_NODE_DIMENSIONS.width}] shadow relative border border-white/60 dark:border-border/30 nowheel transform-gpu bg-black bg-cover bg-center`}
+      // bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]
+      // dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f]
       style={{
         height: GROUP_NODE_DIMENSIONS.height,
         width: GROUP_NODE_DIMENSIONS.width,
+        backgroundPosition: 'center!important',
+        background:
+          'url(https://res.cloudinary.com/dzl9yxixg/image/upload/sub-grid_hnhyvi.png)',
+        // backdropFilter: ' blur(12px) saturate(168%)',
+
+        // backgroundColor: 'rgba(5, 5, 11, 0.4)',
+        // borderRadius: '12px',
+        // background:
+        // '#05060f linear-gradient(0deg,rgba(216,236,248,.06),rgba(152,192,239,.06))',
+        // background: `radial-gradient(36.46% 50% at 50% 50%, rgba(123, 143, 221, 0.08) 0%, rgba(5, 5, 11, 0.00) 100%)`,
+
+        // background: `radial-gradient(75% 75% at 50% 91.9%, #121212 0%, #0D0D0D 100%)`,
       }}
       ref={ref}
     >
       <div
-        className='absolute top-0 left-0 z-0 h-full w-full'
+        className='absolute top-0 left-0 z-0 h-full w-full bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]'
         style={{
-          // background: `radial-gradient(36.46% 50% at 50% 50%, rgba(123, 143, 221, 0.08) 0%, rgba(5, 5, 11, 0.00) 100%), radial-gradient(38.81% 50% at 50% 50%, rgba(123, 143, 221, 0.12) 0%, rgba(5, 5, 11, 0.00) 100%)`,
-
-          background: `radial-gradient(75% 75% at 50% 91.9%, #121212 0%, #0D0D0D 100%)`,
-          boxShadow: `0px 1.5px 0.5px 2.5px rgba(0, 0, 0, 0.40), 0px 0px 0.5px 1px #000, 0px 2px 1px 1px rgba(0, 0, 0, 0.25) inset, 0px 1px 1px 1px rgba(255, 255, 255, 0.20) inset`,
+          backdropFilter: ' blur(12px) saturate(168%)',
+          backgroundColor: 'rgba(5, 5, 11, 0.3)',
+          // borderRadius: '12px',
+        }}
+      />
+      <div
+        className='pointer-events-none absolute opacity-0 z-50 rounded-xl w-full h-full group-hover:opacity-100  transition duration-300 top-0 left-0'
+        style={{
+          background: `
+            radial-gradient(
+              250px circle at 400px 400px,
+              rgba(255, 255, 255, 0.137),
+              transparent 80%
+            )
+          `,
         }}
       />
       <CardTop>
@@ -271,7 +297,28 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
           </Button>
         </div>
       </CardBottom>
-
+      <div
+        className={
+          'absolute bottom-0 left-0 w-full h-full z-0 animate-appear opacity-0'
+        }
+      >
+        {/* <LightsBackground /> */}
+      </div>
+      <div className='accent-lines'>
+        <div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
       <CardCorners />
     </div>
   )

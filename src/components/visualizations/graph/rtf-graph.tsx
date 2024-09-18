@@ -94,7 +94,7 @@ export const Graph: React.FC<GraphProps> = ({ models }) => {
   const {
     selections,
     actives,
-    onNodeClick,
+    addDataToMindMap,
     onCanvasClick,
     onNodePointerOver,
     onNodePointerOut,

@@ -35,7 +35,7 @@ export const EntityNetworkGraph3D: FC<any> = ({
       nodeColor={(n) => n.color || n.fill}
       nodeRelSize={20}
       linkColor={(link) => link?.color}
-      onNodeClick={(node, e) => {
+      addDataToMindMap={(node, e) => {
         e.preventDefault()
 
         handleNodeClick(node)
