@@ -51,7 +51,7 @@ const generateTableConfig = () => {
           cell: ({ row }: any) => {
             if (name === 'name') {
               return (
-                <p className='font-jetbrains tracking-wide text-sm !text-[#cffafe] w-[500px]'>
+                <p className='font-nunito tracking-wide text-sm !text-[#cffafe] w-[500px]'>
                   {capitalize(row.getValue(name))}
                 </p>
               )
@@ -63,7 +63,7 @@ const generateTableConfig = () => {
             }
             if (name === 'summary' || name === 'description') {
               return (
-                <p className='font-jetbrains tracking-wide font-light text-sm text-white w-[500px]'>
+                <p className='font-nunito tracking-wide font-light text-sm text-white w-[500px]'>
                   {truncate(row.getValue(name), 300)}
                 </p>
               )

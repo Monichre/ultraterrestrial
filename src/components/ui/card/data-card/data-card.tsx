@@ -40,7 +40,7 @@ export const DataCard: React.FC<DataCardProps> = (props) => {
   } = props
   return (
     <div className='data-card w-full'>
-      <h1 className='name text-black font-centimaSans'>
+      <h1 className='name text-black font-bebasNeue'>
         {city}, {state}
         <br />
         {country}

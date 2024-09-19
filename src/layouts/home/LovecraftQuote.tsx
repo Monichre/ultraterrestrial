@@ -32,7 +32,7 @@ export const LovecraftQuote = () => {
       <div className='text-white tracking-wide mx-auto p-8 text-center w-[800px]'>
         <BlurFade inView delay={0.25}>
           <h2
-            className='font-centimaSans text-white text-bold text-center text-lg relative site-tagline'
+            className='font-bebasNeue text-white text-bold text-center text-lg relative site-tagline'
             style={{ letterSpacing: '2px' }}
           >
             Tracking the State of Disclosure
@@ -54,17 +54,17 @@ export const LovecraftQuote = () => {
             >
               {index === start && (
                 <span
-                  className={`!font-ailerons lg:text-4xl 2xl:text-6xl font-bold inline relative h-0 top-[15px]`}
+                  className={`!font-nunito lg:text-4xl 2xl:text-6xl font-bold inline relative h-0 top-[15px]`}
                 >
                   "
                 </span>
               )}
-              <span className='font-centimaSans text-white text-bold text-md lg:text-[14px] xl:text-[18px] 4xl:text-[22px] tracking-wider '>
+              <span className='font-nunito text-white text-bold text-md lg:text-[14px] xl:text-[18px] 4xl:text-[22px] tracking-wider '>
                 {line}{' '}
               </span>
               {index === end && (
                 <span
-                  className={`!font-ailerons lg:text-4xl xl:text-6xl font-bold inline absolute h-0 bottom-[33px]`}
+                  className={`!font-nunito lg:text-4xl xl:text-6xl font-bold inline absolute h-0 bottom-[33px]`}
                 >
                   "
                 </span>
@@ -74,7 +74,7 @@ export const LovecraftQuote = () => {
 
           <BlurFade inView className='block mt-4' delay={1} key={'Author'}>
             <span
-              className='font-centimaSans text-white text-bold text-md lg:text-[14px] 4xl:text-[18px] relative site-tagline'
+              className='font-bebasNeue text-white text-bold text-md lg:text-[14px] 4xl:text-[18px] relative site-tagline'
               style={{ letterSpacing: '2px' }}
             >
               H.P. Lovecraft

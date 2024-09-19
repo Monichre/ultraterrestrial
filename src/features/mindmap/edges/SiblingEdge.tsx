@@ -166,7 +166,7 @@
 //           </svg>
 //           <div className='flex flex-col h-full w-full justify-center align-center items-center text-center text-white justify-center '>
 //             <div className='flex justify-evenly items-center align-middle'>
-//               <div className='font-centimaSans text-xs text-white tracking-widest font-light w-min '>
+//               <div className='font-bebasNeue text-xs text-white tracking-widest font-light w-min '>
 //                 {sourceLabel}
 //               </div>
 //               <div className=' w-fill-text-primary mx-4'>
@@ -178,7 +178,7 @@
 //                   />
 //                 </TwoWayArrows>
 //               </div>
-//               <div className='font-centimaSans text-md text-white tracking-widest font-light w-min '>
+//               <div className='font-bebasNeue text-md text-white tracking-widest font-light w-min '>
 //                 {targetLabel}
 //               </div>
 //             </div>
@@ -412,7 +412,7 @@ export const SiblingEdge = (props: EdgeProps & SiblingEdgeProps) => {
   //         </svg>
   //         <div className='flex flex-col h-full w-full justify-center align-center items-center text-center text-white justify-center '>
   //           <div className='flex justify-evenly items-center align-middle'>
-  //             <div className='font-centimaSans text-xs text-white tracking-widest font-light w-min '>
+  //             <div className='font-bebasNeue text-xs text-white tracking-widest font-light w-min '>
   //               {sourceLabel}
   //             </div>
   //             <div className=' w-fill-text-primary mx-4'>
@@ -424,7 +424,7 @@ export const SiblingEdge = (props: EdgeProps & SiblingEdgeProps) => {
   //                 />
   //               </TwoWayArrows>
   //             </div>
-  //             <div className='font-centimaSans text-md text-white tracking-widest font-light w-min '>
+  //             <div className='font-bebasNeue text-md text-white tracking-widest font-light w-min '>
   //               {targetLabel}
   //             </div>
   //           </div>

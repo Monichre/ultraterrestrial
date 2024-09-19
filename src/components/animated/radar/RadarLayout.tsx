@@ -26,7 +26,7 @@ const IconContainer = ({ icon, text, delay }: any) => {
     >
       <div className='flex h-12 w-12 items-center justify-center '>{icon}</div>
       <div className='hidden rounded-md px-2 py-1 md:block'>
-        <div className='text-center text-xs font-bold text-black font-centimaSans tracking-widest uppercase w-min'>
+        <div className='text-center text-xs font-bold text-black font-bebasNeue tracking-widest uppercase w-min'>
           {text || `Web Development`}
         </div>
       </div>

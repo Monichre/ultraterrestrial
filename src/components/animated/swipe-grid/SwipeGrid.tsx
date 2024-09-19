@@ -112,10 +112,10 @@ const SwipeGrid = ({
                       alt='image'
                     />
                     <div className='relative z-10 p-4 text-left'>
-                      <h3 className='font-centimaSans tracking-wide uppercase text-white'>
+                      <h3 className='font-bebasNeue tracking-wide uppercase text-white'>
                         {item.name}
                       </h3>
-                      <p className='font-jetbrains text-white tracking-wide'>
+                      <p className='font-nunito text-white tracking-wide'>
                         {item.role}
                       </p>
                     </div>

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=bebas-neue@400&f[]=sentient@400&display=swap');
-/* @import url('https://api.fontshare.com/v2/css?f[]=bebas-neue@400&f[]=sentient@400&f[]=nunito@400&display=swap'rel='stylesheet'); */
+@import url('https://api.fontshare.com/v2/css?f[]=bebas-neue@400&f[]=nunito@400&display=swap');
+/* @import url('https://api.fontshare.com/v2/css?f[]=bebas-neue@400&f[]=nunito@400&f[]=nunito@400&display=swap'rel='stylesheet'); */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -240,7 +240,9 @@ body {
   block-size: 100%;
   @apply bg-background text-foreground;
   /* font-family: 'JetBrains Mono', monospace; */
-  font-family: var(--font-fira-code);
+  font-family: var(--font-nunito);
+  /* var(--font-fira-code); */
+
   position: relative;
   /* font-family: 'Sentient', serif; */
 }
@@ -292,7 +294,9 @@ body::after {
 
 h2,
 h3 {
-  font-family: 'Centima Sans', sans-serif;
+  /* font-family: 'Centima Sans', sans-serif; */
+  font-family: 'Bebas Neue', sans-serif;
+
   font-size: 24px;
   line-height: 32px;
   font-weight: 400;
@@ -301,9 +305,11 @@ h3 {
 
 p {
   /* font-family: 'JetBrains Mono', monospace; */
-  /* font-family: 'Sentient', serif; */
+  font-family: var(--font-nunito);
+  /* 'Sentient', serif; */
+
   /* font-family: 'JetBrains Mono', monospace; */
-  font-family: var(--font-fira-code);
+  /* font-family: var(--font-fira-code); */
   font-size: 14px;
   line-height: 21px;
   /* font-weight: 300; */
@@ -398,8 +404,11 @@ h3,
 .card h3,
 .header-style {
   /* font-family: var(--font-ailerons); */
-  font-family: var(--font-centima-sans);
+  font-family: var(--font-bebas-neue);
 }
+/* var(--font-nunito) */
+/* var(--font-nunito) */
+/* var(--font-commit-mono) */
 .header-style {
   letter-spacing: 1px;
   /* text-transform: uppercase; */
@@ -631,7 +640,9 @@ a {
 
 td,
 td p {
-  font-family: var(--font-jetbrains);
+  font-family: var(--font-nunito);
+  /* var(--font-nunito); */
+
   font-weight: 400;
   letter-spacing: 1px;
 }
@@ -683,6 +694,8 @@ td p {
 .ai-response-markup h3,
 .ai-response-markup h4 {
   font-family: 'Bebas Neue', sans-serif;
+  /* font-family: var(--font-bebas-neue); */
+  /* var(--font-nunito) */
   /* font-size: 24px;
     line-height: 32px;
     font-weight: 400;
@@ -693,7 +706,8 @@ td p {
 
 .ai-response-markup p,
 .ai-response-markup ul li {
-  font-family: 'Nunito', sans-serif;
+  /* font-family: 'Nunito', sans-serif; */
+  font-family: var(--font-nunito);
 }
 
 .react-flow__edges svg {

@@ -53,10 +53,10 @@ const config = {
         centimaSans: ['var(--font-centima-sans)'],
         eirene: ['var(--font-eirene})'],
         stellar: ['var(--font-stellar})'],
-        jetbrains: ['var(--font-jetbrains)'],
+        jetbrains: ['var(--font-sentient)'],
         nunito: ['var(--font-nunito})'],
         sentient: ['var(--font-sentient)'],
-        bebasNeue: ['var(--font-bebas-neue)'],
+        bebasNeue: ['var(--font-bebasNeue)'],
         commitMono: ['var(--font-commit-mono)'],
       },
       colors: {

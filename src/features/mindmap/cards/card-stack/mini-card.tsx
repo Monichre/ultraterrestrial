@@ -200,14 +200,14 @@ export const MiniCard = ({ card, removeChildCardClone }: any) => {
           </motion.div>
           <motion.div className='absolute top-0 left-0 w-full h-full z-1 flex flex-col justify-start p-4'>
             <h2
-              className='text-white font-centimaSans text-xl whitespace-normal w-fit capitalize '
+              className='text-white font-bebasNeue text-xl whitespace-normal w-fit capitalize '
               style={{ textWrap: 'pretty' }}
             >
               {name}
             </h2>
 
             {type === 'personnel' && (
-              <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-auto ml-auto mt-1'>
+              <p className='date text-1xl text-[#78efff] text-uppercase font-bebasNeue tracking-wider w-auto ml-auto mt-1'>
                 {card?.credibility
                   ? `Credibility Score: ${card?.credibility}`
                   : card.rank
@@ -218,12 +218,12 @@ export const MiniCard = ({ card, removeChildCardClone }: any) => {
 
             <div className='w-full mt-4'>
               {date && (
-                <p className='font-light text-[#78efff] font-centimaSans tracking-wider text-sm mr-auto'>
+                <p className='font-light text-[#78efff] font-bebasNeue tracking-wider text-sm mr-auto'>
                   {format(date, 'MMMM dd, yyyy')}
                 </p>
               )}
               {location && (
-                <p className='font-light text-[#78efff] font-centimaSans tracking-wider  text-sm'>
+                <p className='font-light text-[#78efff] font-bebasNeue tracking-wider  text-sm'>
                   {location}
                 </p>
               )}
