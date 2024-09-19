@@ -251,17 +251,17 @@ export function GraphCard({ data, id, ...rest }: any) {
                   />
                 )}
                 <DialogTitle className='flex w-full justify-between align-middle items-center center-content'>
-                  <h2 className='text-white font-centimaSans text-xl whitespace-normal w-content'>
+                  <h2 className='text-white font-bebasNeue text-xl whitespace-normal w-content'>
                     {name}
                   </h2>
-                  <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-content'>
+                  <p className='date text-1xl text-[#78efff] text-uppercase font-bebasNeue tracking-wider w-content'>
                     {date}
                   </p>
                 </DialogTitle>
               </div>
 
               <DialogSubtitle className='my-3'>
-                <p className='font-jetbrains text-white tracking-wider '>
+                <p className='font-nunito text-white tracking-wider '>
                   {node?.location || role}
                 </p>
                 {/* text-[10px] text-gray-600 sm:text-xs */}
@@ -287,7 +287,7 @@ export function GraphCard({ data, id, ...rest }: any) {
                   </div>
                   <div className='relative h-auto'>
                     <div className='flex w-full justify-between'>
-                      <DialogTitle className='text-white font-centimaSans tracking-wider uppercase'>
+                      <DialogTitle className='text-white font-bebasNeue tracking-wider uppercase'>
                         {name}
                       </DialogTitle>
                       <div className='flex justify-end'>
@@ -303,18 +303,18 @@ export function GraphCard({ data, id, ...rest }: any) {
                       </div>
                     </div>
                     <DialogSubtitle>
-                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                      <p className='font-light text-[#78efff] font-bebasNeue tracking-wider mt-2 text-sm'>
                         {date}
                       </p>
-                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                      <p className='font-light text-[#78efff] font-bebasNeue tracking-wider mt-2 text-sm'>
                         {location}
                       </p>
-                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                      <p className='font-light text-[#78efff] font-bebasNeue tracking-wider mt-2 text-sm'>
                         {latitude}, {longitude}
                       </p>
                     </DialogSubtitle>
 
-                    <div className='mt-4 text-sm text-white font-jetbrains'>
+                    <div className='mt-4 text-sm text-white font-nunito'>
                       <p>{truncate(node?.description, 400)}</p>
                     </div>
                   </div>

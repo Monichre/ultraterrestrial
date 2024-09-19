@@ -223,7 +223,7 @@ export const VercelToolbar = () => {
                 >
                   <motion.div className='flex items-center justify-between align-middle content-center'>
                     {activeModel && (
-                      <h3 className='w-fit  font-centimaSans text-white'>
+                      <h3 className='w-fit  font-bebasNeue text-white'>
                         {capitalize(activeModel)}
                       </h3>
                     )}

@@ -155,14 +155,14 @@ export const firaCode = Fira_Code({
 //   weight: ['300', '400', '500', '600', '700', '800'],
 //   display: 'swap',
 //   subsets: ['latin'],
-//   variable: '--font-jetbrains',
+//   variable: '--font-sentient',
 // })
 
 export const jetBrains = localFont({
   src: 'fonts/jetbrains/JetBrainsMono-VariableFont_wght.ttf',
   // weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
-  variable: '--font-jetbrains',
+  variable: '--font-sentient',
 })
 
 export const nunito = localFont({

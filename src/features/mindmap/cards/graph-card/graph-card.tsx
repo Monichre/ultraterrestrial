@@ -188,7 +188,7 @@ export function GraphCard({ card }: any) {
     {
       title: 'Details',
       render: () => (
-        <div className='mt-4 text-sm text-white font-jetbrains'>
+        <div className='mt-4 text-sm text-white font-nunito'>
           <p>{truncate(card?.description, 400)}</p>
         </div>
       ),
@@ -277,7 +277,7 @@ export function GraphCard({ card }: any) {
 
                 <motion.div>
                   <h2
-                    className='text-white font-centimaSans text-xl whitespace-normal w-fit capitalize '
+                    className='text-white font-bebasNeue text-xl whitespace-normal w-fit capitalize '
                     style={{ textWrap: 'pretty' }}
                   >
                     {name}
@@ -285,10 +285,10 @@ export function GraphCard({ card }: any) {
                 </motion.div>
 
                 <motion.div className=''>
-                  <p className='font-jetbrains text-white tracking-wider '>
+                  <p className='font-nunito text-white tracking-wider '>
                     {card?.location || truncate(role, 50)}
                   </p>
-                  <p className='date text-1xl text-[#78efff] text-uppercase font-centimaSans tracking-wider w-auto ml-auto mt-1'>
+                  <p className='date text-1xl text-[#78efff] text-uppercase font-bebasNeue tracking-wider w-auto ml-auto mt-1'>
                     {type === 'personnel' && card?.credibility
                       ? `Credibility Score: ${card?.credibility}`
                       : type === 'personnel' && card.rank
@@ -319,7 +319,7 @@ export function GraphCard({ card }: any) {
                     </div>
                     <div className='relative h-auto'>
                       <div className='flex w-full justify-between'>
-                        <h2 className='text-white font-centimaSans tracking-wider uppercase'>
+                        <h2 className='text-white font-bebasNeue tracking-wider uppercase'>
                           {name}
                         </h2>
 
@@ -327,13 +327,13 @@ export function GraphCard({ card }: any) {
                       
                       </div>
 
-                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                      <p className='font-light text-[#78efff] font-bebasNeue tracking-wider mt-2 text-sm'>
                         {date}
                       </p>
-                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                      <p className='font-light text-[#78efff] font-bebasNeue tracking-wider mt-2 text-sm'>
                         {location}
                       </p>
-                      <p className='font-light text-[#78efff] font-centimaSans tracking-wider mt-2 text-sm'>
+                      <p className='font-light text-[#78efff] font-bebasNeue tracking-wider mt-2 text-sm'>
                         {latitude}, {longitude}
                       </p>
                     </div>

@@ -391,12 +391,12 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
           </>
         )}
         <div className='relative z-10'>
-          <h2 className='text-white uppercase font-centimaSans text-2xl tracking-wider'>
+          <h2 className='text-white uppercase font-bebasNeue text-2xl tracking-wider'>
             {animatedTitle}
           </h2>
 
           <p
-            className={`w-fit ${expand ? '' : ''} date text-1xl text-[#78efff] uppercase font-centimaSans tracking-wider`}
+            className={`w-fit ${expand ? '' : ''} date text-1xl text-[#78efff] uppercase font-bebasNeue tracking-wider`}
           >
             [{date}]
           </p>
@@ -404,12 +404,12 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
         {expand && (
           <>
             <div className={`w-fit ${expand ? '' : 'ml-4'} `}>
-              <span className='text-1xl text-[#78efff] uppercase font-jetbrains text-white tracking-wider'>
+              <span className='text-1xl text-[#78efff] uppercase font-nunito text-white tracking-wider'>
                 {location}
               </span>
             </div>
             <div className={`w-fit ${expand ? '' : 'ml-4'} `}>
-              <span className='text-1xl text-[#78efff] uppercase font-jetbrains text-white tracking-wider'>
+              <span className='text-1xl text-[#78efff] uppercase font-nunito text-white tracking-wider'>
                 [{latitude}, {longitude}]
               </span>
             </div>
@@ -419,7 +419,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
 
       {expand && (
         <motion.p
-          className='relative z-10 text-xl font-jetbrains text-white text-left p-2 px-4'
+          className='relative z-10 text-xl font-nunito text-white text-left p-2 px-4'
           key={`${id}-additional-info`}
           initial='closed'
           variants={variants3}
@@ -439,7 +439,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
         >
       
           <motion.p
-            className='relative z-10 text-xl font-jetbrains text-white text-left'
+            className='relative z-10 text-xl font-nunito text-white text-left'
             key={`${id}-additional-info`}
             initial='closed'
             variants={variants3}

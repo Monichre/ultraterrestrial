@@ -65,7 +65,7 @@ export const MenuItem = memo(
           <motion.p
             key={`${item}-p`}
             transition={{ duration: 0.3 }}
-            className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm font-jetbrains tracking-wide'
+            className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm font-nunito tracking-wide'
           >
             {item}
           </motion.p>
@@ -125,7 +125,7 @@ export const HoveredLink = ({ children, ...rest }: any) => {
   return (
     <Link
       {...rest}
-      className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
+      className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm !font-nunito tracking-wide'
     >
       {children}
     </Link>
@@ -197,7 +197,7 @@ export function DropdownMenuDemo({ isAdmin }: any) {
           <DropdownMenuItem>
             <SignInButton>
               <Button
-                className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
+                className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm !font-nunito tracking-wide'
                 variant='ghost'
               >
                 Sign In
@@ -348,7 +348,7 @@ export function FullSiteNav({ className }: { className?: string }) {
         {/* <SignedOut>
           <SignInButton>
             <Button
-              className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm !font-jetbrains tracking-wide'
+              className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase text-sm !font-nunito tracking-wide'
               variant='ghost'
             >
               Sign In
