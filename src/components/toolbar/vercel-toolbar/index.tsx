@@ -1,1 +1,2 @@
-export * from './VercelToolbar';
+export * from './VercelToolbar'
+export * from './ai-chat'

@@ -10,7 +10,6 @@ import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
 import { ClerkProvider } from '@clerk/nextjs'
 
 import {
-  centima,
   centimaSans,
   eirene,
   stellar,
@@ -50,7 +49,7 @@ export default function RootLayout({
       <ClerkProvider>
         <html lang='en' suppressHydrationWarning>
           <body
-            className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} dark`}
+            className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} dark`}
           >
             <ThemeProvider
               attribute='class'

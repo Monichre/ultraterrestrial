@@ -167,17 +167,8 @@ export function MindMapToolbar() {
   return (
     // max-w-max m-auto
     // <CultUIPopoverRoot>
-    <div className='flex flex-col shadow items-center justify-between rounded-full p-1  border border-white/80 dark:border-neutral-700/80 text-neutral-500 bg-gradient-to-b from-card/70 rounded-[calc(var(--radius)-2px)]'>
+    <div className='flex flex-col shadow items-center justify-between rounded-full p-1 border border-white/80 dark:border-neutral-700/80 text-neutral-500 bg-gradient-to-b from-card/70 rounded-[calc(var(--radius)-2px)]'>
       <div className='flex flex-col'>
-        <Button
-          variant='ghost'
-          size='icon'
-          className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100 m-2'
-        >
-          <MessageCircleIcon className='h-5 w-5 stroke-1' />
-          <span className='sr-only'>Create a comment</span>
-        </Button>
-
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
