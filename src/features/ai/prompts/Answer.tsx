@@ -20,14 +20,6 @@ export function Answer({ prompt, answer }: { prompt: any; answer: any }) {
       <div className='w-full'>
         <div className='flex items-center justify-between pb-3'>
           <div className='flex gap-4'>
-            <Image
-              unoptimized
-              src='/img/Info.svg'
-              alt='footer'
-              width={24}
-              height={24}
-              className='block lg:hidden'
-            />
             {prompt && (
               <h3 className='text-base font-bold uppercase text-black dark:text-white'>
                 Question:{prompt}
@@ -48,20 +40,7 @@ export function Answer({ prompt, answer }: { prompt: any; answer: any }) {
                 height={20}
                 className="cursor-pointer"
               /> */}
-              <Button
-                onClick={() => {
-                  navigator.clipboard.writeText(answer.trim())
-                }}
-              >
-                <Image
-                  unoptimized
-                  src='/img/copy.svg'
-                  alt='footer'
-                  width={20}
-                  height={20}
-                  className='cursor-pointer'
-                />
-              </Button>
+
               {/* <Image unoptimized
                 src="/img/share.svg"
                 alt="footer"

@@ -421,7 +421,7 @@
 
 import rehypeExternalLinks from 'rehype-external-links'
 import remarkGfm from 'remark-gfm'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 import { SearchIcon } from 'lucide-react'
@@ -524,8 +524,8 @@ const LoaderCore = ({
 export const LoadingSequence = ({
   loadingStates,
   loading,
-  duration = 2000,
-  loop = true,
+  duration = 3000,
+  loop = false,
 }: {
   loadingStates: LoadingState[]
   loading?: boolean
@@ -533,12 +533,9 @@ export const LoadingSequence = ({
   loop?: boolean
 }) => {
   const [currentState, setCurrentState] = useState(0)
+  const [show, setShow] = useState(loading)
 
   useEffect(() => {
-    if (!loading) {
-      setCurrentState(0)
-      return
-    }
     const timeout = setTimeout(() => {
       setCurrentState((prevState) =>
         loop
@@ -552,21 +549,29 @@ export const LoadingSequence = ({
     return () => clearTimeout(timeout)
   }, [currentState, loading, loop, loadingStates.length, duration])
 
+  useEffect(() => {
+    if (!loading) {
+      setCurrentState(0)
+      setShow(false)
+    }
+    if (loading) setShow(true)
+  }, [loading])
+
   return (
     <AnimatePresence mode='wait'>
-      {loading && (
+      {show ? (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className='w-full h-full fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-2xl'
+          className='w-full h-full fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-2xl px-4'
         >
           <div className='h-96 relative'>
             <LoaderCore value={currentState} loadingStates={loadingStates} />
           </div>
           <div className='bg-gradient-to-t inset-x-0 z-20 bottom-0 bg-black dark:bg-black h-full absolute [mask-image:radial-gradient(900px_at_center,transparent_30%,white)]' />
         </motion.div>
-      )}
+      ) : null}
     </AnimatePresence>
   )
 }
@@ -623,6 +628,17 @@ export function AiAssistedSearch() {
     }
   }, [])
 
+  const scrollRef: any = useRef(null)
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: 'smooth',
+      })
+    }
+  }, [messages])
+
   return (
     <Dialog
       open={dialogOpen}
@@ -636,14 +652,17 @@ export function AiAssistedSearch() {
       </div>
       <DialogPortal>
         <DialogOverlay className='fixed inset-0 z-50 bg-black/50' />
-        <DialogContent className='fixed left-1/2 top-1/2 z-50 grid max-h-[85vh] w-[90vw] max-w-xxl transform -translate-x-1/2 -translate-y-1/2 overflow-hidden border bg-black shadow-lg sm:rounded-lg'>
+        <DialogContent className='fixed left-1/2 top-1/2 z-50 grid max-h-[85vh] w-auto max-w-xxl transform -translate-x-1/2 -translate-y-1/2 overflow-hidden border bg-black shadow-lg sm:rounded-lg'>
           <VisuallyHidden.Root>
             <DialogTitle>Get Weird With It</DialogTitle>
           </VisuallyHidden.Root>
           <div
             className={`border-b border-slate-200 flex ${initial ? 'flex-col' : 'flex-col-reverse'}`}
           >
-            <form className='flex items-center' onSubmit={submitMessage}>
+            <form
+              className='flex items-center absolute bottom-0 left-0 bg-black w-full z-50 py-4 border-t-neutral-300 border-t-2'
+              onSubmit={submitMessage}
+            >
               <VisuallyHidden.Root>
                 <label htmlFor='search-modal'>
                   Ask Party Martian, the AI warden of Ultraterrestrial
@@ -664,27 +683,28 @@ export function AiAssistedSearch() {
             </form>
 
             <div className='prompt-ui-responses'>
-              <ScrollArea.Root className='max-h-[calc(85vh-44px)] overflow-scroll'>
+              <ScrollArea.Root
+                className='max-h-[calc(85vh-44px)] overflow-scroll'
+                ref={scrollRef}
+              >
                 <ScrollArea.Viewport className='h-full w-full'>
                   <div className='space-y-4 px-2 py-4'>
-                    {status === 'in_progress' && (
-                      <>
-                        <LoadingSequence
-                          loadingStates={[
-                            {
-                              text: 'Consulting Party Martian, Warden of Ultraterrestrial...',
-                            },
-                            {
-                              text: `Give it a second, we're literally calling Zeta Reticuli`,
-                            },
-                            {
-                              text: 'I know, I know, why is an ET from Zeta Reticul called Party Martian? Why are native americans called Indians bro?',
-                            },
-                            { text: 'Make a snack' },
-                          ]}
-                          loading={status === 'in_progress'}
-                        />
-                      </>
+                    {initial && (
+                      <LoadingSequence
+                        loadingStates={[
+                          {
+                            text: 'Consulting our proprietary Ufology expert: Party Martian. The Warden of Ultraterrestrial and dedicated steward of the Disclosure movement',
+                          },
+                          {
+                            text: `Give it a second, we're literally calling Zeta Reticuli`,
+                          },
+                          {
+                            text: 'I know, I know, why is an ET from Zeta Reticul called Party Martian? Why are native americans called Indians bro?',
+                          },
+                          { text: 'Make a snack' },
+                        ]}
+                        loading={status === 'in_progress'}
+                      />
                     )}
 
                     {initial && (
@@ -706,7 +726,7 @@ export function AiAssistedSearch() {
                     )}
 
                     {messages.length > 0 && (
-                      <div className='flex flex-col p-2 gap-2'>
+                      <div className='flex flex-col p-2 gap-2 pb-8'>
                         {messages.map((message) => (
                           <Answer
                             key={message.id}
@@ -721,6 +741,23 @@ export function AiAssistedSearch() {
                                   ]}
                                   remarkPlugins={[remarkGfm]}
                                   className='prose-sm prose-neutral prose-a:text-accent-foreground/50'
+                                  components={{
+                                    // Map `h1` (`# heading`) to use `h2`s.
+                                    h1: 'h2',
+                                    // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
+                                    pre: (props) => {
+                                      return (
+                                        // @ts-ignore
+                                        <div {...props} />
+                                      )
+                                    },
+                                    code: (props) => {
+                                      return (
+                                        // @ts-ignore
+                                        <p {...props} />
+                                      )
+                                    },
+                                  }}
                                 >
                                   {message.content}
                                 </MemoizedMarkdown>
