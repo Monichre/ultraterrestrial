@@ -29,17 +29,21 @@ const RotatingComponent = ({ spin }: any) => {
   )
 }
 export const Earth = forwardRef((props: any, ref: any) => {
-  console.log('ref: ', ref)
   return (
     <Canvas ref={ref}>
       <ambientLight intensity={0.1} />
       <directionalLight intensity={3.5} position={[1, 0, -0.25]} />
       <Suspense
         fallback={() => (
-          <img alt='earth2' src='/assets/earth2/placeholder.png'></img>
+          <Image
+            alt='earth2'
+            src='/assets/earth2/placeholder.png'
+            width={1000}
+            height={1000}
+          />
         )}
       >
-        <RotatingComponent />
+        <RotatingComponent spin />
       </Suspense>
     </Canvas>
   )

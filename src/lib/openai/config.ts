@@ -1,4 +1,5 @@
-export const DISCLOSURE_ASSISTANT_ID: any = process.env.OPENAI_ASSISTANT_ID
+export const DISCLOSURE_ASSISTANT_ID: any =
+  process.env.OPENAI_ASSISTANT_ID || ''
 
 export const ENTITY_RELATION_RELEVANCE_THREAD =
   'thread_entity_relation_relevance'

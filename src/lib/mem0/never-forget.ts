@@ -1,17 +1,24 @@
-import { DISCLOSURE_ASSISTANT_ID } from '../openai/config'
+import { DISCLOSURE_ASSISTANT_ID } from '@/lib/openai/config'
 import { mem0AI } from './client'
+const agent_id: any = DISCLOSURE_ASSISTANT_ID || process.env.OPENAI_ASSISTANT_ID
 
 export const rememberThisShitForever = () => {}
 
-export const makeSurePartyMartianRemembersThisShit = async ({
-  shitToRemember,
-  metadata,
-}) => {
-  const agent_id = DISCLOSURE_ASSISTANT_ID
-  const gotIt = await mem0AI.add(shitToRemember, { agent_id, ...metadata })
-  return gotIt
+export const addConversationToDisclosureAssistantMemory = async ({
+  messages,
+  metadata = null,
+}: any) => {
+  const memorySaved = metadata
+    ? // @ts-ignore
+      await mem0AI.add(messages, { agent_id, metadata, output_format: 'v1.1' })
+    : // @ts-ignore
+      await mem0AI.add(messages, { agent_id, output_format: 'v1.1' })
+  console.log('memorySaved: ', memorySaved)
+
+  return memorySaved
 }
-export const doYouRemember = async ({ query, metadata }) => {
+
+export const doYouRemember = async ({ query, metadata }: any) => {
   return await mem0AI
     .search(query, { ...metadata })
     .then((results) => console.log(results))
@@ -25,6 +32,7 @@ export const storeUserCoreMemory = async ({
 }) => {
   const res = await mem0AI.add(shitToRemember, {
     user_id: user.id,
+    output_format: 'v1.1',
     ...metadata,
   })
   console.log('res: ', res)

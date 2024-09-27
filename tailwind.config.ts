@@ -49,7 +49,7 @@ const config = {
         ailerons: ['var(--font-ailerons)'],
         futura: ['var(--font-futura)'],
         firaCode: ['var(--font-fira-code)'],
-        centima: ['var(--font-centima})'],
+
         centimaSans: ['var(--font-centima-sans)'],
         eirene: ['var(--font-eirene})'],
         stellar: ['var(--font-stellar})'],

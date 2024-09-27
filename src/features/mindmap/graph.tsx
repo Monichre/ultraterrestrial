@@ -29,6 +29,7 @@ import { Position, MarkerType } from '@xyflow/react'
 import { FloatingConnectionLine } from '@/features/mindmap/edges/FloatingConnectionLine'
 import { VercelToolbar } from '../../components/toolbar/vercel-toolbar/VercelToolbar'
 import { FloatingNodeMenu } from '@/features/mindmap/node-menu/floating-node-menu'
+import { AiChat } from '@/components/toolbar'
 
 // this helper function returns the intersection point
 // of the line between the center of the intersectionNode and the target node
@@ -355,12 +356,11 @@ export function Graph(props: any) {
 
           {/* <QuickLoadEntityMenu /> */}
         </Panel>
-        {/* <Panel
-          position='bottom-left'
-          className='absolute bottom-[40%] left-0  h-[680px] w-[250px] nodrag'
-        >
-          <CardStack mindmapCards={rootNodes} />
-        </Panel> */}
+
+        <Panel position='bottom-right'>
+          {/* <div className='ml-2 mt-2 min-h-[100px] w-[250px]'> */}
+          <AiChat />
+        </Panel>
       </ReactFlow>
     </div>
   )
