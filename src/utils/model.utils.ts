@@ -79,3 +79,12 @@ export const extractUniqueYearsFromEvents = (events: any[]) => {
 
   return Array.from(years)
 }
+export const extractCoordinatesFromEvents = (events: any[]) => {
+  return events.map((event) => {
+    const { latitude, longitude, id, ...rest } = event
+    return {
+      id,
+      location: [latitude, longitude],
+    }
+  })
+}

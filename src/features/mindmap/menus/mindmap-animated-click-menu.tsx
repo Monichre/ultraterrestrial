@@ -131,7 +131,7 @@ function ExplodingMenuItem({
   )
 }
 
-export function MindMapEntityMenu() {
+export function MindMapAnimatedClickMenu() {
   const [isOpen, setIsOpen] = useState(false)
   const mouseXValue = useMotionValue(0)
   const mouseYValue = useMotionValue(0)

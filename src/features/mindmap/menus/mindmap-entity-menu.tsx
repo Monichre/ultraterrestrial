@@ -18,7 +18,7 @@ import { AiAssistedSearch } from '@/features/ai'
 import { Dialog, DialogTrigger } from '@radix-ui/react-dialog'
 import { Separator } from '@/components/ui/separator'
 
-export const VercelToolbar = () => {
+export const MindMapEntityMenu = () => {
   const [isExpanded, setIsExpanded] = useState(false)
   const { addDataToMindMap, addChildNodesFromSearch } = useMindMap()
   const [activeModel, setActiveModel]: any = useState('events')
@@ -228,7 +228,6 @@ export const VercelToolbar = () => {
                     <PlusIcon className='h-6 w-6 text-white' />
                   </ShinyButton>
                 </motion.div>
-
                 <Separator className='my-1 w-full' />
                 {/* <div className='h-14 border-b border-muted-foreground/80'>
                   {activeModel && (

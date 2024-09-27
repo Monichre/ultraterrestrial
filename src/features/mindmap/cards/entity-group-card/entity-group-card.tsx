@@ -205,33 +205,21 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
 
   return (
     <div
-      className={`relative h-min-[${GROUP_NODE_DIMENSIONS.height}] w--[${GROUP_NODE_DIMENSIONS.width}] shadow relative border border-white/60 dark:border-border/30 nowheel transform-gpu bg-black bg-cover bg-center`}
-      // bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]
-      // dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f]
+      className={`relative h-min-[${GROUP_NODE_DIMENSIONS.height}] w-[${GROUP_NODE_DIMENSIONS.width}] shadow relative border border-white/60 dark:border-border/30 nowheel transform-gpu bg-black bg-cover bg-center`}
       style={{
         height: GROUP_NODE_DIMENSIONS.height,
         width: GROUP_NODE_DIMENSIONS.width,
-        backgroundPosition: 'center!important',
-        background:
-          'url(https://res.cloudinary.com/dzl9yxixg/image/upload/sub-grid_hnhyvi.png)',
-        // backdropFilter: ' blur(12px) saturate(168%)',
-
-        // backgroundColor: 'rgba(5, 5, 11, 0.4)',
-        // borderRadius: '12px',
+        // backgroundPosition: 'center!important',
         // background:
-        // '#05060f linear-gradient(0deg,rgba(216,236,248,.06),rgba(152,192,239,.06))',
-        // background: `radial-gradient(36.46% 50% at 50% 50%, rgba(123, 143, 221, 0.08) 0%, rgba(5, 5, 11, 0.00) 100%)`,
-
-        // background: `radial-gradient(75% 75% at 50% 91.9%, #121212 0%, #0D0D0D 100%)`,
+        // 'url(https://res.cloudinary.com/dzl9yxixg/image/upload/sub-grid_hnhyvi.png)',
       }}
       ref={ref}
     >
-      <div
+      {/* <div
         className='absolute top-0 left-0 z-0 h-full w-full bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]'
         style={{
           backdropFilter: ' blur(12px) saturate(168%)',
           backgroundColor: 'rgba(5, 5, 11, 0.3)',
-          // borderRadius: '12px',
         }}
       />
       <div
@@ -245,7 +233,7 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
             )
           `,
         }}
-      />
+      /> */}
       <CardTop>
         <h3 className='text-sm italic'>
           {groupNodeData?.id.split('-')[0]}:{' '}

@@ -54,7 +54,7 @@ const config = {
         eirene: ['var(--font-eirene})'],
         stellar: ['var(--font-stellar})'],
         jetbrains: ['var(--font-sentient)'],
-        nunito: ['var(--font-nunito})'],
+        nunito: ['var(--font-nunito)'],
         sentient: ['var(--font-sentient)'],
         bebasNeue: ['var(--font-bebasNeue)'],
         commitMono: ['var(--font-commit-mono)'],

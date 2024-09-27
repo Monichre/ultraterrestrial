@@ -349,9 +349,7 @@ export const SiblingEdge = (props: EdgeProps & SiblingEdgeProps) => {
         y={edgeCenterY - foreignObjectSize / 2}
         requiredExtensions='http://www.w3.org/1999/xhtml'
       >
-        <span>
-          {sourceLabel}:{targetLabel}
-        </span>
+        <span>{/* {sourceLabel}:{targetLabel} */}</span>
       </foreignObject>
     </>
   )

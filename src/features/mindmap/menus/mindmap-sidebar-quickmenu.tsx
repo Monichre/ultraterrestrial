@@ -126,7 +126,7 @@ const QuickActionsFloatingPanel = () => {
   )
 }
 
-export function MindMapToolbar() {
+export function MindMapSidebarQuickMenu() {
   const {
     showLocationVisualization,
     locationsToVisualize,

@@ -13,8 +13,6 @@ import {
 import * as d3 from 'd3-force'
 import { useMindMap } from '@/providers/mindmap-context'
 
-import { MindMapToolbar } from '@/components/toolbar/mindmap-toolbar'
-
 import { nextTick } from '@/utils'
 import { LocationVisualization } from '@/components/location-visualization'
 
@@ -27,9 +25,13 @@ import { CardStack } from '@/features/mindmap/cards/card-stack/card-stack'
 
 import { Position, MarkerType } from '@xyflow/react'
 import { FloatingConnectionLine } from '@/features/mindmap/edges/FloatingConnectionLine'
-import { VercelToolbar } from '../../components/toolbar/vercel-toolbar/VercelToolbar'
-import { FloatingNodeMenu } from '@/features/mindmap/node-menu/floating-node-menu'
-import { AiChat } from '@/components/toolbar'
+
+import {
+  MindMapAiChat,
+  MindMapSidebarQuickMenu,
+} from '@/features/mindmap/menus'
+import { MindMapEntityMenu } from '@/features/mindmap/menus/mindmap-entity-menu'
+import { GraphPaper } from '@/components/graph-paper'
 
 // this helper function returns the intersection point
 // of the line between the center of the intersectionNode and the target node
@@ -305,11 +307,15 @@ export function Graph(props: any) {
 
   // useForceLayout(childrenLoaded)
   // #NOTE: This might be an interesting way to enhance, bypass or hack any trouble with edges as the node connections get more complex: https://magicui.design/docs/components/animated-beam
+  const wrapperClass = `relative h-[100vh] w-[100vw] bg-black bg-dot-white/[0.3] bg-repeat`
   return (
     <div
       className='relative h-[100vh] w-[100vw] bg-black bg-dot-white/[0.3] bg-repeat'
       style={{ backgroundSize: '20px 20px' }}
     >
+      {/* <div className='fixed top-0 left-0 z-0 w-full'>
+        <GraphPaper />
+      </div> */}
       {/* <Spotlight
         className='-top-40 left-0 md:left-60 md:-top-20'
         fill='white'
@@ -340,26 +346,19 @@ export function Graph(props: any) {
       >
         <Panel position='top-left'>
           <div className='ml-2 mt-2'>
-            <MindMapToolbar />
+            <MindMapSidebarQuickMenu />
           </div>
-          {/* <FloatingNodeMenu /> */}
         </Panel>
         <Panel position='top-right'>
           <LocationVisualization />
         </Panel>
 
         <Panel position='bottom-center'>
-          {/* <div className='ml-2 mt-2 min-h-[100px] w-[250px]'> */}
-          <VercelToolbar />
-
-          {/* </div> */}
-
-          {/* <QuickLoadEntityMenu /> */}
+          <MindMapEntityMenu />
         </Panel>
 
         <Panel position='bottom-right'>
-          {/* <div className='ml-2 mt-2 min-h-[100px] w-[250px]'> */}
-          <AiChat />
+          <MindMapAiChat />
         </Panel>
       </ReactFlow>
     </div>

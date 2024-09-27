@@ -3,7 +3,7 @@ import React from 'react'
 
 import { AiAssistedSearch } from '@/features/ai'
 
-export const AiChat = () => {
+export const MindMapAiChat = () => {
   return <AiAssistedSearch />
 }
 
