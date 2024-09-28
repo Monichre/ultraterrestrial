@@ -9,32 +9,6 @@ import localFont from 'next/font/local'
 export const centimaSans = localFont({
   src: [
     {
-      path: 'fonts/centima/Centima-Mono-W01-Bold.woff',
-      weight: 'bold',
-      style: 'normal',
-    },
-    {
-      path: 'fonts/centima/Centima-Mono-W01-Bold.eot',
-      weight: '700',
-      style: 'normal',
-    },
-
-    {
-      path: 'fonts/centima/Centima-Mono-W01-Bold.ttf',
-      weight: '700',
-      style: 'normal',
-    },
-    {
-      path: 'fonts/centima/Centima-Mono-W01-Bold.woff',
-      weight: '700',
-      style: 'normal',
-    },
-    {
-      path: 'fonts/centima/Centima-Mono-W01-Bold.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-    {
       path: 'fonts/centima/CentimaProSans-Bold.woff',
       weight: '700',
       style: 'normal',
