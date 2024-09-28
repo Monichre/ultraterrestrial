@@ -275,11 +275,7 @@ export const bebasNeue = localFont({
       weight: '500',
       style: 'normal',
     },
-    {
-      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedMediumit.woff2',
-      weight: '500',
-      style: 'italic',
-    },
+
     {
       path: 'fonts/BebasNeue/BebasNeuePro-ExpandedRegular.woff2',
       weight: '400',
