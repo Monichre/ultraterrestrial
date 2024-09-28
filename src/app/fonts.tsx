@@ -14,98 +14,98 @@ export const centimaSans = localFont({
       style: 'normal',
     },
     {
-      path: '/fonts/centima/Centima-Mono-W01-Bold.eot',
+      path: 'fonts/centima/Centima-Mono-W01-Bold.eot',
       weight: '700',
       style: 'normal',
     },
 
     {
-      path: '/fonts/centima/Centima-Mono-W01-Bold.ttf',
+      path: 'fonts/centima/Centima-Mono-W01-Bold.ttf',
       weight: '700',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/Centima-Mono-W01-Bold.woff',
+      path: 'fonts/centima/Centima-Mono-W01-Bold.woff',
       weight: '700',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/Centima-Mono-W01-Bold.woff2',
+      path: 'fonts/centima/Centima-Mono-W01-Bold.woff2',
       weight: '700',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/CentimaProSans-Bold.woff',
+      path: 'fonts/centima/CentimaProSans-Bold.woff',
       weight: '700',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/CentimaProSans-Bold.woff2',
+      path: 'fonts/centima/CentimaProSans-Bold.woff2',
       weight: '700',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/CentimaProSans-BoldItalic.woff2',
+      path: 'fonts/centima/CentimaProSans-BoldItalic.woff2',
       weight: '700',
       style: 'italic',
     },
     {
-      path: '/fonts/centima/CentimaProSans-Italic.woff2',
+      path: 'fonts/centima/CentimaProSans-Italic.woff2',
       weight: '400',
       style: 'italic',
     },
     {
-      path: '/fonts/centima/CentimaProSans.woff',
+      path: 'fonts/centima/CentimaProSans.woff',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/CentimaProSans.woff2',
+      path: 'fonts/centima/CentimaProSans.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/CentimaProSansLight-Italic.woff2',
+      path: 'fonts/centima/CentimaProSansLight-Italic.woff2',
       weight: '300',
       style: 'italic',
     },
     {
-      path: '/fonts/centima/CentimaProSansLight.woff2',
+      path: 'fonts/centima/CentimaProSansLight.woff2',
       weight: '300',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/CentimaProSerif-Bold.woff2',
+      path: 'fonts/centima/CentimaProSerif-Bold.woff2',
       weight: '700',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/CentimaProSerif-BoldItalic.woff2',
+      path: 'fonts/centima/CentimaProSerif-BoldItalic.woff2',
       weight: '700',
       style: 'italic',
     },
     {
-      path: '/fonts/centima/CentimaProSerif-Italic.woff2',
+      path: 'fonts/centima/CentimaProSerif-Italic.woff2',
       weight: '400',
       style: 'italic',
     },
     {
-      path: '/fonts/centima/CentimaProSerif.woff',
+      path: 'fonts/centima/CentimaProSerif.woff',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/CentimaProSerif.woff2',
+      path: 'fonts/centima/CentimaProSerif.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '/fonts/centima/CentimaProSerifLight-Italic.woff2',
+      path: 'fonts/centima/CentimaProSerifLight-Italic.woff2',
       weight: '300',
       style: 'italic',
     },
     {
-      path: '/fonts/centima/CentimaProSerifLight.woff2',
+      path: 'fonts/centima/CentimaProSerifLight.woff2',
       weight: '300',
       style: 'normal',
     },
@@ -280,11 +280,7 @@ export const bebasNeue = localFont({
       weight: '700',
       style: 'normal',
     },
-    {
-      path: 'fonts/BebasNeue/BebasNeuePro-Bolditalic.woff2',
-      weight: '700',
-      style: 'italic',
-    },
+
     {
       path: 'fonts/BebasNeue/BebasNeuePro-Book.woff2',
       weight: '300',
@@ -300,11 +296,7 @@ export const bebasNeue = localFont({
       weight: '700',
       style: 'normal',
     },
-    {
-      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedBolditalic.woff2',
-      weight: '700',
-      style: 'italic',
-    },
+
     {
       path: 'fonts/BebasNeue/BebasNeuePro-ExpandedBook.woff2',
       weight: '300',
