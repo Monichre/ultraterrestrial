@@ -150,3 +150,45 @@ $gradient-bottom-left: linear-gradient(315deg, #010000ff, #a8a3a4ff, #524f50ff, 
 $gradient-radial: radial-gradient(#010000ff, #a8a3a4ff, #524f50ff, #09080bff, #2f2826ff);
 
 */
+
+const gorgeous = [
+  '#1a1b1a',
+  '#222422',
+  '#5b555c',
+  '#ab98ac',
+  '#e9cfeb',
+  '#d1c7d2',
+  '#202024',
+  '#1e1e22',
+  '#395157',
+  '#5b9da7',
+  '#7fdce7',
+  '#a1d2d9',
+  '#080a08',
+  '#0c0e0b',
+  '#24403b',
+  '#3a867d',
+  '#58c5b7',
+  '#90cfbe',
+]
+
+const hueAestheticPAlette = [
+  '#2c1a25',
+  '#2a1823',
+  '#62382b',
+  '#af6633',
+  '#f09144',
+  '#eba47e',
+  '#0d0705',
+  '#0c0605',
+  '#493b37',
+  '#a1827a',
+  '#edc1b6',
+  '#ebccc3',
+  //
+  '#B26646',
+  '#D3A592',
+  '#DFBBAC',
+  '#B4816C',
+  '#CC8F76',
+]
