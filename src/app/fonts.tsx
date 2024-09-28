@@ -18,16 +18,7 @@ export const centimaSans = localFont({
       weight: '700',
       style: 'normal',
     },
-    {
-      path: 'fonts/centima/CentimaProSans-BoldItalic.woff2',
-      weight: '700',
-      style: 'italic',
-    },
-    {
-      path: 'fonts/centima/CentimaProSans-Italic.woff2',
-      weight: '400',
-      style: 'italic',
-    },
+
     {
       path: 'fonts/centima/CentimaProSans.woff',
       weight: '400',
@@ -53,11 +44,7 @@ export const centimaSans = localFont({
       weight: '700',
       style: 'normal',
     },
-    {
-      path: 'fonts/centima/CentimaProSerif-BoldItalic.woff2',
-      weight: '700',
-      style: 'italic',
-    },
+
     {
       path: 'fonts/centima/CentimaProSerif-Italic.woff2',
       weight: '400',
@@ -256,16 +243,6 @@ export const bebasNeue = localFont({
     },
 
     {
-      path: 'fonts/BebasNeue/BebasNeuePro-Book.woff2',
-      weight: '300',
-      style: 'normal',
-    },
-    {
-      path: 'fonts/BebasNeue/BebasNeuePro-Bookitalic.woff2',
-      weight: '300',
-      style: 'italic',
-    },
-    {
       path: 'fonts/BebasNeue/BebasNeuePro-ExpandedBold.woff2',
       weight: '700',
       style: 'normal',
@@ -276,11 +253,7 @@ export const bebasNeue = localFont({
       weight: '300',
       style: 'normal',
     },
-    {
-      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedBookitalic.woff2',
-      weight: '300',
-      style: 'italic',
-    },
+
     {
       path: 'fonts/BebasNeue/BebasNeuePro-ExpandedExtraBold.woff2',
       weight: '800',
