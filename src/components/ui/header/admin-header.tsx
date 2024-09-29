@@ -14,7 +14,7 @@ import {
 import { Input } from '../input'
 import { Button } from '../button'
 import AuthButton, { DropdownAuthButton } from '../../AuthButton'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/services/supabase/server'
 
 export default async function AdminHeader() {
   const supabase = createClient()

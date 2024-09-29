@@ -1,5 +1,5 @@
-import { UFO_VECTOR_DATA_STORE_ID } from '@/lib/openai'
-import { openai } from '@/lib/openai/openai.client'
+import { UFO_VECTOR_DATA_STORE_ID } from '@/services/openai'
+import { openai } from '@/services/openai/openai.client'
 import { writeLogToFile } from '@/utils'
 
 // Create a new assistant

@@ -1,7 +1,7 @@
 'use client'
 
 import { Graph } from '@/features/mindmap/graph'
-import type { NetworkGraphPayload } from '@/lib/xata'
+import type { NetworkGraphPayload } from '@/services/xata'
 
 import { MindMapProvider } from '@/providers/mindmap-context'
 import { ReactFlowProvider } from '@xyflow/react'

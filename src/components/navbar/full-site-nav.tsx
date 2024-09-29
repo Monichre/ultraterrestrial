@@ -1,7 +1,7 @@
 'use client'
 import React, { memo, useEffect, useState } from 'react'
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'
-import { Link } from 'next-view-transitions'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,6 +22,7 @@ import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { UltraterrestrialLogo } from '@/components/navbar/ut-logo'
 import { UltraLogoAlt } from '@/components/navbar/ut-logo-alt'
+import Link from 'next/link'
 
 const transition = {
   type: 'spring',
@@ -65,7 +66,8 @@ export const MenuItem = memo(
           <motion.p
             key={`${item}-p`}
             transition={{ duration: 0.3 }}
-            className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase  font-bebasNeue tracking-widest'
+            className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase !font-bebasNeuePro tracking-widest'
+            style={{ letterSpacing: '1px', fontWeight: 400 }}
           >
             {item}
           </motion.p>
@@ -125,7 +127,8 @@ export const HoveredLink = ({ children, ...rest }: any) => {
   return (
     <Link
       {...rest}
-      className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeue tracking-widest'
+      className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase !font-bebasNeuePro font-[500]'
+      style={{ letterSpacing: '1px', fontWeight: 400 }}
     >
       {children}
     </Link>
@@ -197,7 +200,7 @@ export function DropdownMenuDemo({ isAdmin }: any) {
           <DropdownMenuItem>
             <SignInButton>
               <Button
-                className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeue tracking-widest'
+                className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeuePro tracking-widest'
                 variant='ghost'
               >
                 Sign In
@@ -348,7 +351,7 @@ export function FullSiteNav({ className }: { className?: string }) {
         {/* <SignedOut>
           <SignInButton>
             <Button
-              className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeue tracking-widest'
+              className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeuePro tracking-widest'
               variant='ghost'
             >
               Sign In

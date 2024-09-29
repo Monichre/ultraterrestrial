@@ -1,4 +1,4 @@
-import type { NetworkGraphPayload } from '@/lib/xata'
+import type { NetworkGraphPayload } from '@/services/xata'
 import { useState, useEffect } from 'react'
 
 type EntityGraphSchema = {

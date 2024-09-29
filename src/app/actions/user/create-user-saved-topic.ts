@@ -1,6 +1,6 @@
 'use server'
-import { getXataClient } from '@/lib/xata'
-import type { EventsRecord } from '@/lib/xata'
+import { getXataClient } from '@/services/xata'
+import type { EventsRecord } from '@/services/xata'
 import type { CreateUserSavedItemBase } from './actions.types'
 import { TopicsRecord } from '../../lib/xata/xata'
 const xata = getXataClient()

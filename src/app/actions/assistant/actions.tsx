@@ -1,7 +1,7 @@
 'use server'
 
-import { DISCLOSURE_ASSISTANT_ID } from '@/lib/openai/assistants/config'
-import { openai } from '@/lib/openai/openai.client'
+import { DISCLOSURE_ASSISTANT_ID } from '@/services/openai/assistants/config'
+import { openai } from '@/services/openai/openai.client'
 import { generateId } from 'ai'
 import { createAI, createStreamableUI, createStreamableValue } from 'ai/rsc'
 import { Message } from '@/features/ai/message'

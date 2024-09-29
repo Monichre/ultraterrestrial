@@ -35,6 +35,8 @@ import { truncate } from '@/utils/functions'
 import { useMindMap } from '@/providers'
 import { searchConnections } from '@/features/ai/search'
 import { ConnectionList } from '@/features/mindmap/connection-list'
+import { useEntityCardLogic } from '@/hooks'
+import { format } from 'date-fns'
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
@@ -82,31 +84,37 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   id,
   ...rest
 }) => {
-  const { getNode, updateNode } = useMindMap()
   const {
-    description,
-    latitude,
-    location,
-    longitude,
+    handleHoverLeave,
+    entity,
+    showMenu,
+    setShowMMenu,
+    bookmarked,
+    setBookmarked,
+    relatedDataPoints,
+    saveNote,
+    updateNote,
+    userNote,
+    connectionListConnections: connections,
+    handleHoverEnter,
+    findConnections,
+  } = useEntityCardLogic({ card: { ...data, id } })
+  const {
+    type,
+    color,
     photos,
     name,
-    color,
-    type,
-    label,
-    fill,
-    ...restOfData
-  } = data
-  console.log('restOfData: ', restOfData)
-  const node: any = {
-    id,
-    data,
-    type,
-  }
-  const date = dayjs(data?.date).format('DD.MM.YY')
-  const image: any = photos?.length
-    ? photos[0]
-    : { url: '/foofighters.webp', signedUrl: '/foofighters.webp' }
-  console.log('image: ', image)
+    date: unformattedDate,
+    role,
+    description,
+    location,
+    latitude,
+    longitude,
+  } = entity
+  const [image] = photos
+
+  const date = format(unformattedDate, 'MMM dd, yyyy')
+
   const [expand, setExpand] = useState(false)
   const toggle = useCallback(() => {
     // findConnections(node)
@@ -172,23 +180,6 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   // translate the tooltip
   const translateX = useSpring(useTransform(x, [-75, 75], [0, 0]), springConfig)
 
-  const [showTooltip, setShowTooltip] = useState(false)
-
-  const handleMouseEnter = () => {
-    console.log('handleMouseEnter: ', handleMouseEnter)
-    setShowTooltip(true)
-  }
-  const handleMouseLeave = () => {
-    setShowTooltip(false)
-  }
-
-  const handleMouseMove = (event: any) => {
-    console.log('event: ', event)
-
-    const halfWidth = event.target.offsetWidth / 2
-    const halfHeight = event.target.offsetHeight / 2
-    x.set(event.nativeEvent.offsetX - halfWidth) // set the x value, which is then used in transform and rotate
-  }
   // const cardRef = useRef()
   // onMouseMove={handleMouseMove}
   // onMouseEnter={handleMouseEnter}
@@ -270,41 +261,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     restDelta: 0.001,
     restSpeed: 0.001,
   }
-  const { userId, sessionId, isLoaded }: any = useAuth()
-  const [connections, setConnections]: any = useState(null)
-  const searchRelatedDataPoints = useCallback(async () => {
-    const payload = await searchConnections({
-      id,
-      type,
-    })
-    console.log('payload: ', payload)
 
-    setConnections(payload.data)
-  }, [id, type])
-
-  const [bookmarked, setBookmarked] = useState(false)
-  const handleSave = async () => {
-    setBookmarked(true)
-    const model = objectMapToSingular[node?.type]
-    console.log('model: ', model)
-    const saved = await createUserSavedEvent({ userId, event: node.id, note })
-    console.log('saved: ', saved)
-    // #TODO: Run some save logic (BIG ASK. Loaded Feature with zero configuration in place)
-  }
-
-  useEffect(() => {
-    if (expand) {
-      const fullNode = getNode(id)
-      console.log('fullNode: ', fullNode)
-
-      const updated = updateNode(id, {
-        ...fullNode,
-        height: 1200,
-        width: 1500,
-      })
-      console.log('updated: ', updated)
-    }
-  }, [expand, getNode, id, updateNode])
   return (
     <AnimatedCard
       variants={{
@@ -391,12 +348,12 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
           </>
         )}
         <div className='relative z-10'>
-          <h2 className='text-white uppercase font-bebasNeue text-2xl tracking-wider'>
+          <h2 className='text-white uppercase font-bebasNeuePro text-2xl tracking-wider'>
             {animatedTitle}
           </h2>
 
           <p
-            className={`w-fit ${expand ? '' : ''} date text-1xl text-[#78efff] uppercase font-bebasNeue tracking-wider`}
+            className={`w-fit ${expand ? '' : ''} date text-1xl text-[#78efff] uppercase font-bebasNeuePro tracking-wider`}
           >
             [{date}]
           </p>
@@ -404,12 +361,12 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
         {expand && (
           <>
             <div className={`w-fit ${expand ? '' : 'ml-4'} `}>
-              <span className='text-1xl text-[#78efff] uppercase font-nunito text-white tracking-wider'>
+              <span className='text-1xl text-[#78efff] uppercase font-source text-white tracking-wider'>
                 {location}
               </span>
             </div>
             <div className={`w-fit ${expand ? '' : 'ml-4'} `}>
-              <span className='text-1xl text-[#78efff] uppercase font-nunito text-white tracking-wider'>
+              <span className='text-1xl text-[#78efff] uppercase font-source text-white tracking-wider'>
                 [{latitude}, {longitude}]
               </span>
             </div>
@@ -419,7 +376,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
 
       {expand && (
         <motion.p
-          className='relative z-10 text-xl font-nunito text-white text-left p-2 px-4'
+          className='relative z-10 text-xl font-source text-white text-left p-2 px-4'
           key={`${id}-additional-info`}
           initial='closed'
           variants={variants3}
@@ -439,7 +396,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
         >
       
           <motion.p
-            className='relative z-10 text-xl font-nunito text-white text-left'
+            className='relative z-10 text-xl font-source text-white text-left'
             key={`${id}-additional-info`}
             initial='closed'
             variants={variants3}
@@ -452,9 +409,9 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
         </motion.div>
       )} */}
       {connections && (
-        <ConnectionList originalNode={node} connections={connections} />
+        <ConnectionList originalNode={entity} connections={connections} />
       )}
-      {expand && (
+      {/* {expand && (
         <CardFooter className='absolute top-[10px] right-[10px] z-10 flex flex-row justify-center'>
           <div className='rounded-full border-slate-500'>
             <EntityCardUtilityMenu
@@ -464,7 +421,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
             />
           </div>
         </CardFooter>
-      )}
+      )} */}
     </AnimatedCard>
   )
 }

@@ -17,6 +17,8 @@ import { Button, ShinyButton } from '@/components/ui/button'
 import { AiAssistedSearch } from '@/features/ai'
 import { Dialog, DialogTrigger } from '@radix-ui/react-dialog'
 import { Separator } from '@/components/ui/separator'
+import { AddNote } from '@/components/note/AddNote'
+import { AddNoteFloatingPanelInput } from '@/features/mindmap/menus/mindmap-sidebar-quickmenu'
 
 export const MindMapEntityMenu = () => {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -217,7 +219,7 @@ export const MindMapEntityMenu = () => {
               >
                 <motion.div className='flex items-center justify-between align-middle content-center'>
                   {activeModel && (
-                    <h3 className='w-fit  font-bebasNeue text-white'>
+                    <h3 className='w-fit  font-bebasNeuePro text-white'>
                       {capitalize(activeModel)}
                     </h3>
                   )}
@@ -296,7 +298,7 @@ export const MindMapEntityMenu = () => {
                 </motion.div>
               )
             })}
-
+            {/* <AddNoteFloatingPanelInput /> */}
             {/* <motion.div className='h-10 center flex justify-center align-middle items-center transition-all duration-300'> */}
             {/* </motion.div> */}
           </motion.div>

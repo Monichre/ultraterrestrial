@@ -3,7 +3,6 @@ import React, { useState, useCallback, useMemo } from 'react'
 import { motion } from 'framer-motion'
 
 export const TimelineSidebar = React.memo(({ years }: any) => {
-  console.log('years: ', years)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [selected, setSelected] = useState<number | null>(null)
 
@@ -48,7 +47,6 @@ export const TimelineSidebar = React.memo(({ years }: any) => {
   return (
     <div className='flex flex-col justify-center'>
       {years.map((year, i) => {
-        console.log('year: ', year)
         const isSelected = selected === i
 
         return (

@@ -1,5 +1,5 @@
 'use client'
-import type { NetworkGraphPayload } from '@/lib/xata'
+import type { NetworkGraphPayload } from '@/services/xata'
 
 import { createContext, useContext } from 'react'
 

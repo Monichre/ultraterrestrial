@@ -1,7 +1,7 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
-import { TABLES } from '@/lib/xata'
+import { TABLES } from '@/services/xata'
 import { capitalize, truncate } from '@/utils/functions'
 import Image from 'next/image'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -51,7 +51,7 @@ const generateTableConfig = () => {
           cell: ({ row }: any) => {
             if (name === 'name') {
               return (
-                <p className='font-nunito tracking-wide text-sm !text-[#cffafe] w-[500px]'>
+                <p className='font-source tracking-wide text-sm !text-[#cffafe] w-[500px]'>
                   {capitalize(row.getValue(name))}
                 </p>
               )
@@ -63,7 +63,7 @@ const generateTableConfig = () => {
             }
             if (name === 'summary' || name === 'description') {
               return (
-                <p className='font-nunito tracking-wide font-light text-sm text-white w-[500px]'>
+                <p className='font-source tracking-wide font-light text-sm text-white w-[500px]'>
                   {truncate(row.getValue(name), 300)}
                 </p>
               )

@@ -32,7 +32,7 @@ export const LovecraftQuote = () => {
       <div className='text-white tracking-wide mx-auto p-8 text-center w-[800px]'>
         <BlurFade inView delay={0.25}>
           <h2
-            className='font-bebasNeue text-white text-bold text-center text-lg relative site-tagline'
+            className='font-bebasNeuePro text-white text-bold text-center text-lg relative site-tagline'
             style={{ letterSpacing: '2px' }}
           >
             Tracking the State of Disclosure
@@ -44,37 +44,23 @@ export const LovecraftQuote = () => {
           </i> */}
           </h2>
         </BlurFade>
-        <div className='mt-8 leading-7 w-[80%] mx-auto text-center'>
+        <div className='mt-8 leading-7 w-[80%] mx-auto text-center lovecraft'>
           {quoteLines.map((line: string, index: number) => (
             <BlurFade
               inView
-              className={'inline'}
+              className={'inline quote'}
               delay={index === 0 ? 0.5 : index * 0.5}
               key={`${line.replace(/ /g, '-')}-${index}`}
             >
-              {index === start && (
-                <span
-                  className={`!font-nunito lg:text-4xl 2xl:text-6xl font-bold inline relative h-0 top-[15px]`}
-                >
-                  "
-                </span>
-              )}
-              <span className='font-nunito text-white text-bold text-md lg:text-[14px] xl:text-[18px] 4xl:text-[22px] tracking-wider '>
+              <span className=' text-white text-md lg:text-[18px]  '>
                 {line}{' '}
               </span>
-              {index === end && (
-                <span
-                  className={`!font-nunito lg:text-4xl xl:text-6xl font-bold inline absolute h-0 bottom-[33px]`}
-                >
-                  "
-                </span>
-              )}
             </BlurFade>
           ))}
 
           <BlurFade inView className='block mt-4' delay={1} key={'Author'}>
             <span
-              className='font-bebasNeue text-white text-bold text-md lg:text-[14px] 4xl:text-[18px] relative site-tagline'
+              className='font-bebasNeuePro text-white text-bold text-md lg:text-[24px]  relative site-tagline'
               style={{ letterSpacing: '2px' }}
             >
               H.P. Lovecraft

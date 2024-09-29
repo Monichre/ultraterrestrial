@@ -32,7 +32,7 @@
 //   DialogTrigger,
 // } from '@/components/ui/dialog'
 // import { SuggestedSearchItem } from './SuggestedSearchItem'
-// import { addConversationToDisclosureAssistantMemory } from '@/lib/mem0'
+// import { addConversationToDisclosureAssistantMemory } from '@/services/mem0'
 // // import { useCompletion } from 'ai/react';
 
 // const CheckIcon = ({ className }: { className?: string }) => {
@@ -441,7 +441,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { SuggestedSearchItem } from './SuggestedSearchItem'
-import { addConversationToDisclosureAssistantMemory } from '@/lib/mem0'
+// import { addConversationToDisclosureAssistantMemory } from '@/services/mem0'
 
 const CheckIcon = ({ className }: { className?: string }) => (
   <svg
@@ -608,7 +608,7 @@ export function AiAssistedSearch() {
   const handleDialogChange = useCallback(
     async (isOpen: boolean) => {
       if (!isOpen && messages?.length) {
-        await addConversationToDisclosureAssistantMemory({ messages })
+        // await addConversationToDisclosureAssistantMemory({ messages })
       }
       setDialogOpen(isOpen)
     },

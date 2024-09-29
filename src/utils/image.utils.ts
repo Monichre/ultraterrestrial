@@ -1,4 +1,4 @@
-import type { CoreModel } from '@/lib/xata/models'
+import type { CoreModel } from '@/services/xata/models'
 
 export type ImageProps = {
   id: string

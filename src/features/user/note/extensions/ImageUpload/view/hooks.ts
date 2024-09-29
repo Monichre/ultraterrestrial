@@ -1,8 +1,12 @@
 import { DragEvent, useCallback, useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
-import { API } from '@/lib/api'
+import { API } from '@/services/api'
 
-export const useUploader = ({ onUpload }: { onUpload: (url: string) => void }) => {
+export const useUploader = ({
+  onUpload,
+}: {
+  onUpload: (url: string) => void
+}) => {
   const [loading, setLoading] = useState(false)
 
   const uploadFile = useCallback(
@@ -13,12 +17,13 @@ export const useUploader = ({ onUpload }: { onUpload: (url: string) => void }) =
 
         onUpload(url)
       } catch (errPayload: any) {
-        const error = errPayload?.response?.data?.error || 'Something went wrong'
+        const error =
+          errPayload?.response?.data?.error || 'Something went wrong'
         toast.error(error)
       }
       setLoading(false)
     },
-    [onUpload],
+    [onUpload]
   )
 
   return { loading, uploadFile }
@@ -34,7 +39,11 @@ export const useFileUpload = () => {
   return { ref: fileInput, handleUploadClick }
 }
 
-export const useDropZone = ({ uploader }: { uploader: (file: File) => void }) => {
+export const useDropZone = ({
+  uploader,
+}: {
+  uploader: (file: File) => void
+}) => {
   const [isDragging, setIsDragging] = useState<boolean>(false)
   const [draggedInside, setDraggedInside] = useState<boolean>(false)
 
@@ -74,13 +83,13 @@ export const useDropZone = ({ uploader }: { uploader: (file: File) => void }) =>
         }
       }
 
-      if (files.some(file => file.type.indexOf('image') === -1)) {
+      if (files.some((file) => file.type.indexOf('image') === -1)) {
         return
       }
 
       e.preventDefault()
 
-      const filteredFiles = files.filter(f => f.type.indexOf('image') !== -1)
+      const filteredFiles = files.filter((f) => f.type.indexOf('image') !== -1)
 
       const file = filteredFiles.length > 0 ? filteredFiles[0] : undefined
 
@@ -88,7 +97,7 @@ export const useDropZone = ({ uploader }: { uploader: (file: File) => void }) =>
         uploader(file)
       }
     },
-    [uploader],
+    [uploader]
   )
 
   const onDragEnter = () => {

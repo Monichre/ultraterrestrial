@@ -1,8 +1,8 @@
 'use server'
-import { getXataClient } from '@/lib/xata'
+import { getXataClient } from '@/services/xata'
 
 import type { CreateUserSavedItemBase } from './actions.types'
-import { TestimoniesRecord } from '@/lib/xata'
+import { TestimoniesRecord } from '@/services/xata'
 const xata = getXataClient()
 export interface CreateUserSavedTestimonyProps extends CreateUserSavedItemBase {
   testimony: TestimoniesRecord['id']

@@ -57,6 +57,7 @@ const config = {
         nunito: ['var(--font-nunito)'],
         sentient: ['var(--font-sentient)'],
         bebasNeue: ['var(--font-bebasNeue)'],
+        bebasNeuePro: ['var(--font-bebasNeuePro)'],
         commitMono: ['var(--font-commit-mono)'],
       },
       colors: {

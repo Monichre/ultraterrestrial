@@ -85,7 +85,7 @@ export const GraphNodeCard: React.FC<GraphNodeCardData> = ({
       {...rest}
     >
       <DotGridBackgroundBlack />
-      <CardHeader className='p-2 relative text-white uppercase font-bebasNeue text-lg tracking-wider'>
+      <CardHeader className='p-2 relative text-white uppercase font-bebasNeuePro text-lg tracking-wider'>
         {animatedTitle}
       </CardHeader>
       <CardContent className='relative z-20'>
@@ -96,7 +96,7 @@ export const GraphNodeCard: React.FC<GraphNodeCardData> = ({
         {/* <img src={photos[0].url} alt={photos[0].name} className='mt-2' /> */}
 
         <div className='mt-2'>
-          <p className='date text-[#78efff] font-bebasNeue tracking-wider'>
+          <p className='date text-[#78efff] font-bebasNeuePro tracking-wider'>
             {/* Date{new Date(date).toLocaleDateString()} */}
             {animatedDate}
           </p>

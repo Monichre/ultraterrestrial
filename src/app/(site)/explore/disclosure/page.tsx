@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { getEntityNetworkGraphData, NetworkGraphPayload } from '@/lib/xata'
+import { getEntityNetworkGraphData, NetworkGraphPayload } from '@/services/xata'
 import { auth } from '@clerk/nextjs/server'
 import { ClerkProvider, RedirectToSignIn, SignedIn } from '@clerk/nextjs'
 

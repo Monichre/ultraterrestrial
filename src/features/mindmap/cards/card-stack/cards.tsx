@@ -1,11 +1,11 @@
 'use client'
 
 import { AnimatedMiniCard } from '@/features/mindmap/cards/card-stack/animated-mini-card'
-import { MiniCard } from '@/features/mindmap/cards/card-stack/mini-card'
+import { MiniCard } from '@/features/mindmap/cards/mini-card'
 import { GraphCard } from '@/features/mindmap/cards/graph-card'
 import { LuxeCard } from '@/features/mindmap/cards/luxe-card'
 import { RootNodeCard } from '@/features/mindmap/cards/root-node-card'
-import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion'
+import { motion, useMotionValue, useTransform } from 'framer-motion'
 
 import React, { useCallback, useEffect, useState } from 'react'
 

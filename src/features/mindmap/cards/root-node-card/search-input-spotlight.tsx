@@ -58,7 +58,7 @@ export const InputBorderSpotlight = ({
           }}
           value={value}
           onChange={onChange}
-          className='h-8 w-full cursor-default rounded-lg bg-neutral-950 p-3.5 text-slate-100 transition-colors duration-500 placeholder:select-none placeholder:text-neutral-500 placeholder:text-sm placeholder:font-nunito focus:border focus:border-[rgb(207_174_255)] focus:outline-none'
+          className='h-8 w-full cursor-default rounded-lg bg-neutral-950 p-3.5 text-slate-100 transition-colors duration-500 placeholder:select-none placeholder:text-neutral-500 placeholder:text-sm placeholder:font-source focus:border focus:border-[rgb(207_174_255)] focus:outline-none'
         />
         <input
           ref={divRef}

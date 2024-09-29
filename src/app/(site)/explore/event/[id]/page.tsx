@@ -1,4 +1,4 @@
-import { getXataClient } from '@/lib/xata'
+import { getXataClient } from '@/services/xata'
 const xata = getXataClient()
 
 const record = await xata.db.events.read('rec_xyz')

@@ -3,7 +3,7 @@
 import { FC, useCallback, useRef, useMemo } from 'react'
 import { ForceGraph3D } from 'react-force-graph'
 import { JSONData } from '@xata.io/client'
-import type { NetworkGraphPayload } from '@/lib/xata/get-entity-network-graph-data'
+import type { NetworkGraphPayload } from '@/services/xata/get-entity-network-graph-data'
 // https://github.com/vasturiano/react-force-graph/blob/master/example/custom-node-shape/index-three.html
 
 export const EntityNetworkGraph3D: FC<any> = ({

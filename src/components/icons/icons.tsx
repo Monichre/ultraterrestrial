@@ -1435,3 +1435,174 @@ export const HandrawnArrowLeft = ({
     />
   </svg>
 )
+
+export const MinimizeIcon = ({ stroke, fill, className }: any) => {
+  return (
+    <svg
+      width='20'
+      height='9'
+      viewBox='0 0 20 9'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <g filter='url(#filter0_d_1_346)'>
+        <rect x='4' y='4' width='12' height='1' fill='#FA1E4E' />
+      </g>
+      <defs>
+        <filter
+          id='filter0_d_1_346'
+          x='0'
+          y='0'
+          width='20'
+          height='9'
+          filterUnits='userSpaceOnUse'
+          color-interpolation-filters='sRGB'
+        >
+          <feFlood flood-opacity='0' result='BackgroundImageFix' />
+          <feColorMatrix
+            in='SourceAlpha'
+            type='matrix'
+            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+            result='hardAlpha'
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation='2' />
+          <feColorMatrix
+            type='matrix'
+            values='0 0 0 0 0.980392 0 0 0 0 0.117647 0 0 0 0 0.305882 0 0 0 0.5 0'
+          />
+          <feBlend
+            mode='normal'
+            in2='BackgroundImageFix'
+            result='effect1_dropShadow_1_346'
+          />
+          <feBlend
+            mode='normal'
+            in='SourceGraphic'
+            in2='effect1_dropShadow_1_346'
+            result='shape'
+          />
+        </filter>
+      </defs>
+    </svg>
+  )
+}
+
+export const AddIconAlt = ({ stroke, fill, className }: any) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='21'
+      height='21'
+      viewBox='0 0 21 21'
+      fill='none'
+    >
+      <g filter='url(#filter0_d_1_347)'>
+        <rect x='4' y='10' width='13' height='1' fill='#FA1E4E' />
+        <rect
+          x='11'
+          y='4'
+          width='13'
+          height='1'
+          transform='rotate(90 11 4)'
+          fill='#FA1E4E'
+        />
+      </g>
+      <defs>
+        <filter
+          id='filter0_d_1_347'
+          x='0'
+          y='0'
+          width='21'
+          height='21'
+          filterUnits='userSpaceOnUse'
+          color-interpolation-filters='sRGB'
+        >
+          <feFlood flood-opacity='0' result='BackgroundImageFix' />
+          <feColorMatrix
+            in='SourceAlpha'
+            type='matrix'
+            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+            result='hardAlpha'
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation='2' />
+          <feColorMatrix
+            type='matrix'
+            values='0 0 0 0 0.980392 0 0 0 0 0.117647 0 0 0 0 0.305882 0 0 0 0.5 0'
+          />
+          <feBlend
+            mode='normal'
+            in2='BackgroundImageFix'
+            result='effect1_dropShadow_1_347'
+          />
+          <feBlend
+            mode='normal'
+            in='SourceGraphic'
+            in2='effect1_dropShadow_1_347'
+            result='shape'
+          />
+        </filter>
+      </defs>
+    </svg>
+  )
+}
+
+export const GXLogo = ({ stroke, fill, className }: any) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='33'
+      height='33'
+      viewBox='0 0 33 33'
+      fill='none'
+    >
+      <g filter='url(#filter0_d_1_259)'>
+        <path
+          d='M24.0719 24.9057C22.7399 25.7798 21.217 26.2431 19.6637 26.2431C17.1213 26.2431 14.7107 25.0061 13.0502 22.8494C13.0442 22.842 13.0386 22.8352 13.0327 22.8278C11.759 21.3242 10.9983 19.1153 10.9459 16.7808L10.9456 16.2331C10.9983 13.885 11.759 11.6761 13.0499 10.1512C14.7107 7.99447 17.1216 6.75747 19.6637 6.75747C21.217 6.75747 22.7402 7.22075 24.0728 8.09548C26.4511 10.2398 27.8152 13.3 27.8152 16.5003C27.8152 19.7009 26.4508 22.7614 24.0719 24.9057ZM15.9605 27.8021C9.91832 27.5186 5.18485 22.5543 5.18485 16.5003C5.18485 10.2611 10.2607 5.18486 16.5111 5.18516C16.5138 5.18516 16.5395 5.18545 16.5425 5.18545C17.5322 5.18901 18.5079 5.32201 19.4475 5.57527C16.6151 5.64281 13.9518 7.03828 12.1284 9.40712C10.6825 11.1136 9.81968 13.5921 9.76103 16.2198V16.7941C9.81968 19.4026 10.679 21.8763 12.1195 23.5831C13.9595 25.9665 16.6198 27.3578 19.4483 27.4253C18.3239 27.7286 17.1308 27.8578 15.9605 27.8021ZM24.8311 7.18224C22.5509 5.14191 19.6089 4.01214 16.5339 4.00059C16.5301 4.0003 16.5037 4 16.5001 4C9.60759 4 4 9.60766 4 16.5003C4 23.1883 9.22933 28.6727 15.9057 28.9858C16.1026 28.995 16.3008 29 16.5001 29C19.5772 29 22.5349 27.8711 24.8276 25.8207L24.8302 25.8189C27.4801 23.4486 29 20.0522 29 16.5003C29 12.9487 27.4804 9.55226 24.8311 7.18224Z'
+          fill='#FA1E4E'
+        />
+        <path
+          d='M18.791 8.62598C21.0209 10.058 22 13.0524 22 16.5163C22 19.9802 21.0209 22.9749 18.791 24.4066C22 24.4066 24 20.7288 24 16.5163C24 12.3038 22 8.62598 18.791 8.62598Z'
+          fill='#FA1E4E'
+        />
+      </g>
+      <defs>
+        <filter
+          id='filter0_d_1_259'
+          x='0'
+          y='0'
+          width='33'
+          height='33'
+          filterUnits='userSpaceOnUse'
+          color-interpolation-filters='sRGB'
+        >
+          <feFlood flood-opacity='0' result='BackgroundImageFix' />
+          <feColorMatrix
+            in='SourceAlpha'
+            type='matrix'
+            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+            result='hardAlpha'
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation='2' />
+          <feColorMatrix
+            type='matrix'
+            values='0 0 0 0 0.980392 0 0 0 0 0.117647 0 0 0 0 0.305882 0 0 0 0.5 0'
+          />
+          <feBlend
+            mode='normal'
+            in2='BackgroundImageFix'
+            result='effect1_dropShadow_1_259'
+          />
+          <feBlend
+            mode='normal'
+            in='SourceGraphic'
+            in2='effect1_dropShadow_1_259'
+            result='shape'
+          />
+        </filter>
+      </defs>
+    </svg>
+  )
+}

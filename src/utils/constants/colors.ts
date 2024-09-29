@@ -20,6 +20,11 @@ export const paletteAltTwo = {
   smoke: `#130F0E`,
   silver: `#C5CBCC`,
 }
+export const EVENTS_GREEN = `#79FFE1`
+export const SME_BLUE = `#27F1FF`
+export const TESTIMONIES_RED = `#FA1E4E`
+export const TOPICS_PINK = `#E393E6`
+export const ORGANIZATIONS_PURPLE = `#7c89b9`
 
 export const NEONS = {
   pink: `#E393E6`,
@@ -30,11 +35,11 @@ export const NEONS = {
 }
 
 export const DOMAIN_MODEL_COLORS: any = {
-  topics: NEONS.pink,
-  events: NEONS.green,
-  personnel: NEONS.blue,
-  organizations: NEONS.yellow,
-  testimonies: NEONS.pink,
+  topics: TOPICS_PINK,
+  events: EVENTS_GREEN,
+  personnel: SME_BLUE,
+  organizations: ORGANIZATIONS_PURPLE,
+  testimonies: TESTIMONIES_RED,
   root: '#27F1FF',
 }
 
@@ -130,6 +135,7 @@ const maybe = {
     'Cold Wave': '#c1e0e2',
   },
 }
+// 1px solid rgb(121, 255, 225)
 // Dark palette option
 /*
 $black: #010000ff;
@@ -192,3 +198,26 @@ const hueAestheticPAlette = [
   '#B4816C',
   '#CC8F76',
 ]
+const caseFilePalette = {
+  dark: '#06030D',
+  red: '#FA1E4E',
+  gradient:
+    'background: linear-gradient(270deg, #06030D 28.65%, rgba(6, 3, 13, 0.00) 100%)',
+}
+
+//--------------------------------------------------------------------------------------//
+//                                   Advanced Borders                                   //
+//--------------------------------------------------------------------------------------//
+
+/* 
+.gradient-border {
+  border: 10px solid;
+  border-image: linear-gradient(45deg, #FA1E4E, rgba(0,0,0,0.5)) 1;
+}
+
+.image-border {card
+  border: 10px solid transparent;
+  border-image: url('border-image.png') 30 round;
+}
+
+*/
