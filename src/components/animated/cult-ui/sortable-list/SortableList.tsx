@@ -155,7 +155,7 @@ function SortableListItem({
                     >
                       <p
                         className={cn(
-                          'font-nunito text-white tracking-wide text-[12px] w-full'
+                          'font-source text-white tracking-wide text-[12px] w-full'
                         )}
                       >
                         {item?.name}

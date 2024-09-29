@@ -3,7 +3,7 @@
 // import { useState, createRef, useEffect } from 'react'
 // import { Canvas } from '@react-three/fiber'
 // import { Nodes, Node } from './nodes'
-// import { getConnectionModels } from '@/lib/xata/models'
+// import { getConnectionModels } from '@/services/xata/models'
 import { ThreeDGraph } from './3d-graph'
 import { TrackballControls, OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'

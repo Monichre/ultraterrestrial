@@ -353,15 +353,15 @@
 //               <div className='absolute left-10 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px ' />
 
 //               <div className='font-bold text-white relative z-30'>
-//                 <h3 className='font-bebasNeue text-left'>
+//                 <h3 className='font-bebasNeuePro text-left'>
 //                   {hoverInfo?.properties.city}, {hoverInfo.properties.state}
 //                 </h3>
 //               </div>
 //               <div className=''>
-//                 <p className='text-white text-xs font-nunito'>
+//                 <p className='text-white text-xs font-source'>
 //                   {format(hoverInfo?.properties.date, 'MMMM d, yyyy')}
 //                 </p>
-//                 <p className='text-white text-xs font-nunito lowercase'>
+//                 <p className='text-white text-xs font-source lowercase'>
 //                   {hoverInfo.properties.comments}
 //                 </p>
 //               </div>
@@ -807,15 +807,15 @@
 //                 <div className='absolute left-10 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px ' />
 
 //                 <div className='font-bold text-white relative z-30'>
-//                   <h3 className='font-bebasNeue text-left'>
+//                   <h3 className='font-bebasNeuePro text-left'>
 //                     {hoverInfo?.properties.city}, {hoverInfo.properties.state}
 //                   </h3>
 //                 </div>
 //                 <div className=''>
-//                   <p className='text-white text-xs font-nunito'>
+//                   <p className='text-white text-xs font-source'>
 //                     {/* {format(hoverInfo?.properties.date, 'MMMM d, yyyy')} */}
 //                   </p>
-//                   <p className='text-white text-xs font-nunito lowercase'>
+//                   <p className='text-white text-xs font-source lowercase'>
 //                     {hoverInfo.properties.comments}
 //                   </p>
 //                 </div>

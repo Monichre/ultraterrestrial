@@ -36,7 +36,7 @@ export const BlurIn = ({
       variants={defaultVariants}
       className={cn(
         className,
-        'font-nunito text-center font-bold tracking-[-0.02em] drop-shadow-sm md:leading-[5rem] !text-black'
+        'font-source text-center font-bold tracking-[-0.02em] drop-shadow-sm md:leading-[5rem] !text-black'
       )}
     >
       {word}

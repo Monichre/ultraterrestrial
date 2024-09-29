@@ -1,4 +1,4 @@
-import { getEntityNetworkGraphData, NetworkGraphPayload } from '@/lib/xata'
+import { getEntityNetworkGraphData, NetworkGraphPayload } from '@/services/xata'
 
 import { Suspense } from 'react'
 import { EntityNetworkGraph3D } from '@/features/3d/entity-network-graph-3d'

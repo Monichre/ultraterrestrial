@@ -11,7 +11,7 @@ import {
   useSelection,
 } from 'reagraph'
 
-import { TopicPersonnelAndEventGraphDataPayload } from '@/lib/xata'
+import { TopicPersonnelAndEventGraphDataPayload } from '@/services/xata'
 import {
   MeshReflectorMaterial,
   Image,

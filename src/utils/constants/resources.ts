@@ -1,4 +1,4 @@
-export const REMOTE_RESOURCES = [
+export const EXTERNAL_RESOURCES = [
   'https://www.ufos.wiki/',
   'https://anomalien.com',
   'https://enigmalabs.io/',

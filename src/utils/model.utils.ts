@@ -83,8 +83,20 @@ export const extractCoordinatesFromEvents = (events: any[]) => {
   return events.map((event) => {
     const { latitude, longitude, id, ...rest } = event
     return {
-      id,
       location: [latitude, longitude],
+      size: 0.02,
     }
   })
 }
+
+// Function to generate a random color in hex format
+const randomColor = () => {
+  const letters = '0123456789ABCDEF'
+  let color = '#'
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}
+
+// Function to generate dummy data for the card schema

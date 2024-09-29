@@ -3,33 +3,24 @@
 import { ScanSearch } from 'lucide-react'
 import React, { memo, useState, type FunctionComponent } from 'react'
 
-import { BookmarkIcon, BookmarkFilledIcon } from '@radix-ui/react-icons'
-
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
-
 import { AddNote } from '@/components/note/AddNote'
 import { Button } from '@/components/ui/button/button'
 
 interface EntityCardUtilityMenuProps {
-  handleSave: any
+  updateNote: any
   bookmarked: boolean
 
   saveNote: any
   userNote: any
-  findConnectedDataPointsAndRenderTheirNodes?: any
+  findConnections?: any
 }
 
 export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
-  handleSave,
+  updateNote,
   userNote,
   bookmarked,
   saveNote,
-  findConnectedDataPointsAndRenderTheirNodes,
+  findConnections,
 }) => {
   const gradientOne =
     'bg-[radial-gradient(50%_86.9%_at_50%_100%,_rgba(255,_255,_255,_0.2)_0%,_rgba(255,_255,_255,_0)_100%)] bg-black'
@@ -38,11 +29,8 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
 
   return (
     <>
-      {findConnectedDataPointsAndRenderTheirNodes && (
-        <Button
-          variant='ghost'
-          onClick={findConnectedDataPointsAndRenderTheirNodes}
-        >
+      {findConnections && (
+        <Button variant='ghost' onClick={findConnections}>
           <ScanSearch className='h-5 w-5 text-white stroke-1' />
         </Button>
       )}

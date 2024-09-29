@@ -1,4 +1,4 @@
-import renderToCanvas from '@/lib/3d/helpers/render-to-canvas'
+import renderToCanvas from '@/services/3d/helpers/render-to-canvas'
 import * as THREE from 'three'
 
 export default async function renderToSprite(

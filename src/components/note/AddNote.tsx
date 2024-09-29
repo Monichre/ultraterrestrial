@@ -57,15 +57,12 @@ export const AddNote = ({ saveNote, userNote }: any) => {
       <div className='relative flex items-center justify-center'>
         <motion.button
           key='button'
-          layoutId={`popover-${uniqueId}`}
+          layoutId={`popover-note`}
           // className='flex h-9 items-center border border-zinc-950/10 px-3 text-zinc-950 dark:border-zinc-50/10 '
 
           onClick={openMenu}
         >
-          <motion.span
-            layoutId={`popover-label-${uniqueId}`}
-            className='text-sm'
-          >
+          <motion.span layoutId={`popover-label-note`} className='text-sm'>
             <Button variant='ghost' size='icon'>
               <Pencil2Icon className='h-5 w-5 text-white stroke-1' />
             </Button>
@@ -76,14 +73,14 @@ export const AddNote = ({ saveNote, userNote }: any) => {
           {isOpen && (
             <motion.div
               ref={formContainerRef}
-              layoutId={`popover-${uniqueId}`}
+              layoutId={`popover-note`}
               className='absolute z-50 h-[250px] w-[364px] overflow-hidden outline-none dark:bg-black border border-white/60 dark:border-white/30 rounded-[calc(var(--radius))] text-white bottom-0 left-auto '
               style={{
                 borderRadius: 12,
               }}
             >
               <motion.span
-                layoutId={`popover-label-${uniqueId}`}
+                layoutId={`popover-label-note`}
                 aria-hidden='true'
                 style={{
                   opacity: note ? 0 : 1,

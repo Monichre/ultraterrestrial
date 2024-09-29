@@ -1,15 +1,7 @@
 'use client'
 
-import { createUserSavedEvent } from '@/app/actions/user/create-user-saved-event'
-
-import {
-  searchAndEnrichConnections,
-  searchConnections,
-} from '@/features/ai/search'
 import { EntityCardUtilityMenu } from '@/features/mindmap/cards/entity-card'
 import { DOMAIN_MODEL_COLORS, objectMapToSingular, truncate } from '@/utils'
-import { useAuth } from '@clerk/nextjs'
-import { ScrollArea } from '@radix-ui/react-scroll-area'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -35,39 +27,28 @@ import {
   DialogContent,
   DialogClose,
 } from '@radix-ui/react-dialog'
-
-const dayjs = require('dayjs')
-const utc = require('dayjs/plugin/utc')
-dayjs.extend(utc)
+import { useEntityCardLogic } from '@/hooks'
+import { format } from 'date-fns'
 
 export function GraphCard({ card }: any) {
-  const { addChildNodesFromSearch, addConnectionNodesFromSearch } = useMindMap()
-
   const {
-    description,
-    latitude,
-    location,
-    longitude,
-    photos,
-    photo,
-    name,
-    role,
-    date: unformatted,
-    color,
-    type,
-    label,
-    fill,
-    id,
-  } = card
-
-  const date = dayjs(unformatted?.date).format('MMM DD, YYYY')
-  const image: any = photos?.length
-    ? photos[0]
-    : photo?.length
-      ? photo[0]
-      : { url: '/foofighters.webp', signedUrl: '/foofighters.webp' }
-
-  image.src - image.url
+    handleHoverLeave,
+    entity,
+    showMenu,
+    setShowMMenu,
+    bookmarked,
+    setBookmarked,
+    relatedDataPoints,
+    saveNote,
+    updateNote,
+    userNote,
+    connectionListConnections,
+    handleHoverEnter,
+    findConnections,
+  } = useEntityCardLogic({ card })
+  const { type, color, photos, name, date: unformattedDate, role } = entity
+  const date = unformattedDate ? format(unformattedDate, 'MMMM d, yyyy') : ''
+  const [image] = photos
 
   // const [animatedTitle, setAnimatedTitle] = useState<string>('')
   // const [animatedDate, setAnimatedDate] = useState<string>('')
@@ -109,74 +90,6 @@ export function GraphCard({ card }: any) {
   //   }
   // }, [date, date.length, i, name, t, titleFinished])
 
-  // !IMPORTANT: This is for the connectionList UI only
-  const [connectionListConnections, setConnectionListConnections]: any =
-    useState()
-
-  const [userNote, setUserNote] = useState({
-    title: '',
-    content: '',
-  })
-
-  const saveNote = ({ title, content }: any) => {
-    setUserNote({ title, content })
-  }
-
-  const { userId, sessionId, isLoaded }: any = useAuth()
-  const [relatedDataPoints, setRelatedDataPoints]: any = useState(null)
-
-  const searchRelatedDataPointsForConnectionList = useCallback(async () => {
-    const payload = await searchConnections({
-      id,
-      type,
-    })
-
-    setRelatedDataPoints(payload.data)
-  }, [id, type])
-
-  const findConnectedDataPointsAndRenderTheirNodes = async () => {
-    // const payload = await searchAndEnrichConnections({
-    //   subject: node,
-    //   type,
-    // })
-
-    const payload = await searchConnections({
-      id,
-      type,
-    })
-    const searchResults = payload.data
-
-    const res = addConnectionNodesFromSearch({ source: card, searchResults })
-
-    //
-  }
-
-  const [bookmarked, setBookmarked] = useState(false)
-
-  const handleSave = async () => {
-    setBookmarked(true)
-    const model = objectMapToSingular[card?.type]
-
-    const saved = await createUserSavedEvent({
-      userId,
-      event: card.id,
-      userNote,
-    })
-
-    // #TODO: Run some save logic (BIG ASK. Loaded Feature with zero configuration in place)
-  }
-  {
-    /* <div class="absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div> */
-  }
-
-  const [showMenu, setShowMMenu] = useState(false)
-  const handleHoverEnter = () => {
-    setShowMMenu(true)
-  }
-  const handleHoverLeave = () => {
-    setShowMMenu(false)
-  }
-
   const modelColor = DOMAIN_MODEL_COLORS[type]
 
   const [activeIndex, setActiveIndex] = useState(0)
@@ -188,7 +101,7 @@ export function GraphCard({ card }: any) {
     {
       title: 'Details',
       render: () => (
-        <div className='mt-4 text-sm text-white font-nunito'>
+        <div className='mt-4 text-sm text-white font-source'>
           <p>{truncate(card?.description, 400)}</p>
         </div>
       ),
@@ -201,7 +114,7 @@ export function GraphCard({ card }: any) {
       ),
 
       onClick: () => {
-        handleSave()
+        saveNote()
         setShowMMenu(false)
       },
     },
@@ -215,29 +128,15 @@ export function GraphCard({ card }: any) {
       <div
         className={`relative z-50 rounded-[calc(var(--radius)-2px)] p-[1px] bg-black w`}
         style={{ border: `1px solid ${color}` }}
-        onMouseEnter={handleHoverEnter}
-        onMouseLeave={handleHoverLeave}
       >
-        <AnimatePresence>
-          {showMenu && (
-            <motion.div
-              className='flex justify-center items-center w-full absolute bg-transparent w-auto top-0 left-0'
-              animate={{ opacity: 1, top: -50 }}
-              initial={{ opacity: 0, top: 50 }}
-              exit={{ opacity: 0, top: 50 }}
-            >
-              <EntityCardUtilityMenu
-                handleSave={handleSave}
-                saveNote={saveNote}
-                userNote={userNote}
-                bookmarked={bookmarked}
-                findConnectedDataPointsAndRenderTheirNodes={
-                  findConnectedDataPointsAndRenderTheirNodes
-                }
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <EntityCardUtilityMenu
+          updateNote={updateNote}
+          saveNote={saveNote}
+          userNote={userNote}
+          bookmarked={bookmarked}
+          findConnections={findConnections}
+        />
+
         <motion.div
           transition={{
             type: 'spring',
@@ -277,7 +176,7 @@ export function GraphCard({ card }: any) {
 
                 <motion.div>
                   <h2
-                    className='text-white font-bebasNeue text-xl whitespace-normal w-fit capitalize '
+                    className='text-white font-bebasNeuePro text-xl whitespace-normal w-fit capitalize '
                     style={{ textWrap: 'pretty' }}
                   >
                     {name}
@@ -285,10 +184,10 @@ export function GraphCard({ card }: any) {
                 </motion.div>
 
                 <motion.div className=''>
-                  <p className='font-nunito text-white tracking-wider '>
+                  <p className='font-source text-white tracking-wider '>
                     {card?.location || truncate(role, 50)}
                   </p>
-                  <p className='date text-1xl text-[#78efff] text-uppercase font-bebasNeue tracking-wider w-auto ml-auto mt-1'>
+                  <p className='date text-1xl text-[#78efff] text-uppercase font-bebasNeuePro tracking-wider w-auto ml-auto mt-1'>
                     {type === 'personnel' && card?.credibility
                       ? `Credibility Score: ${card?.credibility}`
                       : type === 'personnel' && card.rank
@@ -319,7 +218,7 @@ export function GraphCard({ card }: any) {
                     </div>
                     <div className='relative h-auto'>
                       <div className='flex w-full justify-between'>
-                        <h2 className='text-white font-bebasNeue tracking-wider uppercase'>
+                        <h2 className='text-white font-bebasNeuePro tracking-wider uppercase'>
                           {name}
                         </h2>
 
@@ -327,13 +226,13 @@ export function GraphCard({ card }: any) {
                       
                       </div>
 
-                      <p className='font-light text-[#78efff] font-bebasNeue tracking-wider mt-2 text-sm'>
+                      <p className='font-light text-[#78efff] font-bebasNeuePro tracking-wider mt-2 text-sm'>
                         {date}
                       </p>
-                      <p className='font-light text-[#78efff] font-bebasNeue tracking-wider mt-2 text-sm'>
+                      <p className='font-light text-[#78efff] font-bebasNeuePro tracking-wider mt-2 text-sm'>
                         {location}
                       </p>
-                      <p className='font-light text-[#78efff] font-bebasNeue tracking-wider mt-2 text-sm'>
+                      <p className='font-light text-[#78efff] font-bebasNeuePro tracking-wider mt-2 text-sm'>
                         {latitude}, {longitude}
                       </p>
                     </div>
@@ -385,60 +284,3 @@ export function GraphCard({ card }: any) {
     </>
   )
 }
-
-// <div>
-//   <style
-//     dangerouslySetInnerHTML={{
-//       __html: "@media (max-width: 767px) {\n/* DivMagic Note: Tailwind does not support max-width. We will fix this soon. */\n\n#div-1 {\nposition: absolute !important; top: 0px !important; left: 100% !important; height: auto !important; width: 100% !important;\n}\n#div-2 {\nbottom: 28px !important; left: 1rem !important; max-width: calc(100% - 4rem) !important;\n}\n}\n",
-//     }}
-//   />
-
-//   <div
-//     className="text-white bg-[linear-gradient(rgba(226,_232,_255,_0)_0%,_rgba(226,_232,_255,_0.12)_100%),_none] relative w-full h-16 border-2 border-white/[0.3] border-solid rounded-3xl overflow-hidden bg-zinc-800 md:mb-2  2xl:mb-3"
-//     id="div-1"
-//     style={{
-//       backgroundClip: "border-box, border-box",
-//     }}>
-//     <img className="left-1/2 absolute top-[12%] align-middle inline-block w-auto h-auto max-w-[85%] max-h-[60%]" src="https://www.premai.io/./assets/images/platform-ill.png" />
-
-//     <div className="bottom-[1.13rem] left-[2.00rem] absolute max-w-[calc(100%_-_4rem)]" id="div-2">
-//       <div className="text-lg font-medium">For Developers</div>
-
-//       <div className="text-gray-200 text-xs overflow-hidden">An intuitive, user-friendly development platform for building generative AI solutions with ease.</div>
-//     </div>
-
-//     <div className="absolute right-[2.00rem] top-[0.75rem] w-11 h-11 rounded-full font-medium">
-//       <a className="items-center justify-center relative text-center inline-flex w-11 h-11 rounded-full" href="https://www.premai.io/?ref=therundown#platform?ref=therundown">
-//         <div className="cursor-pointer left-0 absolute top-0 z-[2] w-full h-full">
-//           <div className="left-0 absolute top-0 z-[3] w-full h-full">
-//             <div className="left-0 absolute top-0 w-full h-full">
-//               <svg className="w-full h-full" fill="none" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
-//                 <circle cx="21" cy="21" fill='url("#paint0_linear_274_4534")' r="20.5" stroke='url("#paint1_linear_274_4534")' transform="rotate(-180 21 21)" />
-
-//                 <defs fill="none">
-//                   <linearGradient fill="none" gradientUnits="userSpaceOnUse" x1="21" x2="21" y1="0" y2="42">
-//                     <stop fill="none" stopColor="#E2E8FF" stopOpacity="0" />
-
-//                     <stop fill="none" offset="1" stopColor="#E2E8FF" stopOpacity=".12" />
-//                   </linearGradient>
-
-//                   <linearGradient fill="none" gradientUnits="userSpaceOnUse" x1="42" x2="-7.271" y1="42" y2="30.096">
-//                     <stop fill="none" stopColor="#fff" />
-
-//                     <stop fill="none" offset="1" stopColor="#fff" stopOpacity="0" />
-//                   </linearGradient>
-//                 </defs>
-//               </svg>
-//             </div>
-
-//             <div className="items-center justify-center left-0 absolute top-0 flex w-full h-full">
-//               <svg className="w-5 h-5" fill="none" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-//                 <path d="M10 4.16675V15.8334M10 4.16675L15 9.16675M10 4.16675L5 9.16675" fill="none" stroke="#fffffc" strokeLinecap="round" strokeLinejoin="round" />
-//               </svg>
-//             </div>
-//           </div>
-//         </div>
-//       </a>
-//     </div>
-//   </div>
-// </div>

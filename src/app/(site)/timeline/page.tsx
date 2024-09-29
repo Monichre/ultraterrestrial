@@ -1,8 +1,9 @@
 import { EventChronologyTimeline } from '@/layouts/timeline/EventChronologyTimeline'
-import { getXataClient } from '@/lib/xata'
+import { getXataClient } from '@/services/xata'
 const xata = getXataClient()
 export default async function Index() {
   const events: any = await xata.db.events
+
     .sort('date', 'desc')
     .select([
       'name',
@@ -22,6 +23,7 @@ export default async function Index() {
     ])
     .getAll()
     .then((data) => data.toSerializable())
+
   return (
     <div className='timeline-page'>
       <EventChronologyTimeline events={events} />

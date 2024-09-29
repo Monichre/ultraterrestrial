@@ -48,11 +48,11 @@ export const InAppNavbar = ({ color = 'black', links = navItems }: any) => {
             href={navItem.link}
             className={cn(
               textColor,
-              'relative items-center flex space-x-1 dark:hover:text-neutral-300 hover:text-neutral-500 uppercase text-sm !font-nunito tracking-wide'
+              'relative items-center flex space-x-1 dark:hover:text-neutral-300 hover:text-neutral-500 uppercase text-sm !font-source tracking-wide'
             )}
           >
             <span className='block sm:hidden'>{navItem.icon}</span>
-            <span className='hidden sm:block text-sm !font-nunito tracking-wide'>
+            <span className='hidden sm:block text-sm !font-source tracking-wide'>
               {navItem.name}
             </span>
           </Link>

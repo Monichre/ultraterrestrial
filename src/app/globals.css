@@ -3,8 +3,6 @@
 @tailwind utilities;
 @tailwind variants;
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=bebas-neue@400&f[]=nunito@400&display=swap');
 /* @import url('https://api.fontshare.com/v2/css?f[]=bebas-neue@400&f[]=nunito@400&f[]=nunito@400&display=swap'rel='stylesheet'); */
 
 @layer base {
@@ -245,7 +243,7 @@ body {
   min-block-size: 400vh;
   @apply bg-background text-foreground;
   /* font-family: 'JetBrains Mono', monospace; */
-  font-family: var(--font-nunito);
+  font-family: var(--font-source);
   /* var(--font-fira-code); */
 
   position: relative;
@@ -310,7 +308,7 @@ h3 {
 
 p {
   /* font-family: 'JetBrains Mono', monospace; */
-  font-family: var(--font-nunito);
+  font-family: var(--font-source) !important;
   /* 'Sentient', serif; */
 
   /* font-family: 'JetBrains Mono', monospace; */
@@ -411,8 +409,8 @@ h3,
   /* font-family: var(--font-ailerons); */
   font-family: var(--font-bebas-neue);
 }
-/* var(--font-nunito) */
-/* var(--font-nunito) */
+/* var(--font-source) */
+/* var(--font-source) */
 /* var(--font-commit-mono) */
 .header-style {
   letter-spacing: 1px;
@@ -645,8 +643,8 @@ a {
 
 td,
 td p {
-  font-family: var(--font-nunito);
-  /* var(--font-nunito); */
+  font-family: var(--font-source);
+  /* var(--font-source); */
 
   font-weight: 400;
   letter-spacing: 1px;
@@ -677,6 +675,13 @@ td p {
 
 .key-figures.fullsite-nav p {
   color: #fff !important;
+  font-family: var(--font-source);
+}
+
+.fullsite-nav p {
+  font-family: 'Bebas Neue Pro' !important;
+  /* font-weight: 700; */
+  font-size: 18px;
 }
 
 .react-flow__background {
@@ -700,7 +705,7 @@ td p {
 .ai-response-markup h4 {
   font-family: 'Bebas Neue', sans-serif;
   /* font-family: var(--font-bebas-neue); */
-  /* var(--font-nunito) */
+  /* var(--font-source) */
   /* font-size: 24px;
     line-height: 32px;
     font-weight: 400;
@@ -712,7 +717,7 @@ td p {
 .ai-response-markup p,
 .ai-response-markup ul li {
   /* font-family: 'Nunito', sans-serif; */
-  font-family: var(--font-nunito);
+  font-family: var(--font-source);
 }
 
 .react-flow__edges svg {
@@ -847,7 +852,8 @@ td p {
   width: 0.2em;
   height: 0.2em;
   border-radius: 1em;
-  background: #9dc3f7;
+  background: var(--accent-lines-clr);
+
   left: 0;
   right: 0;
   margin: auto;
@@ -927,7 +933,7 @@ td p {
   animation: accentload2 2s ease-out 2.4s forwards;
 }
 .accent-lines > div:nth-child(1) > div:nth-child(1)::before,
-.accent-lines > div:nth-child(1) > div:nth-child(1)::after {
+lo .accent-lines > div:nth-child(1) > div:nth-child(1)::after {
   opacity: 0;
   scale: 0;
   animation: accentload3 2s ease-out 2.4s forwards;
@@ -983,13 +989,41 @@ note .ai-response-markup h3,
 .ai-response-markup h4,
 .ai-response-markup h5,
 .ai-response-markup h6 {
-  font-family: var(--font-bebas-neue);
+  font-family: 'Bebas Neue Pro', sans-serif;
   font-weight: 400;
   letter-spacing: 1px;
 }
 
 .ai-response-markup p {
-  font-family: var(--font-nunito);
+  font-family: var(--font-source);
   font-weight: 400;
   letter-spacing: 1px;
+}
+.lovecraft > .quote span {
+  letter-spacing: 1px;
+  font-weight: 400;
+  font-family: 'Bebas Neue Pro', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.08rem;
+}
+
+.entity-group-card {
+}
+
+/* .entity-group-card::after {
+  border-left: 1px solid;
+  border-image: linear-gradient(to bottom, #fa1e4e, rgba(0, 0, 0, 0.3)) 1 100%;
+  border-top-left-radius: 50%;
+  /* border-radius: calc(2 * 50%) calc(2 * 50%) 0 0;
+  mask:
+    radial-gradient(100% 100% at 0 0, #fa1e4e 98%, rgba(0, 0, 0, 0.3)) 0 100% /
+      50% 50%,
+    radial-gradient(100% 100% at 100% 0, #fa1e4e 98%, rgba(0, 0, 0, 0.3)) 100%
+      100% / 50% 50%,
+    linear-gradient(rgba(0, 0, 0, 0.3) 0 0) padding-box;
+  mask-repeat: no-repeat; 
+} */
+
+.react-flow__node-entityGroupNodeChildTopics {
+  visibility: hidden !important;
 }

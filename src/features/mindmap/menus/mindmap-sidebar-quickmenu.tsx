@@ -9,7 +9,11 @@ import {
   FloatingPanelCloseButton,
   FloatingPanelContent,
   FloatingPanelFooter,
+  FloatingPanelForm,
+  FloatingPanelLabel,
   FloatingPanelRoot,
+  FloatingPanelSubmitButton,
+  FloatingPanelTextarea,
   FloatingPanelTrigger,
 } from '@/components/animated'
 import {
@@ -22,9 +26,11 @@ import {
   ThinTwinklyStar,
   TopicsIcon,
 } from '@/components/icons'
+import { AddNote } from '@/components/note/AddNote'
 import { Button } from '@/components/ui/button'
 import { OpenAILogo } from '@/components/ui/icons'
 import { useMindMap } from '@/providers/mindmap-context'
+import { Pencil2Icon } from '@radix-ui/react-icons'
 import {
   TooltipProvider,
   Tooltip,
@@ -125,6 +131,35 @@ const QuickActionsFloatingPanel = () => {
     </FloatingPanelRoot>
   )
 }
+export function AddNoteFloatingPanelInput() {
+  const handleSubmit = (note: string) => {
+    console.log('Submitted note:', note)
+  }
+
+  return (
+    <FloatingPanelRoot>
+      <FloatingPanelTrigger
+        title=''
+        className='flex items-center space-x-2 px-4 py-2 '
+      >
+        <Pencil2Icon className='h-5 w-5 text-white stroke-1' />
+      </FloatingPanelTrigger>
+
+      <FloatingPanelContent className='w-80'>
+        <FloatingPanelForm onSubmit={handleSubmit}>
+          <FloatingPanelBody>
+            <FloatingPanelLabel htmlFor='note-input'>Note</FloatingPanelLabel>
+            <FloatingPanelTextarea id='note-input' className='min-h-[100px]' />
+          </FloatingPanelBody>
+          <FloatingPanelFooter>
+            <FloatingPanelCloseButton />
+            <FloatingPanelSubmitButton />
+          </FloatingPanelFooter>
+        </FloatingPanelForm>
+      </FloatingPanelContent>
+    </FloatingPanelRoot>
+  )
+}
 
 export function MindMapSidebarQuickMenu() {
   const {
@@ -188,6 +223,9 @@ export function MindMapSidebarQuickMenu() {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
+      </div>
+      <div className='flex flex-col items-center'>
+        <AddNoteFloatingPanelInput />
       </div>
 
       <div className='flex flex-col items-center '>

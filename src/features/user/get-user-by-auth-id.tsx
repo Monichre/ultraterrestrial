@@ -1,4 +1,4 @@
-import { getXataClient } from '@/lib/xata'
+import { getXataClient } from '@/services/xata'
 import { clerkClient } from '@clerk/nextjs/server'
 const xata = getXataClient()
 

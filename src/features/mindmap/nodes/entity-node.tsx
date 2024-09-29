@@ -17,6 +17,7 @@ import { GraphCard } from '@/features/mindmap/cards/graph-card/graph-card'
 import { GraphNodeCard } from '@/components/ui/card/graph-node-card'
 import { BlurAppear } from '@/components/animated/animated-wrappers'
 import { useMindMap } from '@/providers'
+import { TopicCard } from '@/features/mindmap/cards/topic-card'
 
 interface Photo {
   id: string
@@ -36,7 +37,7 @@ const EN = memo((node: any) => {
   const updateNodeInternals = useUpdateNodeInternals()
   const [handles, setHandles]: any = useState([])
   const nodeData = useNodesData(node.id)
-  console.log('nodeData: ', nodeData)
+  const type = node.data.type
 
   useEffect(() => {
     if (node?.data?.handles && node.data?.handles.length) {
@@ -70,14 +71,24 @@ const EN = memo((node: any) => {
           ))
         : null}
       <Handle type='target' position={Position.Top} />
+      {type === 'topics' ? (
+        <TopicCard
+          card={{
+            id: node.id,
+            ...node.data,
+          }}
+          key={node.id}
+        />
+      ) : (
+        <GraphCard
+          card={{
+            id: node.id,
+            ...node.data,
+          }}
+          key={node.id}
+        />
+      )}
 
-      <GraphCard
-        card={{
-          id: node.id,
-          ...node.data,
-        }}
-        key={node.id}
-      />
       {/* <GraphNodeCard {...node} key={node.id} /> */}
     </BlurAppear>
   )

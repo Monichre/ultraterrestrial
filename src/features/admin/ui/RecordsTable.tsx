@@ -123,7 +123,7 @@ export function RecordsTable({
       <CardHeader>
         <CardTitle>
           <div className='flex justify-between'>
-            <h2 className='font-bebasNeue text-white uppercase tracking-wide font-medium text-xl'>
+            <h2 className='font-bebasNeuePro text-white uppercase tracking-wide font-medium text-xl'>
               {model}
             </h2>
             <div className='flex flex-col space-y-4'>
@@ -141,7 +141,7 @@ export function RecordsTable({
             <TableRow>
               {columns.map((column: any) => (
                 <TableHead
-                  className='font-bebasNeue uppercase font-medium !tracking-[1px] !text-white'
+                  className='font-bebasNeuePro uppercase font-medium !tracking-[1px] !text-white'
                   key={column.header}
                 >
                   {column.header}

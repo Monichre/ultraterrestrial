@@ -1,4 +1,4 @@
-import { getXataClient, searchRelatedRecords } from '@/lib/xata'
+import { getXataClient, searchRelatedRecords } from '@/services/xata'
 const xata: any = getXataClient()
 
 import { NextRequest, NextResponse } from 'next/server'
@@ -10,10 +10,10 @@ import {
 import {
   askDisclosureAgentToFindRelatedRecords,
   checkRelevanceWithAI,
-} from '@/lib/openai'
-import { filterConnectionsByRelevance } from '@/lib/openai/assistants/assistant.utils'
-import { rememberEntityConnections } from '@/lib/mem0'
-// import { checkRelevanceWithAI } from '@/lib/openai/assistants/disclosure'
+} from '@/services/openai'
+import { filterConnectionsByRelevance } from '@/services/openai/assistants/assistant.utils'
+import { rememberEntityConnections } from '@/services/mem0'
+// import { checkRelevanceWithAI } from '@/services/openai/assistants/disclosure'
 // const xata: any = getXataClient()
 
 export async function GET(request: NextRequest) {

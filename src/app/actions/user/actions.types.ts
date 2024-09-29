@@ -1,4 +1,4 @@
-import type { UserTheoriesRecord, EventsRecord } from '@/lib/xata'
+import type { UserTheoriesRecord, EventsRecord } from '@/services/xata'
 
 export interface CreateUserSavedItemBase {
   userId: string

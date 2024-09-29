@@ -12,9 +12,10 @@ import {
   NodeToolbar,
 } from '@xyflow/react'
 import { BlurAppear } from '@/components/animated'
-import { MiniCard } from '@/features/mindmap/cards/card-stack/mini-card'
+import { MiniCard } from '@/features/mindmap/cards/mini-card'
 import { createPortal } from 'react-dom'
 import { useMindMap } from '@/providers'
+import { useEntityCardLogic } from '@/hooks/useEntityCardLogic'
 
 interface Photo {
   id: string
@@ -33,7 +34,6 @@ const ENC = memo((node: any) => {
   const updateNodeInternals = useUpdateNodeInternals()
   const [handles, setHandles]: any = useState([])
   const nodeData = useNodesData(node.id)
-  console.log('nodeData: ', nodeData)
 
   useEffect(() => {
     if (node?.data?.handles && node.data?.handles.length) {
@@ -47,10 +47,6 @@ const ENC = memo((node: any) => {
     //   updateNodeInternals(node.id)
     // }
   }, [node, updateNodeInternals, nodeData])
-  const domNode: any = document.querySelector(
-    `.react-flow__node[data-id="${node.parentId}"]`
-  )
-  console.log('domNode: ', domNode)
 
   const markUp = (
     <BlurAppear

@@ -2,9 +2,9 @@ import { AssistantResponse } from 'ai'
 import {
   DISCLOSURE_ASSISTANT_ID,
   ENTITY_RELATION_RELEVANCE_THREAD_THREAD_ID,
-} from '@/lib/openai/config'
-import { openai } from '@/lib/openai/openai.client'
-import { searchDatabaseFunction } from '@/lib/openai/assistants/assistant.utils'
+} from '@/services/openai/config'
+import { openai } from '@/services/openai/openai.client'
+import { searchDatabaseFunction } from '@/services/openai/assistants/assistant.utils'
 
 export async function POST(req: Request) {
   const input: {

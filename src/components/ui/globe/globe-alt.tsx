@@ -6,10 +6,10 @@ import { Check, Copy } from 'lucide-react'
 import globeLight from './globe-light.svg'
 import globe2 from './globe.svg'
 import Typed from 'typed.js'
-
-export const Globeanime = ({ markers }) => {
-  const ref = useRef(null)
-  const typerRef = useRef(null)
+import { select, geoPath, geoMercator, min, max, scaleLinear } from 'd3'
+export const Globeanime = ({ markers }: any) => {
+  const ref: any = useRef(null)
+  const svgRef = useRef(null)
   const [copied, setCopied] = useState(false)
   const [darkMode, setDarkMode] = useState(false) // State to manage dark mode
 
@@ -25,13 +25,6 @@ export const Globeanime = ({ markers }) => {
   // const projection = geoMercator()
   //   .fitSize([width, height], selectedCountry || data)
   //   .precision(100);
-
-  const handleCopy = () => {
-    setCopied(true)
-    setTimeout(() => {
-      setCopied(false)
-    }, 1000)
-  }
 
   const dots = [
     {
@@ -138,10 +131,6 @@ export const Globeanime = ({ markers }) => {
     },
   ]
 
-  useEffect(() => {
-    animate()
-  }, [])
-
   const animate = () => {
     const tl = anime.timeline({
       loop: false,
@@ -178,6 +167,28 @@ export const Globeanime = ({ markers }) => {
     //   typed.destroy()
     // }
   }
+
+  useEffect(() => {
+    animate()
+    const svg = select(svgRef.current)
+
+    const { width, height } = ref?.current?.getBoundingClientRect()
+
+    // projects geo-coordinates on a 2D plane
+    const projection = geoMercator()
+      .fitSize(
+        [width, height],
+        markers.map((marker) => marker.location)
+      )
+      .precision(100)
+    console.log('projection: ', projection)
+
+    // takes geojson data,
+    // transforms that into the d attribute of a path element
+    const pathGenerator = geoPath().projection(projection)
+    console.log('pathGenerator: ', pathGenerator)
+    // .attr('d', (feature) => pathGenerator(feature))
+  }, [])
 
   // Function to toggle dark mode
   const toggleDarkMode = () => {
@@ -268,6 +279,7 @@ export const Globeanime = ({ markers }) => {
       {/* Globe background */}
 
       <Image
+        ref={svgRef}
         src={globeLight.src}
         alt='globe wireframe'
         width={400}

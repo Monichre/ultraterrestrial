@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getXataClient } from '@/lib/xata'
+import { getXataClient } from '@/services/xata'
 
 const xata: any = getXataClient()
 

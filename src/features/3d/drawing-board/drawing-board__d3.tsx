@@ -23,7 +23,7 @@ import { Spotlight } from '@/components/animated/spotlight'
 import { motion } from 'framer-motion'
 
 import { Flex, Box } from '@react-three/flex'
-import type { NetworkGraphPayload } from '@/lib/xata'
+import type { NetworkGraphPayload } from '@/services/xata'
 import {
   StarsCard,
   StarsCardTitle,

@@ -23,6 +23,7 @@ import {
   sentient,
   bebasNeue,
   commitMono,
+  bebasNeuePro,
 } from './fonts'
 import { FullSiteNav } from '@/components/navbar/full-site-nav'
 
@@ -49,7 +50,7 @@ export default function RootLayout({
       <ClerkProvider>
         <html lang='en' suppressHydrationWarning>
           <body
-            className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} dark`}
+            className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} ${bebasNeuePro.variable} dark`}
           >
             <ThemeProvider
               attribute='class'
