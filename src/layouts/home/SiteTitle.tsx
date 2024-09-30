@@ -56,7 +56,7 @@ export function SiteTitle(props: any) {
         // mt-auto
         className={`flex justify-center self-center align-center center w-full relative`}
       >
-        <TextEffect per='char' preset='fade' className={theClass}>
+        <TextEffect per='char' preset='fade' className={theClass} as='h1'>
           UltraTerrestrial
         </TextEffect>
         {/* <BlurFade inView delay={0.5} className='text-white'>

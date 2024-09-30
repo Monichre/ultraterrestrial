@@ -56,11 +56,13 @@ export const TimelineItem: React.FC<any> = ({
             <p className='text-white font-source tracking-wider text-xl mr-6'>
               {event.location}
             </p>
-            <TimelineToolTip
-              event={event}
-              onHover={updateActiveLocation}
-              coordinates={[event.latitude, event.longitude]}
-            />
+            {event?.latitude && event?.longitude && (
+              <TimelineToolTip
+                event={event}
+                onHover={updateActiveLocation}
+                coordinates={[event.latitude, event.longitude]}
+              />
+            )}
           </div>
         </div>
       ))}

@@ -10,23 +10,27 @@ import { TimelineSidebar } from '@/layouts/timeline/TimlineSidebarUI'
 import {
   extractCoordinatesFromEvents,
   extractUniqueYearsFromEvents,
+  locationToAngles,
 } from '@/utils'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { CodePenEarthAlt } from '@/features/data-viz'
+import { CodePenEarth, CodePenEarthAlt, Globe } from '@/features/data-viz'
 import { useScroll } from 'framer-motion'
 import { Globeanime } from '@/components/ui/globe/globe-alt'
 import { EventsGlobe } from '@/layouts/timeline/events-globe'
 
 export const EventChronologyTimeline = ({ events }: any) => {
   const years = extractUniqueYearsFromEvents(events)
-  const locations = extractCoordinatesFromEvents(events)
+  const locations = extractCoordinatesFromEvents(events, false)
   const [activeLocation, setActiveLocation] = useState(null)
+
   const updateActiveLocation = (location: any) => {
     console.log('location: ', location)
+    const [lat, lon] = location
+    // const temp = locationToAngles(lat, lon)
+    // console.log('temp: ', temp)
     setActiveLocation(location)
   }
-  console.log('locations: ', locations)
 
   const eventsByYear = useMemo(() => {
     const result: any = {}
@@ -53,10 +57,12 @@ export const EventChronologyTimeline = ({ events }: any) => {
         <ShootingStars />
         <StarsBackground />
         <div className='relative z-10 h-full w-full'>
-          {/* <Earth spin={false} /> */}
+          {/* <Earth spin={false} activeLocation={activeLocation} /> */}
+          {/* <Globe locations={locations} activeLocation={activeLocation} /> */}
           <EventsGlobe markers={locations} activeLocation={activeLocation} />
           {/* <EarthAtNight /> */}
-          {/* {locations && <CodePenEarthAlt locations={locations} />} */}
+          {/* <CodePenEarthAlt locations={locations} /> */}
+          {/* <CodePenEarth locations={locations} /> */}
         </div>
       </div>
 
