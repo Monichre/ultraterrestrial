@@ -5,6 +5,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { OrbitControls, Points, Stars } from '@react-three/drei'
 import * as THREE from 'three'
+// const [SphereInstances, Sphere] = createInstances()
 
 // Sample data: Array of [latitude, longitude] pairs
 const geoToCartesian = (lat: number, lon: number, radius: number) => {
@@ -20,20 +21,22 @@ const Particles = ({ data, radius }: any) => {
 
   useEffect(() => {
     if (meshRef.current && data.length > 0) {
-      data.forEach(({ location }: any, i: any) => {
-        const [lat, lon] = location
-
+      console.log('meshRef: ', meshRef)
+      data.forEach(({ lat, lng, ...rest }: any, i: any) => {
         // Convert latitude and longitude from degrees to radians
         const phi = (90 - lat) * (Math.PI / 180)
-        const theta = (lon + 180) * (Math.PI / 180)
+        const theta = (lng + 180) * (Math.PI / 180)
 
         // Convert spherical coordinates to Cartesian coordinates
-        const x = -radius * Math.sin(phi) * Math.cos(theta)
+        const x = radius * Math.sin(phi) * Math.cos(theta)
         const y = radius * Math.cos(phi)
         const z = radius * Math.sin(phi) * Math.sin(theta)
 
         // Create a position vector
-        const position = new THREE.Vector3(x, y, z)
+        // const position = new THREE.Vector3(x, y, z)
+        const position = new THREE.Vector3().setFromSpherical(
+          new THREE.Spherical(x, y, z)
+        )
 
         // Create a transformation matrix for the instance
         const matrix = new THREE.Matrix4()
@@ -41,12 +44,12 @@ const Particles = ({ data, radius }: any) => {
         matrix.setPosition(position)
 
         // Set the matrix for the current instance
-        meshRef?.current?.setMatrixAt(i, matrix.position)
-        console.log('meshRef: ', meshRef)
+        // meshRef?.current?.setMatrixAt(i, matrix)
+        // console.log('meshRef: ', meshRef)
       })
 
       // Update the instance matrix
-      // meshRef.current.instanceMatrix.needsUpdate = true
+      meshRef.current.instanceMatrix.needsUpdate = true
     }
   }, [data, radius, meshRef])
 

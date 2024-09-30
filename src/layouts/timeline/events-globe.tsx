@@ -1,15 +1,11 @@
 'use client'
+import { locationToAngles } from '@/utils'
 import createGlobe from 'cobe'
 import { useEffect, useRef, useState } from 'react'
 
 export function EventsGlobe({ markers, activeLocation }: any) {
   const canvasRef: any = useRef()
-  const locationToAngles = (lat, long) => {
-    return [
-      Math.PI - ((long * Math.PI) / 180 - Math.PI / 2),
-      (lat * Math.PI) / 180,
-    ]
-  }
+
   const [activeMarker, setActiveMarker] = useState(null)
 
   const focusRef: any = useRef([0, 0])

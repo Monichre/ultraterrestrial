@@ -7,10 +7,12 @@ import Image from 'next/image'
 import { motion } from 'framer-motion-3d'
 import * as THREE from 'three'
 
-const RotatingComponent = ({ spin }: any) => {
+const RotatingComponent = ({ spin, activeLocation }: any) => {
+  console.log('activeLocation: ', activeLocation)
   const earthRef: any = useRef<THREE.Mesh>(null!)
 
   useFrame((state, delta) => {
+    console.log('state: ', state)
     if (spin) {
       return (earthRef.current.rotation.y += delta / 10)
     }
@@ -29,7 +31,7 @@ const RotatingComponent = ({ spin }: any) => {
     </motion.mesh>
   )
 }
-export const Earth = forwardRef((props: any, ref: any) => {
+export const Earth = forwardRef(({ activeLocation }: any, ref: any) => {
   return (
     <Canvas ref={ref}>
       <ambientLight intensity={0.1} />
@@ -44,7 +46,7 @@ export const Earth = forwardRef((props: any, ref: any) => {
       //   />
       // }
       >
-        <RotatingComponent spin />
+        <RotatingComponent spin activeLocation={activeLocation} />
       </Suspense>
     </Canvas>
   )

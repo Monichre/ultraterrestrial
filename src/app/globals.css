@@ -496,7 +496,14 @@ a {
 .site-tagline {
   position: relative;
   width: fit-content;
-  margin: auto;
+  margin: 0 auto 32px;
+}
+
+.lovecraft-block h2,
+.lovecraft-block h3 {
+  font-family: '__bebasNeuePro_da5b0c';
+  -webkit-font-smoothing: antialiased;
+  font-weight: 700;
 }
 
 .site-tagline:after {
@@ -505,7 +512,7 @@ a {
   bottom: -8px;
   left: 45%;
   height: 2px;
-  width: 0;
+  width: 15px;
   background: #fff;
   transition: width 0.3s ease-in-out;
   transition-delay: 1s;
@@ -552,7 +559,7 @@ a {
     radial-gradient(at 63% 63%, rgb(6, 182, 212) 0, transparent 87%),
     radial-gradient(at 93% 5%, rgb(29, 78, 216) 0, transparent 74%);
 }
-.bg-2 {
+/* .bg-2 {
   background-color: rgb(236, 252, 203);
   background-image: radial-gradient(
       at 19% 46%,
@@ -562,9 +569,9 @@ a {
     radial-gradient(at 91% 72%, rgb(127, 29, 29) 0, transparent 41%),
     radial-gradient(at 77% 98%, rgb(56, 189, 248) 0, transparent 88%),
     radial-gradient(at 85% 30%, rgb(125, 211, 252) 0, transparent 18%),
-    radial-gradient(at 92% 76%, rgb(17, 24, 39) 0, transparent 99%),
     radial-gradient(at 57% 55%, rgb(248, 113, 113) 0, transparent 60%);
-}
+    radial-gradient(at 92% 76%, rgb(17, 24, 39) 0, transparent 99%);
+} */
 .bg-3 {
   background-color: rgb(207, 250, 254);
   background-image: radial-gradient(
@@ -999,13 +1006,13 @@ note .ai-response-markup h3,
   font-weight: 400;
   letter-spacing: 1px;
 }
-.lovecraft > .quote span {
+/* .lovecraft > .quote span {
   letter-spacing: 1px;
   font-weight: 400;
   font-family: 'Bebas Neue Pro', sans-serif;
   font-size: 20px;
   letter-spacing: 0.08rem;
-}
+} */
 
 .entity-group-card {
 }
