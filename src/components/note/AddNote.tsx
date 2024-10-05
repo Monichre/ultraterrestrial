@@ -1,13 +1,10 @@
 'use client'
-import * as React from 'react'
 
-import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
-import { ArrowLeftIcon, BookmarkIcon } from 'lucide-react'
-import { useRef, useState, useEffect, useId } from 'react'
-import { useClickOutside } from '@/hooks/useClickOutside'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { Pencil2Icon } from '@radix-ui/react-icons'
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
+import { ArrowLeftIcon, Lightbulb } from 'lucide-react'
+import { useId, useRef, useState } from 'react'
 
 const TRANSITION = {
   type: 'spring',
@@ -15,7 +12,7 @@ const TRANSITION = {
   duration: 0.3,
 }
 
-export const AddNote = ({ saveNote, userNote }: any) => {
+export const AddNote = ({ saveNote, userNote, children }: any) => {
   const uniqueId = useId()
   const formContainerRef = useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = useState(false)
@@ -34,40 +31,31 @@ export const AddNote = ({ saveNote, userNote }: any) => {
     setNote(null)
   }
 
-  useClickOutside(formContainerRef, () => {
+  const handleSubmit = () => {
+    handleSavingNote()
     closeMenu()
-  })
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        closeMenu()
-      }
-    }
-
-    document.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [])
+  }
 
   return (
     <MotionConfig transition={TRANSITION}>
       <div className='relative flex items-center justify-center'>
-        <motion.button
+        <motion.div
           key='button'
-          layoutId={`popover-note`}
+          layoutId={uniqueId}
           // className='flex h-9 items-center border border-zinc-950/10 px-3 text-zinc-950 dark:border-zinc-50/10 '
 
           onClick={openMenu}
         >
-          <motion.span layoutId={`popover-label-note`} className='text-sm'>
-            <Button variant='ghost' size='icon'>
-              <Pencil2Icon className='h-5 w-5 text-white stroke-1' />
-            </Button>
-          </motion.span>
-        </motion.button>
+          {children ? (
+            children
+          ) : (
+            <motion.span layoutId={`popover-label-note`} className='text-sm'>
+              <Button variant='ghost'>
+                <Lightbulb className='h-5 w-5 text-white stroke-1' />
+              </Button>
+            </motion.span>
+          )}
+        </motion.div>
 
         <AnimatePresence>
           {isOpen && (
@@ -96,7 +84,7 @@ export const AddNote = ({ saveNote, userNote }: any) => {
                 <input
                   className='w-full h-auto resize-none rounded-md bg-transparent text-sm outline-none !border-none'
                   value={noteTitle}
-                  onChange={(e) => setNoteTitle(e.target.value)}
+                  onChange={e => setNoteTitle(e.target.value)}
                   placeholder='Title'
                 />
 
@@ -104,7 +92,7 @@ export const AddNote = ({ saveNote, userNote }: any) => {
                   className='h-auto h-min-[180px] w-full resize-none rounded-md bg-transparent text-sm outline-none !border-none grow'
                   autoFocus
                   value={note}
-                  onChange={(e) => setNote(e.target.value)}
+                  onChange={e => setNote(e.target.value)}
                   placeholder='Note content'
                 />
                 <div
@@ -129,10 +117,7 @@ export const AddNote = ({ saveNote, userNote }: any) => {
                     // className='relative ml-1 flex h-8 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 bg-transparent px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] dark:border-zinc-50/10 dark:text-zinc-50 dark:hover:bg-zinc-800'
                     type='button'
                     aria-label='Submit note'
-                    onClick={() => {
-                      handleSavingNote()
-                      closeMenu()
-                    }}
+                    onClick={handleSubmit}
                   >
                     <span>Save</span>
                   </Button>

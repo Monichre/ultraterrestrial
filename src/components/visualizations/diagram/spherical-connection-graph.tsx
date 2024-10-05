@@ -1,22 +1,18 @@
 'use client'
-import * as THREE from 'three'
+import { Canvas } from '@react-three/fiber'
 import {
-  useState,
   createRef,
   useCallback,
-  useRef,
-  useEffect,
-  Suspense,
+  useState
 } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Nodes, Node, RootNode } from './nodes'
+import * as THREE from 'three'
+import { Node, Nodes } from './nodes'
 
-import {
-  DragControls,
-  TrackballControls,
-  OrbitControls,
-} from '@react-three/drei'
 import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
+import {
+  OrbitControls,
+  TrackballControls
+} from '@react-three/drei'
 // import { MotionCanvas, LayoutCamera } from "framer-motion-3d"
 
 export const RootConnectionGraph = ({ models }: any) => {
@@ -183,7 +179,7 @@ export const RootConnectionGraph = ({ models }: any) => {
           <Node
             ref={events}
             name='events'
-            // // fetchConnections={fetchConnections}
+            // // executePlatformWideConnectionSearch={executePlatformWideConnectionSearch}
             rootType='events'
             id='root_events'
             color={DOMAIN_MODEL_COLORS.events}
@@ -195,7 +191,7 @@ export const RootConnectionGraph = ({ models }: any) => {
           <Node
             ref={topics}
             name='topics'
-            // fetchConnections={fetchConnections}
+            // executePlatformWideConnectionSearch={executePlatformWideConnectionSearch}
             rootType='topics'
             id='root_topics'
             color={DOMAIN_MODEL_COLORS.topics}
@@ -233,7 +229,7 @@ export const RootConnectionGraph = ({ models }: any) => {
           {/* <Node
               ref={topics}
               name='topics'
-              // fetchConnections={fetchConnections}
+              // executePlatformWideConnectionSearch={executePlatformWideConnectionSearch}
               rootType='topics'
               id='root_topics'
               color={DOMAIN_MODEL_COLORS.topics}
@@ -246,7 +242,7 @@ export const RootConnectionGraph = ({ models }: any) => {
           {/* <Node
               ref={personnel}
               name='personnel'
-              // // fetchConnections={fetchConnections}
+              // // executePlatformWideConnectionSearch={executePlatformWideConnectionSearch}
               rootType='personnel'
               id='root_personnel'
               color={DOMAIN_MODEL_COLORS.personnel}
@@ -258,7 +254,7 @@ export const RootConnectionGraph = ({ models }: any) => {
             <Node
               ref={testimonies}
               name='testimonies'
-              // // fetchConnections={fetchConnections}
+              // // executePlatformWideConnectionSearch={executePlatformWideConnectionSearch}
               rootType='testimonies'
               id='root_testimonies'
               color={DOMAIN_MODEL_COLORS.testimonies}
@@ -270,7 +266,7 @@ export const RootConnectionGraph = ({ models }: any) => {
             <Node
               ref={organizations}
               name='organizations'
-              // // fetchConnections={fetchConnections}
+              // // executePlatformWideConnectionSearch={executePlatformWideConnectionSearch}
               rootType='organizations'
               id='root_organizations'
               color={DOMAIN_MODEL_COLORS.organizations}

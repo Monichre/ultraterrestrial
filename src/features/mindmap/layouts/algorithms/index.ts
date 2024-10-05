@@ -77,3 +77,6 @@ export type LayoutAlgorithms =
   | 'd3-hierarchy'
   | ELKLayoutAlgorithms
   | D3DAGLayoutAlgorithms
+
+export * from './collide'
+export * from './force-directed'

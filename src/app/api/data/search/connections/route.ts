@@ -1,53 +1,56 @@
-import { getXataClient, searchRelatedRecords } from '@/services/xata'
-const xata: any = getXataClient()
 
-import { NextRequest, NextResponse } from 'next/server'
+import { executePlatformWideConnectionSearch, xata } from '@/services/xata'
+
 import {
-  objectMapToSingular,
-  objectMapPlural,
-  connectionMapByEntityType,
-} from '@/utils/model.utils'
-import {
-  askDisclosureAgentToFindRelatedRecords,
-  checkRelevanceWithAI,
+  askDisclosureAgentToFindRelatedRecords
 } from '@/services/openai'
-import { filterConnectionsByRelevance } from '@/services/openai/assistants/assistant.utils'
-import { rememberEntityConnections } from '@/services/mem0'
+import { NextRequest, NextResponse } from 'next/server'
 // import { checkRelevanceWithAI } from '@/services/openai/assistants/disclosure'
 // const xata: any = getXataClient()
 
-export async function GET(request: NextRequest) {
-  //cc:xata-ai-search#3;searchConnections API route
+export async function GET( request: NextRequest ) {
+
   const searchParams = request.nextUrl.searchParams
 
-  const id = searchParams.get('id')
-  console.log('id: ', id)
+  const id = searchParams.get( 'id' )
+  console.log( 'id: ', id )
 
-  const type: any = searchParams.get('type')
-  console.log('type: ', type)
-  const source = await xata.db[`${type}`].read(id)
-  console.log('source: ', source)
+  const type: any = searchParams.get( 'type' )
+  console.log( 'type: ', type )
+  const source = await xata.db[`${ type }`].read( id )
+  console.log( 'source: ', source )
 
-  const connectionRecords = await searchRelatedRecords({ id, type })
-  console.log('connectionRecords: ', connectionRecords)
-  const relatedItems = Array.from(connectionRecords)
-  if (relatedItems.length === 0) {
-    console.log('No related items found, running search with disclosure agent')
-    const assistantAnswer = await askDisclosureAgentToFindRelatedRecords({
+  const connectionRecords = await executePlatformWideConnectionSearch( { id, type } )
+  console.log( 'connectionRecords: ', connectionRecords )
+  const relatedItems = Array.from( connectionRecords )
+
+  // const disclosureAssistantsAttemptAtRelatedRecords = await askDisclosureAgentToFindRelatedRecords( {
+  //   subject: source,
+  //   type,
+  // } )
+  // console.log( 'disclosureAssistantsAttemptAtRelatedRecords: ', disclosureAssistantsAttemptAtRelatedRecords )
+  // const analysis = await checkRelevanceWithAI( {
+  //   subject: source,
+  //   relatedItems,
+  // } )
+  // console.log( 'analysis: ', analysis )
+  if ( relatedItems.length === 0 ) {
+    console.log( 'No related items found, running search with disclosure agent' )
+    const assistantAnswer = await askDisclosureAgentToFindRelatedRecords( {
       subject: source,
       type,
-    })
-    console.log('assistantAnswer: ', assistantAnswer)
+    } )
+    console.log( 'assistantAnswer: ', assistantAnswer )
     // const memory = await rememberEntityConnections({
     //   type,
     //   source,
     //   assistantAnswer,
     // })
 
-    return NextResponse.json({
+    return NextResponse.json( {
       data: [],
       assistantAnswer: assistantAnswer,
-    })
+    } )
   } else {
     // const { connections, assistantAnswer } = await checkRelevanceWithAI({
     //   subject: source,
@@ -78,10 +81,10 @@ export async function GET(request: NextRequest) {
     //   connections: relevant,
     // })
     // console.log('memory: ', memory)
-    return NextResponse.json({
+    return NextResponse.json( {
       data: relatedItems,
       assistantAnswer: null,
-    })
+    } )
   }
   // const messages = [
   //   {

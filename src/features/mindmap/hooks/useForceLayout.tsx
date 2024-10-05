@@ -1,4 +1,4 @@
-import { collide } from '@/features/mindmap/utils/collide'
+import { collide } from '@/features/mindmap/layouts/collide'
 import { useMindMap } from '@/providers'
 import { nextTick } from '@/utils'
 import {

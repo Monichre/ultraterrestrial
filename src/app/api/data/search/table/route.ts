@@ -1,38 +1,29 @@
+import { executeDatabaseTableQuery } from '@/services/xata'
 import { NextRequest, NextResponse } from 'next/server'
-import { getXataClient } from '@/services/xata'
 
-const xata: any = getXataClient()
-
-export const targetsPerTable = {
-  events: ['name', 'date', 'location', 'description'],
-  personnel: ['role', 'bio', 'name'],
-  topics: ['name', 'summary'],
-  testimonies: ['claim', 'summary', 'documentation'],
+export type SearchResult = {
+  suggestedSearchResult: any
+  relatedResults: any
+  totalCount: number
 }
 
-export async function GET(request: NextRequest) {
+type ErrorResponse = {
+  error: string
+}
+
+export async function GET( request: NextRequest ): Promise<NextResponse<SearchResult | ErrorResponse>> {
   const searchParams = request.nextUrl.searchParams
-  console.log('searchParams: ', searchParams)
-  const keyword: any = searchParams.get('keyword')
-  console.log('keyword: ', keyword)
+  const keyword: string | null = searchParams.get( 'keyword' )
+  const table: string | null = searchParams.get( 'table' )
 
-  const table: any = searchParams.get('table')
-  console.log('table: ', table)
-  const columns: any = targetsPerTable[table] || []
-  const target = columns
-    ? columns.map((column: string) => ({
-        column: `${column}`,
-      }))
-    : null
-  console.log('target: ', target)
+  if ( !keyword || !table ) {
+    return NextResponse.json( { error: 'Missing keyword or table parameter' }, { status: 400 } )
+  }
 
-  const { totalCount, records } = await xata.db[table].search(keyword, {
-    target,
-    fuzziness: 0,
-    prefix: 'phrase',
-  })
-
-  console.log('records: ', records)
-
-  return NextResponse.json({ results: records, totalCount })
+  try {
+    const { suggestedSearchResult, relatedResults, totalCount }: SearchResult = await executeDatabaseTableQuery( { keyword, table } )
+    return NextResponse.json( { suggestedSearchResult, relatedResults, totalCount } )
+  } catch ( error ) {
+    return NextResponse.json( { error: 'Failed to execute database query' }, { status: 500 } )
+  }
 }

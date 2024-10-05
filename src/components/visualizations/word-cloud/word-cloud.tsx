@@ -1,39 +1,25 @@
 'use client'
-import * as React from 'react'
 
-import * as THREE from 'three'
 import {
-  useRef,
-  useState,
-  useMemo,
-  useEffect,
-  Suspense,
-  memo,
-  createRef,
-  forwardRef,
-  useCallback,
-} from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import {
-  Billboard,
-  CubicBezierLine,
   Html,
-  QuadraticBezierLine,
-  Text,
-  TrackballControls,
+  TrackballControls
 } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
 import { useRouter } from 'next/navigation'
+import {
+  Suspense,
+  useRef,
+  useState
+} from 'react'
+import * as THREE from 'three'
 
-import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
-import { capitalize } from '../../../utils/functions'
-import { FontLoader, TextGeometry } from 'three-stdlib'
-import { a, useTransition, useSpring } from '@react-spring/three'
-import type { AnyJson } from 'three/examples/jsm/nodes/core/constants'
-import { ConnectionCard, ModelAvatar } from '@/features/mindmap/connection-list'
-import { cn } from '@/utils'
-import { AnimatePresence, motion } from 'framer-motion'
 import { Loading } from '@/components/loaders/loading'
 import { Card, CardHeader } from '@/components/ui/card'
+
+import { ModelAvatar } from '@/features/mindmap/components/connection-list'
+import { cn } from '@/utils'
+import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
+import { motion } from 'framer-motion'
 // import {
 //   StarsCard,
 //   StarsCardDescription,

@@ -1,6 +1,6 @@
 import { ExpandableCardStandardLayout } from '@/components/ui/card/expandable-card'
 import { ExpandableCard1 } from '@/components/ui/card/ExpandableCard'
-// import { GraphCard } from '@/features/mindmap/cards/graph-card'
+// import { GraphCard } from '@/features/mindmap/components/cards/graph-card'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const graphCardData = {
