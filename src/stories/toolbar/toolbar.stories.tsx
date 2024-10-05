@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { MindMapProvider, StateOfDisclosureProvider } from '@/providers'
 
+import { MindMapCommandCenter } from '@/features/mindmap/components/menus'
 import networkGraphData from '@/stories/data/network-graph-data.json'
-import { MindMapEntityMenu } from '@/features/mindmap/menus'
 const meta = {
-  title: 'Components/Tool Bars/MindMapEntityMenu',
-  component: MindMapEntityMenu,
+  title: 'Components/Tool Bars/MindMapCommandCenter',
+  component: MindMapCommandCenter,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   parameters: {
@@ -21,7 +21,7 @@ const meta = {
       </StateOfDisclosureProvider>
     ),
   ],
-} satisfies Meta<typeof MindMapEntityMenu>
+} satisfies Meta<typeof MindMapCommandCenter>
 
 export default meta
 
@@ -30,7 +30,7 @@ type Story = StoryObj<typeof meta>
 export const Demo: Story = {
   render: () => (
     <div className='h-screen w-screen flex flex-col justify-end'>
-      <MindMapEntityMenu />
+      <MindMapCommandCenter />
       {/* Add your component's story content here */}
     </div>
   ),

@@ -1,5 +1,5 @@
+import { ConnectionList } from '@/features/mindmap/components/connection-list'
 import type { Meta, StoryObj } from '@storybook/react'
-import { ConnectionList } from '@/features/mindmap/connection-list'
 const originalNode = {
   id: 'rec_cobdg3tbjt595h637700',
   label: 'The\nRoswell\nIncident',

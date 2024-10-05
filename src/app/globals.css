@@ -695,12 +695,6 @@ td p {
   background-color: #000;
 }
 
-.react-flow__pane {
-  height: 650px;
-  width: 550px;
-  draggable: false;
-}
-
 .ai-response-markup {
 }
 

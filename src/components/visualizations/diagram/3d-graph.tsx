@@ -1,27 +1,23 @@
 'use client'
-import * as THREE from 'three'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import {
-  useState,
   createRef,
   useCallback,
   useRef,
-  useEffect,
-  Suspense,
+  useState
 } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Nodes, Node } from './basic-nodes'
+import * as THREE from 'three'
+import { Node, Nodes } from './basic-nodes'
 
-import {
-  DragControls,
-  TrackballControls,
-  OrbitControls,
-  Instances,
-  Instance,
-  Sphere,
-} from '@react-three/drei'
 import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
-import { a, useTransition, useSpring } from '@react-spring/three'
+import { a, useSpring, useTransition } from '@react-spring/three'
 import { Physics } from '@react-three/cannon'
+import {
+  Instance,
+  Instances,
+  OrbitControls,
+  TrackballControls
+} from '@react-three/drei'
 
 // import { MotionCanvas, LayoutCamera } from "framer-motion-3d"
 
@@ -461,7 +457,7 @@ export const ThreeDGraph = ({ models }: any) => {
             <Node
               ref={organizations}
               name='organizations'
-              // // fetchConnections={fetchConnections}
+              // // executePlatformWideConnectionSearch={executePlatformWideConnectionSearch}
               rootType='organizations'
               id='root_organizations'
               color={DOMAIN_MODEL_COLORS.organizations}

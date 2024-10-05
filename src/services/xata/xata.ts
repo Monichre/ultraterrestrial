@@ -18,6 +18,7 @@ const tables = [
         type: "file[]",
         "file[]": { defaultPublicAccess: true },
       },
+      { name: "title", type: "string", unique: true },
     ],
     revLinks: [
       { column: "topic", table: "topic-subject-matter-experts" },
@@ -40,6 +41,7 @@ const tables = [
       { name: "credibility", type: "int" },
       { name: "popularity", type: "int" },
       { name: "name", type: "string", unique: true },
+      { name: "authority", type: "int" },
     ],
     revLinks: [
       { column: "member", table: "organization-members" },
@@ -57,7 +59,7 @@ const tables = [
         table: "event-topic-subject-matter-experts",
       },
       { column: "key-figure", table: "user-saved-key-figure" },
-      { column: "author", table: "artifacts" },
+      { column: "author", table: "documents" },
     ],
   },
   {
@@ -70,6 +72,9 @@ const tables = [
       { name: "longitude", type: "float" },
       { name: "date", type: "datetime" },
       { name: "photos", type: "file[]" },
+      { name: "metadata", type: "json", defaultValue: "{}" },
+      { name: "title", type: "string", unique: true },
+      { name: "summary", type: "text" },
     ],
     revLinks: [
       { column: "event", table: "event-subject-matter-experts" },
@@ -86,11 +91,13 @@ const tables = [
       { name: "description", type: "text" },
       { name: "photo", type: "text" },
       { name: "image", type: "file", file: { defaultPublicAccess: true } },
+      { name: "title", type: "string", unique: true },
     ],
     revLinks: [
       { column: "organization", table: "organization-members" },
       { column: "organization", table: "testimonies" },
       { column: "organization", table: "user-saved-organizations" },
+      { column: "organization", table: "documents" },
     ],
   },
   {
@@ -171,6 +178,10 @@ const tables = [
       { name: "content", type: "text" },
       { name: "embedding", type: "vector", vector: { dimension: 1536 } },
       { name: "title", type: "string" },
+      { name: "date", type: "datetime" },
+      { name: "author", type: "link", link: { table: "personnel" } },
+      { name: "organization", type: "link", link: { table: "organizations" } },
+      { name: "url", type: "text" },
     ],
     revLinks: [{ column: "document", table: "user-saved-documents" }],
   },
@@ -216,6 +227,7 @@ const tables = [
       { column: "user", table: "user-theories" },
       { column: "user", table: "user-saved-organizations" },
       { column: "user", table: "user-saved-sightings" },
+      { column: "user", table: "mindmaps" },
     ],
   },
   {
@@ -311,23 +323,33 @@ const tables = [
       { name: "note-title", type: "string" },
     ],
   },
+  { name: "tags", columns: [] },
+  { name: "theories", columns: [] },
+  {
+    name: "mindmaps",
+    columns: [
+      { name: "json", type: "json", defaultValue: "{}" },
+      { name: "embedding", type: "vector", vector: { dimension: 1536 } },
+      { name: "user", type: "link", link: { table: "users" } },
+      { name: "file", type: "file", file: { defaultPublicAccess: true } },
+    ],
+  },
   {
     name: "artifacts",
     columns: [
+      { name: "name", type: "string", unique: true },
+      { name: "description", type: "text" },
+      { name: "photos", type: "multiple" },
+      { name: "date", type: "string" },
+      { name: "source", type: "text" },
+      { name: "origin", type: "text" },
       {
-        name: "photos",
+        name: "images",
         type: "file[]",
         "file[]": { defaultPublicAccess: true },
       },
-      { name: "name", type: "string" },
-      { name: "description", type: "text" },
-      { name: "date", type: "datetime" },
-      { name: "author", type: "link", link: { table: "personnel" } },
-      { name: "metadata", type: "json" },
     ],
   },
-  { name: "tags", columns: [] },
-  { name: "theories", columns: [] },
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -405,14 +427,17 @@ export type UserSavedOrganizationsRecord = UserSavedOrganizations & XataRecord;
 export type UserSavedSightings = InferredTypes["user-saved-sightings"];
 export type UserSavedSightingsRecord = UserSavedSightings & XataRecord;
 
-export type Artifacts = InferredTypes["artifacts"];
-export type ArtifactsRecord = Artifacts & XataRecord;
-
 export type Tags = InferredTypes["tags"];
 export type TagsRecord = Tags & XataRecord;
 
 export type Theories = InferredTypes["theories"];
 export type TheoriesRecord = Theories & XataRecord;
+
+export type Mindmaps = InferredTypes["mindmaps"];
+export type MindmapsRecord = Mindmaps & XataRecord;
+
+export type Artifacts = InferredTypes["artifacts"];
+export type ArtifactsRecord = Artifacts & XataRecord;
 
 export type DatabaseSchema = {
   topics: TopicsRecord;
@@ -437,9 +462,10 @@ export type DatabaseSchema = {
   "user-theories": UserTheoriesRecord;
   "user-saved-organizations": UserSavedOrganizationsRecord;
   "user-saved-sightings": UserSavedSightingsRecord;
-  artifacts: ArtifactsRecord;
   tags: TagsRecord;
   theories: TheoriesRecord;
+  mindmaps: MindmapsRecord;
+  artifacts: ArtifactsRecord;
 };
 
 const DatabaseClient = buildClient();

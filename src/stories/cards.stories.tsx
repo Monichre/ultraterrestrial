@@ -1,10 +1,10 @@
-// import { RootNodeCard } from '@/features/mindmap/cards/root-node-card/root-node-card'
-import { StarsCard, type StarsCardProps } from '@/components/ui/card/stars-card'
+// import { RootNodeCard } from '@/features/mindmap/components/cards/root-node-card/root-node-card'
+import { StarsCard } from '@/components/ui/card/stars-card'
 
 import type { Meta, StoryObj } from '@storybook/react'
 //
 
-// import { MiniCard } from '@/features/mindmap/cards/mini-card'
+// import { MiniCard } from '@/features/mindmap/components/cards/mini-card'
 
 const meta = {
   title: 'Components/Card Stories',

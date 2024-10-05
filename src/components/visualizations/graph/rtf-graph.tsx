@@ -1,25 +1,18 @@
 'use client'
-import * as THREE from 'three'
-import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
-import { useEffect, useRef, useState } from 'react'
-import { useModelNodes } from './useModelNodes'
+import { useEffect, useRef } from 'react'
 import {
   GraphCanvas,
-  GraphEdge,
-  GraphNode,
   lightTheme,
-  useSelection,
+  useSelection
 } from 'reagraph'
+import * as THREE from 'three'
+import { useModelNodes } from './useModelNodes'
 
 import { TopicPersonnelAndEventGraphDataPayload } from '@/services/xata'
 import {
-  MeshReflectorMaterial,
   Image,
-  Text,
-  Environment,
+  Text
 } from '@react-three/drei'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { easing } from 'maath'
 
 const GOLDENRATIO = 1.61803398875
 export const GraphNodeImageCard = ({
@@ -94,7 +87,7 @@ export const Graph: React.FC<GraphProps> = ({ models }) => {
   const {
     selections,
     actives,
-    addDataToMindMap,
+    addNextEntitiesToMindMap,
     onCanvasClick,
     onNodePointerOver,
     onNodePointerOut,

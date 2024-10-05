@@ -1,6 +1,5 @@
+
 export * from './client'
-export * from './models'
-export * from './get-entity-network-graph-data'
+export * from './db/search-operations'
 export * from './xata'
-export * from './tables'
-export * from './search-related-records'
+

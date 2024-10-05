@@ -1,5 +1,5 @@
 import type { NetworkGraphPayload } from '@/services/xata'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 type EntityGraphSchema = {
   nodes: Node
@@ -30,6 +30,14 @@ export type GraphState = {
     nodes: []
     links: []
   }
+  documents: {
+    nodes: []
+    links: []
+  }
+  artifacts: {
+    nodes: []
+    links: []
+  }
 }
 
 export type UseGraphProps = {
@@ -37,6 +45,7 @@ export type UseGraphProps = {
 }
 
 export const use3DGraph = ({ mindMapIntialGraphState }: UseGraphProps) => {
+  console.log({mindMapIntialGraphState})
   const [graph, setGraph] = useState({
     root: {
       nodes: [],
@@ -59,6 +68,14 @@ export const use3DGraph = ({ mindMapIntialGraphState }: UseGraphProps) => {
       links: {},
     },
     organizations: {
+      nodes: [],
+      links: [],
+    },
+    documents: {
+      nodes: [],
+      links: [],
+    },
+    artifacts: {
       nodes: [],
       links: [],
     },
@@ -87,6 +104,14 @@ export const use3DGraph = ({ mindMapIntialGraphState }: UseGraphProps) => {
         links: {},
       },
       organizations: {
+        nodes: [],
+        links: [],
+      },
+      documents: {
+        nodes: [],
+        links: [],
+      },
+      artifacts: {
         nodes: [],
         links: [],
       },
