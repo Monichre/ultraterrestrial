@@ -1,5 +1,10 @@
-node_modules
+node_modules/
 .DS_Store
 /.next/
 .turbo/
 apps/app/.next
+/node_modules/
+apps/app/ultravenv/
+.env
+
+**/*.env
