@@ -6,15 +6,15 @@ import { motion } from 'framer-motion-3d'
 import * as THREE from 'three'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 
-const RotatingComponent = memo( ( { spin, activeLocation }: any ) => {
+const RotatingComponent = memo( ( { activeLocation }: any ) => {
   console.log( 'activeLocation: ', activeLocation )
   const earthRef: any = useRef<THREE.Mesh>( null! )
 
   useFrame( ( state, delta ) => {
     console.log( 'state: ', state )
-    if ( spin ) {
-      return ( earthRef.current.rotation.y += delta / 10 )
-    }
+
+    return ( earthRef.current.rotation.y += delta / 10 )
+
   } )
 
   const [color, normal, aoMap] = useLoader( TextureLoader, [
@@ -34,7 +34,7 @@ RotatingComponent.displayName = 'RotatingComponent'
 
 const E = ( { activeLocation, ref }: any ) => {
   return (
-    <div ref={ref} className='h-full w-full'>
+    <div ref={ref} className='h-full w-full' id='earth-canvas'>
 
       <Suspense
         fallback={

@@ -52,7 +52,7 @@ const EN = memo( ( node: any ) => {
     /* // <BlurAppear> */
   }
   return (
-    <div className={cn( `w-full ${type}`, 'motion-scale-in-0 motion-opacity-in-0' )} id={node.id}>
+    <div className={cn( 'motion-scale-in-0 motion-opacity-in-0' )} id={node.id}>
       <Handle type='target' position={Position.Top} />
 
       {component}

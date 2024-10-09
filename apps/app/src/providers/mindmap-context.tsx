@@ -41,11 +41,7 @@ import { saveUserMindMap } from '@/features/user/api/save-event'
 import { useStateOfDisclosure } from '@/providers/state-of-disclosure-provider'
 import { DOMAIN_MODEL_COLORS } from '@/utils'
 import { capitalize } from '@/utils/functions'
-import { nanoid } from 'ai'
-import { get } from 'http'
-import type { type } from 'os'
-import type source from 'react-mapbox-gl/lib/source'
-import { set } from 'zod'
+
 import type { DatabaseSchema, InferredTypes } from '@/services/xata'
 
 // import { simulation } from '@/features/mindmap/utils/force-directed'
@@ -863,7 +859,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
 
 
 
-  const addMindMapGroupNode = ( { connectionNode, model, nodeType = 'entityGroupNode', groupId, position }: { model: string; childNodes: DatabaseSchema[keyof DatabaseSchema] & { type: string }[]; nodeType: string; position: XYPosition; groupId: string } ) => {
+  const addMindMapGroupNode = ( { connectionNode, model, nodeType = 'entityGroupNode', groupId, position }: { model: string; childNodes: DatabaseSchema[keyof DatabaseSchema] & { type: string }[]; nodeType: string; position: XYPosition; groupId: string; connectionNode: Node } ) => {
 
     const edgeId = `${groupId}`
 
@@ -880,7 +876,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     }
     const newEdge = {
       id: edgeId,
-      source: parentNode.id,
+      source: connectionNode.id,
       target: newNode.id,
       type: 'smoothstep'
     }
@@ -890,7 +886,10 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     addEdges( newEdge )
   }
 
-  const addMindmapChildNode = ( { parentNode, type, childNode, position }: { parentNode: Node, type: string; childNode: DatabaseSchema[keyof DatabaseSchema] & { type: string }; position: XYPosition } ) => {
+  const addMindmapChildNode = useCallback( ( { parentNode, type, childNode, position }:
+    { parentNode: Node, type: string; childNode: DatabaseSchema[keyof DatabaseSchema] & { type: string }; position: XYPosition } ) => {
+    console.log( "🚀 ~ file: mindmap-context.tsx:916 ~ addMindmapChildNode ~ parentNode:", parentNode )
+    console.log( "🚀 ~ file: mindmap-context.tsx:916 ~ addMindmapChildNode ~ childNode:", childNode )
     const nodeType = `${type || childNode.type}Node`
     const edgeId = `${parentNode.id}:${childNode.id}`
     const newNode: any = {
@@ -907,10 +906,12 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
       target: newNode.id,
       type: 'smoothstep'
     }
-    addNodes( newNode )
-    addEdges( newEdge )
 
-  }
+    return { newNode, newEdge }
+    // addNodes( newNode )
+    // addEdges( newEdge )
+
+  }, [graph] )
   const addNextEntitiesToMindMap: any = useCallback(
     ( source: any ) => {
       console.log(

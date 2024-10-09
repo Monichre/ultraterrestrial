@@ -1,16 +1,13 @@
-import { createMessage, formatRelatedItems, parseApiResponse } from '@/services/openai/assistants/assistant.utils.ts'
-import type { DatabaseSchema } from '../../xata/xata.ts'
-import { openai, traceable } from '../openai.client.ts'
 
-
-import { assistantEventHandler } from '@/app/api/assistants/disclosure/message/event-handler.ts'
-import {
-  DISCLOSURE_ASSISTANT_ID,
-  INSTRUCTIONS,
-  metadata
-} from '@/services/openai/index.ts'
+import { assistantEventHandler } from '@/app/api/assistants/disclosure/message/event-handler'
+import { metadata } from '@/app/layout'
+import { askHow, formatRelatedItems, parseApiResponse } from '@/services/openai/assistants/assistant.utils'
+import { DISCLOSURE_ASSISTANT_ID, INSTRUCTIONS } from '@/services/openai/config'
+import type { DatabaseSchema } from '@/services/xata'
 import { AssistantResponse } from 'ai'
-import { Text } from 'lucide-react'
+import { traceable } from 'langsmith/traceable'
+import { openai } from '@/services/openai/openai.client'
+
 
 // Generate generic type for any kind of DatabaseSchema
 type AnyDatabaseSchema = DatabaseSchema[keyof DatabaseSchema]
@@ -21,7 +18,6 @@ export const askDisclosureAgentToFindRelatedRecords = traceable( async ( {
 }: any ) => {
 
   const streamEvents = []
-
 
   // @ts-ignore
   const thread = await openai.beta.threads.create( {
@@ -60,34 +56,7 @@ export const askDisclosureAgentToFindRelatedRecords = traceable( async ( {
           additional_instructions: INSTRUCTIONS,
         }, assistantEventHandler
       )
-      // openai.beta.threads.runs
-      //   .stream( threadId, {
-      //     include: ['step_details.tool_calls[*].file_search.results[*].content'],
-      //     tool_choice: { "type": "file_search" },
-      //     assistant_id:
-      //       DISCLOSURE_ASSISTANT_ID ??
-      //       ( () => {
-      //         throw new Error( 'ASSISTANT_ID environment is not set' )
-      //       } )(),
-      //     additional_instructions: `Look across topics, events, key figures, sightings, documents any additional resources at your disposal. Cite all of your sources thoroughly and specifically, including information and other relevant details on the weight of the resource as it pertains to your answer or the completion of the task. Return your response in well formatted markddown but be sure to return the Citations/Annotations data in JSON 
-      //   in the following format: 
-      //   ---
-      //   {
-      //     "citations": [
-      //       {
 
-      //         "Relation to Subject": "{{data}}", 
-      //         "Evidence": "{{data}}",
-      //         "Relevance Score": "{{data}}",
-      //         "Source": "{{Name of Source/Article}}",
-      //         "File": "{{Name of File}}",
-      //         "Weight": "{{The weight value you would assign it}}"
-      //         }
-      //       ]
-      //   }
-      //   ---
-      //   `,
-      //   }, assistantEventHandler )
 
       let runResult = await forwardStream( runStream )
       while (
@@ -149,7 +118,7 @@ export const checkRelevanceWithAI = traceable( async ( {
   const message = await openai.beta.threads.messages.create( threadId,
     {
       role: 'user',
-      content: `${createMessage( relatedItems )} ${formatRelatedItems( relatedItems )} related to ${subject?.name}? Return your response in JSON with each item containing the fields: "Relation to Subject:", "Evidence:", "Relevance Score:"`,
+      content: `${askHow( relatedItems )} ${formatRelatedItems( relatedItems )} related to ${subject?.name}? Return your response in JSON with each item containing the fields: "Relation to Subject:", "Evidence:", "Relevance Score:"`,
     }
   )
 

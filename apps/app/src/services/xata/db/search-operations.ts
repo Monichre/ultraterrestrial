@@ -127,3 +127,15 @@ export const executeDatabaseTableQuery = async ( { keyword, table }: any ) => {
 
   return { ...processResults( records ), totalCount }
 }
+
+export const askXataWithAi = async ( { question, prompt, table }: any ) => {
+  const result = await xata.db[table].ask( question, {
+    rules: prompt,
+    searchType: 'keyword',
+    search: {
+      fuzziness: 0,
+      prefix: 'phrase',
+    }
+  } )
+  return result
+}

@@ -3,19 +3,16 @@
 import { useGLTF } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Bloom, EffectComposer, TiltShift2 } from '@react-three/postprocessing'
-import { forwardRef, Suspense, useRef } from 'react'
+import { forwardRef, memo, Suspense, useRef } from 'react'
 
 // useGLTF.preload('/assets/moon/moon.glb')
 export const MoonScene = ( { offset = 0, ...props }: any ) => {
   const meshRef: any = useRef()
   const light: any = useRef()
-  // const moonRef = mergeRefs([meshRef, ref])
+
 
   const { nodes, materials }: any = useGLTF( '/assets/moon/moon.glb' )
-  console.log( 'nodes: ', nodes )
 
-  /* The commented out code block you provided is using the `useFrame` hook from `@react-three/fiber` to
-update the rotation of the `meshRef` and `light` elements in the scene. */
   useFrame( ( state, delta ) => {
 
     return ( meshRef.current.rotation.y += delta / 10 )
@@ -44,7 +41,7 @@ update the rotation of the `meshRef` and `light` elements in the scene. */
 export interface MoonProps { }
 
 // Start of Selection
-export const Moon = forwardRef<HTMLCanvasElement, MoonProps>( ( props, ref ) => {
+export const Moon = memo( ( { ref, ...rest }: any ) => {
   return (
     <div className='h-full w-full' ref={ref}>
       <Canvas gl={{ antialias: false }} >

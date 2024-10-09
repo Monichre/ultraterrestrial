@@ -1,7 +1,7 @@
 'use client'
 
 // import { Howl } from 'howler'
-import { inView } from 'framer-motion'
+import { AnimatePresence, inView, motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { useRef, useState } from 'react'
 
@@ -37,7 +37,7 @@ export const Home: React.FC<HomeProps> = () => {
 
 
 
-  inView( earthRef.current, ( entry ) => {
+  inView( '#earth-canvas', ( entry ) => {
     console.log( "🚀 ~ file: home.tsx:40 ~ entry:", entry )
     setEarthInView( true )
   } )
@@ -88,13 +88,14 @@ export const Home: React.FC<HomeProps> = () => {
       <CanvasCursor />
       <div className='astronaut h-full w-full relative flex flex-col justify-center align-middle relative overflow-hidden items-center z-40'>
 
-        {earthInView &&
-          <div className='w-full '>
-            <SiteTitle />
-            <LovecraftQuote />
-          </div>}
+        <AnimatePresence>
+          {earthInView &&
+            <motion.div className='w-full' transition={{ delay: 3 }}>
+              <SiteTitle />
+              <LovecraftQuote />
+            </motion.div>}
 
-
+        </AnimatePresence>
       </div>
       <ShootingStars />
       <StarsBackground />

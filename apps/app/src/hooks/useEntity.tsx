@@ -36,16 +36,6 @@ export const useEntity = ( { card }: any ) => {
     id,
   } = card
 
-  const image: any = photos?.length
-    ? photos[0]
-    : photo?.length
-      ? photo[0]
-      : { url: '/foofighters.webp', signedUrl: '/foofighters.webp' }
-
-  image.src = image.url
-  if ( !card.photos || !card.photos.length ) {
-    card.photos = [image]
-  }
 
   const [showMenu, setShowMMenu] = useState( false )
   const handleHoverLeave = () => {

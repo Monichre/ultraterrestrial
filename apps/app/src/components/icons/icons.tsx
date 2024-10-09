@@ -51,7 +51,7 @@ export const HandDrawnArrowRight = ( { fill, stroke, className, ...rest }: IconP
 }
 
 export const HandDrawnArrowDown = ( { fill, stroke, className, ...rest }: IconProps ) => {
-  const config = animationConfig( fill )
+  const config = animationConfig( { fill } )
   return (
     <svg
       {...rest}
@@ -74,13 +74,15 @@ export const HandDrawnArrowDown = ( { fill, stroke, className, ...rest }: IconPr
 }
 
 export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
-  <svg
+  <motion.svg
     // className='w-30 h-30'
     // viewBox='0 0 82 84'
     className='w-30 h-30' // Increase the size of the SVG
     viewBox='-20 -20 122 124'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'>
+    xmlns='http://www.w3.org/2000/svg'
+    variants={animationConfig( { stroke } )}
+  >
     <motion.path
       d='M41.5816 1.21606C39.7862 5.82482 40.3852 10.0977 40.5593 14.9633C40.7854 21.2812 40.9774 27.5593 41.4363 33.8661'
       stroke={stroke}
@@ -215,12 +217,12 @@ export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
       />
     </motion.circle initial={{pathLength: 0}} animate={{pathLength: 1}}>
     <motion.circle initial={{pathLength: 0}} animate={{pathLength: 1}} cx='41' cy='42' fill={stroke} r='10' /> */}
-  </svg>
+  </motion.svg>
 )
 
 // https://svgdoodles.com/
 export const Star = ( props: IconProps ) => (
-  <svg
+  <motion.svg
     {...props}
     className='w-10 h-10'
     viewBox='0 0 79 78'
@@ -239,7 +241,7 @@ export const Star = ( props: IconProps ) => (
       fill='currentColor'
       fill-opacity='0.2'
     />
-  </svg>
+  </motion.svg>
 )
 
 // https://svgdoodles.com/
@@ -303,7 +305,7 @@ export const DoubleX = ( { className, ...rest }: IconProps ) => (
     <motion.path
       d='M51.2 1L33.1 19L15.1 1L1 15.2L19 33.2L1 51.2L15.1 65.4L33.1 47.3L51.2 65.4L65.3 51.2L47.3 33.2L65.3 15.2L51.2 1Z'
       stroke='#9D9D9D'
-      stroke-width='2'
+      stroke-width='1'
       stroke-miterlimit='10'
       stroke-linecap='round'
       stroke-linejoin='round'
@@ -312,7 +314,7 @@ export const DoubleX = ( { className, ...rest }: IconProps ) => (
 )
 
 export const DoubleDonut = ( props: IconProps ) => (
-  <svg
+  <motion.svg
     {...props}
     className='w-10 h-10'
     viewBox='0 0 156 160'
@@ -1045,7 +1047,7 @@ export const DoubleDonut = ( props: IconProps ) => (
         <rect width='155.856' height='159.244' fill='white' />
       </clipPath>
     </defs>
-  </svg>
+  </motion.svg>
 )
 
 export const HandDrawnArrowDownDoogle = ( props: IconProps ) => (
@@ -1076,28 +1078,32 @@ export const HandDrawnArrowRightDoodle = ( props: IconProps ) => (
     <motion.path
       d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
       stroke='currentColor'
-      stroke-width='2'
+      stroke-width='1'
       stroke-linecap='round'
     />
     <motion.path
       d='M105.295 7.55369C103.251 6.41332 98.0697 4.73081 97.3989 2.01718C97.3762 1.92544 97.3095 1.31771 97.3374 1.37859C98.1737 3.20315 97.6004 7.32036 97.4208 9.32238C97.3735 9.84973 96.396 15.3811 96.8612 15.1485C101.235 12.9619 105.361 8.83254 109.442 6.05271'
       stroke='currentColor'
-      stroke-width='2'
+      stroke-width='1'
       stroke-linecap='round'
     />
   </svg>
 )
 
-export const MyFavoriteStarIllustration = ( props: IconProps ) => (
+export const MyFavoriteStarIllustration = ( { stroke, ...rest }: IconProps ) => (
   <motion.svg
-    {...props}
+    {...rest}
     className='w-10 h-10'
     viewBox='0 0 84 87'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'>
+    xmlns='http://www.w3.org/2000/svg'
+    variants={animationConfig( { stroke } )}
+  >
     <motion.path
       d='M42.007 0L42.4664 40.9945L60.6671 4.25904L43.2941 41.3931L75.6313 16.1926L43.8669 42.1114L83.9358 33.4371L44.0714 43.007L83.9358 52.577L43.8669 43.9027L75.6313 69.8215L43.2941 44.621L60.6671 81.7551L42.4664 45.0196L42.007 86.0141L41.5477 45.0196L23.347 81.7551L40.7199 44.621L8.38278 69.8215L40.1471 43.9027L0.0782776 52.577L39.9427 43.007L0.0782776 33.4371L40.1471 42.1114L8.38278 16.1926L40.7199 41.3931L23.347 4.25904L41.5477 40.9945L42.007 0Z'
       fill='currentColor'
+      animate='visible'
+      initial='hidden'
     />
     <motion.path
       d='M42.007 0L42.4664 40.9945L60.6671 4.25904L43.2941 41.3931L75.6313 16.1926L43.8669 42.1114L83.9358 33.4371L44.0714 43.007L83.9358 52.577L43.8669 43.9027L75.6313 69.8215L43.2941 44.621L60.6671 81.7551L42.4664 45.0196L42.007 86.0141L41.5477 45.0196L23.347 81.7551L40.7199 44.621L8.38278 69.8215L40.1471 43.9027L0.0782776 52.577L39.9427 43.007L0.0782776 33.4371L40.1471 42.1114L8.38278 16.1926L40.7199 41.3931L23.347 4.25904L41.5477 40.9945L42.007 0Z'
@@ -1269,13 +1275,13 @@ export const HandrawnArrowRight = ( { stroke = 'currentColor', onClick, classNam
     <motion.path
       d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
       stroke={stroke}
-      stroke-width='2'
+      stroke-width='1'
       stroke-linecap='round'
     />
     <motion.path
       d='M105.295 7.55369C103.251 6.41332 98.0697 4.73081 97.3989 2.01718C97.3762 1.92544 97.3095 1.31771 97.3374 1.37859C98.1737 3.20315 97.6004 7.32036 97.4208 9.32238C97.3735 9.84973 96.396 15.3811 96.8612 15.1485C101.235 12.9619 105.361 8.83254 109.442 6.05271'
       stroke='currentColor'
-      stroke-width='2'
+      stroke-width='1'
       stroke-linecap='round'
     />
   </svg>
@@ -1295,13 +1301,13 @@ export const HandrawnArrowLeft = ( { stroke = 'currentColor', onClick, className
     <motion.path
       d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
       stroke={stroke}
-      stroke-width='2'
+      stroke-width='1'
       stroke-linecap='round'
     />
     <motion.path
       d='M105.295 7.55369C103.251 6.41332 98.0697 4.73081 97.3989 2.01718C97.3762 1.92544 97.3095 1.31771 97.3374 1.37859C98.1737 3.20315 97.6004 7.32036 97.4208 9.32238C97.3735 9.84973 96.396 15.3811 96.8612 15.1485C101.235 12.9619 105.361 8.83254 109.442 6.05271'
       stroke='currentColor'
-      stroke-width='2'
+      stroke-width='1'
       stroke-linecap='round'
     />
   </svg>
@@ -1468,7 +1474,7 @@ export const WaypointsIcon = ( { stroke = 'currentColor', fill, className }: any
       viewBox='0 0 24 24'
       fill='none'
       stroke={stroke}
-      stroke-width='2'
+      stroke-width='1'
       stroke-linecap='round'
       stroke-linejoin='round'
       variants={draw}
@@ -1520,7 +1526,7 @@ export const ConnectionsIcon = ( { stroke = 'currentColor', className }: any ) =
       viewBox='0 0 24 24'
       fill='none'
       stroke={stroke}
-      stroke-width='2'
+      stroke-width='1'
       stroke-linecap='round'
       stroke-linejoin='round'
       variants={draw}
@@ -1557,7 +1563,7 @@ export const GroupIcon = ( { stroke = 'currentColor', className }: any ) => {
       viewBox='0 0 24 24'
       fill='none'
       stroke={stroke}
-      stroke-width='2'
+      stroke-width='1'
       stroke-linecap='round'
       stroke-linejoin='round'
       className={className}

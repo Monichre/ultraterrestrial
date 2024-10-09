@@ -15,6 +15,7 @@ export const nodeTypes: any = {
   // Utilities Nodes 
   annotationNode: AnnotationNode,
   // Entity Nodes
+  entityNode: EntityNode,
   eventsNode: EntityNode,
   testimoniesNode: TestimonyNode,
   userInputNode: UserInputNode,

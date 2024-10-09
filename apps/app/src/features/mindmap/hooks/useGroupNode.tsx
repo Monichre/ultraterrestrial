@@ -50,7 +50,7 @@ interface UseGroupNodeReturn {
 export const useGroupNode = ( { node }: UseGroupNodeProps ): UseGroupNodeReturn => {
   const { useUpdateNodeInternals, getNode, updateNode, useNodesData, getNodesBounds } = useMindMap()
   const updateNodeInternals = useUpdateNodeInternals()
-  const nodeData = useNodesData( node.id )
+  const nodeData: { id: string; type: string; data: { handles: any[] } } = useNodesData( node.id )
 
 
   const [childrenHidden, setChildrenHidden] = useState( false )
@@ -93,7 +93,7 @@ export const useGroupNode = ( { node }: UseGroupNodeProps ): UseGroupNodeReturn 
 
   // **Effect to Initialize Handles and Child Nodes**
   useEffect( () => {
-    if ( nodeData.handles && nodeData.handles.length > 0 ) {
+    if ( nodeData.data.handles && nodeData.data.handles.length > 0 ) {
       setHandles( nodeData.handles )
       updateNodeInternals( node.id )
     }
