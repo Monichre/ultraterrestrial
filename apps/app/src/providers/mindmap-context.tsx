@@ -887,7 +887,10 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
 
       const groupNode: any = {
         ...initialConfig,
-        position,
+        position: {
+          y: sourceNode.position.y + sourceNode.initialHeight + 20,
+          x: sourceNode.position.x,
+        }
       }
       const childNodeWidth = BASE_ENTITY_NODE_WIDTH
       const childNodeHeight = BASE_ENTITY_NODE_HEIGHT
@@ -938,7 +941,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
         data: { type: model },
       } = source
       console.log( 'model: ', model )
-      const isUserInputNode = false // nodeType === 'userInputNode'
+      const isUserInputNode = nodeType === 'userInputNode'
       console.log(
         '🚀 ~ file: mindmap-context.tsx:941 ~ assignPositionsToChildNodes ~ isUserInputNode:',
         isUserInputNode

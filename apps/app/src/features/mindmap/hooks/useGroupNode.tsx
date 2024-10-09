@@ -58,7 +58,13 @@ export const useGroupNode = ( { node }: UseGroupNodeProps ): UseGroupNodeReturn 
 
   const hideChildDomNodes = useCallback( () => {
     const childNodes = document.querySelectorAll( `.${node?.data?.childrenClassName}` )
+    console.log( "🚀 ~ file: useGroupNode.tsx:63 ~ hideChildDomNodes ~ childNodes:", childNodes )
     childNodes.forEach( ( childNode ) => {
+
+
+
+
+
       childNode.classList.add( 'hide' )
     } )
 

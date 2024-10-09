@@ -11,6 +11,7 @@ import {
   GROUP_NODE_WIDTH,
 } from '@/features/mindmap/config/nodes.config'
 import { useMindMap } from '@/providers'
+import { useGroupNode } from '@/features/mindmap/hooks/useGroupNode'
 
 const dayjs = require( 'dayjs' )
 const utc = require( 'dayjs/plugin/utc' )
@@ -29,27 +30,38 @@ interface Photo {
 
 const GN = memo( ( props: any ) => {
   const { useUpdateNodeInternals, useNodesData, updateNode } = useMindMap()
-  const updateNodeInternals = useUpdateNodeInternals()
-  const [handles, setHandles]: any = useState( [] )
-  const nodeData = useNodesData( props.id )
-  console.log( 'nodeData: ', nodeData )
-  const type = nodeData.id.split( '-' )[0]
+  const { handles, node, hideChildren, showChildren, getClonePosition } = useGroupNode( { node: props } )
+  const { type } = node
+  console.log( "🚀 ~ file: group-results-node.tsx:51 ~ node:", node )
 
   useEffect( () => {
-    if ( props?.data?.handles && props.data?.handles.length ) {
-      const { data } = props
+    console.log( "🚀 ~ file: group-results-node.tsx:53 ~ useEffect ~ getClonePosition:", getClonePosition )
+    hideChildren()
+  }, [getClonePosition, hideChildren] )
 
-      setHandles( data.handles )
-      updateNodeInternals( props.id )
-    }
 
-    // if (props?.data?.concise) {
-    //   updateNodeInternals(props.id)
-    // }
-  }, [props, updateNodeInternals, nodeData] )
+  // const nodeData = useNodesData( props.id )
+  // console.log( 'nodeData: ', nodeData )
+  // const type = nodeData.id.split( '-' )[0]
+  //   .react-flow__node-entityGroupNodeChildTopics {
+
+  // }
+
+  // useEffect( () => {
+  //   if ( props?.data?.handles && props.data?.handles.length ) {
+  //     const { data } = props
+
+  //     setHandles( data.handles )
+  //     updateNodeInternals( props.id )
+  //   }
+
+  //   // if (props?.data?.concise) {
+  //   //   updateNodeInternals(props.id)
+  //   // }
+  // }, [props, updateNodeInternals, nodeData] )
 
   useEffect( () => {
-    if ( type === 'topics' ) {
+    if ( node.type === 'topics' ) {
       updateNode( props.id, {
         style: {
           height: GROUP_NODE_WIDTH,
