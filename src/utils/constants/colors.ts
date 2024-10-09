@@ -1,3 +1,5 @@
+import chroma from 'chroma-js'
+
 export function hexToRgba(hex: string, alpha: number): string {
   const r = parseInt(hex.slice(1, 3), 16)
   const g = parseInt(hex.slice(3, 5), 16)
@@ -20,6 +22,11 @@ export const paletteAltTwo = {
   smoke: `#130F0E`,
   silver: `#C5CBCC`,
 }
+export const EVENTS_GREEN = `#79FFE1`
+export const SME_BLUE = `#27F1FF`
+export const TESTIMONIES_RED = `#FA1E4E`
+export const TOPICS_PINK = `#E393E6`
+export const ORGANIZATIONS_PURPLE = `#7c89b9`
 
 export const NEONS = {
   pink: `#E393E6`,
@@ -30,11 +37,11 @@ export const NEONS = {
 }
 
 export const DOMAIN_MODEL_COLORS: any = {
-  topics: NEONS.pink,
-  events: NEONS.green,
-  personnel: NEONS.blue,
-  organizations: NEONS.yellow,
-  testimonies: NEONS.pink,
+  topics: TOPICS_PINK,
+  events: EVENTS_GREEN,
+  personnel: SME_BLUE,
+  organizations: ORGANIZATIONS_PURPLE,
+  testimonies: TESTIMONIES_RED,
   root: '#27F1FF',
 }
 
@@ -130,6 +137,7 @@ const maybe = {
     'Cold Wave': '#c1e0e2',
   },
 }
+// 1px solid rgb(121, 255, 225)
 // Dark palette option
 /*
 $black: #010000ff;
@@ -150,3 +158,69 @@ $gradient-bottom-left: linear-gradient(315deg, #010000ff, #a8a3a4ff, #524f50ff, 
 $gradient-radial: radial-gradient(#010000ff, #a8a3a4ff, #524f50ff, #09080bff, #2f2826ff);
 
 */
+
+const gorgeous = [
+  '#1a1b1a',
+  '#222422',
+  '#5b555c',
+  '#ab98ac',
+  '#e9cfeb',
+  '#d1c7d2',
+  '#202024',
+  '#1e1e22',
+  '#395157',
+  '#5b9da7',
+  '#7fdce7',
+  '#a1d2d9',
+  '#080a08',
+  '#0c0e0b',
+  '#24403b',
+  '#3a867d',
+  '#58c5b7',
+  '#90cfbe',
+]
+
+const hueAestheticPAlette = [
+  '#2c1a25',
+  '#2a1823',
+  '#62382b',
+  '#af6633',
+  '#f09144',
+  '#eba47e',
+  '#0d0705',
+  '#0c0605',
+  '#493b37',
+  '#a1827a',
+  '#edc1b6',
+  '#ebccc3',
+  //
+  '#B26646',
+  '#D3A592',
+  '#DFBBAC',
+  '#B4816C',
+  '#CC8F76',
+]
+const caseFilePalette = {
+  dark: '#06030D',
+  red: '#FA1E4E',
+  gradient:
+    'background: linear-gradient(270deg, #06030D 28.65%, rgba(6, 3, 13, 0.00) 100%)',
+}
+
+//--------------------------------------------------------------------------------------//
+//                                   Advanced Borders                                   //
+//--------------------------------------------------------------------------------------//
+
+/* 
+.gradient-border {
+  border: 10px solid;
+  border-image: linear-gradient(45deg, #FA1E4E, rgba(0,0,0,0.5)) 1;
+}
+
+.image-border {card
+  border: 10px solid transparent;
+  border-image: url('border-image.png') 30 round;
+}
+
+*/
+export { chroma }

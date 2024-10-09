@@ -2,7 +2,7 @@
 
 import { HocuspocusProvider } from '@hocuspocus/provider'
 
-import { API } from '@/lib/api'
+import { API } from '@/services/api'
 
 import {
   AiWriter,
@@ -57,7 +57,11 @@ interface ExtensionKitProps {
   userColor?: string
 }
 
-export const ExtensionKit = ({ provider, userId, userName = 'Maxi' }: ExtensionKitProps) => [
+export const ExtensionKit = ({
+  provider,
+  userId,
+  userName = 'Maxi',
+}: ExtensionKitProps) => [
   Document,
   Columns,
   TaskList,
@@ -123,7 +127,10 @@ export const ExtensionKit = ({ provider, userId, userName = 'Maxi' }: ExtensionK
 
         return currentEditor
           .chain()
-          .setImageBlockAt({ pos: currentEditor.state.selection.anchor, src: url })
+          .setImageBlockAt({
+            pos: currentEditor.state.selection.anchor,
+            src: url,
+          })
           .focus()
           .run()
       })

@@ -1,38 +1,14 @@
-import { Card } from '@/components/ui/card/card'
-import { ConnectionCard } from '@/features/mindmap/cards/connection-card'
-import {
-  MindMapEntityCard,
-  type MindMapEntityCardProps,
-} from '@/features/mindmap/cards/entity-card/entity-card'
-import { RootNodeCard } from '@/features/mindmap/cards/root-node-card/root-node-card'
-import { StarsCard, type StarsCardProps } from '@/components/ui/card/stars-card'
+// import { RootNodeCard } from '@/features/mindmap/components/cards/root-node-card/root-node-card'
+import { StarsCard } from '@/components/ui/card/stars-card'
 
 import type { Meta, StoryObj } from '@storybook/react'
-import type { JSX, HTMLAttributes, RefAttributes } from 'react'
+//
 
-const CardStories = ({ children }: any) => (
-  <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'>
-    {children}
-    poop
-  </div>
-)
-const mindmapProps: any = {
-  data: {
-    name: 'Roswell UFO Sighting',
-    id: 'test',
-    date: '2/5/1947',
-    location: 'Roswell, New Mexico',
-    photos: [
-      {
-        src: '/foofighters.webp',
-      },
-    ],
-  },
-}
+// import { MiniCard } from '@/features/mindmap/components/cards/mini-card'
 
 const meta = {
   title: 'Components/Card Stories',
-  component: CardStories,
+  component: StarsCard,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   parameters: {
@@ -40,20 +16,63 @@ const meta = {
     layout: 'fullscreen',
   },
   args: {},
-} satisfies Meta<typeof CardStories>
+} satisfies Meta<typeof StarsCard>
 
 export default meta
-type Story = StoryObj<typeof meta>
-export const CardStoriesStory: Story = {
+type Story = StoryObj<typeof StarsCard>
+
+export const StarsCardStory: Story = {
   args: {},
   render: (args: any) => (
     <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'>
-      <ConnectionCard />
-      <MindMapEntityCard {...mindmapProps} />
-      <StarsCard />
+      <StarsCard>
+        <div>poop</div>
+      </StarsCard>
     </div>
   ),
 }
+// export const MiniCardStory: Story = {
+//   // args: { card: cards[0] },
+//   render: (args: any) => (
+//     <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'>
+//       {/* <MiniCard {...args} /> */}
+//     </div>
+//   ),
+// }
+
+// export const GroupCardStory: Story = {
+//   args: {},
+//   render: (args: any) => (
+//     <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'></div>
+//   ),
+// }
+
+// export const SubjectMatterExpertCardStory: Story = {
+//   args: {},
+//   render: (args: any) => (
+//     <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'></div>
+//   ),
+// }
+// export const TestimonyCardStory: Story = {
+//   args: {},
+//   render: (args: any) => (
+//     <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'></div>
+//   ),
+// }
+
+// export const TopicCardStory: Story = {
+//   args: {},
+//   render: (args: any) => (
+//     <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'></div>
+//   ),
+// }
+
+// export const CaseFileCardStory: Story = {
+//   args: {},
+//   render: (args: any) => (
+//     <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'></div>
+//   ),
+// }
 
 // type Story = StoryObj<typeof ConnectionCard>
 
@@ -68,7 +87,7 @@ export const CardStoriesStory: Story = {
 //     args: JSX.IntrinsicAttributes &
 //       HTMLAttributes<HTMLDivElement> &
 //       RefAttributes<HTMLDivElement>
-//   ) => <ConnectionCard />,
+
 // }
 
 // export const MindMapEntityCardStory: Story = {

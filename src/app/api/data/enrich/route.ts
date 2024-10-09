@@ -1,91 +1,52 @@
-import { getXataClient, searchRelatedRecords } from '@/lib/xata'
-const xata: any = getXataClient()
-import { checkRelevanceWithAI } from '@/lib/openai/assistants/disclosure'
-import { connectionMapByEntityType, objectMapToSingular } from '@/utils'
-import { filterConnectionsByRelevance } from '@/lib/openai/assistants/assistant.utils'
-export async function POST(req: any) {
+import { checkRelevanceWithAI } from '@/services/openai/assistants/disclosure'
+import { executePlatformWideConnectionSearch } from '@/services/xata'
+
+export async function POST( req: any ) {
   const { data } = await req.json()
-  console.log('data: ', data)
+  console.log( 'data: ', data )
   const { subject, type } = data
-  console.log('type: ', type)
-  console.log('subject: ', subject)
-  const connectionTables: any = connectionMapByEntityType[type]
-  const originalRecordTypeSingular = objectMapToSingular[type]
-  const databaseRecords: any = await searchRelatedRecords({
+  console.log( 'type: ', type )
+  console.log( 'subject: ', subject )
+
+  const databaseRecords: any = await executePlatformWideConnectionSearch( {
     id: subject.id,
     type,
-  })
-  const relatedItems = Array.from(databaseRecords)
-  console.log('databaseRecords: ', databaseRecords)
-  const { text, assistantAnswer, connections, payload } =
-    await checkRelevanceWithAI({
+  } )
+  console.log( 'databaseRecords: ', databaseRecords )
+  const relatedItems = Array.from( databaseRecords )
+  console.log( 'relatedItems: ', relatedItems )
+  const response =
+    await checkRelevanceWithAI( {
       subject,
       relatedItems,
-    })
+    } )
+  console.log( 'response: ', response )
+  // const { relevant, irrelevant } = filterConnectionsByRelevance(connections)
 
-  const { relevant, irrelevant } = filterConnectionsByRelevance(connections)
-  const evaluatedRecords = Object.keys(relevant).map((name) => {
-    const databasedRecord = relatedItems.find(
-      (record: any) => record.name === name
-    )
-    console.log('databasedRecord: ', databasedRecord)
-    const evaluatedRecord = databasedRecord
-      ? {
-          ...databasedRecord,
-          evaluation: connections[name],
-        }
-      : null
-    console.log('evaluatedRecord: ', evaluatedRecord)
-    return evaluatedRecord
-  })
-  console.log('evaluatedRecords: ', evaluatedRecords)
-  // const deleteTheseRecords = Object.keys(irrelevant).map((name) => {
+  // const evaluatedRecords = Object.keys(relevant).map((name) => {
   //   const databasedRecord = relatedItems.find(
   //     (record: any) => record.name === name
   //   )
-
+  //   console.log('databasedRecord: ', databasedRecord)
   //   const evaluatedRecord = databasedRecord
   //     ? {
   //         ...databasedRecord,
   //         evaluation: connections[name],
   //       }
   //     : null
-
+  //   console.log('evaluatedRecord: ', evaluatedRecord)
   //   return evaluatedRecord
   // })
-  // const result = await xata.db.Tutorial.ask('<question>', {
-  //   rules: [
-  //     // ...array of strings with the rules for the model...,
-  //   ],
-  //   searchType: 'keyword|vector',
-  //   search: {
-  //     fuzziness: 0 | 1 | 2,
-  //     prefix: 'phrase|disabled',
-  //     target: {
-  //       // ...search target options...
-  //     },
-  //     filter: {
-  //       // ...search filter options...
-  //     },
-  //     boosters: [
-  //       // ...search boosters options...
-  //     ],
-  //   },
-  //   vectorSearch: {
-  //     column: '<embedding column>',
-  //     contentColumn: '<content column>',
-  //     filter: {
-  //       // ...search filter options...
-  //     },
-  //   },
-  // })
+  // console.log('evaluatedRecords: ', evaluatedRecords)
 
-  return Response.json({
-    text,
-    assistantAnswer,
-    connections: evaluatedRecords,
-    payload,
-  })
+
+  return Response.json( {
+    // data
+    // text,
+    // assistantAnswer,
+    // connections: evaluatedRecords,
+    payload: response
+  } )
 }
 
 // pages/api/contact.js

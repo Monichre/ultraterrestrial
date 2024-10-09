@@ -6,28 +6,68 @@ import {
 } from 'next/font/google'
 import localFont from 'next/font/local'
 
-export const centima = localFont({
-  src: [
-    {
-      path: 'fonts/centima/Centima-Mono-W01-Bold.woff',
-      weight: 'bold',
-      style: 'normal',
-    },
-  ],
-  display: 'swap',
-  variable: '--font-centima',
-})
-
 export const centimaSans = localFont({
   src: [
     {
       path: 'fonts/centima/CentimaProSans-Bold.woff',
-      weight: 'bold',
+      weight: '700',
       style: 'normal',
     },
     {
+      path: 'fonts/centima/CentimaProSans-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+
+    {
       path: 'fonts/centima/CentimaProSans.woff',
       weight: '400',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/centima/CentimaProSans.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/centima/CentimaProSansLight-Italic.woff2',
+      weight: '300',
+      style: 'italic',
+    },
+    {
+      path: 'fonts/centima/CentimaProSansLight.woff2',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/centima/CentimaProSerif-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+
+    {
+      path: 'fonts/centima/CentimaProSerif-Italic.woff2',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: 'fonts/centima/CentimaProSerif.woff',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/centima/CentimaProSerif.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/centima/CentimaProSerifLight-Italic.woff2',
+      weight: '300',
+      style: 'italic',
+    },
+    {
+      path: 'fonts/centima/CentimaProSerifLight.woff2',
+      weight: '300',
       style: 'normal',
     },
   ],
@@ -162,7 +202,7 @@ export const jetBrains = localFont({
   src: 'fonts/jetbrains/JetBrainsMono-VariableFont_wght.ttf',
   // weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
-  variable: '--font-sentient',
+  variable: '--font-jetbrains',
 })
 
 export const nunito = localFont({
@@ -192,11 +232,110 @@ export const sentient = localFont({
 export const bebasNeue = localFont({
   src: [
     {
-      path: 'fonts/BebasNeue/Fonts/WEB/fonts/BebasNeue-Regular.ttf',
+      path: 'fonts/BebasNeue/BebasNeue-Regular.woff2',
       weight: '400',
       style: 'normal',
     },
   ],
   display: 'swap',
   variable: '--font-bebasNeue',
+})
+
+export const bebasNeuePro = localFont({
+  src: [
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedBold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedBook.ttf',
+      weight: '300',
+      style: 'normal',
+    },
+
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedExtraBold.ttf',
+      weight: '800',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedItalic.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedLight.ttf',
+      weight: '200',
+      style: 'normal',
+    },
+
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedMedium.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedRegular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedThin.ttf',
+      weight: '100',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-ExpandedThinitalic.ttf',
+      weight: '100',
+      style: 'italic',
+    },
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-Italic.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-Light.ttf',
+      weight: '200',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-LightItalic.ttf',
+      weight: '200',
+      style: 'italic',
+    },
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-Middle.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-Thin.ttf',
+      weight: '100',
+      style: 'normal',
+    },
+    {
+      path: 'fonts/BebasNeue/BebasNeuePro-Thinitalic.ttf',
+      weight: '100',
+      style: 'italic',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-bebasNeuePro',
 })

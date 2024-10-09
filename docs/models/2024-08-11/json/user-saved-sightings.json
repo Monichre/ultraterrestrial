@@ -1,1 +1,0 @@
-{"columns":[{"name":"id","type":"text"},{"name":"xata.version","type":"int4"},{"name":"xata.createdAt","type":"timestamptz"},{"name":"xata.updatedAt","type":"timestamptz"},{"name":"user","type":"text"},{"name":"sighting","type":"text"},{"name":"theory","type":"text"},{"name":"note","type":"text"},{"name":"note-title","type":"text"}],"records":[],"total":0}

@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import {
   type Item,
   SortableListItem,
-} from '@/components/animated/cult-ui/sortable-list'
+} from '@/components/cult-ui/sortable-list'
 export const useRenderListItem = ({
   handleAddItem,
   handleCloseOnDrag,

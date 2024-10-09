@@ -1,6 +1,7 @@
 'use client'
-import type { NetworkGraphPayload } from '@/lib/xata'
 
+
+import type { NetworkGraphPayload } from '@/features/mindmap/api/get-entity-network-graph-data'
 import { createContext, useContext } from 'react'
 
 export type StateOfDisclosureSchema = {
@@ -16,6 +17,8 @@ export const StateOfDisclosureContext: any = createContext({
     personnel: [],
     testimonies: [],
     organizations: [],
+    documents: [],
+    artifacts: [],
   },
   connections: {
     topicsExpertsConnections: [],
@@ -44,12 +47,7 @@ export const StateOfDisclosureProvider: React.FC<
     connections,
     graphData: mindMapIntialGraphState,
   } = stateOfDisclosure
-  const typeMap: any = {
-    events: 'event',
-    personnel: 'subject-matter-expert',
-    topics: 'topic',
-    organizations: 'organization',
-  }
+
 
   return (
     <StateOfDisclosureContext.Provider

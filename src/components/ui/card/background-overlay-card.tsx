@@ -1,6 +1,5 @@
 'use client'
-import type { MindMapEntityCardProps } from '@/features/mindmap/cards/entity-card/entity-card'
-import { cn } from '@/utils'
+import type { MindMapEntityCardProps } from '@/features/mindmap/components/cards/entity-card/entity-card'
 
 export function BackgroundOverlayCard({ data }: MindMapEntityCardProps) {
   const { photos } = data

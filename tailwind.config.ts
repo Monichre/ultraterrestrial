@@ -1,10 +1,10 @@
 import type { Config } from 'tailwindcss'
-const tailwindAnimate = require('tailwindcss-animate')
-const svgToDataUri = require('mini-svg-data-uri')
+const tailwindAnimate = require( 'tailwindcss-animate' )
+const svgToDataUri = require( 'mini-svg-data-uri' )
 
 const {
   default: flattenColorPalette,
-} = require('tailwindcss/lib/util/flattenColorPalette')
+} = require( 'tailwindcss/lib/util/flattenColorPalette' )
 
 const storyPaths = [
   './src/**/*.mdx',
@@ -12,15 +12,15 @@ const storyPaths = [
   './src/**/**/*.stories.@(js|jsx|mjs|ts|tsx)',
 ]
 
-function addVariablesForColors({ addBase, theme }: any) {
-  let allColors = flattenColorPalette(theme('colors'))
+function addVariablesForColors( { addBase, theme }: any ) {
+  let allColors = flattenColorPalette( theme( 'colors' ) )
   let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+    Object.entries( allColors ).map( ( [key, val] ) => [`--${ key }`, val] )
   )
 
-  addBase({
+  addBase( {
     ':root': newVars,
-  })
+  } )
 }
 
 const config = {
@@ -49,14 +49,15 @@ const config = {
         ailerons: ['var(--font-ailerons)'],
         futura: ['var(--font-futura)'],
         firaCode: ['var(--font-fira-code)'],
-        centima: ['var(--font-centima})'],
+
         centimaSans: ['var(--font-centima-sans)'],
         eirene: ['var(--font-eirene})'],
         stellar: ['var(--font-stellar})'],
         jetbrains: ['var(--font-sentient)'],
-        nunito: ['var(--font-nunito})'],
+        nunito: ['var(--font-nunito)'],
         sentient: ['var(--font-sentient)'],
         bebasNeue: ['var(--font-bebasNeue)'],
+        bebasNeuePro: ['var(--font-bebasNeuePro)'],
         commitMono: ['var(--font-commit-mono)'],
       },
       colors: {
@@ -219,28 +220,29 @@ const config = {
   plugins: [
     tailwindAnimate,
     addVariablesForColors,
-    function ({ matchUtilities, theme }: any) {
+    function ( { matchUtilities, theme }: any ) {
       matchUtilities(
         {
-          'bg-grid': (value: any) => ({
-            backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
-            )}")`,
-          }),
-          'bg-grid-small': (value: any) => ({
-            backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
-            )}")`,
-          }),
-          'bg-dot': (value: any) => ({
-            backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none"><circle fill="${value}" id="pattern-circle" cx="10" cy="10" r="1.6257413380501518"></circle></svg>`
-            )}")`,
-          }),
+          'bg-grid': ( value: any ) => ( {
+            backgroundImage: `url("${ svgToDataUri(
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${ value }"><path d="M0 .5H31.5V32"/></svg>`
+            ) }")`,
+          } ),
+          'bg-grid-small': ( value: any ) => ( {
+            backgroundImage: `url("${ svgToDataUri(
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="${ value }"><path d="M0 .5H31.5V32"/></svg>`
+            ) }")`,
+          } ),
+          'bg-dot': ( value: any ) => ( {
+            backgroundImage: `url("${ svgToDataUri(
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none"><circle fill="${ value }" id="pattern-circle" cx="10" cy="10" r="1.6257413380501518"></circle></svg>`
+            ) }")`,
+          } ),
         },
-        { values: flattenColorPalette(theme('backgroundColor')), type: 'color' }
+        { values: flattenColorPalette( theme( 'backgroundColor' ) ), type: 'color' }
       )
     },
+    require( 'tailwindcss-motion' )
   ],
 } satisfies Config
 

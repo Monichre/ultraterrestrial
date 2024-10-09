@@ -13,10 +13,11 @@ import { userColors, userNames } from '../lib/constants'
 import { randomElement } from '../lib/utils'
 import { EditorUser } from '../components/BlockEditor/types'
 import { useSidebar } from './useSidebar'
-import { initialContent } from '@/lib/data/initialContent'
+import { initialContent } from '@/services/data/initialContent'
 
 const TIPTAP_AI_APP_ID = process.env.NEXT_PUBLIC_TIPTAP_AI_APP_ID
-const TIPTAP_AI_BASE_URL = process.env.NEXT_PUBLIC_TIPTAP_AI_BASE_URL || 'https://api.tiptap.dev/v1/ai'
+const TIPTAP_AI_BASE_URL =
+  process.env.NEXT_PUBLIC_TIPTAP_AI_BASE_URL || 'https://api.tiptap.dev/v1/ai'
 
 declare global {
   interface Window {
@@ -35,7 +36,7 @@ export const useBlockEditor = ({
 }) => {
   const leftSidebar = useSidebar()
   const [collabState, setCollabState] = useState<WebSocketStatus>(
-    provider ? WebSocketStatus.Connecting : WebSocketStatus.Disconnected,
+    provider ? WebSocketStatus.Connecting : WebSocketStatus.Disconnected
   )
   const { setIsAiLoading, setAiError } = useContext(EditorContext)
 
@@ -86,12 +87,12 @@ export const useBlockEditor = ({
             setIsAiLoading(false)
             setAiError(null)
           },
-          onError: error => {
+          onError: (error) => {
             setIsAiLoading(false)
             setAiError(error.message)
           },
         }),
-      ].filter(e => !!e),
+      ].filter((e) => !!e),
       editorProps: {
         attributes: {
           autocomplete: 'off',
@@ -101,7 +102,7 @@ export const useBlockEditor = ({
         },
       },
     },
-    [ydoc, provider],
+    [ydoc, provider]
   )
 
   const users = useMemo(() => {
@@ -119,7 +120,10 @@ export const useBlockEditor = ({
     })
   }, [editor?.storage.collaborationCursor?.users])
 
-  const characterCount = editor?.storage.characterCount || { characters: () => 0, words: () => 0 }
+  const characterCount = editor?.storage.characterCount || {
+    characters: () => 0,
+    words: () => 0,
+  }
 
   useEffect(() => {
     provider?.on('status', (event: { status: WebSocketStatus }) => {

@@ -4,7 +4,7 @@ dayjs.extend(utc)
 
 import { ScrollThrough3D } from '@/features/3d/scroll-through-3d'
 
-import { getXataClient } from '@/lib/xata'
+import { getXataClient } from '@/services/xata'
 
 const xata = getXataClient()
 

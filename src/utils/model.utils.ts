@@ -79,3 +79,41 @@ export const extractUniqueYearsFromEvents = (events: any[]) => {
 
   return Array.from(years)
 }
+export const extractCoordinatesFromEvents = (
+  events: any[],
+  withEventData = false
+) => {
+  return events.map((event) => {
+    const { latitude, longitude, id, ...rest } = event
+    return withEventData
+      ? {
+          lat: latitude,
+          lng: longitude,
+          size: 0.1,
+          color: '#79ffe1',
+          ...rest,
+        }
+      : {
+          location: [latitude, longitude],
+          size: 0.02,
+        }
+  })
+}
+
+// Function to generate a random color in hex format
+const randomColor = () => {
+  const letters = '0123456789ABCDEF'
+  let color = '#'
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}
+
+// Function to generate dummy data for the card schema
+export const locationToAngles = (lat, long) => {
+  return [
+    Math.PI - ((long * Math.PI) / 180 - Math.PI / 2),
+    (lat * Math.PI) / 180,
+  ]
+}

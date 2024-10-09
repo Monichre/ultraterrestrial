@@ -1,168 +1,199 @@
 'use client'
-import * as React from 'react'
 
-import './timeline.css'
-import dayjs from 'dayjs'
 import {
-  motion,
-  inView,
-  useScroll,
-  useSpring,
-  useTransform,
-} from 'framer-motion'
-import { index } from 'd3'
+  forwardRef,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react'
+import React, { useState } from 'react'
+import { useVisibility } from '@/hooks'
+import { cn } from '@/utils'
+import { format } from 'date-fns'
+import { useScrolling } from 'react-use'
+import { TimelineItem } from '@/layouts/timeline/timeline-item'
 
-// const TimelineItem = (props: any) => {
-//   const { scrollYProgress } = useScroll()
-// const scaleX = useSpring(scrollYProgress)
-//   return (
-//     <div
-//     className='timeline-item'
-//     key={index}
-//     // animate={computeTranslateZ(index * 2)}
-//     // transition={{
-//     //   duration: 2,
-//     //   ease: 'linear',
-//     // }}
-//   >
-//     <h1 className='text-white'>{event.name}</h1>
-//     <p className='text-white'>
-//       {dayjs(event.date).format('MMM DD, YYYY')}
-//     </p>
-//     <p className='text-white'>{event.location}</p>
-//     <p className='text-white'>{event.location}</p>
-//   </div>
-//   )
-// }
+interface TimelineToolTipProps {
+  event: string
+  coordinates: any
+}
 
-export const SpatialTimeline = ({ eventsByYear, years }: any) => {
-  console.log('eventsByYear: ', eventsByYear)
+interface Element {
+  id: number
+  width: number
+  img: string
+}
 
-  // Function to compute translateZ based on index
-  // const y = useTransform(x, (latest) => latest * 2)
-  const opacityOutput = [0, 1, 0]
-  const colorOutput = ['#f00', '#fff', '#0f0']
+interface Column {
+  id: number
+  elements: Element[]
+}
 
-  // const opacity = useTransform(x, xInput, opacityOutput)
-  const computeTranslateZ = (index: number) => ({
-    transform: [
-      `translateZ(${-(index + 1) * 1000}px)`,
-      `translateZ(0px)`,
-      `translateZ(${(index + 1) * 1000}px)`,
-    ],
-    opacity: [0, 1, 0],
-    filter: ['blur(5px)', 'blur(0px)', 'blur(5px)'],
-  })
-  const today = dayjs(new Date()).format('MMM DD, YYYY')
-  // stuck-grid
+interface Event {
+  id: string
+  name: string
+  date: Date
+  location: string
+  latitude: number
+  longitude: number
+}
 
-  React.useEffect(() => {
-    const setAnimationRanges = (
-      element: {
-        style: { setProperty: (arg0: string, arg1: string) => void }
-        animate: (
-          arg0: { opacity: number; transform: string }[],
-          arg1: {
-            duration: number
-            easing: string
-            fill: string
-            delay: number
-          }
-        ) => void
-      },
-      index: number,
-      totalElements: number
-    ) => {
-      const start = 20 + index * 5 // Example start percentage logic
-      const end = start + 10 // Example: each animation spans 10%
+interface TimelineItemProps {
+  events: Event[]
+  year: number
+  currentYear: number
+  mitigateCurrentYearValue: (year: number) => void
+  style: React.CSSProperties
+  scrolling: React.RefObject<boolean>
+}
 
-      element.style.setProperty('--animation-start', `${start}%`)
-      element.style.setProperty('--animation-end', `${end}%`)
-
-      // Use Scroll-driven animations or manually update keyframes
-      element.animate(
-        [
-          { opacity: 0, transform: `translateZ(-100px)` },
-          { opacity: 1, transform: `translateZ(0)` },
-          { opacity: 0, transform: `translateZ(100px)` },
-        ],
-        {
-          duration: 1000,
-          easing: 'linear',
-          fill: 'both',
-          delay: (index / totalElements) * 1000, // Adjust the delay based on index
-        }
-      )
+const throttle = (func: Function, limit: number) => {
+  let inThrottle = false
+  return function (this: any, ...args: any[]) {
+    if (!inThrottle) {
+      func.apply(this, args)
+      inThrottle = true
+      setTimeout(() => (inThrottle = false), limit)
     }
+  }
+}
+
+interface SpatialTimelineProps {
+  eventsByYear: Record<number, Event[]>
+  years: number[]
+  updateActiveLocation: (location: string) => void
+}
+
+export const SpatialTimeline: React.FC<SpatialTimelineProps> = ({
+  eventsByYear,
+  years,
+  updateActiveLocation,
+}) => {
+  const [currentYear, setCurrentYear] = useState(years[0])
+  const scrolling = useRef(false)
+
+  useEffect(() => {
+    const handleScroll = throttle(() => {
+      scrolling.current = true
+    }, 100)
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const mitigateCurrentYearValue = useCallback(
+    (nextYear: number) => {
+      if (nextYear !== currentYear) {
+        setCurrentYear(nextYear)
+      }
+    },
+    [currentYear]
+  )
+  let startOffset = -20
+  const calcAnimation = (index: number) => {
+    if (index !== 0) {
+      startOffset += 10 // index === 0 ? -20 : index * 10
+    }
+    let endOffset = startOffset + 10
+
+    // Adjust startOffset to be within 0% to 100%
+    // if (startOffset > 100) {
+    //   startOffset = startOffset % 100
+    //   endOffset = startOffset % 100
+    // }
+
+    // if (endOffset > 100) {
+    //   endOffset = -50
+    // }
+
+    // if (startOffset === endOffset) {
+    //   // startOffset = 0
+    //   endOffset += 30
+    // }
+
+    // // Adjust endOffset to be within 0% to 100%
+    // if (endOffset > 100) {
+    //   endOffset = 100
+    // } else if (endOffset < 0) {
+    //   endOffset = 0
+    // }
+
+    // // Ensure startOffset is not greater than endOffset
+    // if (startOffset > endOffset) {
+    //   // ;[startOffset, endOffset] = [endOffset, startOffset]
+    //   startOffset = endOffset
+    //   endOffset = startOffset
+    // }
+
+    const start = `${startOffset}%`
+    const end = `100%`
+
+    return {
+      'animation-range': `${start} 100%`,
+    }
+  }
+
   return (
-    <div className='stuck-grid'>
-      {years.map((year: any, index: any) => {
+    // stuck-grid
+    // spatial
+    <div
+      className='stuck-grid h-full'
+      // style={{ minHeight: `${years.length * 100}vh` }}
+    >
+      {years.map((year, index) => {
         return (
-          <div className='grid-item' key={year}>
-            {eventsByYear[year].map((event: any, index: any) => (
-              <div
-                className='timeline-item'
-                key={`${year}-${event.id}`}
-                // animate={computeTranslateZ(index * 2)}
-                // transition={{
-                //   duration: 2,
-                //   ease: 'linear',
-                // }}
-              >
-                <h1 className='text-white'>{event.name}</h1>
-                <p className='text-white'>
-                  {dayjs(event.date).format('MMM DD, YYYY')}
-                </p>
-                <p className='text-white'>{event.location}</p>
-                <p className='text-white'>{event.location}</p>
-              </div>
-            ))}
-          </div>
+          <TimelineItem
+            key={`${year}-${index}-grid-item`}
+            year={year}
+            currentYear={currentYear}
+            updateActiveLocation={updateActiveLocation}
+            events={eventsByYear[year]}
+            mitigateCurrentYearValue={mitigateCurrentYearValue}
+            scrolling={scrolling}
+            style={{
+              ...calcAnimation(index),
+              // zIndex: years.length - index + 1,
+            }}
+          />
         )
       })}
     </div>
   )
 }
+// useEffect(() => {
+//   let zSpacing = -1000
+//   let lastPos = zSpacing / 5
+//
+//   let $frames = document.getElementsByClassName('frame')
+//   let frames = Array.from($frames)
+//   let zVals = []
+//
 
-{
-  /* <div className='grid-item'>@layer</div>
-      <div className='grid-item'>@swash</div>
-      <div className='grid-item'>subgrid</div>
-      <div className='grid-item'>in oklab</div>
-      <div className='grid-item'>:popover-open</div>
-      <div className='grid-item'>abs()</div>
-      <div className='grid-item'>sin()</div>
-      <div className='grid-item'>:has()</div>
-      <div className='grid-item'>::marker</div>
-      <div className='grid-item'>1cap</div>
-      <div className='grid-item'>scrollbar-color</div>
-      <div className='grid-item'>scroll-timeline</div>
-      <div className='grid-item'>view-timeline</div>
-      <div className='grid-item'>overlay</div>
-      <div className='grid-item'>scale</div>
-      <div className='grid-item'>ascent-override</div>
-      <div className='grid-item'>initial-letter</div>
-      <div className='grid-item'>inset</div>
-      <div className='grid-item'>@container</div>
-      <div className='grid-item'>accent-color</div>
-      <div className='grid-item'>color-mix()</div>
-      <div className='grid-item'>@scope</div>
-      <div className='grid-item'>@starting-style</div>
-      <div className='grid-item'>override-colors</div>
-      <div className='grid-item'>anchor()</div>
-      <div className='grid-item'>scroll-snap</div>
-      <div className='grid-item'>::backdrop</div>
-      <div className='grid-item'>::cue</div>
-      <div className='grid-item'>:focus-visible</div>
-      <div className='grid-item'>:user-valid</div>
-      <div className='grid-item'>:fullscreen</div>
-      <div className='grid-item'>:dir()</div>
-      <div className='grid-item'>caret-color</div>
-      <div className='grid-item'>aspect-ratio</div>
-      <div className='grid-item'>cross-fade()</div>
-      <div className='grid-item'>image-set()</div>
-      <div className='grid-item'>env()</div>
-      <div className='grid-item'>place-content</div>
-      <div className='grid-item'>gap</div> */
-}
+//   window.addEventListener('scroll', () => {
+//     let top = document.documentElement.scrollTop
+//
+//     let delta = lastPos - top
+//
+//     lastPos = top
+//
+
+//     frames.forEach((n, i) => {
+//       zVals.push(i * zSpacing + zSpacing)
+//       zVals[i] += delta * -5.5
+
+//       let frame = frames[i]
+//       let transform = `translateZ(${zVals[i]}px)`
+//
+//       let opacity = zVals[i] < Math.abs(zSpacing) / 1.8 ? 1 : 0
+
+//       frame.setAttribute(
+//         'style',
+//         `transform: ${transform}; opacity: ${opacity};`
+//       )
+//     })
+//   })
+// }, [])
+
+// Audio

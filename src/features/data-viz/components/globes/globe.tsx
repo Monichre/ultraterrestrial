@@ -4,8 +4,10 @@ import { useState, useEffect, useMemo } from 'react'
 import EarthGlobe from 'react-globe.gl'
 // import geojson from '@/src/data/events.geojson'
 
+export type ReactGlobePointSchema = {}
 export interface GlobeProps {
-  type: string
+  locations: any[]
+  activeLocation: any
 }
 
 const images = {
@@ -14,12 +16,14 @@ const images = {
 }
 
 export const Globe: React.FC<GlobeProps> = ({
-  type = 'sightings',
+  locations,
+  activeLocation,
 }: GlobeProps) => {
+  console.log('locations: ', locations)
   // const pink = '#E393E6'
   // const lightBlue = '#6EE3E6'
   // const green = #79ffe1
-  const [points, setPoints] = useState<any[]>([])
+  const [points, setPoints] = useState<any[]>(locations)
 
   // useEffect(() => {
   //   fetch(`/${type}.geojson`)
@@ -41,41 +45,18 @@ export const Globe: React.FC<GlobeProps> = ({
   //     })
   // }, [])
 
-  useEffect(() => {
-    const getData = async () => {
-      const green = '#6EE6B5'
-      const geoPoints = await fetch(`/sightings.geojson`)
-        .then((res) => res.json())
-        .then((data) => {
-          const { features } = data
-
-          return features.map((d: any) => {
-            const { geometry, properties } = d
-            return {
-              name: properties.name,
-              lat: geometry.coordinates[1],
-              lng: geometry.coordinates[0],
-              color: green,
-              size: 0.001,
-            }
-          })
-        })
-      setPoints(geoPoints)
-    }
-
-    if (!points || !points?.length) {
-      getData()
-    }
-  }, [points])
-
   return (
     <EarthGlobe
       animateIn
-      pointsData={points}
+      pointsData={locations}
       globeImageUrl={images.earthSky}
+      pointLat={(d: any) => d.lat}
+      pointLng={(d: any) => d.lng}
       backgroundImageUrl={images.nightSky}
-      labelsData={points}
-      pointAltitude={0}
+      // labelsData={locations}
+      pointAltitude={0.3}
+      pointResolution={20}
+      pointRadius={(d: any) => d.size}
       pointColor={(d: any) => d.color}
       // labelText={(d: any) => d.name}
     />

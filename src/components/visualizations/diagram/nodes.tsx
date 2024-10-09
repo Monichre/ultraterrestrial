@@ -1,37 +1,26 @@
 'use client'
 
-import * as THREE from 'three'
 import {
   createContext,
+  forwardRef,
+  useContext,
+  useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
-  useState,
-  useContext,
-  useLayoutEffect,
-  forwardRef,
-  useEffect,
-  useCallback,
-  JSX,
-  RefAttributes,
+  useState
 } from 'react'
+import * as THREE from 'three'
 
-import { useFrame, useThree, useGraph } from '@react-three/fiber'
-import {
-  QuadraticBezierLine,
-  Text,
-  Circle as DreiCircle,
-  Billboard,
-  ScreenSizer,
-  Instance,
-  Line2Props,
-  LineProps,
-  DragControls,
-} from '@react-three/drei'
-import { useDrag } from '@use-gesture/react'
-import { mergeRefs } from 'react-merge-refs'
-import { DOMAIN_MODEL_COLORS, paletteAlt } from '@/utils/constants/colors'
-import { BallCollider, Physics, RigidBody } from '@react-three/rapier'
 import { useSphere } from '@react-three/cannon'
+import {
+  Billboard,
+  QuadraticBezierLine,
+  Text
+} from '@react-three/drei'
+import { useFrame, useThree } from '@react-three/fiber'
+import { BallCollider, RigidBody } from '@react-three/rapier'
+import { useDrag } from '@use-gesture/react'
 
 const context: any = createContext()
 
@@ -283,7 +272,7 @@ export const Node = forwardRef(
 //       connectedTo = [],
 //       position,
 //       rootType,
-//       fetchConnections,
+//       executePlatformWideConnectionSearch,
 //       id,
 //       child,
 //       ...rest
@@ -431,7 +420,7 @@ export const Node = forwardRef(
 //       connectedTo = [],
 //       position,
 //       rootType,
-//       fetchConnections,
+//       executePlatformWideConnectionSearch,
 //       id,
 //       child,
 //       ...props
@@ -632,7 +621,7 @@ export const Node = forwardRef(
 //       connectedTo = [],
 //       position,
 //       rootType,
-//       fetchConnections,
+//       executePlatformWideConnectionSearch,
 //       id,
 //       child,
 //       ...props

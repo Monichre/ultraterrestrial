@@ -1,9 +1,9 @@
 import type { StorybookConfig } from '@storybook/nextjs'
 
 const config: StorybookConfig = {
-  features: {
-    experimentalRSC: true,
-  },
+  // features: {
+  //   experimentalRSC: true,
+  // },
   stories: [
     '../src/**/*.mdx',
     '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
@@ -31,15 +31,7 @@ const config: StorybookConfig = {
     '@storybook/addon-mdx-gfm',
   ],
 
-  framework: {
-    name: '@storybook/nextjs',
-
-    options: {
-      builder: {
-        useSWC: true, // Enables SWC support
-      },
-    },
-  },
+  framework: '@storybook/nextjs', // 👈 Add this
 
   docs: {},
 

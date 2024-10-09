@@ -1,9 +1,10 @@
 'use client'
 
-import { FC, useCallback, useRef, useMemo } from 'react'
+import { type NetworkGraphPayload } from '@/features/mindmap/api/get-entity-network-graph-data'
+import type { JSONData } from '@xata.io/client'
+import { FC, useCallback, useRef } from 'react'
 import { ForceGraph3D } from 'react-force-graph'
-import { JSONData } from '@xata.io/client'
-import type { NetworkGraphPayload } from '@/lib/xata/get-entity-network-graph-data'
+
 // https://github.com/vasturiano/react-force-graph/blob/master/example/custom-node-shape/index-three.html
 
 export const EntityNetworkGraph3D: FC<any> = ({
@@ -35,11 +36,7 @@ export const EntityNetworkGraph3D: FC<any> = ({
       nodeColor={(n) => n.color || n.fill}
       nodeRelSize={20}
       linkColor={(link) => link?.color}
-      addDataToMindMap={(node, e) => {
-        e.preventDefault()
-
-        handleNodeClick(node)
-      }}
+   
     />
   )
 }

@@ -1,7 +1,7 @@
 'use server'
 
 import { promisify } from 'util'
-const fs = require('fs')
+import fs from 'fs'
 
 const writeFile = promisify(fs.writeFile)
 

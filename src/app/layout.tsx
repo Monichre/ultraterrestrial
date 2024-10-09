@@ -1,31 +1,32 @@
+import '@/styles/flowith/flowith.css'
+import '@/styles/flowith/reactflow.css'
 import '@xyflow/react/dist/style.css'
-
-import './globals.css'
 import { ViewTransitions } from 'next-view-transitions'
+import './globals.css'
 
 import { ThemeProvider } from '@/providers'
 
-import DataLayer from '@/providers/data-layer'
-import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
 import { ClerkProvider } from '@clerk/nextjs'
+import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
 
+import { FullSiteNav } from '@/components/navbar/full-site-nav'
 import {
-  centima,
-  centimaSans,
-  eirene,
-  stellar,
   ailerons,
-  futura,
-  oswald,
-  sourceSans,
+  bebasNeue,
+  bebasNeuePro,
+  centimaSans,
+  commitMono,
+  eirene,
   firaCode,
+  futura,
   jetBrains,
   nunito,
+  oswald,
   sentient,
-  bebasNeue,
-  commitMono,
+  sourceSans,
+  stellar,
 } from './fonts'
-import { FullSiteNav } from '@/components/navbar/full-site-nav'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -50,7 +51,7 @@ export default function RootLayout({
       <ClerkProvider>
         <html lang='en' suppressHydrationWarning>
           <body
-            className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${centima.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} dark`}
+            className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} ${bebasNeuePro.variable} ${GeistMono.variable} ${GeistSans.variable} dark`}
           >
             <ThemeProvider
               attribute='class'
