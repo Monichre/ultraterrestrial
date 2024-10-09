@@ -73,7 +73,7 @@ export const rootNodes = [
   documentsRootNode,
   artifactsRootNode,
 ]
-const formatGraphNode = ({ record, type }: any) => {
+const formatGraphNode = ( { record, type }: any ) => {
   const { id, name, label, ...rest } = record
   const title = name || label
 
@@ -90,7 +90,7 @@ const formatGraphNode = ({ record, type }: any) => {
   }
   return node
 }
-const formatGraphEdge = ({ targetNode, sourceNode }: any) => {
+const formatGraphEdge = ( { targetNode, sourceNode }: any ) => {
   const edge = {
     source: sourceNode?.id,
     target: targetNode?.id,
@@ -156,29 +156,29 @@ export const getEntityNetworkGraphData = async () => {
     artifacts,
   }
 
-  const topicsNodes = records.topics.map((record: any) =>
-    formatGraphNode({ record, type: 'topics' })
+  const topicsNodes = records.topics.map( ( record: any ) =>
+    formatGraphNode( { record, type: 'topics' } )
   )
-  const eventsNodes = records.events.map((record: any) =>
-    formatGraphNode({ record, type: 'events' })
+  const eventsNodes = records.events.map( ( record: any ) =>
+    formatGraphNode( { record, type: 'events' } )
   )
-  const personnelNodes = records.personnel.map((record: any) =>
-    formatGraphNode({ record, type: 'personnel' })
+  const personnelNodes = records.personnel.map( ( record: any ) =>
+    formatGraphNode( { record, type: 'personnel' } )
   )
-  const testimoniesNodes = records.testimonies.map((record: any) =>
-    formatGraphNode({ record, type: 'testimonies' })
-  )
-
-  const organizationsNodes = records.organizations.map((record: any) =>
-    formatGraphNode({ record, type: 'organizations' })
+  const testimoniesNodes = records.testimonies.map( ( record: any ) =>
+    formatGraphNode( { record, type: 'testimonies' } )
   )
 
-  const documentsNodes = records.documents.map((record: any) =>
-    formatGraphNode({ record, type: 'documents' })
+  const organizationsNodes = records.organizations.map( ( record: any ) =>
+    formatGraphNode( { record, type: 'organizations' } )
   )
 
-  const artifactsNodes = records.artifacts.map((record: any) =>
-    formatGraphNode({ record, type: 'artifacts' })
+  const documentsNodes = records.documents.map( ( record: any ) =>
+    formatGraphNode( { record, type: 'documents' } )
+  )
+
+  const artifactsNodes = records.artifacts.map( ( record: any ) =>
+    formatGraphNode( { record, type: 'artifacts' } )
   )
 
   const nodes = [
@@ -207,8 +207,8 @@ export const getEntityNetworkGraphData = async () => {
     ...connections.topicsTestimoniesConnections,
     ...connections.organizationsPersonnelConnections,
   ]
-    .map(({ id, ...rest }) => {
-      const [sourceData, targetData] = Object.entries(rest)
+    .map( ( { id, ...rest } ) => {
+      const [sourceData, targetData] = Object.entries( rest )
 
       const [sourceType, sourceNode]: any = sourceData
 
@@ -216,19 +216,19 @@ export const getEntityNetworkGraphData = async () => {
 
       // Check if source and target nodes exist because occassionally a join record can exist in either table while missing the record referenced by the foreign key
       const sourceNodeExists = sourceNode
-        ? nodes.find((node) => node.id === sourceNode.id)
+        ? nodes.find( ( node ) => node.id === sourceNode.id )
         : null
       const targetNodeExists = targetNode
-        ? nodes.find((node) => node.id === targetNode.id)
+        ? nodes.find( ( node ) => node.id === targetNode.id )
         : null
 
-      if (sourceNodeExists && targetNodeExists) {
-        return formatGraphEdge({ id, sourceNode, targetNode })
+      if ( sourceNodeExists && targetNodeExists ) {
+        return formatGraphEdge( { id, sourceNode, targetNode } )
       }
-    })
-    .filter((link) => {
+    } )
+    .filter( ( link ) => {
       return link && link.source && link.target
-    })
+    } )
 
   const payload: NetworkGraphPayload = {
     records,

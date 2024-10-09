@@ -14,7 +14,7 @@ import { format } from 'date-fns'
 import { Plus, X } from 'lucide-react'
 import { useOnClickOutside } from 'usehooks-ts'
 
-export function TopicCard({ card }: any) {
+export function TopicCard( { card }: any ) {
   const {
     handleHoverLeave,
     entity,
@@ -29,9 +29,9 @@ export function TopicCard({ card }: any) {
     connectionListConnections,
     handleHoverEnter,
     findConnections,
-  } = useEntity({ card })
+  } = useEntity( { card } )
   const { type, color, photos, name, date: unformattedDate, role } = entity
-  const date = unformattedDate ? format(unformattedDate, 'MMMM d, yyyy') : ''
+  const date = unformattedDate ? format( unformattedDate, 'MMMM d, yyyy' ) : ''
 
   // const [animatedTitle, setAnimatedTitle] = useState<string>('')
   // const [animatedDate, setAnimatedDate] = useState<string>('')
@@ -75,39 +75,39 @@ export function TopicCard({ card }: any) {
 
   const modelColor = DOMAIN_MODEL_COLORS[type]
 
-  const [activeIndex, setActiveIndex] = useState(0)
-  const updateActiveIndex = (index: number) => {
-    setActiveIndex(index)
+  const [activeIndex, setActiveIndex] = useState( 0 )
+  const updateActiveIndex = ( index: number ) => {
+    setActiveIndex( index )
   }
-  const [alignment, setAlignment] = useState<'columns' | 'rows'>('rows')
-  const [activeItem, setActiveItem] = useState<ItemType | null>(null)
-  const ref = useRef(null)
-  useOnClickOutside(ref, () => setActiveItem(null))
-  useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        setActiveItem(null)
+  const [alignment, setAlignment] = useState<'columns' | 'rows'>( 'rows' )
+  const [activeItem, setActiveItem] = useState<ItemType | null>( null )
+  const ref = useRef( null )
+  useOnClickOutside( ref, () => setActiveItem( null ) )
+  useEffect( () => {
+    function onKeyDown( event: KeyboardEvent ) {
+      if ( event.key === 'Escape' ) {
+        setActiveItem( null )
       }
     }
 
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [])
+    window.addEventListener( 'keydown', onKeyDown )
+    return () => window.removeEventListener( 'keydown', onKeyDown )
+  }, [] )
 
-  useEffect(() => {
-    if (activeItem) {
+  useEffect( () => {
+    if ( activeItem ) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'auto'
     }
-  }, [activeItem])
+  }, [activeItem] )
 
   const items = [
     {
       title: 'Details',
       render: () => (
         <div className='mt-4 text-sm text-white font-source'>
-          <p>{truncate(card?.description, 400)}</p>
+          <p>{truncate( card?.description, 400 )}</p>
         </div>
       ),
     },
@@ -120,12 +120,12 @@ export function TopicCard({ card }: any) {
 
       onClick: () => {
         saveNote()
-        setShowMMenu(false)
+        setShowMMenu( false )
       },
     },
   ]
 
-  const BaseCard = ({ card }: any) => {
+  const BaseCard = ( { card }: any ) => {
     return (
       <div
         className={`relative z-50 rounded-[calc(var(--radius)-2px)] p-[1px] bg-black `}
@@ -189,7 +189,7 @@ export function TopicCard({ card }: any) {
 
                 <motion.div className=''>
                   <p className='font-source text-white tracking-wider '>
-                    {card?.location || truncate(role, 50)}
+                    {card?.location || truncate( role, 50 )}
                   </p>
                   <p className='date text-1xl text-[#78efff] text-uppercase font-bebasNeuePro tracking-wider w-auto ml-auto mt-1'>
                     {type === 'personnel' && card?.credibility
@@ -256,7 +256,7 @@ export function TopicCard({ card }: any) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, transition: { duration: 0.05 } }}
                 className='absolute right-4 top-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-zinc-800 p-2'
-                onClick={() => setActiveItem(null)}
+                onClick={() => setActiveItem( null )}
               >
                 <X className='text-zinc-400' />
               </motion.button>
@@ -268,7 +268,7 @@ export function TopicCard({ card }: any) {
       <motion.div
         layoutId={`card-${card.title}`}
         key={card.title}
-        onClick={() => setActiveItem(card)}
+        onClick={() => setActiveItem( card )}
         style={{ borderRadius: 30 }}
         className='flex h-[360px] w-[336px] cursor-pointer flex-col items-center overflow-hidden bg-[#08090a] px-7 py-8'
       >

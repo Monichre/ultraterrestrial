@@ -46,16 +46,16 @@ export const layoutD3DAG = async (
   const initialNodes = [] as NodeWithPosition[]
   let maxNodeWidth = 0
   let maxNodeHeight = 0
-  for (const node of nodes) {
-    const { widthWithDefault, heightWithDefault } = getNodeSize(node)
-    initialNodes.push({
+  for ( const node of nodes ) {
+    const { widthWithDefault, heightWithDefault } = getNodeSize( node )
+    initialNodes.push( {
       ...node,
       ...node.position,
       width: widthWithDefault,
       height: heightWithDefault,
-    })
-    maxNodeWidth = Math.max(maxNodeWidth, widthWithDefault)
-    maxNodeHeight = Math.max(maxNodeHeight, heightWithDefault)
+    } )
+    maxNodeWidth = Math.max( maxNodeWidth, widthWithDefault )
+    maxNodeHeight = Math.max( maxNodeHeight, heightWithDefault )
   }
 
   // Since d3-dag does not support horizontal layout,
@@ -64,49 +64,49 @@ export const layoutD3DAG = async (
     ? [maxNodeHeight + spacing.y, maxNodeWidth + spacing.x]
     : [maxNodeWidth + spacing.x, maxNodeHeight + spacing.y]
 
-  const getParentIds = (node: any) => {
-    if (node.id === rootNode.id) {
+  const getParentIds = ( node: any ) => {
+    if ( node.id === rootNode.id ) {
       return undefined
     }
     // Node without input is the root node of sub-workflow, and we should connect it to the rootNode
-    const incomers = getIncomers(node, nodes, edges)
-    if (incomers.length < 1) {
+    const incomers = getIncomers( node, nodes, edges )
+    if ( incomers.length < 1 ) {
       return [rootNode.id]
     }
     return algorithm === 'd3-dag'
       ? [incomers[0]?.id]
-      : incomers.map((e) => e.id)
+      : incomers.map( ( e ) => e.id )
   }
 
   const stratify = graphStratify()
   const dag = stratify(
-    [rootNode, ...initialNodes].map((node) => {
+    [rootNode, ...initialNodes].map( ( node ) => {
       return {
         id: node.id,
-        parentIds: getParentIds(node),
+        parentIds: getParentIds( node ),
       }
-    })
+    } )
   )
 
-  const layout = sugiyama().nodeSize(nodeSize)
-  layout(dag)
+  const layout = sugiyama().nodeSize( nodeSize )
+  layout( dag )
 
   const layoutNodes = new Map<string, any>()
-  for (const node of dag.nodes()) {
-    layoutNodes.set(node.data.id, node)
+  for ( const node of dag.nodes() ) {
+    layoutNodes.set( node.data.id, node )
   }
 
   return {
-    nodes: nodes.map((node: { id: string }) => {
-      const { x, y } = layoutNodes.get(node.id)
+    nodes: nodes.map( ( node: { id: string } ) => {
+      const { x, y } = layoutNodes.get( node.id )
       // Interchange x and y mappings based on the layout direction.
       const position = isHorizontal ? { x: y, y: x } : { x, y }
-      return getNodeLayouted({
+      return getNodeLayouted( {
         node,
         position,
         direction,
         visibility,
-        fixPosition: ({ x, y, width, height }) => {
+        fixPosition: ( { x, y, width, height } ) => {
           // This algorithm uses the center coordinate of the node as the reference point,
           // which needs adjustment for ReactFlow's topLeft coordinate system.
           return {
@@ -114,17 +114,17 @@ export const layoutD3DAG = async (
             y: y - height / 2,
           }
         },
-      })
-    }),
-    edges: edges.map((edge: any) => getEdgeLayouted({ edge, visibility })),
+      } )
+    } ),
+    edges: edges.map( ( edge: any ) => getEdgeLayouted( { edge, visibility } ) ),
   }
 }
 
 export const kD3DAGAlgorithms: Record<string, LayoutAlgorithm> = Object.keys(
   algorithms
-).reduce((pre, algorithm) => {
-  pre[algorithm] = (props: any) => {
-    return layoutD3DAG({ ...props, algorithm })
+).reduce( ( pre, algorithm ) => {
+  pre[algorithm] = ( props: any ) => {
+    return layoutD3DAG( { ...props, algorithm } )
   }
   return pre
-}, {} as any)
+}, {} as any )

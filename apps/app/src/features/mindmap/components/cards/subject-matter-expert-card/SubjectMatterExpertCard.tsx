@@ -4,7 +4,7 @@ import { useEntity } from '@/hooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Play } from 'lucide-react'
 import { useState } from 'react'
-export function SubjectMatterExpertCard({ card }: any) {
+export function SubjectMatterExpertCard( { card }: any ) {
   const {
     handleHoverLeave,
     entity,
@@ -19,21 +19,22 @@ export function SubjectMatterExpertCard({ card }: any) {
     connectionListConnections,
     handleHoverEnter,
     findConnections,
-  } = useEntity({ card })
-  console.log('personnel card:', card)
-  console.log('personel entity:', entity)
+  } = useEntity( { card } )
+  console.log( 'personnel card:', card )
+  console.log( 'personel entity:', entity )
   const test = true
   const { popularity, rank, photo, name, role }: any = entity
 
   const image: any = photo[0] || { url: '/astro-3.png' }
 
-  const [step, setStep] = useState(1)
-  const handleClick = () => setStep(prev => (prev % 3) + 1)
-  if (test) {
+  const [step, setStep] = useState( 1 )
+  const handleClick = () => setStep( prev => ( prev % 3 ) + 1 )
+  if ( test ) {
     return <PillCard card={card} />
   }
   return (
     <motion.div
+
       className='relative flex cursor-pointer items-center justify-center'
       animate={{
         width: step === 1 ? 200 : 300,

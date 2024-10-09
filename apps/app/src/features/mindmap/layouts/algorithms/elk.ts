@@ -13,7 +13,7 @@ const algorithms: any = {
   'elk-mr-tree': 'mrtree',
 }
 
-const elk = new ELK({ algorithms: Object.values(algorithms) })
+const elk = new ELK( { algorithms: Object.values( algorithms ) } )
 
 export type ELKLayoutAlgorithms = 'elk-layered' | 'elk-mr-tree'
 
@@ -32,28 +32,28 @@ export const layoutELK = async (
 
   const subWorkflowRootNodes: any[] = []
   const layoutNodes = nodes.map(
-    (node: {
+    ( node: {
       data: { sourceHandles: any[]; targetHandles: any[] }
       id: any
-    }) => {
-      const incomers = getIncomers(node, nodes, edges)
-      if (incomers.length < 1) {
+    } ) => {
+      const incomers = getIncomers( node, nodes, edges )
+      if ( incomers.length < 1 ) {
         // Node without input is the root node of sub-workflow
-        subWorkflowRootNodes.push(node)
+        subWorkflowRootNodes.push( node )
       }
-      const { widthWithDefault, heightWithDefault } = getNodeSize(node)
-      const sourcePorts = node.data.sourceHandles.map((id: any) => ({
+      const { widthWithDefault, heightWithDefault } = getNodeSize( node )
+      const sourcePorts = node.data.sourceHandles.map( ( id: any ) => ( {
         id,
         properties: {
           side: isHorizontal ? 'EAST' : 'SOUTH',
         },
-      }))
-      const targetPorts = node.data.targetHandles.map((id: any) => ({
+      } ) )
+      const targetPorts = node.data.targetHandles.map( ( id: any ) => ( {
         id,
         properties: {
           side: isHorizontal ? 'WEST' : 'NORTH',
         },
-      }))
+      } ) )
       return {
         id: node.id,
         width: widthWithDefault,
@@ -67,13 +67,13 @@ export const layoutELK = async (
   )
 
   const layoutEdges = edges.map(
-    (edge: {
+    ( edge: {
       id: any
       sourceHandle: any
       source: any
       targetHandle: any
       target: any
-    }) => {
+    } ) => {
       return {
         id: edge.id,
         sources: [edge.sourceHandle || edge.source],
@@ -84,17 +84,17 @@ export const layoutELK = async (
 
   // Connect sub-workflows' root nodes to the rootNode
   const rootNode: any = { id: '#root', width: 1, height: 1 }
-  layoutNodes.push(rootNode)
-  for (const subWorkflowRootNode of subWorkflowRootNodes) {
-    layoutEdges.push({
+  layoutNodes.push( rootNode )
+  for ( const subWorkflowRootNode of subWorkflowRootNodes ) {
+    layoutEdges.push( {
       id: `${rootNode.id}-${subWorkflowRootNode.id}`,
       sources: [rootNode.id],
       targets: [subWorkflowRootNode.id],
-    })
+    } )
   }
 
   const layouted = await elk
-    .layout({
+    .layout( {
       id: '@root',
       children: layoutNodes,
       edges: layoutEdges,
@@ -110,17 +110,17 @@ export const layoutELK = async (
           ? spacing.x.toString()
           : spacing.y.toString(),
       },
-    })
-    .catch((e) => {
-      console.log('❌ ELK layout failed', e)
-    })
+    } )
+    .catch( ( e ) => {
+      console.log( '❌ ELK layout failed', e )
+    } )
 
-  if (!layouted?.children) {
+  if ( !layouted?.children ) {
     return
   }
 
   const layoutedNodePositions = layouted.children.reduce(
-    (pre, v) => {
+    ( pre, v ) => {
       pre[v.id] = {
         x: v.x ?? 0,
         y: v.y ?? 0,
@@ -131,19 +131,19 @@ export const layoutELK = async (
   )
 
   return {
-    nodes: nodes.map((node: { id: string | number }) => {
+    nodes: nodes.map( ( node: { id: string | number } ) => {
       const position = layoutedNodePositions[node.id]
-      return getNodeLayouted({ node, position, direction, visibility })
-    }),
-    edges: edges.map((edge: any) => getEdgeLayouted({ edge, visibility })),
+      return getNodeLayouted( { node, position, direction, visibility } )
+    } ),
+    edges: edges.map( ( edge: any ) => getEdgeLayouted( { edge, visibility } ) ),
   }
 }
 
 export const kElkAlgorithms: Record<string, LayoutAlgorithm> = Object.keys(
   algorithms
-).reduce((pre, algorithm) => {
-  pre[algorithm] = (props: any) => {
-    return layoutELK({ ...props, algorithm })
+).reduce( ( pre, algorithm ) => {
+  pre[algorithm] = ( props: any ) => {
+    return layoutELK( { ...props, algorithm } )
   }
   return pre
-}, {} as any)
+}, {} as any )

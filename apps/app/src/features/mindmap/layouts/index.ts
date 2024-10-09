@@ -64,20 +64,20 @@ export type ILayoutReactflow = Reactflow & Partial<ReactflowLayoutConfig>
 export const layoutReactflow = async (
   options: ILayoutReactflow
 ): Promise<Reactflow> => {
-  const config = { ...defaultLayoutConfig, ...removeEmpty(options) }
+  const config = { ...defaultLayoutConfig, ...removeEmpty( options ) }
   const { nodes = [], edges = [] } = config
-  console.log('edges: ', edges)
+  console.log( 'edges: ', edges )
   const layout = layoutAlgorithms[config.algorithm]
-  console.log('layout: ', layout)
-  let result = await layout({ ...config, nodes, edges })
-  if (!result) {
+  console.log( 'layout: ', layout )
+  let result = await layout( { ...config, nodes, edges } )
+  if ( !result ) {
     // If the layout fails, fallback to the origin layout
-    result = await layoutReactflow({
+    result = await layoutReactflow( {
       ...config,
       nodes,
       edges,
       algorithm: 'origin',
-    })
+    } )
   }
   return result!
 }

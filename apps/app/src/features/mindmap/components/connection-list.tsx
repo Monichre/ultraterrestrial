@@ -39,23 +39,23 @@ import { truncate } from '@/utils/functions'
 //   children?: any
 // }
 
-export const ModelAvatar = ({ model, className }: any) => {
-  const modelWithImage: any = formatModelWithImage(model)
+export const ModelAvatar = ( { model, className }: any ) => {
+  const modelWithImage: any = formatModelWithImage( model )
 
-  const splitName = (name: string): string => {
-    const [firstName, lastName] = name.split(' ')
+  const splitName = ( name: string ): string => {
+    const [firstName, lastName] = name.split( ' ' )
     const initials =
       firstName && lastName
-        ? `${firstName.charAt(0)}${lastName.charAt(0)}`
-        : `${firstName.charAt(0)}`
+        ? `${firstName.charAt( 0 )}${lastName.charAt( 0 )}`
+        : `${firstName.charAt( 0 )}`
     return initials
   }
   const text = modelWithImage?.name || modelWithImage?.title
 
-  const initials = text && (text !== ' ' || text !== '') ? splitName(text) : 'X'
+  const initials = text && ( text !== ' ' || text !== '' ) ? splitName( text ) : 'X'
 
   return (
-    <Avatar className={cn('w-8 h-8 border-[1px] border-white/50', className)}>
+    <Avatar className={cn( 'w-8 h-8 border-[1px] border-white/50', className )}>
       <AvatarImage
         className='object-cover w-full h-full rounded-full'
         src={modelWithImage.photo.url}
@@ -66,7 +66,7 @@ export const ModelAvatar = ({ model, className }: any) => {
   )
 }
 
-export const ConnectionCard = ({ connection }: any) => {
+export const ConnectionCard = ( { connection }: any ) => {
   // const model: any = formatModelWithImage(connection)
 
   return (
@@ -93,8 +93,8 @@ const Circle = forwardRef<
     inView: boolean
     variant?: any
   }
->(({ className, children, delay, inView, variant }: any, ref: any) => {
-  const inViewResult = useInView(ref)
+>( ( { className, children, delay, inView, variant }: any, ref: any ) => {
+  const inViewResult = useInView( ref )
   const isInView = !inView || inViewResult
   const duration = 0.4
   const defaultVariants = {
@@ -115,17 +115,17 @@ const Circle = forwardRef<
           duration,
           ease: 'easeIn',
         }}
-        className={cn(className)}
+        className={cn( className )}
       >
         {children}
       </motion.div>
     </AnimatePresence>
   )
-})
+} )
 
 Circle.displayName = 'Circle'
 
-export function ConnectionBeams({
+export function ConnectionBeams( {
   className,
   originalNode,
   connections,
@@ -133,11 +133,11 @@ export function ConnectionBeams({
   className?: string
   originalNode: any
   connections: any[]
-}) {
-  const containerRef = useRef<HTMLDivElement>(null)
+} ) {
+  const containerRef = useRef<HTMLDivElement>( null )
 
-  const originalNodeRef = useRef<HTMLDivElement>(null)
-  const refs: any = connections.map(useRef)
+  const originalNodeRef = useRef<HTMLDivElement>( null )
+  const refs: any = connections.map( useRef )
 
   return (
     <div
@@ -159,7 +159,7 @@ export function ConnectionBeams({
 
         <div className='flex flex-row justify-evenly gap-y-4 self-end place-self-end justify-self-end'>
           {refs.map(
-            (ref: React.Ref<HTMLDivElement> | undefined, index: number) => (
+            ( ref: React.Ref<HTMLDivElement> | undefined, index: number ) => (
               <Circle
                 key={index}
                 ref={ref}
@@ -176,7 +176,7 @@ export function ConnectionBeams({
         </div>
       </div>
 
-      {refs.map((ref: React.RefObject<HTMLElement>, index: number) => (
+      {refs.map( ( ref: React.RefObject<HTMLElement>, index: number ) => (
         <AnimatedBeam
           key={index}
           delay={index * 0.25}
@@ -185,7 +185,7 @@ export function ConnectionBeams({
           toRef={ref}
           duration={3}
         />
-      ))}
+      ) )}
     </div>
   )
 }
@@ -197,10 +197,10 @@ export interface ConnectionListProps {
   }
 }
 
-export const ConnectionList: React.FC<ConnectionListProps> = ({
+export const ConnectionList: React.FC<ConnectionListProps> = ( {
   connections,
   originalNode,
-}: any) => {
+}: any ) => {
   return (
     <ConnectionBeams originalNode={originalNode} connections={connections} />
   )

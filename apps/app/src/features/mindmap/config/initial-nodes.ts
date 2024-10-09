@@ -5,8 +5,8 @@ import {
 } from '@/features/mindmap/config/index.config'
 import { ENTITY_DATA_VIZ_COLOR_PALETTE } from '@/utils'
 
-const entityRootNodes = ROOT_NODE_IDS.map((id) => {
-  const [kind] = id.split('-')
+const entityRootNodes = ROOT_NODE_IDS.map( ( id ) => {
+  const [kind] = id.split( '-' )
   const type = `${kind}Node`
   const entity = kind.toLocaleLowerCase()
   const label: any =
@@ -31,5 +31,5 @@ const entityRootNodes = ROOT_NODE_IDS.map((id) => {
       type: entity,
     },
   }
-})
+} )
 export const rootNodes = [...entityRootNodes]

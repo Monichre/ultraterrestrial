@@ -14,8 +14,8 @@ import { PlusIcon } from 'lucide-react'
 import React, { useCallback, useState } from 'react'
 
 export function FloatingNodeMenu() {
-  const refMenu = React.useRef<HTMLDivElement>(null)
-  const [openMenu, setOpenMenu] = useState(false)
+  const refMenu = React.useRef<HTMLDivElement>( null )
+  const [openMenu, setOpenMenu] = useState( false )
 
   const duration = 0.2
   const transition = { duration, ease: [0.32, 0.72, 0, 1] }
@@ -60,9 +60,9 @@ export function FloatingNodeMenu() {
   }
   const { addNextEntitiesToMindMap } = useMindMap()
   const handleLoadingRecords = useCallback(
-    async (rootNodeSim: any) => {
+    async ( rootNodeSim: any ) => {
       // const
-      await addNextEntitiesToMindMap(rootNodeSim)
+      await addNextEntitiesToMindMap( rootNodeSim )
     },
     [addNextEntitiesToMindMap]
   )
@@ -71,41 +71,41 @@ export function FloatingNodeMenu() {
       icon: <EventsIcon className='w-6 h-6' />,
       label: 'Add Events',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'events' } })
+        await handleLoadingRecords( { data: { type: 'events' } } )
       },
     },
     {
       icon: <TopicsIcon className='w-6 h-6' />,
       label: 'Add Topics',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'topics' } })
+        await handleLoadingRecords( { data: { type: 'topics' } } )
       },
     },
     {
       icon: <KeyFiguresIcon className='w-6 h-6' />,
       label: 'Add KeyFigures',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'personnel' } })
+        await handleLoadingRecords( { data: { type: 'personnel' } } )
       },
     },
     {
       icon: <TestimoniesIcon className='w-6 h-6' />,
       label: 'Add Testimonies',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'testimonies' } })
+        await handleLoadingRecords( { data: { type: 'testimonies' } } )
       },
     },
     {
       icon: <OrganizationsIcon className='w-6 h-6' />,
       label: 'Add Organizations',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'organizations' } })
+        await handleLoadingRecords( { data: { type: 'organizations' } } )
       },
     },
   ]
-  useClickOutside<HTMLDivElement>(refMenu, () => {
-    setOpenMenu(false)
-  })
+  useClickOutside<HTMLDivElement>( refMenu, () => {
+    setOpenMenu( false )
+  } )
 
   return (
     <div
@@ -120,13 +120,13 @@ export function FloatingNodeMenu() {
             animate='open'
             exit='closed'
             variants={menuVariants}
-            // onClick={(e) => e.stopPropagation()}
+          // onClick={(e) => e.stopPropagation()}
           >
             <motion.ul
               variants={contentVariants}
               className='relative flex w-full flex-col space-y-1'
             >
-              {actions.map((item, index) => {
+              {actions.map( ( item, index ) => {
                 return (
                   <motion.li
                     key={index}
@@ -145,7 +145,7 @@ export function FloatingNodeMenu() {
                     </div>
                   </motion.li>
                 )
-              })}
+              } )}
             </motion.ul>
           </motion.div>
         )}
@@ -153,7 +153,7 @@ export function FloatingNodeMenu() {
       <motion.button
         className='absolute bottom-0 border border-contrast-90 z-50 left-0 flex h-16 w-16 items-center justify-center rounded-full bg-black p-4 text-white outline-none dark:bg-black dark:text-white'
         onClick={() => {
-          setOpenMenu(true)
+          setOpenMenu( true )
         }}
         variants={buttonVariants}
         initial='closed'

@@ -1,11 +1,11 @@
 'use  client'
 
-import {memo, type FunctionComponent} from 'react'
+import { memo, type FunctionComponent } from 'react'
 
-import {ConnectionsIcon} from '@/components/icons'
-import {AddNote} from '@/components/note/AddNote'
-import {Button} from '@/components/ui/button/button'
-import {Separator} from '@/components/ui/separator'
+import { ConnectionsIcon } from '@/components/icons'
+import { AddNote } from '@/components/note/AddNote'
+import { Button } from '@/components/ui/button/button'
+import { Separator } from '@/components/ui/separator'
 
 interface EntityCardUtilityMenuProps {
   updateNote: any
@@ -16,13 +16,13 @@ interface EntityCardUtilityMenuProps {
   findConnections?: any
 }
 
-export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
+export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ( {
   updateNote,
   userNote,
 
   saveNote,
   findConnections,
-}) => {
+} ) => {
   return (
     <div className='w-auto flex'>
       <Button variant='ghost' onClick={findConnections} className='p-0'>
@@ -34,4 +34,4 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ({
   )
 }
 EM.displayName = 'EntityCardUtilityMenu'
-export const EntityCardUtilityMenu = memo(EM)
+export const EntityCardUtilityMenu = memo( EM )

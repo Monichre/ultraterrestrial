@@ -7,7 +7,7 @@ export const ROOT_NODES = [
   'testimonies',
 ]
 
-export const ROOT_NODE_IDS = ROOT_NODES.map((type) => `${type}-root-node`)
+export const ROOT_NODE_IDS = ROOT_NODES.map( ( type ) => `${type}-root-node` )
 
 export const ROOT_NODE_POSITIONS: any = {
   events: {
@@ -42,8 +42,8 @@ export const ROOT_NODE_POSITIONS: any = {
 export const ROOT_NODE_WIDTH = 225
 export const ROOT_NODE_HEIGHT = 200
 
-export const BASE_ENTITY_NODE_WIDTH = 300
-export const BASE_ENTITY_NODE_HEIGHT = 100
+export const BASE_ENTITY_NODE_WIDTH = 200
+export const BASE_ENTITY_NODE_HEIGHT = 250
 export const NODE_SPACE = 50
 
 export const ROOT_DIMENSIONS = {
@@ -53,6 +53,10 @@ export const ROOT_DIMENSIONS = {
 
 export const GROUP_NODE_HEIGHT = 900
 export const GROUP_NODE_WIDTH = 700
+export const GROUP_NODE_LANDSCAPE = {
+  width: GROUP_NODE_HEIGHT,
+  height: GROUP_NODE_WIDTH,
+}
 export const GROUP_NODE_DIMENSIONS = {
   height: GROUP_NODE_HEIGHT,
   width: GROUP_NODE_WIDTH,

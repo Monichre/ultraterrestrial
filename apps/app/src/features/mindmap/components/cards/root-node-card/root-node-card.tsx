@@ -15,20 +15,20 @@ import { memo, useCallback, useState } from 'react'
 import { initiateDatabaseTableQuery } from '@/features/mindmap/api/search'
 import { InputWithVanishAnimation } from '@/features/mindmap/components/cards/root-node-card/InputWithVanishAnimation'
 
-const Description = memo(({ childCount, label }: any) => (
+const Description = memo( ( { childCount, label }: any ) => (
   <>
-    There are <NumberTicker value={childCount} /> {capitalize(label)}
+    There are <NumberTicker value={childCount} /> {capitalize( label )}
   </>
-))
-const LoadedStats = memo(({ length, childCount, label }: any) => (
+) )
+const LoadedStats = memo( ( { length, childCount, label }: any ) => (
   <>
     {/* @ts-ignore */}
     Loaded <NumberTicker value={length} /> of
-    <NumberTicker value={childCount} /> {capitalize(label)}{' '}
+    <NumberTicker value={childCount} /> {capitalize( label )}{' '}
   </>
-))
+) )
 
-export const RootNodeCard = memo(({ nodeData }: any) => {
+export const RootNodeCard = memo( ( { nodeData }: any ) => {
   const {
     loadNodesFromTableQuery,
     conciseViewActive,
@@ -38,32 +38,32 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
     addNextEntitiesToMindMap,
   } = useMindMap()
 
-  const nodeState: any = useNodesData(nodeData?.id)
+  const nodeState: any = useNodesData( nodeData?.id )
 
   const type = nodeData?.data?.type
 
-  const [searchTerm, setSearchTerm]: any = useState('')
+  const [searchTerm, setSearchTerm]: any = useState( '' )
 
-  const [searchResults, setSearchResults] = useState([])
-  const updateSearchTerm = (event: any) => {
+  const [searchResults, setSearchResults] = useState( [] )
+  const updateSearchTerm = ( event: any ) => {
     const { value } = event.target
 
-    setSearchTerm(value)
+    setSearchTerm( value )
   }
 
-  const runSearch = useCallback(async () => {
+  const runSearch = useCallback( async () => {
     const keyword = searchTerm
     const table = type
 
-    const { results } = await initiateDatabaseTableQuery({ table, keyword })
+    const { results } = await initiateDatabaseTableQuery( { table, keyword } )
 
-    loadNodesFromTableQuery({
+    loadNodesFromTableQuery( {
       type,
       searchResults: results,
-      searchTerm: keyword.trim().replace(/ /g, ''),
-    })
-    setSearchTerm('')
-  }, [searchTerm, type, loadNodesFromTableQuery])
+      searchTerm: keyword.trim().replace( / /g, '' ),
+    } )
+    setSearchTerm( '' )
+  }, [searchTerm, type, loadNodesFromTableQuery] )
   const {
     data: { childCount, label },
     ...rest
@@ -73,13 +73,13 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
     ...rest,
   }
 
-  const handleLoadingRecords = useCallback(async () => {
-    await addNextEntitiesToMindMap(nodeData)
-  }, [nodeData, addNextEntitiesToMindMap])
+  const handleLoadingRecords = useCallback( async () => {
+    await addNextEntitiesToMindMap( nodeData )
+  }, [nodeData, addNextEntitiesToMindMap] )
 
-  const interim = (label || type).toLowerCase()
+  const interim = ( label || type ).toLowerCase()
   const title =
-    interim === 'personnel' ? 'Subject Matter Experts' : capitalize(interim)
+    interim === 'personnel' ? 'Subject Matter Experts' : capitalize( interim )
 
   return (
     <Card
@@ -138,9 +138,9 @@ export const RootNodeCard = memo(({ nodeData }: any) => {
           onClick={handleLoadingRecords}
           className='load-records-button cursor-pointer'
         >
-          Load {capitalize(label)}
+          Load {capitalize( label )}
         </ShinyButton>
       </CardFooter>
     </Card>
   )
-})
+} )
