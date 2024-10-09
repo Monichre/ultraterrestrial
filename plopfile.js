@@ -1,7 +1,7 @@
-const componentTemplate = require('./templates/component/index')
-const pageTemplate = require('./templates/page/index')
-const featureTemplate = require('./templates/feature/index')
-const { apiTemplate, webhookTemplate } = require('./templates/api')
+const componentTemplate = require('./templates/app/component/index')
+const pageTemplate = require('./templates/app/page/index')
+const featureTemplate = require('./templates/app/feature/index')
+const {apiTemplate, webhookTemplate} = require('./templates/app/api')
 
 module.exports = function (plop) {
   plop.load('plop-helper-list')
