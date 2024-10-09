@@ -1,0 +1,84 @@
+{
+  "id": "mig_cobdfcpj860bgmlk7350",
+  "parentID": "mig_cobdespj860bgmlk733g",
+  "checksum": "1:6c83a25d033a89a25f5a900f4e0c51a7574981f89539bd22f401bbfdd8538c57",
+  "operations": [
+    {
+      "addTable": {
+        "table": "personnel"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "name",
+          "type": "string"
+        },
+        "table": "personnel"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "bio",
+          "type": "text"
+        },
+        "table": "personnel"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "role",
+          "type": "string"
+        },
+        "table": "personnel"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "photo",
+          "type": "text"
+        },
+        "table": "personnel"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "facebook",
+          "type": "string"
+        },
+        "table": "personnel"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "twitter",
+          "type": "string"
+        },
+        "table": "personnel"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "website",
+          "type": "string"
+        },
+        "table": "personnel"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "instagram",
+          "type": "string"
+        },
+        "table": "personnel"
+      }
+    }
+  ]
+}
