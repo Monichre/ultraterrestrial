@@ -1,50 +1,101 @@
+import { useMindMap } from '@/providers'
+import { useNodesInitialized } from '@xyflow/react'
 import ELK from 'elkjs/lib/elk.bundled.js'
+import { useEffect } from 'react'
+// const elk = new ELK()=
+// https://www.eclipse.org/elk/reference/algorithms/org-eclipse-elk-layered.html
+
+
 const elk = new ELK()
 
-const elkOptions = {
+const layoutOptions = {
   'elk.algorithm': 'layered',
-  'elk.layered.spacing.nodeNodeBetweenLayers': '100',
-  'elk.spacing.nodeNode': '80',
   'elk.direction': 'RIGHT',
+  'elk.layered.spacing.edgeNodeBetweenLayers': '40',
+  'elk.spacing.nodeNode': '40',
+  'elk.layered.nodePlacement.strategy': 'SIMPLE',
 }
 
-export const getLayoutedElements = (nodes, edges, options = {}) => {
-  console.log('nodes: ', nodes)
+export const renderElkLayout = async ( nodes: any[], edges: any[] ) => {
   const graph = {
     id: 'root',
-    layoutOptions: {
-      ...elkOptions,
-      ...options,
-    },
-    children: nodes.map((node) => ({
-      ...node,
-      // Adjust the target and source handle positions based on the layout
-      // direction.
-      targetPosition: 'top',
-      sourcePosition: 'bottom',
+    layoutOptions,
+    children: nodes.map( ( n ) => {
+      const targetPorts = n.data.targetHandles.map( ( t ) => ( {
+        id: t.id,
 
-      // Hardcode a width and height for elk to use when layouting.
-      width: 300,
-      height: 100,
-    })),
-    edges: edges,
-  }
+        // ⚠️ it's important to let elk know on which side the port is
+        // in this example targets are on the left (WEST) and sources on the right (EAST)
+        properties: {
+          side: 'WEST',
+        },
+      } ) )
 
-  return elk
-    .layout(graph)
-    .then((layoutedGraph: any) => {
-      console.log('layoutedGraph: ', layoutedGraph)
+      const sourcePorts = n.data.sourceHandles.map( ( s ) => ( {
+        id: s.id,
+        properties: {
+          side: 'EAST',
+        },
+      } ) )
 
       return {
-        nodes: layoutedGraph.children.map((node) => ({
-          ...node,
-          // React Flow expects a position property on the node instead of `x`
-          // and `y` fields.
-          position: { x: node.x, y: node.y },
-        })),
-
-        edges: layoutedGraph.edges,
+        id: n.id,
+        width: n.width ?? 150,
+        height: n.height ?? 50,
+        // ⚠️ we need to tell elk that the ports are fixed, in order to reduce edge crossings
+        properties: {
+          'org.eclipse.elk.portConstraints': 'FIXED_ORDER',
+        },
+        // we are also passing the id, so we can also handle edges without a sourceHandle or targetHandle option
+        ports: [{ id: n.id }, ...targetPorts, ...sourcePorts],
       }
-    })
-    .catch(console.error)
+    } ),
+    edges: edges.map( ( e ) => ( {
+      id: e.id,
+      sources: [e.sourceHandle || e.source],
+      targets: [e.targetHandle || e.target],
+    } ) ),
+  }
+
+  const layoutedGraph = await elk.layout( graph )
+
+  const layoutedNodes = nodes.map( ( node ) => {
+    const layoutedNode = layoutedGraph.children?.find(
+      ( lgNode ) => lgNode.id === node.id,
+    )
+
+    return {
+      ...node,
+      position: {
+        x: layoutedNode?.x ?? 0,
+        y: layoutedNode?.y ?? 0,
+      },
+    }
+  } )
+
+  return layoutedNodes
+}
+
+
+
+export function useElkLayout() {
+  const nodesInitialized = useNodesInitialized()
+  const { getNodes, getEdges, setNodes, fitView } = useMindMap()
+  useEffect( () => {
+    if ( nodesInitialized ) {
+      const layoutNodes = async () => {
+        const layoutedNodes = await renderElkLayout(
+          getNodes() as any[],
+          getEdges(),
+        )
+
+        setNodes( layoutedNodes )
+        setTimeout( () => fitView(), 0 )
+      }
+
+      layoutNodes()
+    }
+  }, [nodesInitialized, getNodes, getEdges, setNodes, fitView] )
+
+  return null
 }

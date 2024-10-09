@@ -32,7 +32,7 @@ interface EntityGroupCardProps {
   card: any
 }
 
-export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
+export const EntityGroupCard: React.FC<EntityGroupCardProps> = ( { card } ) => {
   const { positionAbsoluteY, positionAbsoluteX } = card
   const {
     getIntersectingNodes,
@@ -45,40 +45,40 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
     { x: parentX, y: parentY, width, height, top, right, bottom, left },
   ]: any = useMeasure()
 
-  const groupNodeData = useNodesData(card.id)
+  const groupNodeData = useNodesData( card.id )
   const [groupCards, setGroupCards]: any = useState(
-    formatNodesForCardDisplay(groupNodeData?.data.children)
+    formatNodesForCardDisplay( groupNodeData?.data.children )
   )
 
-  const [groupEntityType] = card.id.split('-')
-  const [years, setYears] = useState(null)
+  const [groupEntityType] = card.id.split( '-' )
+  const [years, setYears] = useState( null )
 
-  const [isMaximized, setIsMaximized] = React.useState(false)
-  const [isStacked, setIsStacked] = React.useState(true)
+  const [isMaximized, setIsMaximized] = React.useState( false )
+  const [isStacked, setIsStacked] = React.useState( true )
 
-  const [isHoveredLogo, setIsHoveredLogo] = React.useState<number | null>(null)
+  const [isHoveredLogo, setIsHoveredLogo] = React.useState<number | null>( null )
 
-  const [stackedHeight, setStackedHeight] = React.useState(0)
-  const itemRefs = React.useRef<(HTMLDivElement | null)[]>([])
+  const [stackedHeight, setStackedHeight] = React.useState( 0 )
+  const itemRefs = React.useRef<( HTMLDivElement | null )[]>( [] )
 
-  const toggleStack = () => setIsStacked(!isStacked)
+  const toggleStack = () => setIsStacked( !isStacked )
   const [clones, setClones]: any = useState()
-  const removeChildCardClone = (cardId: any) => {
+  const removeChildCardClone = ( cardId: any ) => {
     const existing = [...groupCards]
-    const newCards = existing.filter((card) => card.id !== cardId)
-    setGroupCards(newCards)
+    const newCards = existing.filter( ( card ) => card.id !== cardId )
+    setGroupCards( newCards )
   }
-  useEffect(() => {
-    if (groupNodeData?.data.children) {
+  useEffect( () => {
+    if ( groupNodeData?.data.children ) {
       const formattedCards = formatNodesForCardDisplay(
         groupNodeData?.data.children
       )
-      setGroupCards(formattedCards)
-      const formattedYears: any = extractUniqueYearsFromEvents(formattedCards)
+      setGroupCards( formattedCards )
+      const formattedYears: any = extractUniqueYearsFromEvents( formattedCards )
 
-      setYears(formattedYears)
+      setYears( formattedYears )
     }
-  }, [groupNodeData])
+  }, [groupNodeData] )
 
   // useEffect(() => {
   //   const domNodes = Array.from(
@@ -130,7 +130,7 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
               marginLeft: '80px',
             }}
           >
-            {groupNodeData?.id.split('-')[0]}:{' '}
+            {groupNodeData?.id.split( '-' )[0]}:{' '}
             {years && (
               <span className=''>
                 {' '}
@@ -195,7 +195,7 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ({ card }) => {
             <div></div>
           </div>
         </div>
-        <CardCorners type={card.id.split('-')[0]} />
+        <CardCorners type={card.id.split( '-' )[0]} />
       </div>
     </>
   )

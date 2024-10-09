@@ -2,10 +2,10 @@
 
 import { cn } from '@/utils'
 
-export const LightsBackground: React.FC<{ className?: React.ReactNode }> = ({
+export const LightsBackground: React.FC<{ className?: React.ReactNode }> = ( {
   className,
-}) => (
-  <div className={cn('w-full h-full overflow-hidden', className)}>
+} ) => (
+  <div className={cn( 'w-full h-full overflow-hidden', className )}>
     <div
       className={'w-full h-full relative bottom-[-200px] '}
       style={{

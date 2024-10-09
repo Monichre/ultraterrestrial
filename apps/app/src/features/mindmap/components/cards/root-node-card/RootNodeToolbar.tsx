@@ -11,7 +11,7 @@ const transition = {
   duration: 0.2,
 }
 
-function Button({
+function Button( {
   children,
   onClick,
   disabled,
@@ -21,7 +21,7 @@ function Button({
   onClick?: () => void
   disabled?: boolean
   ariaLabel?: string
-}) {
+} ) {
   return (
     <button
       className='relative flex h-9 w-9 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50'
@@ -35,13 +35,13 @@ function Button({
   )
 }
 
-export function RootNodeToolbar({ handleSubmit, type, value, onChange }: any) {
-  const [isOpen, setIsOpen] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
+export function RootNodeToolbar( { handleSubmit, type, value, onChange }: any ) {
+  const [isOpen, setIsOpen] = useState( false )
+  const containerRef = useRef<HTMLDivElement>( null )
 
-  useClickOutside(containerRef, () => {
-    setIsOpen(false)
-  })
+  useClickOutside( containerRef, () => {
+    setIsOpen( false )
+  } )
 
   return (
     <MotionConfig transition={transition}>
@@ -59,7 +59,7 @@ export function RootNodeToolbar({ handleSubmit, type, value, onChange }: any) {
                 <div className='flex'>
                   {/* {children} */}
                   <Button
-                    onClick={() => setIsOpen(true)}
+                    onClick={() => setIsOpen( true )}
                     ariaLabel='Search notes'
                   >
                     <Search className='h-5 w-5' />
@@ -67,7 +67,7 @@ export function RootNodeToolbar({ handleSubmit, type, value, onChange }: any) {
                 </div>
               ) : (
                 <div className='flex'>
-                  <Button onClick={() => setIsOpen(false)} ariaLabel='Back'>
+                  <Button onClick={() => setIsOpen( false )} ariaLabel='Back'>
                     <ArrowLeft className='h-5 w-5' />
                   </Button>
                   <div className='relative w-full'>

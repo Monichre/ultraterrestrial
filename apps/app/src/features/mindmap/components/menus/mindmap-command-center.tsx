@@ -6,73 +6,115 @@ import {
   TestimoniesIcon,
   TopicsIcon,
 } from '@/components/icons/entity-icons'
-import {Button, ShinyButton} from '@/components/ui/button'
-import {Separator} from '@/components/ui/separator'
-import {initiateDatabaseTableQuery} from '@/features/mindmap/api/search'
-import {InputWithVanishAnimation} from '@/features/mindmap/components/cards/root-node-card/InputWithVanishAnimation'
-import {useMindMap} from '@/providers'
-import {capitalize, wait} from '@/utils/functions'
-import {useUser} from '@clerk/nextjs'
-import {AnimatePresence, motion} from 'framer-motion'
-import {PlusIcon} from 'lucide-react'
-import {useCallback, useEffect, useId, useState} from 'react'
+import { Button, ShinyButton } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import { initiateDatabaseTableQuery } from '@/features/mindmap/api/search'
+import { InputWithVanishAnimation } from '@/features/mindmap/components/cards/root-node-card/InputWithVanishAnimation'
+import { useMindMap } from '@/providers'
+import { DOMAIN_MODEL_COLORS } from '@/utils/constants'
+import { capitalize } from '@/utils/functions'
+import { useUser } from '@clerk/nextjs'
+import { AnimatePresence, motion } from 'framer-motion'
+import { PlusIcon } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 export const MindMapCommandCenter = () => {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState( false )
   const {
     addNextEntitiesToMindMap,
     loadNodesFromTableQuery,
     addConnectionNodesFromSearch,
     addUserInputNode,
     addNodes,
-    getNode,
+    updateNodeData,
+    addEdges,
   } = useMindMap()
   const user = useUser()
-  const [activeModel, setActiveModel]: any = useState('events')
-  const idGen = useId()
+  const [activeModel, setActiveModel]: any = useState( 'events' )
 
   const handleLoadingRecords = useCallback(
-    async (rootNodeSim: any) => {
-      // const
-      await addNextEntitiesToMindMap(rootNodeSim)
+    ( { data: { type } }: any ) => {
+      const userNode: any = {
+        id: uuidv4(),
+        type: 'userInputNode',
+        position: { x: 0, y: 0 },
+        data: {
+          label: 'Your Query',
+          input: `Beginning our exploration by loading 3 ${type}. Fetching Data...`,
+          type: type,
+        },
+      }
+      addNodes( userNode )
+      addNextEntitiesToMindMap( userNode )
     },
-    [addNextEntitiesToMindMap]
+    [addNextEntitiesToMindMap, addNodes]
   )
   const runSearch = useCallback(
-    async ({type, searchTerm}: any) => {
-      const response: any = await initiateDatabaseTableQuery({
+    async ( { type, searchTerm }: any ) => {
+      const userNode: any = {
+        id: uuidv4(),
+        type: 'userInputNode',
+        position: { x: 0, y: 0 },
+        data: { label: 'Your Query', input: searchTerm },
+      }
+      addNodes( userNode )
+      // relatedRecords: relatedResults
+
+      const response: any = await initiateDatabaseTableQuery( {
         table: type,
         keyword: searchTerm,
-      })
-      console.log('🚀 ~ file: mindmap-command-center.tsx:42 ~ response:', response)
+      } )
+
       const {
-        suggestedSearchResult: {record},
+        suggestedSearchResult: { record },
         relatedResults,
         totalCount,
       } = response
-      const id = `user-input-node-${idGen}`
-      const userNode = {
-        id,
-        type: 'userInputNode',
-        position: {x: 0, y: 0},
-        data: {label: 'Your Query', input: searchTerm, user, relatedRecords: relatedResults},
-      }
-      addNodes(userNode)
 
-      await wait(5)
-      const source = getNode(id)
-      console.log('🚀 ~ file: mindmap-command-center.tsx:65 ~ source:', source)
-      addConnectionNodesFromSearch({
-        source,
-        searchResults: [record],
-      })
+      const childNode: any = {
+        id: record?.id,
+        type: `${type}Node`,
+        data: {
+          type,
+          ...record,
+        },
+        position: {
+          x: 0,
+          y: userNode.position.y + 380,
+        },
+      }
+      const edgeId = `${userNode.id}-${childNode.id}`
+      const sourceHandle = `handle:${edgeId}`
+
+      const edge: any = {
+        id: edgeId,
+        source: userNode.id,
+        target: childNode.id,
+        sourceHandle: sourceHandle,
+        animated: true,
+        type: 'sequential',
+        label: `You searched for ${searchTerm} within ${type}`,
+        style: {
+          stroke: DOMAIN_MODEL_COLORS[type],
+        },
+      }
+      updateNodeData( userNode.id, { handles: [sourceHandle] } )
+
+      addNodes( childNode )
+      addEdges( edge )
+
+      // addConnectionNodesFromSearch({
+      //   source,
+      //   searchResults: [record],
+      // })
       // loadNodesFromTableQuery({
       //   type,
       //   searchResults: results,
       //   searchTerm: searchTerm.trim().replace(/ /g, ''),
       // })
     },
-    [addConnectionNodesFromSearch, addNodes, getNode]
+    [addConnectionNodesFromSearch, addNodes, addEdges]
   )
 
   const modelActions = [
@@ -80,16 +122,16 @@ export const MindMapCommandCenter = () => {
       icon: <EventsIcon className='w-4 h-4' />,
       label: 'Add Events',
       name: 'Events',
-      searchAction: async (searchTerm: string) => {
-        const res = await runSearch({type: 'events', searchTerm})
+      searchAction: async ( searchTerm: string ) => {
+        const res = await runSearch( { type: 'events', searchTerm } )
         close()
       },
       buttonAction: () => {
-        setActiveModel('events')
-        setIsExpanded(true)
+        setActiveModel( 'events' )
+        setIsExpanded( true )
       },
-      loadAction: async () => {
-        await handleLoadingRecords({data: {type: 'events'}})
+      loadAction: () => {
+        handleLoadingRecords( { data: { type: 'events' } } )
         close()
       },
     },
@@ -97,16 +139,16 @@ export const MindMapCommandCenter = () => {
       icon: <TopicsIcon className='w-4 h-4' />,
       label: 'Add Topics',
       name: 'Topics',
-      searchAction: async (searchTerm: string) => {
-        const res = await runSearch({type: 'topics', searchTerm})
+      searchAction: async ( searchTerm: string ) => {
+        const res = await runSearch( { type: 'topics', searchTerm } )
         close()
       },
       buttonAction: () => {
-        setActiveModel('topics')
-        setIsExpanded(true)
+        setActiveModel( 'topics' )
+        setIsExpanded( true )
       },
-      loadAction: async () => {
-        await handleLoadingRecords({data: {type: 'topics'}})
+      loadAction: () => {
+        handleLoadingRecords( { data: { type: 'topics' } } )
         close()
       },
     },
@@ -114,16 +156,16 @@ export const MindMapCommandCenter = () => {
       icon: <KeyFiguresIcon className='w-4 h-4' />,
       label: 'Add KeyFigures',
       name: 'personnel',
-      searchAction: async (searchTerm: string) => {
-        const res = await runSearch({type: 'personnel', searchTerm})
+      searchAction: async ( searchTerm: string ) => {
+        const res = await runSearch( { type: 'personnel', searchTerm } )
         close()
       },
       buttonAction: () => {
-        setActiveModel('personnel')
-        setIsExpanded(true)
+        setActiveModel( 'personnel' )
+        setIsExpanded( true )
       },
-      loadAction: async () => {
-        await handleLoadingRecords({data: {type: 'personnel'}})
+      loadAction: () => {
+        handleLoadingRecords( { data: { type: 'personnel' } } )
         close()
       },
     },
@@ -131,16 +173,16 @@ export const MindMapCommandCenter = () => {
       icon: <TestimoniesIcon className='w-4 h-4' />,
       label: 'Add Testimonies',
       name: 'Testimonies',
-      searchAction: async (searchTerm: string) => {
-        const res = await runSearch({type: 'testimonies', searchTerm})
+      searchAction: async ( searchTerm: string ) => {
+        const res = await runSearch( { type: 'testimonies', searchTerm } )
         close()
       },
       buttonAction: () => {
-        setActiveModel('testimonies')
-        setIsExpanded(true)
+        setActiveModel( 'testimonies' )
+        setIsExpanded( true )
       },
-      loadAction: async () => {
-        await handleLoadingRecords({data: {type: 'testimonies'}})
+      loadAction: () => {
+        handleLoadingRecords( { data: { type: 'testimonies' } } )
         close()
       },
     },
@@ -148,81 +190,81 @@ export const MindMapCommandCenter = () => {
       icon: <OrganizationsIcon className='w-4 h-4' />,
       label: 'Add Organizations',
       name: 'Organizations',
-      searchAction: async (searchTerm: string) => {
-        const res = await runSearch({type: 'organizations', searchTerm})
+      searchAction: async ( searchTerm: string ) => {
+        const res = await runSearch( { type: 'organizations', searchTerm } )
         close()
       },
       buttonAction: () => {
-        setActiveModel('organizations')
-        setIsExpanded(true)
+        setActiveModel( 'organizations' )
+        setIsExpanded( true )
       },
-      loadAction: async () => {
-        await handleLoadingRecords({data: {type: 'organizations'}})
+      loadAction: () => {
+        handleLoadingRecords( { data: { type: 'organizations' } } )
         close()
       },
     },
   ]
 
-  const modelActionMap = modelActions.reduce((acc: any, curr: any) => {
+  const modelActionMap = modelActions.reduce( ( acc: any, curr: any ) => {
     const type = curr.name.toLowerCase()
     acc[type] = curr
     return acc
-  }, {})
+  }, {} )
 
   const containerVariants = {
-    collapsed: {height: 60, width: 600},
-    expanded: {height: '100%', width: 700},
-    transition: {duration: 0.5, ease: 'easeInOut'},
+    collapsed: { height: 60, width: 600 },
+    expanded: { height: '100%', width: 700 },
+    transition: { duration: 0.5, ease: 'easeInOut' },
   }
 
   const contentVariants = {
-    collapsed: {opacity: 0},
-    expanded: {opacity: 1, transition: {delay: 0.3}},
+    collapsed: { opacity: 0 },
+    expanded: { opacity: 1, transition: { delay: 0.3 } },
   }
 
   const iconsContainerVariants = {
-    collapsed: {y: 0},
-    expanded: {y: '100%', transition: {delay: 0.2}},
+    collapsed: { y: 0 },
+    expanded: { y: '100%', transition: { delay: 0.2 } },
   }
 
   const iconVariants = {
-    collapsed: (i: number) => ({
+    collapsed: ( i: number ) => ( {
       opacity: 1,
       y: 0,
-      transition: {delay: i * 0.15},
-    }),
-    expanded: (i: number) => ({
+      transition: { delay: i * 0.15 },
+    } ),
+    expanded: ( i: number ) => ( {
       opacity: 0,
       y: 20,
-      transition: {delay: i * 0.15},
-    }),
+      transition: { delay: i * 0.15 },
+    } ),
   }
 
   const close = () => {
-    setIsExpanded(false)
-    setActiveModel(null)
+    setIsExpanded( false )
+    setActiveModel( null )
   }
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false)
+  const [dialogOpen, setDialogOpen] = useState<boolean>( false )
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
+  useEffect( () => {
+    const handleKeyDown = ( event: KeyboardEvent ) => {
       // event.preventDefault()
-      if (event.metaKey && event.key === 'k' && !dialogOpen) {
-        setDialogOpen(true)
+      if ( event.metaKey && event.key === 'k' && !dialogOpen ) {
+        setDialogOpen( true )
       }
       // event.preventDefault()
-      if (event.metaKey && event.key === 'k' && dialogOpen) {
-        setDialogOpen(false)
+      if ( event.metaKey && event.key === 'k' && dialogOpen ) {
+        setDialogOpen( false )
       }
     }
 
-    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener( 'keydown', handleKeyDown )
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener( 'keydown', handleKeyDown )
       // setQuery('')
     }
-  }, [dialogOpen])
+  }, [dialogOpen] )
 
   return (
     <div className='h-full center w-full'>
@@ -231,7 +273,7 @@ export const MindMapCommandCenter = () => {
           initial='collapsed'
           animate={isExpanded ? 'expanded' : 'collapsed'}
           variants={containerVariants}
-          transition={{duration: 0.5, ease: 'easeInOut'}}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
           className=' rounded-[30px] overflow-hidden border bg-white dark:bg-black relative'>
           <AnimatePresence>
             {isExpanded && (
@@ -245,7 +287,7 @@ export const MindMapCommandCenter = () => {
                 <motion.div className='flex items-center justify-between align-middle content-center'>
                   {activeModel && (
                     <h3 className='w-fit  font-bebasNeuePro text-white'>
-                      {capitalize(activeModel)}
+                      {capitalize( activeModel )}
                     </h3>
                   )}
                   <ShinyButton
@@ -303,7 +345,7 @@ export const MindMapCommandCenter = () => {
           <motion.div
             variants={iconsContainerVariants}
             className='h-[60px] flex items-center w-full gap-2 justify-evenly px-8 cursor-pointer absolute bottom-0 left-0 right-0 mx-auto'>
-            {modelActions.map((item, index) => {
+            {modelActions.map( ( item, index ) => {
               // some code here
 
               return (
@@ -317,7 +359,7 @@ export const MindMapCommandCenter = () => {
                   {item.icon}
                 </motion.div>
               )
-            })}
+            } )}
             {/* <AddNoteFloatingPanelInput /> */}
             {/* <motion.div className='h-10 center flex justify-center align-middle items-center transition-all duration-300'> */}
             {/* </motion.div> */}

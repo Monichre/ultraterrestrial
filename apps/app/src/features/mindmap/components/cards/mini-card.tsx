@@ -5,7 +5,7 @@ import { useEntity } from '@/hooks'
 import { format } from 'date-fns'
 import { motion } from 'framer-motion'
 
-export const MiniCard = ({ card }: any) => {
+export const MiniCard = ( { card }: any ) => {
   const {
     findConnections,
     entity,
@@ -13,7 +13,7 @@ export const MiniCard = ({ card }: any) => {
     userNote,
     saveNote,
     updateNote,
-  } = useEntity({ card })
+  } = useEntity( { card } )
   const { location, date, photos, id, color, name, type } = entity
   const [image] = photos || [null]
   return (
@@ -60,7 +60,7 @@ export const MiniCard = ({ card }: any) => {
             <div className='w-full mt-4'>
               {date && (
                 <p className='font-light text-[#78efff] font-bebasNeuePro tracking-wider text-sm mr-auto'>
-                  {format(date, 'MMMM dd, yyyy')}
+                  {format( date, 'MMMM dd, yyyy' )}
                 </p>
               )}
               {location && (

@@ -2,20 +2,20 @@
 
 import { AnimatedImageContent } from '@/features/mindmap/components/cards/entity-card/entity-card'
 import {
-    AnimatePresence,
-    motion,
-    useMotionValue,
-    useSpring,
-    useTransform,
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
 } from 'framer-motion'
 
-export const EntityCardTooltip = ({ showTooltip, image }: any) => {
+export const EntityCardTooltip = ( { showTooltip, image }: any ) => {
   const springConfig = { stiffness: 100, damping: 5 }
-  const x = useMotionValue(0) // going to set this value on mouse move
+  const x = useMotionValue( 0 ) // going to set this value on mouse move
   // rotate the tooltip
-  const rotate = useSpring(useTransform(x, [-50, 50], [-45, 45]), springConfig)
+  const rotate = useSpring( useTransform( x, [-50, 50], [-45, 45] ), springConfig )
   // translate the tooltip
-  const translateX = useSpring(useTransform(x, [-75, 75], [0, 0]), springConfig)
+  const translateX = useSpring( useTransform( x, [-75, 75], [0, 0] ), springConfig )
 
   return (
     <AnimatePresence mode='popLayout'>

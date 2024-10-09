@@ -11,7 +11,7 @@ export const getNodeSize = (
   // const internalNode = getNode(node.id)
   const nodeWith = node?.width
   const nodeHeight = node?.height
-  const hasDimension = [nodeWith, nodeHeight].every((e) => e != null)
+  const hasDimension = [nodeWith, nodeHeight].every( ( e ) => e != null )
   return {
     hasDimension,
     width: nodeWith,
@@ -21,33 +21,33 @@ export const getNodeSize = (
   }
 }
 
-type IFixPosition = (pros: {
+type IFixPosition = ( pros: {
   x: number
   y: number
   width: number
   height: number
-}) => {
+} ) => {
   x: number
   y: number
 }
-export const getNodeLayouted = (props: {
+export const getNodeLayouted = ( props: {
   node: any
   position: { x: number; y: number }
   direction: any
   visibility: any
   fixPosition?: IFixPosition
-}) => {
+} ) => {
   const {
     node,
     position,
     direction,
     visibility,
-    fixPosition = (p) => ({ x: p.x, y: p.y }),
+    fixPosition = ( p ) => ( { x: p.x, y: p.y } ),
   } = props
   const hidden = visibility !== 'visible'
   const isHorizontal = direction === 'horizontal'
   const { width, height, widthWithDefault, heightWithDefault } =
-    getNodeSize(node)
+    getNodeSize( node )
   node.targetPosition = isHorizontal ? Position.Left : Position.Top
   node.sourcePosition = isHorizontal ? Position.Right : Position.Bottom
   return {
@@ -56,11 +56,11 @@ export const getNodeLayouted = (props: {
     width,
     height,
     hidden,
-    position: fixPosition({
+    position: fixPosition( {
       ...position,
       width: widthWithDefault,
       height: heightWithDefault,
-    }),
+    } ),
     data: {
       ...node.data,
       label: node.id,
@@ -72,7 +72,7 @@ export const getNodeLayouted = (props: {
   }
 }
 
-export const getEdgeLayouted = (props: { edge: any; visibility: any }) => {
+export const getEdgeLayouted = ( props: { edge: any; visibility: any } ) => {
   const { edge, visibility } = props
   const hidden = visibility !== 'visible'
   return {
@@ -97,13 +97,13 @@ export function generateNodes(
   const parentWidth = parentNode.width!
   const elementsCount = data.length
   const space = 100
-  const totalArea = elementsCount * parentWidth + space * (elementsCount - 1)
+  const totalArea = elementsCount * parentWidth + space * ( elementsCount - 1 )
   const xStartPos = parentNode.position.x - totalArea / 2
 
   let y = 200
   let x = xStartPos - parentWidth
 
-  return data.map(function (node) {
+  return data.map( function ( node ) {
     x += space + parentWidth
 
     return {
@@ -115,11 +115,11 @@ export function generateNodes(
       data: node.data,
       type,
     }
-  })
+  } )
 }
 
-export const generateEdges = (parentId: string, childrens: Array<Node>) => {
-  return childrens.map((childrenNode) => {
+export const generateEdges = ( parentId: string, childrens: Array<Node> ) => {
+  return childrens.map( ( childrenNode ) => {
     return {
       id: childrenNode.id,
       source: parentId,
@@ -127,39 +127,39 @@ export const generateEdges = (parentId: string, childrens: Array<Node>) => {
       animated: true,
       style: { stroke: '#1A192B' },
     }
-  })
+  } )
 }
 
-export const findLeafNodes = (nodes: Array<Node>, nodeId: string) => {
-  const node = nodes.find((node) => node.id === nodeId)!
+export const findLeafNodes = ( nodes: Array<Node>, nodeId: string ) => {
+  const node = nodes.find( ( node ) => node.id === nodeId )!
 
   let tree = [node]
-  if (node.data.parentId) {
-    tree = tree.concat(findLeafNodes(nodes, node.data.parentId))
+  if ( node.data.parentId ) {
+    tree = tree.concat( findLeafNodes( nodes, node.data.parentId ) )
   }
 
   return tree
 }
 
-export const getNodeColor = (depth: number, palette: any) => {
+export const getNodeColor = ( depth: number, palette: any ) => {
   const colors = palette.colors
   const index = depth % colors.length
   const color = colors[index]
 
-  const style = palette.node.buildStyles(color)
+  const style = palette.node.buildStyles( color )
 
   return { style, color }
 }
 
-export const getEdgeColor = (depth: number, palette: any) => {
+export const getEdgeColor = ( depth: number, palette: any ) => {
   const colors = palette.colors
   const index = depth % colors.length
   const color = colors[index]
 
-  const style = palette.edge.buildStyles(color)
+  const style = palette.edge.buildStyles( color )
 
   return { style, color }
 }
-export const getRootNode = (nodes: Reactflow['nodes']) => {
-  return nodes.find((e) => e.type === 'start') ?? nodes[0]
+export const getRootNode = ( nodes: Reactflow['nodes'] ) => {
+  return nodes.find( ( e ) => e.type === 'start' ) ?? nodes[0]
 }

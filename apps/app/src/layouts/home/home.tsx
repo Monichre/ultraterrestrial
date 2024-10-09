@@ -1,23 +1,20 @@
+
 'use client'
 
-import { Astronaut } from './astronaut/astronaut'
-import { Howl } from 'howler'
-import { useEffect, useRef, useState } from 'react'
-// import { PlanetMenu } from '../planet-menu'
-import { CanvasCursor } from '@/components/ui/canvas-cursor'
-import { SiteTitle } from './SiteTitle'
-import { LovecraftQuote } from './LovecraftQuote'
-import dynamic from 'next/dynamic'
-// import { BlurAppear } from '@/components/animated'
-import { useInView } from 'framer-motion'
 import { nextTick } from '@/utils'
-import { Earth } from '@/components/earth'
-import { Moon, MoonScene } from '@/components/moon'
-import { Particles } from '@/components/animated/particles'
-import {
-  ShootingStars,
-  StarsBackground,
-} from '@/components/backgrounds/shooting-stars'
+// import { Howl } from 'howler'
+import { inView, useInView } from 'framer-motion'
+import dynamic from 'next/dynamic'
+import { useEffect, useRef, useState } from 'react'
+
+const CanvasCursor = dynamic( () => import( '@/components/ui/canvas-cursor' ).then( mod => mod.CanvasCursor ) )
+const LovecraftQuote = dynamic( () => import( './LovecraftQuote' ).then( mod => mod.LovecraftQuote ) )
+const SiteTitle = dynamic( () => import( './SiteTitle' ).then( mod => mod.SiteTitle ) )
+// const BlurAppear = dynamic(() => import('@/components/animated').then(mod => mod.BlurAppear))
+const ShootingStars = dynamic( () => import( '@/components/backgrounds/shooting-stars' ).then( mod => mod.ShootingStars ) )
+const StarsBackground = dynamic( () => import( '@/components/backgrounds/shooting-stars' ).then( mod => mod.StarsBackground ) )
+const Earth = dynamic( () => import( '@/components/earth' ).then( mod => mod.Earth ) )
+const Moon = dynamic( () => import( '@/components/moon' ).then( mod => mod.Moon ) )
 
 // // import { Earth } from '@/components/earth'
 // const Earth = dynamic(
@@ -29,46 +26,66 @@ import {
 //     ),
 //   }
 // )
-export interface HomeProps {}
+export interface HomeProps { }
 
 export const Home: React.FC<HomeProps> = () => {
-  const earthRef = useRef(null)
-  const moonRef = useRef(null)
+  const earthRef = useRef( null )
+  const moonRef = useRef( null )
 
-  const isInView = useInView(earthRef)
-  console.log('isInView: ', isInView)
-  const [runAnimationSequence, setRunAnimationSequence] = useState(false)
-  console.log('runAnimationSequence: ', runAnimationSequence)
+  const isInView = useInView( earthRef )
+  console.log( 'isInView: ', isInView )
+  const [runAnimationSequence, setRunAnimationSequence] = useState( false )
+  console.log( 'runAnimationSequence: ', runAnimationSequence )
 
-  useEffect(() => {
-    console.log('isInView: ', isInView)
-    if (isInView) {
-      nextTick(5).then(() => {
-        setRunAnimationSequence(true)
-      })
+  useEffect( () => {
+    console.log( 'isInView: ', isInView )
+    if ( isInView ) {
+      nextTick( 5 ).then( () => {
+        setRunAnimationSequence( true )
+      } )
     }
-  }, [isInView])
+  }, [isInView] )
 
-  useEffect(() => {
-    const sound = new Howl({
-      src: ['/assets/audio/interstellar-stay.mp3'],
-      html5: true,
-      loop: true,
-      preload: true,
-      autoplay: true,
-      volume: 0.5,
-      onend: function () {
-        console.log('Finished!')
-      },
-    })
 
-    sound.play()
-  })
+
+  // console.log( "🚀 ~ file: home.tsx:42 ~ earthInView:", earthInView )
+
+  // const moonInView: any = useInView( moonRef )
+
+  // console.log( "🚀 ~ file: home.tsx:46 ~ moonInView:", moonInView )
+
+  // useEffect( () => {
+  //   console.log( "🚀 ~ file: home.tsx:50 ~ moonInView:", moonInView )
+  //   console.log( "🚀 ~ file: home.tsx:51 ~ earthInView:", earthInView )
+  // }, [moonInView, earthInView] )
+
+
+
+  // const { ref: moonInViewRef, inView: isMoonInView } = useInView({
+  //   triggerOnce: true,
+  //   threshold: 0.5,
+  // })
+
+  // useEffect( () => {
+  //   const sound = new Howl( {
+  //     src: ['/assets/audio/interstellar-stay.mp3'],
+  //     html5: true,
+  //     loop: true,
+  //     preload: true,
+  //     autoplay: true,
+  //     volume: 0.5,
+  //     onend: function () {
+  //       console.log( 'Finished!' )
+  //     },
+  //   } )
+
+  //   sound.play()
+  // } )
 
   return (
     <div className='h-[100vh] w-[100vw] relative'>
       <div className='absolute top-1 left-1 h-[60vh] w-[60vw] z-1'>
-        <Moon />
+        <Moon ref={moonRef} />
       </div>
       <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1'>
         <Earth ref={earthRef} />
@@ -76,15 +93,14 @@ export const Home: React.FC<HomeProps> = () => {
 
       <CanvasCursor />
       <div className='astronaut h-full w-full relative flex flex-col justify-center align-middle relative overflow-hidden items-center z-40'>
-        {runAnimationSequence && (
-          <>
-            <div className='w-full '>
-              <SiteTitle />
-              <LovecraftQuote />
-            </div>
-            {/* <Astronaut /> */}
-          </>
-        )}
+
+        {runAnimationSequence &&
+          <div className='w-full '>
+            <SiteTitle />
+            <LovecraftQuote />
+          </div>}
+
+
       </div>
       <ShootingStars />
       <StarsBackground />

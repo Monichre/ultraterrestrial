@@ -28,20 +28,20 @@ const mapRange = (
   const INPUT_RANGE = inputUpper - inputLower
   const OUTPUT_RANGE = outputUpper - outputLower
 
-  return (value: number) =>
-    outputLower + (((value - inputLower) / INPUT_RANGE) * OUTPUT_RANGE || 0)
+  return ( value: number ) =>
+    outputLower + ( ( ( value - inputLower ) / INPUT_RANGE ) * OUTPUT_RANGE || 0 )
 }
 
-export function ExplodingMenuItem({
+export function ExplodingMenuItem( {
   item,
   index,
 }: {
   item: any
   index: number
-}) {
+} ) {
   const DISTANCE_INCREMENT = 14
-  const x = useSpring(useMotionValue(0), { mass: 0.005, stiffness: 100 })
-  const y = useSpring(useMotionValue(0), { mass: 0.005, stiffness: 100 })
+  const x = useSpring( useMotionValue( 0 ), { mass: 0.005, stiffness: 100 } )
+  const y = useSpring( useMotionValue( 0 ), { mass: 0.005, stiffness: 100 } )
   const distance = `${index * DISTANCE_INCREMENT}%`
 
   const setTransform = (
@@ -53,11 +53,11 @@ export function ExplodingMenuItem({
     const bounds = item.getBoundingClientRect()
     const relativeX = event.clientX - bounds.left
     const relativeY = event.clientY - bounds.top
-    const xRange = mapRange(0, bounds.width, -1, 1)(relativeX)
-    const yRange = mapRange(0, bounds.height, -1, 1)(relativeY)
+    const xRange = mapRange( 0, bounds.width, -1, 1 )( relativeX )
+    const yRange = mapRange( 0, bounds.height, -1, 1 )( relativeY )
 
-    x.set(xRange * 3)
-    y.set(yRange * 3)
+    x.set( xRange * 3 )
+    y.set( yRange * 3 )
   }
 
   return (
@@ -91,8 +91,8 @@ export function ExplodingMenuItem({
         offsetPath: `path("M 0 0 m 0 0 a 9.6 9.6 90 1 0 0 0 a 9.6 9.6 90 1 0 0 0")`,
       }}
       onPointerLeave={() => {
-        x.set(0)
-        y.set(0)
+        x.set( 0 )
+        y.set( 0 )
       }}
       transition={{ duration: 0.2, delay: index * 0.02, type: 'easeInOut' }}
     >
@@ -101,16 +101,16 @@ export function ExplodingMenuItem({
   )
 }
 
-export function MindMapAnimatedClickMenu({
+export function MindMapAnimatedClickMenu( {
   isOpen,
   closeMenu,
   clickPosition,
-}: any) {
+}: any ) {
   const { addNextEntitiesToMindMap } = useMindMap()
   const handleLoadingRecords = React.useCallback(
-    async (rootNodeSim: any) => {
+    async ( rootNodeSim: any ) => {
       // const
-      addNextEntitiesToMindMap(rootNodeSim)
+      addNextEntitiesToMindMap( rootNodeSim )
     },
     [addNextEntitiesToMindMap]
   )
@@ -119,7 +119,7 @@ export function MindMapAnimatedClickMenu({
     {
       render: () => (
         <motion.button
-          onClick={() => handleLoadingRecords({ data: { type: 'events' } })}
+          onClick={() => handleLoadingRecords( { data: { type: 'events' } } )}
           className='flex h-8 w-8 cursor-move items-center justify-center rounded-full bg-mauve-light-3'
         >
           <EventsIcon className='w-4 h-4' />
@@ -129,7 +129,7 @@ export function MindMapAnimatedClickMenu({
     {
       render: () => (
         <motion.button
-          onClick={() => handleLoadingRecords({ data: { type: 'topics' } })}
+          onClick={() => handleLoadingRecords( { data: { type: 'topics' } } )}
           className='flex h-8 w-8 cursor-move items-center justify-center rounded-full bg-mauve-light-3'
         >
           <TopicsIcon className='w-4 h-4' />
@@ -139,7 +139,7 @@ export function MindMapAnimatedClickMenu({
     {
       render: () => (
         <motion.button
-          onClick={() => handleLoadingRecords({ data: { type: 'personnel' } })}
+          onClick={() => handleLoadingRecords( { data: { type: 'personnel' } } )}
           className='flex h-8 w-8 cursor-move items-center justify-center rounded-full bg-mauve-light-3'
         >
           <KeyFiguresIcon className='w-4 h-4' />
@@ -150,7 +150,7 @@ export function MindMapAnimatedClickMenu({
       render: () => (
         <motion.button
           onClick={() =>
-            handleLoadingRecords({ data: { type: 'testimonies' } })
+            handleLoadingRecords( { data: { type: 'testimonies' } } )
           }
           className='flex h-8 w-8 cursor-move items-center justify-center rounded-full bg-mauve-light-3'
         >
@@ -162,7 +162,7 @@ export function MindMapAnimatedClickMenu({
       render: () => (
         <motion.button
           onClick={() =>
-            handleLoadingRecords({ data: { type: 'organizations' } })
+            handleLoadingRecords( { data: { type: 'organizations' } } )
           }
           className='flex h-8 w-8 cursor-move items-center justify-center rounded-full bg-mauve-light-3'
         >
@@ -172,7 +172,7 @@ export function MindMapAnimatedClickMenu({
     },
     {
       render: () => (
-        <AddNote saveNote={() => {}} userNote={{ title: '', content: '' }} />
+        <AddNote saveNote={() => { }} userNote={{ title: '', content: '' }} />
       ),
     },
   ]
@@ -242,11 +242,11 @@ export function MindMapAnimatedClickMenu({
                   />
                 </svg>
               </li>
-              {actions.map((item, index) => {
+              {actions.map( ( item, index ) => {
                 return (
                   <ExplodingMenuItem item={item} index={index} key={index} />
                 )
-              })}
+              } )}
             </ul>
           </motion.div>
         )}

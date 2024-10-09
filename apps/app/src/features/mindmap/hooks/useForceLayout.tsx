@@ -34,9 +34,9 @@ export const useForceLayout = () => {
   const { setNodes, getEdges, getNodes } = useMindMap()
   const edges = getEdges()
   const nodes = getNodes()
-  const [layoutedNodes, setLayoutedNodes] = useState(nodes)
+  const [layoutedNodes, setLayoutedNodes] = useState( nodes )
 
-  console.log('layoutedNodes: ', layoutedNodes)
+  console.log( 'layoutedNodes: ', layoutedNodes )
   const simulationRef: any = useRef()
   // const runIt = () => {
   //   const simulation = runForceSimulation(getNodes(), getEdges(), setNodes)
@@ -50,29 +50,29 @@ export const useForceLayout = () => {
   // }
 
   const runForceSimulation = useMemo(
-    () => (nodes: any[], edges: any[], setNodes: any) => {
-      const simulation = forceSimulation(nodes)
-        .force('charge', forceManyBody().strength(60))
-        .force('x', forceX().x(0).strength(0.05))
-        .force('y', forceY().y(0).strength(0.05))
+    () => ( nodes: any[], edges: any[], setNodes: any ) => {
+      const simulation = forceSimulation( nodes )
+        .force( 'charge', forceManyBody().strength( 60 ) )
+        .force( 'x', forceX().x( 0 ).strength( 0.05 ) )
+        .force( 'y', forceY().y( 0 ).strength( 0.05 ) )
         .force(
           'link',
-          forceLink(edges)
-            .id((d: any) => d.id)
-            .strength(5)
-            .distance(100)
+          forceLink( edges )
+            .id( ( d: any ) => d.id )
+            .strength( 5 )
+            .distance( 100 )
         )
-        .on('tick', () => {
+        .on( 'tick', () => {
           setNodes(
-            nodes.map((node) => ({
+            nodes.map( ( node ) => ( {
               ...node,
               position: {
                 x: node.x ?? node.positionAbsoluteX,
                 y: node.y ?? node.positionAbsoluteY,
               },
-            }))
+            } ) )
           )
-        })
+        } )
 
       // const simulation = forceSimulation()
       //   .nodes(simulationNodes)
@@ -102,8 +102,8 @@ export const useForceLayout = () => {
     []
   )
 
-  useEffect(() => {
-    simulationRef.current = runForceSimulation(nodes, edges, setNodes)
+  useEffect( () => {
+    simulationRef.current = runForceSimulation( nodes, edges, setNodes )
 
     // simulationRef.current = simulation
 
@@ -112,7 +112,7 @@ export const useForceLayout = () => {
     // return () => {
     //   simulation.stop()
     // }
-  }, [nodes, layoutedNodes, runForceSimulation, edges, setNodes])
+  }, [nodes, layoutedNodes, runForceSimulation, edges, setNodes] )
 
   return simulationRef.current
 }

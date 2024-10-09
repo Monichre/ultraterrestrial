@@ -10,27 +10,27 @@ import React, { useCallback, useState } from 'react'
 interface CardRotateProps {
   children: React.ReactNode
   cardId: any
-  onSendToBack: (id: any) => void
+  onSendToBack: ( id: any ) => void
 }
 
-function CardRotate({ children, cardId, onSendToBack }: CardRotateProps) {
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const rotateX = useTransform(y, [-100, 100], [60, -60])
-  const rotateY = useTransform(x, [-100, 100], [-60, 60])
+function CardRotate( { children, cardId, onSendToBack }: CardRotateProps ) {
+  const x = useMotionValue( 0 )
+  const y = useMotionValue( 0 )
+  const rotateX = useTransform( y, [-100, 100], [60, -60] )
+  const rotateY = useTransform( x, [-100, 100], [-60, 60] )
 
   const handleDragEnd = useCallback(
-    (_: any, info: PanInfo) => {
-      console.log('_: ', _)
-      console.log('info: ', info)
-      console.log(Math.abs(info.offset.x))
+    ( _: any, info: PanInfo ) => {
+      console.log( '_: ', _ )
+      console.log( 'info: ', info )
+      console.log( Math.abs( info.offset.x ) )
       const threshold = 180
-      if (Math.abs(info.offset.x) > threshold) {
-        console.log('FOR FUCK SAKE')
-        onSendToBack(cardId)
+      if ( Math.abs( info.offset.x ) > threshold ) {
+        console.log( 'FOR FUCK SAKE' )
+        onSendToBack( cardId )
       } else {
-        x.set(0)
-        y.set(0)
+        x.set( 0 )
+        y.set( 0 )
       }
     },
     [onSendToBack, cardId, x, y]
@@ -52,17 +52,17 @@ function CardRotate({ children, cardId, onSendToBack }: CardRotateProps) {
   )
 }
 
-const CardStackSwipeable = ({ mindmapCards }: any) => {
-  const [cards, setCards] = useState(mindmapCards)
+const CardStackSwipeable = ( { mindmapCards }: any ) => {
+  const [cards, setCards] = useState( mindmapCards )
   // const handleShuffle = ( ) => {
 
   // }
-  const sendToBack = (id: number) => {
-    const incoming = cards.find((card: { id: number }) => card.id === id)
-    const filtered = [...cards].filter((card) => card.id !== id)
+  const sendToBack = ( id: number ) => {
+    const incoming = cards.find( ( card: { id: number } ) => card.id === id )
+    const filtered = [...cards].filter( ( card ) => card.id !== id )
 
     const newCards = [...filtered, incoming]
-    setCards(newCards)
+    setCards( newCards )
   }
 
   // useEffect(() => {
@@ -74,7 +74,7 @@ const CardStackSwipeable = ({ mindmapCards }: any) => {
       className='relative p-4 rounded-xl border-b-base-100 '
       style={{ perspective: 600 }}
     >
-      {cards.map((card: any, index: any) => {
+      {cards.map( ( card: any, index: any ) => {
         return (
           <CardRotate
             key={`panel-${card.id}-${index}`}
@@ -86,7 +86,7 @@ const CardStackSwipeable = ({ mindmapCards }: any) => {
               key={`panel-${card.id}-inner`}
               className='h-full w-full rounded-lg'
               animate={{
-                rotateZ: (cards.length - index - 1) * 4,
+                rotateZ: ( cards.length - index - 1 ) * 4,
                 scale: 1 + index * 0.06 - cards.length * 0.06,
                 transformOrigin: '90% 90%',
               }}
@@ -99,7 +99,7 @@ const CardStackSwipeable = ({ mindmapCards }: any) => {
             </motion.div>
           </CardRotate>
         )
-      })}
+      } )}
     </div>
   )
 }
@@ -110,12 +110,12 @@ const CardStackSwipeable = ({ mindmapCards }: any) => {
 //   )
 // }
 
-const CardStackVerticalStack = ({
+const CardStackVerticalStack = ( {
   mindmapCards,
   stacked,
   toggleStacked,
   removeChildCardClone,
-}: any) => {
+}: any ) => {
   // const [open, setOpen] = useState(stacked
   const CARD_OFFSET = 10
   const SCALE_FACTOR = 0.06
@@ -128,7 +128,7 @@ const CardStackVerticalStack = ({
           perspective: '600px',
         }}
       >
-        {mindmapCards.map((card: any, i: any) => {
+        {mindmapCards.map( ( card: any, i: any ) => {
           const rotateZ = mindmapCards.length - i - 1
           return (
             <AnimatedMiniCard
@@ -143,12 +143,12 @@ const CardStackVerticalStack = ({
               />
             </AnimatedMiniCard>
           )
-        })}
+        } )}
       </div>
     </div>
   )
 }
-export const CardStackUI = ({
+export const CardStackUI = ( {
   mindmapCards,
   swipeable = false,
   toggleStack,
@@ -160,7 +160,7 @@ export const CardStackUI = ({
   toggleStack: any
   stacked: boolean
   removeChildCardClone: any
-}) => {
+} ) => {
   return swipeable ? (
     <CardStackSwipeable mindmapCards={mindmapCards} />
   ) : (

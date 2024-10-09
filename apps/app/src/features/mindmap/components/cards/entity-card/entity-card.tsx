@@ -18,9 +18,9 @@ import type { ImageProps } from '@/utils/image.utils'
 import { format } from 'date-fns'
 import 'react-magic-motion/card.css'
 
-const dayjs = require('dayjs')
-const utc = require('dayjs/plugin/utc')
-dayjs.extend(utc)
+const dayjs = require( 'dayjs' )
+const utc = require( 'dayjs/plugin/utc' )
+dayjs.extend( utc )
 
 export interface MindMapEntityCardProps {
   id: string
@@ -41,29 +41,29 @@ export interface MindMapEntityCardProps {
 
 export const openSpring = { type: 'spring', stiffness: 200, damping: 30 }
 export const closeSpring = { type: 'spring', stiffness: 300, damping: 35 }
-export const AnimatedCardWithRef = forwardRef((props: any, ref: any) => (
+export const AnimatedCardWithRef = forwardRef( ( props: any, ref: any ) => (
   <Card ref={ref} {...props} />
-))
-export const AnimatedCard = motion(AnimatedCardWithRef)
+) )
+export const AnimatedCard = motion( AnimatedCardWithRef )
 AnimatedCard.displayName = 'AnimatedCard'
 
-export const AnimatedCardContentWithRef = forwardRef((props, ref: any) => (
+export const AnimatedCardContentWithRef = forwardRef( ( props, ref: any ) => (
   <CardContent ref={ref} {...props} />
-))
+) )
 AnimatedCardContentWithRef.displayName = 'AnimatedCardContentWithRef'
-export const AnimatedCardContent = motion(AnimatedCardContentWithRef)
+export const AnimatedCardContent = motion( AnimatedCardContentWithRef )
 
-export const AnimatedImageRef = forwardRef((props: any, ref: any) => (
+export const AnimatedImageRef = forwardRef( ( props: any, ref: any ) => (
   <Image ref={ref} {...props} />
-))
+) )
 AnimatedImageRef.displayName = 'AnimatedImageRef'
-export const AnimatedImageContent = motion(AnimatedImageRef)
+export const AnimatedImageContent = motion( AnimatedImageRef )
 
-export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
+export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ( {
   data,
   id,
   ...rest
-}) => {
+} ) => {
   const {
     handleHoverLeave,
     entity,
@@ -78,7 +78,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
     connectionListConnections: connections,
     handleHoverEnter,
     findConnections,
-  } = useEntity({ card: { ...data, id } })
+  } = useEntity( { card: { ...data, id } } )
   const {
     type,
     color,
@@ -93,13 +93,13 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   } = entity
   const [image] = photos
 
-  const date = format(unformattedDate, 'MMM dd, yyyy')
+  const date = format( unformattedDate, 'MMM dd, yyyy' )
 
-  const [expand, setExpand] = useState(false)
-  const toggle = useCallback(() => {
+  const [expand, setExpand] = useState( false )
+  const toggle = useCallback( () => {
     // findConnections(node)
-    setExpand(!expand)
-  }, [expand])
+    setExpand( !expand )
+  }, [expand] )
 
   const animation = {
     hide: { opacity: 0 },
@@ -113,52 +113,52 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
   const animatedClass = expand ? 'h-[900x] w-[1000px]' : 'h-[282px] w-[312px]'
   const duration = 100
 
-  const [animatedTitle, setAnimatedTitle] = useState<string>('')
-  const [animatedDate, setAnimatedDate] = useState<string>('')
-  const [titleFinished, setTitleFinished] = useState(false)
-  const [t, setT] = useState<number>(0)
-  const [i, setI] = useState<number>(0)
+  const [animatedTitle, setAnimatedTitle] = useState<string>( '' )
+  const [animatedDate, setAnimatedDate] = useState<string>( '' )
+  const [titleFinished, setTitleFinished] = useState( false )
+  const [t, setT] = useState<number>( 0 )
+  const [i, setI] = useState<number>( 0 )
 
-  useEffect(() => {
-    const typingEffect = setInterval(() => {
-      if (t < name.length) {
-        setAnimatedTitle(name.substring(0, t + 1))
-        setT(t + 1)
+  useEffect( () => {
+    const typingEffect = setInterval( () => {
+      if ( t < name.length ) {
+        setAnimatedTitle( name.substring( 0, t + 1 ) )
+        setT( t + 1 )
       } else {
-        clearInterval(typingEffect)
+        clearInterval( typingEffect )
 
-        setTitleFinished(true)
+        setTitleFinished( true )
       }
-    }, 100)
+    }, 100 )
 
     return () => {
-      clearInterval(typingEffect)
+      clearInterval( typingEffect )
     }
-  }, [name, t])
+  }, [name, t] )
 
-  useEffect(() => {
-    const typingEffectTwo = setInterval(() => {
-      if (titleFinished) {
-        if (i < date.length) {
-          setAnimatedDate(date.substring(0, i + 1))
-          setI(i + 1)
+  useEffect( () => {
+    const typingEffectTwo = setInterval( () => {
+      if ( titleFinished ) {
+        if ( i < date.length ) {
+          setAnimatedDate( date.substring( 0, i + 1 ) )
+          setI( i + 1 )
         } else {
-          clearInterval(typingEffectTwo)
+          clearInterval( typingEffectTwo )
         }
       }
-    }, 100)
+    }, 100 )
 
     return () => {
-      clearInterval(typingEffectTwo)
+      clearInterval( typingEffectTwo )
     }
-  }, [date, date.length, i, name, t, titleFinished])
+  }, [date, date.length, i, name, t, titleFinished] )
 
   const springConfig = { stiffness: 100, damping: 5 }
-  const x = useMotionValue(0) // going to set this value on mouse move
+  const x = useMotionValue( 0 ) // going to set this value on mouse move
   // rotate the tooltip
-  const rotate = useSpring(useTransform(x, [-50, 50], [-45, 45]), springConfig)
+  const rotate = useSpring( useTransform( x, [-50, 50], [-45, 45] ), springConfig )
   // translate the tooltip
-  const translateX = useSpring(useTransform(x, [-75, 75], [0, 0]), springConfig)
+  const translateX = useSpring( useTransform( x, [-75, 75], [0, 0] ), springConfig )
 
   // const cardRef = useRef()
   // onMouseMove={handleMouseMove}
@@ -226,11 +226,11 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
       duration: 0.25,
     },
   }
-  const truncateText = (text: string, maxLength: number): string => {
-    if (text.length <= maxLength) {
+  const truncateText = ( text: string, maxLength: number ): string => {
+    if ( text.length <= maxLength ) {
       return text
     }
-    return text.substring(0, maxLength) + '...'
+    return text.substring( 0, maxLength ) + '...'
   }
 
   const transition = {
@@ -303,7 +303,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
       <CardHeader
         className={`flex ${expand ? 'flex-col align-start justify-start items-start' : ''} h-[282px] w-[312px] relative z-10 after:content-['*'] after:absolute after:width-[80%] after:left-[10%] after:bottom-0 after:height-[2px] after:bg-white `}
         onClick={toggle}
-        // animate={{ top: 0, scale: 1, y: 0 }}
+      // animate={{ top: 0, scale: 1, y: 0 }}
       >
         {expand ? null : (
           <>
@@ -362,7 +362,7 @@ export const MindMapEntityCard: React.FC<MindMapEntityCardProps> = ({
           variants={variants3}
           animate={expand ? 'open' : 'closed'}
         >
-          {truncate(description, 500)}
+          {truncate( description, 500 )}
         </motion.p>
       )}
 

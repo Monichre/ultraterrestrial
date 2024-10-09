@@ -11,7 +11,7 @@ import { ConnectionList } from '@/features/mindmap/components/connection-list'
 import { useEntity } from '@/hooks'
 import { format } from 'date-fns'
 
-export function GraphCard({ card }: any) {
+export function GraphCard( { card }: any ) {
   const {
     handleHoverLeave,
     entity,
@@ -26,9 +26,9 @@ export function GraphCard({ card }: any) {
     connectionListConnections,
     handleHoverEnter,
     findConnections,
-  } = useEntity({ card })
+  } = useEntity( { card } )
   const { type, color, photos, name, date: unformattedDate, role } = entity
-  const date = unformattedDate ? format(unformattedDate, 'MMMM d, yyyy') : ''
+  const date = unformattedDate ? format( unformattedDate, 'MMMM d, yyyy' ) : ''
   const [image] = photos
 
   // const [animatedTitle, setAnimatedTitle] = useState<string>('')
@@ -73,9 +73,9 @@ export function GraphCard({ card }: any) {
 
   const modelColor = DOMAIN_MODEL_COLORS[type]
 
-  const [activeIndex, setActiveIndex] = useState(0)
-  const updateActiveIndex = (index: number) => {
-    setActiveIndex(index)
+  const [activeIndex, setActiveIndex] = useState( 0 )
+  const updateActiveIndex = ( index: number ) => {
+    setActiveIndex( index )
   }
 
   const items = [
@@ -83,7 +83,7 @@ export function GraphCard({ card }: any) {
       title: 'Details',
       render: () => (
         <div className='mt-4 text-sm text-white font-source'>
-          <p>{truncate(card?.description, 400)}</p>
+          <p>{truncate( card?.description, 400 )}</p>
         </div>
       ),
     },
@@ -96,7 +96,7 @@ export function GraphCard({ card }: any) {
 
       onClick: () => {
         saveNote()
-        setShowMMenu(false)
+        setShowMMenu( false )
       },
     },
   ]
@@ -166,7 +166,7 @@ export function GraphCard({ card }: any) {
 
                 <motion.div className=''>
                   <p className='font-source text-white tracking-wider '>
-                    {card?.location || truncate(role, 50)}
+                    {card?.location || truncate( role, 50 )}
                   </p>
                   <p className='date text-1xl text-[#78efff] text-uppercase font-bebasNeuePro tracking-wider w-auto ml-auto mt-1'>
                     {type === 'personnel' && card?.credibility

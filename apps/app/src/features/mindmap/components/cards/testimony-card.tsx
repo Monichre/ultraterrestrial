@@ -23,11 +23,11 @@ type TestimonyCardProps = {
   }
 }
 
-export const TestimonyCard = ({ card }: TestimonyCardProps) => {
-  console.log('🚀 ~ file: testimony-card.tsx:30 ~ TestimonyCard ~ data:', card)
+export const TestimonyCard = ( { card }: TestimonyCardProps ) => {
+  console.log( '🚀 ~ file: testimony-card.tsx:30 ~ TestimonyCard ~ data:', card )
   const source = card?.witness?.name
   const quote = card?.claim
-  const { photo }: any = formatModelWithImage(card?.witness)
+  const { photo }: any = formatModelWithImage( card?.witness )
   // Lot of testimony records dont have dates, would it be worth it to add an internal AI agent to solve problems like this?
   return (
     <BlurAppear>

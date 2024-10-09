@@ -48,9 +48,9 @@ import {
 const QuickActionsFloatingPanel = () => {
   const { addNextEntitiesToMindMap } = useMindMap()
   const handleLoadingRecords = useCallback(
-    async (rootNodeSim: any) => {
+    async ( rootNodeSim: any ) => {
       // const
-      await addNextEntitiesToMindMap(rootNodeSim)
+      await addNextEntitiesToMindMap( rootNodeSim )
     },
     [addNextEntitiesToMindMap]
   )
@@ -59,49 +59,49 @@ const QuickActionsFloatingPanel = () => {
       icon: <EventsIcon className='w-4 h-4' />,
       label: 'Events',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'events' } })
+        await handleLoadingRecords( { data: { type: 'events' } } )
       },
     },
     {
       icon: <TopicsIcon className='w-4 h-4' />,
       label: 'Topics',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'topics' } })
+        await handleLoadingRecords( { data: { type: 'topics' } } )
       },
     },
     {
       icon: <KeyFiguresIcon className='w-4 h-4' />,
       label: 'KeyFigures',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'personnel' } })
+        await handleLoadingRecords( { data: { type: 'personnel' } } )
       },
     },
     {
       icon: <TestimoniesIcon className='w-4 h-4' />,
       label: 'Testimonies',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'testimonies' } })
+        await handleLoadingRecords( { data: { type: 'testimonies' } } )
       },
     },
     {
       icon: <OrganizationsIcon className='w-4 h-4' />,
       label: 'Organizations',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'organizations' } })
+        await handleLoadingRecords( { data: { type: 'organizations' } } )
       },
     },
     {
       icon: <FileSearch className='w-4 h-4' />,
       label: 'Case Files',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'documents' } })
+        await handleLoadingRecords( { data: { type: 'documents' } } )
       },
     },
     {
       icon: <ArtifactsIcon className='w-4 h-4' />,
       label: 'Historical Artifacts',
       action: async () => {
-        await handleLoadingRecords({ data: { type: 'artifacts' } })
+        await handleLoadingRecords( { data: { type: 'artifacts' } } )
       },
     },
   ]
@@ -117,7 +117,7 @@ const QuickActionsFloatingPanel = () => {
       <FloatingPanelContent className='w-56 bg-black'>
         <FloatingPanelBody>
           <AnimatePresence>
-            {actions.map((action, index) => (
+            {actions.map( ( action, index ) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: -10 }}
@@ -133,7 +133,7 @@ const QuickActionsFloatingPanel = () => {
                   <span>{action.label}</span>
                 </FloatingPanelButton>
               </motion.div>
-            ))}
+            ) )}
           </AnimatePresence>
         </FloatingPanelBody>
         <FloatingPanelFooter>
@@ -144,8 +144,8 @@ const QuickActionsFloatingPanel = () => {
   )
 }
 export function AddNoteFloatingPanelInput() {
-  const handleSubmit = (note: string) => {
-    console.log('Submitted note:', note)
+  const handleSubmit = ( note: string ) => {
+    console.log( 'Submitted note:', note )
   }
 
   return (
@@ -187,31 +187,31 @@ export function MindMapSidebarQuickMenu() {
     {
       icon: <ThinTwinklyStar />,
       label: 'New File',
-      action: () => console.log('New File'),
+      action: () => console.log( 'New File' ),
     },
     {
       icon: <ThinTwinklyStar />,
       label: 'Upload Image',
-      action: () => console.log('Upload Image'),
+      action: () => console.log( 'Upload Image' ),
     },
     {
       icon: <ThinTwinklyStar />,
       label: 'Edit Colors',
-      action: () => console.log('Edit Colors'),
+      action: () => console.log( 'Edit Colors' ),
     },
   ]
 
-  const [isConcise, setIsConcise] = useState(conciseViewActive)
+  const [isConcise, setIsConcise] = useState( conciseViewActive )
   const pressed = isConcise
     ? {
-        color: `rgb(244 244 245 / var(--tw-text-opacity)) `,
-        backgroundColor: `rgb(75 85 99 / var (--tw-bg-opacity))`,
-      }
+      color: `rgb(244 244 245 / var(--tw-text-opacity)) `,
+      backgroundColor: `rgb(75 85 99 / var (--tw-bg-opacity))`,
+    }
     : {}
 
-  useEffect(() => {
-    setIsConcise(conciseViewActive)
-  }, [conciseViewActive])
+  useEffect( () => {
+    setIsConcise( conciseViewActive )
+  }, [conciseViewActive] )
   return (
     // max-w-max m-auto
     // <CultUIPopoverRoot>
@@ -270,7 +270,7 @@ export function MindMapSidebarQuickMenu() {
   /* </CultUIPopoverRoot> */
 }
 
-function InboxIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function InboxIcon( props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) {
   return (
     <svg
       {...props}
@@ -290,7 +290,7 @@ function InboxIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   )
 }
 
-function LayersIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function LayersIcon( props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) {
   return (
     <svg
       {...props}
@@ -311,7 +311,7 @@ function LayersIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   )
 }
 
-function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function MenuIcon( props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) {
   return (
     <svg
       {...props}
@@ -353,7 +353,7 @@ function MessageCircleIcon(
   )
 }
 
-function ShareIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function ShareIcon( props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) {
   return (
     <svg
       {...props}

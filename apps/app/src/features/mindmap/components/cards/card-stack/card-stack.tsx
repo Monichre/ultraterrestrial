@@ -2,9 +2,9 @@
 
 import { CardStackUI } from '@/features/mindmap/components/cards/card-stack/cards'
 
-export const formatNodesForCardDisplay = (nodes: any) => {
-  console.log('nodes: ', nodes)
-  return nodes.map((node) => {
+export const formatNodesForCardDisplay = ( nodes: any ) => {
+  console.log( 'nodes: ', nodes )
+  return nodes.map( ( node ) => {
     const { id, ...rest } = node
     const nodeData = node?.data || rest
 
@@ -12,13 +12,13 @@ export const formatNodesForCardDisplay = (nodes: any) => {
       id,
       ...nodeData,
     }
-    console.log('data: ', data)
+    console.log( 'data: ', data )
 
     return data
-  })
+  } )
 }
 
-export const CardStack = ({
+export const CardStack = ( {
   mindmapCards,
   stacked,
   toggleStack,
@@ -28,7 +28,7 @@ export const CardStack = ({
   stacked: any
   toggleStack: any
   removeChildCardClone: any
-}) => {
+} ) => {
   return (
     <CardStackUI
       mindmapCards={mindmapCards}
