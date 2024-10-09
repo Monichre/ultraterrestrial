@@ -217,11 +217,11 @@ export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
       />
     </motion.circle initial={{pathLength: 0}} animate={{pathLength: 1}}>
     <motion.circle initial={{pathLength: 0}} animate={{pathLength: 1}} cx='41' cy='42' fill={stroke} r='10' /> */}
-  </motion.svg>
+  </motion.svg >
 )
 
 // https://svgdoodles.com/
-export const Star = ( props: IconProps ) => (
+export const Star = ( props: any ) => (
   <motion.svg
     {...props}
     className='w-10 h-10'
@@ -1090,7 +1090,7 @@ export const HandDrawnArrowRightDoodle = ( props: IconProps ) => (
   </svg>
 )
 
-export const MyFavoriteStarIllustration = ( { stroke, ...rest }: IconProps ) => (
+export const MyFavoriteStarIllustration = ( { stroke, ...rest }: any ) => (
   <motion.svg
     {...rest}
     className='w-10 h-10'

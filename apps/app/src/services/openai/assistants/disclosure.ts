@@ -57,7 +57,6 @@ export const askDisclosureAgentToFindRelatedRecords = traceable( async ( {
         }, assistantEventHandler
       )
 
-
       let runResult = await forwardStream( runStream )
       while (
         runResult?.status === 'requires_action' &&

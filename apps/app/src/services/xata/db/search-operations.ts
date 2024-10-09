@@ -126,6 +126,7 @@ export const executeDatabaseTableQuery = async ( { keyword, table }: any ) => {
   } )
 
   return { ...processResults( records ), totalCount }
+<<<<<<< HEAD
 }
 
 export const askXataWithAi = async ( { question, prompt, table }: any ) => {
@@ -139,3 +140,6 @@ export const askXataWithAi = async ( { question, prompt, table }: any ) => {
   } )
   return result
 }
+=======
+}
+>>>>>>> 1219636dfb2904c7d119f46f33e4d907b2e045aa

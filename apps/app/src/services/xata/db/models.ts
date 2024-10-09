@@ -9,7 +9,11 @@ export const getAllTopics = async () => {
 }
 
 export const getAllPersonnel = async () => {
+<<<<<<< HEAD
   return await xata.db.personnel.sort( 'rank', 'desc' ).getAll().then( ( res: { toSerializable: () => any } ) => res.toSerializable() )
+=======
+  return await xata.db.personnel.getAll().then( ( res: { toSerializable: () => any } ) => res.toSerializable() )
+>>>>>>> 1219636dfb2904c7d119f46f33e4d907b2e045aa
 }
 
 export const getAllTestimonies = async () => {

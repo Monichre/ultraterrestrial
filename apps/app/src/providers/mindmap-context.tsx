@@ -41,7 +41,6 @@ import { saveUserMindMap } from '@/features/user/api/save-event'
 import { useStateOfDisclosure } from '@/providers/state-of-disclosure-provider'
 import { DOMAIN_MODEL_COLORS } from '@/utils'
 import { capitalize } from '@/utils/functions'
-
 import type { DatabaseSchema, InferredTypes } from '@/services/xata'
 
 // import { simulation } from '@/features/mindmap/utils/force-directed'

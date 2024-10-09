@@ -289,6 +289,10 @@
     "zustand": "^4.5.5"
   },
   "devDependencies": {
+<<<<<<< HEAD
+=======
+    "@ultraterrestrial/typescript": "*",
+>>>>>>> 1219636dfb2904c7d119f46f33e4d907b2e045aa
     "@chromatic-com/storybook": "^1.9.0",
     "@slicemachine/adapter-next": "^0.3.51",
     "@storybook/addon-actions": "^8.3.5",
@@ -311,7 +315,10 @@
     "@types/react-dom": "18.2.18",
     "@types/three": "^0.169.0",
     "@types/webgl2": "^0.0.11",
+<<<<<<< HEAD
     "@ultraterrestrial/typescript": "*",
+=======
+>>>>>>> 1219636dfb2904c7d119f46f33e4d907b2e045aa
     "@welldone-software/why-did-you-render": "^8.0.3",
     "encoding": "^0.1.13",
     "eslint": "^8.57.1",
@@ -321,16 +328,25 @@
     "glslify": "^7.1.1",
     "glslify-loader": "^2.0.0",
     "graphology-types": "^0.24.7",
+<<<<<<< HEAD
     "partykit": "0.0.111",
     "plop-helper-list": "^1.0.0",
     "postcss-nesting": "^13.0.0",
+=======
+    "plop-helper-list": "^1.0.0",
+>>>>>>> 1219636dfb2904c7d119f46f33e4d907b2e045aa
     "r3f-perf": "^7.2.2",
     "raw-loader": "^4.0.2",
     "root": "^3.2.0",
     "slice-machine-ui": "^1.26.0",
     "storybook": "^8.3.5",
     "tailwindcss-motion": "^0.3.0-beta",
+<<<<<<< HEAD
     "url-loader": "^4.1.1"
+=======
+    "url-loader": "^4.1.1",
+    "partykit": "0.0.111"
+>>>>>>> 1219636dfb2904c7d119f46f33e4d907b2e045aa
   },
   "trigger.dev": {
     "endpointId": "ultraterrestrial-P6ko"

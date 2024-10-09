@@ -78,8 +78,8 @@ const AnimationComponent: React.FC<{
   word: string
   variants: Variants
   per: 'word' | 'char'
-}> = React.memo(({ word, variants, per }) => {
-  if (per === 'word') {
+}> = React.memo( ( { word, variants, per } ) => {
+  if ( per === 'word' ) {
     return (
       <motion.span
         aria-hidden='true'
@@ -93,7 +93,7 @@ const AnimationComponent: React.FC<{
 
   return (
     <span className='inline-block whitespace-pre'>
-      {word.split('').map((char, charIndex) => (
+      {word.split( '' ).map( ( char, charIndex ) => (
         <motion.span
           key={`char-${charIndex}`}
           aria-hidden='true'
@@ -102,23 +102,23 @@ const AnimationComponent: React.FC<{
         >
           {char}
         </motion.span>
-      ))}
+      ) )}
     </span>
   )
-})
+} )
 
 AnimationComponent.displayName = 'AnimationComponent'
 
-export function TextEffect({
+export function TextEffect( {
   children,
   per = 'word',
   as = 'p',
   variants,
   className,
   preset,
-}: TextEffectProps) {
-  const words = children.split(/(\S+)/)
-  const MotionTag = motion[as as keyof typeof motion]
+}: TextEffectProps ) {
+  const words = children.split( /(\S+)/ )
+  const MotionTag: any = motion[as as keyof typeof motion]
   const selectedVariants = preset
     ? presetVariants[preset]
     : { container: defaultContainerVariants, item: defaultItemVariants }
@@ -133,14 +133,14 @@ export function TextEffect({
       variants={containerVariants}
       className={className}
     >
-      {words.map((word, wordIndex) => (
+      {words.map( ( word, wordIndex ) => (
         <AnimationComponent
           key={`word-${wordIndex}`}
           word={word}
           variants={itemVariants}
           per={per}
         />
-      ))}
+      ) )}
     </MotionTag>
   )
 }

@@ -200,7 +200,6 @@ export const UserInputNode = memo( ( node: any ) => {
         </CoreNodeBottom>
       </CoreNodeContainer>
 
-
       {handles && handles?.length
         ? handles.map( ( id: string ) => (
           <Handle

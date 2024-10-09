@@ -20,7 +20,7 @@ interface Photo {
   url: string
 }
 
-const EN = memo( ( node: any ) => {
+const EntityNode = memo( ( node: any ) => {
   console.log( 'node: ', node )
   const { useUpdateNodeInternals, useNodesData } = useMindMap()
   const updateNodeInternals = useUpdateNodeInternals()
@@ -72,4 +72,6 @@ const EN = memo( ( node: any ) => {
   )
 } )
 
-export const EntityNode = memo( EN )
+EntityNode.displayName = 'EntityNode'
+
+export { EntityNode }
