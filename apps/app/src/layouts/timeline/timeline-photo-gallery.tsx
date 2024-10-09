@@ -4,17 +4,17 @@ import { cn } from '@/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 
-export function extractPhotos(event: { photos: any[] }) {
-  if (event && event.photos && Array.isArray(event.photos)) {
+export function extractPhotos( event: { photos: any[] } ) {
+  if ( event && event.photos && Array.isArray( event.photos ) ) {
     return event.photos.map(
-      (photo: {
+      ( photo: {
         id: any
         name: any
         mediaType: any
         size: any
         url: any
         signedUrl: any
-      }) => {
+      } ) => {
         return {
           id: photo.id,
           name: photo.name,
@@ -31,11 +31,11 @@ export function extractPhotos(event: { photos: any[] }) {
   }
 }
 
-export const TimelineItemPhoto = (props: {
+export const TimelineItemPhoto = ( props: {
   item: any
   onClick?: () => void
   isSmall?: boolean
-}) => {
+} ) => {
   return (
     <motion.div
       style={{
@@ -61,18 +61,18 @@ export const TimelineItemPhoto = (props: {
   )
 }
 
-export const TimelineItemPhotoGallery = ({ event }: any) => {
-  const [activeItem, setActiveItem] = useState<Element | null>(null)
+export const TimelineItemPhotoGallery = ( { event }: any ) => {
+  const [activeItem, setActiveItem] = useState<Element | null>( null )
 
-  const allElements = extractPhotos(event)
+  const allElements = extractPhotos( event )
 
-  const handleItemClick = (ele: Element) => {
-    setActiveItem(ele)
+  const handleItemClick = ( ele: Element ) => {
+    setActiveItem( ele )
   }
-  if (!allElements?.length) {
+  if ( !allElements?.length ) {
     return null
   }
-  if (allElements.length === 1) {
+  if ( allElements.length === 1 ) {
     return (
       <div className='flex flex-col gap-5'>
         <div className='flex items-center justify-center gap-5'>
@@ -84,43 +84,43 @@ export const TimelineItemPhotoGallery = ({ event }: any) => {
   return (
     <div className='h-full center w-full flex flex-col gap-5 relative'>
       <motion.div
-        className={cn('flex flex-col gap-5')}
+        className={cn( 'flex flex-col gap-5' )}
         layout
         transition={{ duration: 0.5, ease: 'easeInOut' }}
       >
         <motion.div
-          className={cn('flex items-center justify-center gap-5')}
+          className={cn( 'flex items-center justify-center gap-5' )}
           animate={{
             opacity: activeItem !== null ? 0 : 1,
             willChange: 'auto',
           }}
         >
           {allElements
-            .filter((item: any, i: number) => i % 2 === 0)
-            .map((ele: any, index: React.Key | null | undefined) => (
+            .filter( ( item: any, i: number ) => i % 2 === 0 )
+            .map( ( ele: any, index: React.Key | null | undefined ) => (
               <TimelineItemPhoto
                 item={ele}
                 key={index}
-                onClick={() => setActiveItem(ele)}
+                onClick={() => setActiveItem( ele )}
               />
-            ))}
+            ) )}
         </motion.div>
         <motion.div
-          className={cn('flex items-center justify-center gap-5')}
+          className={cn( 'flex items-center justify-center gap-5' )}
           animate={{
             opacity: activeItem !== null ? 0 : 1,
             willChange: 'auto',
           }}
         >
           {allElements
-            .filter((item: any, i: number) => i % 2 !== 0)
-            .map((ele: any, index: React.Key | null | undefined) => (
+            .filter( ( item: any, i: number ) => i % 2 !== 0 )
+            .map( ( ele: any, index: React.Key | null | undefined ) => (
               <TimelineItemPhoto
                 item={ele}
                 key={index}
-                onClick={() => setActiveItem(ele)}
+                onClick={() => setActiveItem( ele )}
               />
-            ))}
+            ) )}
         </motion.div>
       </motion.div>
 
@@ -141,7 +141,7 @@ export const TimelineItemPhotoGallery = ({ event }: any) => {
               <motion.div
                 layoutId={`card-${activeItem.id}`}
                 className='w-[400px] h-[400px] rounded-3xl center font-bold text-5xl cursor-pointer overflow-hidden z-10'
-                onClick={() => setActiveItem(null)}
+                onClick={() => setActiveItem( null )}
               >
                 <img
                   src={activeItem.img}
@@ -155,15 +155,15 @@ export const TimelineItemPhotoGallery = ({ event }: any) => {
                 transition={{ delay: 0.3 }}
               >
                 {allElements
-                  .filter((ele: { id: number }) => ele.id !== activeItem.id)
-                  .map((ele: any) => (
+                  .filter( ( ele: { id: number } ) => ele.id !== activeItem.id )
+                  .map( ( ele: any ) => (
                     <TimelineItemPhoto
                       key={ele.id}
                       item={ele}
-                      onClick={() => handleItemClick(ele)}
+                      onClick={() => handleItemClick( ele )}
                       isSmall
                     />
-                  ))}
+                  ) )}
               </motion.div>
             </motion.div>
           </AnimatePresence>

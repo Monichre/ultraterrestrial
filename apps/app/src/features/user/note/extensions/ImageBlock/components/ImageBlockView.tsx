@@ -11,12 +11,12 @@ interface ImageBlockViewProps {
       src: string
     }
   }
-  updateAttributes: (attrs: Record<string, string>) => void
+  updateAttributes: ( attrs: Record<string, string> ) => void
 }
 
-export const ImageBlockView = (props: ImageBlockViewProps) => {
+export const ImageBlockView = ( props: ImageBlockViewProps ) => {
   const { editor, getPos, node } = props
-  const imageWrapperRef = useRef<HTMLDivElement>(null)
+  const imageWrapperRef = useRef<HTMLDivElement>( null )
   const { src } = node.attrs
 
   const wrapperClassName = cn(
@@ -25,9 +25,9 @@ export const ImageBlockView = (props: ImageBlockViewProps) => {
     node.attrs.align === 'center' && 'mx-auto'
   )
 
-  const onClick = useCallback(() => {
-    editor.commands.setNodeSelection(getPos())
-  }, [getPos, editor.commands])
+  const onClick = useCallback( () => {
+    editor.commands.setNodeSelection( getPos() )
+  }, [getPos, editor.commands] )
 
   return (
     <NodeViewWrapper>

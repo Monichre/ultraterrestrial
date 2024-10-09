@@ -63,7 +63,10 @@ export async function POST( req: Request ) {
         }
         ---
         `,
-        }, assistantEventHandler )
+
+        },
+
+          assistantEventHandler )
 
       let runResult = await forwardStream( runStream )
       while (

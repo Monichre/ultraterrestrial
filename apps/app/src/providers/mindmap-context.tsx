@@ -20,12 +20,14 @@ import {
   useReactFlow,
   useStoreApi,
   useUpdateNodeInternals,
+  type XYPosition,
 } from '@xyflow/react'
 
 import {
   BASE_ENTITY_NODE_HEIGHT,
   BASE_ENTITY_NODE_WIDTH,
   CHILD_DIMENSIONS,
+  entityGroupNodeBaseConfig,
   GROUP_NODE_DIMENSIONS,
   GROUP_NODE_LANDSCAPE,
   PADDING,
@@ -39,6 +41,12 @@ import { saveUserMindMap } from '@/features/user/api/save-event'
 import { useStateOfDisclosure } from '@/providers/state-of-disclosure-provider'
 import { DOMAIN_MODEL_COLORS } from '@/utils'
 import { capitalize } from '@/utils/functions'
+import { nanoid } from 'ai'
+import { get } from 'http'
+import type { type } from 'os'
+import type source from 'react-mapbox-gl/lib/source'
+import { set } from 'zod'
+import type { DatabaseSchema, InferredTypes } from '@/services/xata'
 
 // import { simulation } from '@/features/mindmap/utils/force-directed'
 
@@ -412,12 +420,12 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
         label: title,
         fill,
       },
-      type: `${data.type}Node`,
+      // type: `${data.type}Node`,
       style: {
         // height: 320,
       },
-      initialWidth: 350,
-      // type: 'entityNode',
+      // initialWidth: 350,
+      type: 'entityNode',
     }
   }, [] )
 
@@ -470,12 +478,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     [addEdges, addNodes, createSiblingEdge, graph, updateNodeData]
   )
 
-  type NodePosition = {
-    position: {
-      x: number
-      y: number
-    }
-  }
+
   function calculateDiagonal( width: number, height: number ) {
     return Math.sqrt( width ** 2 + height ** 2 )
   }
@@ -646,91 +649,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     [createRootNodeEdges, getNode, getNodes, graph]
   )
 
-  const animateRootNodeConcision = useMemo(
-    () =>
-      ( {
-        targetX,
 
-        childlessRootNodes,
-      }: any ) => {
-        const animations = childlessRootNodes.map( ( rootNode: any ) => {
-          console.log( 'rootNode: ', rootNode )
-          const selector = `.react-flow__node[data-id="${rootNode.id}"]`
-          const domNode: any = document.querySelector( selector )
-          console.log( 'domNode: ', domNode )
-
-          const [path, labelX, labelY, offsetX, offsetY, ...restOfPath] = getStraightPath( {
-            sourceX: rootNode.position.x,
-            sourceY: rootNode.position.y,
-            targetX: targetX,
-            targetY: 0,
-          } )
-          console.log( 'labelX: ', labelX )
-          console.log( 'restOfPath: ', restOfPath )
-          console.log( 'offsetX: ', offsetX )
-          console.log( 'path: ', path )
-
-          domNode.style.offsetPath = `path('${path}')`
-          domNode.style.offsetRotate = '0deg'
-
-          const keyframes = [{ offsetDistance: '0%' }, { offsetDistance: '100%' }]
-
-          const animation: any = {
-            duration: 2000,
-            easing: 'ease-in-out',
-            iterations: 1,
-          }
-
-          return {
-            id: rootNode.id,
-            domNode,
-            keyframes,
-            animation,
-          }
-        } )
-
-        const start = () => {
-          animations.forEach( ( animation: any ) => {
-            const anim = animation.domNode.animate( animation.keyframes, animation.animation )
-            // anim.stop()
-          } )
-        }
-
-        return { start, animations }
-      },
-    []
-  )
-  const renderRootNodeConciseLayout = useMemo(
-    () => ( childlessRootNodes: any[] ) => {
-      const firstChildlessNode = childlessRootNodes[0]
-      console.log( 'firstChildlessNode: ', firstChildlessNode )
-
-      const {
-        position: { x },
-      } = firstChildlessNode
-
-      const targetX = x || 0
-      console.log( 'targetX: ', targetX )
-      const targetY = 0
-
-      const positionedChildlessNodes = childlessRootNodes.map( ( childlessRootNode, i ) => ( {
-        ...childlessRootNode,
-        // zIndex: i + 1,
-      } ) )
-
-      const sequence = animateRootNodeConcision( {
-        targetX,
-        targetY,
-        childlessRootNodes,
-      } )
-
-      return {
-        positionedChildlessNodes,
-        sequence,
-      }
-    },
-    [animateRootNodeConcision]
-  )
   const addUserInputNode = ( { input, user, position }: any ) => {
     const newNode = {
       id: `user-input-node-${Math.random().toString( 36 ).substr( 2, 9 )}`,
@@ -843,8 +762,6 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     [getNodes, getNodesBounds]
   )
 
-  // NOTE: This runs when a user searches from within a root node card
-
 
 
   const renderUserInputResultsLayout = useCallback(
@@ -887,10 +804,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
 
       const groupNode: any = {
         ...initialConfig,
-        position: {
-          y: sourceNode.position.y + sourceNode.initialHeight + 20,
-          x: sourceNode.position.x,
-        }
+        position,
       }
       const childNodeWidth = BASE_ENTITY_NODE_WIDTH
       const childNodeHeight = BASE_ENTITY_NODE_HEIGHT
@@ -928,6 +842,75 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     [assignPositionsToChildNodes, getNodes]
   )
 
+
+
+
+  const retrieveEntitiesFromStore = useCallback( ( model: keyof DatabaseSchema ) => {
+
+    const sourceModelIndex: any = `${model}-root-node`
+
+
+    const sourceModelNodesState = rootNodeState[sourceModelIndex]
+    const { lastIndex } = sourceModelNodesState
+
+    // Fetch the next batch of child nodes
+    // This is horrible. Should be querying on demand 
+    const entityNodes = graph[model].nodes.slice( lastIndex, lastIndex + childNodeBatchSize )
+    updateChildNodeBatchIndex( sourceModelIndex )
+    return entityNodes
+
+  }, [rootNodeState, graph, updateChildNodeBatchIndex] )
+
+
+
+  const addMindMapGroupNode = ( { connectionNode, model, nodeType = 'entityGroupNode', groupId, position }: { model: string; childNodes: DatabaseSchema[keyof DatabaseSchema] & { type: string }[]; nodeType: string; position: XYPosition; groupId: string } ) => {
+
+    const edgeId = `${groupId}`
+
+    const newNode: any = {
+      ...entityGroupNodeBaseConfig,
+      id: groupId,
+      type: nodeType,
+      data: {
+        model
+      },
+      position,
+
+
+    }
+    const newEdge = {
+      id: edgeId,
+      source: parentNode.id,
+      target: newNode.id,
+      type: 'smoothstep'
+    }
+    console.log( "🚀 ~ file: mindmap-context.tsx:906 ~ addMindMapGroupNode ~ newNode:", newNode )
+
+    addNodes( newNode )
+    addEdges( newEdge )
+  }
+
+  const addMindmapChildNode = ( { parentNode, type, childNode, position }: { parentNode: Node, type: string; childNode: DatabaseSchema[keyof DatabaseSchema] & { type: string }; position: XYPosition } ) => {
+    const nodeType = `${type || childNode.type}Node`
+    const edgeId = `${parentNode.id}:${childNode.id}`
+    const newNode: any = {
+
+      ...childNode,
+      type: nodeType,
+      position,
+      parentId: parentNode.id,
+    }
+
+    const newEdge: any = {
+      id: edgeId,
+      source: parentNode.id,
+      target: newNode.id,
+      type: 'smoothstep'
+    }
+    addNodes( newNode )
+    addEdges( newEdge )
+
+  }
   const addNextEntitiesToMindMap: any = useCallback(
     ( source: any ) => {
       console.log(
@@ -941,7 +924,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
         data: { type: model },
       } = source
       console.log( 'model: ', model )
-      const isUserInputNode = nodeType === 'userInputNode'
+      const isUserInputNode = false // nodeType === 'userInputNode'
       console.log(
         '🚀 ~ file: mindmap-context.tsx:941 ~ assignPositionsToChildNodes ~ isUserInputNode:',
         isUserInputNode
@@ -1289,8 +1272,11 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
         getNodesBounds,
         turnOnConciseView,
         conciseViewActive,
-        renderRootNodeConciseLayout,
+
         createSearchResultsLayout,
+        retrieveEntitiesFromStore,
+        addMindmapChildNode,
+        addMindMapGroupNode
       }}>
       <div id='mindmap-container'>{children}</div>
     </MindMapContext.Provider>

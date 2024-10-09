@@ -107,7 +107,7 @@ const AnimationComponent: React.FC<{
   variants: Variants
   per: 'line' | 'word' | 'char'
   segmentWrapperClassName?: string
-}> = React.memo(({ segment, variants, per, segmentWrapperClassName }) => {
+}> = React.memo( ( { segment, variants, per, segmentWrapperClassName } ) => {
   const content =
     per === 'line' ? (
       <motion.span variants={variants} className='block'>
@@ -123,7 +123,7 @@ const AnimationComponent: React.FC<{
       </motion.span>
     ) : (
       <motion.span className='inline-block whitespace-pre'>
-        {segment.split('').map((char, charIndex) => (
+        {segment.split( '' ).map( ( char, charIndex ) => (
           <motion.span
             key={`char-${charIndex}`}
             aria-hidden='true'
@@ -132,26 +132,26 @@ const AnimationComponent: React.FC<{
           >
             {char}
           </motion.span>
-        ))}
+        ) )}
       </motion.span>
     )
 
-  if (!segmentWrapperClassName) {
+  if ( !segmentWrapperClassName ) {
     return content
   }
 
   const defaultWrapperClassName = per === 'line' ? 'block' : 'inline-block'
 
   return (
-    <span className={cn(defaultWrapperClassName, segmentWrapperClassName)}>
+    <span className={cn( defaultWrapperClassName, segmentWrapperClassName )}>
       {content}
     </span>
   )
-})
+} )
 
 AnimationComponent.displayName = 'AnimationComponent'
 
-function TextEffect({
+function TextEffect( {
   children,
   per = 'word',
   as = 'p',
@@ -162,15 +162,15 @@ function TextEffect({
   trigger = true,
   onAnimationComplete,
   segmentWrapperClassName,
-}: TextEffectProps) {
+}: TextEffectProps ) {
   let segments: string[]
 
-  if (per === 'line') {
-    segments = children.split('\n')
-  } else if (per === 'word') {
-    segments = children.split(/(\s+)/)
+  if ( per === 'line' ) {
+    segments = children.split( '\n' )
+  } else if ( per === 'word' ) {
+    segments = children.split( /(\s+)/ )
   } else {
-    segments = children.split('')
+    segments = children.split( '' )
   }
 
   const MotionTag = motion[as as keyof typeof motion] as typeof motion.div
@@ -188,9 +188,9 @@ function TextEffect({
     visible: {
       ...containerVariants.visible,
       transition: {
-        ...(containerVariants.visible as TargetAndTransition)?.transition,
+        ...( containerVariants.visible as TargetAndTransition )?.transition,
         staggerChildren:
-          (containerVariants.visible as TargetAndTransition)?.transition
+          ( containerVariants.visible as TargetAndTransition )?.transition
             ?.staggerChildren || stagger,
         delayChildren: delay,
       },
@@ -207,10 +207,10 @@ function TextEffect({
           exit='exit'
           aria-label={ariaLabel}
           variants={delayedContainerVariants}
-          className={cn('whitespace-pre-wrap', className)}
+          className={cn( 'whitespace-pre-wrap', className )}
           onAnimationComplete={onAnimationComplete}
         >
-          {segments.map((segment, index) => (
+          {segments.map( ( segment, index ) => (
             <AnimationComponent
               key={`${per}-${index}-${segment}`}
               segment={segment}
@@ -218,7 +218,7 @@ function TextEffect({
               per={per}
               segmentWrapperClassName={segmentWrapperClassName}
             />
-          ))}
+          ) )}
         </MotionTag>
       )}
     </AnimatePresence>

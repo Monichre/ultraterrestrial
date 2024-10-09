@@ -1,7 +1,7 @@
 import { SVGProps } from 'react'
 import { Cursor } from '@/components/animated/core/cursor'
 
-const MouseIcon = (props: SVGProps<SVGSVGElement>) => {
+const MouseIcon = ( props: SVGProps<SVGSVGElement> ) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

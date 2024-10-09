@@ -24,15 +24,15 @@ export type Item = {
 export interface SortableListItemProps {
   item: Item
   order?: number
-  onCompleteItem: (id: number) => void
-  onRemoveItem: (id: number) => void
-  renderExtra?: (item: Item) => React.ReactNode
+  onCompleteItem: ( id: number ) => void
+  onRemoveItem: ( id: number ) => void
+  renderExtra?: ( item: Item ) => React.ReactNode
   isExpanded?: boolean
   className?: string
   handleDrag: () => void
 }
 
-function SortableListItem({
+function SortableListItem( {
   item,
   order,
   onCompleteItem,
@@ -41,24 +41,24 @@ function SortableListItem({
   handleDrag,
   isExpanded,
   className,
-}: SortableListItemProps) {
+}: SortableListItemProps ) {
   let [ref, bounds] = useMeasure()
-  const [isDragging, setIsDragging] = useState(false)
-  const [isDraggable, setIsDraggable] = useState(true)
+  const [isDragging, setIsDragging] = useState( false )
+  const [isDraggable, setIsDraggable] = useState( true )
   const dragControls = useDragControls()
 
-  const handleDragStart = (event: any) => {
-    setIsDragging(true)
-    dragControls.start(event, { snapToCursor: true })
+  const handleDragStart = ( event: any ) => {
+    setIsDragging( true )
+    dragControls.start( event, { snapToCursor: true } )
     handleDrag()
   }
 
   const handleDragEnd = () => {
-    setIsDragging(false)
+    setIsDragging( false )
   }
 
   return (
-    <motion.div className={cn('', className)} key={item.id}>
+    <motion.div className={cn( '', className )} key={item.id}>
       <div className='flex w-full items-center'>
         <Reorder.Item
           value={item}
@@ -96,20 +96,20 @@ function SortableListItem({
           style={
             isExpanded
               ? {
-                  zIndex: 9999,
-                  marginTop: 10,
-                  marginBottom: 10,
-                  position: 'relative',
-                  overflow: 'hidden',
-                }
+                zIndex: 9999,
+                marginTop: 10,
+                marginBottom: 10,
+                position: 'relative',
+                overflow: 'hidden',
+              }
               : {
-                  position: 'relative',
-                  overflow: 'hidden',
-                }
+                position: 'relative',
+                overflow: 'hidden',
+              }
           }
           whileDrag={{ zIndex: 9999 }}
         >
-          <div ref={ref} className={cn(isExpanded ? '' : '', 'z-20 ')}>
+          <div ref={ref} className={cn( isExpanded ? '' : '', 'z-20 ' )}>
             <motion.div
               layout='position'
               className='flex items-center justify-center '
@@ -128,7 +128,7 @@ function SortableListItem({
                       checked={item.checked}
                       id={`checkbox-${item.id}`}
                       aria-label='Mark to delete'
-                      onCheckedChange={() => onCompleteItem(item.id)}
+                      onCheckedChange={() => onCompleteItem( item.id )}
                       className=' ml-3 h-5 w-5 rounded-md border-white/20 bg-black/30 data-[state=checked]:bg-black data-[state=checked]:text-red-200'
                     />
                     {/* List Order */}
@@ -165,7 +165,7 @@ function SortableListItem({
               </AnimatePresence>
 
               {/* List Item Children */}
-              {renderExtra && renderExtra(item)}
+              {renderExtra && renderExtra( item )}
             </motion.div>
           </div>
           <div
@@ -230,7 +230,7 @@ function SortableListItem({
             >
               <button
                 className='inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md px-3 text-sm font-medium  transition-colors duration-150   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50'
-                onClick={() => onRemoveItem(item.id)}
+                onClick={() => onRemoveItem( item.id )}
               >
                 <Trash className='h-4 w-4 text-red-400 transition-colors duration-150 fill-red-400/60 ' />
               </button>
@@ -247,22 +247,22 @@ SortableListItem.displayName = 'SortableListItem'
 export interface ListCardProps {
   items: Item[]
   setItems: Dispatch<SetStateAction<Item[]>>
-  onCompleteItem: (id: number) => void
+  onCompleteItem: ( id: number ) => void
   renderItem: (
     item: Item,
     order: number,
-    onCompleteItem: (id: number) => void,
-    onRemoveItem: (id: number) => void
+    onCompleteItem: ( id: number ) => void,
+    onRemoveItem: ( id: number ) => void
   ) => ReactNode | any
 }
 
-function ListCard({
+function ListCard( {
   items,
   setItems,
   onCompleteItem,
   renderItem,
-}: ListCardProps) {
-  if (items) {
+}: ListCardProps ) {
+  if ( items ) {
     return (
       <LayoutGroup>
         <Reorder.Group
@@ -272,9 +272,9 @@ function ListCard({
           className='flex flex-col'
         >
           <AnimatePresence>
-            {items?.map((item, index) =>
-              renderItem(item, index, onCompleteItem, (id: number) =>
-                setItems((items) => items.filter((item) => item.id !== id))
+            {items?.map( ( item, index ) =>
+              renderItem( item, index, onCompleteItem, ( id: number ) =>
+                setItems( ( items ) => items.filter( ( item ) => item.id !== id ) )
               )
             )}
           </AnimatePresence>

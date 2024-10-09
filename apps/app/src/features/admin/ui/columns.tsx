@@ -5,37 +5,37 @@ import { TABLES } from '@/services/xata'
 import { capitalize, truncate } from '@/utils/functions'
 import Image from 'next/image'
 import { Checkbox } from '@/components/ui/checkbox'
-const dayjs = require('dayjs')
-const utc = require('dayjs/plugin/utc')
-dayjs.extend(utc)
+const dayjs = require( 'dayjs' )
+const utc = require( 'dayjs/plugin/utc' )
+dayjs.extend( utc )
 
 const generateTableConfig = () => {
   const tableColumns: any = {}
-  TABLES.forEach(({ name: tableName, columns }: any) => {
+  TABLES.forEach( ( { name: tableName, columns }: any ) => {
     tableColumns[tableName] = {
       columns: [
         {
           id: 'select',
 
-          header: ({ table }: any) => (
+          header: ( { table }: any ) => (
             <Checkbox
               className='h-2 w-2'
               checked={
                 table.getIsAllPageRowsSelected() ||
-                (table.getIsSomePageRowsSelected() && 'indeterminate')
+                ( table.getIsSomePageRowsSelected() && 'indeterminate' )
               }
-              onCheckedChange={(value) =>
-                table.toggleAllPageRowsSelected(!!value)
+              onCheckedChange={( value ) =>
+                table.toggleAllPageRowsSelected( !!value )
               }
               aria-label='Select all'
             />
           ),
-          cell: ({ row }: any) => (
+          cell: ( { row }: any ) => (
             <div className='w-[30px]'>
               <Checkbox
                 className='h-2 w-2'
                 checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                onCheckedChange={( value ) => row.toggleSelected( !!value )}
                 aria-label='Select row'
               />
             </div>
@@ -43,35 +43,35 @@ const generateTableConfig = () => {
           enableSorting: false,
           enableHiding: false,
         },
-        ...columns.map(({ name, type }: any) => ({
+        ...columns.map( ( { name, type }: any ) => ( {
           accessorKey: name,
           header: name,
           sortingFn: name === 'date' ? 'datetime' : 'alphanumeric',
           sortDescFirst: true,
-          cell: ({ row }: any) => {
-            if (name === 'name') {
+          cell: ( { row }: any ) => {
+            if ( name === 'name' ) {
               return (
                 <p className='font-source tracking-wide text-sm !text-[#cffafe] w-[500px]'>
-                  {capitalize(row.getValue(name))}
+                  {capitalize( row.getValue( name ) )}
                 </p>
               )
             }
-            if (name === 'date') {
-              const date = dayjs(row.getValue('date')).format('MMMM DD, YYYY')
+            if ( name === 'date' ) {
+              const date = dayjs( row.getValue( 'date' ) ).format( 'MMMM DD, YYYY' )
 
               return date
             }
-            if (name === 'summary' || name === 'description') {
+            if ( name === 'summary' || name === 'description' ) {
               return (
                 <p className='font-source tracking-wide font-light text-sm text-white w-[500px]'>
-                  {truncate(row.getValue(name), 300)}
+                  {truncate( row.getValue( name ), 300 )}
                 </p>
               )
             }
-            if (name === 'photos' || name === 'photo') {
-              const photoData = row.getValue(name)
-              if (Array.isArray(photoData)) {
-                return photoData.map((photo: any) => (
+            if ( name === 'photos' || name === 'photo' ) {
+              const photoData = row.getValue( name )
+              if ( Array.isArray( photoData ) ) {
+                return photoData.map( ( photo: any ) => (
                   <Image
                     key={photo.id}
                     height={20}
@@ -80,7 +80,7 @@ const generateTableConfig = () => {
                     alt={photo.url}
                     className='w-10 h-10 rounded-l-sm'
                   />
-                ))
+                ) )
               } else {
                 return (
                   <Image
@@ -94,12 +94,12 @@ const generateTableConfig = () => {
                 )
               }
             }
-            return <div className='w-fit'>{row.getValue(name)}</div>
+            return <div className='w-fit'>{row.getValue( name )}</div>
           },
-        })),
+        } ) ),
       ],
     }
-  })
+  } )
 
   return tableColumns as Record<string, ColumnDef<any>>
 }

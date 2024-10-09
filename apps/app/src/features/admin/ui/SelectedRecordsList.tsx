@@ -13,19 +13,19 @@ import {
   SortableListItem,
 } from '@/components/cult-ui/sortable-list'
 
-export function SelectedRecordsList({ selectedRecords }: any) {
-  const [items, setItems] = useState<Item[]>(selectedRecords)
+export function SelectedRecordsList( { selectedRecords }: any ) {
+  const [items, setItems] = useState<Item[]>( selectedRecords )
 
-  const handleCompleteItem = (id: number) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
+  const handleCompleteItem = ( id: number ) => {
+    setItems( ( prevItems ) =>
+      prevItems.map( ( item ) =>
         item.id === id ? { ...item, checked: !item.checked } : item
       )
     )
   }
 
   const handleAddItem = () => {
-    setItems((prevItems) => [
+    setItems( ( prevItems ) => [
       ...prevItems,
       {
         text: `Item ${prevItems.length + 1}`,
@@ -33,35 +33,35 @@ export function SelectedRecordsList({ selectedRecords }: any) {
         id: Date.now(),
         description: '',
       },
-    ])
+    ] )
   }
 
   const handleResetItems = () => {
-    setItems(selectedRecords)
+    setItems( selectedRecords )
   }
 
-  const handleCloseOnDrag = useCallback(() => {
-    setItems((prevItems) => {
-      const updatedItems = prevItems.map((item) =>
+  const handleCloseOnDrag = useCallback( () => {
+    setItems( ( prevItems ) => {
+      const updatedItems = prevItems.map( ( item ) =>
         item.checked ? { ...item, checked: false } : item
       )
       return updatedItems.some(
-        (item, index) => item.checked !== prevItems[index].checked
+        ( item, index ) => item.checked !== prevItems[index].checked
       )
         ? updatedItems
         : prevItems
-    })
-  }, [])
+    } )
+  }, [] )
 
-  useEffect(() => {
-    setItems(selectedRecords)
-  }, [selectedRecords])
+  useEffect( () => {
+    setItems( selectedRecords )
+  }, [selectedRecords] )
 
-  const { renderListItem } = useRenderListItem({
+  const { renderListItem } = useRenderListItem( {
     handleAddItem,
     handleCloseOnDrag,
     handleCompleteItem,
-  })
+  } )
 
   return (
     <div className='md:px-4 w-full max-w-xl relative z-50'>

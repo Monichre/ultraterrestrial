@@ -24,30 +24,30 @@ import { r3f } from '@/features/3d/helpers/global'
 import { use3DGraph } from '@/hooks/use3dGraph'
 // const Scene = dynamic(() => import('@/features/3d/canvas/Scene'), { ssr: false })
 
-export const DrawingBoardReactThreeFiberGraph: React.FC<DrawingBoardProps> = ({
+export const DrawingBoardReactThreeFiberGraph: React.FC<DrawingBoardProps> = ( {
   allEntityGraphData,
-}: DrawingBoardProps) => {
-  const { graph3d } = use3DGraph({ allEntityGraphData })
+}: DrawingBoardProps ) => {
+  const { graph3d } = use3DGraph( { allEntityGraphData } )
 
   const { root, events, ...rest } = graph3d
 
-  const [rootNodes, setRootNodes] = useState(() =>
-    [...root.nodes].map((node: any) => ({
+  const [rootNodes, setRootNodes] = useState( () =>
+    [...root.nodes].map( ( node: any ) => ( {
       ...node,
       ref: createRef(),
-    }))
+    } ) )
   )
 
-  useEffect(() => {
-    if (root?.nodes.length) {
-      const tempRootNodes = root.nodes?.map((node: any) => ({
+  useEffect( () => {
+    if ( root?.nodes.length ) {
+      const tempRootNodes = root.nodes?.map( ( node: any ) => ( {
         ...node,
         ref: createRef(),
-      }))
+      } ) )
 
-      setRootNodes(tempRootNodes)
+      setRootNodes( tempRootNodes )
     }
-  }, [root?.nodes])
+  }, [root?.nodes] )
 
   return (
     <div className='h-[100vh] w-[100vw] relative'>
@@ -62,7 +62,7 @@ export const DrawingBoardReactThreeFiberGraph: React.FC<DrawingBoardProps> = ({
           <Suspense fallback={null}>
             <Nodes>
               <DragControls>
-                {rootNodes.map((rootNode, index) => {
+                {rootNodes.map( ( rootNode, index ) => {
                   return (
                     <Node
                       key={rootNode.id}
@@ -73,7 +73,7 @@ export const DrawingBoardReactThreeFiberGraph: React.FC<DrawingBoardProps> = ({
                       connectedTo={rootNode.connectedTo}
                     />
                   )
-                })}
+                } )}
                 {/* <Node
                 ref={a}
                 name='a'

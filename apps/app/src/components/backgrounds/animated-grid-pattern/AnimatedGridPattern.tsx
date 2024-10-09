@@ -18,7 +18,7 @@ interface GridPatternProps {
   repeatDelay?: number
 }
 
-export function AnimatedGridPatternBackground({
+export function AnimatedGridPatternBackground( {
   width = 40,
   height = 40,
   x = -1,
@@ -30,64 +30,64 @@ export function AnimatedGridPatternBackground({
   duration = 4,
   repeatDelay = 0.5,
   ...props
-}: GridPatternProps) {
+}: GridPatternProps ) {
   const id = useId()
-  const containerRef = useRef(null)
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
-  const [squares, setSquares] = useState(() => generateSquares(numSquares))
+  const containerRef = useRef( null )
+  const [dimensions, setDimensions] = useState( { width: 0, height: 0 } )
+  const [squares, setSquares] = useState( () => generateSquares( numSquares ) )
 
   function getPos() {
     return [
-      Math.floor((Math.random() * dimensions.width) / width),
-      Math.floor((Math.random() * dimensions.height) / height),
+      Math.floor( ( Math.random() * dimensions.width ) / width ),
+      Math.floor( ( Math.random() * dimensions.height ) / height ),
     ]
   }
 
   // Adjust the generateSquares function to return objects with an id, x, and y
-  function generateSquares(count: number) {
-    return Array.from({ length: count }, (_, i) => ({
+  function generateSquares( count: number ) {
+    return Array.from( { length: count }, ( _, i ) => ( {
       id: i,
       pos: getPos(),
-    }))
+    } ) )
   }
 
   // Function to update a single square's position
-  const updateSquarePosition = (id: number) => {
-    setSquares((currentSquares) =>
-      currentSquares.map((sq) =>
+  const updateSquarePosition = ( id: number ) => {
+    setSquares( ( currentSquares ) =>
+      currentSquares.map( ( sq ) =>
         sq.id === id
           ? {
-              ...sq,
-              pos: getPos(),
-            }
+            ...sq,
+            pos: getPos(),
+          }
           : sq
       )
     )
   }
 
   // Update squares to animate in
-  useEffect(() => {
-    if (dimensions.width && dimensions.height)
-      setSquares(generateSquares(numSquares))
-  }, [dimensions, numSquares])
+  useEffect( () => {
+    if ( dimensions.width && dimensions.height )
+      setSquares( generateSquares( numSquares ) )
+  }, [dimensions, numSquares] )
 
   // Resize observer to update container dimensions
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        setDimensions({
+  useEffect( () => {
+    const resizeObserver = new ResizeObserver( ( entries ) => {
+      for ( const entry of entries ) {
+        setDimensions( {
           width: entry.contentRect.width,
           height: entry.contentRect.height,
-        })
+        } )
       }
-    })
+    } )
 
-    if (containerRef.current) resizeObserver.observe(containerRef.current)
+    if ( containerRef.current ) resizeObserver.observe( containerRef.current )
 
     return () => {
-      if (containerRef.current) resizeObserver.unobserve(containerRef.current)
+      if ( containerRef.current ) resizeObserver.unobserve( containerRef.current )
     }
-  }, [containerRef])
+  }, [containerRef] )
 
   return (
     <svg
@@ -117,7 +117,7 @@ export function AnimatedGridPatternBackground({
       </defs>
       <rect width='100%' height='100%' fill={`url(#${id})`} />
       <svg x={x} y={y} className='overflow-visible'>
-        {squares.map(({ pos: [x, y], id }, index) => (
+        {squares.map( ( { pos: [x, y], id }, index ) => (
           <motion.rect
             initial={{ opacity: 0 }}
             animate={{ opacity: maxOpacity }}
@@ -127,7 +127,7 @@ export function AnimatedGridPatternBackground({
               delay: index * 0.1,
               repeatType: 'reverse',
             }}
-            onAnimationComplete={() => updateSquarePosition(id)}
+            onAnimationComplete={() => updateSquarePosition( id )}
             key={`${x}-${y}-${index}`}
             width={width - 1}
             height={height - 1}
@@ -136,7 +136,7 @@ export function AnimatedGridPatternBackground({
             fill='currentColor'
             strokeWidth='0'
           />
-        ))}
+        ) )}
       </svg>
     </svg>
   )

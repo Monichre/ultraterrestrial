@@ -18,7 +18,7 @@ const meta = {
     allEntityGraphData,
   },
   decorators: [
-    (Story: any) => (
+    ( Story: any ) => (
       <StateOfDisclosureProvider stateOfDisclosure={networkGraphData}>
         {Story()}
       </StateOfDisclosureProvider>

@@ -62,19 +62,19 @@ const modelViews: ModelView[] = [
 ]
 
 export const SmartCommandMenu = () => {
-  const [open, setOpen] = useState(false)
-  const [selectedView, setSelectedView] = useState<ModelView | null>(null)
+  const [open, setOpen] = useState( false )
+  const [selectedView, setSelectedView] = useState<ModelView | null>( null )
 
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+  useEffect( () => {
+    const down = ( e: KeyboardEvent ) => {
+      if ( e.key === 'k' && ( e.metaKey || e.ctrlKey ) ) {
         e.preventDefault()
-        setOpen((open) => !open)
+        setOpen( ( open ) => !open )
       }
     }
-    document.addEventListener('keydown', down)
-    return () => document.removeEventListener('keydown', down)
-  }, [])
+    document.addEventListener( 'keydown', down )
+    return () => document.removeEventListener( 'keydown', down )
+  }, [] )
 
   return (
     <div className='flex items-center space-x-4 absolute top-20 left-20 z-[100]'>
@@ -102,16 +102,16 @@ export const SmartCommandMenu = () => {
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
-                {modelViews.map((status) => (
+                {modelViews.map( ( status ) => (
                   <CommandItem
                     key={status.value}
                     value={status.value}
-                    onSelect={(value) => {
+                    onSelect={( value ) => {
                       setSelectedView(
-                        modelViews.find((priority) => priority.value === value) ||
-                          null
+                        modelViews.find( ( priority ) => priority.value === value ) ||
+                        null
                       )
-                      setOpen(false)
+                      setOpen( false )
                     }}
                   >
                     <status.icon
@@ -124,7 +124,7 @@ export const SmartCommandMenu = () => {
                     />
                     <span>{status.label}</span>
                   </CommandItem>
-                ))}
+                ) )}
               </CommandGroup>
             </CommandList>
           </Command>

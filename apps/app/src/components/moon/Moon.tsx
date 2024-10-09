@@ -1,37 +1,25 @@
 'use client'
 
-import { forwardRef, Suspense, useRef, useState } from 'react'
+import { useGLTF } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useGLTF, PerspectiveCamera } from '@react-three/drei'
-import { EffectComposer, Bloom, TiltShift2 } from '@react-three/postprocessing'
-import { mergeRefs } from 'react-merge-refs'
+import { Bloom, EffectComposer, TiltShift2 } from '@react-three/postprocessing'
+import { forwardRef, Suspense, useRef } from 'react'
 
 // useGLTF.preload('/assets/moon/moon.glb')
-export const MoonScene = ({ offset = 0, ...props }: any) => {
+export const MoonScene = ( { offset = 0, ...props }: any ) => {
   const meshRef: any = useRef()
   const light: any = useRef()
   // const moonRef = mergeRefs([meshRef, ref])
 
-  const { nodes, materials }: any = useGLTF('/assets/moon/moon.glb')
-  console.log('nodes: ', nodes)
+  const { nodes, materials }: any = useGLTF( '/assets/moon/moon.glb' )
+  console.log( 'nodes: ', nodes )
 
   /* The commented out code block you provided is using the `useFrame` hook from `@react-three/fiber` to
 update the rotation of the `meshRef` and `light` elements in the scene. */
-  useFrame((state, delta) => {
-    // easing.dampE(
-    //   meshRef.current.rotation,
-    //   [Math.PI / 2 + offset / 2, 3, Math.PI + offset],
-    //   0.4,
-    //   delta
-    // )
-    // easing.dampE(
-    //   light.current.rotation,
-    //   [1, offset * Math.PI * 3, offset],
-    //   0.4,
-    //   delta
-    // )
-    return (meshRef.current.rotation.y += delta / 10)
-  })
+  useFrame( ( state, delta ) => {
+
+    return ( meshRef.current.rotation.y += delta / 10 )
+  } )
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -53,23 +41,26 @@ update the rotation of the `meshRef` and `light` elements in the scene. */
   )
 }
 
-export interface MoonProps {}
+export interface MoonProps { }
 
-export const Moon: React.FC<MoonProps> = (props: MoonProps) => {
-  // 1, 0, -0.25
+// Start of Selection
+export const Moon = forwardRef<HTMLCanvasElement, MoonProps>( ( props, ref ) => {
   return (
-    <Canvas gl={{ antialias: false }}>
-      {/* <color attach='background' args={['#101015']} /> */}
-      {/* <PerspectiveCamera makeDefault position={[0, -0.5, 5]} fov={50} /> */}
-      <ambientLight intensity={0.01} />
-      <directionalLight intensity={5} position={[1, 5, -2]} />
-      <Suspense fallback={null}>
-        <MoonScene />
-      </Suspense>
-      <EffectComposer enableNormalPass={false}>
-        <Bloom mipmapBlur luminanceThreshold={0.5} />
-        <TiltShift2 blur={0.35} />
-      </EffectComposer>
-    </Canvas>
+    <div className='h-full w-full' ref={ref}>
+      <Canvas gl={{ antialias: false }} >
+        {/* <color attach='background' args={['#101015']} /> */}
+        {/* <PerspectiveCamera makeDefault position={[0, -0.5, 5]} fov={50} /> */}
+        <ambientLight intensity={0.01} />
+        <directionalLight intensity={5} position={[1, 5, -2]} />
+        <Suspense fallback={null}>
+          <MoonScene />
+        </Suspense>
+        <EffectComposer enableNormalPass={false}>
+          <Bloom mipmapBlur luminanceThreshold={0.5} />
+          <TiltShift2 blur={0.35} />
+        </EffectComposer>
+      </Canvas>
+    </div>
   )
-}
+} )
+Moon.displayName = 'Moon'

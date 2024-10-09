@@ -40,10 +40,10 @@ const menuCategories = [
 
 
 export function EntityQuickMenu() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [subMenuSelected, setSubMenuSelected] = useState('events')
+  const [isOpen, setIsOpen] = useState( false )
+  const [subMenuSelected, setSubMenuSelected] = useState( 'events' )
   const handleOpenSettings = () => {
-    setIsOpen(!isOpen)
+    setIsOpen( !isOpen )
   }
   return (
     <motion.div
@@ -84,7 +84,7 @@ export function EntityQuickMenu() {
                 className={cn(
                   'flex gap-2 p-2 transition-all text-nowrap font-medium text-neutral-500 group-hover:text-neutral-50 text-sm transform-gpu'
                 )}
-                onClick={() => setIsOpen(true)}
+                onClick={() => setIsOpen( true )}
               >
                 View
               </button>
@@ -151,9 +151,9 @@ export function EntityQuickMenu() {
                   className='text-neutral-800 bg-yellow-200 py-1 font-medium px-2 rounded-lg'
                   onClick={() => {
                     handleOpenSettings()
-                    toast.message('Changes done', {
+                    toast.message( 'Changes done', {
                       description: 'Changes validated and applied successfully',
-                    })
+                    } )
                   }}
                 >
                   Apply Changes
@@ -182,9 +182,9 @@ export function EntityQuickMenu() {
                   className='text-neutral-800 bg-yellow-200 py-1 font-medium px-2 rounded-lg'
                   onClick={() => {
                     handleOpenSettings()
-                    toast.message('Changes done', {
+                    toast.message( 'Changes done', {
                       description: 'Changes validated and applied successfully',
-                    })
+                    } )
                   }}
                 >
                   Apply Changes
@@ -209,9 +209,9 @@ export function EntityQuickMenu() {
                   className='text-neutral-800 bg-yellow-200 py-1 font-medium px-2 rounded-lg'
                   onClick={() => {
                     handleOpenSettings()
-                    toast.message('Changes done', {
+                    toast.message( 'Changes done', {
                       description: 'Changes validated and applied successfully',
-                    })
+                    } )
                   }}
                 >
                   Apply Changes
@@ -236,9 +236,9 @@ export function EntityQuickMenu() {
                   className='text-neutral-800 bg-yellow-200 py-1 font-medium px-2 rounded-lg'
                   onClick={() => {
                     handleOpenSettings()
-                    toast.message('Changes done', {
+                    toast.message( 'Changes done', {
                       description: 'Changes validated and applied successfully',
-                    })
+                    } )
                   }}
                 >
                   Apply Changes
@@ -263,9 +263,9 @@ export function EntityQuickMenu() {
                   className='text-neutral-800 bg-yellow-200 py-1 font-medium px-2 rounded-lg'
                   onClick={() => {
                     handleOpenSettings()
-                    toast.message('Changes done', {
+                    toast.message( 'Changes done', {
                       description: 'Changes validated and applied successfully',
-                    })
+                    } )
                   }}
                 >
                   Apply Changes
@@ -289,10 +289,10 @@ const aspectRatioList = [
 ]
 
 function AspectRatioSection() {
-  const [selected, setSelected] = useState<number>(0)
+  const [selected, setSelected] = useState<number>( 0 )
   return (
     <div className='flex gap-2 flex-wrap'>
-      {aspectRatioList.map((item, index) => (
+      {aspectRatioList.map( ( item, index ) => (
         <button
           key={item.label}
           className={cn(
@@ -301,13 +301,13 @@ function AspectRatioSection() {
               ? 'bg-yellow-200/10  text-yellow-200'
               : 'text-neutral-500  hover:text-yellow-200'
           )}
-          onClick={() => setSelected(index)}
+          onClick={() => setSelected( index )}
           type='button'
         >
           <item.icon className='size-5 stroke-yellow-200' />
           {item.label}
         </button>
-      ))}
+      ) )}
     </div>
   )
 }
@@ -320,20 +320,20 @@ function AspectRatioSection() {
 //   );
 // }
 
-function NavigationMenu({
+function NavigationMenu( {
   setSubMenuSelected,
   subMenuSelected,
 }: Readonly<{
-  setSubMenuSelected: (slug: string) => void
+  setSubMenuSelected: ( slug: string ) => void
   subMenuSelected: string
-}>) {
+}> ) {
   return (
     <nav className='flex flex-row'>
-      {menuCategories.map((button, index) => (
+      {menuCategories.map( ( button, index ) => (
         <button
           type='button'
           key={button.label}
-          onClick={() => setSubMenuSelected(button.slug)}
+          onClick={() => setSubMenuSelected( button.slug )}
           className={cn(
             'text-neutral-500 text-sm font-medium py-1 px-2 rounded-md relative whitespace-nowrap inline-flex w-fit hover:text-neutral-50 transition-colors duration-300 transform-gpu',
             subMenuSelected === button.slug && 'text-neutral-200'
@@ -354,7 +354,7 @@ function NavigationMenu({
             )}
           </AnimatePresence>
         </button>
-      ))}
+      ) )}
     </nav>
   )
 }

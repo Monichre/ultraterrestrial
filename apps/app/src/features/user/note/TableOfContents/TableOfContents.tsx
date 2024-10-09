@@ -11,24 +11,24 @@ export type TableOfContentsProps = {
 }
 
 export const TableOfContents = memo(
-  ({ editor, onItemClick }: TableOfContentsProps) => {
-    const [data, setData] = useState<TableOfContentsStorage | null>(null)
+  ( { editor, onItemClick }: TableOfContentsProps ) => {
+    const [data, setData] = useState<TableOfContentsStorage | null>( null )
 
-    useEffect(() => {
-      const handler = ({ editor: currentEditor }: { editor: CoreEditor }) => {
-        setData({ ...currentEditor.extensionStorage.tableOfContents })
+    useEffect( () => {
+      const handler = ( { editor: currentEditor }: { editor: CoreEditor } ) => {
+        setData( { ...currentEditor.extensionStorage.tableOfContents } )
       }
 
-      handler({ editor })
+      handler( { editor } )
 
-      editor.on('update', handler)
-      editor.on('selectionUpdate', handler)
+      editor.on( 'update', handler )
+      editor.on( 'selectionUpdate', handler )
 
       return () => {
-        editor.off('update', handler)
-        editor.off('selectionUpdate', handler)
+        editor.off( 'update', handler )
+        editor.off( 'selectionUpdate', handler )
       }
-    }, [editor])
+    }, [editor] )
 
     return (
       <>
@@ -37,7 +37,7 @@ export const TableOfContents = memo(
         </div>
         {data && data.content.length > 0 ? (
           <div className='flex flex-col gap-1'>
-            {data.content.map((item) => (
+            {data.content.map( ( item ) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
@@ -46,12 +46,12 @@ export const TableOfContents = memo(
                 className={cn(
                   'block font-medium text-neutral-500 dark:text-neutral-300 p-1 rounded bg-opacity-10 text-sm hover:text-neutral-800 transition-all hover:bg-black hover:bg-opacity-5 truncate w-full',
                   item.isActive &&
-                    'text-neutral-800 bg-neutral-100 dark:text-neutral-100 dark:bg-neutral-900'
+                  'text-neutral-800 bg-neutral-100 dark:text-neutral-100 dark:bg-neutral-900'
                 )}
               >
                 {item.itemIndex}. {item.textContent}
               </a>
-            ))}
+            ) )}
           </div>
         ) : (
           <div className='text-sm text-neutral-500'>

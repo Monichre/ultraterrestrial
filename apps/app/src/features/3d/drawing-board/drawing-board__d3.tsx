@@ -30,7 +30,7 @@ import {
   StarsCardDescription,
 } from '@/components/ui/card/stars-card'
 
-const BasicNoteCard = ({ data, ...rest }: any) => {
+const BasicNoteCard = ( { data, ...rest }: any ) => {
   return (
     <Html {...rest}>
       <div className='flex h-[400px] w-full items-center justify-center rounded-lg border border-light-border dark:border-dark-border md:h-[640px] md:flex-1'>
@@ -72,17 +72,17 @@ const BasicNoteCard = ({ data, ...rest }: any) => {
   )
 }
 
-function CardNode({ node, r, position, ...props }: any) {
+function CardNode( { node, r, position, ...props }: any ) {
   const ref: any = useRef()
-  useFrame((state) => {
+  useFrame( ( state ) => {
     ref.current.rotation.x =
       ref.current.rotation.y =
       ref.current.rotation.z +=
-        0.004 * r
+      0.004 * r
     ref.current.position.y =
       position[1] +
-      Math[r > 0.5 ? 'cos' : 'sin'](state.clock.getElapsedTime() * r) * r
-  })
+      Math[r > 0.5 ? 'cos' : 'sin']( state.clock.getElapsedTime() * r ) * r
+  } )
   return (
     <group position={position} ref={ref}>
       <mesh scale={2}>
@@ -132,15 +132,15 @@ const Icon = () => {
   )
 }
 
-function Nodes({ nodes }: any) {
-  const transition = useTransition(nodes, {
+function Nodes( { nodes }: any ) {
+  const transition = useTransition( nodes, {
     from: { scale: [0, 0, 0], rotation: [0, 0, 0] },
-    enter: ({ r }) => ({ scale: [1, 1, 1], rotation: [r * 3, r * 3, r * 3] }),
+    enter: ( { r } ) => ( { scale: [1, 1, 1], rotation: [r * 3, r * 3, r * 3] } ),
     leave: { scale: [0.1, 0.1, 0.1], rotation: [0, 0, 0] },
     config: { mass: 5, tension: 1000, friction: 100 },
     trail: 100,
-  })
-  return transition((props, { position: [x, y, z], r, geometry }) => (
+  } )
+  return transition( ( props, { position: [x, y, z], r, geometry } ) => (
     <CardNode
       position={[x * 3, y * 3, z]}
       material={new THREE.MeshStandardMaterial()}
@@ -148,20 +148,20 @@ function Nodes({ nodes }: any) {
       r={r}
       {...props}
     />
-  ))
+  ) )
 }
 
-const D3Graph = ({ allEntityGraphData, graph }: any) => {
-  console.log('allEntityGraphData: ', allEntityGraphData)
-  console.log('graph: ', graph)
+const D3Graph = ( { allEntityGraphData, graph }: any ) => {
+  console.log( 'allEntityGraphData: ', allEntityGraphData )
+  console.log( 'graph: ', graph )
   const nodeRef: any = useRef()
   const linkRef: any = useRef()
-  const [currentNodes, setCurrentNodes] = useState(graph.events.nodes)
-  const [currentLinks, setCurrentLinks] = useState(graph.events.links)
-  const [positions, setPositions] = useState({
+  const [currentNodes, setCurrentNodes] = useState( graph.events.nodes )
+  const [currentLinks, setCurrentLinks] = useState( graph.events.links )
+  const [positions, setPositions] = useState( {
     nodes: currentNodes,
     links: currentLinks,
-  })
+  } )
 
   // let simulation = forceSimulation(nodes)
   //   .force('charge', forceManyBody().strength(MANY_BODY_STRENGTH))
@@ -215,20 +215,20 @@ const D3Graph = ({ allEntityGraphData, graph }: any) => {
   // });
 
   const linkGeometry: any = new THREE.BufferGeometry()
-  const linkMaterial = new THREE.LineBasicMaterial({ color: 0x0000ff })
+  const linkMaterial = new THREE.LineBasicMaterial( { color: 0x0000ff } )
 
   return (
     <>
       <group ref={nodeRef}>
         <Flex justifyContent='center' alignItems='center'>
-          {positions.nodes.map((node: any, index: number) => (
+          {positions.nodes.map( ( node: any, index: number ) => (
             <Box key={node.id}>
               <Plane
                 position={[0, 0, 0]}
                 material={
-                  new THREE.MeshBasicMaterial({
+                  new THREE.MeshBasicMaterial( {
                     color: node?.color || node?.fill,
-                  })
+                  } )
                 }
               >
                 <Html occlude>
@@ -246,7 +246,7 @@ const D3Graph = ({ allEntityGraphData, graph }: any) => {
                 {/* <BasicNoteCard /> */}
               </Plane>
             </Box>
-          ))}
+          ) )}
         </Flex>
       </group>
 
@@ -270,10 +270,10 @@ export interface D3DrawingBoardProps {
   allEntityGraphData: NetworkGraphPayload['graphData']
 }
 
-export const D3DrawingBoard: React.FC<D3DrawingBoardProps> = ({
+export const D3DrawingBoard: React.FC<D3DrawingBoardProps> = ( {
   allEntityGraphData,
-}: D3DrawingBoardProps) => {
-  const [graph, setGraph] = useState({
+}: D3DrawingBoardProps ) => {
+  const [graph, setGraph] = useState( {
     events: {
       nodes: [],
       links: [],
@@ -290,9 +290,9 @@ export const D3DrawingBoard: React.FC<D3DrawingBoardProps> = ({
       nodes: [],
       links: [],
     },
-  })
+  } )
 
-  useEffect(() => {
+  useEffect( () => {
     const data: any = {
       events: {
         nodes: [],
@@ -311,25 +311,25 @@ export const D3DrawingBoard: React.FC<D3DrawingBoardProps> = ({
         links: [],
       },
     }
-    if (allEntityGraphData.nodes?.length) {
-      allEntityGraphData.nodes.forEach((node: any) => {
-        if (node.data.type === 'events') {
-          data.events.nodes.push(node)
+    if ( allEntityGraphData.nodes?.length ) {
+      allEntityGraphData.nodes.forEach( ( node: any ) => {
+        if ( node.data.type === 'events' ) {
+          data.events.nodes.push( node )
         }
-        if (node.data.type === 'testimonies') {
-          data.testimonies.nodes.push(node)
+        if ( node.data.type === 'testimonies' ) {
+          data.testimonies.nodes.push( node )
         }
-        if (node.data.type === 'personnel') {
-          data.personnel.nodes.push(node)
+        if ( node.data.type === 'personnel' ) {
+          data.personnel.nodes.push( node )
         }
-        if (node.data.type === 'topics') {
-          data.topics.nodes.push(node)
+        if ( node.data.type === 'topics' ) {
+          data.topics.nodes.push( node )
         }
-      })
+      } )
 
-      setGraph(data)
+      setGraph( data )
     }
-  }, [allEntityGraphData.nodes])
+  }, [allEntityGraphData.nodes] )
 
   return (
     <div className='h-[100vh] w-[100vw] relative'>

@@ -23,7 +23,7 @@ type Story = StoryObj<typeof StarsCard>
 
 export const StarsCardStory: Story = {
   args: {},
-  render: (args: any) => (
+  render: ( args: any ) => (
     <div className='h-[100vh] w-[100vw] flex column justify-center align-center items-center content-center'>
       <StarsCard>
         <div>poop</div>

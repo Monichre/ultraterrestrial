@@ -33,7 +33,7 @@ const navItems = [
   },
 ]
 
-export const InAppNavbar = ({ color = 'black', links = navItems }: any) => {
+export const InAppNavbar = ( { color = 'black', links = navItems }: any ) => {
   const textColor = `text-${color}`
   return (
     <div
@@ -42,7 +42,7 @@ export const InAppNavbar = ({ color = 'black', links = navItems }: any) => {
       )}
     >
       <div className='flex max-w-fit items-center space-between space-x-16 px-4 py-2 m-auto'>
-        {links.map((navItem: any, idx: number) => (
+        {links.map( ( navItem: any, idx: number ) => (
           <Link
             key={`link=${idx}`}
             href={navItem.link}
@@ -56,13 +56,13 @@ export const InAppNavbar = ({ color = 'black', links = navItems }: any) => {
               {navItem.name}
             </span>
           </Link>
-        ))}
+        ) )}
       </div>
     </div>
   )
 }
 
-export const NavBar = ({
+export const NavBar = ( {
   links = navItems,
   className,
 }: {
@@ -72,10 +72,10 @@ export const NavBar = ({
     icon?: JSX.Element
   }[]
   className?: string
-}) => {
+} ) => {
   const { scrollYProgress } = useScroll()
 
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState( true )
 
   // useMotionValueEvent(scrollYProgress, "change", (current) => {
   //   // Check if current is not undefined and is a number
@@ -101,7 +101,7 @@ export const NavBar = ({
       )}
     >
       <div className='flex rounded-full border dark:border-neutral-900 border-neutral-950/20 items-center justify-center space-x-4 px-4 py-2 bg-gradient-to-b from-card/70 to-secondary/50'>
-        {links.map((navItem: any, idx: number) => (
+        {links.map( ( navItem: any, idx: number ) => (
           <Link
             key={`link=${idx}`}
             href={navItem.link}
@@ -114,7 +114,7 @@ export const NavBar = ({
               {navItem.name}
             </span>
           </Link>
-        ))}
+        ) )}
         {/* <button className='border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full'>
           <span>Login</span>
           <span className='absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px' />

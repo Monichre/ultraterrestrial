@@ -1,11 +1,9 @@
-
 'use client'
 
-import { nextTick } from '@/utils'
 // import { Howl } from 'howler'
-import { inView, useInView } from 'framer-motion'
+import { inView } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 const CanvasCursor = dynamic( () => import( '@/components/ui/canvas-cursor' ).then( mod => mod.CanvasCursor ) )
 const LovecraftQuote = dynamic( () => import( './LovecraftQuote' ).then( mod => mod.LovecraftQuote ) )
@@ -29,24 +27,20 @@ const Moon = dynamic( () => import( '@/components/moon' ).then( mod => mod.Moon 
 export interface HomeProps { }
 
 export const Home: React.FC<HomeProps> = () => {
-  const earthRef = useRef( null )
+  const earthRef: any = useRef( null )
+  const [earthInView, setEarthInView] = useState( false )
+  console.log( "🚀 ~ file: home.tsx:32 ~ earthRef:", earthRef )
+
   const moonRef = useRef( null )
 
-  const isInView = useInView( earthRef )
-  console.log( 'isInView: ', isInView )
-  const [runAnimationSequence, setRunAnimationSequence] = useState( false )
-  console.log( 'runAnimationSequence: ', runAnimationSequence )
-
-  useEffect( () => {
-    console.log( 'isInView: ', isInView )
-    if ( isInView ) {
-      nextTick( 5 ).then( () => {
-        setRunAnimationSequence( true )
-      } )
-    }
-  }, [isInView] )
 
 
+
+
+  inView( earthRef.current, ( entry ) => {
+    console.log( "🚀 ~ file: home.tsx:40 ~ entry:", entry )
+    setEarthInView( true )
+  } )
 
   // console.log( "🚀 ~ file: home.tsx:42 ~ earthInView:", earthInView )
 
@@ -94,7 +88,7 @@ export const Home: React.FC<HomeProps> = () => {
       <CanvasCursor />
       <div className='astronaut h-full w-full relative flex flex-col justify-center align-middle relative overflow-hidden items-center z-40'>
 
-        {runAnimationSequence &&
+        {earthInView &&
           <div className='w-full '>
             <SiteTitle />
             <LovecraftQuote />

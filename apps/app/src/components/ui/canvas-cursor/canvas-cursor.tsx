@@ -37,12 +37,12 @@ export const CanvasCursor = () => {
       <canvas
         className='pointer-events-none fixed inset-0 z-50'
         id='canvas'
-        // style={{
-        //   mixBlendMode: 'difference',
-        //   transformOrigin: 'center center',
-        //   backgroundColor: '#fff',
-        // filter: 'url("#goo")',
-        // }}
+      // style={{
+      //   mixBlendMode: 'difference',
+      //   transformOrigin: 'center center',
+      //   backgroundColor: '#fff',
+      // filter: 'url("#goo")',
+      // }}
       />
     </>
   )

@@ -25,7 +25,7 @@ interface SidebarProps {
   isMobile: boolean
 }
 
-export function ChatSidebar({ links, isCollapsed, isMobile }: SidebarProps) {
+export function ChatSidebar( { links, isCollapsed, isMobile }: SidebarProps ) {
   return (
     <div
       data-collapsed={isCollapsed}
@@ -39,18 +39,18 @@ export function ChatSidebar({ links, isCollapsed, isMobile }: SidebarProps) {
           </div>
 
           <div>
-            <Button variant='ghost' className={cn('h-9 w-9')}>
+            <Button variant='ghost' className={cn( 'h-9 w-9' )}>
               <MoreHorizontal size={20} />
             </Button>
 
-            <Button variant='ghost' className={cn('h-9 w-9')}>
+            <Button variant='ghost' className={cn( 'h-9 w-9' )}>
               <SquarePen size={20} />
             </Button>
           </div>
         </div>
       )}
       <nav className='grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2'>
-        {links.map((link, index) =>
+        {links.map( ( link, index ) =>
           isCollapsed ? (
             <TooltipProvider key={index}>
               <Tooltip key={index} delayDuration={0}>
@@ -59,7 +59,7 @@ export function ChatSidebar({ links, isCollapsed, isMobile }: SidebarProps) {
                     className={cn(
                       'h-11 w-11 md:h-16 md:w-16',
                       link.variant === 'grey' &&
-                        'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white'
+                      'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white'
                     )}
                   >
                     <Avatar className='flex justify-center items-center'>

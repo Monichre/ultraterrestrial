@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import { useState } from 'react'
 
-export const PillCard = ({ card }: any) => {
+export const PillCard = ( { card }: any ) => {
   const {
     handleHoverLeave,
     entity,
@@ -23,9 +23,9 @@ export const PillCard = ({ card }: any) => {
     connectionListConnections,
     handleHoverEnter,
     findConnections,
-  } = useEntity({ card })
-  console.log('personnel card:', card)
-  console.log('personel entity:', entity)
+  } = useEntity( { card } )
+  console.log( 'personnel card:', card )
+  console.log( 'personel entity:', entity )
   const { popularity, rank, photo, name, role }: any = entity
   const statsMap: any = {
     popularity: popularity,
@@ -34,8 +34,8 @@ export const PillCard = ({ card }: any) => {
   }
 
   const image: any = photo[0] || { url: '/astro-3.png' }
-  const [isOpen, setIsOpen] = useState(false)
-  const [showContent, setShowContent] = useState(false)
+  const [isOpen, setIsOpen] = useState( false )
+  const [showContent, setShowContent] = useState( false )
 
   const presence = {
     enter: {
@@ -83,37 +83,26 @@ export const PillCard = ({ card }: any) => {
   }
 
   const handleToggle = () => {
-    if (isOpen) {
-      setShowContent(false)
+    if ( isOpen ) {
+      setShowContent( false )
     } else {
-      setIsOpen(true)
-      setTimeout(() => setShowContent(true), 50)
+      setIsOpen( true )
+      setTimeout( () => setShowContent( true ), 50 )
     }
   }
 
   return (
     <div className='h-full center w-full'>
       <motion.div
-        whileHover={{
-          scale: isOpen ? 1 : 0.95,
-        }}
         className={cn(
           'bg-primary w-[500px] rounded-full h-16 px-4 cursor-pointer dark:bg-black dark:border dark:border-white/60',
           isOpen && 'rounded-3xl'
         )}
         animate={{ height: isOpen ? 240 : 64, width: isOpen ? 500 : 300 }}
         transition={{ duration: 0.2 }}
-        onClick={handleToggle}
-      >
-        <div
-          className={cn(
-            'flex items-center justify-between relative h-16',
-            isOpen && 'pt-5'
-          )}
-        >
-          <p className='text-xl text-primary-foreground dark:text-white'>
-            {name}
-          </p>
+        onClick={handleToggle}>
+        <div className={cn( 'flex items-center justify-between relative h-16', isOpen && 'pt-5' )}>
+          <p className='text-xl text-primary-foreground dark:text-white'>{name}</p>
           <motion.div
             className='rounded-3xl overflow-hidden relative'
             animate={{
@@ -121,28 +110,23 @@ export const PillCard = ({ card }: any) => {
               width: isOpen ? 200 : 40,
               y: isOpen ? 75 : 0,
             }}
-            transition={{ duration: 0.2 }}
-          >
+            transition={{ duration: 0.2 }}>
             <Image
               src={image.url}
               alt={name}
               fill
-              className={cn(
-                'transition-all duration-150 grayscale',
-                isOpen && 'grayscale-0'
-              )}
+              className={cn( 'transition-all duration-150 grayscale', isOpen && 'grayscale-0' )}
             />
             <div
               className={cn(
                 'absolute opacity-0 bg-black/50 top-0 left-0 flex items-center justify-center text-primary-foreground font-semibold text-2xl h-full w-full transition-all duration-150',
                 isOpen && 'hover:opacity-100'
-              )}
-            >
+              )}>
               Book a call
             </div>
           </motion.div>
         </div>
-        <AnimatePresence onExitComplete={() => setIsOpen(false)}>
+        <AnimatePresence onExitComplete={() => setIsOpen( false )}>
           {showContent && (
             <motion.ul
               initial='enter'
@@ -155,15 +139,13 @@ export const PillCard = ({ card }: any) => {
                 textWrap: 'pretty',
 
                 width: '50%',
-              }}
-            >
-              {['Rank', 'Popularity', 'Role'].map((item, index) =>
+              }}>
+              {['Rank', 'Popularity', 'Role'].map( ( item, index ) =>
                 item === 'Role' ? (
                   <motion.li
                     key={item + index}
                     variants={itemVariants}
-                    className='font-nunito line-clamp-2'
-                  >
+                    className='font-nunito line-clamp-2'>
                     {role}
                   </motion.li>
                 ) : (
@@ -181,8 +163,7 @@ export const PillCard = ({ card }: any) => {
               style={{
                 marginTop: '20px',
                 display: 'inline-block',
-              }}
-            >
+              }}>
               <ConnectionsIcon className='h-6 w-6 text-white' stroke='#fff' />
             </ShinyButton>
           )}

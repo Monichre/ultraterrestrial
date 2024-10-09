@@ -3,14 +3,14 @@ import { locationToAngles } from '@/utils'
 import createGlobe from 'cobe'
 import { useEffect, useRef, useState } from 'react'
 
-export function EventsGlobe({ markers, activeLocation }: any) {
+export function EventsGlobe( { markers, activeLocation }: any ) {
   const canvasRef: any = useRef()
 
-  const [activeMarker, setActiveMarker] = useState(null)
+  const [activeMarker, setActiveMarker] = useState( null )
 
-  const focusRef: any = useRef([0, 0])
+  const focusRef: any = useRef( [0, 0] )
 
-  useEffect(() => {
+  useEffect( () => {
     const baseColor: any = [0, 0.3569, 0.4196]
     const markerColor: any = [1, 0, 0.7098]
     const glowColor: any = [0.0118, 0.0824, 0.1373]
@@ -19,7 +19,7 @@ export function EventsGlobe({ markers, activeLocation }: any) {
     let currentPhi = 0
     let currentTheta = 0
     const doublePi = Math.PI * 2
-    const globe = createGlobe(canvasRef.current, {
+    const globe = createGlobe( canvasRef.current, {
       devicePixelRatio: 1,
       width: 1000,
       height: 1000,
@@ -36,17 +36,17 @@ export function EventsGlobe({ markers, activeLocation }: any) {
       opacity: 0.27,
       scale: 0.75,
       markers,
-      onRender: (state) => {
+      onRender: ( state ) => {
         // Called on every animation frame.
         // `state` will be an empty object, return updated params.
 
         state.phi = currentPhi
         state.theta = currentTheta
         const [focusPhi, focusTheta] = focusRef.current
-        const distPositive = (focusPhi - currentPhi + doublePi) % doublePi
-        const distNegative = (currentPhi - focusPhi + doublePi) % doublePi
+        const distPositive = ( focusPhi - currentPhi + doublePi ) % doublePi
+        const distNegative = ( currentPhi - focusPhi + doublePi ) % doublePi
         // Control the speed
-        if (distPositive < distNegative) {
+        if ( distPositive < distNegative ) {
           currentPhi += distPositive * 0.08
         } else {
           currentPhi -= distNegative * 0.08
@@ -55,20 +55,20 @@ export function EventsGlobe({ markers, activeLocation }: any) {
         state.width = width * 2
         state.height = width * 2
       },
-    })
+    } )
 
     return () => {
       globe.destroy()
     }
-  }, [])
+  }, [] )
 
-  useEffect(() => {
-    if (activeLocation) {
-      console.log('activeLocation: ', activeLocation)
+  useEffect( () => {
+    if ( activeLocation ) {
+      console.log( 'activeLocation: ', activeLocation )
       const [lat, lon] = activeLocation
-      focusRef.current = locationToAngles(lat, lon)
+      focusRef.current = locationToAngles( lat, lon )
     }
-  }, [activeLocation])
+  }, [activeLocation] )
 
   return (
     <div

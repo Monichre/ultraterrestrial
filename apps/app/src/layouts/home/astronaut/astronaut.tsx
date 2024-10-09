@@ -8,13 +8,13 @@ const vfx = new VFX()
 import Image from 'next/image'
 import { BlurFade } from '@/components/animated'
 
-interface AstronautProps {}
+interface AstronautProps { }
 
 export const Astronaut: FunctionComponent<AstronautProps> = () => {
-  const isLargeScreen = useMedia('(min-width: 1280px)')
+  const isLargeScreen = useMedia( '(min-width: 1280px)' )
   const size: number = isLargeScreen ? 800 : 400
 
-  useEffect(() => {
+  useEffect( () => {
     // const img: any = document.getElementById('#astronaut')
     // vfx.add(img, { shader: 'rgbShift' })
     // | "uvGradient"
@@ -34,7 +34,7 @@ export const Astronaut: FunctionComponent<AstronautProps> = () => {
     // | "slitScanTransition"
     // | "warpTransition"
     // | "pixelateTransition"
-  }, [])
+  }, [] )
   // items-center align-bottom self-center
   return (
     <div className=' w-full h-auto absolute bottom-0 left-0'>

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { DoubleX, ScratchyX, DoubleDonut } from '@/components/icons'
 import { Radar } from '@/components/animated/radar/Radar'
 
-const IconContainer = ({ icon, text, delay }: any) => {
+const IconContainer = ( { icon, text, delay }: any ) => {
   return (
     <motion.div
       initial={{
@@ -33,7 +33,7 @@ const IconContainer = ({ icon, text, delay }: any) => {
     </motion.div>
   )
 }
-const MyFavoriteStarIllustration = (props: any) => (
+const MyFavoriteStarIllustration = ( props: any ) => (
   <svg
     className='w-15 h-15 stroke-1'
     viewBox='0 0 84 87'
@@ -52,7 +52,7 @@ const MyFavoriteStarIllustration = (props: any) => (
   </svg>
 )
 
-const Star = (props: any) => (
+const Star = ( props: any ) => (
   <svg
     className='w-15 h-15 stroke-1'
     viewBox='0 0 79 78'
@@ -76,7 +76,7 @@ const Star = (props: any) => (
 )
 
 // https://svgdoodles.com/
-const ThinTwinklyStar = (props: any) => (
+const ThinTwinklyStar = ( props: any ) => (
   <svg
     className='w-15 h-15 stroke-1'
     viewBox='0 0 75 75'
@@ -98,14 +98,14 @@ const ThinTwinklyStar = (props: any) => (
     />
   </svg>
 )
-export const RadarLayout = ({ children }: any) => {
-  const radarTargetRefOne = React.useRef(null)
-  const radarTargetRefTwo = React.useRef(null)
-  const radarTargetRefThree = React.useRef(null)
-  const radarTargetRefFour = React.useRef(null)
-  const radarTargetRefFive = React.useRef(null)
-  const radarTargetRefSix = React.useRef(null)
-  const radarTargetRefSeven = React.useRef(null)
+export const RadarLayout = ( { children }: any ) => {
+  const radarTargetRefOne = React.useRef( null )
+  const radarTargetRefTwo = React.useRef( null )
+  const radarTargetRefThree = React.useRef( null )
+  const radarTargetRefFour = React.useRef( null )
+  const radarTargetRefFive = React.useRef( null )
+  const radarTargetRefSix = React.useRef( null )
+  const radarTargetRefSeven = React.useRef( null )
   const refs = [
     radarTargetRefOne,
     radarTargetRefTwo,

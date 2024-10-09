@@ -21,14 +21,14 @@ export const AppSidebarContext = createContext<SidebarContextProps | undefined>(
 )
 
 export const useAppSidebar = () => {
-  const context = useContext(AppSidebarContext)
-  if (!context) {
-    throw new Error('useSidebar must be used within a SidebarProvider')
+  const context = useContext( AppSidebarContext )
+  if ( !context ) {
+    throw new Error( 'useSidebar must be used within a SidebarProvider' )
   }
   return context
 }
 
-export const AppSidebarProvider = ({
+export const AppSidebarProvider = ( {
   children,
   open: openProp,
   setOpen: setOpenProp,
@@ -36,8 +36,8 @@ export const AppSidebarProvider = ({
   children: React.ReactNode
   open?: boolean
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>
-}) => {
-  const [openState, setOpenState] = useState(false)
+} ) => {
+  const [openState, setOpenState] = useState( false )
   const open = openProp !== undefined ? openProp : openState
   const setOpen = setOpenProp !== undefined ? setOpenProp : setOpenState
 
@@ -48,7 +48,7 @@ export const AppSidebarProvider = ({
   )
 }
 
-export const AppSidebar = ({
+export const AppSidebar = ( {
   children,
   open,
   setOpen,
@@ -56,7 +56,7 @@ export const AppSidebar = ({
   children: React.ReactNode
   open?: boolean
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>
-}) => {
+} ) => {
   return (
     <AppSidebarProvider open={open} setOpen={setOpen}>
       {children}
@@ -71,16 +71,16 @@ export const AppSidebarBody = (
   return (
     <>
       <DesktopSidebar {...props} />
-      <MobileSidebar {...(props as React.ComponentProps<'div'>)} />
+      <MobileSidebar {...( props as React.ComponentProps<'div'> )} />
     </>
   )
 }
 
-export const DesktopSidebar = ({
+export const DesktopSidebar = ( {
   className,
   children,
   ...props
-}: React.ComponentProps<typeof motion.div>) => {
+}: React.ComponentProps<typeof motion.div> ) => {
   const { open, setOpen } = useAppSidebar()
   return (
     <>
@@ -92,8 +92,8 @@ export const DesktopSidebar = ({
         animate={{
           width: open ? '300px' : '60px',
         }}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
+        onMouseEnter={() => setOpen( true )}
+        onMouseLeave={() => setOpen( false )}
         {...props}
       >
         {children}
@@ -102,11 +102,11 @@ export const DesktopSidebar = ({
   )
 }
 
-export const MobileSidebar = ({
+export const MobileSidebar = ( {
   className,
   children,
   ...props
-}: React.ComponentProps<'div'>) => {
+}: React.ComponentProps<'div'> ) => {
   const { open, setOpen } = useAppSidebar()
   return (
     <>
@@ -119,7 +119,7 @@ export const MobileSidebar = ({
         <div className='flex justify-end z-20 w-full'>
           <MenuIcon
             className='text-neutral-800 dark:text-neutral-200'
-            onClick={() => setOpen(!open)}
+            onClick={() => setOpen( !open )}
           />
         </div>
         <AnimatePresence>
@@ -139,7 +139,7 @@ export const MobileSidebar = ({
             >
               <div
                 className='absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200'
-                onClick={() => setOpen(!open)}
+                onClick={() => setOpen( !open )}
               >
                 <CloseIcon />
               </div>
@@ -152,13 +152,13 @@ export const MobileSidebar = ({
   )
 }
 
-export const AppSidebarLink = ({
+export const AppSidebarLink = ( {
   label,
   className,
   icon,
   onClick,
   ...props
-}: any) => {
+}: any ) => {
   const { open } = useAppSidebar()
   return (
     <div

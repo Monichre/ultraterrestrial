@@ -12,7 +12,7 @@ interface ChatTopbarProps {
 
 export const TopbarIcons = [{ icon: Phone }, { icon: Video }, { icon: Info }]
 
-export function ChatTopbar({ selectedUser }: ChatTopbarProps) {
+export function ChatTopbar( { selectedUser }: ChatTopbarProps ) {
   return (
     <div className='w-full h-20 flex p-4 justify-between items-center border-b'>
       <div className='flex items-center gap-2'>
@@ -32,7 +32,7 @@ export function ChatTopbar({ selectedUser }: ChatTopbarProps) {
       </div>
 
       <div>
-        {TopbarIcons.map((icon, index) => (
+        {TopbarIcons.map( ( icon, index ) => (
           <Button
             key={index}
             variant='ghost'
@@ -43,7 +43,7 @@ export function ChatTopbar({ selectedUser }: ChatTopbarProps) {
           >
             <icon.icon size={20} className='text-muted-foreground' />
           </Button>
-        ))}
+        ) )}
       </div>
     </div>
   )

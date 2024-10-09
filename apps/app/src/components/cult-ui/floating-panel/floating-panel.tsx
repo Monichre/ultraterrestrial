@@ -26,23 +26,23 @@ const TRANSITION = {
 
 interface FloatingPanelContextType {
   isOpen: boolean
-  openFloatingPanel: (rect: DOMRect) => void
+  openFloatingPanel: ( rect: DOMRect ) => void
   closeFloatingPanel: () => void
   uniqueId: string
   note: string
-  setNote: (note: string) => void
+  setNote: ( note: string ) => void
   triggerRect: DOMRect | null
   title: string
-  setTitle: (title: string) => void
+  setTitle: ( title: string ) => void
 }
 
 const FloatingPanelContext = createContext<
   FloatingPanelContextType | undefined
->(undefined)
+>( undefined )
 
 function useFloatingPanel() {
-  const context = useContext(FloatingPanelContext)
-  if (!context) {
+  const context = useContext( FloatingPanelContext )
+  if ( !context ) {
     throw new Error(
       'useFloatingPanel must be used within a FloatingPanelProvider'
     )
@@ -52,18 +52,18 @@ function useFloatingPanel() {
 
 function useFloatingPanelLogic() {
   const uniqueId = useId()
-  const [isOpen, setIsOpen] = useState(false)
-  const [note, setNote] = useState('')
-  const [triggerRect, setTriggerRect] = useState<DOMRect | null>(null)
-  const [title, setTitle] = useState('')
+  const [isOpen, setIsOpen] = useState( false )
+  const [note, setNote] = useState( '' )
+  const [triggerRect, setTriggerRect] = useState<DOMRect | null>( null )
+  const [title, setTitle] = useState( '' )
 
-  const openFloatingPanel = (rect: DOMRect) => {
-    setTriggerRect(rect)
-    setIsOpen(true)
+  const openFloatingPanel = ( rect: DOMRect ) => {
+    setTriggerRect( rect )
+    setIsOpen( true )
   }
   const closeFloatingPanel = () => {
-    setIsOpen(false)
-    setNote('')
+    setIsOpen( false )
+    setNote( '' )
   }
 
   return {
@@ -84,16 +84,16 @@ interface FloatingPanelRootProps {
   className?: string
 }
 
-export function FloatingPanelRoot({
+export function FloatingPanelRoot( {
   children,
   className,
-}: FloatingPanelRootProps) {
+}: FloatingPanelRootProps ) {
   const floatingPanelLogic = useFloatingPanelLogic()
 
   return (
     <FloatingPanelContext.Provider value={floatingPanelLogic}>
       <MotionConfig transition={TRANSITION}>
-        <div className={cn('relative', className)}>{children}</div>
+        <div className={cn( 'relative', className )}>{children}</div>
       </MotionConfig>
     </FloatingPanelContext.Provider>
   )
@@ -105,18 +105,18 @@ interface FloatingPanelTriggerProps {
   title: string
 }
 
-export function FloatingPanelTrigger({
+export function FloatingPanelTrigger( {
   children,
   className,
   title,
-}: FloatingPanelTriggerProps) {
+}: FloatingPanelTriggerProps ) {
   const { openFloatingPanel, uniqueId, setTitle } = useFloatingPanel()
-  const triggerRef = useRef<HTMLButtonElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>( null )
 
   const handleClick = () => {
-    if (triggerRef.current) {
-      openFloatingPanel(triggerRef.current.getBoundingClientRect())
-      setTitle(title)
+    if ( triggerRef.current ) {
+      openFloatingPanel( triggerRef.current.getBoundingClientRect() )
+      setTitle( title )
     }
   }
 
@@ -155,34 +155,34 @@ interface FloatingPanelContentProps {
   className?: string
 }
 
-export function FloatingPanelContent({
+export function FloatingPanelContent( {
   children,
   className,
-}: FloatingPanelContentProps) {
+}: FloatingPanelContentProps ) {
   const { isOpen, closeFloatingPanel, uniqueId, triggerRect, title } =
     useFloatingPanel()
-  const contentRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>( null )
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+  useEffect( () => {
+    const handleClickOutside = ( event: MouseEvent ) => {
       if (
         contentRef.current &&
-        !contentRef.current.contains(event.target as Node)
+        !contentRef.current.contains( event.target as Node )
       ) {
         closeFloatingPanel()
       }
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [closeFloatingPanel])
+    document.addEventListener( 'mousedown', handleClickOutside )
+    return () => document.removeEventListener( 'mousedown', handleClickOutside )
+  }, [closeFloatingPanel] )
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') closeFloatingPanel()
+  useEffect( () => {
+    const handleKeyDown = ( event: KeyboardEvent ) => {
+      if ( event.key === 'Escape' ) closeFloatingPanel()
     }
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [closeFloatingPanel])
+    document.addEventListener( 'keydown', handleKeyDown )
+    return () => document.removeEventListener( 'keydown', handleKeyDown )
+  }, [closeFloatingPanel] )
 
   const variants: Variants = {
     hidden: { opacity: 0, scale: 0.9, y: 10 },
@@ -233,7 +233,7 @@ interface FloatingPanelTitleProps {
   children: React.ReactNode
 }
 
-export function FloatingPanelTitle({ children }: FloatingPanelTitleProps) {
+export function FloatingPanelTitle( { children }: FloatingPanelTitleProps ) {
   const { uniqueId } = useFloatingPanel()
 
   return (
@@ -254,26 +254,26 @@ export function FloatingPanelTitle({ children }: FloatingPanelTitleProps) {
 
 interface FloatingPanelFormProps {
   children: React.ReactNode
-  onSubmit?: (note: string) => void
+  onSubmit?: ( note: string ) => void
   className?: string
 }
 
-export function FloatingPanelForm({
+export function FloatingPanelForm( {
   children,
   onSubmit,
   className,
-}: FloatingPanelFormProps) {
+}: FloatingPanelFormProps ) {
   const { note, closeFloatingPanel } = useFloatingPanel()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = ( e: React.FormEvent ) => {
     e.preventDefault()
-    onSubmit?.(note)
+    onSubmit?.( note )
     closeFloatingPanel()
   }
 
   return (
     <form
-      className={cn('flex h-full flex-col', className)}
+      className={cn( 'flex h-full flex-col', className )}
       onSubmit={handleSubmit}
     >
       {children}
@@ -287,11 +287,11 @@ interface FloatingPanelLabelProps {
   className?: string
 }
 
-export function FloatingPanelLabel({
+export function FloatingPanelLabel( {
   children,
   htmlFor,
   className,
-}: FloatingPanelLabelProps) {
+}: FloatingPanelLabelProps ) {
   const { note } = useFloatingPanel()
 
   return (
@@ -313,10 +313,10 @@ interface FloatingPanelTextareaProps {
   id?: string
 }
 
-export function FloatingPanelTextarea({
+export function FloatingPanelTextarea( {
   className,
   id,
-}: FloatingPanelTextareaProps) {
+}: FloatingPanelTextareaProps ) {
   const { note, setNote } = useFloatingPanel()
 
   return (
@@ -328,7 +328,7 @@ export function FloatingPanelTextarea({
       )}
       autoFocus
       value={note}
-      onChange={(e) => setNote(e.target.value)}
+      onChange={( e ) => setNote( e.target.value )}
     />
   )
 }
@@ -338,10 +338,10 @@ interface FloatingPanelHeaderProps {
   className?: string
 }
 
-export function FloatingPanelHeader({
+export function FloatingPanelHeader( {
   children,
   className,
-}: FloatingPanelHeaderProps) {
+}: FloatingPanelHeaderProps ) {
   return (
     <motion.div
       className={cn(
@@ -362,13 +362,13 @@ export interface FloatingPanelBodyProps {
   className?: string
 }
 
-export function FloatingPanelBody({
+export function FloatingPanelBody( {
   children,
   className,
-}: FloatingPanelBodyProps) {
+}: FloatingPanelBodyProps ) {
   return (
     <motion.div
-      className={cn('p-4', className)}
+      className={cn( 'p-4', className )}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
@@ -383,13 +383,13 @@ interface FloatingPanelFooterProps {
   className?: string
 }
 
-export function FloatingPanelFooter({
+export function FloatingPanelFooter( {
   children,
   className,
-}: FloatingPanelFooterProps) {
+}: FloatingPanelFooterProps ) {
   return (
     <motion.div
-      className={cn('flex justify-between px-4 py-3', className)}
+      className={cn( 'flex justify-between px-4 py-3', className )}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
@@ -403,15 +403,15 @@ interface FloatingPanelCloseButtonProps {
   className?: string
 }
 
-export function FloatingPanelCloseButton({
+export function FloatingPanelCloseButton( {
   className,
-}: FloatingPanelCloseButtonProps) {
+}: FloatingPanelCloseButtonProps ) {
   const { closeFloatingPanel } = useFloatingPanel()
 
   return (
     <motion.button
       type='button'
-      className={cn('flex items-center', className)}
+      className={cn( 'flex items-center', className )}
       onClick={closeFloatingPanel}
       aria-label='Close floating panel'
       whileHover={{ scale: 1.1 }}
@@ -426,9 +426,9 @@ interface FloatingPanelSubmitButtonProps {
   className?: string
 }
 
-export function FloatingPanelSubmitButton({
+export function FloatingPanelSubmitButton( {
   className,
-}: FloatingPanelSubmitButtonProps) {
+}: FloatingPanelSubmitButtonProps ) {
   return (
     <motion.button
       className={cn(
@@ -451,11 +451,11 @@ interface FloatingPanelButtonProps {
   className?: string
 }
 
-export function FloatingPanelButton({
+export function FloatingPanelButton( {
   children,
   onClick,
   className,
-}: FloatingPanelButtonProps) {
+}: FloatingPanelButtonProps ) {
   const { closeFloatingPanel } = useFloatingPanel()
   const handleClick = () => {
     onClick && onClick()

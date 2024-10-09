@@ -2,7 +2,7 @@
 
 import { PinContainer } from '@/features/3d/3d-pin/3d-pin'
 
-export function ThreeDPinCard({ title, link, header, content, image }: any) {
+export function ThreeDPinCard( { title, link, header, content, image }: any ) {
   return (
     <div className='h-[40rem] w-full flex items-center justify-center '>
       <PinContainer

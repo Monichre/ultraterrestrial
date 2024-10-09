@@ -5,30 +5,30 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 
 export function ExpandableCardStandardLayout() {
-  const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
+  const [active, setActive] = useState<( typeof cards )[number] | boolean | null>(
     null
   )
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>( null )
   const id = useId()
 
-  useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        setActive(false)
+  useEffect( () => {
+    function onKeyDown( event: KeyboardEvent ) {
+      if ( event.key === 'Escape' ) {
+        setActive( false )
       }
     }
 
-    if (active && typeof active === 'object') {
+    if ( active && typeof active === 'object' ) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'auto'
     }
 
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [active])
+    window.addEventListener( 'keydown', onKeyDown )
+    return () => window.removeEventListener( 'keydown', onKeyDown )
+  }, [active] )
 
-  useOutsideClick(ref, () => setActive(null))
+  useOutsideClick( ref, () => setActive( null ) )
 
   return (
     <>
@@ -61,7 +61,7 @@ export function ExpandableCardStandardLayout() {
                 },
               }}
               className='flex absolute top-2 right-2 lg:hidden items-center justify-center bg-white rounded-full h-6 w-6'
-              onClick={() => setActive(null)}
+              onClick={() => setActive( null )}
             >
               <CloseIcon />
             </motion.button>
@@ -126,11 +126,11 @@ export function ExpandableCardStandardLayout() {
         ) : null}
       </AnimatePresence>
       <ul className='max-w-2xl mx-auto w-full gap-4'>
-        {cards.map((card, index) => (
+        {cards.map( ( card, index ) => (
           <motion.div
             layoutId={`card-${card.title}-${id}`}
             key={`card-${card.title}-${id}`}
-            onClick={() => setActive(card)}
+            onClick={() => setActive( card )}
             className='p-4 flex flex-col md:flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer'
           >
             <div className='flex gap-4 flex-col md:flex-row '>
@@ -165,7 +165,7 @@ export function ExpandableCardStandardLayout() {
               {card.ctaText}
             </motion.button>
           </motion.div>
-        ))}
+        ) )}
       </ul>
     </>
   )

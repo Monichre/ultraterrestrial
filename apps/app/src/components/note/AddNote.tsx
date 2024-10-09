@@ -12,23 +12,23 @@ const TRANSITION = {
   duration: 0.3,
 }
 
-export const AddNote = ({ saveNote, userNote, children }: any) => {
+export const AddNote = ( { saveNote, userNote, children }: any ) => {
   const uniqueId = useId()
-  const formContainerRef = useRef<HTMLDivElement>(null)
-  const [isOpen, setIsOpen] = useState(false)
-  const [noteTitle, setNoteTitle] = useState(userNote.title)
-  const [note, setNote] = useState<null | string>(userNote.content)
+  const formContainerRef = useRef<HTMLDivElement>( null )
+  const [isOpen, setIsOpen] = useState( false )
+  const [noteTitle, setNoteTitle] = useState( userNote.title )
+  const [note, setNote] = useState<null | string>( userNote.content )
 
   const handleSavingNote = () => {
-    saveNote({ title: noteTitle, content: note })
+    saveNote( { title: noteTitle, content: note } )
   }
   const openMenu = () => {
-    setIsOpen(true)
+    setIsOpen( true )
   }
 
   const closeMenu = () => {
-    setIsOpen(false)
-    setNote(null)
+    setIsOpen( false )
+    setNote( null )
   }
 
   const handleSubmit = () => {
@@ -84,7 +84,7 @@ export const AddNote = ({ saveNote, userNote, children }: any) => {
                 <input
                   className='w-full h-auto resize-none rounded-md bg-transparent text-sm outline-none !border-none'
                   value={noteTitle}
-                  onChange={e => setNoteTitle(e.target.value)}
+                  onChange={e => setNoteTitle( e.target.value )}
                   placeholder='Title'
                 />
 
@@ -92,7 +92,7 @@ export const AddNote = ({ saveNote, userNote, children }: any) => {
                   className='h-auto h-min-[180px] w-full resize-none rounded-md bg-transparent text-sm outline-none !border-none grow'
                   autoFocus
                   value={note}
-                  onChange={e => setNote(e.target.value)}
+                  onChange={e => setNote( e.target.value )}
                   placeholder='Note content'
                 />
                 <div

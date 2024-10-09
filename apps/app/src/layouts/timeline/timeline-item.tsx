@@ -6,7 +6,7 @@ import { Separator } from '@radix-ui/react-separator'
 import { format } from 'date-fns'
 import { events } from '../../components/visualizations/spatial-gallery/events'
 
-export const TimelineItem: React.FC<any> = ({
+export const TimelineItem: React.FC<any> = ( {
   events,
   year,
   currentYear,
@@ -14,7 +14,7 @@ export const TimelineItem: React.FC<any> = ({
   style,
   scrolling,
   updateActiveLocation,
-}) => {
+} ) => {
   // const [status, elementRef] = useVisibility(scrolling)
 
   // useEffect(() => {
@@ -28,9 +28,9 @@ export const TimelineItem: React.FC<any> = ({
     <div
       className={`grid-item ${year}`}
       style={style}
-      // ref={elementRef}
+    // ref={elementRef}
     >
-      {events.map((event) => (
+      {events.map( ( event ) => (
         <div
           className={`timeline-item ${year} relative`}
           key={`${year}-${event.id}`}
@@ -49,7 +49,7 @@ export const TimelineItem: React.FC<any> = ({
               width: 'fit-content',
             }}
           >
-            {format(event.date, 'MMM dd, yyyy')},
+            {format( event.date, 'MMM dd, yyyy' )},
           </p>
 
           <div className='flex items-center align-middle mt-8'>
@@ -65,7 +65,7 @@ export const TimelineItem: React.FC<any> = ({
             )}
           </div>
         </div>
-      ))}
+      ) )}
     </div>
   )
 }

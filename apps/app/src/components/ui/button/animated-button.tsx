@@ -11,9 +11,9 @@ interface AnimatedButtonProps {
   children: React.ReactNode
 }
 
-const AnimatedButton: React.FC<AnimatedButtonProps> = ({ children }) => {
-  const [isExpanded, setIsExpanded] = useState(false)
-  const toggleExpand = () => setIsExpanded(!isExpanded)
+const AnimatedButton: React.FC<AnimatedButtonProps> = ( { children } ) => {
+  const [isExpanded, setIsExpanded] = useState( false )
+  const toggleExpand = () => setIsExpanded( !isExpanded )
 
   return (
     <div
@@ -62,11 +62,11 @@ interface AnimatedButtonContainerProps {
   children: ReactNode
 }
 
-const AnimatedButtonContainer: FC<AnimatedButtonContainerProps> = ({
+const AnimatedButtonContainer: FC<AnimatedButtonContainerProps> = ( {
   isExpanded,
   toggleExpand,
   children,
-}) => {
+} ) => {
   return (
     <motion.div
       className={cn(
@@ -81,22 +81,22 @@ const AnimatedButtonContainer: FC<AnimatedButtonContainerProps> = ({
       animate={
         isExpanded
           ? {
-              borderRadius: 20,
-              width: CONTAINER_SIZE,
-              height: CONTAINER_SIZE + 50,
+            borderRadius: 20,
+            width: CONTAINER_SIZE,
+            height: CONTAINER_SIZE + 50,
 
-              transition: {
-                type: 'spring',
-                damping: 25,
-                stiffness: 400,
-                when: 'beforeChildren',
-              },
-            }
+            transition: {
+              type: 'spring',
+              damping: 25,
+              stiffness: 400,
+              when: 'beforeChildren',
+            },
+          }
           : {
-              borderRadius: 21,
-              width: '4rem',
-              height: '4rem',
-            }
+            borderRadius: 21,
+            width: '4rem',
+            height: '4rem',
+          }
       }
     >
       {children}

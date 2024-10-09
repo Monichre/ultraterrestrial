@@ -10,37 +10,37 @@ import {
 } from 'framer-motion'
 import { cn } from '@/utils/cn'
 
-export const TracingBeam = ({
+export const TracingBeam = ( {
   children,
   className,
 }: {
   children: React.ReactNode
   className?: string
-}) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
+} ) => {
+  const ref = useRef<HTMLDivElement>( null )
+  const { scrollYProgress } = useScroll( {
     target: ref,
     offset: ['start start', 'end start'],
-  })
+  } )
 
-  const contentRef = useRef<HTMLDivElement>(null)
-  const [svgHeight, setSvgHeight] = useState(0)
+  const contentRef = useRef<HTMLDivElement>( null )
+  const [svgHeight, setSvgHeight] = useState( 0 )
 
-  useEffect(() => {
-    if (contentRef.current) {
-      setSvgHeight(contentRef.current.offsetHeight)
+  useEffect( () => {
+    if ( contentRef.current ) {
+      setSvgHeight( contentRef.current.offsetHeight )
     }
-  }, [])
+  }, [] )
 
   const y1 = useSpring(
-    useTransform(scrollYProgress, [0, 0.8], [50, svgHeight]),
+    useTransform( scrollYProgress, [0, 0.8], [50, svgHeight] ),
     {
       stiffness: 500,
       damping: 90,
     }
   )
   const y2 = useSpring(
-    useTransform(scrollYProgress, [0, 1], [50, svgHeight - 200]),
+    useTransform( scrollYProgress, [0, 1], [50, svgHeight - 200] ),
     {
       stiffness: 500,
       damping: 90,
@@ -48,7 +48,7 @@ export const TracingBeam = ({
   )
 
   return (
-    <motion.div ref={ref} className={cn('relative w-full h-full', className)}>
+    <motion.div ref={ref} className={cn( 'relative w-full h-full', className )}>
       <div className='absolute -left-4 md:-left-20 top-3'>
         <motion.div
           transition={{

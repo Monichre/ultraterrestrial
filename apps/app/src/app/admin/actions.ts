@@ -4,8 +4,8 @@ import { getXataClient } from '@/services/xata'
 const xata = getXataClient()
 export async function getEvents() {
   const events = await xata.db.events
-    .sort('date', 'desc')
-    .select([
+    .sort( 'date', 'desc' )
+    .select( [
       'name',
       'description',
       'location',
@@ -15,15 +15,15 @@ export async function getEvents() {
       'photos.enablePublicUrl',
       'longitude',
       'date',
-    ])
+    ] )
     .getAll()
-    .then((res) => res.toSerializable())
+    .then( ( res ) => res.toSerializable() )
   return events
 }
 
 export async function getKeyFigures() {
   const personnel = await xata.db.personnel
-    .select([
+    .select( [
       'name',
       'bio',
       'role',
@@ -37,15 +37,15 @@ export async function getKeyFigures() {
       'rank',
       'credibility',
       'popularity',
-    ])
+    ] )
     .getAll()
-    .then((res) => res.toSerializable())
+    .then( ( res ) => res.toSerializable() )
   return personnel
 }
 
 export async function getTestimonies() {
   const testimonies = await xata.db.testimonies
-    .select([
+    .select( [
       '*',
       'witness.id',
       'witness.name',
@@ -55,23 +55,23 @@ export async function getTestimonies() {
       'event.id',
       'event.name',
       'event.date',
-    ])
+    ] )
     .getAll()
-    .then((res) => res.toSerializable())
+    .then( ( res ) => res.toSerializable() )
   return testimonies
 }
 
 export async function getOrganizations() {
   const organizations = await xata.db.organizations
     .getAll()
-    .then((res) => res.toSerializable())
+    .then( ( res ) => res.toSerializable() )
   return organizations
 }
 
 export async function getTopics() {
   const topics = await xata.db.topics
     .getAll()
-    .then((res) => res.toSerializable())
+    .then( ( res ) => res.toSerializable() )
 
   return topics
 }

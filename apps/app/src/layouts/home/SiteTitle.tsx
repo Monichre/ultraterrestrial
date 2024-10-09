@@ -6,21 +6,21 @@ import { motion } from 'framer-motion-3d'
 import * as React from 'react'
 import { useState, useEffect } from 'react'
 
-export function SiteTitle(props: any) {
+export function SiteTitle( props: any ) {
   const title = 'UltraTerrestrial'
-  const [visible, setVisible] = useState(false)
-  const letters = title.split('')
+  const [visible, setVisible] = useState( false )
+  const letters = title.split( '' )
 
   const pullupVariant = {
     hide: { y: 50, opacity: 0 },
-    show: (i: any) => ({
+    show: ( i: any ) => ( {
       y: 0,
       opacity: 1,
       transition: {
         delay: i * 0.1, // Delay each letter's animation by 0.05 seconds
       },
       staggerChildren: true,
-    }),
+    } ),
   }
   const sparkleAnimation = {
     hide: { y: 50, opacity: 0 },
@@ -35,9 +35,9 @@ export function SiteTitle(props: any) {
   // left-0 top-[400px]
   // absolute
 
-  useEffect(() => {
-    setVisible(true)
-  }, [])
+  useEffect( () => {
+    setVisible( true )
+  }, [] )
 
   const theClass = `text-center !font-ailerons text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem] !text-white 3xl:text-9xl`
   {

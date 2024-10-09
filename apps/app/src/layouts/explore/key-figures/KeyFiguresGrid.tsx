@@ -5,30 +5,30 @@ import SwipeGrid, {
 } from '@/components/animated/swipe-grid/SwipeGrid'
 import { cn } from '@/utils'
 
-const formatKeyFigures = (keyFigures: KeyFiguresArray) => {
+const formatKeyFigures = ( keyFigures: KeyFiguresArray ) => {
   // @ts-ignore
-  return keyFigures.map((figure) => {
+  return keyFigures.map( ( figure ) => {
     return {
       name: figure.name,
       src:
         // @ts-ignore
         figure.photo && figure.photo.length
           ? // @ts-ignore
-            figure.photo[0]?.signedUrl || figure?.photo[0]?.url
+          figure.photo[0]?.signedUrl || figure?.photo[0]?.url
           : figure.photo
             ? figure.photo
             : '/atro-4.png' || '/atro-4.png',
       // content: <>{/* Add the JSX content for each swipe grid item */}</>.toString(),
     }
-  })
+  } )
 }
 
-export const KeyFiguresGrid = ({
+export const KeyFiguresGrid = ( {
   keyFigures,
 }: {
   keyFigures: KeyFiguresArray
-}) => {
-  const items: any = formatKeyFigures(keyFigures)
+} ) => {
+  const items: any = formatKeyFigures( keyFigures )
   return (
     <div className='key-figures relative'>
       <div

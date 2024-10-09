@@ -10,14 +10,25 @@ import { useMindMap } from '@/providers'
 import { Handle, Position } from '@xyflow/react'
 
 const PersonnelGroupNode = memo( ( node: any ) => {
-  const { handles, node: groupNode, hideChildren, showChildren, getClonePosition } = useGroupNode( { node: props } )
-
-  console.log( "🚀 ~ file: group-results-node.tsx:51 ~ node:", node )
+  const { useUpdateNodeInternals, useNodesData, updateNode } = useMindMap()
+  const updateNodeInternals = useUpdateNodeInternals()
+  const [handles, setHandles]: any = useState( [] )
+  const nodeData = useNodesData( node.id )
+  console.log( 'nodeData: ', nodeData )
+  const type = nodeData.id.split( '-' )[0]
 
   useEffect( () => {
-    console.log( "🚀 ~ file: group-results-node.tsx:53 ~ useEffect ~ getClonePosition:", getClonePosition )
-    hideChildren()
-  }, [getClonePosition, hideChildren] )
+    if ( node?.data?.handles && node.data?.handles.length ) {
+      const { data } = node
+
+      setHandles( data.handles )
+      updateNodeInternals( node.id )
+    }
+
+    if ( node?.data?.concise ) {
+      updateNodeInternals( node.id )
+    }
+  }, [node, updateNodeInternals, nodeData] )
 
 
 

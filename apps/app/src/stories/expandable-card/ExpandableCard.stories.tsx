@@ -82,7 +82,7 @@ export const ExpandableCardBasic: Story = {
 
 export const ExpandableCardStandardLayoutStory: Story = {
   // args: {},
-  render: (args) => <ExpandableCardStandardLayout {...args} />,
+  render: ( args ) => <ExpandableCardStandardLayout {...args} />,
 }
 
 // export const GraphCardStory: Story = {

@@ -43,7 +43,7 @@ import { motion } from 'framer-motion'
 </a> */
 }
 
-const Star = ({ isGlowing, delay }: { isGlowing: boolean; delay: number }) => {
+const Star = ( { isGlowing, delay }: { isGlowing: boolean; delay: number } ) => {
   return (
     <motion.div
       key={delay}
@@ -59,12 +59,12 @@ const Star = ({ isGlowing, delay }: { isGlowing: boolean; delay: number }) => {
         ease: 'easeInOut',
         delay: delay,
       }}
-      className={cn('bg-[#666] h-[1px] w-[1px] rounded-full relative z-20')}
+      className={cn( 'bg-[#666] h-[1px] w-[1px] rounded-full relative z-20' )}
     ></motion.div>
   )
 }
 
-const Glow = ({ delay }: { delay: number }) => {
+const Glow = ( { delay }: { delay: number } ) => {
   return (
     <motion.div
       initial={{
@@ -87,19 +87,19 @@ const Glow = ({ delay }: { delay: number }) => {
 }
 
 // generate random words
-const Word = ({ children, item, ...props }: any): any => {
+const Word = ( { children, item, ...props }: any ): any => {
   // updateWithRef
-  console.log('props: ', props)
-  console.log('children: ', children)
-  console.log('item: ', item)
+  console.log( 'props: ', props )
+  console.log( 'children: ', children )
+  console.log( 'item: ', item )
   const ref = useRef()
   const { type, id }: any = item
   const hex = DOMAIN_MODEL_COLORS[type]
-  console.log('hex: ', hex)
+  console.log( 'hex: ', hex )
   const router = useRouter()
   const color = new THREE.Color()
 
-  const [hovered, setHovered] = useState(false)
+  const [hovered, setHovered] = useState( false )
 
   return (
     // <Billboard >{/* </Billboard> */}
@@ -163,15 +163,15 @@ const Word = ({ children, item, ...props }: any): any => {
 //   )
 // }
 
-function Cloud({ words }: any) {
-  return words.map(([position, item]: any, index: any) => (
+function Cloud( { words }: any ) {
+  return words.map( ( [position, item]: any, index: any ) => (
     <Word key={index} position={position} children={item.name} item={item} />
-  ))
+  ) )
 }
 export type WordCloudProps = {
   events: any[]
 }
-export const WordCloud = ({ records, connections }: any) => {
+export const WordCloud = ( { records, connections }: any ) => {
   return (
     <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 35], fov: 90 }}>
       <fog attach='fog' args={['#202025', 0, 80]} />

@@ -4,30 +4,30 @@ import React, { useState, useEffect } from 'react'
 import { useMotionTemplate, motion } from 'framer-motion'
 import { cn } from '@/utils/cn'
 
-export const HoverCard = ({
+export const HoverCard = ( {
   text,
   className,
 }: {
   text?: string
   className?: string
-}) => {
-  let mouseX = useMotionValue(0)
-  let mouseY = useMotionValue(0)
+} ) => {
+  let mouseX = useMotionValue( 0 )
+  let mouseY = useMotionValue( 0 )
 
-  const [randomString, setRandomString] = useState('')
+  const [randomString, setRandomString] = useState( '' )
 
-  useEffect(() => {
-    let str = generateRandomString(1500)
-    setRandomString(str)
-  }, [])
+  useEffect( () => {
+    let str = generateRandomString( 1500 )
+    setRandomString( str )
+  }, [] )
 
-  function onMouseMove({ currentTarget, clientX, clientY }: any) {
+  function onMouseMove( { currentTarget, clientX, clientY }: any ) {
     let { left, top } = currentTarget.getBoundingClientRect()
-    mouseX.set(clientX - left)
-    mouseY.set(clientY - top)
+    mouseX.set( clientX - left )
+    mouseY.set( clientY - top )
 
-    const str = generateRandomString(1500)
-    setRandomString(str)
+    const str = generateRandomString( 1500 )
+    setRandomString( str )
   }
 
   return (
@@ -57,7 +57,7 @@ export const HoverCard = ({
   )
 }
 
-export function CardPattern({ mouseX, mouseY, randomString }: any) {
+export function CardPattern( { mouseX, mouseY, randomString }: any ) {
   let maskImage = useMotionTemplate`radial-gradient(250px at ${mouseX}px ${mouseY}px, white, transparent)`
   let style = { maskImage, WebkitMaskImage: maskImage }
 
@@ -82,15 +82,15 @@ export function CardPattern({ mouseX, mouseY, randomString }: any) {
 
 const characters =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-export const generateRandomString = (length: number) => {
+export const generateRandomString = ( length: number ) => {
   let result = ''
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length))
+  for ( let i = 0; i < length; i++ ) {
+    result += characters.charAt( Math.floor( Math.random() * characters.length ) )
   }
   return result
 }
 
-export const Icon = ({ className, ...rest }: any) => {
+export const Icon = ( { className, ...rest }: any ) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

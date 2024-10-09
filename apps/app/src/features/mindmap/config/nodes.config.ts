@@ -66,3 +66,15 @@ export const CHILD_DIMENSIONS = {
   height: BASE_ENTITY_NODE_HEIGHT,
 }
 export const PADDING = 75
+
+export const entityGroupNodeBaseConfig = {
+
+  type: 'entityGroupNode',
+  initialHeight: GROUP_NODE_LANDSCAPE.height,
+  initialWidth: GROUP_NODE_LANDSCAPE.width,
+  // zIndex: 1,
+  style: {
+      width: `${GROUP_NODE_LANDSCAPE.width}px`,
+    height: `${GROUP_NODE_LANDSCAPE.height}px`,
+  },
+}

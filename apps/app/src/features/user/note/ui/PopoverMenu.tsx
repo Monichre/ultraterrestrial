@@ -14,13 +14,13 @@ export type MenuProps = {
   triggerClassName?: string
   customTrigger?: boolean
   isOpen?: boolean
-  onOpenChange?: (state: boolean) => void
+  onOpenChange?: ( state: boolean ) => void
   withPortal?: boolean
   tooltip?: string
   isActive?: boolean
 }
 
-export const Menu = ({
+export const Menu = ( {
   customTrigger,
   trigger,
   triggerClassName,
@@ -29,7 +29,7 @@ export const Menu = ({
   withPortal,
   tooltip,
   onOpenChange,
-}: MenuProps) => {
+}: MenuProps ) => {
   return (
     <Popover.Root onOpenChange={onOpenChange}>
       {customTrigger ? (
@@ -65,7 +65,7 @@ export const Menu = ({
 
 Menu.displayName = 'Menu'
 
-export const Item = ({
+export const Item = ( {
   label,
   close = true,
   icon,
@@ -81,14 +81,14 @@ export const Item = ({
   disabled?: boolean
   onClick: () => void
   isActive?: boolean
-}) => {
+} ) => {
   const className = cn(
     'flex items-center gap-2 p-1.5 text-sm font-medium text-neutral-500 text-left bg-transparent w-full rounded',
     !isActive && !disabled,
     'hover:bg-neutral-100 hover:text-neutral-800 dark:hover:bg-neutral-900 dark:hover:text-neutral-200',
     isActive &&
-      !disabled &&
-      'bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200',
+    !disabled &&
+    'bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200',
     disabled && 'text-neutral-400 cursor-not-allowed dark:text-neutral-600'
   )
 
@@ -110,7 +110,7 @@ export type CategoryTitle = {
   children: React.ReactNode
 }
 
-export const CategoryTitle = ({ children }: CategoryTitle) => {
+export const CategoryTitle = ( { children }: CategoryTitle ) => {
   return (
     <div className='mt-4 first:mt-1.5 mb-1.5 text-[0.625rem] font-medium text-neutral-400 dark:text-neutral-600 uppercase select-none px-1'>
       {children}
@@ -118,7 +118,7 @@ export const CategoryTitle = ({ children }: CategoryTitle) => {
   )
 }
 
-export const Divider = forwardRef<HTMLHRElement>((props, ref) => {
+export const Divider = forwardRef<HTMLHRElement>( ( props, ref ) => {
   return (
     <hr
       {...props}
@@ -126,6 +126,6 @@ export const Divider = forwardRef<HTMLHRElement>((props, ref) => {
       className='my-1 border-neutral-200 dark:border-neutral-800'
     />
   )
-})
+} )
 
 Divider.displayName = 'Divider'

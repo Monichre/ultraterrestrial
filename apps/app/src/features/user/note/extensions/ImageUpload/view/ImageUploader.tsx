@@ -5,24 +5,24 @@ import { Icon } from '@/components/ui/Icon'
 import { cn } from '@/utils'
 import { ChangeEvent, useCallback } from 'react'
 
-export const ImageUploader = ({
+export const ImageUploader = ( {
   onUpload,
 }: {
-  onUpload: (url: string) => void
-}) => {
-  const { loading, uploadFile } = useUploader({ onUpload })
+  onUpload: ( url: string ) => void
+} ) => {
+  const { loading, uploadFile } = useUploader( { onUpload } )
   const { handleUploadClick, ref } = useFileUpload()
-  const { draggedInside, onDrop, onDragEnter, onDragLeave } = useDropZone({
+  const { draggedInside, onDrop, onDragEnter, onDragLeave } = useDropZone( {
     uploader: uploadFile,
-  })
+  } )
 
   const onFileChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) =>
-      e.target.files ? uploadFile(e.target.files[0]) : null,
+    ( e: ChangeEvent<HTMLInputElement> ) =>
+      e.target.files ? uploadFile( e.target.files[0] ) : null,
     [uploadFile]
   )
 
-  if (loading) {
+  if ( loading ) {
     return (
       <div className='flex items-center justify-center p-8 rounded-lg min-h-[10rem] bg-opacity-80'>
         <Spinner className='text-neutral-500' size={1.5} />

@@ -9,16 +9,16 @@ export type StarsCardProps = {
   className?: string
   children?: any
 }
-export const StarsCard = ({ className, children }: StarsCardProps) => {
-  const [mouseEnter, setMouseEnter] = useState(false)
+export const StarsCard = ( { className, children }: StarsCardProps ) => {
+  const [mouseEnter, setMouseEnter] = useState( false )
 
   return (
     <div
       onMouseEnter={() => {
-        setMouseEnter(true)
+        setMouseEnter( true )
       }}
       onMouseLeave={() => {
-        setMouseEnter(false)
+        setMouseEnter( false )
       }}
       className={
         'bg-[linear-gradient(110deg,#333_0.6%,#222)] p-4 max-w-md max-h-[20rem] h-full w-full rounded-xl border border-[#eaeaea] dark:border-neutral-600'
@@ -32,22 +32,22 @@ export const StarsCard = ({ className, children }: StarsCardProps) => {
   )
 }
 
-export const StarsCardDescription = ({
+export const StarsCardDescription = ( {
   className,
   children,
 }: {
   className?: string
   children?: React.ReactNode
-}) => {
+} ) => {
   return <p className={'text-base text-white max-w-[16rem]'}>{children}</p>
 }
 
-export const StarsCardTitle = ({
+export const StarsCardTitle = ( {
   className,
   children,
 }: {
   className?: string
   children?: React.ReactNode
-}) => {
+} ) => {
   return <h2 className={'font-bold text-2xl text-[#eaeaea]'}>{children}</h2>
 }

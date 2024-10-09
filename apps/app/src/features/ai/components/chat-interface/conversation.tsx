@@ -14,23 +14,23 @@ export function Conversation() {
       id: number
       text: string
     }[]
-  >([])
-  const [newMessage, setNewMessage] = useState<string>('')
+  >( [] )
+  const [newMessage, setNewMessage] = useState<string>( '' )
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = ( e: { preventDefault: () => void } ) => {
     e.preventDefault()
 
-    if (newMessage.trim()) {
+    if ( newMessage.trim() ) {
       const timestamp = new Date().getTime()
-      setMessages([...messages, { id: timestamp, text: newMessage }])
-      setNewMessage('')
+      setMessages( [...messages, { id: timestamp, text: newMessage }] )
+      setNewMessage( '' )
     }
   }
 
   return (
     <div className='flex h-[300px] flex-col items-end justify-end pb-4'>
       <AnimatePresence mode='wait'>
-        {messages.map((message) => (
+        {messages.map( ( message ) => (
           <motion.div
             key={message.id}
             layout='position'
@@ -42,13 +42,13 @@ export function Conversation() {
               {message.text}
             </div>
           </motion.div>
-        ))}
+        ) )}
       </AnimatePresence>
       <div className='mt-4 flex w-full'>
         <form onSubmit={handleSubmit} className='flex w-full'>
           <input
             type='text'
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={( e ) => setNewMessage( e.target.value )}
             value={newMessage}
             className='py- relative h-9 w-[250px] flex-grow rounded-full border border-gray-200 bg-white px-3 text-[15px] outline-none placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-blue-500/20 focus-visible:ring-offset-1
             dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:focus-visible:ring-blue-500/20 dark:focus-visible:ring-offset-1 dark:focus-visible:ring-offset-gray-700

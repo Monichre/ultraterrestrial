@@ -10,10 +10,10 @@ export type IconProps = React.HTMLAttributes<HTMLOrSVGElement> & {
   fill?: string
 }
 
-const animationConfig = ({ fill, stroke }: any) => {
-  const color = (fill || stroke) ?? DOMAIN_MODEL_COLORS.root
-  const hiddenColor = chroma(color).alpha(0).css()
-  const visibleColor = chroma(color).alpha(1).css()
+const animationConfig = ( { fill, stroke }: any ) => {
+  const color = ( fill || stroke ) ?? DOMAIN_MODEL_COLORS.root
+  const hiddenColor = chroma( color ).alpha( 0 ).css()
+  const visibleColor = chroma( color ).alpha( 1 ).css()
 
   return {
     hidden: {
@@ -27,13 +27,8 @@ const animationConfig = ({ fill, stroke }: any) => {
   }
 }
 
-export const HandDrawnArrowRight = ({
-  fill,
-  stroke,
-  className,
-  ...rest
-}: IconProps) => {
-  const config = animationConfig({ fill, stroke })
+export const HandDrawnArrowRight = ( { fill, stroke, className, ...rest }: IconProps ) => {
+  const config = animationConfig( { fill, stroke } )
   return (
     <svg
       {...rest}
@@ -41,8 +36,7 @@ export const HandDrawnArrowRight = ({
       height='82'
       viewBox='0 0 150 82'
       fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-    >
+      xmlns='http://www.w3.org/2000/svg'>
       <motion.path
         variants={config}
         initial='hidden'
@@ -56,13 +50,8 @@ export const HandDrawnArrowRight = ({
   )
 }
 
-export const HandDrawnArrowDown = ({
-  fill,
-  stroke,
-  className,
-  ...rest
-}: IconProps) => {
-  const config = animationConfig(fill)
+export const HandDrawnArrowDown = ( { fill, stroke, className, ...rest }: IconProps ) => {
+  const config = animationConfig( fill )
   return (
     <svg
       {...rest}
@@ -70,8 +59,7 @@ export const HandDrawnArrowDown = ({
       height='218'
       viewBox='0 0 48 218'
       fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-    >
+      xmlns='http://www.w3.org/2000/svg'>
       <motion.path
         variants={config}
         initial='hidden'
@@ -85,15 +73,14 @@ export const HandDrawnArrowDown = ({
   )
 }
 
-export const StarDoodle = ({ stroke = NEONS.blue }: any) => (
+export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
   <svg
     // className='w-30 h-30'
     // viewBox='0 0 82 84'
     className='w-30 h-30' // Increase the size of the SVG
     viewBox='-20 -20 122 124'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+    xmlns='http://www.w3.org/2000/svg'>
     <motion.path
       d='M41.5816 1.21606C39.7862 5.82482 40.3852 10.0977 40.5593 14.9633C40.7854 21.2812 40.9774 27.5593 41.4363 33.8661'
       stroke={stroke}
@@ -152,14 +139,7 @@ export const StarDoodle = ({ stroke = NEONS.blue }: any) => (
       stroke={stroke}
       stroke-width='1'
     />
-    <animate
-      attributeName='r'
-      from='20'
-      to='60'
-      dur='1.5s'
-      begin='0s'
-      repeatCount='indefinite'
-    />
+    <animate attributeName='r' from='20' to='60' dur='1.5s' begin='0s' repeatCount='indefinite' />
     <animate
       attributeName='opacity'
       from='1'
@@ -194,16 +174,8 @@ export const StarDoodle = ({ stroke = NEONS.blue }: any) => (
       fill='rgba(255,255,255, .5)'
       r='60'
       stroke={stroke}
-      stroke-width='1'
-    >
-      <animate
-        attributeName='r'
-        from='20'
-        to='60'
-        dur='1.5s'
-        begin='0s'
-        repeatCount='indefinite'
-      />
+      stroke-width='1'>
+      <animate attributeName='r' from='20' to='60' dur='1.5s' begin='0s' repeatCount='indefinite' />
       <animate
         attributeName='opacity'
         from='.2'
@@ -247,14 +219,13 @@ export const StarDoodle = ({ stroke = NEONS.blue }: any) => (
 )
 
 // https://svgdoodles.com/
-export const Star = (props: IconProps) => (
+export const Star = ( props: IconProps ) => (
   <svg
     {...props}
     className='w-10 h-10'
     viewBox='0 0 79 78'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+    xmlns='http://www.w3.org/2000/svg'>
     <motion.path
       fill-rule='evenodd'
       clip-rule='evenodd'
@@ -272,14 +243,13 @@ export const Star = (props: IconProps) => (
 )
 
 // https://svgdoodles.com/
-export const ThinTwinklyStar = ({ className, ...rest }: IconProps) => (
+export const ThinTwinklyStar = ( { className, ...rest }: IconProps ) => (
   <svg
     {...rest}
-    className={cn('w-10 h-10', className)}
+    className={cn( 'w-10 h-10', className )}
     viewBox='0 0 75 75'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+    xmlns='http://www.w3.org/2000/svg'>
     <motion.path
       fill-rule='evenodd'
       clip-rule='evenodd'
@@ -295,14 +265,13 @@ export const ThinTwinklyStar = ({ className, ...rest }: IconProps) => (
     />
   </svg>
 )
-export const ScratchyX = ({ className, ...rest }: IconProps) => (
+export const ScratchyX = ( { className, ...rest }: IconProps ) => (
   <svg
     {...rest}
-    className={cn('w-10 h-10', className)}
+    className={cn( 'w-10 h-10', className )}
     viewBox='0 0 64 64'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+    xmlns='http://www.w3.org/2000/svg'>
     <motion.path
       d='M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z'
       fill='currentColor'
@@ -315,14 +284,13 @@ export const ScratchyX = ({ className, ...rest }: IconProps) => (
   </svg>
 )
 
-export const DoubleX = ({ className, ...rest }: IconProps) => (
+export const DoubleX = ( { className, ...rest }: IconProps ) => (
   <svg
     {...rest}
-    className={cn('w-10 h-10', className)}
+    className={cn( 'w-10 h-10', className )}
     viewBox='0 0 68 79'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+    xmlns='http://www.w3.org/2000/svg'>
     <motion.path
       d='M53.4998 14.7002L35.4998 32.7002L17.3998 14.7002L3.2998 28.8002L21.2998 46.9002L3.2998 64.9002L17.3998 79.0002L35.4998 61.0002L53.4998 79.0002L67.5998 64.9002L49.5998 46.9002L67.5998 28.8002L53.4998 14.7002Z'
       fill='currentColor'
@@ -343,14 +311,13 @@ export const DoubleX = ({ className, ...rest }: IconProps) => (
   </svg>
 )
 
-export const DoubleDonut = (props: IconProps) => (
+export const DoubleDonut = ( props: IconProps ) => (
   <svg
     {...props}
     className='w-10 h-10'
     viewBox='0 0 156 160'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+    xmlns='http://www.w3.org/2000/svg'>
     <g clip-path='url(#clip0_103_6652)'>
       <motion.path
         d='M27.9136 125.492C27.9136 125.492 27.9493 125.47 27.9761 125.465C27.459 125.078 26.9285 124.709 26.4248 124.309C26.5146 124.638 26.7074 124.931 26.9751 125.143C27.2429 125.356 27.5716 125.478 27.9136 125.492Z'
@@ -1081,14 +1048,13 @@ export const DoubleDonut = (props: IconProps) => (
   </svg>
 )
 
-export const HandDrawnArrowDownDoogle = (props: IconProps) => (
+export const HandDrawnArrowDownDoogle = ( props: IconProps ) => (
   <svg
     {...props}
     className='w-10 h-10'
     viewBox='0 0 246 345'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+    xmlns='http://www.w3.org/2000/svg'>
     <motion.path
       d='M231.654 338.871C226.62 328.369 215.525 326.434 199.105 326.459M231.654 338.871C225.998 327.972 228.442 313.96 239.986 304.673M231.654 338.871C230.13 339.104 224.107 318.996 210.59 297.968M199.326 279.195L187.311 259.67M176.046 242.774L165.908 227.004M155.62 210.859L143.605 192.461M133.535 178.327L121.895 160.68M112.283 146.111L100.268 129.214M89.0786 113.445L78.1898 97.2995M68.4273 83.4069L56.0365 67.6368M44.4719 53.3697C41.9687 49.615 35.9861 41.0541 32.0812 36.8487M22.3189 24.457L5.79785 6.05859'
       stroke='currentColor'
@@ -1100,14 +1066,13 @@ export const HandDrawnArrowDownDoogle = (props: IconProps) => (
   </svg>
 )
 
-export const HandDrawnArrowRightDoodle = (props: IconProps) => (
+export const HandDrawnArrowRightDoodle = ( props: IconProps ) => (
   <svg
     {...props}
     className='w-10 h-10'
     viewBox='0 0 110 33'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+    xmlns='http://www.w3.org/2000/svg'>
     <motion.path
       d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
       stroke='currentColor'
@@ -1123,14 +1088,13 @@ export const HandDrawnArrowRightDoodle = (props: IconProps) => (
   </svg>
 )
 
-export const MyFavoriteStarIllustration = (props: IconProps) => (
-  <svg
+export const MyFavoriteStarIllustration = ( props: IconProps ) => (
+  <motion.svg
     {...props}
     className='w-10 h-10'
     viewBox='0 0 84 87'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+    xmlns='http://www.w3.org/2000/svg'>
     <motion.path
       d='M42.007 0L42.4664 40.9945L60.6671 4.25904L43.2941 41.3931L75.6313 16.1926L43.8669 42.1114L83.9358 33.4371L44.0714 43.007L83.9358 52.577L43.8669 43.9027L75.6313 69.8215L43.2941 44.621L60.6671 81.7551L42.4664 45.0196L42.007 86.0141L41.5477 45.0196L23.347 81.7551L40.7199 44.621L8.38278 69.8215L40.1471 43.9027L0.0782776 52.577L39.9427 43.007L0.0782776 33.4371L40.1471 42.1114L8.38278 16.1926L40.7199 41.3931L23.347 4.25904L41.5477 40.9945L42.007 0Z'
       fill='currentColor'
@@ -1140,16 +1104,15 @@ export const MyFavoriteStarIllustration = (props: IconProps) => (
       fill='currentColor'
       fill-opacity='0.2'
     />
-  </svg>
+  </motion.svg>
 )
 
-export const SketchyGlobe = ({ fill = '#9D9D9D' }: any) => (
+export const SketchyGlobe = ( { fill = '#9D9D9D' }: any ) => (
   <svg
     className='h-5 w-5 stroke-1'
     viewBox='0 0 107 111'
     fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
+    xmlns='http://www.w3.org/2000/svg'>
     <motion.path
       d='M105.3 51.4014L47 109.601C48.6 109.901 50.2 110.201 51.8 110.401L106 56.2014C105.9 54.6014 105.6 53.0014 105.3 51.4014Z'
       fill={fill}
@@ -1296,18 +1259,13 @@ export const SketchyGlobe = ({ fill = '#9D9D9D' }: any) => (
   </svg>
 )
 
-export const HandrawnArrowRight = ({
-  stroke = 'currentColor',
-  onClick,
-  className,
-}: any) => (
+export const HandrawnArrowRight = ( { stroke = 'currentColor', onClick, className }: any ) => (
   <svg
-    className={cn('w-10 h-10', className)}
+    className={cn( 'w-10 h-10', className )}
     viewBox='0 0 110 33'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
-    onClick={onClick}
-  >
+    onClick={onClick}>
     <motion.path
       d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
       stroke={stroke}
@@ -1323,13 +1281,9 @@ export const HandrawnArrowRight = ({
   </svg>
 )
 
-export const HandrawnArrowLeft = ({
-  stroke = 'currentColor',
-  onClick,
-  className,
-}: any) => (
+export const HandrawnArrowLeft = ( { stroke = 'currentColor', onClick, className }: any ) => (
   <svg
-    className={cn('w-10 h-10', className)}
+    className={cn( 'w-10 h-10', className )}
     viewBox='0 0 110 33'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -1337,8 +1291,7 @@ export const HandrawnArrowLeft = ({
     style={{
       transform: 'rotate(180deg)',
       transformOrigin: 'center',
-    }}
-  >
+    }}>
     <motion.path
       d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
       stroke={stroke}
@@ -1354,15 +1307,9 @@ export const HandrawnArrowLeft = ({
   </svg>
 )
 
-export const MinimizeIcon = ({ stroke, fill, className }: any) => {
+export const MinimizeIcon = ( { stroke, fill, className }: any ) => {
   return (
-    <svg
-      width='20'
-      height='9'
-      viewBox='0 0 20 9'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-    >
+    <svg width='20' height='9' viewBox='0 0 20 9' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <g filter='url(#filter0_d_1_346)'>
         <rect x='4' y='4' width='12' height='1' fill='#FA1E4E' />
       </g>
@@ -1374,8 +1321,7 @@ export const MinimizeIcon = ({ stroke, fill, className }: any) => {
           width='20'
           height='9'
           filterUnits='userSpaceOnUse'
-          color-interpolation-filters='sRGB'
-        >
+          color-interpolation-filters='sRGB'>
           <feFlood flood-opacity='0' result='BackgroundImageFix' />
           <feColorMatrix
             in='SourceAlpha'
@@ -1389,42 +1335,20 @@ export const MinimizeIcon = ({ stroke, fill, className }: any) => {
             type='matrix'
             values='0 0 0 0 0.980392 0 0 0 0 0.117647 0 0 0 0 0.305882 0 0 0 0.5 0'
           />
-          <feBlend
-            mode='normal'
-            in2='BackgroundImageFix'
-            result='effect1_dropShadow_1_346'
-          />
-          <feBlend
-            mode='normal'
-            in='SourceGraphic'
-            in2='effect1_dropShadow_1_346'
-            result='shape'
-          />
+          <feBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_1_346' />
+          <feBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_1_346' result='shape' />
         </filter>
       </defs>
     </svg>
   )
 }
 
-export const AddIconAlt = ({ stroke, fill, className }: any) => {
+export const AddIconAlt = ( { stroke, fill, className }: any ) => {
   return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      width='21'
-      height='21'
-      viewBox='0 0 21 21'
-      fill='none'
-    >
+    <svg xmlns='http://www.w3.org/2000/svg' width='21' height='21' viewBox='0 0 21 21' fill='none'>
       <g filter='url(#filter0_d_1_347)'>
         <rect x='4' y='10' width='13' height='1' fill='#FA1E4E' />
-        <rect
-          x='11'
-          y='4'
-          width='13'
-          height='1'
-          transform='rotate(90 11 4)'
-          fill='#FA1E4E'
-        />
+        <rect x='11' y='4' width='13' height='1' transform='rotate(90 11 4)' fill='#FA1E4E' />
       </g>
       <defs>
         <filter
@@ -1434,8 +1358,7 @@ export const AddIconAlt = ({ stroke, fill, className }: any) => {
           width='21'
           height='21'
           filterUnits='userSpaceOnUse'
-          color-interpolation-filters='sRGB'
-        >
+          color-interpolation-filters='sRGB'>
           <feFlood flood-opacity='0' result='BackgroundImageFix' />
           <feColorMatrix
             in='SourceAlpha'
@@ -1449,32 +1372,17 @@ export const AddIconAlt = ({ stroke, fill, className }: any) => {
             type='matrix'
             values='0 0 0 0 0.980392 0 0 0 0 0.117647 0 0 0 0 0.305882 0 0 0 0.5 0'
           />
-          <feBlend
-            mode='normal'
-            in2='BackgroundImageFix'
-            result='effect1_dropShadow_1_347'
-          />
-          <feBlend
-            mode='normal'
-            in='SourceGraphic'
-            in2='effect1_dropShadow_1_347'
-            result='shape'
-          />
+          <feBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_1_347' />
+          <feBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_1_347' result='shape' />
         </filter>
       </defs>
     </svg>
   )
 }
 
-export const GXLogo = ({ stroke, fill, className }: any) => {
+export const GXLogo = ( { stroke, fill, className }: any ) => {
   return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      width='33'
-      height='33'
-      viewBox='0 0 33 33'
-      fill='none'
-    >
+    <svg xmlns='http://www.w3.org/2000/svg' width='33' height='33' viewBox='0 0 33 33' fill='none'>
       <g filter='url(#filter0_d_1_259)'>
         <motion.path
           d='M24.0719 24.9057C22.7399 25.7798 21.217 26.2431 19.6637 26.2431C17.1213 26.2431 14.7107 25.0061 13.0502 22.8494C13.0442 22.842 13.0386 22.8352 13.0327 22.8278C11.759 21.3242 10.9983 19.1153 10.9459 16.7808L10.9456 16.2331C10.9983 13.885 11.759 11.6761 13.0499 10.1512C14.7107 7.99447 17.1216 6.75747 19.6637 6.75747C21.217 6.75747 22.7402 7.22075 24.0728 8.09548C26.4511 10.2398 27.8152 13.3 27.8152 16.5003C27.8152 19.7009 26.4508 22.7614 24.0719 24.9057ZM15.9605 27.8021C9.91832 27.5186 5.18485 22.5543 5.18485 16.5003C5.18485 10.2611 10.2607 5.18486 16.5111 5.18516C16.5138 5.18516 16.5395 5.18545 16.5425 5.18545C17.5322 5.18901 18.5079 5.32201 19.4475 5.57527C16.6151 5.64281 13.9518 7.03828 12.1284 9.40712C10.6825 11.1136 9.81968 13.5921 9.76103 16.2198V16.7941C9.81968 19.4026 10.679 21.8763 12.1195 23.5831C13.9595 25.9665 16.6198 27.3578 19.4483 27.4253C18.3239 27.7286 17.1308 27.8578 15.9605 27.8021ZM24.8311 7.18224C22.5509 5.14191 19.6089 4.01214 16.5339 4.00059C16.5301 4.0003 16.5037 4 16.5001 4C9.60759 4 4 9.60766 4 16.5003C4 23.1883 9.22933 28.6727 15.9057 28.9858C16.1026 28.995 16.3008 29 16.5001 29C19.5772 29 22.5349 27.8711 24.8276 25.8207L24.8302 25.8189C27.4801 23.4486 29 20.0522 29 16.5003C29 12.9487 27.4804 9.55226 24.8311 7.18224Z'
@@ -1493,8 +1401,7 @@ export const GXLogo = ({ stroke, fill, className }: any) => {
           width='33'
           height='33'
           filterUnits='userSpaceOnUse'
-          color-interpolation-filters='sRGB'
-        >
+          color-interpolation-filters='sRGB'>
           <feFlood flood-opacity='0' result='BackgroundImageFix' />
           <feColorMatrix
             in='SourceAlpha'
@@ -1508,51 +1415,38 @@ export const GXLogo = ({ stroke, fill, className }: any) => {
             type='matrix'
             values='0 0 0 0 0.980392 0 0 0 0 0.117647 0 0 0 0 0.305882 0 0 0 0.5 0'
           />
-          <feBlend
-            mode='normal'
-            in2='BackgroundImageFix'
-            result='effect1_dropShadow_1_259'
-          />
-          <feBlend
-            mode='normal'
-            in='SourceGraphic'
-            in2='effect1_dropShadow_1_259'
-            result='shape'
-          />
+          <feBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_1_259' />
+          <feBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_1_259' result='shape' />
         </filter>
       </defs>
     </svg>
   )
 }
 
-export const TallyMark5 = ({ stroke, fill, className }: any) => {
+export const TallyMark5 = ( { stroke, fill, className }: any ) => {
   return <Tally5 />
 }
 
-export const TallyMark4 = ({ stroke, fill, className }: any) => {
+export const TallyMark4 = ( { stroke, fill, className }: any ) => {
   return <Tally4 />
 }
 
-export const TallyMark3 = ({ stroke, fill, className }: any) => {
+export const TallyMark3 = ( { stroke, fill, className }: any ) => {
   return <Tally3 />
 }
 
-export const TallyMark2 = ({ stroke, fill, className }: any) => {
+export const TallyMark2 = ( { stroke, fill, className }: any ) => {
   return <Tally2 />
 }
 
-export const TallyMark1 = ({ stroke, fill, className }: any) => {
+export const TallyMark1 = ( { stroke, fill, className }: any ) => {
   return <Tally1 />
 }
 
 // <AudioLines />
 
 // <AudioLines />
-export const WaypointsIcon = ({
-  stroke = 'currentColor',
-  fill,
-  className,
-}: any) => {
+export const WaypointsIcon = ( { stroke = 'currentColor', fill, className }: any ) => {
   const draw = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: {
@@ -1580,23 +1474,10 @@ export const WaypointsIcon = ({
       variants={draw}
       initial='hidden'
       animate='visible'
-      className={className}
-    >
-      <motion.circle
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        cx='12'
-        cy='4.5'
-        r='2.5'
-      />
+      className={className}>
+      <motion.circle initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} cx='12' cy='4.5' r='2.5' />
       <motion.path d='m10.2 6.3-3.9 3.9' />
-      <motion.circle
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        cx='4.5'
-        cy='12'
-        r='2.5'
-      />
+      <motion.circle initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} cx='4.5' cy='12' r='2.5' />
       <motion.path d='M7 12h10' />
       <motion.circle
         initial={{ pathLength: 0 }}
@@ -1617,10 +1498,7 @@ export const WaypointsIcon = ({
   )
 }
 
-export const ConnectionsIcon = ({
-  stroke = 'currentColor',
-  className,
-}: any) => {
+export const ConnectionsIcon = ( { stroke = 'currentColor', className }: any ) => {
   const draw = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: {
@@ -1648,8 +1526,7 @@ export const ConnectionsIcon = ({
       variants={draw}
       initial='hidden'
       animate='visible'
-      className={className}
-    >
+      className={className}>
       <motion.circle cx='18' cy='5' r='3' variants={draw} />
       <motion.circle cx='6' cy='12' r='3' variants={draw} />
       <motion.circle cx='18' cy='19' r='3' variants={draw} />
@@ -1659,7 +1536,7 @@ export const ConnectionsIcon = ({
   )
 }
 
-export const GroupIcon = ({ stroke = 'currentColor', className }: any) => {
+export const GroupIcon = ( { stroke = 'currentColor', className }: any ) => {
   const draw = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: {
@@ -1686,8 +1563,7 @@ export const GroupIcon = ({ stroke = 'currentColor', className }: any) => {
       className={className}
       variants={draw}
       animate='visible'
-      initial='hidden'
-    >
+      initial='hidden'>
       <motion.path d='M3 7V5c0-1.1.9-2 2-2h2' variants={draw} />
       <motion.path d='M17 3h2c1.1 0 2 .9 2 2v2' variants={draw} />
       <motion.path d='M21 17v2c0 1.1-.9 2-2 2h-2' variants={draw} />

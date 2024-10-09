@@ -15,10 +15,10 @@ import {
 } from '@react-three/drei'
 // import { MotionCanvas, LayoutCamera } from "framer-motion-3d"
 
-export const RootConnectionGraph = ({ models }: any) => {
+export const RootConnectionGraph = ( { models }: any ) => {
   // {topics, testimonies, organizations, personnel}
   const [[root, topics, events, personnel, testimonies, organizations]]: any =
-    useState(() =>
+    useState( () =>
       [
         'root',
         'topics',
@@ -27,11 +27,11 @@ export const RootConnectionGraph = ({ models }: any) => {
         'testimonies',
         'organizations',
         'testimonies',
-      ].map(createRef)
+      ].map( createRef )
     )
 
-  const eventNodeRefs = models.events.map(createRef)
-  const topicNodeRefs = models?.topics?.map(createRef)
+  const eventNodeRefs = models.events.map( createRef )
+  const topicNodeRefs = models?.topics?.map( createRef )
   // const [childNodes, setChildNodes]: any = useState(
   //   Object.keys(models).reduce((acc: any, key: any) => {
   //     const rootModels = models[key]
@@ -45,26 +45,26 @@ export const RootConnectionGraph = ({ models }: any) => {
   // )
 
   // console.log('childNodes: ', childNodes)
-  const [rootRecords, setRootRecords]: any = useState(null)
+  const [rootRecords, setRootRecords]: any = useState( null )
 
-  const calculatePosition = (index: any, length: any) => {
+  const calculatePosition = ( index: any, length: any ) => {
     const radius = 20
-    const phi = Math.acos(-1 + (2 * index) / length)
-    const theta = Math.sqrt(length * Math.PI) * phi
+    const phi = Math.acos( -1 + ( 2 * index ) / length )
+    const theta = Math.sqrt( length * Math.PI ) * phi
     return new THREE.Vector3().setFromSpherical(
-      new THREE.Spherical(radius, phi, theta)
+      new THREE.Spherical( radius, phi, theta )
     )
   }
 
-  const fetchRootRecords = useCallback(async (rootType: any) => {
-    const { records } = await fetch(`/api/xata?type=${rootType}`).then((res) =>
+  const fetchRootRecords = useCallback( async ( rootType: any ) => {
+    const { records } = await fetch( `/api/xata?type=${rootType}` ).then( ( res ) =>
       res.json()
     )
-    console.log('fetchRootRecords records: ', records)
+    console.log( 'fetchRootRecords records: ', records )
     // const newNodes = records.map(createRef)
     // console.log('newNodes: ', newNodes)
     return records
-  }, [])
+  }, [] )
 
   // const populateRootRecords = useCallback(
   //   async (rootType: any) => {
@@ -185,7 +185,7 @@ export const RootConnectionGraph = ({ models }: any) => {
             color={DOMAIN_MODEL_COLORS.events}
             position={[-4, -3, 0]}
             connectedTo={[...eventNodeRefs]}
-            // eventNodeRefs
+          // eventNodeRefs
           />
 
           <Node
@@ -199,7 +199,7 @@ export const RootConnectionGraph = ({ models }: any) => {
             connectedTo={[...topicNodeRefs]}
           />
 
-          {eventNodeRefs.map((ref: any, index: any) => {
+          {eventNodeRefs.map( ( ref: any, index: any ) => {
             const node = models.events[index]
             return (
               <Node
@@ -208,12 +208,12 @@ export const RootConnectionGraph = ({ models }: any) => {
                 name={node.name}
                 color={DOMAIN_MODEL_COLORS.events}
                 child
-                position={calculatePosition(index, models.events.length)}
+                position={calculatePosition( index, models.events.length )}
               />
             )
-          })}
+          } )}
 
-          {topicNodeRefs.map((ref: any, index: any) => {
+          {topicNodeRefs.map( ( ref: any, index: any ) => {
             const node = models.topics[index]
             return (
               <Node
@@ -222,10 +222,10 @@ export const RootConnectionGraph = ({ models }: any) => {
                 name={node.name}
                 color={DOMAIN_MODEL_COLORS.topics}
                 child
-                position={calculatePosition(index, models.topics.length)}
+                position={calculatePosition( index, models.topics.length )}
               />
             )
-          })}
+          } )}
           {/* <Node
               ref={topics}
               name='topics'

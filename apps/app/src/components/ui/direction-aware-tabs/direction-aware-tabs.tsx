@@ -20,47 +20,47 @@ interface OgImageSectionProps {
   onChange?: () => void
 }
 
-function DirectionAwareTabs({
+function DirectionAwareTabs( {
   tabs,
   className,
   rounded,
   onChange,
-}: OgImageSectionProps) {
-  const [activeTab, setActiveTab] = useState(0)
-  const [direction, setDirection] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
+}: OgImageSectionProps ) {
+  const [activeTab, setActiveTab] = useState( 0 )
+  const [direction, setDirection] = useState( 0 )
+  const [isAnimating, setIsAnimating] = useState( false )
   const [ref, bounds] = useMeasure()
 
-  const content = useMemo(() => {
-    const activeTabContent = tabs.find((tab) => tab.id === activeTab)?.content
+  const content = useMemo( () => {
+    const activeTabContent = tabs.find( ( tab ) => tab.id === activeTab )?.content
     return activeTabContent || null
-  }, [activeTab, tabs])
+  }, [activeTab, tabs] )
 
-  const handleTabClick = (newTabId: number) => {
-    if (newTabId !== activeTab && !isAnimating) {
+  const handleTabClick = ( newTabId: number ) => {
+    if ( newTabId !== activeTab && !isAnimating ) {
       const newDirection = newTabId > activeTab ? 1 : -1
-      setDirection(newDirection)
-      setActiveTab(newTabId)
+      setDirection( newDirection )
+      setActiveTab( newTabId )
       onChange ? onChange() : null
     }
   }
 
   const variants = {
-    initial: (direction: number) => ({
+    initial: ( direction: number ) => ( {
       x: 300 * direction,
       opacity: 0,
       filter: 'blur(4px)',
-    }),
+    } ),
     active: {
       x: 0,
       opacity: 1,
       filter: 'blur(0px)',
     },
-    exit: (direction: number) => ({
+    exit: ( direction: number ) => ( {
       x: -300 * direction,
       opacity: 0,
       filter: 'blur(4px)',
-    }),
+    } ),
   }
 
   return (
@@ -72,10 +72,10 @@ function DirectionAwareTabs({
           rounded
         )}
       >
-        {tabs.map((tab) => (
+        {tabs.map( ( tab ) => (
           <Button
             key={tab.id}
-            onClick={() => handleTabClick(tab.id)}
+            onClick={() => handleTabClick( tab.id )}
             className={cn(
               'relative rounded-full px-3.5 py-1.5 text-xs sm:text-sm font-medium text-neutral-200  transition focus-visible:outline-1 focus-visible:ring-1  focus-visible:outline-none flex gap-2 items-center ',
               activeTab === tab.id
@@ -96,7 +96,7 @@ function DirectionAwareTabs({
 
             {tab.label}
           </Button>
-        ))}
+        ) )}
       </div>
       <MotionConfig transition={{ duration: 0.4, type: 'spring', bounce: 0.2 }}>
         <motion.div
@@ -108,7 +108,7 @@ function DirectionAwareTabs({
             <AnimatePresence
               custom={direction}
               mode='popLayout'
-              onExitComplete={() => setIsAnimating(false)}
+              onExitComplete={() => setIsAnimating( false )}
             >
               <motion.div
                 key={activeTab}
@@ -117,8 +117,8 @@ function DirectionAwareTabs({
                 animate='active'
                 exit='exit'
                 custom={direction}
-                onAnimationStart={() => setIsAnimating(true)}
-                onAnimationComplete={() => setIsAnimating(false)}
+                onAnimationStart={() => setIsAnimating( true )}
+                onAnimationComplete={() => setIsAnimating( false )}
               >
                 {content}
               </motion.div>

@@ -1,6 +1,6 @@
 import { cn } from '@/utils'
 
-export function Card({
+export function Card( {
   title,
   description,
   content,
@@ -10,7 +10,7 @@ export function Card({
   description: string
   content: any
   className: string
-}>) {
+}> ) {
   return (
     <div
       className={cn(

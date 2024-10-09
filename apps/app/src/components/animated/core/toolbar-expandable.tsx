@@ -93,23 +93,23 @@ const ITEMS = [
 ]
 
 export default function ToolbarExpandable() {
-  const [active, setActive] = useState<number | null>(null)
+  const [active, setActive] = useState<number | null>( null )
   const [contentRef, { height: heightContent }] = useMeasure()
   const [menuRef, { width: widthContainer }] = useMeasure()
-  const ref = useRef<HTMLDivElement>(null)
-  const [isOpen, setIsOpen] = useState(false)
-  const [maxWidth, setMaxWidth] = useState(0)
+  const ref = useRef<HTMLDivElement>( null )
+  const [isOpen, setIsOpen] = useState( false )
+  const [maxWidth, setMaxWidth] = useState( 0 )
 
-  useClickOutside(ref, () => {
-    setIsOpen(false)
-    setActive(null)
-  })
+  useClickOutside( ref, () => {
+    setIsOpen( false )
+    setActive( null )
+  } )
 
-  useEffect(() => {
-    if (!widthContainer || maxWidth > 0) return
+  useEffect( () => {
+    if ( !widthContainer || maxWidth > 0 ) return
 
-    setMaxWidth(widthContainer)
-  }, [widthContainer, maxWidth])
+    setMaxWidth( widthContainer )
+  }, [widthContainer, maxWidth] )
 
   return (
     <MotionConfig transition={transition}>
@@ -128,7 +128,7 @@ export default function ToolbarExpandable() {
                   }}
                 >
                   <div ref={contentRef} className='p-2'>
-                    {ITEMS.map((item) => {
+                    {ITEMS.map( ( item ) => {
                       const isSelected = active === item.id
 
                       return (
@@ -148,14 +148,14 @@ export default function ToolbarExpandable() {
                           </div>
                         </motion.div>
                       )
-                    })}
+                    } )}
                   </div>
                 </motion.div>
               ) : null}
             </AnimatePresence>
           </div>
           <div className='flex space-x-2 p-2' ref={menuRef}>
-            {ITEMS.map((item) => (
+            {ITEMS.map( ( item ) => (
               <button
                 key={item.id}
                 aria-label={item.label}
@@ -165,19 +165,19 @@ export default function ToolbarExpandable() {
                 )}
                 type='button'
                 onClick={() => {
-                  if (!isOpen) setIsOpen(true)
-                  if (active === item.id) {
-                    setIsOpen(false)
-                    setActive(null)
+                  if ( !isOpen ) setIsOpen( true )
+                  if ( active === item.id ) {
+                    setIsOpen( false )
+                    setActive( null )
                     return
                   }
 
-                  setActive(item.id)
+                  setActive( item.id )
                 }}
               >
                 {item.title}
               </button>
-            ))}
+            ) )}
           </div>
         </div>
       </div>

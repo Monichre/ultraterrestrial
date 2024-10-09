@@ -19,39 +19,39 @@ import { initiateDatabaseTableQuery } from '@/features/mindmap/api/search'
 import { InputWithVanishAnimation } from '@/features/mindmap/components/cards/root-node-card/InputWithVanishAnimation'
 
 
-export const MindMapEntityLoaderCard = memo(({ type }: any) => {
+export const MindMapEntityLoaderCard = memo( ( { type }: any ) => {
   const { loadNodesFromTableQuery, addNextEntitiesToMindMap } = useMindMap()
 
-  const [searchTerm, setSearchTerm]: any = useState('')
+  const [searchTerm, setSearchTerm]: any = useState( '' )
 
-  const [searchResults, setSearchResults] = useState([])
-  const updateSearchTerm = (event: any) => {
+  const [searchResults, setSearchResults] = useState( [] )
+  const updateSearchTerm = ( event: any ) => {
     const { value } = event.target
 
-    setSearchTerm(value)
+    setSearchTerm( value )
   }
 
-  const runSearch = useCallback(async () => {
+  const runSearch = useCallback( async () => {
     const keyword = searchTerm
     const table = type
 
-    const { results } = await initiateDatabaseTableQuery({ table, keyword })
+    const { results } = await initiateDatabaseTableQuery( { table, keyword } )
 
-    loadNodesFromTableQuery({
+    loadNodesFromTableQuery( {
       type,
       searchResults: results,
-      searchTerm: keyword.trim().replace(/ /g, ''),
-    })
-    setSearchTerm('')
-  }, [searchTerm, type, loadNodesFromTableQuery])
+      searchTerm: keyword.trim().replace( / /g, '' ),
+    } )
+    setSearchTerm( '' )
+  }, [searchTerm, type, loadNodesFromTableQuery] )
 
-  const handleLoadingRecords = useCallback(async () => {
-    await addNextEntitiesToMindMap({ data: { type } })
-  }, [type, addNextEntitiesToMindMap])
+  const handleLoadingRecords = useCallback( async () => {
+    await addNextEntitiesToMindMap( { data: { type } } )
+  }, [type, addNextEntitiesToMindMap] )
 
   const interim = type.toLowerCase()
   const title =
-    interim === 'personnel' ? 'Subject Matter Experts' : capitalize(interim)
+    interim === 'personnel' ? 'Subject Matter Experts' : capitalize( interim )
 
   return (
     <Card
@@ -108,4 +108,4 @@ export const MindMapEntityLoaderCard = memo(({ type }: any) => {
       </CardFooter>
     </Card>
   )
-})
+} )

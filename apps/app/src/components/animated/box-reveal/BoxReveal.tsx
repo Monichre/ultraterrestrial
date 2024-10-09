@@ -12,27 +12,27 @@ interface BoxRevealProps {
   duration?: number
 }
 
-export const BoxReveal = ({
+export const BoxReveal = ( {
   children,
   width = 'fit-content',
   boxColor,
   duration,
-}: BoxRevealProps) => {
+}: BoxRevealProps ) => {
   const mainControls = useAnimation()
   const slideControls = useAnimation()
 
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true })
+  const ref = useRef( null )
+  const isInView = useInView( ref, { once: true } )
 
-  useEffect(() => {
-    if (isInView) {
-      slideControls.start('visible')
-      mainControls.start('visible')
+  useEffect( () => {
+    if ( isInView ) {
+      slideControls.start( 'visible' )
+      mainControls.start( 'visible' )
     } else {
-      slideControls.start('hidden')
-      mainControls.start('hidden')
+      slideControls.start( 'hidden' )
+      mainControls.start( 'hidden' )
     }
-  }, [isInView, mainControls, slideControls])
+  }, [isInView, mainControls, slideControls] )
 
   return (
     <div ref={ref} style={{ position: 'relative', width, overflow: 'hidden' }}>

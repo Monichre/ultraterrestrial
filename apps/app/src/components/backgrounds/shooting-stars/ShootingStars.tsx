@@ -25,10 +25,10 @@ interface ShootingStarsProps {
 }
 
 const getRandomStartPoint = () => {
-  const side = Math.floor(Math.random() * 4)
+  const side = Math.floor( Math.random() * 4 )
   const offset = Math.random() * window.innerWidth
 
-  switch (side) {
+  switch ( side ) {
     case 0:
       return { x: offset, y: 0, angle: 45 }
     case 1:
@@ -42,7 +42,7 @@ const getRandomStartPoint = () => {
   }
 }
 
-export const ShootingStars: React.FC<ShootingStarsProps> = ({
+export const ShootingStars: React.FC<ShootingStarsProps> = ( {
   minSpeed = 10,
   maxSpeed = 30,
   minDelay = 1200,
@@ -52,11 +52,11 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
   starWidth = 10,
   starHeight = 1,
   className,
-}) => {
-  const [star, setStar] = useState<ShootingStar | null>(null)
-  const svgRef = useRef<SVGSVGElement>(null)
+} ) => {
+  const [star, setStar] = useState<ShootingStar | null>( null )
+  const svgRef = useRef<SVGSVGElement>( null )
 
-  useEffect(() => {
+  useEffect( () => {
     const createStar = () => {
       const { x, y, angle } = getRandomStartPoint()
       const newStar: ShootingStar = {
@@ -65,31 +65,31 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
         y,
         angle,
         scale: 1,
-        speed: Math.random() * (maxSpeed - minSpeed) + minSpeed,
+        speed: Math.random() * ( maxSpeed - minSpeed ) + minSpeed,
         distance: 0,
       }
-      setStar(newStar)
+      setStar( newStar )
 
-      const randomDelay = Math.random() * (maxDelay - minDelay) + minDelay
-      setTimeout(createStar, randomDelay)
+      const randomDelay = Math.random() * ( maxDelay - minDelay ) + minDelay
+      setTimeout( createStar, randomDelay )
     }
 
     createStar()
 
-    return () => {}
-  }, [minSpeed, maxSpeed, minDelay, maxDelay])
+    return () => { }
+  }, [minSpeed, maxSpeed, minDelay, maxDelay] )
 
-  useEffect(() => {
+  useEffect( () => {
     const moveStar = () => {
-      if (star) {
-        setStar((prevStar) => {
-          if (!prevStar) return null
+      if ( star ) {
+        setStar( ( prevStar ) => {
+          if ( !prevStar ) return null
           const newX =
             prevStar.x +
-            prevStar.speed * Math.cos((prevStar.angle * Math.PI) / 180)
+            prevStar.speed * Math.cos( ( prevStar.angle * Math.PI ) / 180 )
           const newY =
             prevStar.y +
-            prevStar.speed * Math.sin((prevStar.angle * Math.PI) / 180)
+            prevStar.speed * Math.sin( ( prevStar.angle * Math.PI ) / 180 )
           const newDistance = prevStar.distance + prevStar.speed
           const newScale = 1 + newDistance / 100
           if (
@@ -107,18 +107,18 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
             distance: newDistance,
             scale: newScale,
           }
-        })
+        } )
       }
     }
 
-    const animationFrame = requestAnimationFrame(moveStar)
-    return () => cancelAnimationFrame(animationFrame)
-  }, [star])
+    const animationFrame = requestAnimationFrame( moveStar )
+    return () => cancelAnimationFrame( animationFrame )
+  }, [star] )
 
   return (
     <svg
       ref={svgRef}
-      className={cn('w-full h-full absolute inset-0 z-0', className)}
+      className={cn( 'w-full h-full absolute inset-0 z-0', className )}
     >
       {star && (
         <rect
@@ -128,9 +128,8 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
           width={starWidth * star.scale}
           height={starHeight}
           fill='url(#gradient)'
-          transform={`rotate(${star.angle}, ${
-            star.x + (starWidth * star.scale) / 2
-          }, ${star.y + starHeight / 2})`}
+          transform={`rotate(${star.angle}, ${star.x + ( starWidth * star.scale ) / 2
+            }, ${star.y + starHeight / 2})`}
         />
       )}
       <defs>

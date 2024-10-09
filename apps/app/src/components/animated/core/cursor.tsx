@@ -22,10 +22,10 @@ type CursorProps = {
     animate: Variant
     exit: Variant
   }
-  onPositionChange?: (x: number, y: number) => void
+  onPositionChange?: ( x: number, y: number ) => void
 }
 
-export function Cursor({
+export function Cursor( {
   children,
   className,
   springConfig,
@@ -33,79 +33,79 @@ export function Cursor({
   variants,
   transition,
   onPositionChange,
-}: CursorProps) {
+}: CursorProps ) {
   const cursorX = useMotionValue(
     typeof window !== 'undefined' ? window.innerWidth / 2 : 0
   )
   const cursorY = useMotionValue(
     typeof window !== 'undefined' ? window.innerHeight / 2 : 0
   )
-  const cursorRef = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(!attachToParent)
+  const cursorRef = useRef<HTMLDivElement>( null )
+  const [isVisible, setIsVisible] = useState( !attachToParent )
 
-  useEffect(() => {
-    if (!attachToParent) {
+  useEffect( () => {
+    if ( !attachToParent ) {
       document.body.style.cursor = 'none'
     } else {
       document.body.style.cursor = 'auto'
     }
 
-    const updatePosition = (e: MouseEvent) => {
-      cursorX.set(e.clientX)
-      cursorY.set(e.clientY)
-      onPositionChange?.(e.clientX, e.clientY)
+    const updatePosition = ( e: MouseEvent ) => {
+      cursorX.set( e.clientX )
+      cursorY.set( e.clientY )
+      onPositionChange?.( e.clientX, e.clientY )
     }
 
-    document.addEventListener('mousemove', updatePosition)
+    document.addEventListener( 'mousemove', updatePosition )
 
     return () => {
-      document.removeEventListener('mousemove', updatePosition)
+      document.removeEventListener( 'mousemove', updatePosition )
     }
-  }, [cursorX, cursorY, onPositionChange])
+  }, [cursorX, cursorY, onPositionChange] )
 
-  const cursorXSpring = useSpring(cursorX, springConfig || { duration: 0 })
-  const cursorYSpring = useSpring(cursorY, springConfig || { duration: 0 })
+  const cursorXSpring = useSpring( cursorX, springConfig || { duration: 0 } )
+  const cursorYSpring = useSpring( cursorY, springConfig || { duration: 0 } )
 
-  useEffect(() => {
-    const handleVisibilityChange = (visible: boolean) => {
-      setIsVisible(visible)
+  useEffect( () => {
+    const handleVisibilityChange = ( visible: boolean ) => {
+      setIsVisible( visible )
     }
 
-    if (attachToParent && cursorRef.current) {
+    if ( attachToParent && cursorRef.current ) {
       const parent = cursorRef.current.parentElement
-      if (parent) {
-        parent.addEventListener('mouseenter', () => {
+      if ( parent ) {
+        parent.addEventListener( 'mouseenter', () => {
           parent.style.cursor = 'none'
-          handleVisibilityChange(true)
-        })
-        parent.addEventListener('mouseleave', () => {
+          handleVisibilityChange( true )
+        } )
+        parent.addEventListener( 'mouseleave', () => {
           parent.style.cursor = 'auto'
-          handleVisibilityChange(false)
-        })
+          handleVisibilityChange( false )
+        } )
       }
     }
 
     return () => {
-      if (attachToParent && cursorRef.current) {
+      if ( attachToParent && cursorRef.current ) {
         const parent = cursorRef.current.parentElement
-        if (parent) {
-          parent.removeEventListener('mouseenter', () => {
+        if ( parent ) {
+          parent.removeEventListener( 'mouseenter', () => {
             parent.style.cursor = 'none'
-            handleVisibilityChange(true)
-          })
-          parent.removeEventListener('mouseleave', () => {
+            handleVisibilityChange( true )
+          } )
+          parent.removeEventListener( 'mouseleave', () => {
             parent.style.cursor = 'auto'
-            handleVisibilityChange(false)
-          })
+            handleVisibilityChange( false )
+          } )
         }
       }
     }
-  }, [attachToParent])
+  }, [attachToParent] )
 
   return (
     <motion.div
       ref={cursorRef}
-      className={cn('pointer-events-none fixed left-0 top-0 z-50', className)}
+      className={cn( 'pointer-events-none fixed left-0 top-0 z-50', className )}
       style={{
         x: cursorXSpring,
         y: cursorYSpring,

@@ -30,7 +30,7 @@ export interface AnimatedBeamProps {
   endYOffset?: number
 }
 
-export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
+export const AnimatedBeam: React.FC<AnimatedBeamProps> = ( {
   className,
   containerRef,
   fromRef,
@@ -48,36 +48,36 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
   startYOffset = 0,
   endXOffset = 0,
   endYOffset = 0,
-}) => {
+} ) => {
   const id = useId()
-  const [pathD, setPathD] = useState('')
-  const [svgDimensions, setSvgDimensions] = useState({ width: 0, height: 0 })
+  const [pathD, setPathD] = useState( '' )
+  const [svgDimensions, setSvgDimensions] = useState( { width: 0, height: 0 } )
 
   // Calculate the gradient coordinates based on the reverse prop
   const gradientCoordinates = reverse
     ? {
-        x1: ['90%', '-10%'],
-        x2: ['100%', '0%'],
-        y1: ['0%', '0%'],
-        y2: ['0%', '0%'],
-      }
+      x1: ['90%', '-10%'],
+      x2: ['100%', '0%'],
+      y1: ['0%', '0%'],
+      y2: ['0%', '0%'],
+    }
     : {
-        x1: ['10%', '110%'],
-        x2: ['0%', '100%'],
-        y1: ['0%', '0%'],
-        y2: ['0%', '0%'],
-      }
+      x1: ['10%', '110%'],
+      x2: ['0%', '100%'],
+      y1: ['0%', '0%'],
+      y2: ['0%', '0%'],
+    }
 
-  useEffect(() => {
+  useEffect( () => {
     const updatePath = () => {
-      if (containerRef.current && fromRef.current && toRef.current) {
+      if ( containerRef.current && fromRef.current && toRef.current ) {
         const containerRect = containerRef.current.getBoundingClientRect()
         const rectA = fromRef.current.getBoundingClientRect()
         const rectB = toRef.current.getBoundingClientRect()
 
         const svgWidth = containerRect.width
         const svgHeight = containerRect.height
-        setSvgDimensions({ width: svgWidth, height: svgHeight })
+        setSvgDimensions( { width: svgWidth, height: svgHeight } )
 
         const startX =
           rectA.left - containerRect.left + rectA.width / 2 + startXOffset
@@ -89,24 +89,23 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
           rectB.top - containerRect.top + rectB.height / 2 + endYOffset
 
         const controlY = startY - curvature
-        const d = `M ${startX},${startY} Q ${
-          (startX + endX) / 2
-        },${controlY} ${endX},${endY}`
-        setPathD(d)
+        const d = `M ${startX},${startY} Q ${( startX + endX ) / 2
+          },${controlY} ${endX},${endY}`
+        setPathD( d )
       }
     }
 
     // Initialize ResizeObserver
-    const resizeObserver = new ResizeObserver((entries) => {
+    const resizeObserver = new ResizeObserver( ( entries ) => {
       // For all entries, recalculate the path
-      for (let entry of entries) {
+      for ( let entry of entries ) {
         updatePath()
       }
-    })
+    } )
 
     // Observe the container element
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current)
+    if ( containerRef.current ) {
+      resizeObserver.observe( containerRef.current )
     }
 
     // Call the updatePath initially to set the initial path
@@ -125,13 +124,13 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
     startYOffset,
     endXOffset,
     endYOffset,
-  ])
+  ] )
 
   const svgRef: any = useRef()
-  const isInView = useInView(svgRef)
-  console.log('isInView: ', isInView)
-  const pathLength = useMotionValue(0)
-  const opacity = useTransform(pathLength, [0.05, 0.15], [0, 1])
+  const isInView = useInView( svgRef )
+  console.log( 'isInView: ', isInView )
+  const pathLength = useMotionValue( 0 )
+  const opacity = useTransform( pathLength, [0.05, 0.15], [0, 1] )
 
   const draw = {
     hidden: { pathLength: 0, opacity: 0 },
@@ -175,7 +174,7 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         style={{ pathLength, opacity }}
         custom={isInView}
 
-        // strokeDashoffset={'2px'}
+      // strokeDashoffset={'2px'}
       />
       <motion.path
         d={pathD}
@@ -187,7 +186,7 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         variants={draw}
         style={{ pathLength, opacity }}
 
-        // strokeDashoffset={'2px'}
+      // strokeDashoffset={'2px'}
       />
       <defs>
         <motion.linearGradient

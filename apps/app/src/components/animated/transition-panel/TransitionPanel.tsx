@@ -9,47 +9,46 @@ import {
 } from 'framer-motion'
 import { cn } from '@/utils'
 
-export const PanelMenuItem = ({
+export const PanelMenuItem = ( {
   title,
   onClick,
   active,
   index,
 }: {
   title: string
-  onClick: (index: number) => void
+  onClick: ( index: number ) => void
   active: boolean
   index: number
-}) => {
+} ) => {
   const handleClick = () => {
-    onClick(index)
+    onClick( index )
   }
   return (
     <button
       onClick={handleClick}
-      className={`rounded-md px-3 py-1 text-sm font-medium ${
-        active
+      className={`rounded-md px-3 py-1 text-sm font-medium ${active
           ? 'bg-zinc-200 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
           : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-400'
-      }`}
+        }`}
     >
       {title}
     </button>
   )
 }
 
-export const PanelMenu = ({
+export const PanelMenu = ( {
   items,
   activeIndex,
   onClick,
 }: {
   items: any[]
 
-  onClick: (index: number) => void
+  onClick: ( index: number ) => void
   activeIndex: number
-}) => {
+} ) => {
   return (
     <div className='mb-4 flex space-x-2'>
-      {items.map((item, index) => (
+      {items.map( ( item, index ) => (
         <PanelMenuItem
           key={index}
           index={index}
@@ -57,12 +56,12 @@ export const PanelMenu = ({
           onClick={onClick}
           active={activeIndex === index}
         />
-      ))}
+      ) )}
     </div>
   )
 }
 
-export const TransitionPanelCard = ({ item }: any) => {
+export const TransitionPanelCard = ( { item }: any ) => {
   return (
     <div className='py-2'>
       <h3 className='mb-2 font-medium text-zinc-800 dark:text-zinc-100'>
@@ -81,16 +80,16 @@ type TransitionPanelProps = {
   variants?: { enter: Variant; center: Variant; exit: Variant }
 } & MotionProps
 
-export function TransitionPanel({
+export function TransitionPanel( {
   children,
   className,
   transition,
   variants,
   activeIndex,
   ...motionProps
-}: TransitionPanelProps) {
+}: TransitionPanelProps ) {
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn( 'relative', className )}>
       <AnimatePresence
         initial={false}
         mode='popLayout'

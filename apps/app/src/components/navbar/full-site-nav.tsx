@@ -34,32 +34,32 @@ const transition = {
 }
 
 export const MenuItem = memo(
-  ({
+  ( {
     setActive,
     active,
     item,
     children,
   }: {
-    setActive: (item: string) => void
+    setActive: ( item: string ) => void
     active: string | null
     item: string
     children?: React.ReactNode
-  }) => {
-    const [visible, setVisible] = useState(item === active)
+  } ) => {
+    const [visible, setVisible] = useState( item === active )
 
     const handleMouseEnter = () => {
-      setActive(item)
+      setActive( item )
     }
 
-    useEffect(() => {
-      setVisible(item === active)
-    }, [active, item])
+    useEffect( () => {
+      setVisible( item === active )
+    }, [active, item] )
 
     return (
       <div
         onMouseEnter={handleMouseEnter}
         className='relative cursor-pointer z-50'
-        // onMouseLeave={handleMouseExit}
+      // onMouseLeave={handleMouseExit}
       >
         <LayoutGroup>
           {/* <AnimatePresence> */}
@@ -106,16 +106,16 @@ export const MenuItem = memo(
 
 MenuItem.displayName = 'FullSiteNavMenuItem'
 
-export const Menu = ({
+export const Menu = ( {
   setActive,
   children,
 }: {
-  setActive: (item: string | null) => void
+  setActive: ( item: string | null ) => void
   children: React.ReactNode
-}) => {
+} ) => {
   return (
     <nav
-      onMouseLeave={() => setActive(null)} // resets the state
+      onMouseLeave={() => setActive( null )} // resets the state
       className='relative flex justify-center space-x-12 px-8 py-6 '
     >
       {children}
@@ -123,7 +123,7 @@ export const Menu = ({
   )
 }
 
-export const HoveredLink = ({ children, ...rest }: any) => {
+export const HoveredLink = ( { children, ...rest }: any ) => {
   return (
     <Link
       {...rest}
@@ -136,12 +136,12 @@ export const HoveredLink = ({ children, ...rest }: any) => {
 }
 
 //just move open/close state to parent component
-export const SideMenuBtn = ({ open }: any) => {
-  const [crossed, setCrossedState] = useState(open)
+export const SideMenuBtn = ( { open }: any ) => {
+  const [crossed, setCrossedState] = useState( open )
 
-  useEffect(() => {
-    setCrossedState(open)
-  }, [open])
+  useEffect( () => {
+    setCrossedState( open )
+  }, [open] )
 
   return (
     <DropdownMenuTrigger asChild>
@@ -184,9 +184,9 @@ export const SideMenuBtn = ({ open }: any) => {
   )
 }
 
-export function DropdownMenuDemo({ isAdmin }: any) {
-  const [open, setOpen] = useState(false)
-  const handleOpen = (isOpen: boolean) => setOpen(isOpen)
+export function DropdownMenuDemo( { isAdmin }: any ) {
+  const [open, setOpen] = useState( false )
+  const handleOpen = ( isOpen: boolean ) => setOpen( isOpen )
   return (
     <DropdownMenu onOpenChange={handleOpen} open={open}>
       <SideMenuBtn open={open} />
@@ -231,16 +231,16 @@ export function DropdownMenuDemo({ isAdmin }: any) {
   )
 }
 
-export function FullSiteNav({ className }: { className?: string }) {
-  const [active, setActive] = useState<string | null>(null)
+export function FullSiteNav( { className }: { className?: string } ) {
+  const [active, setActive] = useState<string | null>( null )
 
   const pathname = usePathname()
   const { user }: any = useUser()
 
   const role = user?.publicMetadata?.role || 'guest'
   const isAdmin = role === 'admin'
-  const page = pathname.split('/')[pathname.split('/').length - 1]
-  if (pathname === '/explore/disclosure' || pathname === '/admin') {
+  const page = pathname.split( '/' )[pathname.split( '/' ).length - 1]
+  if ( pathname === '/explore/disclosure' || pathname === '/admin' ) {
     return null
   }
   className = `${className} ${page}`

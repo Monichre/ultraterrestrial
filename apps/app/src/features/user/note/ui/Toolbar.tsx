@@ -44,7 +44,7 @@ export type ToolbarDividerProps = {
 } & HTMLProps<HTMLDivElement>
 
 const ToolbarDivider = forwardRef<HTMLDivElement, ToolbarDividerProps>(
-  ({ horizontal, className, ...rest }, ref) => {
+  ( { horizontal, className, ...rest }, ref ) => {
     const dividerClassName = cn(
       'bg-neutral-200 dark:bg-neutral-800',
       horizontal
@@ -82,7 +82,7 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
     },
     ref
   ) => {
-    const buttonClass = cn('gap-1 min-w-[2rem] px-2 w-auto', className)
+    const buttonClass = cn( 'gap-1 min-w-[2rem] px-2 w-auto', className )
 
     const content = (
       <Button
@@ -97,7 +97,7 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
       </Button>
     )
 
-    if (tooltip) {
+    if ( tooltip ) {
       return (
         <Tooltip title={tooltip} shortcut={tooltipShortcut}>
           {content}

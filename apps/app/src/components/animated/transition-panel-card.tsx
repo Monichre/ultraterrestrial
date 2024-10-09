@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { TransitionPanel } from '@/components/animated/core/transition-panel'
 import useMeasure from 'react-use-measure'
 
-function Button({
+function Button( {
   onClick,
   children,
 }: {
   onClick: () => void
   children: React.ReactNode
-}) {
+} ) {
   return (
     <button
       onClick={onClick}
@@ -21,8 +21,8 @@ function Button({
   )
 }
 export function TransitionPanelCard() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [direction, setDirection] = useState(1)
+  const [activeIndex, setActiveIndex] = useState( 0 )
+  const [direction, setDirection] = useState( 1 )
   const [ref, bounds] = useMeasure()
 
   const FEATURES = [
@@ -48,27 +48,27 @@ export function TransitionPanelCard() {
     },
   ]
 
-  const handleSetActiveIndex = (newIndex: number) => {
-    setDirection(newIndex > activeIndex ? 1 : -1)
-    setActiveIndex(newIndex)
+  const handleSetActiveIndex = ( newIndex: number ) => {
+    setDirection( newIndex > activeIndex ? 1 : -1 )
+    setActiveIndex( newIndex )
   }
 
-  useEffect(() => {
-    if (activeIndex < 0) setActiveIndex(0)
-    if (activeIndex >= FEATURES.length) setActiveIndex(FEATURES.length - 1)
-  }, [activeIndex])
+  useEffect( () => {
+    if ( activeIndex < 0 ) setActiveIndex( 0 )
+    if ( activeIndex >= FEATURES.length ) setActiveIndex( FEATURES.length - 1 )
+  }, [activeIndex] )
 
   const variants = {
-    enter: (direction: number) => ({
+    enter: ( direction: number ) => ( {
       x: direction > 0 ? 364 : -364,
       opacity: 0,
-    }),
+    } ),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
     },
-    exit: (direction: number) => ({
+    exit: ( direction: number ) => ( {
       zIndex: 0,
       x: direction < 0 ? 364 : -364,
       opacity: 0,
@@ -76,7 +76,7 @@ export function TransitionPanelCard() {
       top: 0,
       left: 0,
       width: '100%',
-    }),
+    } ),
   }
 
   return (
@@ -84,25 +84,25 @@ export function TransitionPanelCard() {
       <TransitionPanel
         activeIndex={activeIndex}
         variants={{
-          enter: (direction) => ({
+          enter: ( direction ) => ( {
             x: direction > 0 ? 364 : -364,
             opacity: 0,
             height: bounds.height > 0 ? bounds.height : 'auto',
-          }),
+          } ),
           center: {
             zIndex: 1,
             x: 0,
             opacity: 1,
             height: bounds.height > 0 ? bounds.height : 'auto',
           },
-          exit: (direction) => ({
+          exit: ( direction ) => ( {
             zIndex: 0,
             x: direction < 0 ? 364 : -364,
             opacity: 0,
             position: 'absolute',
             top: 0,
             width: '100%',
-          }),
+          } ),
         }}
         transition={{
           x: { type: 'spring', stiffness: 300, damping: 30 },
@@ -110,7 +110,7 @@ export function TransitionPanelCard() {
         }}
         custom={direction}
       >
-        {FEATURES.map((feature, index) => (
+        {FEATURES.map( ( feature, index ) => (
           <div key={index} className='px-4 pt-4' ref={ref}>
             <h3 className='mb-0.5 font-medium text-zinc-800 dark:text-zinc-100'>
               {feature.title}
@@ -119,11 +119,11 @@ export function TransitionPanelCard() {
               {feature.description}
             </p>
           </div>
-        ))}
+        ) )}
       </TransitionPanel>
       <div className='flex justify-between p-4'>
         {activeIndex > 0 ? (
-          <Button onClick={() => handleSetActiveIndex(activeIndex - 1)}>
+          <Button onClick={() => handleSetActiveIndex( activeIndex - 1 )}>
             Previous
           </Button>
         ) : (
@@ -133,7 +133,7 @@ export function TransitionPanelCard() {
           onClick={() =>
             activeIndex === FEATURES.length - 1
               ? null
-              : handleSetActiveIndex(activeIndex + 1)
+              : handleSetActiveIndex( activeIndex + 1 )
           }
         >
           {activeIndex === FEATURES.length - 1 ? 'Close' : 'Next'}

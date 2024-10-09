@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Earth } from '@/components/earth';
+import type { Meta, StoryObj } from '@storybook/react'
+import { Earth } from '@/components/earth'
 
 const meta = {
   title: 'Components/Earth',
@@ -13,11 +13,11 @@ const meta = {
   args: {
 
   },
-} satisfies Meta<typeof Earth>;
+} satisfies Meta<typeof Earth>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
   args: {

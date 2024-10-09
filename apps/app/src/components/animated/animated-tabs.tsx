@@ -33,7 +33,7 @@ export function AnimatedTabs() {
             duration: 0.3,
           }}
         >
-          {TABS.map((tab) => (
+          {TABS.map( ( tab ) => (
             <button
               key={tab.label}
               data-id={tab.label}
@@ -42,7 +42,7 @@ export function AnimatedTabs() {
             >
               {tab.icon}
             </button>
-          ))}
+          ) )}
         </AnimatedBackground>
       </div>
     </div>

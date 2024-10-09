@@ -59,7 +59,7 @@ const testCard = () => {
   )
 }
 
-const BasicNoteCard = ({ data, ...rest }: any) => {
+const BasicNoteCard = ( { data, ...rest }: any ) => {
   return (
     <Html {...rest}>
       <div className='flex h-[400px] w-full items-center justify-center rounded-lg border border-light-border dark:border-dark-border md:h-[640px] md:flex-1'>
@@ -101,17 +101,17 @@ const BasicNoteCard = ({ data, ...rest }: any) => {
   )
 }
 
-function CardNode({ node, r, position, ...props }: any) {
+function CardNode( { node, r, position, ...props }: any ) {
   const ref: any = useRef()
-  useFrame((state) => {
+  useFrame( ( state ) => {
     ref.current.rotation.x =
       ref.current.rotation.y =
       ref.current.rotation.z +=
-        0.004 * r
+      0.004 * r
     ref.current.position.y =
       position[1] +
-      Math[r > 0.5 ? 'cos' : 'sin'](state.clock.getElapsedTime() * r) * r
-  })
+      Math[r > 0.5 ? 'cos' : 'sin']( state.clock.getElapsedTime() * r ) * r
+  } )
   return (
     <group position={position} ref={ref}>
       <mesh scale={2}>
@@ -161,15 +161,15 @@ const Icon = () => {
   )
 }
 
-function Nodes({ nodes }: any) {
-  const transition = useTransition(nodes, {
+function Nodes( { nodes }: any ) {
+  const transition = useTransition( nodes, {
     from: { scale: [0, 0, 0], rotation: [0, 0, 0] },
-    enter: ({ r }) => ({ scale: [1, 1, 1], rotation: [r * 3, r * 3, r * 3] }),
+    enter: ( { r } ) => ( { scale: [1, 1, 1], rotation: [r * 3, r * 3, r * 3] } ),
     leave: { scale: [0.1, 0.1, 0.1], rotation: [0, 0, 0] },
     config: { mass: 5, tension: 1000, friction: 100 },
     trail: 100,
-  })
-  return transition((props, { position: [x, y, z], r, geometry }) => (
+  } )
+  return transition( ( props, { position: [x, y, z], r, geometry } ) => (
     <CardNode
       position={[x * 3, y * 3, z]}
       material={new THREE.MeshStandardMaterial()}
@@ -177,29 +177,29 @@ function Nodes({ nodes }: any) {
       r={r}
       {...props}
     />
-  ))
+  ) )
 }
 
-const FlexLayoutGraph = ({ allEntityGraphData, graph }: any) => {
+const FlexLayoutGraph = ( { allEntityGraphData, graph }: any ) => {
   // https://github.com/vasturiano/d3-force-3d
-  console.log('allEntityGraphData: ', allEntityGraphData)
-  console.log('graph: ', graph)
+  console.log( 'allEntityGraphData: ', allEntityGraphData )
+  console.log( 'graph: ', graph )
   const group: any = useRef<THREE.Group>()
   const { size } = useThree()
-  const [vpWidth, vpHeight] = useAspect(size.width, size.height)
+  const [vpWidth, vpHeight] = useAspect( size.width, size.height )
   const vec = new THREE.Vector3()
   // useFrame(() =>
   //   group.current.position.lerp(vec.set(0, state.top / 100, 0), 0.1)
   // );
 
   const linkRef: any = useRef()
-  const [currentNodes, setCurrentNodes] = useState(graph.root.nodes)
-  const [currentLinks, setCurrentLinks] = useState(graph.root.links)
-  const [positions, setPositions] = useState({
+  const [currentNodes, setCurrentNodes] = useState( graph.root.nodes )
+  const [currentLinks, setCurrentLinks] = useState( graph.root.links )
+  const [positions, setPositions] = useState( {
     nodes: currentNodes,
     links: currentLinks,
-  })
-  console.log('positions: ', positions)
+  } )
+  console.log( 'positions: ', positions )
 
   // useEffect(() => {
   //   // Create force-directed layout
@@ -242,7 +242,7 @@ const FlexLayoutGraph = ({ allEntityGraphData, graph }: any) => {
   // });
 
   const linkGeometry: any = new THREE.BufferGeometry()
-  const linkMaterial = new THREE.LineBasicMaterial({ color: 0x0000ff })
+  const linkMaterial = new THREE.LineBasicMaterial( { color: 0x0000ff } )
 
   return (
     <>
@@ -258,7 +258,7 @@ const FlexLayoutGraph = ({ allEntityGraphData, graph }: any) => {
           marginTop={0.3}
           marginBottom={0.1}
         >
-          {positions.nodes.map((node: any, index: number) => (
+          {positions.nodes.map( ( node: any, index: number ) => (
             <Box key={node.id} margin={0.05}>
               <Plane position={[0, 0, 0]}>
                 <Html occlude>
@@ -276,7 +276,7 @@ const FlexLayoutGraph = ({ allEntityGraphData, graph }: any) => {
                 {/* <BasicNoteCard /> */}
               </Plane>
             </Box>
-          ))}
+          ) )}
         </Flex>
       </group>
 
@@ -303,10 +303,10 @@ export interface DrawingBoardProps {
   }
 }
 
-export const R3FDrawingBoardFlexLayout: React.FC<DrawingBoardProps> = ({
+export const R3FDrawingBoardFlexLayout: React.FC<DrawingBoardProps> = ( {
   allEntityGraphData,
-}: DrawingBoardProps) => {
-  const [graph, setGraph] = useState({
+}: DrawingBoardProps ) => {
+  const [graph, setGraph] = useState( {
     root: {
       nodes: [],
       links: [],
@@ -327,9 +327,9 @@ export const R3FDrawingBoardFlexLayout: React.FC<DrawingBoardProps> = ({
       nodes: [],
       links: [],
     },
-  })
+  } )
 
-  useEffect(() => {
+  useEffect( () => {
     const data: any = {
       root: {
         nodes: [],
@@ -352,32 +352,32 @@ export const R3FDrawingBoardFlexLayout: React.FC<DrawingBoardProps> = ({
         links: [],
       },
     }
-    if (allEntityGraphData.nodes?.length) {
+    if ( allEntityGraphData.nodes?.length ) {
       const rootNodes = allEntityGraphData.nodes.filter(
-        (node: { id: string | string[] }) => node?.id.includes('root')
+        ( node: { id: string | string[] } ) => node?.id.includes( 'root' )
       )
       const restOfNodes = allEntityGraphData.nodes.filter(
-        (node: any) => !rootNodes.includes(node)
+        ( node: any ) => !rootNodes.includes( node )
       )
-      rootNodes.forEach((rootNode: any) => data.root.nodes.push(rootNode))
-      restOfNodes.forEach((node: any) => {
-        if (node.data.type === 'events') {
-          data.events.nodes.push(node)
+      rootNodes.forEach( ( rootNode: any ) => data.root.nodes.push( rootNode ) )
+      restOfNodes.forEach( ( node: any ) => {
+        if ( node.data.type === 'events' ) {
+          data.events.nodes.push( node )
         }
-        if (node.data.type === 'testimonies') {
-          data.testimonies.nodes.push(node)
+        if ( node.data.type === 'testimonies' ) {
+          data.testimonies.nodes.push( node )
         }
-        if (node.data.type === 'personnel') {
-          data.personnel.nodes.push(node)
+        if ( node.data.type === 'personnel' ) {
+          data.personnel.nodes.push( node )
         }
-        if (node.data.type === 'topics') {
-          data.topics.nodes.push(node)
+        if ( node.data.type === 'topics' ) {
+          data.topics.nodes.push( node )
         }
-      })
+      } )
 
-      setGraph(data)
+      setGraph( data )
     }
-  }, [allEntityGraphData.nodes])
+  }, [allEntityGraphData.nodes] )
 
   return (
     <div className='h-[100vh] w-[100vw] relative'>

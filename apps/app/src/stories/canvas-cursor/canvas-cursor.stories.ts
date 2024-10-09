@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { CanvasCursor } from '@/components/ui/canvas-cursor';
+import type { Meta, StoryObj } from '@storybook/react'
+import { CanvasCursor } from '@/components/ui/canvas-cursor'
 
 const meta = {
   title: 'Components/CanvasCursor',
@@ -13,11 +13,11 @@ const meta = {
   args: {
 
   },
-} satisfies Meta<typeof CanvasCursor>;
+} satisfies Meta<typeof CanvasCursor>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
   args: {

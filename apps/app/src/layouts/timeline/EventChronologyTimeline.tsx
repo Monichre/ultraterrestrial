@@ -19,38 +19,38 @@ import { useScroll } from 'framer-motion'
 import { Globeanime } from '@/components/ui/globe/globe-alt'
 import { EventsGlobe } from '@/layouts/timeline/events-globe'
 
-export const EventChronologyTimeline = ({ events }: any) => {
-  const years = extractUniqueYearsFromEvents(events)
-  const locations = extractCoordinatesFromEvents(events, false)
-  const [activeLocation, setActiveLocation] = useState(null)
+export const EventChronologyTimeline = ( { events }: any ) => {
+  const years = extractUniqueYearsFromEvents( events )
+  const locations = extractCoordinatesFromEvents( events, false )
+  const [activeLocation, setActiveLocation] = useState( null )
 
-  const updateActiveLocation = (location: any) => {
-    console.log('location: ', location)
+  const updateActiveLocation = ( location: any ) => {
+    console.log( 'location: ', location )
     const [lat, lon] = location
     // const temp = locationToAngles(lat, lon)
     // console.log('temp: ', temp)
-    setActiveLocation(location)
+    setActiveLocation( location )
   }
 
-  const eventsByYear = useMemo(() => {
+  const eventsByYear = useMemo( () => {
     const result: any = {}
-    for (let year of years) {
+    for ( let year of years ) {
       // @ts-ignore
-      result[year] = events.filter((event) => event.date.includes(year))
+      result[year] = events.filter( ( event ) => event.date.includes( year ) )
     }
     return result
-  }, [events, years])
+  }, [events, years] )
 
   const { scrollYProgress } = useScroll()
-  console.log('scrollYProgress: ', scrollYProgress)
+  console.log( 'scrollYProgress: ', scrollYProgress )
 
-  useEffect(() => {
-    window.addEventListener('scroll', () => {
+  useEffect( () => {
+    window.addEventListener( 'scroll', () => {
       let top = document.documentElement.scrollTop
-    })
-  }, [])
+    } )
+  }, [] )
 
-  const earthRef = useRef(null)
+  const earthRef = useRef( null )
   return (
     <>
       <div className='fixed top-0 left-0 right-0 bottom-0 bg-black h-full w-full z-0'>

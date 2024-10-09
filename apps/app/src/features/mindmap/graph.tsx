@@ -1,6 +1,6 @@
 'use client'
 import { useMindMap } from '@/providers/mindmap-context'
-import { Panel, ReactFlow, type ConnectionMode } from '@xyflow/react'
+import { Panel, ReactFlow } from '@xyflow/react'
 
 import { LocationVisualization } from '@/components/location-visualization'
 
@@ -166,17 +166,17 @@ export function Graph( props: any ) {
         // snapToGrid={true}
         defaultEdgeOptions={edgeOptions}
         nodes={nodes}
-        defaultViewport={{
+        initialViewport={{
           zoom: 0,
-          // x: 0,
-          // y: 0,
+          x: 0,
+          y: 0,
         }}
 
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        connectionMode={'loose' as ConnectionMode}
+        connectionMode='loose'
         // connectionLineComponent={FloatingConnectionLine}
         elevateNodesOnSelect={true}
         fitView

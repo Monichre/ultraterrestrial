@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { LocationVisualization } from '@/components/location-visualization';
+import type { Meta, StoryObj } from '@storybook/react'
+import { LocationVisualization } from '@/components/location-visualization'
 
 const meta = {
   title: 'Components/LocationVisualization',
@@ -13,11 +13,11 @@ const meta = {
   args: {
 
   },
-} satisfies Meta<typeof LocationVisualization>;
+} satisfies Meta<typeof LocationVisualization>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
   args: {

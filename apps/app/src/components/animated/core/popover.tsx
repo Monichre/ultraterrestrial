@@ -12,36 +12,36 @@ const TRANSITION = {
 
 export default function Popover() {
   const uniqueId = useId()
-  const formContainerRef = useRef<HTMLDivElement>(null)
-  const [isOpen, setIsOpen] = useState(false)
-  const [note, setNote] = useState<null | string>(null)
+  const formContainerRef = useRef<HTMLDivElement>( null )
+  const [isOpen, setIsOpen] = useState( false )
+  const [note, setNote] = useState<null | string>( null )
 
   const openMenu = () => {
-    setIsOpen(true)
+    setIsOpen( true )
   }
 
   const closeMenu = () => {
-    setIsOpen(false)
-    setNote(null)
+    setIsOpen( false )
+    setNote( null )
   }
 
-  useClickOutside(formContainerRef, () => {
+  useClickOutside( formContainerRef, () => {
     closeMenu()
-  })
+  } )
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+  useEffect( () => {
+    const handleKeyDown = ( event: KeyboardEvent ) => {
+      if ( event.key === 'Escape' ) {
         closeMenu()
       }
     }
 
-    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener( 'keydown', handleKeyDown )
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener( 'keydown', handleKeyDown )
     }
-  }, [])
+  }, [] )
 
   return (
     <MotionConfig transition={TRANSITION}>
@@ -75,9 +75,9 @@ export default function Popover() {
             >
               <form
                 className='flex h-full flex-col'
-                onSubmit={(e) => {
+                onSubmit={( e ) => {
                   e.preventDefault()
-                  console.log('Add Note')
+                  console.log( 'Add Note' )
                 }}
               >
                 <motion.span
@@ -93,7 +93,7 @@ export default function Popover() {
                 <textarea
                   className='h-full w-full resize-none rounded-md bg-transparent px-4 py-3 text-sm outline-none'
                   autoFocus
-                  onChange={(e) => setNote(e.target.value)}
+                  onChange={( e ) => setNote( e.target.value )}
                 />
                 <div key='close' className='flex justify-between px-4 py-3'>
                   <button
@@ -112,7 +112,7 @@ export default function Popover() {
                     type='button'
                     aria-label='Submit note'
                     onClick={() => {
-                      console.log('Send feedback')
+                      console.log( 'Send feedback' )
                       closeMenu()
                     }}
                   >

@@ -5,7 +5,7 @@ import { EntityNetworkGraph3D } from '@/features/3d/entity-network-graph-3d'
 
 export default async function Index() {
   const data: NetworkGraphPayload = await getEntityNetworkGraphData()
-  console.log('data: ', data)
+  console.log( 'data: ', data )
 
   // {/* <Graph models={models} /> */}
 

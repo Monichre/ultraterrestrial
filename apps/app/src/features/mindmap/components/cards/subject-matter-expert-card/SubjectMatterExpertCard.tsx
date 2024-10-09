@@ -22,14 +22,16 @@ export function SubjectMatterExpertCard( { card }: any ) {
   } = useEntity( { card } )
   console.log( 'personnel card:', card )
   console.log( 'personel entity:', entity )
-
+  const test = true
   const { popularity, rank, photo, name, role }: any = entity
 
   const image: any = photo[0] || { url: '/astro-3.png' }
 
   const [step, setStep] = useState( 1 )
   const handleClick = () => setStep( prev => ( prev % 3 ) + 1 )
-
+  if ( test ) {
+    return <PillCard card={card} />
+  }
   return (
     <motion.div
 

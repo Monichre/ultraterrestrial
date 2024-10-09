@@ -1,8 +1,8 @@
 // useContextMenu.ts
 'use client'
 
-import { useLongPress, useMouse } from '@uidotdev/usehooks'
-import { useEffect, useRef, useState } from 'react'
+import {useLongPress, useMouse} from '@uidotdev/usehooks'
+import {useEffect, useRef, useState} from 'react'
 
 interface MenuPosition {
   x: number
@@ -23,15 +23,14 @@ export function useContextMenu() {
   const handlePositionChange = (x: number, y: number) => {
     if (targetRef.current) {
       const rect = targetRef.current.getBoundingClientRect()
-      const isInside =
-        x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
+      const isInside = x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
       // Note: setIsHovering is removed as it's not defined in the scope
     }
   }
 
   const handleContextMenu = (event: any) => {
     event.preventDefault()
-    setClickPosition({ x: event.clientX, y: event.clientY })
+    setClickPosition({x: event.clientX, y: event.clientY})
     setIsOpen(true)
   }
   const closeMenu = () => {
@@ -47,8 +46,8 @@ export function useContextMenu() {
       onStart: (event: any) => {
         handleContextMenu(event)
       },
-      onFinish: () => console.log('Press Finished'),
-      onCancel: () => console.log('Press cancelled'),
+      onFinish: () => null,
+      onCancel: () => null,
       threshold: 1000,
     }
   )

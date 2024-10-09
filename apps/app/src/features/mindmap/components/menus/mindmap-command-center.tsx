@@ -29,12 +29,19 @@ export const MindMapCommandCenter = () => {
     addNodes,
     updateNodeData,
     addEdges,
+    retrieveEntitiesFromStore,
+    addMindMapGroupNode,
+    addMindmapChildNode,
   } = useMindMap()
   const user = useUser()
   const [activeModel, setActiveModel]: any = useState( 'events' )
 
   const handleLoadingRecords = useCallback(
     ( { data: { type } }: any ) => {
+
+      console.log( "🚀 ~ file: mindmap-command-center.tsx:42 ~ MindMapCommandCenter ~ type:", type )
+
+
       const userNode: any = {
         id: uuidv4(),
         type: 'userInputNode',
@@ -45,13 +52,20 @@ export const MindMapCommandCenter = () => {
           type: type,
         },
       }
+      const entities = retrieveEntitiesFromStore( type )
+
+      console.log( "🚀 ~ file: mindmap-command-center.tsx:54 ~ MindMapCommandCenter ~ entities:", entities )
+
       addNodes( userNode )
-      addNextEntitiesToMindMap( userNode )
+      addMindmapChildNode()
+
+      // addNextEntitiesToMindMap( userNode )
     },
     [addNextEntitiesToMindMap, addNodes]
   )
   const runSearch = useCallback(
     async ( { type, searchTerm }: any ) => {
+
       const userNode: any = {
         id: uuidv4(),
         type: 'userInputNode',

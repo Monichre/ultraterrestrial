@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/utils'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 
-const CultButton = motion(Button)
+const CultButton = motion( Button )
 
 const TRANSITION = {
   type: 'spring',
@@ -28,16 +28,16 @@ interface CultUIPopoverContextType {
   closeCultUIPopover: () => void
   uniqueId: string
   note: string
-  setNote: (note: string) => void
+  setNote: ( note: string ) => void
 }
 
 const CultUIPopoverContext = createContext<
   CultUIPopoverContextType | undefined
->(undefined)
+>( undefined )
 
 function useCultUIPopover() {
-  const context = useContext(CultUIPopoverContext)
-  if (!context) {
+  const context = useContext( CultUIPopoverContext )
+  if ( !context ) {
     throw new Error(
       'useCultUIPopover must be used within a CultUIPopoverProvider'
     )
@@ -47,13 +47,13 @@ function useCultUIPopover() {
 
 function useCultUIPopoverLogic() {
   const uniqueId = useId()
-  const [isOpen, setIsOpen] = useState(false)
-  const [note, setNote] = useState('')
+  const [isOpen, setIsOpen] = useState( false )
+  const [note, setNote] = useState( '' )
 
-  const openCultUIPopover = () => setIsOpen(true)
+  const openCultUIPopover = () => setIsOpen( true )
   const closeCultUIPopover = () => {
-    setIsOpen(false)
-    setNote('')
+    setIsOpen( false )
+    setNote( '' )
   }
 
   return {
@@ -71,18 +71,18 @@ interface CultUIPopoverRootProps {
   className?: string
 }
 
-export function CultUIPopoverRoot({
+export function CultUIPopoverRoot( {
   children,
   className,
-}: CultUIPopoverRootProps) {
+}: CultUIPopoverRootProps ) {
   const popoverLogic = useCultUIPopoverLogic()
   const ref: any = useRef()
 
-  useOutsideClick(ref, () => {
-    if (popoverLogic?.isOpen) {
+  useOutsideClick( ref, () => {
+    if ( popoverLogic?.isOpen ) {
       popoverLogic?.closeCultUIPopover()
     }
-  })
+  } )
 
   return (
     <CultUIPopoverContext.Provider value={popoverLogic}>
@@ -107,11 +107,11 @@ interface CultUIPopoverTriggerProps {
   variant?: string
 }
 
-export function CultUIPopoverTrigger({
+export function CultUIPopoverTrigger( {
   children,
   className,
   variant,
-}: CultUIPopoverTriggerProps) {
+}: CultUIPopoverTriggerProps ) {
   const { openCultUIPopover, uniqueId } = useCultUIPopover()
 
   return (
@@ -140,28 +140,28 @@ interface CultUIPopoverContentProps {
   className?: string
 }
 
-export function CultUIPopoverContent({
+export function CultUIPopoverContent( {
   children,
   className,
-}: CultUIPopoverContentProps) {
+}: CultUIPopoverContentProps ) {
   const { isOpen, closeCultUIPopover, uniqueId } = useCultUIPopover()
-  const formContainerRef = useRef<HTMLDivElement>(null)
+  const formContainerRef = useRef<HTMLDivElement>( null )
 
-  useOutsideClick(formContainerRef, closeCultUIPopover)
+  useOutsideClick( formContainerRef, closeCultUIPopover )
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+  useEffect( () => {
+    const handleKeyDown = ( event: KeyboardEvent ) => {
+      if ( event.key === 'Escape' ) {
         closeCultUIPopover()
       }
     }
 
-    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener( 'keydown', handleKeyDown )
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener( 'keydown', handleKeyDown )
     }
-  }, [closeCultUIPopover])
+  }, [closeCultUIPopover] )
 
   return (
     <AnimatePresence>
@@ -189,26 +189,26 @@ export function CultUIPopoverContent({
 
 interface CultUIPopoverFormProps {
   children: React.ReactNode
-  onSubmit?: (note: string) => void
+  onSubmit?: ( note: string ) => void
   className?: string
 }
 
-export function CultUIPopoverForm({
+export function CultUIPopoverForm( {
   children,
   onSubmit,
   className,
-}: CultUIPopoverFormProps) {
+}: CultUIPopoverFormProps ) {
   const { note, closeCultUIPopover } = useCultUIPopover()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = ( e: React.FormEvent ) => {
     e.preventDefault()
-    onSubmit?.(note)
+    onSubmit?.( note )
     closeCultUIPopover()
   }
 
   return (
     <form
-      className={cn('flex h-full flex-col', className)}
+      className={cn( 'flex h-full flex-col', className )}
       onSubmit={handleSubmit}
     >
       {children}
@@ -221,10 +221,10 @@ interface CultUIPopoverLabelProps {
   className?: string
 }
 
-export function CultUIPopoverLabel({
+export function CultUIPopoverLabel( {
   children,
   className,
-}: CultUIPopoverLabelProps) {
+}: CultUIPopoverLabelProps ) {
   const { uniqueId, note } = useCultUIPopover()
 
   return (
@@ -248,9 +248,9 @@ interface CultUIPopoverTextareaProps {
   className?: string
 }
 
-export function CultUIPopoverTextarea({
+export function CultUIPopoverTextarea( {
   className,
-}: CultUIPopoverTextareaProps) {
+}: CultUIPopoverTextareaProps ) {
   const { note, setNote } = useCultUIPopover()
 
   return (
@@ -261,7 +261,7 @@ export function CultUIPopoverTextarea({
       )}
       autoFocus
       value={note}
-      onChange={(e) => setNote(e.target.value)}
+      onChange={( e ) => setNote( e.target.value )}
     />
   )
 }
@@ -271,14 +271,14 @@ interface CultUIPopoverFooterProps {
   className?: string
 }
 
-export function CultUIPopoverFooter({
+export function CultUIPopoverFooter( {
   children,
   className,
-}: CultUIPopoverFooterProps) {
+}: CultUIPopoverFooterProps ) {
   return (
     <div
       key='close'
-      className={cn('flex justify-between px-4 py-3', className)}
+      className={cn( 'flex justify-between px-4 py-3', className )}
     >
       {children}
     </div>
@@ -289,15 +289,15 @@ interface CultUIPopoverCloseButtonProps {
   className?: string
 }
 
-export function CultUIPopoverCloseButton({
+export function CultUIPopoverCloseButton( {
   className,
-}: CultUIPopoverCloseButtonProps) {
+}: CultUIPopoverCloseButtonProps ) {
   const { closeCultUIPopover } = useCultUIPopover()
 
   return (
     <button
       type='button'
-      className={cn('flex items-center', className)}
+      className={cn( 'flex items-center', className )}
       onClick={closeCultUIPopover}
       aria-label='Close popover'
     >
@@ -310,9 +310,9 @@ interface CultUIPopoverSubmitButtonProps {
   className?: string
 }
 
-export function CultUIPopoverSubmitButton({
+export function CultUIPopoverSubmitButton( {
   className,
-}: CultUIPopoverSubmitButtonProps) {
+}: CultUIPopoverSubmitButtonProps ) {
   return (
     <button
       className={cn(
@@ -327,13 +327,13 @@ export function CultUIPopoverSubmitButton({
   )
 }
 
-export function CultUIPopoverHeader({
+export function CultUIPopoverHeader( {
   children,
   className,
 }: {
   children: React.ReactNode
   className?: string
-}) {
+} ) {
   return (
     <div
       className={cn(
@@ -346,18 +346,18 @@ export function CultUIPopoverHeader({
   )
 }
 
-export function CultUIPopoverBody({
+export function CultUIPopoverBody( {
   children,
   className,
 }: {
   children: React.ReactNode
   className?: string
-}) {
-  return <div className={cn('p-4', className)}>{children}</div>
+} ) {
+  return <div className={cn( 'p-4', className )}>{children}</div>
 }
 
 // New component: CultUIPopoverButton
-export function CultUIPopoverButton({
+export function CultUIPopoverButton( {
   children,
   onClick,
   className,
@@ -365,7 +365,7 @@ export function CultUIPopoverButton({
   children: React.ReactNode
   onClick?: () => void
   className?: string
-}) {
+} ) {
   return (
     <button
       className={cn(

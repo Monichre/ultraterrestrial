@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import { FunctionComponent } from 'react'
 
-interface SiteHeaderProps {}
+interface SiteHeaderProps { }
 
 export const SiteHeader: FunctionComponent<SiteHeaderProps> = () => {
   return (

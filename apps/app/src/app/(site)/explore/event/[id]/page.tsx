@@ -1,13 +1,13 @@
 import { getXataClient } from '@/services/xata'
 const xata = getXataClient()
 
-const record = await xata.db.events.read('rec_xyz')
-console.log(record)
+const record = await xata.db.events.read( 'rec_xyz' )
+console.log( record )
 
-export default async function EventPage({ params: { id } }) {
-  const event = await xata.db.events.read(id)
+export default async function EventPage( { params: { id } } ) {
+  const event = await xata.db.events.read( id )
 
-  console.log('event: ', event)
+  console.log( 'event: ', event )
 
   return <div>Event</div>
 }

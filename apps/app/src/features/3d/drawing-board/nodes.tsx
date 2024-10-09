@@ -26,7 +26,7 @@ import {
   StarsCardTitle,
 } from '@/components/ui/card/stars-card'
 
-const context = createContext(null)
+const context = createContext( null )
 
 const Circle = forwardRef(
   (
@@ -57,50 +57,50 @@ Circle.displayName = 'Circle'
 // const manyBody = d3.forceManyBody().strength(-100);
 // const x = d3.forceX(width / 2);
 
-function force(nodes: any, alpha: number) {
-  for (let i = 0, n = nodes.length, node, k = alpha * 0.1; i < n; ++i) {
+function force( nodes: any, alpha: number ) {
+  for ( let i = 0, n = nodes.length, node, k = alpha * 0.1; i < n; ++i ) {
     node = nodes[i]
     node.vx -= node.x * k
     node.vy -= node.y * k
   }
 }
 
-export function Nodes({ children }: any) {
+export function Nodes( { children }: any ) {
   const group: any = useRef()
-  const [nodes, set]: any = useState([])
-  console.log('nodes: ', nodes)
-  const lines = useMemo(() => {
+  const [nodes, set]: any = useState( [] )
+  console.log( 'nodes: ', nodes )
+  const lines = useMemo( () => {
     const lines: any[] = []
-    for (let node of nodes) {
+    for ( let node of nodes ) {
       node.connectedTo
-        .map((ref: { current: { position: any } }) => [
+        .map( ( ref: { current: { position: any } } ) => [
           node.position,
           ref.current.position,
-        ])
-        .forEach(([start, end]: any) =>
-          lines.push({
-            start: start.clone().add({ x: 0.35, y: 0, z: 0 }),
-            end: end.clone().add({ x: -0.35, y: 0, z: 0 }),
-          })
+        ] )
+        .forEach( ( [start, end]: any ) =>
+          lines.push( {
+            start: start.clone().add( { x: 0.35, y: 0, z: 0 } ),
+            end: end.clone().add( { x: -0.35, y: 0, z: 0 } ),
+          } )
         )
     }
 
     return lines
-  }, [nodes])
+  }, [nodes] )
 
-  useFrame((_, delta) =>
+  useFrame( ( _, delta ) =>
     group.current.children.forEach(
-      (group: {
+      ( group: {
         children: {
           material: { uniforms: { dashOffset: { value: number } } }
         }[]
-      }) => (group.children[0].material.uniforms.dashOffset.value -= delta * 10)
+      } ) => ( group.children[0].material.uniforms.dashOffset.value -= delta * 10 )
     )
   )
   return (
     <context.Provider value={set}>
       <group ref={group}>
-        {lines.map((line, index) => (
+        {lines.map( ( line, index ) => (
           <group key={index}>
             <QuadraticBezierLine
               key={index}
@@ -119,15 +119,15 @@ export function Nodes({ children }: any) {
               opacity={0.1}
             />
           </group>
-        ))}
+        ) )}
       </group>
       {children}
-      {lines.map(({ start, end }: any, index: any) => (
+      {lines.map( ( { start, end }: any, index: any ) => (
         <group key={index} position-z={1}>
           <Circle position={start} />
           <Circle position={end} />
         </group>
-      ))}
+      ) )}
     </context.Provider>
   )
 }
@@ -151,7 +151,7 @@ const Icon = () => {
   )
 }
 
-function GlowingStarsBackgroundCardPreview({ name }: any) {
+function GlowingStarsBackgroundCardPreview( { name }: any ) {
   return (
     <StarsCard>
       <StarsCardTitle>{name}</StarsCardTitle>
@@ -178,43 +178,43 @@ export const Node = forwardRef(
     }: any,
     ref: any
   ) => {
-    const set: any = useContext(context)
+    const set: any = useContext( context )
     const { size, camera } = useThree()
-    const [pos, setPos] = useState(() => new THREE.Vector3(...position))
+    const [pos, setPos] = useState( () => new THREE.Vector3( ...position ) )
     const state = useMemo(
-      () => ({ position: pos, connectedTo }),
+      () => ( { position: pos, connectedTo } ),
       [pos, connectedTo]
     )
     // Register this node on mount, unregister on unmount
-    useLayoutEffect(() => {
-      set((nodes: any) => [...nodes, state])
+    useLayoutEffect( () => {
+      set( ( nodes: any ) => [...nodes, state] )
       return () =>
-        void set((nodes: any[]) =>
+        void set( ( nodes: any[] ) =>
           nodes.filter(
-            (n: { position: THREE.Vector3; connectedTo: any }) => n !== state
+            ( n: { position: THREE.Vector3; connectedTo: any } ) => n !== state
           )
         )
-    }, [state, pos, set])
+    }, [state, pos, set] )
     // Drag n drop, hover
-    const [hovered, setHovered] = useState(false)
+    const [hovered, setHovered] = useState( false )
 
     useEffect(
-      () => void (document.body.style.cursor = hovered ? 'grab' : 'auto'),
+      () => void ( document.body.style.cursor = hovered ? 'grab' : 'auto' ),
       [hovered]
     )
-    const bind = useDrag(({ down, xy: [x, y] }) => {
+    const bind = useDrag( ( { down, xy: [x, y] } ) => {
       document.body.style.cursor = down ? 'grabbing' : 'grab'
       setPos(
         new THREE.Vector3(
-          (x / size.width) * 2 - 1,
-          -(y / size.height) * 2 + 1,
+          ( x / size.width ) * 2 - 1,
+          -( y / size.height ) * 2 + 1,
           0
         )
-          .unproject(camera)
-          .multiply({ x: 1, y: 1, z: 0 })
+          .unproject( camera )
+          .multiply( { x: 1, y: 1, z: 0 } )
           .clone()
       )
-    })
+    } )
     const [isOccluded, setOccluded] = useState()
     const [isInRange, setInRange] = useState()
     const isVisible = isInRange && !isOccluded

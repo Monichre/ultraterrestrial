@@ -16,6 +16,6 @@ export const EXTERNAL_RESOURCES = [
   'https://www.thinkaboutitdocs.com/',
   'https://nufohrc.org/',
   'https://www.mufog.co.uk/',
-  'https://uapswiki.wpenginepowered.com/links/',
+  'https://uapswiki.wpenginepowered.com',
   'https://newparadigminstitute.org/',
 ]

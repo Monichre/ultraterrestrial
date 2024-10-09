@@ -4,8 +4,8 @@ import * as React from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 
-export function Answer({ prompt, answer }: { prompt: any; answer: any }) {
-  console.log('answer: ', answer)
+export function Answer( { prompt, answer }: { prompt: any; answer: any } ) {
+  console.log( 'answer: ', answer )
   return (
     <div className='container flex flex-col h-auto w-full shrink-0 gap-4 rounded-lg border border-solid border-[#C2C2C2] bg-white dark:bg-black p-5 '>
       {/* <div className='hidden lg:block'>

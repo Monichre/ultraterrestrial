@@ -1,6 +1,6 @@
 import { cn } from '@/utils'
 
-export function DotGridBackground({ children }: any) {
+export function DotGridBackground( { children }: any ) {
   return (
     <div
       className={`h-full w-full absolute z-0 top-0 left-0 flex items-center justify-center bg-black bg-dot-white/[0.2]`}
@@ -13,7 +13,7 @@ export function DotGridBackground({ children }: any) {
     </div>
   )
 }
-export function DotGridBackgroundBlack({ children }: any) {
+export function DotGridBackgroundBlack( { children }: any ) {
   return (
     <div
       className={`h-full w-full absolute z-0 top-0 left-0 flex items-center justify-center bg-black bg-dot-white/[0.2]`}
@@ -27,7 +27,7 @@ export function DotGridBackgroundBlack({ children }: any) {
   )
 }
 
-export function DotGridBackgroundWhite({ children }: any) {
+export function DotGridBackgroundWhite( { children }: any ) {
   return (
     <div
       className={`h-full w-full absolute z-0 top-0 left-0 flex items-center justify-center bg-white bg-dot-black/[0.2]`}

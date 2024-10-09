@@ -4,67 +4,67 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/utils'
 
-export const Radar = ({ className, children }: any) => {
-  const circles = new Array(8).fill(1)
+export const Radar = ( { className, children }: any ) => {
+  const circles = new Array( 8 ).fill( 1 )
 
-  const [isOverlapping, setIsOverlapping] = useState(false)
-  console.log('isOverlapping: ', isOverlapping)
-  const [currentTargets, setCurrentTargets] = useState([] as HTMLElement[])
+  const [isOverlapping, setIsOverlapping] = useState( false )
+  console.log( 'isOverlapping: ', isOverlapping )
+  const [currentTargets, setCurrentTargets] = useState( [] as HTMLElement[] )
 
-  console.log('currentTarget: ', currentTargets)
-  const radarLine = useRef(null)
+  console.log( 'currentTarget: ', currentTargets )
+  const radarLine = useRef( null )
 
-  useEffect(() => {
-    const targets = Array.from(document.querySelectorAll('.radar-target'))
-    console.log('Initial targets: ', targets)
+  useEffect( () => {
+    const targets = Array.from( document.querySelectorAll( '.radar-target' ) )
+    console.log( 'Initial targets: ', targets )
 
     const observer = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
+      ( entries: IntersectionObserverEntry[] ) => {
         const intersectingEntries = entries.filter(
-          (entry) => entry.isIntersecting
+          ( entry ) => entry.isIntersecting
         )
-        console.log('Intersecting entries: ', intersectingEntries)
+        console.log( 'Intersecting entries: ', intersectingEntries )
 
-        intersectingEntries.forEach((entry) => {
-          entry.target.classList.add('bg-blue')
-        })
+        intersectingEntries.forEach( ( entry ) => {
+          entry.target.classList.add( 'bg-blue' )
+        } )
 
-        setCurrentTargets((prevTargets) => [
-          ...new Set([
+        setCurrentTargets( ( prevTargets ) => [
+          ...new Set( [
             ...prevTargets,
-            ...intersectingEntries.map((entry) => entry.target as HTMLElement),
-          ]),
-        ])
+            ...intersectingEntries.map( ( entry ) => entry.target as HTMLElement ),
+          ] ),
+        ] )
       },
       { root: radarLine.current }
     )
 
     // Observe existing targets
-    if (targets.length) {
-      targets.forEach((target) => observer.observe(target))
+    if ( targets.length ) {
+      targets.forEach( ( target ) => observer.observe( target ) )
     }
 
     // MutationObserver to detect newly added targets
-    const mutationObserver = new MutationObserver((mutationsList) => {
-      mutationsList.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          const addedNodes = Array.from(mutation.addedNodes) as HTMLElement[]
-          addedNodes.forEach((node) => {
-            if (node.classList && node.classList.contains('radar-target')) {
-              observer.observe(node)
+    const mutationObserver = new MutationObserver( ( mutationsList ) => {
+      mutationsList.forEach( ( mutation ) => {
+        if ( mutation.type === 'childList' ) {
+          const addedNodes = Array.from( mutation.addedNodes ) as HTMLElement[]
+          addedNodes.forEach( ( node ) => {
+            if ( node.classList && node.classList.contains( 'radar-target' ) ) {
+              observer.observe( node )
             }
-          })
+          } )
         }
-      })
-    })
+      } )
+    } )
 
-    mutationObserver.observe(document.body, { childList: true, subtree: true })
+    mutationObserver.observe( document.body, { childList: true, subtree: true } )
 
     return () => {
       observer.disconnect()
       mutationObserver.disconnect()
     }
-  }, [])
+  }, [] )
 
   return (
     <div
@@ -85,22 +85,22 @@ export const Radar = ({ className, children }: any) => {
       </div>
       {children}
       {/* concentric circles */}
-      {circles.map((circle, idx) => (
+      {circles.map( ( circle, idx ) => (
         <Circle
           style={{
-            height: `${(idx + 1) * 5}rem`,
-            width: `${(idx + 1) * 5}rem`,
-            border: `1px solid rgba(71, 85, 105, ${1 - (idx + 1) * 0.1})`,
+            height: `${( idx + 1 ) * 5}rem`,
+            width: `${( idx + 1 ) * 5}rem`,
+            border: `1px solid rgba(71, 85, 105, ${1 - ( idx + 1 ) * 0.1})`,
           }}
           key={`motion-${idx}`}
           idx={idx}
         />
-      ))}
+      ) )}
     </div>
   )
 }
 
-const Circle = ({ className, children, idx, ...rest }: any) => {
+const Circle = ( { className, children, idx, ...rest }: any ) => {
   return (
     <motion.div
       {...rest}
