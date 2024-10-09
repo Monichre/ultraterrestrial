@@ -1025,6 +1025,7 @@ note .ai-response-markup h3,
   mask-repeat: no-repeat; 
 } */
 
-.react-flow__node-entityGroupNodeChildTopics {
+
+.hide {
   visibility: hidden !important;
 }

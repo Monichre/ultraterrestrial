@@ -62,7 +62,7 @@ export const UserInputNode = memo( ( node: any ) => {
     <>
       <CoreNodeContainer id={nodeData.id} className='motion-scale-in-0 motion-opacity-in-0'>
         <CoreNodeContent>
-          <p className='text-sm text-white font-nunito'>{nodeData?.data?.input}</p>
+          <p className='text-sm text-white font-nunito'>{node?.data?.input}</p>
         </CoreNodeContent>
         <CoreNodeBottom>
           <CoreNodeAvatar image={image} label={user?.fullName || ''} />
