@@ -1,9 +1,9 @@
 import { getXataClient } from '@/services/xata'
 const xata: any = getXataClient()
 
-export async function POST(req) {
+export async function POST( req ) {
   const { question } = await req.json()
-  const result = await xata.db.Tutorial.ask('<question>', {
+  const result = await xata.db.Tutorial.ask( '<question>', {
     rules: [
       // ...array of strings with the rules for the model...,
     ],
@@ -28,5 +28,5 @@ export async function POST(req) {
         // ...search filter options...
       },
     },
-  })
+  } )
 }

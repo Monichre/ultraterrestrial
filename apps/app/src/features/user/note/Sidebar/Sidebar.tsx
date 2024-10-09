@@ -4,7 +4,7 @@ import { Editor } from '@tiptap/react'
 import { TableOfContents } from '../TableOfContents'
 
 export const Sidebar = memo(
-  ({
+  ( {
     editor,
     isOpen,
     onClose,
@@ -12,12 +12,12 @@ export const Sidebar = memo(
     editor: Editor
     isOpen?: boolean
     onClose: () => void
-  }) => {
-    const handlePotentialClose = useCallback(() => {
-      if (window.innerWidth < 1024) {
+  } ) => {
+    const handlePotentialClose = useCallback( () => {
+      if ( window.innerWidth < 1024 ) {
         onClose()
       }
-    }, [onClose])
+    }, [onClose] )
 
     const windowClassName = cn(
       'absolute top-0 left-0 bg-white lg:bg-white/30 lg:backdrop-blur-xl h-full lg:h-auto lg:relative z-[999] w-0 duration-300 transition-all',

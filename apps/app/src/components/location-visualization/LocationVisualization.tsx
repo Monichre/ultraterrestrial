@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react'
 //   )
 // }
 
-export interface LocationVisualizationProps {}
+export interface LocationVisualizationProps { }
 
 export const LocationVisualization: React.FC<LocationVisualizationProps> = (
   props: LocationVisualizationProps
@@ -26,22 +26,22 @@ export const LocationVisualization: React.FC<LocationVisualizationProps> = (
   } = useMindMap()
   // bg-[#0a0a0a]
 
-  const [markers, setMarkers] = useState([])
+  const [markers, setMarkers] = useState( [] )
 
-  useEffect(() => {
-    console.log('locationsToVisualize: ', locationsToVisualize)
-    if (locationsToVisualize.length) {
-      const newMarkers = locationsToVisualize.map(({ data }: any) => {
+  useEffect( () => {
+    console.log( 'locationsToVisualize: ', locationsToVisualize )
+    if ( locationsToVisualize.length ) {
+      const newMarkers = locationsToVisualize.map( ( { data }: any ) => {
         return {
           location: [data.latitude, data.longitude],
           size: 0.025,
         }
-      })
-      setMarkers(newMarkers)
+      } )
+      setMarkers( newMarkers )
     }
-  }, [locationsToVisualize])
+  }, [locationsToVisualize] )
 
-  if (showLocationVisualization) {
+  if ( showLocationVisualization ) {
     // bg-gradient-to-b from-transparent via-[#0a0a0a] to-black
     return (
       <div className='absolute top-0 right-0 w-[32vw] min-h-[600px] z-30 p-4'>

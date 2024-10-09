@@ -14,7 +14,7 @@ interface DotPatternProps {
   className?: string
   [key: string]: any
 }
-export function DotPattern({
+export function DotPattern( {
   width = 16,
   height = 16,
   x = 0,
@@ -24,7 +24,7 @@ export function DotPattern({
   cr = 1,
   className,
   ...props
-}: DotPatternProps) {
+}: DotPatternProps ) {
   const id = useId()
 
   return (

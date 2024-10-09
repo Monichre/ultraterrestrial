@@ -6,16 +6,16 @@ import { currentUser, clerkClient } from '@clerk/nextjs/server'
 
 export default async function Page() {
   const user: any = await currentUser()
-  if (!user?.publicMetadata?.databaseId) {
-    const dbUser = await getUserByAuthId(user)
-    console.log('dbUser: ', dbUser)
-    if (dbUser) {
-      const response = await clerkClient.users.updateUserMetadata(user.id, {
+  if ( !user?.publicMetadata?.databaseId ) {
+    const dbUser = await getUserByAuthId( user )
+    console.log( 'dbUser: ', dbUser )
+    if ( dbUser ) {
+      const response = await clerkClient.users.updateUserMetadata( user.id, {
         publicMetadata: {
           databaseId: dbUser.id,
         },
-      })
-      console.log('response: ', response)
+      } )
+      console.log( 'response: ', response )
     }
   }
 

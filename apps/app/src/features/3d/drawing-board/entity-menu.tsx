@@ -1,12 +1,12 @@
-"use client";
-import React, { useState } from "react";
+"use client"
+import React, { useState } from "react"
 import {
   motion,
   AnimatePresence,
   useScroll,
   useMotionValueEvent,
-} from "framer-motion";
-import { cn } from "@/utils/cn";
+} from "framer-motion"
+import { cn } from "@/utils/cn"
 import Link from "next/link"
 
 export default function EntityMenu() {
@@ -29,20 +29,20 @@ export default function EntityMenu() {
 
 
 
-export const FloatingEntityMenu = ({
+export const FloatingEntityMenu = ( {
   navItems,
   className,
 }: {
   navItems: {
-    name: string;
-    link: string;
-    icon?: JSX.Element;
-  }[];
-  className?: string;
-}) => {
-  const { scrollYProgress } = useScroll();
+    name: string
+    link: string
+    icon?: JSX.Element
+  }[]
+  className?: string
+} ) => {
+  const { scrollYProgress } = useScroll()
 
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState( true )
 
   // useMotionValueEvent(scrollYProgress, "change", (current) => {
   //   // Check if current is not undefined and is a number
@@ -80,7 +80,7 @@ export const FloatingEntityMenu = ({
           className
         )}
       >
-        {navItems.map((navItem: any, idx: number) => (
+        {navItems.map( ( navItem: any, idx: number ) => (
           <Link
             key={`link=${idx}`}
             href={navItem.link}
@@ -91,9 +91,9 @@ export const FloatingEntityMenu = ({
             <span className="block sm:hidden">{navItem.icon}</span>
             <span className="hidden sm:block text-sm">{navItem.name}</span>
           </Link>
-        ))}
+        ) )}
 
       </motion.div>
     </AnimatePresence>
-  );
-};
+  )
+}

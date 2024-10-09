@@ -15,7 +15,7 @@ const meta = {
   },
   args: {},
   decorators: [
-    (Story: any) => (
+    ( Story: any ) => (
       <StateOfDisclosureProvider stateOfDisclosure={networkGraphData}>
         <MindMapProvider>{Story()}</MindMapProvider>
       </StateOfDisclosureProvider>

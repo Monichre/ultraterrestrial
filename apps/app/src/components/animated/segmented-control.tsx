@@ -11,7 +11,7 @@ export function SegmentedControl() {
           duration: 0.2,
         }}
       >
-        {['Day', 'Week', 'Month', 'Year'].map((label, index) => {
+        {['Day', 'Week', 'Month', 'Year'].map( ( label, index ) => {
           return (
             <button
               key={index}
@@ -22,7 +22,7 @@ export function SegmentedControl() {
               {label}
             </button>
           )
-        })}
+        } )}
       </AnimatedBackground>
     </div>
   )

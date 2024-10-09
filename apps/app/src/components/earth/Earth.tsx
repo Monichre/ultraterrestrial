@@ -1,28 +1,27 @@
 'use client'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
-import { forwardRef, memo, Suspense, useRef } from 'react'
+import { memo, Suspense, useRef } from 'react'
 
-import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import Image from 'next/image'
 import { motion } from 'framer-motion-3d'
 import * as THREE from 'three'
+import { TextureLoader } from 'three/src/loaders/TextureLoader'
 
-const RotatingComponent = ({ spin, activeLocation }: any) => {
-  console.log('activeLocation: ', activeLocation)
-  const earthRef: any = useRef<THREE.Mesh>(null!)
+const RotatingComponent = memo( ( { spin, activeLocation }: any ) => {
+  console.log( 'activeLocation: ', activeLocation )
+  const earthRef: any = useRef<THREE.Mesh>( null! )
 
-  useFrame((state, delta) => {
-    console.log('state: ', state)
-    if (spin) {
-      return (earthRef.current.rotation.y += delta / 10)
+  useFrame( ( state, delta ) => {
+    console.log( 'state: ', state )
+    if ( spin ) {
+      return ( earthRef.current.rotation.y += delta / 10 )
     }
-  })
+  } )
 
-  const [color, normal, aoMap] = useLoader(TextureLoader, [
+  const [color, normal, aoMap] = useLoader( TextureLoader, [
     '/assets/earth2/color.jpg',
     '/assets/earth2/normal.png',
     '/assets/earth2/occlusion.jpg',
-  ])
+  ] )
 
   return (
     <motion.mesh scale={2.5} ref={earthRef} rotation-y={0.5}>
@@ -30,34 +29,42 @@ const RotatingComponent = ({ spin, activeLocation }: any) => {
       <meshStandardMaterial map={color} normalMap={normal} aoMap={aoMap} />
     </motion.mesh>
   )
-}
-export const Earth = forwardRef(({ activeLocation }: any, ref: any) => {
-  return (
-    <Canvas ref={ref}>
-      <ambientLight intensity={0.1} />
-      <directionalLight intensity={3.5} position={[1, 0, -0.25]} />
-      <Suspense
-      // fallback={
-      //   <img
-      //     alt='earth2'
-      //     src='/assets/earth2/placeholder.png'
-      //     width={1000}
-      //     height={1000}
-      //   />
-      // }
-      >
-        <RotatingComponent spin activeLocation={activeLocation} />
-      </Suspense>
-    </Canvas>
-  )
-})
+} )
+RotatingComponent.displayName = 'RotatingComponent'
 
-export const EN = forwardRef((props: any, ref: any) => {
+const E = ( { activeLocation, ref }: any ) => {
+  return (
+    <div ref={ref} className='h-full w-full'>
+
+      <Suspense
+        fallback={
+          <img
+            alt='earth2'
+            src='/assets/earth2/placeholder.png'
+            width={1000}
+            height={1000}
+          />
+        }
+      >
+        <Canvas>
+          <ambientLight intensity={0.1} />
+          <directionalLight intensity={3.5} position={[1, 0, -0.25]} />
+
+          <RotatingComponent spin activeLocation={activeLocation} />
+        </Canvas>
+      </Suspense>
+    </div>
+  )
+}
+
+
+export const Earth = memo( E )
+export const EN = ( { ref, ...rest }: any ) => {
   // useFrame((state, delta) => {
   //   return (earthRef.current.rotation.y += delta / 10)
   // })
 
-  const [color, normal, aoMap] = useLoader(TextureLoader, [
+  const [color, normal, aoMap] = useLoader( TextureLoader, [
     '/8k_earth_nightmap.jpeg',
     // '/assets/earth/textures/lambert6_baseColor.png',
     // '/assets/earth/textures/phong1_baseColor.jpeg',
@@ -68,10 +75,10 @@ export const EN = forwardRef((props: any, ref: any) => {
     // '/assets/scenes/earth/textures/Material_50_normal.png',
     // '/assets/scenes/earth/textures/Material_62_baseColor.png',
     // '/assets/scenes/earth/textures/Material_62_emissive.jpeg',
-  ])
+  ] )
 
   return (
-    <Canvas>
+    <Canvas fallback={<img alt='earth2' src='/assets/earth2/placeholder.png' width={1000} height={1000} />} ref={ref}>
       <ambientLight intensity={0.1} />
       <directionalLight intensity={3.5} position={[1, 0, -0.25]} />
 
@@ -81,6 +88,6 @@ export const EN = forwardRef((props: any, ref: any) => {
       </motion.mesh>
     </Canvas>
   )
-})
+}
 
-export const EarthAtNight = memo(EN)
+export const EarthAtNight = memo( EN )

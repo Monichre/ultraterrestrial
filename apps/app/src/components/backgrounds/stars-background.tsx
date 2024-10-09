@@ -4,24 +4,24 @@ import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/utils/cn'
 
-export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
+export const Illustration = ( { mouseEnter }: { mouseEnter: boolean } ) => {
   const stars = 108
   const columns = 18
 
-  const [glowingStars, setGlowingStars] = useState<number[]>([])
+  const [glowingStars, setGlowingStars] = useState<number[]>( [] )
 
-  const highlightedStars = useRef<number[]>([])
+  const highlightedStars = useRef<number[]>( [] )
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      highlightedStars.current = Array.from({ length: 5 }, () =>
-        Math.floor(Math.random() * stars)
+  useEffect( () => {
+    const interval = setInterval( () => {
+      highlightedStars.current = Array.from( { length: 5 }, () =>
+        Math.floor( Math.random() * stars )
       )
-      setGlowingStars([...highlightedStars.current])
-    }, 3000)
+      setGlowingStars( [...highlightedStars.current] )
+    }, 3000 )
 
-    return () => clearInterval(interval)
-  }, [])
+    return () => clearInterval( interval )
+  }, [] )
 
   return (
     <div
@@ -32,9 +32,9 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
         gap: `1px`,
       }}
     >
-      {[...Array(stars)].map((_, starIdx) => {
-        const isGlowing = glowingStars.includes(starIdx)
-        const delay = (starIdx % 10) * 0.1
+      {[...Array( stars )].map( ( _, starIdx ) => {
+        const isGlowing = glowingStars.includes( starIdx )
+        const delay = ( starIdx % 10 ) * 0.1
         const staticDelay = starIdx * 0.01
         return (
           <div
@@ -51,18 +51,18 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
             </AnimatePresence>
           </div>
         )
-      })}
+      } )}
     </div>
   )
 }
 
-export const Star = ({
+export const Star = ( {
   isGlowing,
   delay,
 }: {
   isGlowing: boolean
   delay: number
-}) => {
+} ) => {
   return (
     <motion.div
       key={delay}
@@ -78,12 +78,12 @@ export const Star = ({
         ease: 'easeInOut',
         delay: delay,
       }}
-      className={cn('bg-[#666] h-[1px] w-[1px] rounded-full relative z-20')}
+      className={cn( 'bg-[#666] h-[1px] w-[1px] rounded-full relative z-20' )}
     ></motion.div>
   )
 }
 
-export const Glow = ({ delay }: { delay: number }) => {
+export const Glow = ( { delay }: { delay: number } ) => {
   return (
     <motion.div
       initial={{

@@ -25,6 +25,8 @@ table_names=(
     "user-saved-topics"
     "user-theories"
     "users"
+    "artifacts"
+    ""
 )
 today=$(date +%Y-%m-%d)
 # Create the directory if it doesn't exist

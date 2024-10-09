@@ -1,17 +1,17 @@
 import { cn } from '@/utils'
 import React from 'react'
 
-export const Meteors = ({
+export const Meteors = ( {
   number,
   className,
 }: {
   number?: number
   className?: string
-}) => {
-  const meteors = new Array(number || 20).fill(true)
+} ) => {
+  const meteors = new Array( number || 20 ).fill( true )
   return (
     <>
-      {meteors.map((el, idx) => (
+      {meteors.map( ( el, idx ) => (
         <span
           key={'meteor' + idx}
           className={cn(
@@ -21,12 +21,12 @@ export const Meteors = ({
           )}
           style={{
             top: 0,
-            left: Math.floor(Math.random() * (400 - -400) + -400) + 'px',
-            animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + 's',
-            animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + 's',
+            left: Math.floor( Math.random() * ( 400 - -400 ) + -400 ) + 'px',
+            animationDelay: Math.random() * ( 0.8 - 0.2 ) + 0.2 + 's',
+            animationDuration: Math.floor( Math.random() * ( 10 - 2 ) + 2 ) + 's',
           }}
         ></span>
-      ))}
+      ) )}
     </>
   )
 }

@@ -32,15 +32,15 @@ const colors = [
 // ]
 
 class ConnectionsFacade extends Group3DFacade {
-  constructor(parent) {
-    super(parent)
+  constructor( parent ) {
+    super( parent )
     this.objectRefs = { globe: null, cities: null }
 
     this.onBeforeRender = () => {
       const { globe, cities } = this.objectRefs
       const cxns = []
-      if (globe && cities && !globe.isDestroying && !cities.isDestroying) {
-        cities.forEachChild((cityLabel, i) => {
+      if ( globe && cities && !globe.isDestroying && !cities.isDestroying ) {
+        cities.forEachChild( ( cityLabel, i ) => {
           const { offsetHeight, offsetTop, parentFlexNode } = cityLabel
           if (
             cityLabel.visible &&
@@ -48,21 +48,21 @@ class ConnectionsFacade extends Group3DFacade {
             !cityLabel.isFullyClipped &&
             offsetTop + offsetHeight / 2 > parentFlexNode.scrollTop &&
             offsetTop + offsetHeight / 2 <
-              parentFlexNode.scrollTop + parentFlexNode.clientHeight
+            parentFlexNode.scrollTop + parentFlexNode.clientHeight
           ) {
             const labelY = offsetHeight / 2
             const labelPos = cityLabel.threeObject.localToWorld(
-              new Vector3(0.005, -labelY, 0)
+              new Vector3( 0.005, -labelY, 0 )
             )
             const labelCtrl = cityLabel.threeObject.localToWorld(
-              new Vector3(-0.2, -labelY, 0)
+              new Vector3( -0.2, -labelY, 0 )
             )
             const { lat, lng, hovering } = cityLabel
-            const globePos = globe.latLonToWorldPosition(lat, lng, 1)
-            const globeCtrl = globe.latLonToWorldPosition(lat, lng, 4)
+            const globePos = globe.latLonToWorldPosition( lat, lng, 1 )
+            const globeCtrl = globe.latLonToWorldPosition( lat, lng, 4 )
             // globeCtrl.y = globeCtrl.y > 0 ? 3 : -3
             // globeCtrl.applyMatrix4(globe.threeObject.matrixWorld)
-            cxns.push({
+            cxns.push( {
               key: cityLabel.$facadeId,
               facade: Bezier3DInstanceableFacade,
               radius: hovering ? 0.0015 : 0.001,
@@ -83,15 +83,15 @@ class ConnectionsFacade extends Group3DFacade {
               dashArray: hovering ? [0.01, 0.01] : null,
               animation: hovering
                 ? {
-                    from: { dashOffset: 0 },
-                    to: { dashOffset: -0.02 },
-                    duration: 200,
-                    iterations: Infinity,
-                  }
+                  from: { dashOffset: 0 },
+                  to: { dashOffset: -0.02 },
+                  duration: 200,
+                  iterations: Infinity,
+                }
                 : null,
-            })
+            } )
           }
-        })
+        } )
       }
       this.children = cxns
       this.afterUpdate()

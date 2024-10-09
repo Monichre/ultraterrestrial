@@ -513,10 +513,10 @@ interface PopupInfo {
 }
 
 // Helper Functions
-const getFirstLabelLayerId = (style: any): string | undefined => {
+const getFirstLabelLayerId = ( style: any ): string | undefined => {
   const layers = style.layers
-  for (let layer of layers) {
-    if (layer.type === 'symbol') {
+  for ( let layer of layers ) {
+    if ( layer.type === 'symbol' ) {
       return layer.id
     }
   }
@@ -524,28 +524,28 @@ const getFirstLabelLayerId = (style: any): string | undefined => {
 }
 
 // DeckGL Overlay Component
-const DeckGLOverlay: FC<MapboxOverlayProps> = (props) => {
-  useControl(() => new MapboxOverlay(props), { position: 'top-right' })
+const DeckGLOverlay: FC<MapboxOverlayProps> = ( props ) => {
+  useControl( () => new MapboxOverlay( props ), { position: 'top-right' } )
   return null
 }
 
 // Main Component
 export const SightingsGlobe: FC<SightingsGlobeProps> = memo(
-  ({ sightings, militaryBases, ufoPosts }) => {
+  ( { sightings, militaryBases, ufoPosts } ) => {
     // References
-    const mapRef = useRef<any>(null)
+    const mapRef = useRef<any>( null )
 
     // State
-    const [viewState, setViewState] = useState({
+    const [viewState, setViewState] = useState( {
       longitude: -125.148032,
       latitude: 19.613688,
       zoom: 2.48,
       bearing: 0,
       pitch: 0,
-    })
-    const [selected, setSelected] = useState<any | null>(null)
-    const [hoverInfo, setHoverInfo] = useState<PopupInfo | null>(null)
-    const [selectedPOI, setSelectedPOI] = useState<string>('8a283082aa17fff')
+    } )
+    const [selected, setSelected] = useState<any | null>( null )
+    const [hoverInfo, setHoverInfo] = useState<PopupInfo | null>( null )
+    const [selectedPOI, setSelectedPOI] = useState<string>( '8a283082aa17fff' )
     const [firstLabelLayerId, setFirstLabelLayerId] = useState<
       string | undefined
     >()
@@ -554,147 +554,147 @@ export const SightingsGlobe: FC<SightingsGlobeProps> = memo(
     const colorScale = useMemo(
       () =>
         scaleLog<number, number[]>()
-          .domain([10, 100, 1000, 10000])
-          .range([
+          .domain( [10, 100, 1000, 10000] )
+          .range( [
             [255, 255, 178],
             [254, 204, 92],
             [253, 141, 60],
             [227, 26, 28],
-          ]),
+          ] ),
       []
     )
 
     // Handlers
-    const onMapLoad = useCallback(() => {
-      if (mapRef.current) {
-        const layerId = getFirstLabelLayerId(mapRef.current.getStyle())
-        setFirstLabelLayerId(layerId)
+    const onMapLoad = useCallback( () => {
+      if ( mapRef.current ) {
+        const layerId = getFirstLabelLayerId( mapRef.current.getStyle() )
+        setFirstLabelLayerId( layerId )
       }
-    }, [])
+    }, [] )
 
-    const fetchCurrentUserLocation = useCallback(() => {
-      if ('geolocation' in navigator) {
+    const fetchCurrentUserLocation = useCallback( () => {
+      if ( 'geolocation' in navigator ) {
         navigator.geolocation.getCurrentPosition(
-          (position) => {
+          ( position ) => {
             const userLocation: [number, number] = [
               position.coords.longitude,
               position.coords.latitude,
             ]
-            setViewState((prev) => ({
+            setViewState( ( prev ) => ( {
               ...prev,
               longitude: userLocation[0],
               latitude: userLocation[1],
-            }))
+            } ) )
           },
-          (error) => {
-            console.error('Error retrieving location:', error)
+          ( error ) => {
+            console.error( 'Error retrieving location:', error )
             // Optionally handle fallback
           }
         )
       } else {
-        console.error('Geolocation not supported by this browser.')
+        console.error( 'Geolocation not supported by this browser.' )
         // Optionally handle fallback
       }
-    }, [])
+    }, [] )
 
-    useEffect(() => {
+    useEffect( () => {
       fetchCurrentUserLocation()
-    }, [fetchCurrentUserLocation])
+    }, [fetchCurrentUserLocation] )
 
     // Memoized Layers
-    const layers = useMemo(() => {
+    const layers = useMemo( () => {
       const baseGeoJsonLayerProps = {
         filled: true,
         pointRadiusMinPixels: 2,
         pointRadiusScale: 2000,
         pickable: true,
         autoHighlight: true,
-        onClick: (info: any) => {
-          if (info.object) {
+        onClick: ( info: any ) => {
+          if ( info.object ) {
             const coords =
               info.object.geometry.type === 'Point'
                 ? info.object.geometry.coordinates
                 : info.object.properties?.geo_point_2d
                   ? [
-                      info.object.properties.geo_point_2d.lon,
-                      info.object.properties.geo_point_2d.lat,
-                    ]
+                    info.object.properties.geo_point_2d.lon,
+                    info.object.properties.geo_point_2d.lat,
+                  ]
                   : [0, 0]
-            setSelected({
+            setSelected( {
               longitude: coords[0],
               latitude: coords[1],
               ...info.object.properties,
               content: (
                 <div className='font-bold'>
-                  {Object.entries(info.object.properties).map(
-                    ([key, value]) => (
+                  {Object.entries( info.object.properties ).map(
+                    ( [key, value] ) => (
                       <p key={key}>{info.object.properties[key]}</p>
                     )
                   )}
                 </div>
               ),
-            })
+            } )
           }
         },
-        onHover: (info: any) => {
-          console.log('info: ', info)
-          if (info.object) {
+        onHover: ( info: any ) => {
+          console.log( 'info: ', info )
+          if ( info.object ) {
             const coords =
               info.object.geometry.type === 'Point'
                 ? info.object.geometry.coordinates
                 : info.object.properties?.geo_point_2d
                   ? [
-                      info.object.properties.geo_point_2d.lon,
-                      info.object.properties.geo_point_2d.lat,
-                    ]
+                    info.object.properties.geo_point_2d.lon,
+                    info.object.properties.geo_point_2d.lat,
+                  ]
                   : [0, 0]
-            setHoverInfo({
+            setHoverInfo( {
               longitude: coords[0],
               latitude: coords[1],
               ...info.object.properties,
               content: (
                 <div className='font-bold'>
-                  {Object.entries(info.object.properties).map(([key, value]) =>
+                  {Object.entries( info.object.properties ).map( ( [key, value] ) =>
                     key === 'geo_point_2d' ? null : <p key={key}>{value}</p>
                   )}
                 </div>
               ),
-            })
+            } )
           } else {
-            setHoverInfo(null)
+            setHoverInfo( null )
           }
         },
       }
 
-      const sightingsLayer = new GeoJsonLayer({
+      const sightingsLayer = new GeoJsonLayer( {
         id: 'sightings',
         data: sightings,
         ...baseGeoJsonLayerProps,
         // beforeId: firstLabelLayerId,
-      })
-      const militaryLayer = new GeoJsonLayer({
+      } )
+      const militaryLayer = new GeoJsonLayer( {
         id: 'military-bases',
         data: militaryBases,
         ...baseGeoJsonLayerProps,
-      })
+      } )
 
-      const ufoPostsLayer = new GeoJsonLayer({
+      const ufoPostsLayer = new GeoJsonLayer( {
         id: 'ufo-posts',
         data: ufoPosts,
         ...baseGeoJsonLayerProps,
-        getPointRadius: (f: any) => 11 - f.properties.scalerank,
+        getPointRadius: ( f: any ) => 11 - f.properties.scalerank,
         getFillColor: [200, 0, 80, 180],
         // beforeId: firstLabelLayerId,
-      })
+      } )
 
-      const airportsLayer = new GeoJsonLayer({
+      const airportsLayer = new GeoJsonLayer( {
         id: 'airports',
         data: AIR_PORTS_URL,
         ...baseGeoJsonLayerProps,
-        getPointRadius: (f: any) => 11 - f.properties.scalerank,
+        getPointRadius: ( f: any ) => 11 - f.properties.scalerank,
         getFillColor: [200, 0, 80, 180],
         beforeId: firstLabelLayerId,
-      })
+      } )
 
       // const arcsLayer = new ArcLayer({
       //   id: 'arcs',
@@ -717,14 +717,14 @@ export const SightingsGlobe: FC<SightingsGlobeProps> = memo(
         airportsLayer,
         // arcsLayer,
       ]
-    }, [sightings, militaryBases, ufoPosts, firstLabelLayerId])
-    console.log('selected: ', selected)
+    }, [sightings, militaryBases, ufoPosts, firstLabelLayerId] )
+    console.log( 'selected: ', selected )
     return (
       <div className='h-screen w-screen'>
         <Map
           ref={mapRef}
           initialViewState={viewState}
-          onMove={(evt) => setViewState(evt.viewState)}
+          onMove={( evt ) => setViewState( evt.viewState )}
           mapStyle='mapbox://styles/ellisliam/cld51oavf001e01o2eko08rd9'
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN}
           onLoad={onMapLoad}
@@ -750,7 +750,7 @@ export const SightingsGlobe: FC<SightingsGlobeProps> = memo(
               //     ? selected.geometry.coordinates[1]
               //     : selected.properties?.geo_point_2d?.lat || 0
               // }
-              onClose={() => setSelected(null)}
+              onClose={() => setSelected( null )}
               style={{ zIndex: 10 }}
             >
               <div>{selected.content}</div>
@@ -763,7 +763,7 @@ export const SightingsGlobe: FC<SightingsGlobeProps> = memo(
               anchor='left'
               longitude={hoverInfo.longitude}
               latitude={hoverInfo.latitude}
-              onClose={() => setHoverInfo(null)}
+              onClose={() => setHoverInfo( null )}
               style={{
                 zIndex: 10,
 

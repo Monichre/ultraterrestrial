@@ -12,22 +12,22 @@ interface BlurIntProps {
   visible: boolean
   duration?: number
 }
-export const BlurIn = ({
+export const BlurIn = ( {
   word,
   className,
   visible,
   duration = 1,
-}: BlurIntProps) => {
+}: BlurIntProps ) => {
   const defaultVariants = {
     hidden: { filter: 'blur(10px)', opacity: 0 },
-    visible: (i: any) => ({
+    visible: ( i: any ) => ( {
       filter: 'blur(0px)',
       opacity: 1,
       transition: {
         duration: 1,
         delay: i * 1,
       },
-    }),
+    } ),
   }
 
   return (

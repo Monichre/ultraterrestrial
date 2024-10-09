@@ -21,11 +21,26 @@ export class AssistantStreamEventHandler extends EventEmitter {
           event.data.thread_id,
         )
       }
+      else if ( event.event === "thread.message.completed" ) {
+        console.log( data )
+        await this.handleFinished( event.data, event.data.id, event.data.thread_id )
+      }
     } catch ( error ) {
       console.error( "Error handling event:", error )
     }
   }
-
+  async handleFinished( data: any, runId: any, threadId: any ) {
+    console.log( "🚀 ~ file: event-handler.ts:33 ~ AssistantStreamEventHandler ~ handleFinished ~ threadId:", threadId )
+    console.log( "🚀 ~ file: event-handler.ts:33 ~ AssistantStreamEventHandler ~ handleFinished ~ runId:", runId )
+    console.log( "🚀 ~ file: event-handler.ts:33 ~ AssistantStreamEventHandler ~ handleFinished ~ data:", data )
+    try {
+      // Implement your chat saving logic here
+      // await saveChat( { runId, threadId, data } )
+      console.log( "Chat history saved successfully." )
+    } catch ( error ) {
+      console.error( "Error saving chat history:", error )
+    }
+  }
   async handleRequiresAction( data: any, runId: any, threadId: any ) {
     try {
       const toolOutputs =

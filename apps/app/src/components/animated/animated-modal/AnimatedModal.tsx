@@ -13,13 +13,13 @@ import React, {
 
 interface ModalContextType {
   open: boolean
-  setOpen: (open: boolean) => void
+  setOpen: ( open: boolean ) => void
 }
 
-const ModalContext = createContext<ModalContextType | undefined>(undefined)
+const ModalContext = createContext<ModalContextType | undefined>( undefined )
 
-export const ModalProvider = ({ children }: { children: ReactNode }) => {
-  const [open, setOpen] = useState(false)
+export const ModalProvider = ( { children }: { children: ReactNode } ) => {
+  const [open, setOpen] = useState( false )
 
   return (
     <ModalContext.Provider value={{ open, setOpen }}>
@@ -29,24 +29,24 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 }
 
 export const useModal = () => {
-  const context = useContext(ModalContext)
-  if (!context) {
-    throw new Error('useModal must be used within a ModalProvider')
+  const context = useContext( ModalContext )
+  if ( !context ) {
+    throw new Error( 'useModal must be used within a ModalProvider' )
   }
   return context
 }
 
-export function Modal({ children }: { children: ReactNode }) {
+export function Modal( { children }: { children: ReactNode } ) {
   return <ModalProvider>{children}</ModalProvider>
 }
 
-export const ModalTrigger = ({
+export const ModalTrigger = ( {
   children,
   className,
 }: {
   children: ReactNode
   className?: string
-}) => {
+} ) => {
   const { setOpen } = useModal()
   return (
     <button
@@ -54,33 +54,33 @@ export const ModalTrigger = ({
         'px-4 py-2 rounded-md text-black dark:text-white text-center relative overflow-hidden',
         className
       )}
-      onClick={() => setOpen(true)}
+      onClick={() => setOpen( true )}
     >
       {children}
     </button>
   )
 }
 
-export const ModalBody = ({
+export const ModalBody = ( {
   children,
   className,
 }: {
   children: ReactNode
   className?: string
-}) => {
+} ) => {
   const { open } = useModal()
 
-  useEffect(() => {
-    if (open) {
+  useEffect( () => {
+    if ( open ) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'auto'
     }
-  }, [open])
+  }, [open] )
 
-  const modalRef = useRef(null)
+  const modalRef = useRef( null )
   const { setOpen } = useModal()
-  useOutsideClick(modalRef, () => setOpen(false))
+  useOutsideClick( modalRef, () => setOpen( false ) )
 
   return (
     <AnimatePresence>
@@ -139,27 +139,27 @@ export const ModalBody = ({
   )
 }
 
-export const ModalContent = ({
+export const ModalContent = ( {
   children,
   className,
 }: {
   children: ReactNode
   className?: string
-}) => {
+} ) => {
   return (
-    <div className={cn('flex flex-col flex-1 p-8 md:p-10', className)}>
+    <div className={cn( 'flex flex-col flex-1 p-8 md:p-10', className )}>
       {children}
     </div>
   )
 }
 
-export const ModalFooter = ({
+export const ModalFooter = ( {
   children,
   className,
 }: {
   children: ReactNode
   className?: string
-}) => {
+} ) => {
   return (
     <div
       className={cn(
@@ -172,7 +172,7 @@ export const ModalFooter = ({
   )
 }
 
-const Overlay = ({ className }: { className?: string }) => {
+const Overlay = ( { className }: { className?: string } ) => {
   return (
     <motion.div
       initial={{
@@ -195,7 +195,7 @@ const CloseIcon = () => {
   const { setOpen } = useModal()
   return (
     <Button
-      onClick={() => setOpen(false)}
+      onClick={() => setOpen( false )}
       className='absolute top-4 right-4 group'
     >
       <svg
@@ -224,21 +224,21 @@ export const useOutsideClick = (
   ref: React.RefObject<HTMLDivElement>,
   callback: Function
 ) => {
-  useEffect(() => {
-    const listener = (event: any) => {
+  useEffect( () => {
+    const listener = ( event: any ) => {
       // DO NOTHING if the element being clicked is the target element or their children
-      if (!ref.current || ref.current.contains(event.target)) {
+      if ( !ref.current || ref.current.contains( event.target ) ) {
         return
       }
-      callback(event)
+      callback( event )
     }
 
-    document.addEventListener('mousedown', listener)
-    document.addEventListener('touchstart', listener)
+    document.addEventListener( 'mousedown', listener )
+    document.addEventListener( 'touchstart', listener )
 
     return () => {
-      document.removeEventListener('mousedown', listener)
-      document.removeEventListener('touchstart', listener)
+      document.removeEventListener( 'mousedown', listener )
+      document.removeEventListener( 'touchstart', listener )
     }
-  }, [ref, callback])
+  }, [ref, callback] )
 }

@@ -20,7 +20,7 @@ type Story = StoryObj<typeof meta>
 
 export const Demo: Story = {
   args: {},
-  render: (args: any) => (
+  render: ( args: any ) => (
     <div className='h-screen w-screen'>
       <MatrixBackground />
     </div>

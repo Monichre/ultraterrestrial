@@ -16,16 +16,16 @@ type TransitionPanelProps = {
   variants?: { enter: Variant; center: Variant; exit: Variant }
 } & MotionProps
 
-export function TransitionPanel({
+export function TransitionPanel( {
   children,
   className,
   transition,
   variants,
   activeIndex,
   ...motionProps
-}: TransitionPanelProps) {
+}: TransitionPanelProps ) {
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn( 'relative', className )}>
       <AnimatePresence
         initial={false}
         mode='popLayout'

@@ -24,20 +24,20 @@ import { Textarea } from '@/features/user/note/ui/Textarea'
 import type { Message } from 'ai'
 
 interface ChatBottombarProps {
-  sendMessage: (newMessage: any) => void
+  sendMessage: ( newMessage: any ) => void
   isMobile: boolean
 }
 
 export const BottombarIcons = [{ icon: FileImage }, { icon: Paperclip }]
 
-export function ChatBottombar({ sendMessage, isMobile }: ChatBottombarProps) {
+export function ChatBottombar( { sendMessage, isMobile }: ChatBottombarProps ) {
   // const { userId, sessionId, isLoaded }: any = useAuth()
   const user: any = useUser()
-  const [message, setMessage] = useState('')
-  const inputRef = useRef<HTMLTextAreaElement>(null)
+  const [message, setMessage] = useState( '' )
+  const inputRef = useRef<HTMLTextAreaElement>( null )
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(event.target.value)
+  const handleInputChange = ( event: React.ChangeEvent<HTMLTextAreaElement> ) => {
+    setMessage( event.target.value )
   }
 
   const handleThumbsUp = () => {
@@ -46,35 +46,35 @@ export function ChatBottombar({ sendMessage, isMobile }: ChatBottombarProps) {
 
       content: '👍',
     }
-    sendMessage(newMessage)
-    setMessage('')
+    sendMessage( newMessage )
+    setMessage( '' )
   }
 
   const handleSend = () => {
-    if (message.trim()) {
+    if ( message.trim() ) {
       const newMessage: any = {
         name: user?.name,
 
         content: message.trim(),
       }
-      sendMessage(newMessage)
-      setMessage('')
+      sendMessage( newMessage )
+      setMessage( '' )
 
-      if (inputRef.current) {
+      if ( inputRef.current ) {
         inputRef.current.focus()
       }
     }
   }
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
+  const handleKeyPress = ( event: React.KeyboardEvent<HTMLTextAreaElement> ) => {
+    if ( event.key === 'Enter' && !event.shiftKey ) {
       event.preventDefault()
       handleSend()
     }
 
-    if (event.key === 'Enter' && event.shiftKey) {
+    if ( event.key === 'Enter' && event.shiftKey ) {
       event.preventDefault()
-      setMessage((prev) => prev + '\n')
+      setMessage( ( prev ) => prev + '\n' )
     }
   }
 
@@ -105,7 +105,7 @@ export function ChatBottombar({ sendMessage, isMobile }: ChatBottombarProps) {
                 >
                   <Mic size={20} className='text-muted-foreground' />
                 </Button>
-                {BottombarIcons.map((icon, index) => (
+                {BottombarIcons.map( ( icon, index ) => (
                   <Button
                     key={index}
                     variant='ghost'
@@ -116,7 +116,7 @@ export function ChatBottombar({ sendMessage, isMobile }: ChatBottombarProps) {
                   >
                     <icon.icon size={20} className='text-muted-foreground' />
                   </Button>
-                ))}
+                ) )}
               </div>
             ) : (
               <Button
@@ -133,7 +133,7 @@ export function ChatBottombar({ sendMessage, isMobile }: ChatBottombarProps) {
         </Popover>
         {!message.trim() && !isMobile && (
           <div className='flex'>
-            {BottombarIcons.map((icon, index) => (
+            {BottombarIcons.map( ( icon, index ) => (
               <Button
                 key={index}
                 variant='ghost'
@@ -144,7 +144,7 @@ export function ChatBottombar({ sendMessage, isMobile }: ChatBottombarProps) {
               >
                 <icon.icon size={20} className='text-muted-foreground' />
               </Button>
-            ))}
+            ) )}
           </div>
         )}
       </div>

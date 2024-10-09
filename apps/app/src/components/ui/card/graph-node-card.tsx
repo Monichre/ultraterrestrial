@@ -1,9 +1,9 @@
 import { DotGridBackgroundBlack } from '@/components/backgrounds'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { useState, useEffect } from 'react'
-const dayjs = require('dayjs')
-const utc = require('dayjs/plugin/utc')
-dayjs.extend(utc)
+const dayjs = require( 'dayjs' )
+const utc = require( 'dayjs/plugin/utc' )
+dayjs.extend( utc )
 export type GraphNodeCardData = {
   data: {
     date: string
@@ -20,10 +20,10 @@ export type GraphNodeCardData = {
   }
 }
 
-export const GraphNodeCard: React.FC<GraphNodeCardData> = ({
+export const GraphNodeCard: React.FC<GraphNodeCardData> = ( {
   data,
   ...rest
-}) => {
+} ) => {
   const {
     date: unformattedDate,
     description,
@@ -37,46 +37,46 @@ export const GraphNodeCard: React.FC<GraphNodeCardData> = ({
     label,
     fill,
   } = data
-  const date = dayjs(data?.date).format('DD.MM.YY')
-  const [animatedTitle, setAnimatedTitle] = useState<string>('')
-  const [animatedDate, setAnimatedDate] = useState<string>('')
-  const [titleFinished, setTitleFinished] = useState(false)
-  const [t, setT] = useState<number>(0)
-  const [i, setI] = useState<number>(0)
+  const date = dayjs( data?.date ).format( 'DD.MM.YY' )
+  const [animatedTitle, setAnimatedTitle] = useState<string>( '' )
+  const [animatedDate, setAnimatedDate] = useState<string>( '' )
+  const [titleFinished, setTitleFinished] = useState( false )
+  const [t, setT] = useState<number>( 0 )
+  const [i, setI] = useState<number>( 0 )
 
-  useEffect(() => {
-    const typingEffect = setInterval(() => {
-      if (t < name.length) {
-        setAnimatedTitle(name.substring(0, t + 1))
-        setT(t + 1)
+  useEffect( () => {
+    const typingEffect = setInterval( () => {
+      if ( t < name.length ) {
+        setAnimatedTitle( name.substring( 0, t + 1 ) )
+        setT( t + 1 )
       } else {
-        clearInterval(typingEffect)
+        clearInterval( typingEffect )
 
-        setTitleFinished(true)
+        setTitleFinished( true )
       }
-    }, 100)
+    }, 100 )
 
     return () => {
-      clearInterval(typingEffect)
+      clearInterval( typingEffect )
     }
-  }, [name, t])
+  }, [name, t] )
 
-  useEffect(() => {
-    const typingEffectTwo = setInterval(() => {
-      if (titleFinished) {
-        if (i < date.length) {
-          setAnimatedDate(date.substring(0, i + 1))
-          setI(i + 1)
+  useEffect( () => {
+    const typingEffectTwo = setInterval( () => {
+      if ( titleFinished ) {
+        if ( i < date.length ) {
+          setAnimatedDate( date.substring( 0, i + 1 ) )
+          setI( i + 1 )
         } else {
-          clearInterval(typingEffectTwo)
+          clearInterval( typingEffectTwo )
         }
       }
-    }, 100)
+    }, 100 )
 
     return () => {
-      clearInterval(typingEffectTwo)
+      clearInterval( typingEffectTwo )
     }
-  }, [date, date.length, i, name, t, titleFinished])
+  }, [date, date.length, i, name, t, titleFinished] )
 
   return (
     <Card

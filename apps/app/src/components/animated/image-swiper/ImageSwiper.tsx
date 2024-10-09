@@ -9,18 +9,18 @@ import { HandrawnArrowLeft, HandrawnArrowRight } from '@/components/icons'
 export const ImageSwiper: React.FC<{
   images: string[]
   className?: string
-}> = ({ images, className }) => {
-  const [imgIndex, setImgIndex] = useState(0)
+}> = ( { images, className } ) => {
+  const [imgIndex, setImgIndex] = useState( 0 )
 
-  const dragX = useMotionValue(0)
+  const dragX = useMotionValue( 0 )
 
   const onDragEnd = () => {
     const x = dragX.get()
 
-    if (x <= -10 && imgIndex < images.length - 1) {
-      setImgIndex((e) => e + 1)
-    } else if (x >= 10 && imgIndex > 0) {
-      setImgIndex((e) => e - 1)
+    if ( x <= -10 && imgIndex < images.length - 1 ) {
+      setImgIndex( ( e ) => e + 1 )
+    } else if ( x >= 10 && imgIndex > 0 ) {
+      setImgIndex( ( e ) => e - 1 )
     }
   }
 
@@ -36,8 +36,8 @@ export const ImageSwiper: React.FC<{
           style={imgIndex === 0 ? { opacity: 0 } : {}}
           className='pointer-events-auto h-fit w-fit rounded-full bg-white/80 p-2 opacity-0 transition-all group-hover/hover:opacity-100'
           onClick={() => {
-            if (imgIndex > 0) {
-              setImgIndex((pv) => pv - 1)
+            if ( imgIndex > 0 ) {
+              setImgIndex( ( pv ) => pv - 1 )
             }
           }}
         >
@@ -47,8 +47,8 @@ export const ImageSwiper: React.FC<{
           style={imgIndex === images.length - 1 ? { opacity: 0 } : {}}
           className='pointer-events-auto h-fit w-fit rounded-full bg-white/80 p-2  opacity-0 transition-all group-hover/hover:opacity-100'
           onClick={() => {
-            if (imgIndex < images.length - 1) {
-              setImgIndex((pv) => pv + 1)
+            if ( imgIndex < images.length - 1 ) {
+              setImgIndex( ( pv ) => pv + 1 )
             }
           }}
         >
@@ -84,7 +84,7 @@ export const ImageSwiper: React.FC<{
         }}
         className=' flex h-full cursor-grab items-center rounded-[inherit] active:cursor-grabbing'
       >
-        {images.map((src, i) => {
+        {images.map( ( src, i ) => {
           return (
             <motion.div
               key={i}
@@ -97,7 +97,7 @@ export const ImageSwiper: React.FC<{
               />
             </motion.div>
           )
-        })}
+        } )}
       </motion.div>
     </div>
   )

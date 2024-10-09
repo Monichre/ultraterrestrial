@@ -36,14 +36,14 @@ const transition = {
 //   )
 // }
 
-export function AnimatedSearchInput({ onChange, onSubmit, type, value }: any) {
-  const [isOpen, setIsOpen] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
+export function AnimatedSearchInput( { onChange, onSubmit, type, value }: any ) {
+  const [isOpen, setIsOpen] = useState( false )
+  const containerRef = useRef<HTMLDivElement>( null )
   const [contentRef, { width, height }] = useMeasure()
 
-  useClickOutside(containerRef, () => {
-    setIsOpen(false)
-  })
+  useClickOutside( containerRef, () => {
+    setIsOpen( false )
+  } )
 
   return (
     <MotionConfig transition={transition}>
@@ -61,13 +61,13 @@ export function AnimatedSearchInput({ onChange, onSubmit, type, value }: any) {
                 <Button
                   variant='ghost'
                   size='icon'
-                  onClick={() => setIsOpen(true)}
+                  onClick={() => setIsOpen( true )}
                 >
                   <Search className='h-5 w-5' />
                 </Button>
               ) : (
                 <div className='flex space-x-2'>
-                  <Button onClick={() => setIsOpen(false)}>
+                  <Button onClick={() => setIsOpen( false )}>
                     <ArrowLeft className='h-5 w-5' />
                   </Button>
                   <div className='relative w-full'>
@@ -77,8 +77,8 @@ export function AnimatedSearchInput({ onChange, onSubmit, type, value }: any) {
                       value={value}
                       onChange={onChange}
                       placeholder={`Search ${type}`}
-                      onKeyDown={(event) => {
-                        if (event.key === 'Enter') {
+                      onKeyDown={( event ) => {
+                        if ( event.key === 'Enter' ) {
                           onSubmit()
                         }
                       }}

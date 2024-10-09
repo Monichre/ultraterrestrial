@@ -20,7 +20,7 @@ interface BlurFadeProps {
   blur?: string
 }
 
-export function BlurFade({
+export function BlurFade( {
   children,
   className,
   variant,
@@ -30,9 +30,9 @@ export function BlurFade({
   inView = false,
   inViewMargin = '-50px',
   blur = '6px',
-}: BlurFadeProps) {
-  const ref = useRef(null)
-  const inViewResult = useInView(ref, { once: true, margin: inViewMargin })
+}: BlurFadeProps ) {
+  const ref = useRef( null )
+  const inViewResult = useInView( ref, { once: true, margin: inViewMargin } )
   const isInView = !inView || inViewResult
   const defaultVariants: Variants = {
     hidden: { y: 10, opacity: 0, filter: `blur(${blur})` },
@@ -52,7 +52,7 @@ export function BlurFade({
           duration,
           ease: 'easeIn',
         }}
-        className={cn(className, isInView ? 'in-view' : '')}
+        className={cn( className, isInView ? 'in-view' : '' )}
       >
         {children}
       </motion.div>

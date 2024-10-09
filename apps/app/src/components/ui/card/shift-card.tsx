@@ -17,11 +17,11 @@ interface ShiftCardProps
 const ShiftCardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ children, ...props }, ref) => (
+>( ( { children, ...props }, ref ) => (
   <div ref={ref} {...props}>
     {children}
   </div>
-))
+) )
 ShiftCardHeader.displayName = 'ShiftCardHeader'
 
 interface ShiftCardContentProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -30,7 +30,7 @@ interface ShiftCardContentProps extends React.HTMLAttributes<HTMLDivElement> {
 const ShiftCardContent = React.forwardRef<
   HTMLDivElement,
   ShiftCardContentProps
->(({ isHovered, children, ...divProps }, ref) => {
+>( ( { isHovered, children, ...divProps }, ref ) => {
   // Explicitly define motion props to avoid passing incompatible HTML attributes
   const motionProps: MotionProps = {
     initial: { opacity: 0, height: 0 },
@@ -50,7 +50,7 @@ const ShiftCardContent = React.forwardRef<
       {children}
     </motion.div>
   )
-})
+} )
 ShiftCardContent.displayName = 'ShiftCardContent'
 
 const ShiftCard = React.forwardRef<HTMLDivElement, ShiftCardProps>(
@@ -65,12 +65,12 @@ const ShiftCard = React.forwardRef<HTMLDivElement, ShiftCardProps>(
     },
     ref
   ) => {
-    const [isHovered, setHovered] = React.useState(false)
-    const handleMouseEnter = () => setHovered(true)
-    const handleMouseLeave = () => setHovered(false)
-    const handleTapStart = () => setHovered(true)
-    const handleTapCancel = () => setHovered(false)
-    const handleTap = () => setHovered(false)
+    const [isHovered, setHovered] = React.useState( false )
+    const handleMouseEnter = () => setHovered( true )
+    const handleMouseLeave = () => setHovered( false )
+    const handleTapStart = () => setHovered( true )
+    const handleTapCancel = () => setHovered( false )
+    const handleTap = () => setHovered( false )
 
     return (
       <motion.div

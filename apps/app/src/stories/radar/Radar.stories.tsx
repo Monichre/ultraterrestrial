@@ -26,7 +26,7 @@ export const DemoRadar: Story = {
 
 export const RadarLayoutDemo: Story = {
   args: {},
-  render: (args) => (
+  render: ( args ) => (
     <div className='w-screen h-screen'>
       <RadarLayout />
     </div>
@@ -35,7 +35,7 @@ export const RadarLayoutDemo: Story = {
 
 export const PulseRadar: Story = {
   args: {},
-  render: (args) => (
+  render: ( args ) => (
     <div className='w-screen h-screen'>
       <RadarPulseBeams />
     </div>

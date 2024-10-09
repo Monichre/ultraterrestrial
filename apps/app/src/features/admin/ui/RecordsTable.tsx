@@ -45,32 +45,32 @@ import {
 import { AnimatedGridPatternBackground } from '@/components/backgrounds/animated-grid-pattern'
 import { Input } from '@/components/ui/input'
 
-export function RecordsTable({
+export function RecordsTable( {
   model,
   records,
   addItemToSelectedRecordsList,
-}: any) {
-  console.log('model: ', model)
-  console.log('records: ', records)
-  console.log('TableConfig: ', TableConfig)
+}: any ) {
+  console.log( 'model: ', model )
+  console.log( 'records: ', records )
+  console.log( 'TableConfig: ', TableConfig )
   const columns = TableConfig[model].columns
-  console.log('columns: ', columns)
+  console.log( 'columns: ', columns )
 
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>( [] )
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+    React.useState<VisibilityState>( {} )
+  const [rowSelection, setRowSelection] = React.useState( {} )
 
-  const handleRowClick = ({ id, original: item }: any) => {
-    console.log('item: ', item)
-    addItemToSelectedRecordsList({ rowId: id, ...item })
+  const handleRowClick = ( { id, original: item }: any ) => {
+    console.log( 'item: ', item )
+    addItemToSelectedRecordsList( { rowId: id, ...item } )
   }
-  console.log('rowSelection: ', rowSelection)
+  console.log( 'rowSelection: ', rowSelection )
 
-  const table = useReactTable({
+  const table = useReactTable( {
     data: records,
     columns,
     onSortingChange: setSorting,
@@ -83,7 +83,7 @@ export function RecordsTable({
     enableRowSelection: true,
     enableMultiRowSelection: true,
     onRowSelectionChange: setRowSelection,
-    getRowId: (row: any) => row?.uuid,
+    getRowId: ( row: any ) => row?.uuid,
 
     state: {
       sorting,
@@ -91,20 +91,20 @@ export function RecordsTable({
       columnVisibility,
       rowSelection,
     },
-  })
+  } )
 
-  useEffect(() => {
-    console.log('rowSelection: ', rowSelection)
-    if (Object.keys(rowSelection).length > 0) {
+  useEffect( () => {
+    console.log( 'rowSelection: ', rowSelection )
+    if ( Object.keys( rowSelection ).length > 0 ) {
       const selected = table.getSelectedRowModel().rows
-      console.log('selected: ', selected)
-      const models = selected.map(({ id, original }: any) => ({
+      console.log( 'selected: ', selected )
+      const models = selected.map( ( { id, original }: any ) => ( {
         rowId: id,
         ...original,
-      }))
-      models.forEach((model) => addItemToSelectedRecordsList(model))
+      } ) )
+      models.forEach( ( model ) => addItemToSelectedRecordsList( model ) )
     }
-  }, [addItemToSelectedRecordsList, rowSelection, table])
+  }, [addItemToSelectedRecordsList, rowSelection, table] )
 
   // bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black
   // bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-indigo-300 via-lime-900 to-lime-100
@@ -139,27 +139,27 @@ export function RecordsTable({
         <Table>
           <TableHeader>
             <TableRow>
-              {columns.map((column: any) => (
+              {columns.map( ( column: any ) => (
                 <TableHead
                   className='font-bebasNeuePro uppercase font-medium !tracking-[1px] !text-white'
                   key={column.header}
                 >
                   {column.header}
                 </TableHead>
-              ))}
+              ) )}
             </TableRow>
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map( ( row ) => (
                 <TableRow
                   className='hover:bg-gray-100 bg-[#000001]'
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
-                  // onClick={() => handleRowClick(row)}
+                // onClick={() => handleRowClick(row)}
                 >
-                  {row.getVisibleCells().map((cell) => {
-                    console.log('cell: ', cell)
+                  {row.getVisibleCells().map( ( cell ) => {
+                    console.log( 'cell: ', cell )
                     const columnName = cell.column.id
                     const isDescription = columnName === 'description'
                     const className = isDescription ? 'w-content' : 'w-content'
@@ -171,9 +171,9 @@ export function RecordsTable({
                         )}
                       </TableCell>
                     )
-                  })}
+                  } )}
                 </TableRow>
-              ))
+              ) )
             ) : (
               <TableRow>
                 <TableCell

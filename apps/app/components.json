@@ -10,10 +10,9 @@
     "cssVariables": false,
     "prefix": ""
   },
-   "aliases": {
+  "aliases": {
     "components": "@/components",
     "layouts": "@/layouts",
-    "components": "@/components",
     "providers": "@/providers",
     "utils": "@/utils",
     "ui": "@/components/ui",

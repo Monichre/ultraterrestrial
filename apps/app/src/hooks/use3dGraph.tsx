@@ -44,9 +44,9 @@ export type UseGraphProps = {
   mindMapIntialGraphState: NetworkGraphPayload['graphData']
 }
 
-export const use3DGraph = ({ mindMapIntialGraphState }: UseGraphProps) => {
-  console.log({mindMapIntialGraphState})
-  const [graph, setGraph] = useState({
+export const use3DGraph = ( { mindMapIntialGraphState }: UseGraphProps ) => {
+  console.log( { mindMapIntialGraphState } )
+  const [graph, setGraph] = useState( {
     root: {
       nodes: [],
       links: {},
@@ -79,9 +79,9 @@ export const use3DGraph = ({ mindMapIntialGraphState }: UseGraphProps) => {
       nodes: [],
       links: [],
     },
-  })
+  } )
 
-  useEffect(() => {
+  useEffect( () => {
     const data: any = {
       root: {
         nodes: [],
@@ -116,17 +116,17 @@ export const use3DGraph = ({ mindMapIntialGraphState }: UseGraphProps) => {
         links: [],
       },
     }
-    if (mindMapIntialGraphState.nodes?.length) {
+    if ( mindMapIntialGraphState.nodes?.length ) {
       const rootNodes = mindMapIntialGraphState.nodes.filter(
-        (node: { id: string | string[] }) => node?.id.includes('root')
+        ( node: { id: string | string[] } ) => node?.id.includes( 'root' )
       )
       const restOfNodes = mindMapIntialGraphState.nodes.filter(
-        (node: any) => !rootNodes.includes(node)
+        ( node: any ) => !rootNodes.includes( node )
       )
 
-      rootNodes.forEach((rootNode: any) => {
+      rootNodes.forEach( ( rootNode: any ) => {
         const childNodes = restOfNodes.filter(
-          (node) => node.data.type === rootNode.data.type
+          ( node ) => node.data.type === rootNode.data.type
         )
 
         const rootNodeWithLinks = {
@@ -134,30 +134,30 @@ export const use3DGraph = ({ mindMapIntialGraphState }: UseGraphProps) => {
           childNodes,
           connectedTo: [],
         }
-        data.root.nodes.push(rootNodeWithLinks)
+        data.root.nodes.push( rootNodeWithLinks )
         data.root.links[rootNode.id] = {
           connectedTo: childNodes,
         }
-      })
+      } )
 
-      restOfNodes.forEach((node: any) => {
+      restOfNodes.forEach( ( node: any ) => {
         let childNodes = mindMapIntialGraphState.links.filter(
-          (link: { source: any }) => link.source === node.id
+          ( link: { source: any } ) => link.source === node.id
         )
         let nodeWithLinks = {
           ...node,
           childNodes,
         }
-        data[node.data.type].nodes.push(nodeWithLinks)
+        data[node.data.type].nodes.push( nodeWithLinks )
 
         data[node.data.type].links[node.id] = {
           connectedTo: childNodes,
         }
-      })
+      } )
 
-      setGraph(data)
+      setGraph( data )
     }
-  }, [mindMapIntialGraphState.links, mindMapIntialGraphState.nodes])
+  }, [mindMapIntialGraphState.links, mindMapIntialGraphState.nodes] )
 
   return { graph3d: graph }
 }

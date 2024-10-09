@@ -3,15 +3,15 @@ import { useCallback } from 'react'
 
 export type ToggleProps = {
   active?: boolean
-  onChange: (active: boolean) => void
+  onChange: ( active: boolean ) => void
   size?: 'small' | 'large'
 }
 
-export const Toggle = ({
+export const Toggle = ( {
   onChange,
   active = false,
   size = 'large',
-}: ToggleProps) => {
+}: ToggleProps ) => {
   const state = active ? 'checked' : 'unchecked'
   const value = active ? 'on' : 'off'
 
@@ -30,15 +30,15 @@ export const Toggle = ({
     size === 'large' && 'h-4 w-4',
     active
       ? cn(
-          size === 'small' ? 'translate-x-3' : '',
-          size === 'large' ? 'translate-x-4' : ''
-        )
+        size === 'small' ? 'translate-x-3' : '',
+        size === 'large' ? 'translate-x-4' : ''
+      )
       : 'translate-x-0'
   )
 
-  const handleChange = useCallback(() => {
-    onChange(!active)
-  }, [active, onChange])
+  const handleChange = useCallback( () => {
+    onChange( !active )
+  }, [active, onChange] )
 
   return (
     <button

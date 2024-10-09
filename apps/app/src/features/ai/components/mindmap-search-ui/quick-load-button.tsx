@@ -13,9 +13,9 @@ interface QuickLoadButtonProps {
   children: any
 }
 
-const QuickLoadButton: React.FC<QuickLoadButtonProps> = ({ children }) => {
-  const [isExpanded, setIsExpanded] = useState(false)
-  const toggleExpand = () => setIsExpanded(!isExpanded)
+const QuickLoadButton: React.FC<QuickLoadButtonProps> = ( { children } ) => {
+  const [isExpanded, setIsExpanded] = useState( false )
+  const toggleExpand = () => setIsExpanded( !isExpanded )
 
   return (
     <div
@@ -66,7 +66,7 @@ interface QuickLoadButtonContainerProps {
 
 export const QuickLoadButtonContainer: React.FC<
   QuickLoadButtonContainerProps
-> = ({ isExpanded, toggleExpand, children }: any) => {
+> = ( { isExpanded, toggleExpand, children }: any ) => {
   return (
     <motion.div
       className={cn(
@@ -81,22 +81,22 @@ export const QuickLoadButtonContainer: React.FC<
       animate={
         isExpanded
           ? {
-              borderRadius: 20,
-              width: CONTAINER_SIZE,
-              height: CONTAINER_SIZE + 50,
+            borderRadius: 20,
+            width: CONTAINER_SIZE,
+            height: CONTAINER_SIZE + 50,
 
-              transition: {
-                type: 'spring',
-                damping: 25,
-                stiffness: 400,
-                when: 'beforeChildren',
-              },
-            }
+            transition: {
+              type: 'spring',
+              damping: 25,
+              stiffness: 400,
+              when: 'beforeChildren',
+            },
+          }
           : {
-              borderRadius: 21,
-              width: '4rem',
-              height: '4rem',
-            }
+            borderRadius: 21,
+            width: '4rem',
+            height: '4rem',
+          }
       }
     >
       {children}
@@ -166,13 +166,13 @@ let tabs = [
 ]
 
 export function EntityTabs() {
-  const [activeTab, setActiveTab] = useState(0)
-  const [direction, setDirection] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
+  const [activeTab, setActiveTab] = useState( 0 )
+  const [direction, setDirection] = useState( 0 )
+  const [isAnimating, setIsAnimating] = useState( false )
   const [ref, bounds] = useMeasure()
 
-  const content = useMemo(() => {
-    switch (activeTab) {
+  const content = useMemo( () => {
+    switch ( activeTab ) {
       case 0:
         return (
           <div className='flex items-center justify-center'>
@@ -243,44 +243,43 @@ export function EntityTabs() {
       default:
         return null
     }
-  }, [activeTab])
+  }, [activeTab] )
 
-  const handleTabClick = (newTabId: number) => {
-    if (newTabId !== activeTab && !isAnimating) {
+  const handleTabClick = ( newTabId: number ) => {
+    if ( newTabId !== activeTab && !isAnimating ) {
       const newDirection = newTabId > activeTab ? 1 : -1
-      setDirection(newDirection)
-      setActiveTab(newTabId)
+      setDirection( newDirection )
+      setActiveTab( newTabId )
     }
   }
 
   const variants = {
-    initial: (direction: number) => ({
+    initial: ( direction: number ) => ( {
       x: 300 * direction,
       opacity: 0,
       filter: 'blur(4px)',
-    }),
+    } ),
     active: {
       x: 0,
       opacity: 1,
       filter: 'blur(0px)',
     },
-    exit: (direction: number) => ({
+    exit: ( direction: number ) => ( {
       x: -300 * direction,
       opacity: 0,
       filter: 'blur(4px)',
-    }),
+    } ),
   }
 
   return (
     <div className='flex flex-col items-center pt-4 '>
       <div className='flex space-x-1 border border-none rounded-[8px] cursor-pointer bg-neutral-700  px-[3px] py-[3.2px] shadow-inner-shadow'>
-        {tabs.map((tab, i) => (
+        {tabs.map( ( tab, i ) => (
           <button
             key={`${tab.id}-i-${i}`}
-            onClick={() => handleTabClick(tab.id)}
-            className={`${
-              activeTab === tab.id ? 'text-white ' : 'hover:text-neutral-300/60'
-            } relative rounded-[5px] px-3 py-1.5 text-xs sm:text-sm font-medium text-neutral-600  transition focus-visible:outline-1 focus-visible:ring-1 focus-visible:ring-blue-light focus-visible:outline-none`}
+            onClick={() => handleTabClick( tab.id )}
+            className={`${activeTab === tab.id ? 'text-white ' : 'hover:text-neutral-300/60'
+              } relative rounded-[5px] px-3 py-1.5 text-xs sm:text-sm font-medium text-neutral-600  transition focus-visible:outline-1 focus-visible:ring-1 focus-visible:ring-blue-light focus-visible:outline-none`}
             style={{ WebkitTapHighlightColor: 'transparent' }}
           >
             {activeTab === tab.id && (
@@ -293,7 +292,7 @@ export function EntityTabs() {
             )}
             {tab.label}
           </button>
-        ))}
+        ) )}
       </div>
       <MotionConfig transition={{ duration: 0.4, type: 'spring', bounce: 0.2 }}>
         <motion.div
@@ -305,7 +304,7 @@ export function EntityTabs() {
             <AnimatePresence
               custom={direction}
               mode='popLayout'
-              onExitComplete={() => setIsAnimating(false)}
+              onExitComplete={() => setIsAnimating( false )}
             >
               <motion.div
                 key={activeTab}
@@ -314,8 +313,8 @@ export function EntityTabs() {
                 animate='active'
                 exit='exit'
                 custom={direction}
-                onAnimationStart={() => setIsAnimating(true)}
-                onAnimationComplete={() => setIsAnimating(false)}
+                onAnimationStart={() => setIsAnimating( true )}
+                onAnimationComplete={() => setIsAnimating( false )}
               >
                 {content}
               </motion.div>

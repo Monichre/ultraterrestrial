@@ -6,8 +6,8 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 export const MiniToolbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [showContent, setShowContent] = useState(false)
+  const [isOpen, setIsOpen] = useState( false )
+  const [showContent, setShowContent] = useState( false )
 
   const presence = {
     enter: {
@@ -55,11 +55,11 @@ export const MiniToolbar = () => {
   }
 
   const handleToggle = () => {
-    if (isOpen) {
-      setShowContent(false)
+    if ( isOpen ) {
+      setShowContent( false )
     } else {
-      setIsOpen(true)
-      setTimeout(() => setShowContent(true), 50)
+      setIsOpen( true )
+      setTimeout( () => setShowContent( true ), 50 )
     }
   }
 
@@ -112,7 +112,7 @@ export const MiniToolbar = () => {
             </div>
           </motion.div>
         </div>
-        <AnimatePresence onExitComplete={() => setIsOpen(false)}>
+        <AnimatePresence onExitComplete={() => setIsOpen( false )}>
           {showContent && (
             <motion.ul
               initial='enter'
@@ -122,11 +122,11 @@ export const MiniToolbar = () => {
               transition={{ duration: 0.2 }}
               className='text-primary-foreground mt-6'
             >
-              {['Home', 'About', 'Contact'].map((item, index) => (
+              {['Home', 'About', 'Contact'].map( ( item, index ) => (
                 <motion.li key={item + index} variants={itemVariants}>
                   {item}
                 </motion.li>
-              ))}
+              ) )}
             </motion.ul>
           )}
         </AnimatePresence>

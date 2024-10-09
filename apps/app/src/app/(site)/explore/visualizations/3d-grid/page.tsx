@@ -26,7 +26,7 @@ export default async function Index() {
     ...personnel.toSerializable(),
   ]
 
-  console.log('data: ', data)
+  console.log( 'data: ', data )
 
   return (
     <Suspense fallback={null}>

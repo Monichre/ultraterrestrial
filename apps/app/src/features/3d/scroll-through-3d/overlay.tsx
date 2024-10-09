@@ -23,18 +23,18 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-const dayjs = require('dayjs')
-const utc = require('dayjs/plugin/utc')
-dayjs.extend(utc)
+const dayjs = require( 'dayjs' )
+const utc = require( 'dayjs/plugin/utc' )
+dayjs.extend( utc )
 
 interface OverlayEventImageProps {
   photo: any
 }
 
-const OverlayEventImage: React.FC<OverlayEventImageProps> = ({
+const OverlayEventImage: React.FC<OverlayEventImageProps> = ( {
   photo,
-}: any) => {
-  const texture: any = useTexture(photo?.signed)
+}: any ) => {
+  const texture: any = useTexture( photo?.signed )
 
   return <meshStandardMaterial {...texture} />
 }
@@ -43,37 +43,37 @@ const OverlayEventImage: React.FC<OverlayEventImageProps> = ({
 //    <OverlayEventImage photo={photo} />
 //  </View>
 
-const OverlaySection = ({ event, position, updateTimeFrame }: any) => {
-  const [ref, entry]: any = useIntersectionObserver({
+const OverlaySection = ( { event, position, updateTimeFrame }: any ) => {
+  const [ref, entry]: any = useIntersectionObserver( {
     threshold: 0,
-    root: document.querySelector('.scroll'),
+    root: document.querySelector( '.scroll' ),
     rootMargin: '0px',
-  })
+  } )
 
   const elementRef: any = useRef()
   // const ref = useRef(null)
-  const isInView = useInView(elementRef)
-  console.log('isInView: ', isInView)
-  const { scrollYProgress } = useScroll({
+  const isInView = useInView( elementRef )
+  console.log( 'isInView: ', isInView )
+  const { scrollYProgress } = useScroll( {
     target: elementRef,
     offset: ['end end', 'start start'],
-  })
-  console.log('scrollYProgress: ', scrollYProgress)
+  } )
+  console.log( 'scrollYProgress: ', scrollYProgress )
 
-  console.log('isInView: ', isInView)
-  useEffect(() => {
-    if (entry?.isIntersecting) {
+  console.log( 'isInView: ', isInView )
+  useEffect( () => {
+    if ( entry?.isIntersecting ) {
       //
-      updateTimeFrame(position)
+      updateTimeFrame( position )
     }
-  }, [entry, position, updateTimeFrame])
+  }, [entry, position, updateTimeFrame] )
 
   return (
     <div style={{ height: '200vh', position: 'relative' }} ref={ref}>
       <div className='dot'>
         <h1>
           {event.name}{' '}
-          <span className=''>{dayjs(event.date).format('DDDD/MMMM/YYYY')}</span>
+          <span className=''>{dayjs( event.date ).format( 'DDDD/MMMM/YYYY' )}</span>
         </h1>
         {/* <p className='text-white'>{currentEvent.description}</p> */}
       </div>
@@ -123,37 +123,37 @@ export const Overlay = forwardRef(
     }: OverlayProps,
     ref: any
   ) => {
-    console.log('activeYear: ', activeYear)
-    const [events, setEvents] = useState(currentEvents)
-    const scrollDirection = useRef('down')
+    console.log( 'activeYear: ', activeYear )
+    const [events, setEvents] = useState( currentEvents )
+    const scrollDirection = useRef( 'down' )
 
-    console.log('currentEvents: ', currentEvents)
+    console.log( 'currentEvents: ', currentEvents )
 
-    const handleScroll = (e: any) => {
+    const handleScroll = ( e: any ) => {
       let lastScrollTop = scroll.current
 
       scroll.current =
-        e.target.scrollTop / (e.target.scrollHeight - window.innerHeight)
+        e.target.scrollTop / ( e.target.scrollHeight - window.innerHeight )
 
-      if (scroll.current > lastScrollTop) {
+      if ( scroll.current > lastScrollTop ) {
         scrollDirection.current = 'down'
       } else {
         scrollDirection.current = 'up'
       }
     }
 
-    const updateTimeFrame = (position: any) => {
-      console.log('position: ', position)
+    const updateTimeFrame = ( position: any ) => {
+      console.log( 'position: ', position )
 
       // updateActiveYear
       if (
-        (position === 'first' ||
-          (position === 'last' && currentEvents.length === 1)) &&
+        ( position === 'first' ||
+          ( position === 'last' && currentEvents.length === 1 ) ) &&
         scrollDirection.current === 'up'
       ) {
         moveToPreviousYear()
       }
-      if (position === 'last' && scrollDirection.current === 'down') {
+      if ( position === 'last' && scrollDirection.current === 'down' ) {
         moveToNextYear()
       }
     }
@@ -206,7 +206,7 @@ export const Overlay = forwardRef(
     return (
       <div ref={ref} className='scroll' onScroll={handleScroll}>
         <Suspense fallback={null}>
-          {events.map((currentEvent: any, index: number) => {
+          {events.map( ( currentEvent: any, index: number ) => {
             return (
               <OverlaySection
                 position={
@@ -221,7 +221,7 @@ export const Overlay = forwardRef(
                 event={currentEvent}
               />
             )
-          })}
+          } )}
 
           <h1 className='caption'>
             {/* ref={caption} */}

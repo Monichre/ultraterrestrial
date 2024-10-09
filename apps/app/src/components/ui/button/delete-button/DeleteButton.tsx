@@ -6,14 +6,14 @@ import { Check, X } from 'lucide-react'
 import { cn } from '@/utils'
 
 export const DeleteButton = () => {
-  const [isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState( true )
 
   const handleDeleteClick = () => {
-    setIsActive(false)
+    setIsActive( false )
   }
 
   const handleCancelClick = () => {
-    setIsActive(true)
+    setIsActive( true )
   }
 
   return (
@@ -78,7 +78,7 @@ export const DeleteButton = () => {
                 duration: 0.4,
                 ease: 'easeInOut',
               }}
-              className={cn('h-10 w-10 rounded-full bg-black center')}
+              className={cn( 'h-10 w-10 rounded-full bg-black center' )}
               onClick={handleCancelClick}
             >
               <X className='w-4 h-4' />
@@ -106,7 +106,7 @@ export const DeleteButton = () => {
                 duration: 0.4,
                 ease: 'easeInOut',
               }}
-              className={cn('h-10 w-10 rounded-full bg-black center')}
+              className={cn( 'h-10 w-10 rounded-full bg-black center' )}
               onClick={handleCancelClick}
             >
               <Check className='w-4 h-4' />

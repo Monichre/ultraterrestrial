@@ -21,17 +21,17 @@ import {
 
 // import { MotionCanvas, LayoutCamera } from "framer-motion-3d"
 
-function Geometry({ r, position, ...props }) {
+function Geometry( { r, position, ...props } ) {
   const ref = useRef()
-  useFrame((state) => {
+  useFrame( ( state ) => {
     ref.current.rotation.x =
       ref.current.rotation.y =
       ref.current.rotation.z +=
-        0.004 * r
+      0.004 * r
     ref.current.position.y =
       position[1] +
-      Math[r > 0.5 ? 'cos' : 'sin'](state.clock.getElapsedTime() * r) * r
-  })
+      Math[r > 0.5 ? 'cos' : 'sin']( state.clock.getElapsedTime() * r ) * r
+  } )
   return (
     <group position={position} ref={ref}>
       <a.mesh {...props} />
@@ -41,14 +41,14 @@ function Geometry({ r, position, ...props }) {
 
 function Geometries() {
   const { items, material } = useStore()
-  const transition = useTransition(items, {
+  const transition = useTransition( items, {
     from: { scale: [0, 0, 0], rotation: [0, 0, 0] },
-    enter: ({ r }) => ({ scale: [1, 1, 1], rotation: [r * 3, r * 3, r * 3] }),
+    enter: ( { r } ) => ( { scale: [1, 1, 1], rotation: [r * 3, r * 3, r * 3] } ),
     leave: { scale: [0.1, 0.1, 0.1], rotation: [0, 0, 0] },
     config: { mass: 5, tension: 1000, friction: 100 },
     trail: 100,
-  })
-  return transition((props, { position: [x, y, z], r, geometry }) => (
+  } )
+  return transition( ( props, { position: [x, y, z], r, geometry } ) => (
     <Geometry
       position={[x * 3, y * 3, z]}
       material={material}
@@ -56,30 +56,30 @@ function Geometries() {
       r={r}
       {...props}
     />
-  ))
+  ) )
 }
 
 function Rig() {
   const { camera, mouse } = useThree()
   const vec = new THREE.Vector3()
-  return useFrame(() =>
+  return useFrame( () =>
     camera.position.lerp(
-      vec.set(mouse.x * 2, mouse.y * 1, camera.position.z),
+      vec.set( mouse.x * 2, mouse.y * 1, camera.position.z ),
       0.02
     )
   )
 }
 
-export const ThreeDGraph = ({ models }: any) => {
-  console.log('models: ', models)
+export const ThreeDGraph = ( { models }: any ) => {
+  console.log( 'models: ', models )
   const { topics: tData, personnel: pData } = models
-  console.log('tData: ', tData)
-  console.log('pData: ', pData)
+  console.log( 'tData: ', tData )
+  console.log( 'pData: ', pData )
   // {topics, testimonies, organizations, personnel}
 
   const rfs = THREE.MathUtils.randFloatSpread
 
-  const [[root, topics, events, personnel]]: any = useState(() =>
+  const [[root, topics, events, personnel]]: any = useState( () =>
     [
       'root',
       'topics',
@@ -88,12 +88,12 @@ export const ThreeDGraph = ({ models }: any) => {
       // 'testimonies',
       // 'organizations',
       // 'testimonies',
-    ].map(createRef)
+    ].map( createRef )
   )
 
-  const eventNodeRefs = models.events.map(createRef)
-  const topicNodeRefs = models?.topics?.map(createRef)
-  const personnelNodeRefs = models?.personnel?.map(createRef)
+  const eventNodeRefs = models.events.map( createRef )
+  const topicNodeRefs = models?.topics?.map( createRef )
+  const personnelNodeRefs = models?.personnel?.map( createRef )
   // const [childNodes, setChildNodes]: any = useState(
   //   Object.keys(models).reduce((acc: any, key: any) => {
   //     const rootModels = models[key]
@@ -107,27 +107,27 @@ export const ThreeDGraph = ({ models }: any) => {
   // )
 
   //
-  const [rootRecords, setRootRecords]: any = useState(null)
+  const [rootRecords, setRootRecords]: any = useState( null )
 
-  const calculateSphericalPosition = (index: any, length: any) => {
+  const calculateSphericalPosition = ( index: any, length: any ) => {
     const radius = 5
-    const phi = Math.acos(-1 + (2 * index) / length)
-    const theta = Math.sqrt(length * Math.PI) * phi
+    const phi = Math.acos( -1 + ( 2 * index ) / length )
+    const theta = Math.sqrt( length * Math.PI ) * phi
     return new THREE.Vector3().setFromSpherical(
-      new THREE.Spherical(radius, phi, theta)
+      new THREE.Spherical( radius, phi, theta )
     )
   }
 
-  const calculatePosition = (parentX, index, totalNodes, level) => {
+  const calculatePosition = ( parentX, index, totalNodes, level ) => {
     const spacing = 2 // Adjust this value to change the distance between nodes
     const x =
       parentX +
-      Math.floor(level / spacing) +
-      Math.floor((totalNodes - index) / 2) // Adjust the y position based on the level
-    console.log('x: ', x)
-    const y = Math.floor(level / spacing) + Math.floor((totalNodes - index) / 2) // Adjust the y position based on the level
-    console.log('y: ', y)
-    return new THREE.Vector3(parentX, -y, 0)
+      Math.floor( level / spacing ) +
+      Math.floor( ( totalNodes - index ) / 2 ) // Adjust the y position based on the level
+    console.log( 'x: ', x )
+    const y = Math.floor( level / spacing ) + Math.floor( ( totalNodes - index ) / 2 ) // Adjust the y position based on the level
+    console.log( 'y: ', y )
+    return new THREE.Vector3( parentX, -y, 0 )
   }
 
   const calculateGridPositionAlt = (
@@ -138,33 +138,33 @@ export const ThreeDGraph = ({ models }: any) => {
   ) => {
     // Calculate the row and column of the current node
     const totalNodes = eventNodeRefs.length + topicNodeRefs.length
-    const row = Math.floor(index / gridSize)
+    const row = Math.floor( index / gridSize )
     const col = index % gridSize
 
     // Define the spacing between nodes
     const spacing = 2 // Adjust this value to change the distance between nodes
 
     // Calculate the x and y positions
-    const x = parent[0] + (col - (gridSize - 1) / 2) * spacing
+    const x = parent[0] + ( col - ( gridSize - 1 ) / 2 ) * spacing
     // Calculate the y-distance increment based on the total number of nodes
-    const yIncrement = (baseYDistance * 2) / (totalNodes - 1)
+    const yIncrement = ( baseYDistance * 2 ) / ( totalNodes - 1 )
     // Increment the y position for each node sequentially
     const y =
       parent[1] +
-      (row - (gridSize - 1) / 2) * spacing +
+      ( row - ( gridSize - 1 ) / 2 ) * spacing +
       baseYDistance +
       index * yIncrement
 
     // Return the new position as a THREE.Vector3
-    return new THREE.Vector3(x, y, 0)
+    return new THREE.Vector3( x, y, 0 )
   }
 
-  const calculateGridPosition = (parent, index, gridSize) => {
+  const calculateGridPosition = ( parent, index, gridSize ) => {
     // Calculate the row and column of the current node
     const baseYDistance = 4
     let newParentYPosition = parent[1] + -baseYDistance
 
-    const row = Math.floor(index / gridSize)
+    const row = Math.floor( index / gridSize )
     const col = index % gridSize
 
     // Define the spacing between nodes
@@ -174,37 +174,37 @@ export const ThreeDGraph = ({ models }: any) => {
     // const x = parent[0] + (col - (gridSize - 1) / 2) * spacing
     // const y =
     //   Math.abs(newParentYPosition) + (row - (gridSize - 1) / 2) * spacing
-    const x = parent[0] + (col - (gridSize - 1) / 2) * spacing
-    const y = parent[1] + (row - (gridSize - 1) / 2) * spacing + baseYDistance
+    const x = parent[0] + ( col - ( gridSize - 1 ) / 2 ) * spacing
+    const y = parent[1] + ( row - ( gridSize - 1 ) / 2 ) * spacing + baseYDistance
 
     // Return the new position as a THREE.Vector3
-    return new THREE.Vector3(x, -y, 0)
+    return new THREE.Vector3( x, -y, 0 )
   }
 
-  const calculateRadialPosition = (parent, index) => {
+  const calculateRadialPosition = ( parent, index ) => {
     // Calculate the angle between each node
-    const angle = (2 * Math.PI) / eventNodeRefs?.length
+    const angle = ( 2 * Math.PI ) / eventNodeRefs?.length
     // Calculate the radius of the circle
 
     const radius = 5 // Adjust this value to change the distance from the parent node
     const spacing = 2
     // Calculate the x and y positions
-    const x = parent[0] + radius * Math.cos(angle * index)
-    const y = parent[1] + radius * Math.sin(angle * index)
+    const x = parent[0] + radius * Math.cos( angle * index )
+    const y = parent[1] + radius * Math.sin( angle * index )
 
     // Return the new position as a THREE.Vector3
     return [x, -y, 0] //new THREE.Vector3(x, -y, 0)
   }
 
-  const fetchRootRecords = useCallback(async (rootType: any) => {
-    const { records } = await fetch(`/api/xata?type=${rootType}`).then((res) =>
+  const fetchRootRecords = useCallback( async ( rootType: any ) => {
+    const { records } = await fetch( `/api/xata?type=${rootType}` ).then( ( res ) =>
       res.json()
     )
 
     // const newNodes = records.map(createRef)
     //
     return records
-  }, [])
+  }, [] )
 
   // const populateRootRecords = useCallback(
   //   async (rootType: any) => {
@@ -291,14 +291,14 @@ export const ThreeDGraph = ({ models }: any) => {
   // }, [])
 
   const gridSize = Math.ceil(
-    Math.sqrt(eventNodeRefs.length + topicNodeRefs.length)
+    Math.sqrt( eventNodeRefs.length + topicNodeRefs.length )
   )
-  const { color } = useSpring({
+  const { color } = useSpring( {
     color: 0,
     from: { color: 1 },
     config: { friction: 50 },
     loop: true,
-  })
+  } )
 
   return (
     // <div className='h-[100vh] connection-graph overflow-scroll'>
@@ -362,7 +362,7 @@ export const ThreeDGraph = ({ models }: any) => {
               color={DOMAIN_MODEL_COLORS.events}
               position={[-4, -1, 0]}
               connectedTo={[...eventNodeRefs]}
-              // eventNodeRefs
+            // eventNodeRefs
             />
 
             <Node
@@ -376,7 +376,7 @@ export const ThreeDGraph = ({ models }: any) => {
             />
           </group>
 
-          {eventNodeRefs.map((ref: any, index: any) => {
+          {eventNodeRefs.map( ( ref: any, index: any ) => {
             const node = models.events[index]
 
             return (
@@ -393,13 +393,13 @@ export const ThreeDGraph = ({ models }: any) => {
                 )}
               />
             )
-          })}
+          } )}
 
           <Instances>
             <sphereGeometry />
             <meshStandardMaterial />
             <group position={[8, -1, 0]} rotation={[Math.PI / 2, 0, 0]}>
-              {topicNodeRefs.map((ref: any, index: any) => {
+              {topicNodeRefs.map( ( ref: any, index: any ) => {
                 const node = models.topics[index]
 
                 return (
@@ -418,11 +418,11 @@ export const ThreeDGraph = ({ models }: any) => {
                     />
                   </Instance>
                 )
-              })}
+              } )}
             </group>
           </Instances>
 
-          {personnelNodeRefs.map((ref: any, index: any) => {
+          {personnelNodeRefs.map( ( ref: any, index: any ) => {
             const node = models.personnel[index]
 
             return (
@@ -439,7 +439,7 @@ export const ThreeDGraph = ({ models }: any) => {
                 )}
               />
             )
-          })}
+          } )}
 
           {/* 
             <Node

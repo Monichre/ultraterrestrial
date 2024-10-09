@@ -18,7 +18,7 @@ type ParticlesProps = {
   particleColor?: string
   particleDensity?: number
 }
-export const Sparkles = (props: ParticlesProps) => {
+export const Sparkles = ( props: ParticlesProps ) => {
   const {
     id,
     className,
@@ -29,34 +29,34 @@ export const Sparkles = (props: ParticlesProps) => {
     particleColor,
     particleDensity,
   } = props
-  const [init, setInit] = useState(false)
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine)
-    }).then(() => {
-      setInit(true)
-    })
-  }, [])
+  const [init, setInit] = useState( false )
+  useEffect( () => {
+    initParticlesEngine( async ( engine ) => {
+      await loadSlim( engine )
+    } ).then( () => {
+      setInit( true )
+    } )
+  }, [] )
   const controls = useAnimation()
 
-  const particlesLoaded = async (container?: Container) => {
-    if (container) {
-      console.log(container)
-      controls.start({
+  const particlesLoaded = async ( container?: Container ) => {
+    if ( container ) {
+      console.log( container )
+      controls.start( {
         opacity: 1,
         transition: {
           duration: 1,
         },
-      })
+      } )
     }
   }
 
   return (
-    <motion.div animate={controls} className={cn('opacity-0', className)}>
+    <motion.div animate={controls} className={cn( 'opacity-0', className )}>
       {init && (
         <Particles
           id={id || 'tsparticles'}
-          className={cn('h-full w-full')}
+          className={cn( 'h-full w-full' )}
           particlesLoaded={particlesLoaded}
           options={{
             background: {

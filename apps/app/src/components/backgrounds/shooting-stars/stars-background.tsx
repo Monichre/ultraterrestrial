@@ -16,13 +16,13 @@ interface StarProps {
   twinkleSpeed: number | null
 }
 
-export const Star: React.FC<StarProps> = ({
+export const Star: React.FC<StarProps> = ( {
   x,
   y,
   radius,
   opacity,
   twinkleSpeed,
-}) => (
+} ) => (
   <circle cx={x} cy={y} r={radius} fill='white' opacity={opacity}>
     {twinkleSpeed !== null && (
       <animate
@@ -44,22 +44,22 @@ interface StarsBackgroundProps {
   className?: string
 }
 
-export const StarsBackground: React.FC<StarsBackgroundProps> = ({
+export const StarsBackground: React.FC<StarsBackgroundProps> = ( {
   starDensity = 0.00015,
   allStarsTwinkle = true,
   twinkleProbability = 0.7,
   minTwinkleSpeed = 0.5,
   maxTwinkleSpeed = 1,
   className,
-}) => {
-  const [stars, setStars] = useState<StarProps[]>([])
-  const containerRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
+} ) => {
+  const [stars, setStars] = useState<StarProps[]>( [] )
+  const containerRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>( null )
 
   const generateStars = useCallback(
-    (width: number, height: number): StarProps[] => {
+    ( width: number, height: number ): StarProps[] => {
       const area = width * height
-      const numStars = Math.floor(area * starDensity)
-      return Array.from({ length: numStars }, () => {
+      const numStars = Math.floor( area * starDensity )
+      return Array.from( { length: numStars }, () => {
         const shouldTwinkle =
           allStarsTwinkle || Math.random() < twinkleProbability
         return {
@@ -69,10 +69,10 @@ export const StarsBackground: React.FC<StarsBackgroundProps> = ({
           opacity: Math.random() * 0.5 + 0.5,
           twinkleSpeed: shouldTwinkle
             ? minTwinkleSpeed +
-              Math.random() * (maxTwinkleSpeed - minTwinkleSpeed)
+            Math.random() * ( maxTwinkleSpeed - minTwinkleSpeed )
             : null,
         }
-      })
+      } )
     },
     [
       starDensity,
@@ -83,24 +83,24 @@ export const StarsBackground: React.FC<StarsBackgroundProps> = ({
     ]
   )
 
-  useEffect(() => {
+  useEffect( () => {
     const updateStars = () => {
-      if (containerRef.current) {
+      if ( containerRef.current ) {
         const { width, height } = containerRef.current.getBoundingClientRect()
-        setStars(generateStars(width, height))
+        setStars( generateStars( width, height ) )
       }
     }
 
     updateStars()
 
-    const resizeObserver = new ResizeObserver(updateStars)
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current)
+    const resizeObserver = new ResizeObserver( updateStars )
+    if ( containerRef.current ) {
+      resizeObserver.observe( containerRef.current )
     }
 
     return () => {
-      if (containerRef.current) {
-        resizeObserver.unobserve(containerRef.current)
+      if ( containerRef.current ) {
+        resizeObserver.unobserve( containerRef.current )
       }
     }
   }, [
@@ -110,7 +110,7 @@ export const StarsBackground: React.FC<StarsBackgroundProps> = ({
     minTwinkleSpeed,
     maxTwinkleSpeed,
     generateStars,
-  ])
+  ] )
 
   return (
     <div
@@ -125,9 +125,9 @@ export const StarsBackground: React.FC<StarsBackgroundProps> = ({
         className='h-full w-full bg-transparent pointer-none relative z-0'
       >
         <rect width='100%' height='100%' fill='none' />
-        {stars.map((star, index) => (
+        {stars.map( ( star, index ) => (
           <Star key={index} {...star} />
-        ))}
+        ) )}
       </svg>
     </div>
   )

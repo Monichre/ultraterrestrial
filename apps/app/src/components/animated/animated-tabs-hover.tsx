@@ -15,7 +15,7 @@ export function AnimatedTabsHover() {
         }}
         enableHover
       >
-        {TABS.map((tab, index) => (
+        {TABS.map( ( tab, index ) => (
           <button
             key={index}
             data-id={tab}
@@ -24,7 +24,7 @@ export function AnimatedTabsHover() {
           >
             {tab}
           </button>
-        ))}
+        ) )}
       </AnimatedBackground>
     </div>
   )

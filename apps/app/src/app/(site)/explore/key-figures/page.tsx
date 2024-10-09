@@ -33,7 +33,7 @@ export type KeyFiguresArray = KeyFigure[]
 export default async function Index() {
   const xata = getXataClient()
   const data: any = await xata.db.personnel
-    .select([
+    .select( [
       'name',
       'bio',
       'role',
@@ -47,11 +47,11 @@ export default async function Index() {
       'popularity',
       'photo.signedUrl',
       'photo.enablePublicUrl',
-    ])
+    ] )
     .getAll()
 
   const personnel = data.toSerializable()
-  console.log('personnel: ', personnel)
+  console.log( 'personnel: ', personnel )
   return (
     <Suspense fallback={<Loading />}>
       <div className='key-figures relative'>

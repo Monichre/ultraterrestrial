@@ -7,36 +7,36 @@ import { ForceGraph3D } from 'react-force-graph'
 
 // https://github.com/vasturiano/react-force-graph/blob/master/example/custom-node-shape/index-three.html
 
-export const EntityNetworkGraph3D: FC<any> = ({
+export const EntityNetworkGraph3D: FC<any> = ( {
   graphData,
-}: JSONData<NetworkGraphPayload>) => {
-  console.log('graphData: ', graphData)
+}: JSONData<NetworkGraphPayload> ) => {
+  console.log( 'graphData: ', graphData )
   // https://github.com/vasturiano/d3-force-3d
   const graphRef: any = useRef()
   // https://github.com/vasturiano/react-force-graph/blob/master/example/dynamic/index.html
-  const handleNodeClick = useCallback((node: any) => {
-    console.log('node: ', node)
+  const handleNodeClick = useCallback( ( node: any ) => {
+    console.log( 'node: ', node )
     // Aim at node from outside it
     const distance = 40
-    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z)
-    if (graphRef?.current) {
+    const distRatio = 1 + distance / Math.hypot( node.x, node.y, node.z )
+    if ( graphRef?.current ) {
       graphRef.current.cameraPosition(
         { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
         node, // lookAt ({ x, y, z })
         3000 // ms transition duration
       )
     }
-  }, [])
+  }, [] )
 
   return (
     <ForceGraph3D
       ref={graphRef}
       graphData={graphData}
-      nodeLabel={(node) => `${node.label}`}
-      nodeColor={(n) => n.color || n.fill}
+      nodeLabel={( node ) => `${node.label}`}
+      nodeColor={( n ) => n.color || n.fill}
       nodeRelSize={20}
-      linkColor={(link) => link?.color}
-   
+      linkColor={( link ) => link?.color}
+
     />
   )
 }

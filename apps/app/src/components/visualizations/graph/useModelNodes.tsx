@@ -41,7 +41,7 @@ const rootNodes = [
   },
 ]
 
-export const useModelNodes = ({ models }: ModelNodesProps) => {
+export const useModelNodes = ( { models }: ModelNodesProps ) => {
   const {
     events: {
       all: allEventModels,
@@ -53,19 +53,19 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
 
   const [topicsRootNode, eventsRootNode, personnelRootNode] = rootNodes
 
-  const [graphData, setGraphData] = useState({
+  const [graphData, setGraphData] = useState( {
     nodes: [],
     edges: [],
     links: [],
-  })
+  } )
 
-  const [nodes, edges, links] = useMemo(() => {
+  const [nodes, edges, links] = useMemo( () => {
     const tempNodes = [...rootNodes]
     const tempEdges: any = []
     const tempLinks: any = []
 
-    const createNodeAndEdge = (rootNode, models, color) => {
-      models.forEach(({ id, ...model }) => {
+    const createNodeAndEdge = ( rootNode, models, color ) => {
+      models.forEach( ( { id, ...model } ) => {
         const node = {
           id,
           label: model?.name,
@@ -75,18 +75,18 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
             color,
           },
         }
-        tempNodes.push(node)
-        tempEdges.push({
+        tempNodes.push( node )
+        tempEdges.push( {
           color,
           source: rootNode.id,
           target: id,
           id: `${rootNode.id}->${id}`,
-        })
-        tempLinks.push({
+        } )
+        tempLinks.push( {
           source: rootNode.id,
           target: id,
-        })
-      })
+        } )
+      } )
     }
 
     createNodeAndEdge(
@@ -94,39 +94,39 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
       personnelModels,
       DOMAIN_MODEL_COLORS.personnel
     )
-    createNodeAndEdge(topicsRootNode, allTopics, DOMAIN_MODEL_COLORS.topics)
+    createNodeAndEdge( topicsRootNode, allTopics, DOMAIN_MODEL_COLORS.topics )
     createNodeAndEdge(
       eventsRootNode,
       allEventModels,
       DOMAIN_MODEL_COLORS.events
     )
 
-    topicsSubjectMatterExpertEdges.forEach((edge) => {
-      tempEdges.push({
+    topicsSubjectMatterExpertEdges.forEach( ( edge ) => {
+      tempEdges.push( {
         source: edge.topic,
         target: edge['subject-matter-expert'],
         id: edge.id,
         color: '#fff',
-      })
-      tempLinks.push({
+      } )
+      tempLinks.push( {
         source: edge.topic,
         target: edge['subject-matter-expert'],
-      })
-    })
+      } )
+    } )
 
-    eventsSubjectMatterExpertsEdges.forEach(({ id, event, ...rest }) => {
+    eventsSubjectMatterExpertsEdges.forEach( ( { id, event, ...rest } ) => {
       const target = rest['subject-matter-expert']
-      tempEdges.push({
+      tempEdges.push( {
         source: event,
         target,
         id,
         color: '#fff',
-      })
-      tempLinks.push({
+      } )
+      tempLinks.push( {
         source: event,
         target,
-      })
-    })
+      } )
+    } )
 
     // const tempLinks = tempEdges.map(({ source, target }) => ({
     //   source,
@@ -134,7 +134,7 @@ export const useModelNodes = ({ models }: ModelNodesProps) => {
     // }))
 
     return [tempNodes, tempEdges, tempLinks]
-  }, [])
+  }, [] )
 
   return {
     nodes,

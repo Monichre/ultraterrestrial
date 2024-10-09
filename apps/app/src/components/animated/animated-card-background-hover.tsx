@@ -45,7 +45,7 @@ export function AnimatedCardBackgroundHover() {
         }}
         enableHover
       >
-        {ITEMS.map((item, index) => (
+        {ITEMS.map( ( item, index ) => (
           <div key={index} data-id={`card-${index}`}>
             <div className='flex select-none flex-col space-y-1 p-4'>
               <h3 className='text-base font-medium text-zinc-800 dark:text-zinc-50'>
@@ -56,7 +56,7 @@ export function AnimatedCardBackgroundHover() {
               </p>
             </div>
           </div>
-        ))}
+        ) )}
       </AnimatedBackground>
     </div>
   )

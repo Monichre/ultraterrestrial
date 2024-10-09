@@ -40,14 +40,14 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { palette } from '@/utils/constants/colors'
 import { geometry } from 'maath'
-extend(geometry)
+extend( geometry )
 
-gsap.registerPlugin(useGSAP)
+gsap.registerPlugin( useGSAP )
 
-interface IntroSectionProps {}
+interface IntroSectionProps { }
 
 const IntroSection: React.FC<IntroSectionProps> = () => {
-  const texture = useTexture('/astro-3.png')
+  const texture = useTexture( '/astro-3.png' )
   return (
     <mesh position={[0, 0, 0]} scale={[800, 800, 1]}>
       <meshStandardMaterial map={texture} />
@@ -82,7 +82,7 @@ const IntroSection: React.FC<IntroSectionProps> = () => {
   )
 }
 
-const LoadingSequence = ({ handleClick }: any) => {
+const LoadingSequence = ( { handleClick }: any ) => {
   const loadingStates = [
     { text: 'Verifying Majestic Level Security Clearance' },
     { text: 'Fetching Data' },
@@ -100,27 +100,27 @@ interface SceneProps {
   children: any
 }
 
-const Scene = ({ events, experts, years }: any) => {
+const Scene = ( { events, experts, years }: any ) => {
   const { camera, scene }: any = useThree()
-  console.log('camera: ', camera)
-  console.log('scene: ', scene)
-  const timelineRef = useRef(new THREE.Group())
+  console.log( 'camera: ', camera )
+  console.log( 'scene: ', scene )
+  const timelineRef = useRef( new THREE.Group() )
 
   // const scroll = useScroll()
 
-  const timelineConfig: any = useTimelineConfig({ events, personnel: experts })
-  console.log('timelineConfig: ', timelineConfig)
-  const [activeYear, setActiveYear] = useState(2024)
-  const [beginJourney, setBeginJourney] = useState(false)
+  const timelineConfig: any = useTimelineConfig( { events, personnel: experts } )
+  console.log( 'timelineConfig: ', timelineConfig )
+  const [activeYear, setActiveYear] = useState( 2024 )
+  const [beginJourney, setBeginJourney] = useState( false )
   const [remainingYears, setRemainingYears] = useState(
-    years.slice(years.indexOf(activeYear), years.length - 1)
+    years.slice( years.indexOf( activeYear ), years.length - 1 )
   )
-  console.log('remainingYears: ', remainingYears)
+  console.log( 'remainingYears: ', remainingYears )
 
-  useFrame((state, delta) => {
-    console.log('timelineRef: ', timelineRef)
+  useFrame( ( state, delta ) => {
+    console.log( 'timelineRef: ', timelineRef )
     // timelineRef.current.position.y = THREE.MathUtils.damp(timelineRef.current.position.y, viewport.height * scroll.current, 4, delta)
-  })
+  } )
 
   // const store = useEventsStore({ ...timelineConfig, activeYear: 2024 })
   // console.log('store: ', store)
@@ -254,13 +254,13 @@ const Scene = ({ events, experts, years }: any) => {
   )
 }
 
-function Box({ text, color, ...props }: any) {
-  const [hovered, set] = useState(false)
+function Box( { text, color, ...props }: any ) {
+  const [hovered, set] = useState( false )
   return (
     <mesh
       {...props}
-      onPointerOver={(e) => set(true)}
-      onPointerOut={(e) => set(false)}
+      onPointerOver={( e ) => set( true )}
+      onPointerOut={( e ) => set( false )}
     >
       <boxGeometry args={[2, 2, 2]} />
       <meshStandardMaterial color={hovered ? 'hotpink' : color} />
@@ -271,7 +271,7 @@ function Box({ text, color, ...props }: any) {
   )
 }
 function Boxes() {
-  const viewport = useThree((state) => state.viewport)
+  const viewport = useThree( ( state ) => state.viewport )
   return (
     <>
       <Box text={<span>This is HTML</span>} color='aquamarine' />
@@ -283,17 +283,17 @@ function Boxes() {
     </>
   )
 }
-function ScrollContainer({ scroll, children }: any) {
+function ScrollContainer( { scroll, children }: any ) {
   const { viewport } = useThree()
   const group: any = useRef()
-  useFrame((state, delta) => {
+  useFrame( ( state, delta ) => {
     group.current.position.y = THREE.MathUtils.damp(
       group.current.position.y,
       viewport.height * scroll.current,
       4,
       delta
     )
-  })
+  } )
   return (
     <group position={[0, 0, 0]} ref={group}>
       {children}
@@ -333,13 +333,13 @@ function ScrollContainer({ scroll, children }: any) {
 //     </div>
 //   )
 // }
-const zPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0)
-const yPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 1)
+const zPlane = new THREE.Plane( new THREE.Vector3( 0, 0, 1 ), 0 )
+const yPlane = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), 1 )
 
 function Controls() {
   // Get notified on changes to state
   // const snap = useSnapshot(state)
-  const scene = useThree((state) => state.scene)
+  const scene = useThree( ( state ) => state.scene )
   return (
     <>
       {/* As of drei@7.13 transform-controls can refer to the target by children, or the object prop */}
@@ -354,9 +354,9 @@ function Controls() {
   )
 }
 
-const Timeline: React.FC<any> = ({ events, experts }: any) => {
-  const years = Object.keys(events)
-  const scroll = useRef(0)
+const Timeline: React.FC<any> = ( { events, experts }: any ) => {
+  const years = Object.keys( events )
+  const scroll = useRef( 0 )
 
   return (
     <div

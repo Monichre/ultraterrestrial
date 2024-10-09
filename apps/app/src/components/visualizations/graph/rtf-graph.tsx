@@ -15,14 +15,14 @@ import {
 } from '@react-three/drei'
 
 const GOLDENRATIO = 1.61803398875
-export const GraphNodeImageCard = ({
+export const GraphNodeImageCard = ( {
   c = new THREE.Color(),
   node,
   ...props
-}: any) => {
+}: any ) => {
   const { id, data, fill, label } = node
   const url = data?.photos && data.photos?.length ? data.photos[0].url : ''
-  console.log('url: ', url)
+  console.log( 'url: ', url )
 
   const ref = useRef()
 
@@ -71,7 +71,7 @@ export const GraphNodeImageCard = ({
         position={[0.55, GOLDENRATIO, 0]}
         fontSize={0.025}
       >
-        {name.split('-').join(' ')}
+        {name.split( '-' ).join( ' ' )}
       </Text>
     </group>
   )
@@ -81,8 +81,8 @@ export interface GraphProps {
   models: TopicPersonnelAndEventGraphDataPayload
 }
 
-export const Graph: React.FC<GraphProps> = ({ models }) => {
-  const { nodes, edges } = useModelNodes({ models })
+export const Graph: React.FC<GraphProps> = ( { models } ) => {
+  const { nodes, edges } = useModelNodes( { models } )
   const ref: any = useRef()
   const {
     selections,
@@ -91,19 +91,19 @@ export const Graph: React.FC<GraphProps> = ({ models }) => {
     onCanvasClick,
     onNodePointerOver,
     onNodePointerOut,
-  } = useSelection({
+  } = useSelection( {
     ref,
     nodes,
     edges,
     pathHoverType: 'all',
-  })
+  } )
 
-  useEffect(() => {
-    if (ref?.current) {
-      console.log('ref?.current: ', ref?.current)
+  useEffect( () => {
+    if ( ref?.current ) {
+      console.log( 'ref?.current: ', ref?.current )
       // ref.current.theme.canvas.background = 'rgba(255,255,255, 0.1)'
     }
-  }, [ref.current])
+  }, [ref.current] )
 
   if (
     window &&
@@ -159,7 +159,7 @@ export const Graph: React.FC<GraphProps> = ({ models }) => {
           clusterAttribute='type'
           draggable
           layoutType='forceDirected3d'
-          renderNode={({ size, color, opacity }) => {
+          renderNode={( { size, color, opacity } ) => {
             return (
               <group>
                 <mesh castShadow receiveShadow>
@@ -176,7 +176,7 @@ export const Graph: React.FC<GraphProps> = ({ models }) => {
 
             // <GraphNodeImageCard {...props} />
           }}
-          // clusterAttribute='type'
+        // clusterAttribute='type'
         >
           <directionalLight position={[0, 5, -4]} intensity={1} />
         </GraphCanvas>

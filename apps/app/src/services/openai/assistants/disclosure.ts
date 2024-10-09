@@ -1,5 +1,5 @@
 import { createMessage, formatRelatedItems, parseApiResponse } from '@/services/openai/assistants/assistant.utils.ts'
-import type { DatabaseSchema } from '../../xata/xata'
+import type { DatabaseSchema } from '../../xata/xata.ts'
 import { openai, traceable } from '../openai.client.ts'
 
 

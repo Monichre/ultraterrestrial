@@ -11,22 +11,22 @@ import {
   type Item,
   SortableListItem,
 } from '@/components/cult-ui/sortable-list'
-export const useRenderListItem = ({
+export const useRenderListItem = ( {
   handleAddItem,
   handleCloseOnDrag,
   handleCompleteItem,
-}: any) => {
-  const [openItemId, setOpenItemId] = useState<number | null>(null)
-  const [tabChangeRerender, setTabChangeRerender] = useState<number>(1)
-  const [topP, setTopP] = useState([10])
-  const [temp, setTemp] = useState([10])
-  const [tokens, setTokens] = useState([10])
+}: any ) => {
+  const [openItemId, setOpenItemId] = useState<number | null>( null )
+  const [tabChangeRerender, setTabChangeRerender] = useState<number>( 1 )
+  const [topP, setTopP] = useState( [10] )
+  const [temp, setTemp] = useState( [10] )
+  const [tokens, setTokens] = useState( [10] )
 
   const renderListItem = (
     item: Item,
     order: number,
-    onCompleteItem: (id: number) => void,
-    onRemoveItem: (id: number) => void
+    onCompleteItem: ( id: number ) => void,
+    onRemoveItem: ( id: number ) => void
   ) => {
     const isOpen = item.id === openItemId
 
@@ -53,14 +53,14 @@ export const useRenderListItem = ({
                 type='text'
                 value={item.text}
                 className=' w-full rounded-lg border font-semibold border-black/10 bg-neutral-800 px-1 py-[6px] text-xl md:text-3xl text-white placeholder:text-white/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#13EEE3]/80 dark:border-white/10'
-                // onChange={(e) => {
-                //   const text = e.target.value
-                //   setItems((prevItems) =>
-                //     prevItems.map((i) =>
-                //       i.id === item.id ? { ...i, text } : i
-                //     )
-                //   )
-                // }}
+              // onChange={(e) => {
+              //   const text = e.target.value
+              //   setItems((prevItems) =>
+              //     prevItems.map((i) =>
+              //       i.id === item.id ? { ...i, text } : i
+              //     )
+              //   )
+              // }}
               />
             </motion.div>
           </div>
@@ -93,14 +93,14 @@ export const useRenderListItem = ({
                 className='h-[100px] w-full resize-none rounded-[6px]  bg-neutral-800 px-2 py-[2px] text-sm text-white placeholder:text-white/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#13EEE3]/80'
                 value={item.description}
                 placeholder='update agent prompt'
-                // onChange={(e) => {
-                //   const description = e.target.value
-                //   setItems((prevItems) =>
-                //     prevItems.map((i) =>
-                //       i.id === item.id ? { ...i, description } : i
-                //     )
-                //   )
-                // }}
+              // onChange={(e) => {
+              //   const description = e.target.value
+              //   setItems((prevItems) =>
+              //     prevItems.map((i) =>
+              //       i.id === item.id ? { ...i, description } : i
+              //     )
+              //   )
+              // }}
               />
             </motion.div>
           </div>
@@ -205,7 +205,7 @@ export const useRenderListItem = ({
         onRemoveItem={onRemoveItem}
         handleDrag={handleCloseOnDrag}
         className='my-2 '
-        renderExtra={(item) => (
+        renderExtra={( item ) => (
           <div
             key={`${isOpen}`}
             className={cn(
@@ -215,7 +215,7 @@ export const useRenderListItem = ({
           >
             <motion.button
               layout
-              onClick={() => setOpenItemId(!isOpen ? item.id : null)}
+              onClick={() => setOpenItemId( !isOpen ? item.id : null )}
               key='collapse'
               className={cn(
                 isOpen
@@ -278,7 +278,7 @@ export const useRenderListItem = ({
                           rounded='rounded '
                           tabs={tabs}
                           onChange={() =>
-                            setTabChangeRerender(tabChangeRerender + 1)
+                            setTabChangeRerender( tabChangeRerender + 1 )
                           }
                         />
                       </motion.div>
@@ -306,8 +306,8 @@ export const useRenderListItem = ({
                           size='sm'
                           variant='ghost'
                           onClick={() => {
-                            setOpenItemId(null)
-                            toast.info('Changes saved')
+                            setOpenItemId( null )
+                            toast.info( 'Changes saved' )
                           }}
                           className='h-7 rounded-lg bg-[#13EEE3]/80 hover:bg-[#13EEE3] hover:text-black text-black'
                         >

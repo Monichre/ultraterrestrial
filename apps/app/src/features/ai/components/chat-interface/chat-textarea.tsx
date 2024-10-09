@@ -5,12 +5,12 @@ import * as React from 'react'
 import { cn } from '@/utils'
 
 export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> { }
 
 export const ChatTextarea = React.forwardRef<
   HTMLTextAreaElement,
   TextareaProps
->(({ className, ...props }, ref) => {
+>( ( { className, ...props }, ref ) => {
   return (
     <textarea
       className={cn(
@@ -21,5 +21,5 @@ export const ChatTextarea = React.forwardRef<
       {...props}
     />
   )
-})
+} )
 ChatTextarea.displayName = 'Textarea'

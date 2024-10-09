@@ -9,8 +9,8 @@ import { StateOfDisclosureProvider } from '@/providers'
 
 
 export default async function Index() {
-  
-  
+
+
 
   const data: NetworkGraphPayload = await getEntityNetworkGraphData()
 

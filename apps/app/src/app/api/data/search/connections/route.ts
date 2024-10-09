@@ -17,7 +17,7 @@ export async function GET( request: NextRequest ) {
 
   const type: any = searchParams.get( 'type' )
   console.log( 'type: ', type )
-  const source = await xata.db[`${ type }`].read( id )
+  const source = await xata.db[`${type}`].read( id )
   console.log( 'source: ', source )
 
   const connectionRecords = await executePlatformWideConnectionSearch( { id, type } )

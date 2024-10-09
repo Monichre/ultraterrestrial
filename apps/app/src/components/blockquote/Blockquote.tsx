@@ -3,7 +3,7 @@ import { TextEffect } from '@/components/animated/text-effect'
 import { AvatarImage } from '@/components/ui/avatar'
 import { QuoteIcon } from 'lucide-react'
 
-export const BlockQuote = ({
+export const BlockQuote = ( {
   quote,
   author,
   children,
@@ -11,7 +11,7 @@ export const BlockQuote = ({
   quote: string
   author: string
   children?: any
-}) => {
+} ) => {
   return (
     <BlurAppear>
       <blockquote className=''>

@@ -32,12 +32,12 @@ interface DialogContextType {
   triggerRef: React.RefObject<HTMLDivElement>
 }
 
-const DialogContext = React.createContext<DialogContextType | null>(null)
+const DialogContext = React.createContext<DialogContextType | null>( null )
 
 function useDialog() {
-  const context = useContext(DialogContext)
-  if (!context) {
-    throw new Error('useDialog must be used within a DialogProvider')
+  const context = useContext( DialogContext )
+  if ( !context ) {
+    throw new Error( 'useDialog must be used within a DialogProvider' )
   }
   return context
 }
@@ -47,13 +47,13 @@ type DialogProviderProps = {
   transition?: Transition
 }
 
-function DialogProvider({ children, transition }: DialogProviderProps) {
-  const [isOpen, setIsOpen] = useState(false)
+function DialogProvider( { children, transition }: DialogProviderProps ) {
+  const [isOpen, setIsOpen] = useState( false )
   const uniqueId = useId()
-  const triggerRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLDivElement>( null )
 
   const contextValue = useMemo(
-    () => ({ isOpen, setIsOpen, uniqueId, triggerRef }),
+    () => ( { isOpen, setIsOpen, uniqueId, triggerRef } ),
     [isOpen, uniqueId]
   )
 
@@ -69,7 +69,7 @@ type DialogProps = {
   transition?: Transition
 }
 
-function Dialog({ children, transition }: DialogProps) {
+function Dialog( { children, transition }: DialogProps ) {
   return (
     <DialogProvider>
       <MotionConfig transition={transition}>{children}</MotionConfig>
@@ -84,23 +84,23 @@ type DialogTriggerProps = {
   triggerRef?: React.RefObject<HTMLDivElement>
 }
 
-function DialogTrigger({
+function DialogTrigger( {
   children,
   className,
   style,
   triggerRef,
-}: DialogTriggerProps) {
+}: DialogTriggerProps ) {
   const { setIsOpen, isOpen, uniqueId } = useDialog()
 
-  const handleClick = useCallback(() => {
-    setIsOpen(!isOpen)
-  }, [isOpen, setIsOpen])
+  const handleClick = useCallback( () => {
+    setIsOpen( !isOpen )
+  }, [isOpen, setIsOpen] )
 
   const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
-      if (event.key === 'Enter' || event.key === ' ') {
+    ( event: React.KeyboardEvent ) => {
+      if ( event.key === 'Enter' || event.key === ' ' ) {
         event.preventDefault()
-        setIsOpen(!isOpen)
+        setIsOpen( !isOpen )
       }
     },
     [isOpen, setIsOpen]
@@ -110,7 +110,7 @@ function DialogTrigger({
     <motion.div
       ref={triggerRef}
       layoutId={`dialog-${uniqueId}`}
-      className={cn('relative cursor-pointer', className)}
+      className={cn( 'relative cursor-pointer', className )}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       style={style}
@@ -130,29 +130,29 @@ type DialogContent = {
   style?: React.CSSProperties
 }
 
-function DialogContent({ children, className, style }: DialogContent) {
+function DialogContent( { children, className, style }: DialogContent ) {
   const { setIsOpen, isOpen, uniqueId, triggerRef } = useDialog()
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>( null )
   const [firstFocusableElement, setFirstFocusableElement] =
-    useState<HTMLElement | null>(null)
+    useState<HTMLElement | null>( null )
   const [lastFocusableElement, setLastFocusableElement] =
-    useState<HTMLElement | null>(null)
+    useState<HTMLElement | null>( null )
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsOpen(false)
+  useEffect( () => {
+    const handleKeyDown = ( event: KeyboardEvent ) => {
+      if ( event.key === 'Escape' ) {
+        setIsOpen( false )
       }
-      if (event.key === 'Tab') {
-        if (!firstFocusableElement || !lastFocusableElement) return
+      if ( event.key === 'Tab' ) {
+        if ( !firstFocusableElement || !lastFocusableElement ) return
 
-        if (event.shiftKey) {
-          if (document.activeElement === firstFocusableElement) {
+        if ( event.shiftKey ) {
+          if ( document.activeElement === firstFocusableElement ) {
             event.preventDefault()
             lastFocusableElement.focus()
           }
         } else {
-          if (document.activeElement === lastFocusableElement) {
+          if ( document.activeElement === lastFocusableElement ) {
             event.preventDefault()
             firstFocusableElement.focus()
           }
@@ -160,44 +160,44 @@ function DialogContent({ children, className, style }: DialogContent) {
       }
     }
 
-    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener( 'keydown', handleKeyDown )
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener( 'keydown', handleKeyDown )
     }
-  }, [setIsOpen, firstFocusableElement, lastFocusableElement])
+  }, [setIsOpen, firstFocusableElement, lastFocusableElement] )
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add('overflow-hidden')
+  useEffect( () => {
+    if ( isOpen ) {
+      document.body.classList.add( 'overflow-hidden' )
       const focusableElements = containerRef.current?.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       )
-      if (focusableElements && focusableElements.length > 0) {
-        setFirstFocusableElement(focusableElements[0] as HTMLElement)
+      if ( focusableElements && focusableElements.length > 0 ) {
+        setFirstFocusableElement( focusableElements[0] as HTMLElement )
         setLastFocusableElement(
           focusableElements[focusableElements.length - 1] as HTMLElement
         )
-        ;(focusableElements[0] as HTMLElement).focus()
+          ; ( focusableElements[0] as HTMLElement ).focus()
       }
     } else {
-      document.body.classList.remove('overflow-hidden')
+      document.body.classList.remove( 'overflow-hidden' )
       triggerRef.current?.focus()
     }
-  }, [isOpen, triggerRef])
+  }, [isOpen, triggerRef] )
 
-  useClickOutside(containerRef, () => {
-    if (isOpen) {
-      setIsOpen(false)
+  useClickOutside( containerRef, () => {
+    if ( isOpen ) {
+      setIsOpen( false )
     }
-  })
+  } )
 
   return (
     <motion.div
       ref={containerRef}
       layoutId={`dialog-${uniqueId}`}
       layoutScroll
-      className={cn('overflow-hidden', className)}
+      className={cn( 'overflow-hidden', className )}
       style={style}
       role='dialog'
       aria-modal='true'
@@ -215,16 +215,16 @@ type DialogContainerProps = {
   style?: React.CSSProperties
 }
 
-function DialogContainer({ children }: DialogContainerProps) {
+function DialogContainer( { children }: DialogContainerProps ) {
   const { isOpen, uniqueId } = useDialog()
-  const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState( false )
 
-  useEffect(() => {
-    setMounted(true)
-    return () => setMounted(false)
-  }, [])
+  useEffect( () => {
+    setMounted( true )
+    return () => setMounted( false )
+  }, [] )
 
-  if (!mounted) return null
+  if ( !mounted ) return null
 
   return createPortal(
     <AnimatePresence initial={false} mode='sync'>
@@ -254,7 +254,7 @@ type DialogTitleProps = {
   style?: React.CSSProperties
 }
 
-function DialogTitle({ children, className, style }: DialogTitleProps) {
+function DialogTitle( { children, className, style }: DialogTitleProps ) {
   const { uniqueId } = useDialog()
 
   return (
@@ -285,7 +285,7 @@ type DialogSubtitleProps = {
   style?: React.CSSProperties
 }
 
-function DialogSubtitle({ children, className, style }: DialogSubtitleProps) {
+function DialogSubtitle( { children, className, style }: DialogSubtitleProps ) {
   const { uniqueId } = useDialog()
 
   return (
@@ -310,12 +310,12 @@ type DialogDescriptionProps = {
   }
 }
 
-function DialogDescription({
+function DialogDescription( {
   children,
   className,
   variants,
   disableLayoutAnimation,
-}: DialogDescriptionProps) {
+}: DialogDescriptionProps ) {
   const { uniqueId } = useDialog()
 
   return (
@@ -345,8 +345,8 @@ type DialogImageProps = {
   style?: React.CSSProperties
 }
 
-function DialogImage({ src, alt, className, style }: DialogImageProps) {
-  console.log('src: ', src)
+function DialogImage( { src, alt, className, style }: DialogImageProps ) {
+  console.log( 'src: ', src )
   const { uniqueId } = useDialog()
 
   return (
@@ -374,12 +374,12 @@ type DialogCloseProps = {
   }
 }
 
-function DialogClose({ children, className, variants }: DialogCloseProps) {
+function DialogClose( { children, className, variants }: DialogCloseProps ) {
   const { setIsOpen, uniqueId } = useDialog()
 
-  const handleClose = useCallback(() => {
-    setIsOpen(false)
-  }, [setIsOpen])
+  const handleClose = useCallback( () => {
+    setIsOpen( false )
+  }, [setIsOpen] )
 
   return (
     <motion.button
@@ -387,7 +387,7 @@ function DialogClose({ children, className, variants }: DialogCloseProps) {
       type='button'
       aria-label='Close dialog'
       key={`dialog-close-${uniqueId}`}
-      className={cn('absolute right-6 top-6', className)}
+      className={cn( 'absolute right-6 top-6', className )}
       initial='initial'
       animate='animate'
       exit='exit'

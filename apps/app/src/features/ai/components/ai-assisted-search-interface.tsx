@@ -24,25 +24,25 @@ import { Answer } from './prompts/Answer'
 import { SuggestedSearchItem } from './SuggestedSearchItem'
 // import { addConversationToDisclosureAssistantMemory } from '@/services/mem0'
 
-const CheckIcon = ({ className }: { className?: string }) => (
+const CheckIcon = ( { className }: { className?: string } ) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     fill='none'
     viewBox='0 0 24 24'
     strokeWidth={1.5}
     stroke='currentColor'
-    className={cn('w-6 h-6', className)}
+    className={cn( 'w-6 h-6', className )}
   >
     <path d='M9 12.75L11.25 15L15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z' />
   </svg>
 )
 
-const CheckFilled = ({ className }: { className?: string }) => (
+const CheckFilled = ( { className }: { className?: string } ) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 24 24'
     fill='currentColor'
-    className={cn('w-6 h-6', className)}
+    className={cn( 'w-6 h-6', className )}
   >
     <path
       fillRule='evenodd'
@@ -56,24 +56,24 @@ type LoadingState = {
   text: string
 }
 
-const LoaderCore = ({
+const LoaderCore = ( {
   loadingStates,
   value = 0,
 }: {
   loadingStates: LoadingState[]
   value?: number
-}) => (
+} ) => (
   <div className='flex relative justify-start max-w-xxl mx-auto flex-col mt-40'>
-    {loadingStates.map((loadingState, index) => {
-      const distance = Math.abs(index - value)
-      const opacity = Math.max(1 - distance * 0.2, 0)
+    {loadingStates.map( ( loadingState, index ) => {
+      const distance = Math.abs( index - value )
+      const opacity = Math.max( 1 - distance * 0.2, 0 )
 
       return (
         <motion.div
           key={index}
           className='text-left flex gap-2 mb-4'
-          initial={{ opacity: 0, y: -(value * 40) }}
-          animate={{ opacity: opacity, y: -(value * 40) }}
+          initial={{ opacity: 0, y: -( value * 40 ) }}
+          animate={{ opacity: opacity, y: -( value * 40 ) }}
           transition={{ duration: 0.5 }}
         >
           <div>
@@ -98,11 +98,11 @@ const LoaderCore = ({
           </span>
         </motion.div>
       )
-    })}
+    } )}
   </div>
 )
 
-export const LoadingSequence = ({
+export const LoadingSequence = ( {
   loadingStates,
   loading,
   duration = 3000,
@@ -112,31 +112,31 @@ export const LoadingSequence = ({
   loading?: boolean
   duration?: number
   loop?: boolean
-}) => {
-  const [currentState, setCurrentState] = useState(0)
-  const [show, setShow] = useState(loading)
+} ) => {
+  const [currentState, setCurrentState] = useState( 0 )
+  const [show, setShow] = useState( loading )
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setCurrentState((prevState) =>
+  useEffect( () => {
+    const timeout = setTimeout( () => {
+      setCurrentState( ( prevState ) =>
         loop
           ? prevState === loadingStates.length - 1
             ? 0
             : prevState + 1
-          : Math.min(prevState + 1, loadingStates.length - 1)
+          : Math.min( prevState + 1, loadingStates.length - 1 )
       )
-    }, duration)
+    }, duration )
 
-    return () => clearTimeout(timeout)
-  }, [currentState, loading, loop, loadingStates.length, duration])
+    return () => clearTimeout( timeout )
+  }, [currentState, loading, loop, loadingStates.length, duration] )
 
-  useEffect(() => {
-    if (!loading) {
-      setCurrentState(0)
-      setShow(false)
+  useEffect( () => {
+    if ( !loading ) {
+      setCurrentState( 0 )
+      setShow( false )
     }
-    if (loading) setShow(true)
-  }, [loading])
+    if ( loading ) setShow( true )
+  }, [loading] )
 
   return (
     <AnimatePresence mode='wait'>
@@ -165,7 +165,7 @@ const suggestions = [
   'What data is there on ancient artifacts as they relate to non-human intelligence?',
 ]
 
-export const AiAssistedSearch = memo(() => {
+export const AiAssistedSearch = memo( () => {
   const {
     status,
     messages,
@@ -176,9 +176,9 @@ export const AiAssistedSearch = memo(() => {
     threadId,
     setThreadId,
     ...rest
-  } = useAssistant({ api: '/api/assistants/disclosure/message' })
-  console.log('rest:', rest, { messages })
-  useAssistant({ api: '/api/assistants/disclosure/message' })
+  } = useAssistant( { api: '/api/assistants/disclosure/message' } )
+  console.log( 'rest:', rest, { messages } )
+  useAssistant( { api: '/api/assistants/disclosure/message' } )
 
   // const [value, setValue, remove] = useLocalStorage('threadId', null)
 
@@ -188,48 +188,48 @@ export const AiAssistedSearch = memo(() => {
   //   }
   // }, [threadId, setValue, value, setThreadId])
 
-  const handleSelection = (suggestion: string) => {
-    append({
+  const handleSelection = ( suggestion: string ) => {
+    append( {
       role: 'user',
       content: suggestion,
-    })
+    } )
   }
 
-  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState( false )
 
   const handleDialogChange = useCallback(
-    async (isOpen: boolean) => {
-      if (!isOpen && messages?.length) {
+    async ( isOpen: boolean ) => {
+      if ( !isOpen && messages?.length ) {
         // await addConversationToDisclosureAssistantMemory({ messages })
       }
-      setDialogOpen(isOpen)
+      setDialogOpen( isOpen )
     },
     [messages]
   )
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.metaKey && event.key === 'k') {
-        setDialogOpen((prev) => !prev)
+  useEffect( () => {
+    const handleKeyDown = ( event: KeyboardEvent ) => {
+      if ( event.metaKey && event.key === 'k' ) {
+        setDialogOpen( ( prev ) => !prev )
       }
     }
 
-    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener( 'keydown', handleKeyDown )
     return () => {
-      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener( 'keydown', handleKeyDown )
     }
-  }, [])
+  }, [] )
 
-  const scrollRef: any = useRef(null)
+  const scrollRef: any = useRef( null )
 
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({
+  useEffect( () => {
+    if ( scrollRef.current ) {
+      scrollRef.current.scrollTo( {
         top: scrollRef.current.scrollHeight,
         behavior: 'smooth',
-      })
+      } )
     }
-  }, [messages])
+  }, [messages] )
 
   let initial = messages.length === 0
 
@@ -307,13 +307,13 @@ export const AiAssistedSearch = memo(() => {
                           Suggestions
                         </div>
                         <ul>
-                          {suggestions.map((suggestion) => (
+                          {suggestions.map( ( suggestion ) => (
                             <SuggestedSearchItem
                               onClick={handleSelection}
                               key={suggestion}
                               value={suggestion}
                             />
-                          ))}
+                          ) )}
                         </ul>
                         <Divider />
                       </div>
@@ -321,7 +321,7 @@ export const AiAssistedSearch = memo(() => {
 
                     {messages.length > 0 && (
                       <div className='flex flex-col p-2 gap-2 pb-8'>
-                        {messages.map((message) => (
+                        {messages.map( ( message ) => (
                           <Answer
                             key={message.id}
                             prompt={
@@ -339,13 +339,13 @@ export const AiAssistedSearch = memo(() => {
                                     // Map `h1` (`# heading`) to use `h2`s.
                                     h1: 'h2',
                                     // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
-                                    pre: (props) => {
+                                    pre: ( props ) => {
                                       return (
                                         // @ts-ignore
                                         <div {...props} />
                                       )
                                     },
-                                    code: (props) => {
+                                    code: ( props ) => {
                                       return (
                                         // @ts-ignore
                                         <p {...props} />
@@ -358,7 +358,7 @@ export const AiAssistedSearch = memo(() => {
                               ) : null
                             }
                           />
-                        ))}
+                        ) )}
                       </div>
                     )}
                   </div>
@@ -383,4 +383,4 @@ export const AiAssistedSearch = memo(() => {
       </DialogPortal>
     </Dialog>
   )
-})
+} )

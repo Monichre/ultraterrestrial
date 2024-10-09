@@ -1,7 +1,7 @@
 'use client'
 import type { MindMapEntityCardProps } from '@/features/mindmap/components/cards/entity-card/entity-card'
 
-export function BackgroundOverlayCard({ data }: MindMapEntityCardProps) {
+export function BackgroundOverlayCard( { data }: MindMapEntityCardProps ) {
   const { photos } = data
 
   return (

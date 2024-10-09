@@ -10,7 +10,7 @@ export type StateOfDisclosureSchema = {
   searchRelatedDataPoints: any
 }
 
-export const StateOfDisclosureContext: any = createContext({
+export const StateOfDisclosureContext: any = createContext( {
   records: {
     topics: [],
     events: [],
@@ -32,7 +32,7 @@ export const StateOfDisclosureContext: any = createContext({
     links: [],
   },
   // searchRelatedDataPoints?: ({ id, type }: any) => {},
-})
+} )
 
 export interface StateOfDisclosureProviderProps {
   children: any
@@ -41,7 +41,7 @@ export interface StateOfDisclosureProviderProps {
 
 export const StateOfDisclosureProvider: React.FC<
   StateOfDisclosureProviderProps
-> = ({ stateOfDisclosure, children }) => {
+> = ( { stateOfDisclosure, children } ) => {
   const {
     records,
     connections,
@@ -59,10 +59,10 @@ export const StateOfDisclosureProvider: React.FC<
 }
 
 export const useStateOfDisclosure: any = () => {
-  const context = useContext(StateOfDisclosureContext)
+  const context = useContext( StateOfDisclosureContext )
 
-  if (!context) {
-    throw new Error('useGraph must be used within a UfologyProvider')
+  if ( !context ) {
+    throw new Error( 'useGraph must be used within a UfologyProvider' )
   }
   return context
 }

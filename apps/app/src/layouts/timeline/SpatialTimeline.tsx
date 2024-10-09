@@ -44,18 +44,18 @@ interface TimelineItemProps {
   events: Event[]
   year: number
   currentYear: number
-  mitigateCurrentYearValue: (year: number) => void
+  mitigateCurrentYearValue: ( year: number ) => void
   style: React.CSSProperties
   scrolling: React.RefObject<boolean>
 }
 
-const throttle = (func: Function, limit: number) => {
+const throttle = ( func: Function, limit: number ) => {
   let inThrottle = false
-  return function (this: any, ...args: any[]) {
-    if (!inThrottle) {
-      func.apply(this, args)
+  return function ( this: any, ...args: any[] ) {
+    if ( !inThrottle ) {
+      func.apply( this, args )
       inThrottle = true
-      setTimeout(() => (inThrottle = false), limit)
+      setTimeout( () => ( inThrottle = false ), limit )
     }
   }
 }
@@ -63,37 +63,37 @@ const throttle = (func: Function, limit: number) => {
 interface SpatialTimelineProps {
   eventsByYear: Record<number, Event[]>
   years: number[]
-  updateActiveLocation: (location: string) => void
+  updateActiveLocation: ( location: string ) => void
 }
 
-export const SpatialTimeline: React.FC<SpatialTimelineProps> = ({
+export const SpatialTimeline: React.FC<SpatialTimelineProps> = ( {
   eventsByYear,
   years,
   updateActiveLocation,
-}) => {
-  const [currentYear, setCurrentYear] = useState(years[0])
-  const scrolling = useRef(false)
+} ) => {
+  const [currentYear, setCurrentYear] = useState( years[0] )
+  const scrolling = useRef( false )
 
-  useEffect(() => {
-    const handleScroll = throttle(() => {
+  useEffect( () => {
+    const handleScroll = throttle( () => {
       scrolling.current = true
-    }, 100)
+    }, 100 )
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener( 'scroll', handleScroll )
+    return () => window.removeEventListener( 'scroll', handleScroll )
+  }, [] )
 
   const mitigateCurrentYearValue = useCallback(
-    (nextYear: number) => {
-      if (nextYear !== currentYear) {
-        setCurrentYear(nextYear)
+    ( nextYear: number ) => {
+      if ( nextYear !== currentYear ) {
+        setCurrentYear( nextYear )
       }
     },
     [currentYear]
   )
   let startOffset = -20
-  const calcAnimation = (index: number) => {
-    if (index !== 0) {
+  const calcAnimation = ( index: number ) => {
+    if ( index !== 0 ) {
       startOffset += 10 // index === 0 ? -20 : index * 10
     }
     let endOffset = startOffset + 10
@@ -140,9 +140,9 @@ export const SpatialTimeline: React.FC<SpatialTimelineProps> = ({
     // spatial
     <div
       className='stuck-grid h-full'
-      // style={{ minHeight: `${years.length * 100}vh` }}
+    // style={{ minHeight: `${years.length * 100}vh` }}
     >
-      {years.map((year, index) => {
+      {years.map( ( year, index ) => {
         return (
           <TimelineItem
             key={`${year}-${index}-grid-item`}
@@ -153,12 +153,12 @@ export const SpatialTimeline: React.FC<SpatialTimelineProps> = ({
             mitigateCurrentYearValue={mitigateCurrentYearValue}
             scrolling={scrolling}
             style={{
-              ...calcAnimation(index),
+              ...calcAnimation( index ),
               // zIndex: years.length - index + 1,
             }}
           />
         )
-      })}
+      } )}
     </div>
   )
 }

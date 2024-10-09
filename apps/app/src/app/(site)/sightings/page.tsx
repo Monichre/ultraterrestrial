@@ -4,7 +4,7 @@ import { SightingsGlobe } from '@/features/data-viz/sightings/sightings-globe'
 
 export default async function Index() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `http://localhost:3000`
-  const sightingsPayload = await fetch(`${baseUrl}/api/data/sightings`)
+  const sightingsPayload = await fetch( `${baseUrl}/api/data/sightings` )
 
   const {
     data: { sightings, militaryBases, ufoPosts },

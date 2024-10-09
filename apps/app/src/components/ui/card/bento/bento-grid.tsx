@@ -1,12 +1,12 @@
 import { cn } from '@/utils'
 
-export const BentoGrid = ({
+export const BentoGrid = ( {
   className,
   children,
 }: {
   className?: string
   children?: React.ReactNode
-}) => {
+} ) => {
   return (
     <div
       className={cn(
@@ -19,7 +19,7 @@ export const BentoGrid = ({
   )
 }
 
-export const BentoGridItem = ({
+export const BentoGridItem = ( {
   className,
   title,
   description,
@@ -33,7 +33,7 @@ export const BentoGridItem = ({
   header?: React.ReactNode
   icon?: React.ReactNode
   children?: any
-}) => {
+} ) => {
   return (
     <div
       className={cn(

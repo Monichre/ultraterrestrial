@@ -98,65 +98,65 @@ export const LogoIcon = () => {
 }
 
 // Dummy dashboard component with content
-export const DashboardContent = ({ children }: any) => {
+export const DashboardContent = ( { children }: any ) => {
   return (
     <div className=' border border-white/50 dark:border-neutral-700/50 rounded-[calc(var(--radius)-4px)] flex flex-col gap-2 flex-1 w-full h-auto overflow-scroll relative'>
       {children}
     </div>
   )
 }
-const makeLinks = (updateCurrentSection) => [
+const makeLinks = ( updateCurrentSection ) => [
   {
     label: 'Events',
-    onClick: () => updateCurrentSection('events'),
+    onClick: () => updateCurrentSection( 'events' ),
     icon: (
       <LayoutDashboardIcon className='text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0' />
     ),
   },
   {
     label: 'Key Figures',
-    onClick: () => updateCurrentSection('personnel'),
+    onClick: () => updateCurrentSection( 'personnel' ),
     icon: (
       <User className='text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0' />
     ),
   },
   {
     label: 'Topics',
-    onClick: () => updateCurrentSection('topics'),
+    onClick: () => updateCurrentSection( 'topics' ),
     icon: (
       <Settings className='text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0' />
     ),
   },
   {
     label: 'Testimonies',
-    onClick: () => updateCurrentSection('testimonies'),
+    onClick: () => updateCurrentSection( 'testimonies' ),
     icon: (
       <ArrowBigLeft className='text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0' />
     ),
   },
   {
     label: 'Organizations',
-    onClick: () => updateCurrentSection('organizations'),
+    onClick: () => updateCurrentSection( 'organizations' ),
     icon: (
       <ArrowBigLeft className='text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0' />
     ),
   },
   {
     label: 'Documents',
-    onClick: () => updateCurrentSection('documents'),
+    onClick: () => updateCurrentSection( 'documents' ),
     icon: (
       <ArrowBigLeft className='text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0' />
     ),
   },
 ]
-export const AdminDashboard = (props: any) => {
-  const [activeSection, setActiveSection]: any = useState('events')
-  const [events, setEvents]: any = useState(null)
-  const [topics, setTopics]: any = useState(null)
-  const [personnel, setPersonnel]: any = useState(null)
-  const [testimonies, setTestimonies]: any = useState(null)
-  const [organizations, setOrganizations]: any = useState(null)
-  const [selectedRecords, setSelectedRecords]: any = useState([])
+export const AdminDashboard = ( props: any ) => {
+  const [activeSection, setActiveSection]: any = useState( 'events' )
+  const [events, setEvents]: any = useState( null )
+  const [topics, setTopics]: any = useState( null )
+  const [personnel, setPersonnel]: any = useState( null )
+  const [testimonies, setTestimonies]: any = useState( null )
+  const [organizations, setOrganizations]: any = useState( null )
+  const [selectedRecords, setSelectedRecords]: any = useState( [] )
 
   const activeRecords =
     activeSection === 'events'
@@ -170,36 +170,36 @@ export const AdminDashboard = (props: any) => {
             : activeSection === 'organizations'
               ? organizations
               : null
-  const updateCurrentSection = (model: string) => {
-    console.log('model: ', model)
-    setActiveSection(model)
+  const updateCurrentSection = ( model: string ) => {
+    console.log( 'model: ', model )
+    setActiveSection( model )
   }
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState( false )
 
-  const links = makeLinks(updateCurrentSection)
+  const links = makeLinks( updateCurrentSection )
 
-  const addItemToSelectedRecordsList = useCallback((item: any) => {
-    console.log('item: ', item)
+  const addItemToSelectedRecordsList = useCallback( ( item: any ) => {
+    console.log( 'item: ', item )
 
-    setSelectedRecords((selectedRecords: any) => [...selectedRecords, item])
-  }, [])
+    setSelectedRecords( ( selectedRecords: any ) => [...selectedRecords, item] )
+  }, [] )
 
-  useEffect(() => {
-    if (activeSection === 'events' && !events?.length) {
-      getEvents().then((res: any) => setEvents(res))
+  useEffect( () => {
+    if ( activeSection === 'events' && !events?.length ) {
+      getEvents().then( ( res: any ) => setEvents( res ) )
     }
-    if (activeSection === 'personnel' && !personnel?.length) {
-      getKeyFigures().then((res: any) => setPersonnel(res))
+    if ( activeSection === 'personnel' && !personnel?.length ) {
+      getKeyFigures().then( ( res: any ) => setPersonnel( res ) )
     }
-    if (activeSection === 'topics' && !topics?.length) {
-      getTopics().then((res: any) => setTopics(res))
+    if ( activeSection === 'topics' && !topics?.length ) {
+      getTopics().then( ( res: any ) => setTopics( res ) )
     }
-    if (activeSection === 'testimonies' && !testimonies?.length) {
-      getTestimonies().then((res: any) => setTestimonies(res))
+    if ( activeSection === 'testimonies' && !testimonies?.length ) {
+      getTestimonies().then( ( res: any ) => setTestimonies( res ) )
     }
-    if (activeSection === 'organizations' && !organizations?.length) {
-      getOrganizations().then((res: any) => setOrganizations(res))
+    if ( activeSection === 'organizations' && !organizations?.length ) {
+      getOrganizations().then( ( res: any ) => setOrganizations( res ) )
     }
   }, [
     activeSection,
@@ -208,7 +208,7 @@ export const AdminDashboard = (props: any) => {
     personnel?.length,
     testimonies?.length,
     topics?.length,
-  ])
+  ] )
   return (
     <div
       className={cn(
@@ -224,9 +224,9 @@ export const AdminDashboard = (props: any) => {
           <div className='flex flex-col flex-1 overflow-y-auto'>
             {open ? <Logo /> : <LogoIcon />}
             <div className='mt-8 flex flex-col gap-2'>
-              {links.map((link, idx) => (
+              {links.map( ( link, idx ) => (
                 <AppSidebarLink key={idx} {...link} />
-              ))}
+              ) )}
             </div>
           </div>
           <div>
@@ -287,10 +287,10 @@ export const AdminDashboard = (props: any) => {
                 <AdminDashboardGlobe
                   markers={
                     selectedRecords
-                      ? selectedRecords.map((item: any) => ({
-                          location: [item?.latitude, item?.longitude],
-                          size: 0.05,
-                        }))
+                      ? selectedRecords.map( ( item: any ) => ( {
+                        location: [item?.latitude, item?.longitude],
+                        size: 0.05,
+                      } ) )
                       : []
                   }
                 />

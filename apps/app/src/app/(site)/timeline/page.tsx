@@ -4,8 +4,8 @@ const xata = getXataClient()
 export default async function Index() {
   const events: any = await xata.db.events
 
-    .sort('date', 'desc')
-    .select([
+    .sort( 'date', 'desc' )
+    .select( [
       'name',
       'description',
       'location',
@@ -20,9 +20,9 @@ export default async function Index() {
         columns: ['*'],
         as: 'experts',
       },
-    ])
+    ] )
     .getAll()
-    .then((data) => data.toSerializable())
+    .then( ( data ) => data.toSerializable() )
 
   return (
     <div className='timeline-page'>
