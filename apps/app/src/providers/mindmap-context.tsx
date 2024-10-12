@@ -537,15 +537,17 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
       const existingNodes = [...getNodes().filter( ( node: any ) => node.id !== siblingSourceNode.id )]
       const nodeRadius = calculateCircumcircleRadius( ROOT_NODE_WIDTH, ROOT_NODE_HEIGHT ) // Radius of the node (adjust as needed)
       const circleRadius = searchResults.reduce( ( sum: number, result: any ) => {
+        console.log( result )
         const { type } = result
-        const node = graph[type].nodes.find( ( node: { id: any } ) => node?.id === result.id )
-        return sum + calculateCircumcircleRadius( node.width, node.height )
+        console.log( 'type: ', type )
+        // const node = graph[type].nodes.find( ( node: { id: any } ) => node?.id === result.id )
+        return sum + calculateCircumcircleRadius( ROOT_NODE_WIDTH, ROOT_NODE_HEIGHT )
       }, 0 )
 
       searchResults.forEach( ( result: { id?: any; type?: any }, i: number ) => {
-        const { type } = result
-
-        let node = graph[type].nodes.find( ( node: { id: any } ) => node?.id === result.id )
+        const { type, id, ...rest } = result
+        console.log( 'type: ', type )
+        // let node = graph[type].nodes.find( ( node: { id: any } ) => node?.id === result.id )
 
         // Calculate initial angle
         const totalNodes = searchResults.length
@@ -582,7 +584,14 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
         }
 
         const positionedNode = {
-          ...node,
+          id,
+          type: `${type}Node`,
+          // @ts-ignore
+          label: rest?.label || rest?.name,
+          data: {
+            ...rest,
+            type,
+          },
           position: {
             x: x,
             y: y,
@@ -590,14 +599,14 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
         }
         const edgeId = `${siblingSourceNode.id}:${positionedNode.id}`
 
-        const edgeType = 'floating' // || 'siblingEdge'
+        const edgeType = 'siblingEdge' // || 'siblingEdge'
 
         // const connectionLabel = `${rootNodeChildNode.data.name}::${sourceNode?.data.name}`
         // console.log('connectionLabel: ', connectionLabel)
         const siblingEdge = {
           id: edgeId,
-          source: positionedNode.id,
-          target: siblingSourceNode.id,
+          source: siblingSourceNode.id,
+          target: positionedNode.id,
           animated: true,
 
           type: edgeType,
@@ -622,17 +631,23 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
 
       const incomingSiblingHandles: any = incomingEdges.map( ( edge: any ) => edge.sourceHandle )
 
-      existingNodes.push( {
-        ...siblingSourceNode,
-        data: {
-          ...siblingSourceNode.data,
-          handles: siblingSourceNode.data?.handles?.length
-            ? [...siblingSourceNode.data.handles, ...incomingSiblingHandles]
-            : incomingSiblingHandles,
-        },
+      // existingNodes.push( {
+      //   ...siblingSourceNode,
+      //   data: {
+      //     ...siblingSourceNode.data,
+      //     handles: siblingSourceNode.data?.handles?.length
+      //       ? [...siblingSourceNode.data.handles, ...incomingSiblingHandles]
+      //       : incomingSiblingHandles,
+      //   },
+      // } )
+      updateNodeData( siblingSourceNode.id, {
+        handles: siblingSourceNode.data?.handles?.length
+          ? [...siblingSourceNode.data.handles, ...incomingSiblingHandles]
+          : incomingSiblingHandles,
       } )
 
-      setNodes( ( nds: any ) => [...existingNodes, ...incomingNodes] )
+
+      setNodes( ( nds: any ) => [...nds, ...incomingNodes] )
 
       setEdges( ( edges: any ) => [...edges, ...incomingEdges] )
 

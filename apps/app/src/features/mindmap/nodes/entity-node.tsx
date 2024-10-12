@@ -25,6 +25,7 @@ const EntityNode = memo( ( node: any ) => {
   const { useUpdateNodeInternals, useNodesData } = useMindMap()
   const updateNodeInternals = useUpdateNodeInternals()
   const [handles, setHandles]: any = useState( [] )
+  console.log( 'handles: ', handles )
   const nodeData = useNodesData( node.id )
   const type = node.data.type
   const component = renderEntity( {
@@ -36,11 +37,12 @@ const EntityNode = memo( ( node: any ) => {
   } )
 
   useEffect( () => {
+    updateNodeInternals( node.id )
     if ( node?.data?.handles && node.data?.handles.length ) {
       const { data } = node
-
-      setHandles( data.handles )
       updateNodeInternals( node.id )
+      setHandles( data.handles )
+
     }
 
     // if (node?.data?.concise) {
@@ -58,9 +60,9 @@ const EntityNode = memo( ( node: any ) => {
       {component}
 
       {handles && handles?.length
-        ? handles.map( ( id: string ) => (
+        ? handles.map( ( id: string, index: number ) => (
           <Handle
-            key={id}
+            key={`${id}-${index}`}
             type='source'
             position={Position.Bottom}
             id={id}

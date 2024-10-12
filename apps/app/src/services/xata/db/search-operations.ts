@@ -5,11 +5,57 @@ import {
   objectMapToSingular,
 } from '@/utils'
 
+const findNestedId = async ( obj: any ): Promise<any[] | null> => {
+  const nestedRecords = []
+  for ( const key in obj ) {
+    if ( obj[key] && typeof obj[key] === 'object' ) {
+      if ( obj[key].id ) {
+        const nestedRecord = await xata.db[key].read( obj[key].id )
+        console.log( 'nestedRecord: ', nestedRecord )
+        nestedRecords.push( nestedRecord )
+
+      }
+      //  else {
+      //   const result = await findNestedId( obj[key] )
+      //   if ( result ) {
+      //     return result
+      //   }
+      // }
+    }
+  }
+  return nestedRecords
+}
+
+const handleNested = async ( item: any ) => {
+  const {
+    record: { xata: xataObject, ...restOfRecord },
+    table: connectionTable,
+  }: any = item
+  const { id: recordId, ...rest } = restOfRecord
+  const originalRecordTypeSingular = objectMapToSingular[connectionTable]
+
+  if (
+    restOfRecord[originalRecordTypeSingular] &&
+    restOfRecord[originalRecordTypeSingular].id === recordId
+  ) {
+    delete restOfRecord[originalRecordTypeSingular]
+  }
 
 
+  const [connectionType] = Object.keys( rest )
+
+  const table: any = objectMapPlural[connectionType]
+
+  const connectedRecordId = rest[connectionType].id
+
+  const connection: any = await xata.db[table].read( connectedRecordId )
+  return {
+    ...connection,
+    type: table,
+  }
+}
 export const executePlatformWideConnectionSearch = async ( { id, type }: any ) => {
   const tables: any = connectionMapByEntityType[type]
-  const originalRecordTypeSingular = objectMapToSingular[type]
 
   const { totalCount, records } = await xata.search.all( `${id}`, {
     tables: tables.map(
@@ -27,38 +73,114 @@ export const executePlatformWideConnectionSearch = async ( { id, type }: any ) =
   const connectionRecords: Set<any> = new Set()
 
   for ( const item of records ) {
-    const {
-      record: { xata: xataObject, ...restOfRecord },
-      table: connectionTable,
-    }: any = item
+    const { record, table } = item
+    if ( table === 'testimonies' ) {
+      console.log( 'record: ', record )
+      const connection: any = await xata.db.testimonies.read( record?.id, ['*', 'event.*', 'witness.*'] )
+      if ( !connectionRecords.has( connection ) ) {
+        connectionRecords.add( {
+          ...connection,
+          type: 'testimonies',
 
-    if (
-      restOfRecord[originalRecordTypeSingular] &&
-      restOfRecord[originalRecordTypeSingular].id === id
-    ) {
-      delete restOfRecord[originalRecordTypeSingular]
+          // connectionTable,
+        } )
+
+      }
+    } else {
+      const originalRecordTypeSingular = objectMapToSingular[type]
+      const {
+        record: { xata: xataObject, ...restOfRecord },
+        table: connectionTable,
+      }: any = item
+
+      if (
+        restOfRecord[originalRecordTypeSingular] &&
+        restOfRecord[originalRecordTypeSingular].id === id
+      ) {
+        delete restOfRecord[originalRecordTypeSingular]
+      }
+      const { id: recordId, ...rest } = restOfRecord
+
+      const [connectionType] = Object.keys( rest )
+
+      const table: any = objectMapPlural[connectionType]
+
+      const connectedRecordId = rest[connectionType].id
+
+      const connection: any = await xata.db[table].read( connectedRecordId )
+
+      if ( !connectionRecords.has( connection ) ) {
+        connectionRecords.add( {
+          ...connection,
+          type: table,
+          connectionTableId: recordId,
+          connectionTable,
+        } )
+      }
+
     }
-    const { id: recordId, ...rest } = restOfRecord
 
-    const [connectionType] = Object.keys( rest )
 
-    const table: any = objectMapPlural[connectionType]
+    //  await xata.db[table].read( record?.id )
+    // console.log( 'connection: ', connection )
 
-    const connectedRecordId = rest[connectionType].id
-
-    const connection: any = await xata.db[table].read( connectedRecordId )
-
-    if ( !connectionRecords.has( connection ) ) {
-      connectionRecords.add( {
-        ...connection,
-        type: table,
-        connectionTableId: recordId,
-        connectionTable,
-      } )
-    }
   }
   return connectionRecords
 }
+
+// export const executePlatformWideConnectionSearch = async ( { id, type }: any ) => {
+// const tables: any = connectionMapByEntityType[type]
+// const originalRecordTypeSingular = objectMapToSingular[type]
+//   console.log( 'tables: ', tables )
+
+//   const { totalCount, records } = await xata.search.all( `${id}`, {
+//     tables: tables.map(
+//       ( { table, target }: { table: string; target: string } ) => {
+//         return {
+//           table: `${table}`,
+//           target: [{ column: `${target}`, weight: 10 }],
+//         }
+//       }
+//     ),
+//     fuzziness: 0,
+//     prefix: 'phrase',
+//   } )
+
+//   const connectionRecords: Set<any> = new Set()
+
+//   for ( const item of records ) {
+// const {
+//   record: { xata: xataObject, ...restOfRecord },
+//   table: connectionTable,
+// }: any = item
+
+// if (
+//   restOfRecord[originalRecordTypeSingular] &&
+//   restOfRecord[originalRecordTypeSingular].id === id
+// ) {
+//   delete restOfRecord[originalRecordTypeSingular]
+// }
+// const { id: recordId, ...rest } = restOfRecord
+
+// const [connectionType] = Object.keys( rest )
+
+// const table: any = objectMapPlural[connectionType]
+
+// const connectedRecordId = rest[connectionType].id
+
+// const connection: any = await xata.db[table].read( connectedRecordId )
+
+//     if ( !connectionRecords.has( connection ) ) {
+//       connectionRecords.add( {
+//         ...connection,
+//         type: table,
+//         connectionTableId: recordId,
+//         connectionTable,
+//       } )
+//     }
+//   }
+//   return connectionRecords
+// }
 
 export const targetsPerTable: any = {
   events: [

@@ -1,8 +1,9 @@
 'use client'
 
 import { EarthOptimized } from '@/components/earth/Earth'
+import { log } from 'console'
 // import { Howl } from 'howler'
-import { AnimatePresence, inView, motion } from 'framer-motion'
+import { AnimatePresence, inView, motion, useInView } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 
@@ -39,25 +40,17 @@ const onRenderCallback = (
 export interface HomeProps { }
 
 export const Home: React.FC<HomeProps> = () => {
-  const earthRef: any = useRef( null )
-  const [earthInView, setEarthInView] = useState( false )
-  console.log( "🚀 ~ file: home.tsx:32 ~ earthRef:", earthRef )
 
-  const moonRef = useRef( null )
-
-
-  // useEffect( () => {
-  //   inView( '#earth-canvas', ( entry ) => {
-  //     console.log( "🚀 ~ file: home.tsx:40 ~ entry:", entry )
-  //     setEarthInView( true )
-  //   }, )
-
-  // }, [] )
-
+  const moonRef = useRef<HTMLDivElement>( null )
+  const [moonInView, setMoonInView] = useState( false )
 
   // console.log( "🚀 ~ file: home.tsx:42 ~ earthInView:", earthInView )
 
-  // const moonInView: any = useInView( moonRef )
+  useEffect( () => {
+    inView( '#moon-canvas', ( entry ) => {
+      setMoonInView( entry.isIntersecting )
+    } )
+  }, [] )
 
   // console.log( "🚀 ~ file: home.tsx:46 ~ moonInView:", moonInView )
 
@@ -92,26 +85,24 @@ export const Home: React.FC<HomeProps> = () => {
   return (
     <div className='h-[100vh] w-[100vw] relative'>
       <div className='absolute top-1 left-1 h-[60vh] w-[60vw] z-1'>
-        <Moon ref={moonRef} />
+        <Moon />
       </div>
       {/* <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1'>
         <Earth ref={earthRef} />
       </div> */}
-
+      {/* 
       <Profiler id="Earth" onRender={onRenderCallback}>
         <Earth />
-      </Profiler>
+      </Profiler> */}
 
       <CanvasCursor />
       <div className='astronaut h-full w-full relative flex flex-col justify-center align-middle relative overflow-hidden items-center z-40'>
 
         <AnimatePresence>
-          {earthInView &&
-            <motion.div className='w-full' transition={{ delay: 2 }}>
-              <SiteTitle />
-              <LovecraftQuote />
-            </motion.div>}
-
+          {moonInView && <motion.div className='w-full' transition={{ delay: 2 }}>
+            <SiteTitle />
+            <LovecraftQuote />
+          </motion.div>}
         </AnimatePresence>
       </div>
       <ShootingStars />

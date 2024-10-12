@@ -17,13 +17,13 @@ export async function GET( request: NextRequest ) {
 
   const type: any = searchParams.get( 'type' )
   console.log( 'type: ', type )
-  const source = await xata.db[`${type}`].read( id )
+  const source: any = await xata.db[`${type}`].read( id )
   console.log( 'source: ', source )
 
   const connectionRecords = await executePlatformWideConnectionSearch( { id, type } )
-  console.log( 'connectionRecords: ', connectionRecords )
-  const relatedItems = Array.from( connectionRecords )
 
+  const relatedItems = Array.from( connectionRecords )
+  console.log( 'relatedItems: ', relatedItems )
   // const disclosureAssistantsAttemptAtRelatedRecords = await askDisclosureAgentToFindRelatedRecords( {
   //   subject: source,
   //   type,

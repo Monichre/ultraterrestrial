@@ -32,7 +32,7 @@ export const TestimonyCard = ( { card }: TestimonyCardProps ) => {
   return (
     <BlurAppear>
       <div
-        className='animate-running speed-normal nodrag overflow-hidden rounded-3xl bg-white dark:bg-black'
+        className='animate-running speed-normal overflow-hidden rounded-3xl bg-white dark:bg-black'
         style={{ opacity: 1, willChange: 'auto' }}
       >
         <main

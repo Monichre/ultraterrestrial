@@ -43,7 +43,7 @@ export interface MoonProps { }
 // Start of Selection
 export const Moon = memo( ( { ref, ...rest }: any ) => {
   return (
-    <div className='h-full w-full' ref={ref}>
+    <div className='h-full w-full' ref={ref} id='moon-canvas'>
       <Canvas gl={{ antialias: false }} >
         {/* <color attach='background' args={['#101015']} /> */}
         {/* <PerspectiveCamera makeDefault position={[0, -0.5, 5]} fov={50} /> */}

@@ -153,9 +153,9 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
 
         </CoreNodeContent>
         <CoreNodeBottom>
-          {( node?.data?.entities?.length > 0 && props.data.type && props.data.input ? ( <AskAI question={askQuestion( { entities: node?.data?.entities, input: props.data.input, type: props.data.type } )} table={props?.data?.type} >
+          {/* {( node?.data?.entities?.length > 0 && props.data.type && props.data.input ? ( <AskAI question={askQuestion( { entities: node?.data?.entities, input: props.data.input, type: props.data.type } )} table={props?.data?.type} >
             <WaypointsIcon stroke={DOMAIN_MODEL_COLORS.personnel} className='w-4 h-4 stroke-1' />
-          </AskAI> ) : null )}
+          </AskAI> ) : null )} */}
           <div className='flex justify-end gap-2 width-[50%]'>
             <div className='w-auto flex'>
               <Button variant='ghost' onClick={findConnections} className='p-0'>

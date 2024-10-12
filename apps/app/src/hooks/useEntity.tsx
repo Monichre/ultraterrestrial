@@ -8,6 +8,7 @@ import { saveEventForUser } from '@/features/user/api/save-event'
 import { useMindMap } from '@/providers'
 import { objectMapToSingular } from '@/utils'
 import { useAuth } from '@clerk/nextjs'
+import { S } from '@liveblocks/react/dist/suspense-fYGGJ3D9'
 import { useCallback, useState } from 'react'
 
 export const useEntity = ( { card }: any ) => {
@@ -73,7 +74,7 @@ export const useEntity = ( { card }: any ) => {
       id,
       type,
     } )
-
+    console.log( 'payload: ', payload )
     setRelatedDataPoints( payload.data )
   }, [id, type] )
 
@@ -120,9 +121,9 @@ export const useEntity = ( { card }: any ) => {
       id: siblingSourceNode.id,
       type: siblingSourceNode.data.type,
     } )
-
+    console.log( 'payload: ', payload )
     const searchResults = payload.data
-
+    console.log( 'searchResults: ', searchResults )
     addConnectionNodesFromSearch( {
       source: siblingSourceNode,
       searchResults,

@@ -34,7 +34,7 @@ export const MiniCard = ( { card }: any ) => {
         >
           <motion.div className='absolute top-0 left-0 w-full h-full z-0 after:absolute after:top-0 after:left-0 after:w-full after:z-1 after:h-full after:bg-black after:opacity-80'>
             {photo && photo.url || photos?.length ? <motion.img
-              src={photo.url || photo.src}
+              src={photo?.url || photo?.src}
               alt='What I Talk About When I Talk About Running - book cover'
               className='h-full w-full'
             /> : null}

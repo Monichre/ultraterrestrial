@@ -166,7 +166,7 @@ export const CoreNodeContent: React.FC<CoreNodeContentProps> = ( { className = '
 export const CoreNodeContainer = ( { children, id, className }: any ) => {
   return (
     <div
-      className={cn( 'overflow-hidden nodrag rounded-3xl bg-white dark:bg-black', className )}
+      className={cn( 'overflow-hidden  rounded-3xl bg-white dark:bg-black', className )}
       id={id}>
       <main
         className={`border-1 p-1.5 rounded-3xl duration-200 border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 group hover:border-indigo-200 dark:hover:border-indigo-800`}>
