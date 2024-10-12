@@ -4,7 +4,7 @@
   overflow: hidden;
 }
 
-main {
+main.graph-paper {
   display: flex;
   justify-content: center;
   height: 100%;

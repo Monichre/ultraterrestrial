@@ -241,7 +241,7 @@ body {
   min-block-size: 400vh;
   @apply bg-background text-foreground;
   /* font-family: 'JetBrains Mono', monospace; */
-  font-family: var(--font-source);
+  font-family: var(--font-source-sans);
   /* var(--font-fira-code); */
 
   position: relative;
@@ -306,7 +306,7 @@ h3 {
 
 p {
   /* font-family: 'JetBrains Mono', monospace; */
-  font-family: var(--font-source) !important;
+  font-family: var(--font-source-sans) !important;
   /* 'Sentient', serif; */
 
   /* font-family: 'JetBrains Mono', monospace; */
@@ -403,8 +403,8 @@ h3,
   /* font-family: var(--font-ailerons); */
   font-family: var(--font-bebas-neue);
 }
-/* var(--font-source) */
-/* var(--font-source) */
+/* var(--font-source-sans) */
+/* var(--font-source-sans) */
 /* var(--font-commit-mono) */
 .header-style {
   letter-spacing: 1px;
@@ -628,8 +628,8 @@ a {
 
 td,
 td p {
-  font-family: var(--font-source);
-  /* var(--font-source); */
+  font-family: var(--font-source-sans);
+  /* var(--font-source-sans); */
 
   font-weight: 400;
   letter-spacing: 1px;
@@ -660,7 +660,7 @@ td p {
 
 .key-figures.fullsite-nav p {
   color: #fff !important;
-  font-family: var(--font-source);
+  font-family: var(--font-source-sans);
 }
 
 .fullsite-nav p {
@@ -684,7 +684,7 @@ td p {
 .ai-response-markup h4 {
   font-family: 'Bebas Neue', sans-serif;
   /* font-family: var(--font-bebas-neue); */
-  /* var(--font-source) */
+  /* var(--font-source-sans) */
   /* font-size: 24px;
     line-height: 32px;
     font-weight: 400;
@@ -696,7 +696,7 @@ td p {
 .ai-response-markup p,
 .ai-response-markup ul li {
   /* font-family: 'Nunito', sans-serif; */
-  font-family: var(--font-source);
+  font-family: var(--font-source-sans);
 }
 
 .react-flow__edges svg {
@@ -969,7 +969,7 @@ note .ai-response-markup h3,
 }
 
 .ai-response-markup p {
-  font-family: var(--font-source);
+  font-family: var(--font-source-sans);
   font-weight: 400;
   letter-spacing: 1px;
 }

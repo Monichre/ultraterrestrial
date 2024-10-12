@@ -2,11 +2,11 @@
 
 import { useMindMap } from '@/providers'
 import { useCallback, useEffect, useRef, useState } from 'react'
-
+import type { Node, NodeProps } from '@xyflow/react'
 
 // **Types for Hook Inputs and Outputs**
 interface UseGroupNodeProps {
-  node: Node & {
+  node: NodeProps & {
     width: number
     height: number
     id: string
@@ -38,7 +38,7 @@ interface UseGroupNodeReturn {
 
     id: string
     data: {
-      children?: Node[]
+      children?: any[]
       handles?: any[]
       input?: string
       source?: Record<string, any>

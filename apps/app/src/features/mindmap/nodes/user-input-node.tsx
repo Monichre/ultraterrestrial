@@ -11,7 +11,7 @@ import { useMindMap } from '@/providers'
 import { useUser } from '@clerk/nextjs'
 import { Handle, Position } from '@xyflow/react'
 import { SparklesIcon, WaypointsIcon } from 'lucide-react'
-import { memo, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 
 import { DOMAIN_MODEL_COLORS } from '@/utils'
 import Image from "next/image"
@@ -24,18 +24,20 @@ import {
   useSpring,
 } from "framer-motion"
 import { AskAI } from '@/features/mindmap/components/ask-ai'
+import { MemoizedMarkdown } from '@/features/ai'
 import { LetterFx } from '@/components/animated/text-effect/letter-glitch'
 import { useEntity } from '@/hooks'
 import { useGroupNode } from '@/features/mindmap/hooks/useGroupNode'
+import type { Node, NodeProps } from '@xyflow/react'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { ConnectionsIcon, GroupIcon } from '@/components/icons'
 import { AddNote } from '@/components/note/AddNote'
 
 export const ResultAvatars = ( {
-  results,
+  entities,
 }: {
-  results: {
+  entities: {
     id: number
     name: string
 
@@ -62,7 +64,7 @@ export const ResultAvatars = ( {
 
   return (
     <>
-      {results.map( ( item, idx ) => (
+      {entities.map( ( item, idx ) => (
         <div
           className="-mr-8 relative group w-min"
           key={item.id}
@@ -117,40 +119,14 @@ export const ResultAvatars = ( {
 
 
 
-interface UserInputNodeProps { }
 
-interface UserInputNodeProps {
-  id: string
-  data: {
-    type: string
-    handles?: any[]
-    input: string
-  }
-}
+export const UserInputNode = memo( ( props: NodeProps ) => {
 
-export const UserInputNode = memo( ( node: any ) => {
-  const { useUpdateNodeInternals, useNodesData } = useMindMap()
-  const updateNodeInternals = useUpdateNodeInternals()
-  const [handles, setHandles]: any = useState( [] )
-  const nodeData = useNodesData( node.id )
-  const {
-    handles: groupHandles,
-    childNodeIds,
-    hideChildren,
-    showChildren,
-    positionChildNodes,
-    getClonePosition,
-    node: groupNode
-  } = useGroupNode( { node } )
-
-  useEffect( () => {
-    if ( groupHandles && groupHandles.length > 0 ) {
-      setHandles( groupHandles )
-      updateNodeInternals( node.id )
-    }
+  const [prompt, setPrompt] = useState( null )
+  // @ts-ignore
+  const { handles, node }: any = useGroupNode( { node: { ...props } } )
 
 
-  }, [groupHandles, childNodeIds, node.id, updateNodeInternals] )
 
   const { saveNote, updateNote, userNote, findConnections } = useEntity( { card: node } )
 
@@ -159,34 +135,27 @@ export const UserInputNode = memo( ( node: any ) => {
   //   url: user?.hasImage ? user?.imageUrl : '/astro-3.png',
   // }
 
-  const createPrompt = ( input: string, type: string ) => {
-    return `Given the following ${type}s, ${input} what are some connections between them?`
+  const askQuestion = ( { entities, input, type }: any ) => {
+    const names = entities.map( ( result: any ) => result.name ).join( ', ' )
+    return `Given the following ${type}s: ${names}, what are some related data points and related avenues worth exploring in regard to their story in its own right and their role in the state of disclosure as we know it??`
   }
 
-  useEffect( () => {
-    updateNodeInternals( node.id )
-    if ( nodeData?.handles?.length ) {
-      setHandles( nodeData.handles )
-
-    }
-  }, [nodeData, updateNodeInternals] )
 
   return (
     <>
-      <CoreNodeContainer id={nodeData.id} className='motion-scale-in-0 motion-opacity-in-0'>
-        <CoreNodeContent>
-          <p className='text-sm text-white font-nunito'>
-            <LetterFx>
-
-              {node?.data?.input}
+      <CoreNodeContainer id={props.id} className='motion-scale-in-0 motion-opacity-in-0'>
+        <CoreNodeContent className='min-h-[100xp] w-full'>
+          <p className='text-sm text-white font-source-sans'>
+            <LetterFx className='w-full' speed='slow'>
+              {props.data.input || ''}
             </LetterFx>
           </p>
 
         </CoreNodeContent>
         <CoreNodeBottom>
-          <AskAI records={node?.data?.results} prompt={createPrompt( node?.data?.input, node?.data?.type )} table={node?.data?.type} >
-            <WaypointsIcon stroke={DOMAIN_MODEL_COLORS.personnel} className='w-9 h-9 stroke-1' />
-          </AskAI>
+          {( node?.data?.entities?.length > 0 && props.data.type && props.data.input ? ( <AskAI question={askQuestion( { entities: node?.data?.entities, input: props.data.input, type: props.data.type } )} table={props?.data?.type} >
+            <WaypointsIcon stroke={DOMAIN_MODEL_COLORS.personnel} className='w-4 h-4 stroke-1' />
+          </AskAI> ) : null )}
           <div className='flex justify-end gap-2 width-[50%]'>
             <div className='w-auto flex'>
               <Button variant='ghost' onClick={findConnections} className='p-0'>

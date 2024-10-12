@@ -19,7 +19,7 @@ export const useEntity = ( { card }: any ) => {
     screenToFlowPosition,
     updateNode,
   } = useMindMap()
-  const {
+  let {
     description,
     latitude,
     location,
@@ -43,9 +43,7 @@ export const useEntity = ( { card }: any ) => {
       : { url: '/foofighters.webp', signedUrl: '/foofighters.webp' }
 
   image.src = image.url
-  if ( !card.photos || !card.photos.length ) {
-    card.photos = [image]
-  }
+
 
   const [showMenu, setShowMMenu] = useState( false )
   const handleHoverLeave = () => {

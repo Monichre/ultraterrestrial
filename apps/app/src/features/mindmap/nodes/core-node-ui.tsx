@@ -156,7 +156,7 @@ export const CoreNodeContent: React.FC<CoreNodeContentProps> = ( { className = '
   return (
     <section
       className={cn(
-        'overflow-visible relative rounded-2xl duration-200 border-1 bg-neutral-50 px-2 py-3 shadow-lg shadow-neutral-200/50 dark:bg-neutral-950 dark:shadow-neutral-800/50 border-neutral-200 dark:border-neutral-800',
+        'overflow-hidden relative rounded-2xl duration-200 border-1 bg-neutral-50 px-2 py-3 shadow-lg shadow-neutral-200/50 dark:bg-neutral-950 dark:shadow-neutral-800/50 border-neutral-200 dark:border-neutral-800',
         className
       )}>
       {children}

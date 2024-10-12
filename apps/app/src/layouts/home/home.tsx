@@ -1,9 +1,11 @@
 'use client'
 
+import { EarthOptimized } from '@/components/earth/Earth'
 // import { Howl } from 'howler'
 import { AnimatePresence, inView, motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
 
 const CanvasCursor = dynamic( () => import( '@/components/ui/canvas-cursor' ).then( mod => mod.CanvasCursor ) )
 const LovecraftQuote = dynamic( () => import( './LovecraftQuote' ).then( mod => mod.LovecraftQuote ) )
@@ -14,16 +16,26 @@ const StarsBackground = dynamic( () => import( '@/components/backgrounds/shootin
 const Earth = dynamic( () => import( '@/components/earth' ).then( mod => mod.Earth ) )
 const Moon = dynamic( () => import( '@/components/moon' ).then( mod => mod.Moon ) )
 
-// // import { Earth } from '@/components/earth'
-// const Earth = dynamic(
-//   () => import('@/components/earth').then((mod) => mod.Earth),
-//   {
-//     ssr: false,
-//     loading: () => (
-//       <img alt='earth2' src='/assets/earth2/placeholder.png'></img>
-//     ),
-//   }
-// )
+import { Profiler } from 'react'
+
+const onRenderCallback = (
+  id, // the "id" prop of the Profiler tree that has just committed
+  phase, // either "mount" or "update"
+  actualDuration, // time spent rendering the committed update
+  baseDuration, // estimated time to render the entire subtree without memoization
+  startTime, // when React began rendering this update
+  commitTime, // when React committed this update
+  interactions // the Set of interactions belonging to this update
+) => {
+  console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ actualDuration:", actualDuration )
+  console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ baseDuration:", baseDuration )
+  console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ startTime:", startTime )
+  console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ commitTime:", commitTime )
+  console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ interactions:", interactions )
+
+}
+
+
 export interface HomeProps { }
 
 export const Home: React.FC<HomeProps> = () => {
@@ -34,13 +46,14 @@ export const Home: React.FC<HomeProps> = () => {
   const moonRef = useRef( null )
 
 
+  // useEffect( () => {
+  //   inView( '#earth-canvas', ( entry ) => {
+  //     console.log( "🚀 ~ file: home.tsx:40 ~ entry:", entry )
+  //     setEarthInView( true )
+  //   }, )
 
+  // }, [] )
 
-
-  inView( '#earth-canvas', ( entry ) => {
-    console.log( "🚀 ~ file: home.tsx:40 ~ entry:", entry )
-    setEarthInView( true )
-  } )
 
   // console.log( "🚀 ~ file: home.tsx:42 ~ earthInView:", earthInView )
 
@@ -81,16 +94,20 @@ export const Home: React.FC<HomeProps> = () => {
       <div className='absolute top-1 left-1 h-[60vh] w-[60vw] z-1'>
         <Moon ref={moonRef} />
       </div>
-      <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1'>
+      {/* <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1'>
         <Earth ref={earthRef} />
-      </div>
+      </div> */}
+
+      <Profiler id="Earth" onRender={onRenderCallback}>
+        <Earth />
+      </Profiler>
 
       <CanvasCursor />
       <div className='astronaut h-full w-full relative flex flex-col justify-center align-middle relative overflow-hidden items-center z-40'>
 
         <AnimatePresence>
           {earthInView &&
-            <motion.div className='w-full' transition={{ delay: 3 }}>
+            <motion.div className='w-full' transition={{ delay: 2 }}>
               <SiteTitle />
               <LovecraftQuote />
             </motion.div>}

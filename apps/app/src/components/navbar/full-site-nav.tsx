@@ -192,7 +192,7 @@ export function DropdownMenuDemo( { isAdmin }: any ) {
       <SideMenuBtn open={open} />
 
       <DropdownMenuContent
-        className='w-56 bg-white dark:bg-black text-black dark:text-white'
+        className='bg-white dark:bg-black text-black dark:text-white'
         align='end'
         alignOffset={0}
       >
@@ -253,7 +253,7 @@ export function FullSiteNav( { className }: { className?: string } ) {
       }}
       initial={{ opacity: 0, y: 10 }}
       className={cn(
-        'fixed top-0 inset-x-0 z-50 w-full flex justify-center content-center items-center align-center fullsite-nav',
+        'fixed top-0 inset-x-0 z-50 w-full flex justify-center content-center items-center align-center fullsite-nav py-12',
         className
       )}
     >

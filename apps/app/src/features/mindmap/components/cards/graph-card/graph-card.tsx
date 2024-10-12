@@ -29,7 +29,7 @@ export function GraphCard( { card }: any ) {
   } = useEntity( { card } )
   const { type, color, photos, name, date: unformattedDate, role } = entity
   const date = unformattedDate ? format( unformattedDate, 'MMMM d, yyyy' ) : ''
-  const [image] = photos
+  const [image] = photos ? photos : [null]
 
   // const [animatedTitle, setAnimatedTitle] = useState<string>('')
   // const [animatedDate, setAnimatedDate] = useState<string>('')
@@ -78,28 +78,6 @@ export function GraphCard( { card }: any ) {
     setActiveIndex( index )
   }
 
-  const items = [
-    {
-      title: 'Details',
-      render: () => (
-        <div className='mt-4 text-sm text-white font-source'>
-          <p>{truncate( card?.description, 400 )}</p>
-        </div>
-      ),
-    },
-
-    {
-      button: 'Connections',
-      render: () => (
-        <ConnectionList originalNode={card} connections={relatedDataPoints} />
-      ),
-
-      onClick: () => {
-        saveNote()
-        setShowMMenu( false )
-      },
-    },
-  ]
 
   return (
     <>

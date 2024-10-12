@@ -68,7 +68,7 @@ export const MindMapCommandCenter = () => {
         data: {
           label: 'Your Query',
           input: `Beginning our exploration by loading 3 ${type}. Fetching Data...`,
-          results: entities,
+          entities,
           type: type,
         },
       }

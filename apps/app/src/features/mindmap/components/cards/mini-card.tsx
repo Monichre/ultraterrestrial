@@ -14,8 +14,8 @@ export const MiniCard = ( { card }: any ) => {
     saveNote,
     updateNote,
   } = useEntity( { card } )
-  const { location, date, photos, id, color, name, type } = entity
-  const [image] = photos || [null]
+  const { location, date, photos, photo, id, color, name, type } = entity
+
   return (
     <div
       className={`relative rounded-[calc(var(--radius)-2px)] p-[1px] bg-black !w-[350px] h-[220px] entity-group-node-child-card`}
@@ -33,11 +33,11 @@ export const MiniCard = ( { card }: any ) => {
           style={{ borderLeft: `1px solid ${color}` }}
         >
           <motion.div className='absolute top-0 left-0 w-full h-full z-0 after:absolute after:top-0 after:left-0 after:w-full after:z-1 after:h-full after:bg-black after:opacity-80'>
-            <motion.img
-              src={image.url || image.src}
+            {photo && photo.url || photos?.length ? <motion.img
+              src={photo.url || photo.src}
               alt='What I Talk About When I Talk About Running - book cover'
               className='h-full w-full'
-            />
+            /> : null}
           </motion.div>
           <motion.div className='absolute top-0 left-0 w-full h-full z-1 flex flex-col justify-start p-4'>
             <h2

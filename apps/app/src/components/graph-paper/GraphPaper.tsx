@@ -4,9 +4,9 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import './graph-paper.css' // Include your CSS styles
 import { GraphPaperAnimation } from './main'
 export const GraphPaper = () => {
-  useEffect(() => {
+  useEffect( () => {
     const animation = new GraphPaperAnimation()
-  }, [])
+  }, [] )
 
   return (
     <>
@@ -63,7 +63,7 @@ export const GraphPaper = () => {
           </g>
         </symbol>
       </svg>
-      <main>
+      <main className='graph-paper'>
         <canvas id='plane-canvas'></canvas>
         <canvas id='main-canvas'></canvas>
         <div className='mouse'>Hold mouse1 button</div>

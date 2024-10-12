@@ -5,9 +5,27 @@ import { memo, useEffect, useState } from 'react'
 
 import { KeyFiguresIcon } from '@/components/icons'
 import { CoreNodeBottom, CoreNodeContainer, CoreNodeContent } from '@/features/mindmap/nodes/core-node-ui'
-import { AiButton } from '@/features/mindmap/nodes/user-input-node'
+
 import { useMindMap } from '@/providers'
 import { Handle, Position } from '@xyflow/react'
+import { SparklesIcon } from 'lucide-react'
+
+
+export const AiButton: React.FC = () => {
+  return (
+    <button
+      className="group flex items-center gap-1 rounded-md px-2 py-1 transition-colors hover:bg-neutral-400/15 active:bg-neutral-400/25"
+      type="button"
+    >
+      <SparklesIcon aria-hidden="true" className="w-4 h-4 text-neutral-400" />
+      <span className="w-0 overflow-hidden transition-all duration-500 group-hover:w-20">
+        <span className="whitespace-nowrap text-neutral-400 text-sm opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+          Ask AI
+        </span>
+      </span>
+    </button>
+  )
+}
 
 const PersonnelGroupNode = memo( ( node: any ) => {
   const { useUpdateNodeInternals, useNodesData, updateNode } = useMindMap()

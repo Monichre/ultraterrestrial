@@ -6,7 +6,7 @@ import {
 } from 'next/font/google'
 import localFont from 'next/font/local'
 
-export const centimaSans = localFont({
+export const centimaSans = localFont( {
   src: [
     {
       path: 'fonts/centima/CentimaProSans-Bold.woff',
@@ -73,9 +73,9 @@ export const centimaSans = localFont({
   ],
   display: 'swap',
   variable: '--font-centima-sans',
-})
+} )
 
-export const eirene = localFont({
+export const eirene = localFont( {
   src: [
     {
       path: 'fonts/eirene/EireneSans-Bold.otf',
@@ -90,9 +90,9 @@ export const eirene = localFont({
   ],
   display: 'swap',
   variable: '--font-eirene',
-})
+} )
 
-export const stellar = localFont({
+export const stellar = localFont( {
   src: [
     {
       path: 'fonts/stellar/PPStellar-Bold.woff',
@@ -107,9 +107,9 @@ export const stellar = localFont({
   ],
   display: 'swap',
   variable: '--font-stellar',
-})
+} )
 
-export const ailerons = localFont({
+export const ailerons = localFont( {
   src: [
     {
       path: 'fonts/ailerons.woff2',
@@ -119,9 +119,9 @@ export const ailerons = localFont({
   display: 'swap',
   weight: '700',
   variable: '--font-ailerons',
-})
+} )
 
-export const futura = localFont({
+export const futura = localFont( {
   src: [
     {
       path: 'fonts/futura/futura.ttf',
@@ -141,9 +141,9 @@ export const futura = localFont({
     },
   ],
   variable: '--font-futura',
-})
+} )
 
-export const commitMono = localFont({
+export const commitMono = localFont( {
   src: [
     {
       path: 'fonts/CommitMono/CommitMono-400-Regular.otf',
@@ -168,28 +168,28 @@ export const commitMono = localFont({
     },
   ],
   variable: '--font-futura',
-})
+} )
 
-export const oswald = Oswald({
+export const oswald = Oswald( {
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   subsets: ['latin'],
   variable: '--font-oswald',
-})
+} )
 
-export const sourceSans = Source_Sans_3({
+export const sourceSans = Source_Sans_3( {
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   subsets: ['latin'],
-  variable: '--font-source-sans',
-})
+  variable: '---font-source-sans',
+} )
 
-export const firaCode = Fira_Code({
+export const firaCode = Fira_Code( {
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   subsets: ['latin'],
   variable: '--font-fira-code',
-})
+} )
 
 // export const jetBrains = JetBrains_Mono({
 //   weight: ['300', '400', '500', '600', '700', '800'],
@@ -198,14 +198,14 @@ export const firaCode = Fira_Code({
 //   variable: '--font-sentient',
 // })
 
-export const jetBrains = localFont({
+export const jetBrains = localFont( {
   src: 'fonts/jetbrains/JetBrainsMono-VariableFont_wght.ttf',
   // weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
   variable: '--font-jetbrains',
-})
+} )
 
-export const nunito = localFont({
+export const nunito = localFont( {
   src: [
     {
       path: 'fonts/Nunito/Fonts/WEB/fonts/Nunito-Regular.ttf',
@@ -215,9 +215,9 @@ export const nunito = localFont({
   ],
   display: 'swap',
   variable: '--font-nunito',
-})
+} )
 
-export const sentient = localFont({
+export const sentient = localFont( {
   src: [
     {
       path: 'fonts/Sentient/Fonts/WEB/fonts/Sentient-Regular.ttf',
@@ -227,9 +227,9 @@ export const sentient = localFont({
   ],
   display: 'swap',
   variable: '--font-sentient',
-})
+} )
 
-export const bebasNeue = localFont({
+export const bebasNeue = localFont( {
   src: [
     {
       path: 'fonts/BebasNeue/BebasNeue-Regular.woff2',
@@ -239,9 +239,9 @@ export const bebasNeue = localFont({
   ],
   display: 'swap',
   variable: '--font-bebasNeue',
-})
+} )
 
-export const bebasNeuePro = localFont({
+export const bebasNeuePro = localFont( {
   src: [
     {
       path: 'fonts/BebasNeue/BebasNeuePro-Bold.ttf',
@@ -338,4 +338,4 @@ export const bebasNeuePro = localFont({
   ],
   display: 'swap',
   variable: '--font-bebasNeuePro',
-})
+} )

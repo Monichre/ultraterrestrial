@@ -1,5 +1,9 @@
 {
   "recommendations": [
-    "chakrounanas.turbo-console-log"
-  ]
+    "chakrounanas.turbo-console-log",
+    "esbenp.prettier-vscode",
+
+  
+  ],
+  
 }
