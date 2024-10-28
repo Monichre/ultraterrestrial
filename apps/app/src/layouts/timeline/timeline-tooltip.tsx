@@ -1,11 +1,11 @@
 'use client'
-export const TimelineToolTip: React.FC<any> = ({
+export const TimelineToolTip: React.FC<any> = ( {
   event,
   coordinates,
   onHover,
-}: any) => {
+}: any ) => {
   const handleHover = () => {
-    onHover(coordinates)
+    onHover( coordinates )
   }
 
   return (

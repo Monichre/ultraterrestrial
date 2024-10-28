@@ -6,6 +6,16 @@ import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
 import { ArrowLeftIcon, Lightbulb } from 'lucide-react'
 import { useId, useRef, useState } from 'react'
 
+// const NoteButton = ({ref, ...rest}) => {
+//   return (
+//     <Button variant='ghost' className='h-4 w-4 ' layoutId={`popover-label-note`} className='text-sm' ref={ref}>
+//       <Lightbulb className='text-white stroke-1' size='8' />
+//     </Button>
+//   )
+// }
+// @ts-ignore
+const MotionButton: any = motion<any>( Button )
+
 const TRANSITION = {
   type: 'spring',
   bounce: 0.05,
@@ -49,11 +59,11 @@ export const AddNote = ( { saveNote, userNote, children }: any ) => {
           {children ? (
             children
           ) : (
-            <motion.span layoutId={`popover-label-note`} className='text-sm'>
-              <Button variant='ghost'>
-                <Lightbulb className='h-5 w-5 text-white stroke-1' />
-              </Button>
-            </motion.span>
+
+            <MotionButton variant='ghost' layoutId={`popover-label-note`} >
+              <Lightbulb className='text-white stroke-1' size='18' />
+            </MotionButton>
+
           )}
         </motion.div>
 

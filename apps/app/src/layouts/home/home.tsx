@@ -1,11 +1,12 @@
 'use client'
 
 import { EarthOptimized } from '@/components/earth/Earth'
+import { wait } from '@/utils'
 import { log } from 'console'
 // import { Howl } from 'howler'
 import { AnimatePresence, inView, motion, useInView } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 
 
 const CanvasCursor = dynamic( () => import( '@/components/ui/canvas-cursor' ).then( mod => mod.CanvasCursor ) )
@@ -14,19 +15,19 @@ const SiteTitle = dynamic( () => import( './SiteTitle' ).then( mod => mod.SiteTi
 // const BlurAppear = dynamic(() => import('@/components/animated').then(mod => mod.BlurAppear))
 const ShootingStars = dynamic( () => import( '@/components/backgrounds/shooting-stars' ).then( mod => mod.ShootingStars ) )
 const StarsBackground = dynamic( () => import( '@/components/backgrounds/shooting-stars' ).then( mod => mod.StarsBackground ) )
-const Earth = dynamic( () => import( '@/components/earth' ).then( mod => mod.Earth ) )
+// const Earth = dynamic( () => import( '@/components/earth' ).then( mod => mod.Earth ) )
 const Moon = dynamic( () => import( '@/components/moon' ).then( mod => mod.Moon ) )
 
 import { Profiler } from 'react'
 
 const onRenderCallback = (
-  id, // the "id" prop of the Profiler tree that has just committed
-  phase, // either "mount" or "update"
-  actualDuration, // time spent rendering the committed update
-  baseDuration, // estimated time to render the entire subtree without memoization
-  startTime, // when React began rendering this update
-  commitTime, // when React committed this update
-  interactions // the Set of interactions belonging to this update
+  id: any, // the "id" prop of the Profiler tree that has just committed
+  phase: any, // either "mount" or "update"
+  actualDuration: any, // time spent rendering the committed update
+  baseDuration: any, // estimated time to render the entire subtree without memoization
+  startTime: any, // when React began rendering this update
+  commitTime: any, // when React committed this update
+  interactions: any // the Set of interactions belonging to this update
 ) => {
   console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ actualDuration:", actualDuration )
   console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ baseDuration:", baseDuration )
@@ -41,16 +42,22 @@ export interface HomeProps { }
 
 export const Home: React.FC<HomeProps> = () => {
 
-  const moonRef = useRef<HTMLDivElement>( null )
+
   const [moonInView, setMoonInView] = useState( false )
 
   // console.log( "🚀 ~ file: home.tsx:42 ~ earthInView:", earthInView )
 
   useEffect( () => {
-    inView( '#moon-canvas', ( entry ) => {
-      setMoonInView( entry.isIntersecting )
-    } )
-  }, [] )
+    // inView( '#moon-canvas', ( entry ) => {
+    //   setMoonInView( entry.isIntersecting )
+    // } )
+    if ( !moonInView ) {
+      wait( 500 ).then( () => {
+        setMoonInView( true )
+      } )
+    }
+
+  }, [moonInView] )
 
   // console.log( "🚀 ~ file: home.tsx:46 ~ moonInView:", moonInView )
 
@@ -84,8 +91,10 @@ export const Home: React.FC<HomeProps> = () => {
 
   return (
     <div className='h-[100vh] w-[100vw] relative'>
-      <div className='absolute top-1 left-1 h-[60vh] w-[60vw] z-1'>
-        <Moon />
+      <div className='absolute top-1 left-1 h-[80vh] w-[80vw] z-1'>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Moon />
+        </Suspense>
       </div>
       {/* <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1'>
         <Earth ref={earthRef} />
@@ -97,13 +106,14 @@ export const Home: React.FC<HomeProps> = () => {
 
       <CanvasCursor />
       <div className='astronaut h-full w-full relative flex flex-col justify-center align-middle relative overflow-hidden items-center z-40'>
-
-        <AnimatePresence>
-          {moonInView && <motion.div className='w-full' transition={{ delay: 2 }}>
-            <SiteTitle />
-            <LovecraftQuote />
-          </motion.div>}
-        </AnimatePresence>
+        {/* @ts-ignore */}
+        {/* <AnimatePresence>
+          {moonInView && ( )}
+        </AnimatePresence> */}
+        <motion.div className='w-full'>
+          <SiteTitle />
+          <LovecraftQuote />
+        </motion.div> 
       </div>
       <ShootingStars />
       <StarsBackground />

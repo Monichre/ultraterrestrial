@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_3c352c54beeb37",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE documents (id varchar(255) PRIMARY KEY, file text[], content text, embedding double precision[], title varchar(255))"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_3c352c54beeb37",
+  "parent": "sql_7aa7955f2ceeac",
+  "schema": "public",
+  "startedAt": "2024-08-16T03:13:19.97084Z"
+}

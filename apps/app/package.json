@@ -200,7 +200,7 @@
     "langchain": "^0.3.2",
     "langsmith": "^0.1.62",
     "llamaindex": "^0.6.17",
-    "lucide-react": "^0.363.0",
+    "lucide-react": "^0.453.0",
     "maath": "^0.10.8",
     "map-gl-utils": "^0.44.3",
     "mapbox-gl": "^3.7.0",

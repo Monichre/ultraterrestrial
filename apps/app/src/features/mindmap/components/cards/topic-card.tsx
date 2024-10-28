@@ -206,6 +206,7 @@ export function TopicCard( { card }: any ) {
       </div>
     )
   }
+  console.log( { card } )
   return (
     <>
       <AnimatePresence>
@@ -275,7 +276,7 @@ export function TopicCard( { card }: any ) {
         <motion.img
           layoutId={`image-${card.title}`}
           alt='card'
-          src={card.photos[0].url}
+          src={card?.photos[0]?.url || card?.photos[0]?.src}
           className='-mt-10 h-full w-full bg-[#0a0a0b]'
         />
         <div className='flex w-full items-end justify-between'>

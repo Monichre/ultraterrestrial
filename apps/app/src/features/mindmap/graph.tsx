@@ -180,7 +180,7 @@ export function Graph( props: any ) {
         // connectionLineComponent={FloatingConnectionLine}
         elevateNodesOnSelect={true}
         fitView
-        // onInit={updateMindMapInstance}
+        onInit={updateMindMapInstance}
         style={{ backgroundColor: 'transparent' }}>
         <Panel position='top-left'>
           <div className='ml-2 mt-2'>

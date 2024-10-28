@@ -232,7 +232,7 @@ export const LovecraftQuote = () => {
         per='char'
         preset='fade'
         as='h2'
-        className='font-bebasNeuePro text-white text-bold text-center text-xl relative site-tagline mb-8 '
+        className='font-bebasNeuePro text-white text-center text-xl relative site-tagline mb-8 '
       >
         Tracking the State of Disclosure
       </TextEffect>
@@ -258,7 +258,7 @@ export const LovecraftQuote = () => {
         per='char'
         delay={4}
         as='h3'
-        className='font-bebasNeuePro text-white text-bold text-center text-xl relative site-tagline'
+        className='font-bebasNeuePro text-white text-center text-xl relative site-tagline'
         preset='blur'
       >
         H.P. Lovecraft

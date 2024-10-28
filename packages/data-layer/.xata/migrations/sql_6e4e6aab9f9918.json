@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_6e4e6aab9f9918",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE topics (id varchar(255) PRIMARY KEY, name varchar(255), summary text, photo varchar(255), photos text[])"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_6e4e6aab9f9918",
+  "parent": "mig_cqslpke0suhdj1lc02hg",
+  "schema": "public",
+  "startedAt": "2024-08-12T01:37:43.594253Z"
+}

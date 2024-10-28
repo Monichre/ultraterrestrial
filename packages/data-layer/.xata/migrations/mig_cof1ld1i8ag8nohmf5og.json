@@ -1,0 +1,212 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_cof1ld1i8ag8nohmf5og",
+    "operations": [
+      {
+        "create_table": {
+          "name": "personnel",
+          "columns": [
+            {
+              "name": "bio",
+              "type": "text",
+              "comment": "{\"xata.type\":\"text\"}",
+              "nullable": true
+            },
+            {
+              "name": "credibility",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "facebook",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "id",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "instagram",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "name",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "picture",
+              "type": "text",
+              "comment": "{\"xata.type\":\"text\"}",
+              "nullable": true
+            },
+            {
+              "name": "popularity",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "rank",
+              "type": "bigint",
+              "nullable": true
+            },
+            {
+              "name": "role",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "twitter",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "website",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "xata/createdAt",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "xata/updatedAt",
+              "type": "timestamptz",
+              "nullable": true
+            },
+            {
+              "name": "xata/version",
+              "type": "bigint",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/enablePublicUrl",
+              "type": "boolean",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/id",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/mediaType",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/name",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/signedUrlTimeout",
+              "type": "bigint",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/size",
+              "type": "bigint",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/storageKey",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/uploadKey",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/uploadUrlTimeout",
+              "type": "bigint",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/version",
+              "type": "bigint",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/attributes/height",
+              "type": "bigint",
+              "nullable": true
+            },
+            {
+              "name": "photo/0/attributes/width",
+              "type": "bigint",
+              "nullable": true
+            },
+            {
+              "name": "xata_id",
+              "type": "text",
+              "check": {
+                "name": "personnel_xata_id_length_xata_id",
+                "constraint": "length(\"xata_id\") < 256"
+              },
+              "unique": true,
+              "default": "'rec_' || xata_private.xid()",
+              "nullable": false
+            },
+            {
+              "name": "xata_version",
+              "type": "integer",
+              "default": "0",
+              "nullable": false
+            },
+            {
+              "name": "xata_createdat",
+              "type": "timestamptz",
+              "default": "now()",
+              "nullable": false
+            },
+            {
+              "name": "xata_updatedat",
+              "type": "timestamptz",
+              "default": "now()",
+              "nullable": false
+            }
+          ]
+        }
+      },
+      {
+        "sql": {
+          "up": "ALTER TABLE \"personnel\" REPLICA IDENTITY FULL",
+          "onComplete": true
+        }
+      },
+      {
+        "sql": {
+          "up": "CREATE TRIGGER xata_maintain_metadata_trigger_pgroll\n  BEFORE INSERT OR UPDATE\n  ON \"personnel\"\n  FOR EACH ROW\n  EXECUTE FUNCTION xata_private.maintain_metadata_trigger_pgroll()",
+          "onComplete": true
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_cof1ld1i8ag8nohmf5og",
+  "schema": "public",
+  "startedAt": "2024-04-16T06:29:09.243682Z"
+}

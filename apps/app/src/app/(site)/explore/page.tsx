@@ -1,7 +1,8 @@
-import { getEntityNetworkGraphData, NetworkGraphPayload } from '@/services/xata'
+
 
 import { Suspense } from 'react'
 import { EntityNetworkGraph3D } from '@/features/3d/entity-network-graph-3d'
+import { getEntityNetworkGraphData, type NetworkGraphPayload } from '@/features/mindmap/api/get-entity-network-graph-data'
 
 export default async function Index() {
   const data: NetworkGraphPayload = await getEntityNetworkGraphData()

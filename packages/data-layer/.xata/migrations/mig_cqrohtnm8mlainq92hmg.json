@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_cqrohtnm8mlainq92hmg",
+    "operations": [
+      {
+        "drop_table": {
+          "name": "topic-subject-matter-experts"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_cqrohtnm8mlainq92hmg",
+  "parent": "mig_cqrohri05tt3u27fp78g",
+  "schema": "public",
+  "startedAt": "2024-08-10T15:36:23.191726Z"
+}

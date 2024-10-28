@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_59a8a9e9f00e23",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE users (id varchar(255) PRIMARY KEY, email varchar(255) UNIQUE, name varchar(255), photo varchar(255), profile_image_url varchar(255), external_id varchar(255))"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_59a8a9e9f00e23",
+  "parent": "sql_f22f0d9603f401",
+  "schema": "public",
+  "startedAt": "2024-08-16T03:13:20.997493Z"
+}

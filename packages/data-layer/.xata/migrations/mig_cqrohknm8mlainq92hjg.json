@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_cqrohknm8mlainq92hjg",
+    "operations": [
+      {
+        "drop_table": {
+          "name": "organization-members-old"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_cqrohknm8mlainq92hjg",
+  "parent": "mig_cqrohj7m8mlainq92hig",
+  "schema": "public",
+  "startedAt": "2024-08-10T15:35:47.014951Z"
+}

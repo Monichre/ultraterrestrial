@@ -6,7 +6,8 @@ import {
   TestimoniesIcon,
   TopicsIcon,
 } from '@/components/icons/entity-icons'
-import { Button, ShinyButton } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
+import { ShinyButton } from '@/components/ui/button/shiny-button'
 import { Separator } from '@/components/ui/separator'
 import { initiateDatabaseTableQuery } from '@/features/mindmap/api/search'
 import { InputWithVanishAnimation } from '@/features/mindmap/components/cards/root-node-card/InputWithVanishAnimation'
@@ -332,9 +333,9 @@ export const MindMapCommandCenter = () => {
           animate={isExpanded ? 'expanded' : 'collapsed'}
           variants={containerVariants}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className=' rounded-[30px] overflow-hidden border bg-white dark:bg-black relative'>
+          className='rounded-[30px] overflow-hidden border bg-white dark:bg-black relative'>
           <AnimatePresence>
-            {isExpanded && (
+            {isExpanded && activeModel && (
               <motion.div
                 key='content'
                 initial='collapsed'
@@ -405,7 +406,7 @@ export const MindMapCommandCenter = () => {
             className='h-[60px] flex items-center w-full gap-2 justify-evenly px-8 cursor-pointer absolute bottom-0 left-0 right-0 mx-auto'>
             {modelActions.map( ( item, index ) => {
               // some code here
-
+              console.log( { item } )
               return (
                 <motion.div
                   key={index}

@@ -1,0 +1,24 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_cog18a9i8ag8nohmfeb0",
+    "operations": [
+      {
+        "alter_column": {
+          "up": "\"d\"",
+          "down": "\"d\"",
+          "table": "organizations",
+          "column": "d",
+          "unique": {
+            "name": "organizations_d_unique"
+          }
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_cog18a9i8ag8nohmfeb0",
+  "parent": "mig_cof1o4hi8ag8nohmf5s0",
+  "schema": "public",
+  "startedAt": "2024-04-17T18:25:45.449804Z"
+}

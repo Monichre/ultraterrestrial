@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_7aa7955f2ceeac",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE \"topics-testimonies\" (id varchar(255) PRIMARY KEY, topic varchar(255) REFERENCES topics (id), testimony varchar(255) REFERENCES testimonies (id))"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_7aa7955f2ceeac",
+  "parent": "sql_882c201bd5e983",
+  "schema": "public",
+  "startedAt": "2024-08-16T03:13:19.606919Z"
+}

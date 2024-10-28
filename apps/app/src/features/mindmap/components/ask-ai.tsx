@@ -9,58 +9,27 @@ interface AskAIProps {
   prompt?: any
   table: any
   children: React.ReactNode
+  updateAnalysis: ( analysis: any ) => void
 }
 
-export const AskAI: React.FC<AskAIProps> = ( { question, prompt, table, children } ) => {
-  const [analysis, setAnalysis] = useState<any>( null )
-  console.log( "🚀 ~ file: ask-ai.tsx:14 ~ AskAI ~ setAnalysis:", setAnalysis )
+export const AskAI: React.FC<AskAIProps> = ( { question, prompt, table, children, updateAnalysis } ) => {
+  const [status, setStatus] = useState<any>( 'loading..' )
+
   useEffect( () => {
     askAIAction( { question, prompt, table } ).then( res => {
       if ( res?.dbResponse ) {
         const { dbResponse: { answer: text, records } } = res
-        setAnalysis( { text, records } )
+        setStatus( 'Complete' )
+        updateAnalysis( { text, records } )
       }
     } )
 
-  }, [question, prompt, table] )
+  }, [question, prompt, table, updateAnalysis] )
 
-  return ( <div>
-    <div className='w-full'>
-      {children}
+  return (
+    <div className='w-full flex justify-start items-center'>
+      {children}: {status}
     </div>
-    <MemoizedMarkdown
-      rehypePlugins={[
-        [rehypeExternalLinks, { target: '_blank' }],
-      ]}
-      remarkPlugins={[remarkGfm]}
-      className='prose-sm prose-neutral prose-a:text-accent-foreground/50'
-      components={{
-        // Map `h1` (`# heading`) to use `h2`s.
-        h1: 'h2',
-        // Rewrite `em`s (`*like so*`) to `i` with a red foreground color.
-        pre: ( props ) => {
-          return (
-            // @ts-ignore
-            <div {...props} />
-          )
-        },
-        code: ( props ) => {
-          return (
-            // @ts-ignore
-            <p {...props} />
-          )
-        },
-        p: ( props ) => {
-          return (
 
-            <LetterFX speed='slow'>
-              <p {...props} />
-            </LetterFX>
-          )
-        },
-      }}
-    >
-      {analysis}
-    </MemoizedMarkdown>
-  </div> )
+  )
 }

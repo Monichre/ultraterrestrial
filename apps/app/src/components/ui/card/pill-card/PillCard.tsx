@@ -33,7 +33,7 @@ export const PillCard = ( { card }: any ) => {
     role: role,
   }
 
-  const image: any = photo[0] || { url: '/astro-3.png' }
+  const image: any = entity?.photo && photo[0] ? photo[0] : { url: '/astro-3.png' }
   const [isOpen, setIsOpen] = useState( false )
   const [showContent, setShowContent] = useState( false )
 

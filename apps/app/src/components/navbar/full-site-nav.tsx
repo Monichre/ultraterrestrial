@@ -66,7 +66,7 @@ export const MenuItem = memo(
           <motion.p
             key={`${item}-p`}
             transition={{ duration: 0.3 }}
-            className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase !font-bebasNeuePro tracking-widest'
+            className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9] uppercase !font-bebasNeuePro tracking-widest'
             style={{ letterSpacing: '1px', fontWeight: 400 }}
           >
             {item}
@@ -84,7 +84,7 @@ export const MenuItem = memo(
                   key={`${item}-div-2`}
                   transition={transition}
                   layoutId='active' // layoutId ensures smooth animation
-                  className='bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] shadow-xl hover-menu'
+                  className='light:bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] shadow-xl hover-menu'
                 >
                   <motion.div
                     key={`${item}-div-3`}
@@ -127,7 +127,7 @@ export const HoveredLink = ( { children, ...rest }: any ) => {
   return (
     <Link
       {...rest}
-      className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase !font-bebasNeuePro font-[500]'
+      className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9] uppercase !font-bebasNeuePro font-[500]'
       style={{ letterSpacing: '1px', fontWeight: 400 }}
     >
       {children}
@@ -192,7 +192,7 @@ export function DropdownMenuDemo( { isAdmin }: any ) {
       <SideMenuBtn open={open} />
 
       <DropdownMenuContent
-        className='bg-white dark:bg-black text-black dark:text-white'
+        className='light:bg-white dark:bg-black light:text-black dark:text-white'
         align='end'
         alignOffset={0}
       >
@@ -200,7 +200,7 @@ export function DropdownMenuDemo( { isAdmin }: any ) {
           <DropdownMenuItem>
             <SignInButton>
               <Button
-                className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeuePro tracking-widest'
+                className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeuePro tracking-widest'
                 variant='ghost'
               >
                 Sign In
@@ -351,7 +351,7 @@ export function FullSiteNav( { className }: { className?: string } ) {
         {/* <SignedOut>
           <SignInButton>
             <Button
-              className='cursor-pointer text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeuePro tracking-widest'
+              className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeuePro tracking-widest'
               variant='ghost'
             >
               Sign In

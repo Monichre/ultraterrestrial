@@ -1,9 +1,10 @@
+import type { DEFAULT } from '@react-three/fiber/dist/declarations/src/core/utils'
 import chroma from 'chroma-js'
 
-export function hexToRgba(hex: string, alpha: number): string {
-  const r = parseInt(hex.slice(1, 3), 16)
-  const g = parseInt(hex.slice(3, 5), 16)
-  const b = parseInt(hex.slice(5, 7), 16)
+export function hexToRgba( hex: string, alpha: number ): string {
+  const r = parseInt( hex.slice( 1, 3 ), 16 )
+  const g = parseInt( hex.slice( 3, 5 ), 16 )
+  const b = parseInt( hex.slice( 5, 7 ), 16 )
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
@@ -224,3 +225,8 @@ const caseFilePalette = {
 
 */
 export { chroma }
+
+
+// - Tailwind
+
+// { 'raisin_black': { DEFAULT: '#231D1D', 100: '#070606', 200: '#0e0c0c', 300: '#161212', 400: '#1d1818', 500: '#231d1d', 600: '#544747', 700: '#856f6f', 800: '#ae9e9e', 900: '#d7cfcf' }, 'licorice': { DEFAULT: '#120C11', 100: '#040203', 200: '#070507', 300: '#0b070a', 400: '#0f0a0e', 500: '#120c11', 600: '#4c3348', 700: '#85597e', 800: '#b28cac', 900: '#d9c5d5' }, 'raisin_black': { DEFAULT: '#28282E', 100: '#080809', 200: '#101013', 300: '#18181c', 400: '#202025', 500: '#28282e', 600: '#50505c', 700: '#777789', 800: '#a4a4b0', 900: '#d2d2d8' }, 'taupe_gray': { DEFAULT: '#A29EA0', 100: '#211f20', 200: '#423f40', 300: '#625e60', 400: '#837e81', 500: '#a29ea0', 600: '#b5b2b4', 700: '#c8c5c6', 800: '#dad9d9', 900: '#edecec' }, 'black': { DEFAULT: '#07070C', 100: '#020203', 200: '#030305', 300: '#050508', 400: '#06060a', 500: '#07070c', 600: '#2c2c4b', 700: '#505088', 800: '#8484b7', 900: '#c1c1db' } }

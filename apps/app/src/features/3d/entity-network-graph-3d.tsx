@@ -1,9 +1,19 @@
 'use client'
 
 import { type NetworkGraphPayload } from '@/features/mindmap/api/get-entity-network-graph-data'
+import { nodes } from '@/stories/data/graph-data-with-xyz-coordinates'
+import { DOMAIN_MODEL_COLORS } from '@/utils'
+import { x, y } from '@liveblocks/react/dist/suspense-fYGGJ3D9'
+import { forEach } from '@tiptap/core/dist/commands'
 import type { JSONData } from '@xata.io/client'
-import { FC, useCallback, useRef } from 'react'
+import { clear } from 'console'
+import { arc } from 'd3'
+import { add } from 'date-fns'
+import { FC, useCallback, useMemo, useRef, useState } from 'react'
 import { ForceGraph3D } from 'react-force-graph'
+import source from 'react-mapbox-gl/lib/source'
+import { fill } from 'three/src/extras/TextureUtils'
+import { PI } from 'tldraw'
 
 // https://github.com/vasturiano/react-force-graph/blob/master/example/custom-node-shape/index-three.html
 
@@ -28,14 +38,20 @@ export const EntityNetworkGraph3D: FC<any> = ( {
     }
   }, [] )
 
+
+
+
+
   return (
     <ForceGraph3D
       ref={graphRef}
       graphData={graphData}
+
       nodeLabel={( node ) => `${node.label}`}
-      nodeColor={( n ) => n.color || n.fill}
+      nodeColor={( n ) => DOMAIN_MODEL_COLORS[n.data.type]}
       nodeRelSize={20}
       linkColor={( link ) => link?.color}
+      onNodeClick={handleNodeClick}
 
     />
   )

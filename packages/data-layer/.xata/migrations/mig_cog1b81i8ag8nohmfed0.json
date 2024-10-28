@@ -1,0 +1,106 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_cog1b81i8ag8nohmfed0",
+    "operations": [
+      {
+        "create_table": {
+          "name": "organization-members",
+          "columns": [
+            {
+              "name": "id",
+              "type": "text",
+              "comment": "{\"xata.type\":\"string\"}",
+              "nullable": true
+            },
+            {
+              "name": "member",
+              "type": "text",
+              "comment": "{\"xata.link\":\"personnel\"}",
+              "nullable": true,
+              "references": {
+                "name": "member_link",
+                "table": "personnel",
+                "column": "xata_id",
+                "on_delete": "SET NULL"
+              }
+            },
+            {
+              "name": "organization",
+              "type": "text",
+              "comment": "{\"xata.link\":\"organizations\"}",
+              "nullable": true,
+              "references": {
+                "name": "organization_link",
+                "table": "organizations",
+                "column": "xata_id",
+                "on_delete": "SET NULL"
+              }
+            },
+            {
+              "name": "xata/createdAt",
+              "type": "timestamptz",
+              "nullable": true
+            },
+            {
+              "name": "xata/updatedAt",
+              "type": "timestamptz",
+              "nullable": true
+            },
+            {
+              "name": "xata/version",
+              "type": "bigint",
+              "nullable": true
+            },
+            {
+              "name": "xata_id",
+              "type": "text",
+              "check": {
+                "name": "organization-members_xata_id_length_xata_id",
+                "constraint": "length(\"xata_id\") < 256"
+              },
+              "unique": true,
+              "default": "'rec_' || xata_private.xid()",
+              "nullable": false
+            },
+            {
+              "name": "xata_version",
+              "type": "integer",
+              "default": "0",
+              "nullable": false
+            },
+            {
+              "name": "xata_createdat",
+              "type": "timestamptz",
+              "default": "now()",
+              "nullable": false
+            },
+            {
+              "name": "xata_updatedat",
+              "type": "timestamptz",
+              "default": "now()",
+              "nullable": false
+            }
+          ]
+        }
+      },
+      {
+        "sql": {
+          "up": "ALTER TABLE \"organization-members\" REPLICA IDENTITY FULL",
+          "onComplete": true
+        }
+      },
+      {
+        "sql": {
+          "up": "CREATE TRIGGER xata_maintain_metadata_trigger_pgroll\n  BEFORE INSERT OR UPDATE\n  ON \"organization-members\"\n  FOR EACH ROW\n  EXECUTE FUNCTION xata_private.maintain_metadata_trigger_pgroll()",
+          "onComplete": true
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_cog1b81i8ag8nohmfed0",
+  "parent": "mig_cog1almp7f5ih5v52pgg",
+  "schema": "public",
+  "startedAt": "2024-04-17T18:32:00.729028Z"
+}

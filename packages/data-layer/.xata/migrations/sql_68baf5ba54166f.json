@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_68baf5ba54166f",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE \"user-saved-testimonies\" (id varchar(255) PRIMARY KEY, \"user\" varchar(255) REFERENCES users (id), testimony varchar(255) REFERENCES testimonies (id), theory varchar(255) REFERENCES \"user-theories\" (id), note text)"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_68baf5ba54166f",
+  "parent": "sql_608eec17e371b7",
+  "schema": "public",
+  "startedAt": "2024-08-16T03:23:22.134019Z"
+}

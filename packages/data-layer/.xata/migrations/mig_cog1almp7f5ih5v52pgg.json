@@ -1,0 +1,19 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_cog1almp7f5ih5v52pgg",
+    "operations": [
+      {
+        "rename_table": {
+          "to": "organization-members-old",
+          "from": "organization-members"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_cog1almp7f5ih5v52pgg",
+  "parent": "mig_cog1a4pi8ag8nohmfec0",
+  "schema": "public",
+  "startedAt": "2024-04-17T18:30:47.471717Z"
+}

@@ -1,3 +1,5 @@
 export * from './animated-button'
 export * from './button'
 export * from './shiny-button'
+export * from './animated-button'
+export * from './delete-button'

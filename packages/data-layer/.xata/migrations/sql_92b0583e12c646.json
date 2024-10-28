@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_92b0583e12c646",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE organizations (id varchar(255) PRIMARY KEY, name varchar(255), specialization varchar(255), description text, photo text, image varchar(255))"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_92b0583e12c646",
+  "parent": "sql_9c5d337ca5e12b",
+  "schema": "public",
+  "startedAt": "2024-08-16T03:13:17.562568Z"
+}

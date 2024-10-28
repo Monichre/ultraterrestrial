@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_f1cd74e452eedc",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE \"user-saved-organizations\" (id varchar(255) PRIMARY KEY, \"user\" varchar(255) REFERENCES users (id), organization varchar(255) REFERENCES organizations (id), theory varchar(255) REFERENCES \"user-theories\" (id), note text)"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_f1cd74e452eedc",
+  "parent": "sql_7d57eebd620668",
+  "schema": "public",
+  "startedAt": "2024-08-16T03:23:22.812668Z"
+}

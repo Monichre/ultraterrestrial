@@ -5,7 +5,7 @@ export const UltraterrestrialLogo = () => {
   return (
     <Link href='/' className='cursor-pointer'>
       <svg
-        className='w-10 h-10 stroke-2'
+        className='w-12 h-12 stroke-0'
         stroke='#000'
         viewBox='0 0 87 96'
         fill='none'

@@ -156,20 +156,21 @@ export const CoreNodeContent: React.FC<CoreNodeContentProps> = ( { className = '
   return (
     <section
       className={cn(
-        'overflow-hidden relative rounded-2xl duration-200 border-1 bg-neutral-50 px-2 py-3 shadow-lg shadow-neutral-200/50 dark:bg-neutral-950 dark:shadow-neutral-800/50 border-neutral-200 dark:border-neutral-800',
+        'overflow-hidden relative rounded-2xl duration-200 border-1 bg-neutral-50 px-2 py-3 shadow-lg shadow-neutral-200/50 dark:bg-neutral-950 dark:shadow-neutral-800/50 border-neutral-200 dark:border-neutral-800 transition-all duration-300 will-change-transform',
         className
       )}>
       {children}
     </section>
   )
 }
-export const CoreNodeContainer = ( { children, id, className }: any ) => {
+export const CoreNodeContainer = ( { children, id, className, ref }: any ) => {
   return (
     <div
-      className={cn( 'overflow-hidden  rounded-3xl bg-white dark:bg-black', className )}
+      ref={ref}
+      className={cn( 'overflow-hidden rounded-3xl bg-white dark:bg-black relative', className )}
       id={id}>
       <main
-        className={`border-1 p-1.5 rounded-3xl duration-200 border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 group hover:border-indigo-200 dark:hover:border-indigo-800`}>
+        className={`border-1 p-1.5 rounded-3xl duration-200 border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 group hover:border-indigo-200 dark:hover:border-indigo-800 transition-all duration-300 will-change-transform`}>
         {children}
       </main>
       <button

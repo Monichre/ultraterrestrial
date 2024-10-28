@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_c362c1b91b34d5",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE \"topic-subject-matter-experts\" (id varchar(255) PRIMARY KEY, topic varchar(255) REFERENCES topics (id), \"subject-matter-expert\" varchar(255) REFERENCES personnel (id))"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_c362c1b91b34d5",
+  "parent": "sql_9d6c52f92b4067",
+  "schema": "public",
+  "startedAt": "2024-08-16T03:13:18.562571Z"
+}

@@ -47,36 +47,35 @@ export const metadata = {
 export default function RootLayout( { children }: { children: React.ReactNode } ) {
   // bg-[url("/8k_stars_milky_way.jpeg")] bg-center bg-cover dark
   return (
-    <ViewTransitions>
-      <ClerkProvider>
-        <html lang='en' suppressHydrationWarning>
-          <body
-            className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} ${bebasNeuePro.variable} ${GeistMono.variable} ${GeistSans.variable} dark`}>
-            <ThemeProvider
-              attribute='class'
-              defaultTheme='dark'
-              enableSystem
-            // disableTransitionOnChange
-            >
-              {/* <DataLayer> */}
 
-              <FullSiteNav />
-              {/* <AnimationProvider> */}
-              {/* <PageTransition> */}
-              <main className='min-h-[100vh] min-w-screen relative site dark'>
-                {/* <NavBar navItems={navItems} /> */}
-                {/* <HomePageNav navItems={navItems} /> */}
-                {/* <FullSiteNav className='top-2' /> */}
-                {children}
-              </main>
+    <ClerkProvider>
+      <html lang='en' suppressHydrationWarning className='dark'>
+        <body
+          className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} ${bebasNeuePro.variable} ${GeistMono.variable} ${GeistSans.variable} dark`}>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='dark'
+            enableSystem
+          // disableTransitionOnChange
+          >
+            {/* <DataLayer> */}
 
-              {/* </PageTransition> */}
-              {/* </AnimationProvider> */}
-            </ThemeProvider>
-          </body>
-          {/* </DataLayer> */}
-        </html>
-      </ClerkProvider>
-    </ViewTransitions>
+            <FullSiteNav />
+            {/* <AnimationProvider> */}
+            {/* <PageTransition> */}
+            <main className='min-h-[100vh] min-w-screen relative site dark'>
+              {/* <NavBar navItems={navItems} /> */}
+              {/* <HomePageNav navItems={navItems} /> */}
+              {/* <FullSiteNav className='top-2' /> */}
+              {children}
+            </main>
+
+            {/* </PageTransition> */}
+            {/* </AnimationProvider> */}
+          </ThemeProvider>
+        </body>
+        {/* </DataLayer> */}
+      </html>
+    </ClerkProvider>
   )
 }

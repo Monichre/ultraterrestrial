@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "sql_56bcea352ee9e2",
+    "operations": [
+      {
+        "sql": {
+          "up": "CREATE TABLE locations (id varchar(255) PRIMARY KEY, name varchar(255), coordinates varchar(255), \"google-maps-location-id\" text, city varchar(255), state varchar(255), latitude double precision, longitude double precision)"
+        }
+      }
+    ]
+  },
+  "migrationType": "inferred",
+  "name": "sql_56bcea352ee9e2",
+  "parent": "sql_3c352c54beeb37",
+  "schema": "public",
+  "startedAt": "2024-08-16T03:13:20.304062Z"
+}

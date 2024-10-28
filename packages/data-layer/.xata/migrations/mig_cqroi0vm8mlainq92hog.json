@@ -1,0 +1,18 @@
+{
+  "done": true,
+  "migration": {
+    "name": "mig_cqroi0vm8mlainq92hog",
+    "operations": [
+      {
+        "drop_table": {
+          "name": "topics-testimonies"
+        }
+      }
+    ]
+  },
+  "migrationType": "pgroll",
+  "name": "mig_cqroi0vm8mlainq92hog",
+  "parent": "mig_cqrohvfm8mlainq92hng",
+  "schema": "public",
+  "startedAt": "2024-08-10T15:36:36.264276Z"
+}
