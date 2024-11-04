@@ -91,18 +91,20 @@ export const PillCard = ( { card }: any ) => {
     }
   }
 
+  // 'overflow-hidden relative rounded-2xl  will-change-transform',
+  // dark: bg - black dark:border dark: border - white / 60'
   return (
-    <div className='h-full center w-full'>
+    <div className='h-full center w-full overflow-hidden relative'>
       <motion.div
         className={cn(
-          'bg-primary w-[500px] rounded-full h-16 px-4 cursor-pointer dark:bg-black dark:border dark:border-white/60',
+          'bg-primary w-[500px] rounded-full h-14 px-4 cursor-pointer duration-200 border-2 border-white bg-neutral-100 dark:bg-black group hover:border-indigo-200 dark:hover:border-indigo-800 transition-all',
           isOpen && 'rounded-3xl'
         )}
         animate={{ height: isOpen ? 240 : 64, width: isOpen ? 500 : 300 }}
         transition={{ duration: 0.2 }}
         onClick={handleToggle}>
         <div className={cn( 'flex items-center justify-between relative h-16', isOpen && 'pt-5' )}>
-          <p className='text-xl text-primary-foreground dark:text-white'>{name}</p>
+          <p className='dark:text-white font-nunito'>{name}</p>
           <motion.div
             className='rounded-3xl overflow-hidden relative'
             animate={{

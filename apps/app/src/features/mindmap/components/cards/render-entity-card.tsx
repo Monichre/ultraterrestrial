@@ -5,7 +5,9 @@ import { GraphCard } from '@/features/mindmap/components/cards/graph-card'
 import { TestimonyCard } from '@/features/mindmap/components/cards/testimony-card'
 import { TopicCard } from '@/features/mindmap/components/cards/topic-card'
 import { SubjectMatterExpertCard } from './subject-matter-expert-card'
+
 const UnOpinionatedGroupCard = ( props: any ) => <div {...props} />
+
 const entityMap = {
   personnel: ( props: any ) => <SubjectMatterExpertCard {...props} />,
   organizations: ( props: any ) => <GraphCard {...props} />,

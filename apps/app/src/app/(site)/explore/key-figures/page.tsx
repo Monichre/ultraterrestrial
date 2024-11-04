@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { getXataClient } from '@/services/xata/client'
+import { getXataClient } from '@/db/xata'
 
 import SwipeGrid from '@/components/animated/swipe-grid/SwipeGrid'
 import { Suspense } from 'react'

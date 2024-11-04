@@ -51,8 +51,8 @@ export const ROOT_DIMENSIONS = {
   height: ROOT_NODE_HEIGHT,
 }
 
-export const GROUP_NODE_HEIGHT = 900
-export const GROUP_NODE_WIDTH = 700
+export const GROUP_NODE_HEIGHT = 600
+export const GROUP_NODE_WIDTH = 900
 export const GROUP_NODE_LANDSCAPE = {
   width: GROUP_NODE_HEIGHT,
   height: GROUP_NODE_WIDTH,
@@ -74,7 +74,7 @@ export const entityGroupNodeBaseConfig = {
   initialWidth: GROUP_NODE_LANDSCAPE.width,
   // zIndex: 1,
   style: {
-      width: `${GROUP_NODE_LANDSCAPE.width}px`,
+    width: `${GROUP_NODE_LANDSCAPE.width}px`,
     height: `${GROUP_NODE_LANDSCAPE.height}px`,
   },
 }

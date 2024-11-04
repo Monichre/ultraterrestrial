@@ -1,7 +1,7 @@
 'use client'
 
 import { EntityCardUtilityMenu } from '@/features/mindmap/components/cards/entity-card'
-import { DOMAIN_MODEL_COLORS, truncate } from '@/utils'
+import { DOMAIN_MODEL_COLORS, STOCK_PHOTOS, truncate } from '@/utils'
 
 import { motion } from 'framer-motion'
 
@@ -29,7 +29,11 @@ export function GraphCard( { card }: any ) {
   } = useEntity( { card } )
   const { type, color, photos, name, date: unformattedDate, role } = entity
   const date = unformattedDate ? format( unformattedDate, 'MMMM d, yyyy' ) : ''
-  const [image] = photos ? photos : [null]
+  const stock = {
+    url: STOCK_PHOTOS.saucer,
+    src: STOCK_PHOTOS.saucer,
+  }
+  const bgPhoto = photos?.length && photos[0]?.mediaType?.startsWith( 'image/' ) ? photos[0] : stock
 
   // const [animatedTitle, setAnimatedTitle] = useState<string>('')
   // const [animatedDate, setAnimatedDate] = useState<string>('')

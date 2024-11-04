@@ -1,15 +1,16 @@
-import { StreamingTextResponse, streamText, streamObject  } from 'ai';
+import { StreamingTextResponse, streamText, streamObject } from 'ai'
 
 import { openai as vercelAI } from '@ai-sdk/openai'
-import OpenAI from "openai";
+import OpenAI from "openai"
 
-import zod from 'zod';
+import zod from 'zod'
 
 const openai = new OpenAI(
   {
-    apiKey: process.env.OPENAI_API_KEY
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY
+    // apiKey: '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',
   }
-);
+)
 
 const SystemPrompt = `
 You are ChatGPT, an AI language model specialized in processing and analyzing webpage content. 
@@ -61,50 +62,50 @@ Tags:
 
 `
 
-const userPrompt = (data: string) => `
+const userPrompt = ( data: string ) => `
 Please analyze the following webpage content and extract the key information including sources, personnel, events and related items, and then summarize the content and generate relevant tags for classification.
 Ensure that your method is conducive to the AI embedding and vectorization pipeline to which content will be added.
 
 **Webpage Content:**
 ${data}
 `
-const runWithVercel = async ({data}: any) => {
-   const model = vercelAI('gpt-4o')
-  const completion = await streamText({
+export const runWithVercel = async ( { data }: any ) => {
+  const model = vercelAI( 'gpt-4o' )
+  const completion = await streamText( {
     model,
     system: SystemPrompt,
     messages: [
-      { role: "user", content: userPrompt(data) },
+      { role: "user", content: userPrompt( data ) },
     ],
-  });
-   return completion.toAIStreamResponse()
-} 
+  } )
+  return completion.toAIStreamResponse()
+}
 // app/api/chat/route.ts
 
 
 
 
-export const summarize = async (data: string): Promise<{ summary: string; tags: string[] }> => {
+export const summarize = async ( data: string ): Promise<{ summary: string; tags: string[] }> => {
   try {
     // Initiate the streaming completion
     const completion = await openai.chat.completions.create(
-    {
-      model: 'gpt-4o-mini',
-      messages: [
-        { role: "system", content: SystemPrompt },
-        { role: "user", content: userPrompt(data) },
-      ],
-      stream: true,
-    },
-  );
+      {
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: "system", content: SystemPrompt },
+          { role: "user", content: userPrompt( data ) },
+        ],
+        stream: true,
+      },
+    )
 
-    console.log("🚀 ~ file: summarize.ts:81 ~ summarize ~ completion:", completion)
-const chunks: any = []
-    for await (const chunk of completion) {
-      console.log("🚀 ~ file: summarize.ts:81 ~ summarize ~ chunk:", chunk)
-      chunks.push(chunk)
+    console.log( "🚀 ~ file: summarize.ts:81 ~ summarize ~ completion:", completion )
+    const chunks: any = []
+    for await ( const chunk of completion ) {
+      console.log( "🚀 ~ file: summarize.ts:81 ~ summarize ~ chunk:", chunk )
+      chunks.push( chunk )
     }
-return chunks
+    return chunks
     // return new Promise((resolve, reject) => {
     //   let fullResponse = "";
 
@@ -150,29 +151,29 @@ return chunks
     //     reject(err);
     //   });
     // });
-  } catch (error) {
-    console.error("Error during summarization:", error);
-    throw error;
+  } catch ( error ) {
+    console.error( "Error during summarization:", error )
+    throw error
   }
-};
+}
 
-  // 	const endpointUrl = 'https://api.langbase.com/beta/generate';
-	// 	const headers = {
-	// 		'Content-Type': 'application/json',
-	// 		Authorization: `Bearer ${process.env.NEXT_LB_PIPE_API_KEY}`
-	// 	};
+// 	const endpointUrl = 'https://api.langbase.com/beta/generate';
+// 	const headers = {
+// 		'Content-Type': 'application/json',
+// 		Authorization: `Bearer ${process.env.NEXT_LB_PIPE_API_KEY}`
+// 	};
 
-  // const response = await fetch('https://api.langbase.ai/v1/summarize', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${process.env.LANGBASE_API_KEY}`,
-  //   },
-  //   body: JSON.stringify({ data }),
-  // });
+// const response = await fetch('https://api.langbase.ai/v1/summarize', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'Authorization': `Bearer ${process.env.LANGBASE_API_KEY}`,
+//   },
+//   body: JSON.stringify({ data }),
+// });
 
-  // 	const endpointUrl = 'https://api.langbase.com/beta/generate';
-	// 	const headers = {
-	// 		'Content-Type': 'application/json',
-	// 		Authorization: `Bearer ${process.env.NEXT_LB_PIPE_API_KEY}`
-	// 	};
+// 	const endpointUrl = 'https://api.langbase.com/beta/generate';
+// 	const headers = {
+// 		'Content-Type': 'application/json',
+// 		Authorization: `Bearer ${process.env.NEXT_LB_PIPE_API_KEY}`
+// 	};

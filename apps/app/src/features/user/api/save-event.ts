@@ -1,5 +1,5 @@
 'use server'
-import { xata } from '@/services/xata/client'
+import { xata } from '@/db/xata/client'
 import path from 'path'
 const fs = require( 'fs' )
 
@@ -44,8 +44,8 @@ export const saveUserMindMap = async ( { user, mindMap }: any ) => {
   return await xata.db.mindmaps.get( record.id )
 }
 
-// import { getXataClient } from '@/services/xata'
-// import type { EventsRecord } from '@/services/xata'
+// import { getXataClient } from'@/db/xata'
+// import type { EventsRecord } from'@/db/xata'
 // import type { CreateUserSavedItemBase } from './actions.types'
 
 // const xata = getXataClient()

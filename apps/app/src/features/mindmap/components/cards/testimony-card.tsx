@@ -68,9 +68,9 @@ export const TestimonyCard = ( { card }: TestimonyCardProps ) => {
                   />
                 </span>
               </div>
-              <span className='text-neutral-600 dark:text-neutral-400'>Me</span>
+              <span className='text-neutral-600 dark:text-neutral-400'>{source}</span>
             </div>
-            <span>{source}</span>
+            <span></span>
           </div>
         </main>
         <button

@@ -18,7 +18,7 @@ const StarsBackground = dynamic( () => import( '@/components/backgrounds/shootin
 // const Earth = dynamic( () => import( '@/components/earth' ).then( mod => mod.Earth ) )
 const Moon = dynamic( () => import( '@/components/moon' ).then( mod => mod.Moon ) )
 
-import { Profiler } from 'react'
+
 
 const onRenderCallback = (
   id: any, // the "id" prop of the Profiler tree that has just committed
@@ -92,9 +92,9 @@ export const Home: React.FC<HomeProps> = () => {
   return (
     <div className='h-[100vh] w-[100vw] relative'>
       <div className='absolute top-1 left-1 h-[80vh] w-[80vw] z-1'>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Moon />
-        </Suspense>
+
+        <Moon />
+
       </div>
       {/* <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1'>
         <Earth ref={earthRef} />
@@ -113,7 +113,7 @@ export const Home: React.FC<HomeProps> = () => {
         <motion.div className='w-full'>
           <SiteTitle />
           <LovecraftQuote />
-        </motion.div> 
+        </motion.div>
       </div>
       <ShootingStars />
       <StarsBackground />

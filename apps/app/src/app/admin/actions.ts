@@ -1,6 +1,6 @@
 'use server'
 
-import { getXataClient } from '@/services/xata'
+import { getXataClient } from '@/db/xata'
 const xata = getXataClient()
 export async function getEvents() {
   const events = await xata.db.events

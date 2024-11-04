@@ -11,9 +11,9 @@ import { nodeTypes } from '@/features/mindmap/config/index.config'
 import {
   MindMapAiChat,
   MindMapAnimatedClickMenu,
-  MindMapSidebarQuickMenu,
+  MindMapSideMenu,
 } from '@/features/mindmap/components/menus'
-import { MindMapCommandCenter } from '@/features/mindmap/components/menus/mindmap-command-center'
+import { MindMapBottomMenu } from '@/features/mindmap/components/menus/mindmap-bottom-menu'
 
 import { useContextMenu } from '@/hooks/useContextMenu'
 // import { useElkLayout } from '@/features/mindmap/layouts/algorithms/elk-layout'
@@ -184,7 +184,7 @@ export function Graph( props: any ) {
         style={{ backgroundColor: 'transparent' }}>
         <Panel position='top-left'>
           <div className='ml-2 mt-2'>
-            <MindMapSidebarQuickMenu />
+            <MindMapSideMenu />
           </div>
         </Panel>
         <Panel position='top-right'>
@@ -198,7 +198,7 @@ export function Graph( props: any ) {
         />
 
         <Panel position='bottom-center'>
-          <MindMapCommandCenter />
+          <MindMapBottomMenu />
         </Panel>
 
         <Panel position='bottom-right'>

@@ -1,8 +1,12 @@
 import { cn, DOMAIN_MODEL_COLORS, NEONS } from '@/utils'
+import type { d } from '@liveblocks/react/dist/suspense-fYGGJ3D9'
 import chroma from 'chroma-js'
+import { svg } from 'd3'
 import { motion } from 'framer-motion'
 import { Tally1, Tally2, Tally3, Tally4, Tally5 } from 'lucide-react'
+import path from 'path'
 import * as React from 'react'
+import type { fill } from 'three/src/extras/TextureUtils'
 export type IconProps = React.HTMLAttributes<HTMLOrSVGElement> & {
   stroke?: string
   className?: string
@@ -86,49 +90,49 @@ export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
     <motion.path
       d='M41.5816 1.21606C39.7862 5.82482 40.3852 10.0977 40.5593 14.9633C40.7854 21.2812 40.9774 27.5593 41.4363 33.8661'
       stroke={stroke}
-      stroke-width='1.90596'
+      strokeWidth='1.90596'
       stroke-linecap='round'
     />
     <motion.path
       d='M41.0651 45.1798C39.7505 51.5096 40.3418 57.6794 40.8893 64.0791C41.4093 70.1568 42.1389 76.2117 42.8566 82.2682'
       stroke={stroke}
-      stroke-width='1.90596'
+      strokeWidth='1.90596'
       stroke-linecap='round'
     />
     <motion.path
       d='M1.13413 46.6647C5.16696 44.8703 8.96881 44.7974 13.3092 44.5029C19.8761 44.0572 26.2025 43.2089 32.656 41.952'
       stroke={stroke}
-      stroke-width='1.90596'
+      strokeWidth='1.90596'
       stroke-linecap='round'
     />
     <motion.path
       d='M47.2629 40.0959C58.4139 39.3819 69.3895 37.5305 80.4472 35.9965'
       stroke={stroke}
-      stroke-width='1.90596'
+      strokeWidth='1.90596'
       stroke-linecap='round'
     />
     <motion.path
       d='M49.3429 34.6508L52.917 28.1667'
       stroke={stroke}
-      stroke-width='1.90596'
+      strokeWidth='1.90596'
       stroke-linecap='round'
     />
     <motion.path
       d='M32.9786 50.3504L28.6387 54.6391'
       stroke={stroke}
-      stroke-width='1.90596'
+      strokeWidth='1.90596'
       stroke-linecap='round'
     />
     <motion.path
       d='M52.6361 48.6656L56.9506 51.5758'
       stroke={stroke}
-      stroke-width='1.90596'
+      strokeWidth='1.90596'
       stroke-linecap='round'
     />
     <motion.path
       d='M31.549 30.8471C26.8741 29.4323 22.7143 27.3543 18.2738 25.3586'
       stroke={stroke}
-      stroke-width='1.90596'
+      strokeWidth='1.90596'
       stroke-linecap='round'
     />
     <motion.circle
@@ -139,7 +143,7 @@ export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
       fill='none'
       r='60'
       stroke={stroke}
-      stroke-width='1'
+      strokeWidth='1'
     />
     <animate attributeName='r' from='20' to='60' dur='1.5s' begin='0s' repeatCount='indefinite' />
     <animate
@@ -158,7 +162,7 @@ export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
       fill='none'
       r='60'
       stroke={stroke}
-      stroke-width='1'
+      strokeWidth='1'
     />
     <motion.circle
       initial={{ pathLength: 0 }}
@@ -168,7 +172,7 @@ export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
       fill='none'
       r='60'
       stroke={stroke}
-      stroke-width='1'
+      strokeWidth='1'
     />
     <motion.circle
       cx='41'
@@ -176,7 +180,7 @@ export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
       fill='rgba(255,255,255, .5)'
       r='60'
       stroke={stroke}
-      stroke-width='1'>
+      strokeWidth='1'>
       <animate attributeName='r' from='20' to='60' dur='1.5s' begin='0s' repeatCount='indefinite' />
       <animate
         attributeName='opacity'
@@ -195,10 +199,10 @@ export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
       fill='none'
       r='60'
       stroke={stroke}
-      stroke-width='1'
+      strokeWidth='1'
     />
 
-    {/* <motion.circle initial={{pathLength: 0}} animate={{pathLength: 1}} cx='41' cy='42' fill='none' r='30' stroke={stroke} stroke-width='1'>
+    {/* <motion.circle initial={{pathLength: 0}} animate={{pathLength: 1}} cx='41' cy='42' fill='none' r='30' stroke={stroke} strokeWidth='1'>
       <animate
         attributeName='r'
         from='8'
@@ -305,7 +309,7 @@ export const DoubleX = ( { className, ...rest }: IconProps ) => (
     <motion.path
       d='M51.2 1L33.1 19L15.1 1L1 15.2L19 33.2L1 51.2L15.1 65.4L33.1 47.3L51.2 65.4L65.3 51.2L47.3 33.2L65.3 15.2L51.2 1Z'
       stroke='#9D9D9D'
-      stroke-width='1'
+      strokeWidth='1'
       stroke-miterlimit='10'
       stroke-linecap='round'
       stroke-linejoin='round'
@@ -1060,7 +1064,7 @@ export const HandDrawnArrowDownDoogle = ( props: IconProps ) => (
     <motion.path
       d='M231.654 338.871C226.62 328.369 215.525 326.434 199.105 326.459M231.654 338.871C225.998 327.972 228.442 313.96 239.986 304.673M231.654 338.871C230.13 339.104 224.107 318.996 210.59 297.968M199.326 279.195L187.311 259.67M176.046 242.774L165.908 227.004M155.62 210.859L143.605 192.461M133.535 178.327L121.895 160.68M112.283 146.111L100.268 129.214M89.0786 113.445L78.1898 97.2995M68.4273 83.4069L56.0365 67.6368M44.4719 53.3697C41.9687 49.615 35.9861 41.0541 32.0812 36.8487M22.3189 24.457L5.79785 6.05859'
       stroke='currentColor'
-      stroke-width='11.3869'
+      strokeWidth='11.3869'
       stroke-miterlimit='1.5'
       stroke-linecap='round'
       stroke-linejoin='round'
@@ -1078,13 +1082,13 @@ export const HandDrawnArrowRightDoodle = ( props: IconProps ) => (
     <motion.path
       d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
       stroke='currentColor'
-      stroke-width='1'
+      strokeWidth='1'
       stroke-linecap='round'
     />
     <motion.path
       d='M105.295 7.55369C103.251 6.41332 98.0697 4.73081 97.3989 2.01718C97.3762 1.92544 97.3095 1.31771 97.3374 1.37859C98.1737 3.20315 97.6004 7.32036 97.4208 9.32238C97.3735 9.84973 96.396 15.3811 96.8612 15.1485C101.235 12.9619 105.361 8.83254 109.442 6.05271'
       stroke='currentColor'
-      stroke-width='1'
+      strokeWidth='1'
       stroke-linecap='round'
     />
   </svg>
@@ -1275,13 +1279,13 @@ export const HandrawnArrowRight = ( { stroke = 'currentColor', onClick, classNam
     <motion.path
       d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
       stroke={stroke}
-      stroke-width='1'
+      strokeWidth='1'
       stroke-linecap='round'
     />
     <motion.path
       d='M105.295 7.55369C103.251 6.41332 98.0697 4.73081 97.3989 2.01718C97.3762 1.92544 97.3095 1.31771 97.3374 1.37859C98.1737 3.20315 97.6004 7.32036 97.4208 9.32238C97.3735 9.84973 96.396 15.3811 96.8612 15.1485C101.235 12.9619 105.361 8.83254 109.442 6.05271'
       stroke='currentColor'
-      stroke-width='1'
+      strokeWidth='1'
       stroke-linecap='round'
     />
   </svg>
@@ -1301,13 +1305,13 @@ export const HandrawnArrowLeft = ( { stroke = 'currentColor', onClick, className
     <motion.path
       d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
       stroke={stroke}
-      stroke-width='1'
+      strokeWidth='1'
       stroke-linecap='round'
     />
     <motion.path
       d='M105.295 7.55369C103.251 6.41332 98.0697 4.73081 97.3989 2.01718C97.3762 1.92544 97.3095 1.31771 97.3374 1.37859C98.1737 3.20315 97.6004 7.32036 97.4208 9.32238C97.3735 9.84973 96.396 15.3811 96.8612 15.1485C101.235 12.9619 105.361 8.83254 109.442 6.05271'
       stroke='currentColor'
-      stroke-width='1'
+      strokeWidth='1'
       stroke-linecap='round'
     />
   </svg>
@@ -1474,7 +1478,7 @@ export const WaypointsIcon = ( { stroke = 'currentColor', fill, className }: any
       viewBox='0 0 24 24'
       fill='none'
       stroke={stroke}
-      stroke-width='1'
+      strokeWidth='1'
       stroke-linecap='round'
       stroke-linejoin='round'
       variants={draw}
@@ -1526,7 +1530,7 @@ export const ConnectionsIcon = ( { stroke = 'currentColor', className }: any ) =
       viewBox='0 0 24 24'
       fill='none'
       stroke={stroke}
-      stroke-width='1'
+      strokeWidth='1'
       stroke-linecap='round'
       stroke-linejoin='round'
       variants={draw}
@@ -1563,7 +1567,7 @@ export const GroupIcon = ( { stroke = 'currentColor', className }: any ) => {
       viewBox='0 0 24 24'
       fill='none'
       stroke={stroke}
-      stroke-width='1'
+      strokeWidth='1'
       stroke-linecap='round'
       stroke-linejoin='round'
       className={className}
@@ -1576,6 +1580,44 @@ export const GroupIcon = ( { stroke = 'currentColor', className }: any ) => {
       <motion.path d='M7 21H5c-1.1 0-2-.9-2-2v-2' variants={draw} />
       <motion.rect width='7' height='5' x='7' y='7' rx='1' variants={draw} />
       <motion.rect width='7' height='5' x='10' y='12' rx='1' variants={draw} />
+    </motion.svg>
+  )
+}
+
+export const AiStarIcon = ( { stroke = 'currentColor', fill = 'currentColor', className = 'w-10 h-10' }: any ) => {
+  const draw = {
+    hidden: { pathLength: 0, opacity: 0 },
+    visible: {
+      pathLength: 1,
+      opacity: 1,
+      transition: {
+        pathLength: { type: 'spring', duration: 1.5, bounce: 0 },
+        opacity: { duration: 0.01 },
+        staggerChildren: 0.02,
+      },
+    },
+  }
+  return (
+
+    <motion.svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <motion.path d="M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z" fill={fill} variants={draw} />
+      <motion.path d="M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z" fill={fill} fill-opacity="0.2" variants={draw} />
+    </motion.svg>
+  )
+}
+
+export const StarIcon = ( { stroke = 'currentColor', fill = 'currentColor', className = 'w-10 h-10' }: any ) => {
+  const draw = {
+    hidden: { pathLength: 0, opacity: 0 },
+    visible: {
+      pathLength: 1,
+      opacity: 1,
+    },
+  }
+  return (
+    <motion.svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" variants={draw} initial='hidden' animate='visible'>
+      <motion.path d="M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z" fill={fill} />
+      <motion.path d="M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z" fill={fill} fill-opacity="0.2" />
     </motion.svg>
   )
 }

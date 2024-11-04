@@ -1,9 +1,7 @@
 import { MemoizedMarkdown } from "@/features/ai"
 import { askAIAction } from "@/features/mindmap/api/actions"
 import { useState, useEffect } from "react"
-import rehypeExternalLinks from "rehype-external-links"
-import remarkGfm from "remark-gfm"
-import { LetterFx } from '@/components/animated/text-effect/letter-glitch'
+
 interface AskAIProps {
   question: any
   prompt?: any
@@ -18,7 +16,7 @@ export const AskAI: React.FC<AskAIProps> = ( { question, prompt, table, children
   useEffect( () => {
     askAIAction( { question, prompt, table } ).then( res => {
       if ( res?.dbResponse ) {
-        const { dbResponse: { answer: text, records } } = res
+        const { answer: text, records } = res
         setStatus( 'Complete' )
         updateAnalysis( { text, records } )
       }

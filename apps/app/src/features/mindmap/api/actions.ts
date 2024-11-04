@@ -1,10 +1,36 @@
 'use server'
 
 
-import { askXataWithAi, xata } from '@/services/xata'
-import { askDisclosureAgentToFindRelatedRecords } from '@/services/openai/assistants/disclosure'
+import { askXataWithAi, xata } from '@/db/xata'
 
-
+const tables = [
+  { table: "topics" },
+  { table: "personnel" },
+  { table: "events" },
+  { table: "organizations" },
+  { table: "sightings" },
+  { table: "event-subject-matter-experts" },
+  { table: "topic-subject-matter-experts" },
+  { table: "organization-members" },
+  { table: "testimonies" },
+  { table: "topics-testimonies" },
+  { table: "documents" },
+  { table: "locations" },
+  { table: "event-topic-subject-matter-experts" },
+  { table: "users" },
+  { table: "user-saved-events" },
+  { table: "user-saved-topics" },
+  { table: "user-saved-key-figure" },
+  { table: "user-saved-testimonies" },
+  { table: "user-saved-documents" },
+  { table: "user-theories" },
+  { table: "user-saved-organizations" },
+  { table: "user-saved-sightings" },
+  { table: "tags" },
+  { table: "theories" },
+  { table: "mindmaps" },
+  { table: 'artifacts' },
+]
 
 export const askAIAction = async ( { question, prompt, table }: any ) => {
 
@@ -16,7 +42,7 @@ export const askAIAction = async ( { question, prompt, table }: any ) => {
     // const assistantResponse = await askDisclosureAgentToFindRelatedRecords( { subject: question, type: table } )
     // !TODO: figure out how to process the response
     const response = {
-      dbResponse: plainData
+      ...plainData
       // assistantResponse
     }
     console.log( 'response: ', response )
@@ -24,5 +50,45 @@ export const askAIAction = async ( { question, prompt, table }: any ) => {
   } catch ( error ) {
     console.error( 'Error in askAIAction:', error )
     throw error
+  }
+
+}
+
+export const searchAllConnections = async ( { name, id }: any ) => {
+  // Generated with CL
+  const { answer, records: recordIds, sessionId } = await xata.db.personnel.ask(
+
+
+    `Find all linked records to ${name} with xata id ${id}. Be sure to check joining tables and linked columns`,
+    {
+      headers: {
+        Accept: 'text/event-stream',
+      },
+    }
+  )
+  console.log( "🚀 ~ file: actions.ts:61 ~ searchAllConnections ~ sessionId:", sessionId )
+
+  console.log( "🚀 ~ file: actions.ts:68 ~ searchAllConnections ~ recordIds:", recordIds )
+
+
+  console.log( "🚀 ~ file: actions.ts:68 ~ searchAllConnections ~ answer:", answer )
+
+
+  // console.log(record);
+  const { records } = await xata.search.all( name, {
+    tables,
+    fuzziness: 0,
+    prefix: "phrase",
+  } )
+
+  console.log( records )
+
+  return {
+    enrichedResponse: {
+      answer,
+      recordIds,
+      sessionId
+    },
+    searchResults: records
   }
 }

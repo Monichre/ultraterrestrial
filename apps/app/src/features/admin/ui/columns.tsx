@@ -1,7 +1,7 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
-import { TABLES } from '@/services/xata'
+import { TABLES } from '@/db/xata'
 import { capitalize, truncate } from '@/utils/functions'
 import Image from 'next/image'
 import { Checkbox } from '@/components/ui/checkbox'

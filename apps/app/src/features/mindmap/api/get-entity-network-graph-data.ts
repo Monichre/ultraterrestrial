@@ -11,7 +11,7 @@ import {
   getAllTopics,
   getAllTopicsExpertsConnections,
   getAllTopicsTestimoniesConnections,
-} from '@/services/xata/db/models'
+} from '@/db/xata/db/models'
 
 export const eventsRootNode = {
   label: 'events',

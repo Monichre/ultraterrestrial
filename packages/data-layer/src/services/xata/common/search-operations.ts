@@ -1,4 +1,4 @@
-import { xata } from '@/services/xata/client'
+import { xata } from '@/db/xata/client'
 import {
   connectionMapByEntityType,
   objectMapPlural,

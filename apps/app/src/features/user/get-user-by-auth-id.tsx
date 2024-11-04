@@ -1,5 +1,5 @@
-import { getXataClient } from '@/services/xata'
-import { clerkClient } from '@clerk/nextjs/server'
+import { getXataClient } from '@/db/xata'
+// import { clerkClient } from '@clerk/nextjs/server'
 const xata = getXataClient()
 
 export const getUserByAuthId = async ( user ) => {

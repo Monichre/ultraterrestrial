@@ -1,0 +1,309 @@
+
+Table "artifacts" {
+  "id" integer [pk, not null]
+  "name" text [unique, not null]
+  "description" text
+  "photos" "text[]"
+  "date" text
+  "source" text
+  "origin" text
+  "images" "text[]"
+  "xata_id" text
+}
+
+Table "documents" {
+  "id" integer [pk, not null]
+  "file" "text[]"
+  "content" text
+  "title" text [not null]
+  "date" timestamp
+  "author_id" integer
+  "organization_id" integer
+  "url" text
+}
+
+Table "event_subject_matter_experts" {
+  "id" integer [pk, not null]
+  "event_id" integer
+  "subject_matter_expert_id" integer
+}
+
+Table "event_topic_subject_matter_experts" {
+  "id" integer [pk, not null]
+  "event_id" integer
+  "topic_id" integer
+  "subject_matter_expert_id" integer
+}
+
+Table "events" {
+  "id" integer [pk, not null]
+  "name" text [not null]
+  "description" text
+  "location" text
+  "latitude" doubleprecision
+  "longitude" doubleprecision
+  "date" timestamp
+  "photos" "text[]"
+  "metadata" json [default: `'{}'::json`]
+  "title" text [unique, not null]
+  "summary" text
+}
+
+Table "mindmaps" {
+  "id" integer [pk, not null]
+  "json" json [default: `'{}'::json`]
+  "user_id" integer
+  "file" text
+}
+
+Table "organization_members" {
+  "id" integer [pk, not null]
+  "member_id" integer
+  "organization_id" integer
+}
+
+Table "organizations" {
+  "id" integer [pk, not null]
+  "name" text [not null]
+  "specialization" text
+  "description" text
+  "photo" text
+  "image" text
+  "title" text [unique, not null]
+}
+
+Table "personnel" {
+  "id" integer [pk, not null]
+  "bio" text
+  "role" text
+  "facebook" text
+  "twitter" text
+  "website" text
+  "instagram" text
+  "photo" "text[]"
+  "rank" integer
+  "credibility" integer
+  "popularity" integer
+  "name" text [unique, not null]
+  "authority" integer
+}
+
+Table "sightings" {
+  "id" integer [pk, not null]
+  "date" timestamp
+  "description" text
+  "media_link" text
+  "city" text
+  "state" text
+  "country" text
+  "shape" text
+  "duration_seconds" text
+  "duration_hours_min" text
+  "comments" text
+  "date_posted" timestamp
+  "latitude" doubleprecision
+  "longitude" doubleprecision
+}
+
+Table "tags" {
+  "id" integer [pk, not null]
+}
+
+Table "testimonies" {
+  "id" integer [pk, not null]
+  "claim" text
+  "event_id" integer
+  "summary" text
+  "witness_id" integer
+  "documentation" "text[]"
+  "date" timestamp
+  "organization_id" integer
+}
+
+Table "theories" {
+  "id" integer [pk, not null]
+}
+
+Table "topic_subject_matter_experts" {
+  "id" integer [pk, not null]
+  "topic_id" integer
+  "subject_matter_expert_id" integer
+}
+
+Table "topics" {
+  "id" integer [pk, not null]
+  "name" text [not null]
+  "summary" text
+  "photo" text
+  "photos" "text[]"
+  "title" text [unique, not null]
+}
+
+Table "topics_testimonies" {
+  "id" integer [pk, not null]
+  "topic_id" integer
+  "testimony_id" integer
+}
+
+Table "user_saved_documents" {
+  "id" integer [pk, not null]
+  "user_id" integer
+  "document_id" integer
+  "theory_id" integer
+  "note" text
+  "note_title" text
+}
+
+Table "user_saved_events" {
+  "id" integer [pk, not null]
+  "user_id" integer
+  "event_id" integer
+  "theory_id" integer
+  "note" text
+  "note_title" text
+}
+
+Table "user_saved_key_figure" {
+  "id" integer [pk, not null]
+  "user_id" integer
+  "key_figure_id" integer
+  "theory_id" integer
+  "note" text
+  "note_title" text
+}
+
+Table "user_saved_organizations" {
+  "id" integer [pk, not null]
+  "user_id" integer
+  "organization_id" integer
+  "theory_id" integer
+  "note" text
+  "note_title" text
+}
+
+Table "user_saved_sightings" {
+  "id" integer [pk, not null]
+  "user_id" integer
+  "sighting_id" integer
+  "theory_id" integer
+  "note" text
+  "note_title" text
+}
+
+Table "user_saved_testimonies" {
+  "id" integer [pk, not null]
+  "user_id" integer
+  "testimony_id" integer
+  "theory_id" integer
+  "note" text
+  "note_title" text
+}
+
+Table "user_saved_topics" {
+  "id" integer [pk, not null]
+  "user_id" integer
+  "topic_id" integer
+  "theory_id" integer
+  "note" text
+  "note_title" text
+}
+
+Table "user_theories" {
+  "id" integer [pk, not null]
+  "user_id" integer
+  "name" text [not null]
+  "content" text
+  "synopsis" text
+  "diagrams" "text[]"
+
+  Indexes {
+    (user_id, name) [unique, name: "user_theories_user_id_name_key"]
+  }
+}
+
+Table "users" {
+  "id" integer [pk, not null]
+  "email" text [unique, not null]
+  "name" text [not null]
+  "photo" text
+  "profile_image_url" text
+  "external_id" text
+}
+
+Ref "documents_author_id_fkey":"personnel"."id" < "documents"."author_id" [delete: set null]
+
+Ref "documents_organization_id_fkey":"organizations"."id" < "documents"."organization_id" [delete: set null]
+
+Ref "event_subject_matter_experts_event_id_fkey":"events"."id" < "event_subject_matter_experts"."event_id" [delete: cascade]
+
+Ref "event_subject_matter_experts_subject_matter_expert_id_fkey":"personnel"."id" < "event_subject_matter_experts"."subject_matter_expert_id" [delete: cascade]
+
+Ref "event_topic_subject_matter_expert_subject_matter_expert_id_fkey":"personnel"."id" < "event_topic_subject_matter_experts"."subject_matter_expert_id" [delete: cascade]
+
+Ref "event_topic_subject_matter_experts_event_id_fkey":"events"."id" < "event_topic_subject_matter_experts"."event_id" [delete: cascade]
+
+Ref "event_topic_subject_matter_experts_topic_id_fkey":"topics"."id" < "event_topic_subject_matter_experts"."topic_id" [delete: cascade]
+
+Ref "mindmaps_user_id_fkey":"users"."id" < "mindmaps"."user_id" [delete: cascade]
+
+Ref "organization_members_member_id_fkey":"personnel"."id" < "organization_members"."member_id" [delete: cascade]
+
+Ref "organization_members_organization_id_fkey":"organizations"."id" < "organization_members"."organization_id" [delete: cascade]
+
+Ref "testimonies_event_id_fkey":"events"."id" < "testimonies"."event_id" [delete: set null]
+
+Ref "testimonies_organization_id_fkey":"organizations"."id" < "testimonies"."organization_id" [delete: set null]
+
+Ref "testimonies_witness_id_fkey":"personnel"."id" < "testimonies"."witness_id" [delete: set null]
+
+Ref "topic_subject_matter_experts_subject_matter_expert_id_fkey":"personnel"."id" < "topic_subject_matter_experts"."subject_matter_expert_id" [delete: cascade]
+
+Ref "topic_subject_matter_experts_topic_id_fkey":"topics"."id" < "topic_subject_matter_experts"."topic_id" [delete: cascade]
+
+Ref "topics_testimonies_testimony_id_fkey":"testimonies"."id" < "topics_testimonies"."testimony_id" [delete: cascade]
+
+Ref "topics_testimonies_topic_id_fkey":"topics"."id" < "topics_testimonies"."topic_id" [delete: cascade]
+
+Ref "user_saved_documents_document_id_fkey":"documents"."id" < "user_saved_documents"."document_id" [delete: cascade]
+
+Ref "user_saved_documents_theory_id_fkey":"user_theories"."id" < "user_saved_documents"."theory_id" [delete: set null]
+
+Ref "user_saved_documents_user_id_fkey":"users"."id" < "user_saved_documents"."user_id" [delete: cascade]
+
+Ref "user_saved_events_event_id_fkey":"events"."id" < "user_saved_events"."event_id" [delete: cascade]
+
+Ref "user_saved_events_theory_id_fkey":"user_theories"."id" < "user_saved_events"."theory_id" [delete: set null]
+
+Ref "user_saved_events_user_id_fkey":"users"."id" < "user_saved_events"."user_id" [delete: cascade]
+
+Ref "user_saved_key_figure_key_figure_id_fkey":"personnel"."id" < "user_saved_key_figure"."key_figure_id" [delete: cascade]
+
+Ref "user_saved_key_figure_theory_id_fkey":"user_theories"."id" < "user_saved_key_figure"."theory_id" [delete: set null]
+
+Ref "user_saved_key_figure_user_id_fkey":"users"."id" < "user_saved_key_figure"."user_id" [delete: cascade]
+
+Ref "user_saved_organizations_organization_id_fkey":"organizations"."id" < "user_saved_organizations"."organization_id" [delete: cascade]
+
+Ref "user_saved_organizations_theory_id_fkey":"user_theories"."id" < "user_saved_organizations"."theory_id" [delete: set null]
+
+Ref "user_saved_organizations_user_id_fkey":"users"."id" < "user_saved_organizations"."user_id" [delete: cascade]
+
+Ref "user_saved_sightings_sighting_id_fkey":"sightings"."id" < "user_saved_sightings"."sighting_id" [delete: cascade]
+
+Ref "user_saved_sightings_theory_id_fkey":"user_theories"."id" < "user_saved_sightings"."theory_id" [delete: set null]
+
+Ref "user_saved_sightings_user_id_fkey":"users"."id" < "user_saved_sightings"."user_id" [delete: cascade]
+
+Ref "user_saved_testimonies_testimony_id_fkey":"testimonies"."id" < "user_saved_testimonies"."testimony_id" [delete: cascade]
+
+Ref "user_saved_testimonies_theory_id_fkey":"user_theories"."id" < "user_saved_testimonies"."theory_id" [delete: set null]
+
+Ref "user_saved_testimonies_user_id_fkey":"users"."id" < "user_saved_testimonies"."user_id" [delete: cascade]
+
+Ref "user_saved_topics_theory_id_fkey":"user_theories"."id" < "user_saved_topics"."theory_id" [delete: set null]
+
+Ref "user_saved_topics_topic_id_fkey":"topics"."id" < "user_saved_topics"."topic_id" [delete: cascade]
+
+Ref "user_saved_topics_user_id_fkey":"users"."id" < "user_saved_topics"."user_id" [delete: cascade]
+
+Ref "user_theories_user_id_fkey":"users"."id" < "user_theories"."user_id" [delete: cascade]

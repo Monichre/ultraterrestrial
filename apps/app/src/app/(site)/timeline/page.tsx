@@ -1,5 +1,5 @@
 import { EventChronologyTimeline } from '@/layouts/timeline/EventChronologyTimeline'
-import { getXataClient } from '@/services/xata'
+import { getXataClient } from '@/db/xata'
 const xata = getXataClient()
 export default async function Index() {
   const events: any = await xata.db.events

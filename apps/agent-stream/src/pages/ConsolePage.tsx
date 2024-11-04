@@ -1,3 +1,4 @@
+import * as React from "react"
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { ItemType } from '@openai/realtime-api-beta/dist/lib/client.js'
@@ -5,7 +6,7 @@ import { WavRecorder, WavStreamPlayer } from '../lib/wavtools/index.js'
 import { instructions } from '../utils/conversation_config.js'
 import { WavRenderer } from '../utils/wav_renderer'
 
-import { ArrowDown, ArrowUp, Edit, X, Zap } from 'react-feather'
+import { ArrowDown, ArrowUp, Edit, X, Zap, File } from 'react-feather'
 import { Button } from '../components/button/Button'
 import { Toggle } from '../components/toggle/Toggle'
 
@@ -16,6 +17,17 @@ import { RealtimeClient } from '@openai/realtime-api-beta'
 import { createNewMemory, getSignedUploadUrl } from '../lib/langbase/remember'
 // import { writeFile } from '../utils/write-file.js'
 
+import Papa from 'papaparse'
+import { addCustomizedMemory } from "../lib/mem/index"
+
+import ReactMarkdown from 'react-markdown'
+
+
+
+
+const firecrawl = new FirecrawlApp( {
+  apiKey: 'fc-22d136e7c1484888b4ba53b1a85da50e',
+} )
 const LOCAL_RELAY_SERVER_URL: string =
   process.env.REACT_APP_LOCAL_RELAY_SERVER_URL || ''
 
@@ -42,6 +54,25 @@ client.updateSession( {
           },
         },
         required: ['url'],
+        additionalProperties: false,
+      }
+    },
+    {
+      name: 'file_upload',
+      description: 'Upload a CSV file containing URLs, parse them with PapaParse, scrape each URL with Firecrawl, and save to memory using mem0ai',
+      parameters: {
+        type: 'object',
+        properties: {
+          fileContent: {
+            type: 'string',
+            description: 'The content of the CSV file as a string',
+          },
+          urlColumnName: {
+            type: 'string',
+            description: 'The name of the column containing URLs in the CSV file',
+          }
+        },
+        required: ['fileContent', 'urlColumnName'],
         additionalProperties: false,
       }
     }
@@ -77,13 +108,21 @@ interface RealtimeEvent {
   event: { [key: string]: any }
 }
 
+// Initialize mem0ai client
+// const mem0ai = new Mem0AI({
+//   apiKey: process.env.MEM0AI_API_KEY
+// });
+
+// Function to handle file processing
+
+
 export function ConsolePage() {
   /**
    * Ask user for API Key
    * If we're using the local relay server, we don't need this
    */
 
-  /**
+  /**ˆ
    * Instantiate:
    * - WavRecorder (speech input)
    * - WavStreamPlayer (speech output)
@@ -189,27 +228,7 @@ export function ConsolePage() {
 
     try {
       await client.connect()
-      // await client.updateSession( {
-      //   tools: [
 
-      //     {
-
-      //       name: 'scrape_data',
-      //       description: 'gets a url and scrapes data from it using @Firecrawl.',
-      //       parameters: {
-      //         type: 'object',
-      //         properties: {
-      //           url: {
-      //             type: 'string',
-      //             description: 'URL to scrape data from',
-      //           },
-      //         },
-      //         required: ['url'],
-      //         additionalProperties: false,
-      //       }
-      //     }
-      //   ]
-      // } )
 
       client.sendUserMessageContent( [
         {
@@ -281,6 +300,33 @@ export function ConsolePage() {
     client.createResponse()
   }
 
+  const onFileUpload = async ( e: React.ChangeEvent<HTMLInputElement> ) => {
+
+    const file = e.target.files?.[0]
+    if ( !file ) return
+
+    const reader = new FileReader()
+    reader.onload = async ( event ) => {
+      const fileContent = event.target?.result as string
+      if ( !fileContent ) return
+
+      client.sendUserMessageContent( [{
+        type: 'input_text',
+        text: `I'm uploading a CSV file with URLs. Please process it using the file_upload tool. The column containing URLs is named "url".`
+      }] )
+
+      // Send file content separately to avoid type error
+      client.sendUserMessageContent( [{
+
+
+        type: 'input_text',
+        text: fileContent
+
+      }] )
+    }
+    reader.readAsText( file )
+
+  }
   /**
    * Switch between Manual <> VAD mode for communication
    */
@@ -475,6 +521,110 @@ export function ConsolePage() {
       }
     )
 
+
+    // Update the tool configuration to use addTool instead of addToolHandler
+    client.addTool(
+      {
+        name: 'file_upload',
+        description: 'Parse csv file from upload for urls and scrape all of them.',
+        parameters: {
+          type: 'object',
+          properties: {
+            fileContent: {
+              type: 'string',
+              description: 'The content of the CSV file as a string',
+            },
+            urlColumnName: {
+              type: 'string',
+              description: 'The name of the column containing URLs in the CSV file',
+            }
+          },
+          required: ['fileContent', 'urlColumnName'],
+        },
+      },
+      async ( { fileContent, urlColumnName }: { fileContent: string; urlColumnName: string } ) => {
+
+
+        const parseResult = Papa.parse( fileContent, {
+          header: true,
+          skipEmptyLines: true
+        } )
+        const urls = parseResult.data
+          .map( ( value: unknown ) => {
+            const row = value as Record<string, string>
+            return row[urlColumnName]
+          } )
+          .filter( ( url: unknown ): url is string =>
+            typeof url === 'string' && url.trim() !== ''
+          )
+
+        // Use the existing firecrawl instance instead of creating a new one
+        for ( const url of urls ) {
+          try {
+            const scrapedData: any = await firecrawl.scrapeUrl( url, {
+              formats: ['markdown', 'links', 'screenshot']
+            } )
+
+            if ( scrapedData?.markdown && scrapedData.metadata ) {
+              const { metadata: {
+                description,
+                keywords,
+                title
+              }, markdown }: any = scrapedData
+              console.log( "🚀 ~ file: ConsolePage.tsx:621 ~ scrapedData:", scrapedData )
+
+              const memory = await addCustomizedMemory( {
+                messages: [{
+                  role: 'user',
+                  content: markdown
+                }],
+                includes: `${title}, ${keywords}`
+              } )
+              console.log( "🚀 ~ file: ConsolePage.tsx:620 ~ memory:", memory )
+              // const summary = await summarize(
+              //   markdown
+              // )
+
+              // console.log( "🚀 ~ file: ConsolePage.tsx:633 ~ summary:", summary )
+              // addCustomizedMemory
+              // Use your local memory system
+              // const memory = await createNewMemory( {
+              //   name: title || url,
+              //   description: `Description: ${description}\nKeywords: ${keywords && Array.isArray( keywords ) ? keywords.join( ', ' ) : keywords}`
+              // } )
+
+              // const signedUrl = await getSignedUploadUrl( {
+              //   memoryName: memory.name,
+              //   fileName: `${title || 'scrape'}.md`
+              // } )
+
+              // Update UI state
+              setScrapeBucket( ( prevBucket: any ) => [...prevBucket, { ...scrapedData }] )
+              setWebData( ( prevData: string | any[] ) => {
+                const newItem = {
+                  markdown: scrapedData.markdown,
+                  screenshot: scrapedData.screenshot ?? ''
+                }
+                return prevData?.length ? [...prevData, newItem] : [newItem]
+              } )
+              setScreenshots( prev => [...prev, scrapedData.screenshot ?? ''] )
+            }
+          } catch ( error ) {
+            console.error( `Error processing URL ${url}:`, error )
+          }
+        }
+
+        return { ok: true, message: `Processed ${urls.length} URLs successfully` }
+
+      }
+    )
+
+
+
+
+
+
+
     client.addTool(
       {
         name: 'scrape_ufo_data',
@@ -523,6 +673,8 @@ export function ConsolePage() {
             description: `Description: ${description}\nkeywords: ${keywords && Array.isArray( keywords ) ? keywords.join( ', ' ) : keywords}`
           } )
 
+
+
           console.log( "🚀 ~ file: ConsolePage.tsx:591 ~ memory:", memory )
           const signedUrl = await getSignedUploadUrl( { memoryName: memory.name, fileName: `${title}.md` } )
 
@@ -545,6 +697,9 @@ export function ConsolePage() {
       }
     )
     // )
+
+
+
     client.on( 'response.function_call_arguments', async () => {
       const trackSampleOffset = await wavStreamPlayer.interrupt()
       if ( trackSampleOffset?.trackId ) {
@@ -665,6 +820,7 @@ export function ConsolePage() {
    * Render the application
    */
   return (
+
     <div data-component="ConsolePage">
       <div className="content-top">
         <div className="content-title">
@@ -684,171 +840,70 @@ export function ConsolePage() {
         </div>
       </div>
       <div className="content-main">
-        <div className="content-logs">
-          <div className="content-block events">
-            <div className="visualization">
-              <div className="visualization-entry client">
-                <canvas ref={clientCanvasRef} />
-              </div>
-              <div className="visualization-entry server">
-                <canvas ref={serverCanvasRef} />
-              </div>
-            </div>
-            <div className="content-block-title">events</div>
-            <div className="content-block-body" ref={eventsScrollRef}>
-              {!realtimeEvents.length && `awaiting connection...`}
-              {realtimeEvents.map( ( realtimeEvent, i ) => {
-                const count = realtimeEvent.count
-                const event = { ...realtimeEvent.event }
-                if ( event.type === 'input_audio_buffer.append' ) {
-                  event.audio = `[trimmed: ${event.audio.length} bytes]`
-                } else if ( event.type === 'response.audio.delta' ) {
-                  event.delta = `[trimmed: ${event.delta.length} bytes]`
-                }
-                return (
-                  <div className="event" key={event.event_id}>
-                    <div className="event-timestamp">
-                      {formatTime( realtimeEvent.time )}
+
+        <div className="content-block conversation">
+          <div className="content-block-title">conversation</div>
+          <div className="content-block-body" data-conversation-content>
+            {!items.length && `awaiting connection...`}
+
+            {items && items.map( ( conversationItem, i ) => {
+              return (
+                <div className="conversation-item" key={conversationItem.id}>
+                  <div className={`speaker ${conversationItem.role || ''}`}>
+                    <div>
+                      {(
+                        conversationItem.role || conversationItem.type
+                      ).replaceAll( '_', ' ' )}
                     </div>
-                    <div className="event-details">
-                      <div
-                        className="event-summary"
-                        onClick={() => {
-                          // toggle event details
-                          const id = event.event_id
-                          const expanded = { ...expandedEvents }
-                          if ( expanded[id] ) {
-                            delete expanded[id]
-                          } else {
-                            expanded[id] = true
-                          }
-                          setExpandedEvents( expanded )
-                        }}
-                      >
-                        <div
-                          className={`event-source ${event.type === 'error'
-                            ? 'error'
-                            : realtimeEvent.source
-                            }`}
-                        >
-                          {realtimeEvent.source === 'client' ? (
-                            <ArrowUp />
-                          ) : (
-                            <ArrowDown />
-                          )}
-                          <span>
-                            {event.type === 'error'
-                              ? 'error!'
-                              : realtimeEvent.source}
-                          </span>
-                        </div>
-                        <div className="event-type">
-                          {event.type}
-                          {count && ` (${count})`}
-                        </div>
-                      </div>
-                      {!!expandedEvents[event.event_id] && (
-                        <div className="event-payload">
-                          {JSON.stringify( event, null, 2 )}
-                        </div>
-                      )}
+                    <div
+                      className="close"
+                      onClick={() =>
+                        deleteConversationItem( conversationItem.id )
+                      }
+                    >
+                      <X />
                     </div>
                   </div>
-                )
-              } )}
-            </div>
-          </div>
-          <div className="content-block conversation">
-            <div className="content-block-title">conversation</div>
-            <div className="content-block-body" data-conversation-content>
-              {!items.length && `awaiting connection...`}
-              {items.map( ( conversationItem, i ) => {
-                return (
-                  <div className="conversation-item" key={conversationItem.id}>
-                    <div className={`speaker ${conversationItem.role || ''}`}>
+                  <div className={`speaker-content`}>
+                    {/* tool response */}
+                    {conversationItem.type === 'function_call_output' && (
+                      <div>{conversationItem.formatted.output}</div>
+                    )}
+                    {/* tool call */}
+                    {!!conversationItem.formatted.tool && (
                       <div>
-                        {(
-                          conversationItem.role || conversationItem.type
-                        ).replaceAll( '_', ' ' )}
+                        {conversationItem.formatted.tool.name}(
+                        {conversationItem.formatted.tool.arguments})
                       </div>
-                      <div
-                        className="close"
-                        onClick={() =>
-                          deleteConversationItem( conversationItem.id )
-                        }
-                      >
-                        <X />
-                      </div>
-                    </div>
-                    <div className={`speaker-content`}>
-                      {/* tool response */}
-                      {conversationItem.type === 'function_call_output' && (
-                        <div>{conversationItem.formatted.output}</div>
-                      )}
-                      {/* tool call */}
-                      {!!conversationItem.formatted.tool && (
+                    )}
+                    {!conversationItem.formatted.tool &&
+                      conversationItem.role === 'user' && (
                         <div>
-                          {conversationItem.formatted.tool.name}(
-                          {conversationItem.formatted.tool.arguments})
+                          {conversationItem.formatted.transcript ||
+                            ( conversationItem.formatted.audio?.length
+                              ? '(awaiting transcript)'
+                              : conversationItem.formatted.text ||
+                              '(item sent)' )}
                         </div>
                       )}
-                      {!conversationItem.formatted.tool &&
-                        conversationItem.role === 'user' && (
-                          <div>
-                            {conversationItem.formatted.transcript ||
-                              ( conversationItem.formatted.audio?.length
-                                ? '(awaiting transcript)'
-                                : conversationItem.formatted.text ||
-                                '(item sent)' )}
-                          </div>
-                        )}
-                      {!conversationItem.formatted.tool &&
-                        conversationItem.role === 'assistant' && (
-                          <div>
-                            {conversationItem.formatted.transcript ||
-                              conversationItem.formatted.text ||
-                              '(truncated)'}
-                          </div>
-                        )}
-                      {conversationItem.formatted.file && (
-                        <audio
-                          src={conversationItem.formatted.file.url}
-                          controls
-                        />
+                    {!conversationItem.formatted.tool &&
+                      conversationItem.role === 'assistant' && (
+                        <div>
+                          {conversationItem.formatted.transcript ||
+                            conversationItem.formatted.text ||
+                            '(truncated)'}
+                        </div>
                       )}
-                    </div>
+                    {conversationItem.formatted.file && (
+                      <audio
+                        src={conversationItem.formatted.file.url}
+                        controls
+                      />
+                    )}
                   </div>
-                )
-              } )}
-            </div>
-          </div>
-          <div className="content-actions">
-            <Toggle
-              defaultValue={false}
-              labels={['manual', 'vad']}
-              values={['none', 'server_vad']}
-              onChange={( _, value ) => changeTurnEndType( value )}
-            />
-            <div className="spacer" />
-            {isConnected && canPushToTalk && (
-              <Button
-                label={isRecording ? 'release to send' : 'push to talk'}
-                buttonStyle={isRecording ? 'alert' : 'regular'}
-                disabled={!isConnected || !canPushToTalk}
-                onMouseDown={startRecording}
-                onMouseUp={stopRecording}
-              />
-            )}
-            <div className="spacer" />
-            <Button
-              label={isConnected ? 'disconnect' : 'connect'}
-              iconPosition={isConnected ? 'end' : 'start'}
-              icon={isConnected ? X : Zap}
-              buttonStyle={isConnected ? 'regular' : 'action'}
-              onClick={
-                isConnected ? disconnectConversation : connectConversation
-              }
-            />
+                </div>
+              )
+            } )}
           </div>
         </div>
         <div className="content-right">
@@ -857,7 +912,7 @@ export function ConsolePage() {
             {webData?.length ? webData.map( ( { markdown, screenshot }: { markdown: string; screenshot: string } ) => (
               <div key={screenshot}>
                 <img src={screenshot} alt="screenshot" />
-                <div>{markdown}</div>
+                <ReactMarkdown>{markdown}</ReactMarkdown>
               </div>
             ) ) : null}
 
@@ -871,7 +926,142 @@ export function ConsolePage() {
           </div>
 
         </div>
+
+
       </div>
+
+
+
+
+      <div className="content-actions">
+        <div className="inner">
+
+
+          <Toggle
+            defaultValue={false}
+            labels={['manual', 'vad']}
+            values={['none', 'server_vad']}
+            onChange={( _, value ) => changeTurnEndType( value )}
+          />
+
+          {isConnected && canPushToTalk && (
+            <Button
+              label={isRecording ? 'release to send' : 'push to talk'}
+              buttonStyle={isRecording ? 'alert' : 'regular'}
+              disabled={!isConnected || !canPushToTalk}
+              onMouseDown={startRecording}
+              onMouseUp={stopRecording}
+            />
+          )}
+
+          <Button
+            label={isConnected ? 'disconnect' : 'connect'}
+            iconPosition={isConnected ? 'end' : 'start'}
+            icon={isConnected ? X : Zap}
+            buttonStyle={isConnected ? 'regular' : 'action'}
+            onClick={
+              isConnected ? disconnectConversation : connectConversation
+            }
+          />
+
+
+          <Button label={'upload'} icon={File} style={{ maxWidth: '50px' }}>
+
+            <input
+              id="csv-upload"
+              type="file"
+              accept=".csv"
+              onChange={onFileUpload}
+              style={{
+                opacity: 0,
+                width: '100%'
+              }}
+            />
+          </Button>
+
+
+
+        </div>
+        <div className="bottom" />
+      </div>
+
+      <div className="content-block events">
+        <div className="visualization">
+          <div className="visualization-entry client">
+            <canvas ref={clientCanvasRef} />
+          </div>
+          <div className="visualization-entry server">
+            <canvas ref={serverCanvasRef} />
+          </div>
+        </div>
+        <div className="content-block-title">events</div>
+        <div className="content-block-body" ref={eventsScrollRef}>
+          {!realtimeEvents.length && `awaiting connection...`}
+
+          {realtimeEvents && realtimeEvents.map( ( realtimeEvent, i ) => {
+            const count = realtimeEvent.count
+            const event = { ...realtimeEvent.event }
+            if ( event.type === 'input_audio_buffer.append' ) {
+              event.audio = `[trimmed: ${event.audio.length} bytes]`
+            } else if ( event.type === 'response.audio.delta' ) {
+              event.delta = `[trimmed: ${event.delta.length} bytes]`
+            }
+            return (
+              <div className="event" key={event.event_id}>
+                <div className="event-timestamp">
+                  {formatTime( realtimeEvent.time )}
+                </div>
+                <div className="event-details">
+                  <div
+                    className="event-summary"
+                    onClick={() => {
+                      // toggle event details
+                      const id = event.event_id
+                      const expanded = { ...expandedEvents }
+                      if ( expanded[id] ) {
+                        delete expanded[id]
+                      } else {
+                        expanded[id] = true
+                      }
+                      setExpandedEvents( expanded )
+                    }}
+                  >
+                    <div
+                      className={`event-source ${event.type === 'error'
+                        ? 'error'
+                        : realtimeEvent.source
+                        }`}
+                    >
+                      {realtimeEvent.source === 'client' ? (
+                        <ArrowUp />
+                      ) : (
+                        <ArrowDown />
+                      )}
+                      <span>
+                        {event.type === 'error'
+                          ? 'error!'
+                          : realtimeEvent.source}
+                      </span>
+                    </div>
+                    <div className="event-type">
+                      {event.type}
+                      {count && ` (${count})`}
+                    </div>
+                  </div>
+                  {!!expandedEvents[event.event_id] && (
+                    <div className="event-payload">
+                      {JSON.stringify( event, null, 2 )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )
+          } )}
+        </div>
+      </div>
+
+
     </div>
+
   )
 }

@@ -1,15 +1,15 @@
 'use client'
 
-import { useGLTF } from '@react-three/drei'
+import { PerspectiveCamera, useGLTF } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Bloom, EffectComposer, TiltShift2 } from '@react-three/postprocessing'
 import { forwardRef, memo, Suspense, useRef } from 'react'
 
-// useGLTF.preload('/assets/moon/moon.glb')
+
 export const MoonScene = ( { offset = 0, ...props }: any ) => {
   const meshRef: any = useRef()
   const light: any = useRef()
-
+  useGLTF.preload( '/assets/moon/moon.glb' )
 
   const { nodes, materials }: any = useGLTF( '/assets/moon/moon.glb' )
 
@@ -41,12 +41,12 @@ export const MoonScene = ( { offset = 0, ...props }: any ) => {
 export interface MoonProps { }
 
 // Start of Selection
-export const Moon = memo( ( { ref, ...rest }: any ) => {
+export const Moon = () => {
   return (
-    <div className='h-full w-full' ref={ref} id='moon-canvas'>
+    <div className='h-full w-full' id='moon-canvas'>
       <Canvas gl={{ antialias: false }} >
-        {/* <color attach='background' args={['#101015']} /> */}
-        {/* <PerspectiveCamera makeDefault position={[0, -0.5, 5]} fov={50} /> */}
+        <color attach='background' args={['#101015']} />
+        <PerspectiveCamera makeDefault position={[0, -0.5, 5]} fov={50} />
         <ambientLight intensity={0.01} />
         <directionalLight intensity={5} position={[1, 5, -2]} />
         <Suspense fallback={null}>
@@ -59,5 +59,4 @@ export const Moon = memo( ( { ref, ...rest }: any ) => {
       </Canvas>
     </div>
   )
-} )
-Moon.displayName = 'Moon'
+} 

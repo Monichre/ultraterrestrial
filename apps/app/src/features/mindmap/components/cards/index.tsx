@@ -8,5 +8,6 @@ export * from './mini-card'
 export * from './root-node-card/root-node-card'
 export * from './testimony-card'
 import { MiniCard } from './mini-card'
+import { GridCard } from './event/grid-card'
 
-export const EventCard = MiniCard
+export const EventCard = GridCard

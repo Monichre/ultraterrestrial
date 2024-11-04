@@ -8,7 +8,7 @@ import {
 import * as THREE from 'three'
 import { useModelNodes } from './useModelNodes'
 
-import { TopicPersonnelAndEventGraphDataPayload } from '@/services/xata'
+import { TopicPersonnelAndEventGraphDataPayload } from '@/db/xata'
 import {
   Image,
   Text

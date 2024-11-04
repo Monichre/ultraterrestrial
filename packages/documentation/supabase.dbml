@@ -1,0 +1,1869 @@
+Enum "auth"."aal_level" {
+  "aal1"
+  "aal2"
+  "aal3"
+}
+
+Enum "auth"."code_challenge_method" {
+  "s256"
+  "plain"
+}
+
+Enum "auth"."factor_status" {
+  "unverified"
+  "verified"
+}
+
+Enum "auth"."factor_type" {
+  "totp"
+  "webauthn"
+  "phone"
+}
+
+Enum "auth"."one_time_token_type" {
+  "confirmation_token"
+  "reauthentication_token"
+  "recovery_token"
+  "email_change_token_new"
+  "email_change_token_current"
+  "phone_change_token"
+}
+
+Table "auth"."users" {
+  "instance_id" uuid
+  "id" uuid [pk, not null]
+  "aud" varchar(255)
+  "role" varchar(255)
+  "email" varchar(255) [unique]
+  "encrypted_password" varchar(255)
+  "email_confirmed_at" timestamptz
+  "invited_at" timestamptz
+  "confirmation_token" varchar(255) [unique]
+  "confirmation_sent_at" timestamptz
+  "recovery_token" varchar(255) [unique]
+  "recovery_sent_at" timestamptz
+  "email_change_token_new" varchar(255) [unique]
+  "email_change" varchar(255)
+  "email_change_sent_at" timestamptz
+  "last_sign_in_at" timestamptz
+  "raw_app_meta_data" jsonb
+  "raw_user_meta_data" jsonb
+  "is_super_admin" bool
+  "created_at" timestamptz
+  "updated_at" timestamptz
+  "phone" text [unique, default: `NULL::character varying`]
+  "phone_confirmed_at" timestamptz
+  "phone_change" text [default: '']
+  "phone_change_token" varchar(255) [default: '']
+  "phone_change_sent_at" timestamptz
+  "confirmed_at" timestamptz
+  "email_change_token_current" varchar(255) [unique, default: '']
+  "email_change_confirm_status" int2 [default: 0]
+  "banned_until" timestamptz
+  "reauthentication_token" varchar(255) [unique, default: '']
+  "reauthentication_sent_at" timestamptz
+  "is_sso_user" bool [not null, default: false, note: 'Auth: Set this column to true when the account comes from SSO. These accounts can have duplicate emails.']
+  "deleted_at" timestamptz
+  "is_anonymous" bool [not null, default: false]
+
+  Indexes {
+    (instance_id, `lower((email)::text)`) [type: btree, name: "users_instance_id_email_idx"]
+    instance_id [type: btree, name: "users_instance_id_idx"]
+    is_anonymous [type: btree, name: "users_is_anonymous_idx"]
+  }
+  Note: 'Auth: Stores user login data within a secure schema.'
+}
+
+Table "auth"."refresh_tokens" {
+  "instance_id" uuid
+  "id" int8 [pk, not null, increment]
+  "token" varchar(255) [unique]
+  "user_id" varchar(255)
+  "revoked" bool
+  "created_at" timestamptz
+  "updated_at" timestamptz
+  "parent" varchar(255)
+  "session_id" uuid
+
+  Indexes {
+    instance_id [type: btree, name: "refresh_tokens_instance_id_idx"]
+    (instance_id, user_id) [type: btree, name: "refresh_tokens_instance_id_user_id_idx"]
+    parent [type: btree, name: "refresh_tokens_parent_idx"]
+    (session_id, revoked) [type: btree, name: "refresh_tokens_session_id_revoked_idx"]
+    updated_at [type: btree, name: "refresh_tokens_updated_at_idx"]
+  }
+  Note: 'Auth: Store of tokens used to refresh JWT tokens once they expire.'
+}
+
+Table "auth"."instances" {
+  "id" uuid [pk, not null]
+  "uuid" uuid
+  "raw_base_config" text
+  "created_at" timestamptz
+  "updated_at" timestamptz
+  Note: 'Auth: Manages users across multiple sites.'
+}
+
+Table "auth"."audit_log_entries" {
+  "instance_id" uuid
+  "id" uuid [pk, not null]
+  "payload" json
+  "created_at" timestamptz
+  "ip_address" varchar(64) [not null, default: '']
+
+  Indexes {
+    instance_id [type: btree, name: "audit_logs_instance_id_idx"]
+  }
+  Note: 'Auth: Audit trail for user actions.'
+}
+
+Table "auth"."schema_migrations" {
+  "version" varchar(255) [pk, not null]
+  Note: 'Auth: Manages updates to the auth system.'
+}
+
+Table "auth"."identities" {
+  "provider_id" text [not null]
+  "user_id" uuid [not null]
+  "identity_data" jsonb [not null]
+  "provider" text [not null]
+  "last_sign_in_at" timestamptz
+  "created_at" timestamptz
+  "updated_at" timestamptz
+  "email" text [note: 'Auth: Email is a generated column that references the optional email property in the identity_data']
+  "id" uuid [pk, not null, default: `gen_random_uuid()`]
+
+  Indexes {
+    (provider_id, provider) [type: btree, name: "identities_provider_id_provider_unique"]
+    email [type: btree, name: "identities_email_idx"]
+    user_id [type: btree, name: "identities_user_id_idx"]
+  }
+  Note: 'Auth: Stores identities associated to a user.'
+}
+
+Table "auth"."sessions" {
+  "id" uuid [pk, not null]
+  "user_id" uuid [not null]
+  "created_at" timestamptz
+  "updated_at" timestamptz
+  "factor_id" uuid
+  "aal" auth.aal_level
+  "not_after" timestamptz [note: 'Auth: Not after is a nullable column that contains a timestamp after which the session should be regarded as expired.']
+  "refreshed_at" timestamp
+  "user_agent" text
+  "ip" inet
+  "tag" text
+
+  Indexes {
+    not_after [type: btree, name: "sessions_not_after_idx"]
+    user_id [type: btree, name: "sessions_user_id_idx"]
+    (user_id, created_at) [type: btree, name: "user_id_created_at_idx"]
+  }
+  Note: 'Auth: Stores session data associated to a user.'
+}
+
+Table "auth"."mfa_factors" {
+  "id" uuid [pk, not null]
+  "user_id" uuid [not null]
+  "friendly_name" text
+  "factor_type" auth.factor_type [not null]
+  "status" auth.factor_status [not null]
+  "created_at" timestamptz [not null]
+  "updated_at" timestamptz [not null]
+  "secret" text
+  "phone" text
+  "last_challenged_at" timestamptz [unique]
+  "web_authn_credential" jsonb
+  "web_authn_aaguid" uuid
+
+  Indexes {
+    (friendly_name, user_id) [type: btree, name: "mfa_factors_user_friendly_name_unique"]
+    (user_id, phone) [type: btree, name: "unique_phone_factor_per_user"]
+    (user_id, created_at) [type: btree, name: "factor_id_created_at_idx"]
+    user_id [type: btree, name: "mfa_factors_user_id_idx"]
+  }
+  Note: 'auth: stores metadata about factors'
+}
+
+Table "auth"."mfa_challenges" {
+  "id" uuid [pk, not null]
+  "factor_id" uuid [not null]
+  "created_at" timestamptz [not null]
+  "verified_at" timestamptz
+  "ip_address" inet [not null]
+  "otp_code" text
+  "web_authn_session_data" jsonb
+
+  Indexes {
+    created_at [type: btree, name: "mfa_challenge_created_at_idx"]
+  }
+  Note: 'auth: stores metadata about challenge requests made'
+}
+
+Table "auth"."mfa_amr_claims" {
+  "session_id" uuid [not null]
+  "created_at" timestamptz [not null]
+  "updated_at" timestamptz [not null]
+  "authentication_method" text [not null]
+  "id" uuid [pk, not null]
+
+  Indexes {
+    (session_id, authentication_method) [type: btree, name: "mfa_amr_claims_session_id_authentication_method_pkey"]
+  }
+  Note: 'auth: stores authenticator method reference claims for multi factor authentication'
+}
+
+Table "auth"."sso_providers" {
+  "id" uuid [pk, not null]
+  "resource_id" text [note: 'Auth: Uniquely identifies a SSO provider according to a user-chosen resource ID (case insensitive), useful in infrastructure as code.']
+  "created_at" timestamptz
+  "updated_at" timestamptz
+  Note: 'Auth: Manages SSO identity provider information; see saml_providers for SAML.'
+}
+
+Table "auth"."sso_domains" {
+  "id" uuid [pk, not null]
+  "sso_provider_id" uuid [not null]
+  "domain" text [not null]
+  "created_at" timestamptz
+  "updated_at" timestamptz
+
+  Indexes {
+    sso_provider_id [type: btree, name: "sso_domains_sso_provider_id_idx"]
+  }
+  Note: 'Auth: Manages SSO email address domain mapping to an SSO Identity Provider.'
+}
+
+Table "auth"."saml_providers" {
+  "id" uuid [pk, not null]
+  "sso_provider_id" uuid [not null]
+  "entity_id" text [unique, not null]
+  "metadata_xml" text [not null]
+  "metadata_url" text
+  "attribute_mapping" jsonb
+  "created_at" timestamptz
+  "updated_at" timestamptz
+  "name_id_format" text
+
+  Indexes {
+    sso_provider_id [type: btree, name: "saml_providers_sso_provider_id_idx"]
+  }
+  Note: 'Auth: Manages SAML Identity Provider connections.'
+}
+
+Table "auth"."saml_relay_states" {
+  "id" uuid [pk, not null]
+  "sso_provider_id" uuid [not null]
+  "request_id" text [not null]
+  "for_email" text
+  "redirect_to" text
+  "created_at" timestamptz
+  "updated_at" timestamptz
+  "flow_state_id" uuid
+
+  Indexes {
+    created_at [type: btree, name: "saml_relay_states_created_at_idx"]
+    for_email [type: btree, name: "saml_relay_states_for_email_idx"]
+    sso_provider_id [type: btree, name: "saml_relay_states_sso_provider_id_idx"]
+  }
+  Note: 'Auth: Contains SAML Relay State information for each Service Provider initiated login.'
+}
+
+Table "auth"."flow_state" {
+  "id" uuid [pk, not null]
+  "user_id" uuid
+  "auth_code" text [not null]
+  "code_challenge_method" auth.code_challenge_method [not null]
+  "code_challenge" text [not null]
+  "provider_type" text [not null]
+  "provider_access_token" text
+  "provider_refresh_token" text
+  "created_at" timestamptz
+  "updated_at" timestamptz
+  "authentication_method" text [not null]
+  "auth_code_issued_at" timestamptz
+
+  Indexes {
+    created_at [type: btree, name: "flow_state_created_at_idx"]
+    auth_code [type: btree, name: "idx_auth_code"]
+    (user_id, authentication_method) [type: btree, name: "idx_user_id_auth_method"]
+  }
+  Note: 'stores metadata for pkce logins'
+}
+
+Table "auth"."one_time_tokens" {
+  "id" uuid [pk, not null]
+  "user_id" uuid [not null]
+  "token_type" auth.one_time_token_type [not null]
+  "token_hash" text [not null]
+  "relates_to" text [not null]
+  "created_at" timestamp [not null, default: `now()`]
+  "updated_at" timestamp [not null, default: `now()`]
+
+  Indexes {
+    (user_id, token_type) [type: btree, name: "one_time_tokens_user_id_token_type_key"]
+    relates_to [type: hash, name: "one_time_tokens_relates_to_hash_idx"]
+    token_hash [type: hash, name: "one_time_tokens_token_hash_hash_idx"]
+  }
+}
+
+Enum "net"."request_status" {
+  "PENDING"
+  "SUCCESS"
+  "ERROR"
+}
+
+Table "net"."http_request_queue" {
+  "id" int8 [not null, increment]
+  "method" text [not null]
+  "url" text [not null]
+  "headers" jsonb [not null]
+  "body" bytea
+  "timeout_milliseconds" int4 [not null]
+}
+
+Table "net"."_http_response" {
+  "id" int8
+  "status_code" int4
+  "content_type" text
+  "headers" jsonb
+  "content" text
+  "timed_out" bool
+  "error_msg" text
+  "created" timestamptz [not null, default: `now()`]
+
+  Indexes {
+    created [type: btree, name: "_http_response_created_idx"]
+  }
+}
+
+Enum "pgsodium"."key_status" {
+  "default"
+  "valid"
+  "invalid"
+  "expired"
+}
+
+Enum "pgsodium"."key_type" {
+  "aead-ietf"
+  "aead-det"
+  "hmacsha512"
+  "hmacsha256"
+  "auth"
+  "shorthash"
+  "generichash"
+  "kdf"
+  "secretbox"
+  "secretstream"
+  "stream_xchacha20"
+}
+
+Table "pgsodium"."key" {
+  "id" uuid [pk, not null, default: `gen_random_uuid()`]
+  "status" pgsodium.key_status [unique, default: 'valid']
+  "created" timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  "expires" timestamptz
+  "key_type" pgsodium.key_type
+  "key_id" int8 [increment]
+  "key_context" bytea [default: '\x7067736f6469756d']
+  "name" text [unique]
+  "associated_data" text [default: 'associated']
+  "raw_key" bytea
+  "raw_key_nonce" bytea
+  "parent_key" uuid
+  "comment" text
+  "user_data" text
+
+  Indexes {
+    (key_id, key_context, key_type) [type: btree, name: "key_key_id_key_context_key_type_idx"]
+    status [type: btree, name: "key_status_idx"]
+  }
+  Note: 'This table holds metadata for derived keys given a key_id and key_context. The raw key is never stored.'
+}
+
+Enum "lat_lon" {
+  "latitude"
+  "longitude"
+}
+
+Enum "xata_uid" {
+  "rec_"
+}
+
+Table "spatial_ref_sys" {
+  "srid" int4 [pk, not null]
+  "auth_name" varchar(256)
+  "auth_srid" int4
+  "srtext" varchar(2048)
+  "proj4text" varchar(2048)
+}
+
+Table "event_subject_matter_experts" {
+  "id" int4 [pk, not null, increment]
+  "xata_id" varchar [unique]
+  "event_id" int4
+  "subject_matter_expert_id" int4
+  "created_at" timestamp
+  "updated_at" timestamp
+  "version" int4
+  "api_data" jsonb
+}
+
+Table "event_topic_subject_matter_experts" {
+  "id" int4 [pk, not null, increment]
+  "xata_id" varchar [unique]
+  "event_id" int4
+  "topic_id" int4
+  "subject_matter_expert_id" int4
+  "created_at" timestamp
+  "updated_at" timestamp
+  "version" int4
+  "api_data" jsonb
+}
+
+Table "events" {
+  "id" int4 [pk, not null, increment]
+  "xata_id" varchar [unique]
+  "name" varchar
+  "location" varchar
+  "date" date
+  "latitude" float4
+  "longitude" float4
+  "description" text
+  "photos" jsonb
+  "api_data" jsonb
+}
+
+Table "key_figures" {
+  "id" int4 [pk, not null, increment]
+  "xata_id" varchar [unique]
+  "name" varchar
+  "bio" text
+  "role" varchar
+  "facebook" varchar
+  "twitter" varchar
+  "website" varchar
+  "instagram" varchar
+  "rank" int4
+  "photo" jsonb
+  "credibility" int4
+  "popularity" int4
+  "authority" int4
+  "created_at" timestamp
+  "updated_at" timestamp
+  "version" int4
+  "api_data" jsonb
+}
+
+Table "organization_members" {
+  "id" int4 [pk, not null, increment]
+  "xata_id" varchar [unique]
+  "member_id" int4
+  "organization_id" int4
+  "created_at" timestamp
+  "updated_at" timestamp
+  "version" int4
+  "api_data" jsonb
+}
+
+Table "organizations" {
+  "id" int4 [pk, not null, increment]
+  "xata_id" varchar [unique]
+  "name" varchar
+  "specialization" varchar
+  "description" text
+  "photo" text
+  "image" text
+  "created_at" timestamp
+  "updated_at" timestamp
+  "version" int4
+  "api_data" jsonb
+}
+
+Table "sightings" {
+  "date" timestamptz
+  "description" text
+  "media_link" text
+  "city" varchar
+  "state" varchar
+  "country" varchar
+  "shape" varchar
+  "duration_seconds" varchar
+  "duration_hours_min" varchar
+  "comments" text
+  "date_posted" date
+  "latitude" numeric
+  "longitude" numeric
+  "api_data" jsonb
+}
+
+Table "testimonies" {
+  "id" int4 [pk, not null, increment]
+  "xata_id" varchar [unique]
+  "claim" text
+  "summary" text
+  "documentation" jsonb
+  "event_id" int4
+  "date" timestamp
+  "witness_id" int4
+  "organization_id" int4
+  "created_at" timestamp
+  "updated_at" timestamp
+  "version" int4
+  "api_data" jsonb
+}
+
+Table "testimonies_xata" {
+  "xata_id" text [pk, not null]
+  "claim" text
+  "summary" text
+  "documentation" jsonb
+  "event" text
+  "date" text
+  "witness" text
+  "organization" text
+}
+
+Table "topic_subject_matter_experts" {
+  "id" int4 [pk, not null, increment]
+  "xata_id" varchar [unique]
+  "topic_id" int4
+  "subject_matter_expert_id" int4
+  "created_at" timestamp
+  "updated_at" timestamp
+  "version" int4
+  "api_data" jsonb
+}
+
+Table "topics" {
+  "id" int4 [pk, not null, increment]
+  "xata_id" varchar [unique]
+  "name" varchar
+  "summary" text
+  "photo" text
+  "photos" jsonb
+  "created_at" timestamp
+  "updated_at" timestamp
+  "version" int4
+  "api_data" jsonb
+}
+
+Table "topics_testimonies" {
+  "id" int4 [pk, not null, increment]
+  "xata_id" varchar [unique]
+  "topic_id" int4
+  "testimony_id" int4
+  "created_at" timestamp
+  "updated_at" timestamp
+  "version" int4
+  "api_data" jsonb
+}
+
+Table "xata_to_postgres_mapping" {
+  "xata_id" varchar [pk, not null]
+  "new_id" int4
+}
+
+Table "documents" {
+  "id" int8 [pk, not null, increment]
+  "content" text
+  "metadata" jsonb
+  "embedding" public.vector
+  "api_data" jsonb
+}
+
+Table "users" {
+  "id" int4 [pk, not null, increment]
+  "email" text [unique, not null]
+  "name" text [not null]
+  "photo" text
+  "profile_image_url" text
+  "external_id" text
+  "api_data" jsonb
+}
+
+Table "user_theories" {
+  "id" int4 [pk, not null, increment]
+  "user_id" int4
+  "title" text [not null]
+  "content" text
+  "synopsis" text
+  "diagrams" "text[]"
+  "description" text
+
+  Indexes {
+    (user_id, title) [type: btree, name: "user_theories_user_id_name_key"]
+  }
+}
+
+Table "user_saved_events" {
+  "id" int4 [pk, not null, increment]
+  "user_id" int4
+  "event_id" int4
+  "note" text
+  "note_title" text
+  "api_data" jsonb
+}
+
+Table "user_saved_topics" {
+  "id" int4 [pk, not null, increment]
+  "user_id" int4
+  "topic_id" int4
+  "note" text
+  "note_title" text
+  "api_data" jsonb
+}
+
+Table "theories" {
+  "id" int4 [pk, not null, increment]
+  "description" text
+  "title" text
+}
+
+Table "user_saved_testimonies" {
+  "id" int4 [pk, not null, increment]
+  "user_id" int4
+  "testimony_id" int4
+  "note" text
+  "note_title" text
+  "api_data" jsonb
+}
+
+Table "user_saved_documents" {
+  "id" int4 [pk, not null, increment]
+  "user_id" int4
+  "document_id" int4
+  "note" text
+  "note_title" text
+  "api_data" jsonb
+}
+
+Table "user_saved_organizations" {
+  "id" int4 [pk, not null, increment]
+  "user_id" int4
+  "organization_id" int4
+  "note" text
+  "note_title" text
+  "api_data" jsonb
+}
+
+Table "mindmaps" {
+  "id" int4 [pk, not null, increment]
+  "json" json [default: `{}`]
+  "embedding" public.vector
+  "user_id" int4
+  "file" text
+  "api_data" jsonb
+}
+
+Table "artifacts" {
+  "id" int4 [pk, not null, increment]
+  "name" text [unique, not null]
+  "description" text
+  "photos" "text[]"
+  "date" text
+  "source" text
+  "origin" text
+  "images" "text[]"
+  "xata_id" text [unique]
+  "api_data" jsonb
+}
+
+Ref "identities_user_id_fkey":"auth"."users"."id" < "auth"."identities"."user_id" [delete: cascade]
+
+Ref "mfa_amr_claims_session_id_fkey":"auth"."sessions"."id" < "auth"."mfa_amr_claims"."session_id" [delete: cascade]
+
+Ref "mfa_challenges_auth_factor_id_fkey":"auth"."mfa_factors"."id" < "auth"."mfa_challenges"."factor_id" [delete: cascade]
+
+Ref "mfa_factors_user_id_fkey":"auth"."users"."id" < "auth"."mfa_factors"."user_id" [delete: cascade]
+
+Ref "one_time_tokens_user_id_fkey":"auth"."users"."id" < "auth"."one_time_tokens"."user_id" [delete: cascade]
+
+Ref "refresh_tokens_session_id_fkey":"auth"."sessions"."id" < "auth"."refresh_tokens"."session_id" [delete: cascade]
+
+Ref "saml_providers_sso_provider_id_fkey":"auth"."sso_providers"."id" < "auth"."saml_providers"."sso_provider_id" [delete: cascade]
+
+Ref "saml_relay_states_flow_state_id_fkey":"auth"."flow_state"."id" < "auth"."saml_relay_states"."flow_state_id" [delete: cascade]
+
+Ref "saml_relay_states_sso_provider_id_fkey":"auth"."sso_providers"."id" < "auth"."saml_relay_states"."sso_provider_id" [delete: cascade]
+
+Ref "sessions_user_id_fkey":"auth"."users"."id" < "auth"."sessions"."user_id" [delete: cascade]
+
+Ref "sso_domains_sso_provider_id_fkey":"auth"."sso_providers"."id" < "auth"."sso_domains"."sso_provider_id" [delete: cascade]
+
+Ref "event_subject_matter_experts_event_id_fkey":"events"."id" < "event_subject_matter_experts"."event_id"
+
+Ref "event_subject_matter_experts_subject_matter_expert_id_fkey":"key_figures"."id" < "event_subject_matter_experts"."subject_matter_expert_id"
+
+Ref "event_topic_subject_matter_expert_subject_matter_expert_id_fkey":"key_figures"."id" < "event_topic_subject_matter_experts"."subject_matter_expert_id"
+
+Ref "event_topic_subject_matter_experts_event_id_fkey":"events"."id" < "event_topic_subject_matter_experts"."event_id"
+
+Ref "event_topic_subject_matter_experts_topic_id_fkey":"topics"."id" < "event_topic_subject_matter_experts"."topic_id"
+
+Ref "mindmaps_user_id_fkey":"users"."id" < "mindmaps"."user_id" [delete: cascade]
+
+Ref "organization_members_member_id_fkey":"key_figures"."id" < "organization_members"."member_id"
+
+Ref "organization_members_organization_id_fkey":"organizations"."id" < "organization_members"."organization_id"
+
+Ref "testimonies_event_id_fkey":"events"."id" < "testimonies"."event_id"
+
+Ref "testimonies_organization_id_fkey":"organizations"."id" < "testimonies"."organization_id"
+
+Ref "testimonies_witness_id_fkey":"key_figures"."id" < "testimonies"."witness_id"
+
+Ref "topic_subject_matter_experts_subject_matter_expert_id_fkey":"key_figures"."id" < "topic_subject_matter_experts"."subject_matter_expert_id"
+
+Ref "topic_subject_matter_experts_topic_id_fkey":"topics"."id" < "topic_subject_matter_experts"."topic_id"
+
+Ref "topics_testimonies_testimony_id_fkey":"testimonies"."id" < "topics_testimonies"."testimony_id"
+
+Ref "topics_testimonies_topic_id_fkey":"topics"."id" < "topics_testimonies"."topic_id"
+
+Ref "user_saved_documents_document_id_fkey":"documents"."id" < "user_saved_documents"."document_id" [delete: set null]
+
+Ref "user_saved_documents_user_id_fkey":"users"."id" < "user_saved_documents"."user_id" [delete: cascade]
+
+Ref "user_saved_events_event_id_fkey":"events"."id" < "user_saved_events"."event_id" [delete: cascade]
+
+Ref "user_saved_events_user_id_fkey":"users"."id" < "user_saved_events"."user_id" [delete: cascade]
+
+Ref "user_saved_organizations_organization_id_fkey":"organizations"."id" < "user_saved_organizations"."organization_id" [delete: set null]
+
+Ref "user_saved_organizations_user_id_fkey":"users"."id" < "user_saved_organizations"."user_id" [delete: cascade]
+
+Ref "user_saved_testimonies_testimony_id_fkey":"testimonies"."id" < "user_saved_testimonies"."testimony_id" [delete: set null]
+
+Ref "user_saved_testimonies_user_id_fkey":"users"."id" < "user_saved_testimonies"."user_id" [delete: cascade]
+
+Ref "user_saved_topics_topic_id_fkey":"topics"."id" < "user_saved_topics"."topic_id" [delete: cascade]
+
+Ref "user_saved_topics_user_id_fkey":"users"."id" < "user_saved_topics"."user_id" [delete: cascade]
+
+Ref "user_theories_user_id_fkey":"users"."id" < "user_theories"."user_id" [delete: cascade]
+
+Ref "objects_bucketId_fkey":"storage"."buckets"."id" < "storage"."objects"."bucket_id"
+
+Ref "s3_multipart_uploads_bucket_id_fkey":"storage"."buckets"."id" < "storage"."s3_multipart_uploads"."bucket_id"
+
+Ref "s3_multipart_uploads_parts_bucket_id_fkey":"storage"."buckets"."id" < "storage"."s3_multipart_uploads_parts"."bucket_id"
+
+Ref "s3_multipart_uploads_parts_upload_id_fkey":"storage"."s3_multipart_uploads"."id" < "storage"."s3_multipart_uploads_parts"."upload_id" [delete: cascade]
+
+Enum "realtime"."action" {
+  "INSERT"
+  "UPDATE"
+  "DELETE"
+  "TRUNCATE"
+  "ERROR"
+}
+
+Enum "realtime"."equality_op" {
+  "eq"
+  "neq"
+  "lt"
+  "lte"
+  "gt"
+  "gte"
+  "in"
+}
+
+Table "realtime"."schema_migrations" {
+  "version" int8 [pk, not null]
+  "inserted_at" timestamp
+}
+
+Table "realtime"."subscription" {
+  "id" int8 [pk, not null, increment]
+  "subscription_id" uuid [not null]
+  "entity" regclass [not null]
+  "filters" "user_defined_filter[]" [not null, default: 'ARRAY[realtime.user_defined_filter[]']
+  "claims" jsonb [not null]
+  "claims_role" regrole [not null]
+  "created_at" timestamp [not null, default: `timezone('utc'::text, now())`]
+
+  Indexes {
+    (subscription_id, entity, filters) [type: btree, name: "subscription_subscription_id_entity_filters_key"]
+    entity [type: hash, name: "ix_realtime_subscription_entity"]
+  }
+}
+
+Table "realtime"."messages" {
+  "id" int8 [pk, not null, increment]
+  "topic" text [not null]
+  "extension" text [not null]
+  "inserted_at" timestamp [not null]
+  "updated_at" timestamp [not null]
+
+  Indexes {
+    topic [type: btree, name: "messages_topic_index"]
+  }
+}
+
+Table "_timescaledb_catalog"."hypertable" {
+  "id" int4 [pk, not null, increment]
+  "schema_name" name [not null]
+  "table_name" name [not null]
+  "associated_schema_name" name [not null]
+  "associated_table_prefix" name [not null]
+  "num_dimensions" int2 [not null]
+  "chunk_sizing_func_schema" name [not null]
+  "chunk_sizing_func_name" name [not null]
+  "chunk_target_size" int8 [not null]
+  "compression_state" int2 [not null, default: 0]
+  "compressed_hypertable_id" int4
+  "status" int4 [not null, default: 0]
+
+  Indexes {
+    (associated_schema_name, associated_table_prefix) [type: btree, name: "hypertable_associated_schema_name_associated_table_prefix_key"]
+    (table_name, schema_name) [type: btree, name: "hypertable_table_name_schema_name_key"]
+  }
+}
+
+Table "_timescaledb_catalog"."tablespace" {
+  "id" int4 [pk, not null, increment]
+  "hypertable_id" int4 [not null]
+  "tablespace_name" name [not null]
+
+  Indexes {
+    (hypertable_id, tablespace_name) [type: btree, name: "tablespace_hypertable_id_tablespace_name_key"]
+  }
+}
+
+Table "_timescaledb_catalog"."dimension" {
+  "id" int4 [pk, not null, increment]
+  "hypertable_id" int4 [not null]
+  "column_name" name [not null]
+  "column_type" regtype [not null]
+  "aligned" bool [not null]
+  "num_slices" int2
+  "partitioning_func_schema" name
+  "partitioning_func" name
+  "interval_length" int8
+  "compress_interval_length" int8
+  "integer_now_func_schema" name
+  "integer_now_func" name
+
+  Indexes {
+    (hypertable_id, column_name) [type: btree, name: "dimension_hypertable_id_column_name_key"]
+  }
+}
+
+Table "_timescaledb_catalog"."dimension_slice" {
+  "id" int4 [pk, not null, increment]
+  "dimension_id" int4 [not null]
+  "range_start" int8 [not null]
+  "range_end" int8 [not null]
+
+  Indexes {
+    (dimension_id, range_start, range_end) [type: btree, name: "dimension_slice_dimension_id_range_start_range_end_key"]
+  }
+}
+
+Table "_timescaledb_catalog"."chunk" {
+  "id" int4 [pk, not null, increment]
+  "hypertable_id" int4 [not null]
+  "schema_name" name [not null]
+  "table_name" name [not null]
+  "compressed_chunk_id" int4
+  "dropped" bool [not null, default: false]
+  "status" int4 [not null, default: 0]
+  "osm_chunk" bool [not null, default: false]
+  "creation_time" timestamptz [not null]
+
+  Indexes {
+    (schema_name, table_name) [type: btree, name: "chunk_schema_name_table_name_key"]
+    compressed_chunk_id [type: btree, name: "chunk_compressed_chunk_id_idx"]
+    (hypertable_id, creation_time) [type: btree, name: "chunk_hypertable_id_creation_time_idx"]
+    hypertable_id [type: btree, name: "chunk_hypertable_id_idx"]
+    (osm_chunk, hypertable_id) [type: btree, name: "chunk_osm_chunk_idx"]
+  }
+}
+
+Table "_timescaledb_catalog"."chunk_constraint" {
+  "chunk_id" int4 [not null]
+  "dimension_slice_id" int4
+  "constraint_name" name [not null]
+  "hypertable_constraint_name" name
+
+  Indexes {
+    (chunk_id, constraint_name) [type: btree, name: "chunk_constraint_chunk_id_constraint_name_key"]
+    dimension_slice_id [type: btree, name: "chunk_constraint_dimension_slice_id_idx"]
+  }
+}
+
+Table "_timescaledb_catalog"."chunk_index" {
+  "chunk_id" int4 [not null]
+  "index_name" name [not null]
+  "hypertable_id" int4 [not null]
+  "hypertable_index_name" name [not null]
+
+  Indexes {
+    (chunk_id, index_name) [type: btree, name: "chunk_index_chunk_id_index_name_key"]
+    (hypertable_id, hypertable_index_name) [type: btree, name: "chunk_index_hypertable_id_hypertable_index_name_idx"]
+  }
+}
+
+Table "_timescaledb_catalog"."chunk_column_stats" {
+  "id" int4 [pk, not null, increment]
+  "hypertable_id" int4 [not null]
+  "chunk_id" int4 [not null]
+  "column_name" name [not null]
+  "range_start" int8 [not null]
+  "range_end" int8 [not null]
+  "valid" bool [not null]
+
+  Indexes {
+    (hypertable_id, chunk_id, column_name) [type: btree, name: "chunk_column_stats_ht_id_chunk_id_colname_key"]
+  }
+}
+
+Table "_timescaledb_catalog"."metadata" {
+  "key" name [pk, not null]
+  "value" text [not null]
+  "include_in_telemetry" bool [not null]
+}
+
+Table "_timescaledb_catalog"."telemetry_event" {
+  "created" timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  "tag" name [not null]
+  "body" jsonb [not null]
+}
+
+Table "_timescaledb_catalog"."continuous_agg" {
+  "mat_hypertable_id" int4 [pk, not null]
+  "raw_hypertable_id" int4 [not null]
+  "parent_mat_hypertable_id" int4
+  "user_view_schema" name [not null]
+  "user_view_name" name [not null]
+  "partial_view_schema" name [not null]
+  "partial_view_name" name [not null]
+  "direct_view_schema" name [not null]
+  "direct_view_name" name [not null]
+  "materialized_only" bool [not null, default: false]
+  "finalized" bool [not null, default: true]
+
+  Indexes {
+    (partial_view_schema, partial_view_name) [type: btree, name: "continuous_agg_partial_view_schema_partial_view_name_key"]
+    (user_view_schema, user_view_name) [type: btree, name: "continuous_agg_user_view_schema_user_view_name_key"]
+    raw_hypertable_id [type: btree, name: "continuous_agg_raw_hypertable_id_idx"]
+  }
+}
+
+Table "_timescaledb_catalog"."continuous_aggs_bucket_function" {
+  "mat_hypertable_id" int4 [pk, not null]
+  "bucket_func" text [not null]
+  "bucket_width" text [not null]
+  "bucket_origin" text
+  "bucket_offset" text
+  "bucket_timezone" text
+  "bucket_fixed_width" bool [not null]
+}
+
+Table "_timescaledb_catalog"."continuous_aggs_invalidation_threshold" {
+  "hypertable_id" int4 [pk, not null]
+  "watermark" int8 [not null]
+}
+
+Table "_timescaledb_catalog"."continuous_aggs_watermark" {
+  "mat_hypertable_id" int4 [pk, not null]
+  "watermark" int8 [not null]
+}
+
+Table "_timescaledb_catalog"."continuous_aggs_hypertable_invalidation_log" {
+  "hypertable_id" int4 [not null]
+  "lowest_modified_value" int8 [not null]
+  "greatest_modified_value" int8 [not null]
+
+  Indexes {
+    (hypertable_id, lowest_modified_value) [type: btree, name: "continuous_aggs_hypertable_invalidation_log_idx"]
+  }
+}
+
+Table "_timescaledb_catalog"."continuous_aggs_materialization_invalidation_log" {
+  "materialization_id" int4
+  "lowest_modified_value" int8 [not null]
+  "greatest_modified_value" int8 [not null]
+
+  Indexes {
+    (materialization_id, lowest_modified_value) [type: btree, name: "continuous_aggs_materialization_invalidation_log_idx"]
+  }
+}
+
+Table "_timescaledb_catalog"."compression_algorithm" {
+  "id" int2 [pk, not null]
+  "version" int2 [not null]
+  "name" name [not null]
+  "description" text
+}
+
+Table "_timescaledb_catalog"."compression_settings" {
+  "relid" regclass [pk, not null]
+  "segmentby" "text[]"
+  "orderby" "text[]"
+  "orderby_desc" "bool[]"
+  "orderby_nullsfirst" "bool[]"
+}
+
+Table "_timescaledb_catalog"."compression_chunk_size" {
+  "chunk_id" int4 [pk, not null]
+  "compressed_chunk_id" int4 [not null]
+  "uncompressed_heap_size" int8 [not null]
+  "uncompressed_toast_size" int8 [not null]
+  "uncompressed_index_size" int8 [not null]
+  "compressed_heap_size" int8 [not null]
+  "compressed_toast_size" int8 [not null]
+  "compressed_index_size" int8 [not null]
+  "numrows_pre_compression" int8
+  "numrows_post_compression" int8
+  "numrows_frozen_immediately" int8
+}
+
+Table "_timescaledb_catalog"."continuous_agg_migrate_plan" {
+  "mat_hypertable_id" int4 [pk, not null]
+  "start_ts" timestamptz [not null, default: `now()`]
+  "end_ts" timestamptz
+  "user_view_definition" text
+}
+
+Table "_timescaledb_catalog"."continuous_agg_migrate_plan_step" {
+  "mat_hypertable_id" int4 [not null]
+  "step_id" int4 [not null, increment]
+  "status" text [not null, default: 'NOT STARTED']
+  "start_ts" timestamptz
+  "end_ts" timestamptz
+  "type" text [not null]
+  "config" jsonb
+
+  Indexes {
+    (mat_hypertable_id, step_id) [type: btree, name: "continuous_agg_migrate_plan_step_pkey"]
+  }
+}
+
+Table "_timescaledb_config"."bgw_job" {
+  "id" int4 [pk, not null, increment]
+  "application_name" name [not null]
+  "schedule_interval" interval [not null]
+  "max_runtime" interval [not null]
+  "max_retries" int4 [not null]
+  "retry_period" interval [not null]
+  "proc_schema" name [not null]
+  "proc_name" name [not null]
+  "owner" regrole [not null, default: `(quote_ident((CURRENT_ROLE)::text))::regrole`]
+  "scheduled" bool [not null, default: true]
+  "fixed_schedule" bool [not null, default: true]
+  "initial_start" timestamptz
+  "hypertable_id" int4
+  "config" jsonb
+  "check_schema" name
+  "check_name" name
+  "timezone" text
+
+  Indexes {
+    (proc_schema, proc_name, hypertable_id) [type: btree, name: "bgw_job_proc_hypertable_id_idx"]
+  }
+}
+
+Table "_timescaledb_internal"."bgw_job_stat" {
+  "job_id" int4 [pk, not null]
+  "last_start" timestamptz [not null, default: `now()`]
+  "last_finish" timestamptz [not null]
+  "next_start" timestamptz [not null]
+  "last_successful_finish" timestamptz [not null]
+  "last_run_success" bool [not null]
+  "total_runs" int8 [not null]
+  "total_duration" interval [not null]
+  "total_duration_failures" interval [not null]
+  "total_successes" int8 [not null]
+  "total_failures" int8 [not null]
+  "total_crashes" int8 [not null]
+  "consecutive_failures" int4 [not null]
+  "consecutive_crashes" int4 [not null]
+  "flags" int4 [not null, default: 0]
+}
+
+Table "_timescaledb_internal"."bgw_job_stat_history" {
+  "id" int8 [pk, not null, increment]
+  "job_id" int4 [not null]
+  "pid" int4
+  "execution_start" timestamptz [not null, default: `now()`]
+  "execution_finish" timestamptz
+  "succeeded" bool [not null, default: false]
+  "data" jsonb
+
+  Indexes {
+    job_id [type: btree, name: "bgw_job_stat_history_job_id_idx"]
+  }
+}
+
+Table "_timescaledb_internal"."bgw_policy_chunk_stats" {
+  "job_id" int4 [not null]
+  "chunk_id" int4 [not null]
+  "num_times_job_run" int4
+  "last_time_job_run" timestamptz
+
+  Indexes {
+    (job_id, chunk_id) [type: btree, name: "bgw_policy_chunk_stats_job_id_chunk_id_key"]
+  }
+}
+
+Table "cron"."job" {
+  "jobid" int8 [pk, not null, increment]
+  "schedule" text [not null]
+  "command" text [not null]
+  "nodename" text [not null, default: 'localhost']
+  "nodeport" int4 [not null, default: `inet_server_port()`]
+  "database" text [not null, default: `current_database()`]
+  "username" text [not null, default: `CURRENT_USER`]
+  "active" bool [not null, default: true]
+  "jobname" text
+
+  Indexes {
+    (jobname, username) [type: btree, name: "jobname_username_uniq"]
+  }
+}
+
+Table "cron"."job_run_details" {
+  "jobid" int8
+  "runid" int8 [pk, not null, increment]
+  "job_pid" int4
+  "database" text
+  "username" text
+  "command" text
+  "status" text
+  "return_message" text
+  "start_time" timestamptz
+  "end_time" timestamptz
+}
+
+Table "extensions"."wrappers_fdw_stats" {
+  "fdw_name" text [pk, not null]
+  "create_times" int8 [note: 'Total number of times the FDW instacne has been created']
+  "rows_in" int8 [note: 'Total rows input from origin']
+  "rows_out" int8 [note: 'Total rows output to Postgres']
+  "bytes_in" int8 [note: 'Total bytes input from origin']
+  "bytes_out" int8 [note: 'Total bytes output to Postgres']
+  "metadata" jsonb [note: 'Metadata specific for the FDW']
+  "created_at" timestamptz [not null, default: `timezone('utc'::text, now())`]
+  "updated_at" timestamptz [not null, default: `timezone('utc'::text, now())`]
+  Note: 'Wrappers Foreign Data Wrapper statistics'
+}
+
+Table "storage"."buckets" {
+  "id" text [pk, not null]
+  "name" text [unique, not null]
+  "owner" uuid [note: 'Field is deprecated, use owner_id instead']
+  "created_at" timestamptz [default: `now()`]
+  "updated_at" timestamptz [default: `now()`]
+  "public" bool [default: false]
+  "avif_autodetection" bool [default: false]
+  "file_size_limit" int8
+  "allowed_mime_types" "text[]"
+  "owner_id" text
+}
+
+Table "storage"."objects" {
+  "id" uuid [pk, not null, default: `gen_random_uuid()`]
+  "bucket_id" text
+  "name" text
+  "owner" uuid [note: 'Field is deprecated, use owner_id instead']
+  "created_at" timestamptz [default: `now()`]
+  "updated_at" timestamptz [default: `now()`]
+  "last_accessed_at" timestamptz [default: `now()`]
+  "metadata" jsonb
+  "path_tokens" "text[]"
+  "version" text
+  "owner_id" text
+  "user_metadata" jsonb
+
+  Indexes {
+    (bucket_id, name) [type: btree, name: "bucketid_objname"]
+    (bucket_id, name) [type: btree, name: "idx_objects_bucket_id_name"]
+    name [type: btree, name: "name_prefix_search"]
+  }
+}
+
+Table "storage"."migrations" {
+  "id" int4 [pk, not null]
+  "name" varchar(100) [unique, not null]
+  "hash" varchar(40) [not null]
+  "executed_at" timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "storage"."s3_multipart_uploads" {
+  "id" text [pk, not null]
+  "in_progress_size" int8 [not null, default: 0]
+  "upload_signature" text [not null]
+  "bucket_id" text [not null]
+  "key" text [not null]
+  "version" text [not null]
+  "owner_id" text
+  "created_at" timestamptz [not null, default: `now()`]
+  "user_metadata" jsonb
+
+  Indexes {
+    (bucket_id, key, created_at) [type: btree, name: "idx_multipart_uploads_list"]
+  }
+}
+
+Table "storage"."s3_multipart_uploads_parts" {
+  "id" uuid [pk, not null, default: `gen_random_uuid()`]
+  "upload_id" text [not null]
+  "size" int8 [not null, default: 0]
+  "part_number" int4 [not null]
+  "bucket_id" text [not null]
+  "key" text [not null]
+  "etag" text [not null]
+  "owner_id" text
+  "version" text [not null]
+  "created_at" timestamptz [not null, default: `now()`]
+}
+
+Table "supabase_functions"."hooks" {
+  "id" int8 [pk, not null, increment]
+  "hook_table_id" int4 [not null]
+  "hook_name" text [not null]
+  "created_at" timestamptz [not null, default: `now()`]
+  "request_id" int8
+
+  Indexes {
+    (hook_table_id, hook_name) [type: btree, name: "supabase_functions_hooks_h_table_id_h_name_idx"]
+    request_id [type: btree, name: "supabase_functions_hooks_request_id_idx"]
+  }
+  Note: 'Supabase Functions Hooks: Audit trail for triggered hooks.'
+}
+
+Table "supabase_functions"."migrations" {
+  "version" text [pk, not null]
+  "inserted_at" timestamptz [not null, default: `now()`]
+}
+
+Table "supabase_migrations"."schema_migrations" {
+  "version" text [pk, not null]
+  "statements" "text[]"
+  "name" text
+}
+
+Table "tiger"."geocode_settings" {
+  "name" text [pk, not null]
+  "setting" text
+  "unit" text
+  "category" text
+  "short_desc" text
+}
+
+Table "tiger"."geocode_settings_default" {
+  "name" text [pk, not null]
+  "setting" text
+  "unit" text
+  "category" text
+  "short_desc" text
+}
+
+Table "tiger"."direction_lookup" {
+  "name" varchar(20) [pk, not null]
+  "abbrev" varchar(3)
+
+  Indexes {
+    abbrev [type: btree, name: "direction_lookup_abbrev_idx"]
+  }
+}
+
+Table "tiger"."secondary_unit_lookup" {
+  "name" varchar(20) [pk, not null]
+  "abbrev" varchar(5)
+
+  Indexes {
+    abbrev [type: btree, name: "secondary_unit_lookup_abbrev_idx"]
+  }
+}
+
+Table "tiger"."state_lookup" {
+  "st_code" int4 [pk, not null]
+  "name" varchar(40) [unique]
+  "abbrev" varchar(3) [unique]
+  "statefp" bpchar(2) [unique]
+}
+
+Table "tiger"."street_type_lookup" {
+  "name" varchar(50) [pk, not null]
+  "abbrev" varchar(50)
+  "is_hw" bool [not null, default: false]
+
+  Indexes {
+    abbrev [type: btree, name: "street_type_lookup_abbrev_idx"]
+  }
+}
+
+Table "tiger"."place_lookup" {
+  "st_code" int4 [not null]
+  "state" varchar(2)
+  "pl_code" int4 [not null]
+  "name" varchar(90)
+
+  Indexes {
+    (st_code, pl_code) [type: btree, name: "place_lookup_pkey"]
+    state [type: btree, name: "place_lookup_state_idx"]
+  }
+}
+
+Table "tiger"."county_lookup" {
+  "st_code" int4 [not null]
+  "state" varchar(2)
+  "co_code" int4 [not null]
+  "name" varchar(90)
+
+  Indexes {
+    (st_code, co_code) [type: btree, name: "county_lookup_pkey"]
+    state [type: btree, name: "county_lookup_state_idx"]
+  }
+}
+
+Table "tiger"."countysub_lookup" {
+  "st_code" int4 [not null]
+  "state" varchar(2)
+  "co_code" int4 [not null]
+  "county" varchar(90)
+  "cs_code" int4 [not null]
+  "name" varchar(90)
+
+  Indexes {
+    (st_code, co_code, cs_code) [type: btree, name: "countysub_lookup_pkey"]
+    state [type: btree, name: "countysub_lookup_state_idx"]
+  }
+}
+
+Table "tiger"."zip_lookup_all" {
+  "zip" int4
+  "st_code" int4
+  "state" varchar(2)
+  "co_code" int4
+  "county" varchar(90)
+  "cs_code" int4
+  "cousub" varchar(90)
+  "pl_code" int4
+  "place" varchar(90)
+  "cnt" int4
+}
+
+Table "tiger"."zip_lookup_base" {
+  "zip" varchar(5) [pk, not null]
+  "state" varchar(40)
+  "county" varchar(90)
+  "city" varchar(90)
+  "statefp" varchar(2)
+}
+
+Table "tiger"."zip_lookup" {
+  "zip" int4 [pk, not null]
+  "st_code" int4
+  "state" varchar(2)
+  "co_code" int4
+  "county" varchar(90)
+  "cs_code" int4
+  "cousub" varchar(90)
+  "pl_code" int4
+  "place" varchar(90)
+  "cnt" int4
+}
+
+Table "tiger"."county" {
+  "gid" int4 [unique, not null, increment]
+  "statefp" varchar(2)
+  "countyfp" varchar(3)
+  "countyns" varchar(8)
+  "cntyidfp" varchar(5) [pk, not null]
+  "name" varchar(100)
+  "namelsad" varchar(100)
+  "lsad" varchar(2)
+  "classfp" varchar(2)
+  "mtfcc" varchar(5)
+  "csafp" varchar(3)
+  "cbsafp" varchar(5)
+  "metdivfp" varchar(5)
+  "funcstat" varchar(1)
+  "aland" int8
+  "awater" float8
+  "intptlat" varchar(11)
+  "intptlon" varchar(12)
+  "the_geom" public.geometry
+
+  Indexes {
+    countyfp [type: btree, name: "idx_tiger_county"]
+  }
+}
+
+Table "tiger"."state" {
+  "gid" int4 [unique, not null, increment]
+  "region" varchar(2)
+  "division" varchar(2)
+  "statefp" varchar(2) [pk, not null]
+  "statens" varchar(8)
+  "stusps" varchar(2) [unique, not null]
+  "name" varchar(100)
+  "lsad" varchar(2)
+  "mtfcc" varchar(5)
+  "funcstat" varchar(1)
+  "aland" int8
+  "awater" int8
+  "intptlat" varchar(11)
+  "intptlon" varchar(12)
+  "the_geom" public.geometry
+
+  Indexes {
+    the_geom [type: gist, name: "idx_tiger_state_the_geom_gist"]
+  }
+}
+
+Table "tiger"."place" {
+  "gid" int4 [unique, not null, increment]
+  "statefp" varchar(2)
+  "placefp" varchar(5)
+  "placens" varchar(8)
+  "plcidfp" varchar(7) [pk, not null]
+  "name" varchar(100)
+  "namelsad" varchar(100)
+  "lsad" varchar(2)
+  "classfp" varchar(2)
+  "cpi" varchar(1)
+  "pcicbsa" varchar(1)
+  "pcinecta" varchar(1)
+  "mtfcc" varchar(5)
+  "funcstat" varchar(1)
+  "aland" int8
+  "awater" int8
+  "intptlat" varchar(11)
+  "intptlon" varchar(12)
+  "the_geom" public.geometry
+
+  Indexes {
+    the_geom [type: gist, name: "tiger_place_the_geom_gist"]
+  }
+}
+
+Table "tiger"."zip_state" {
+  "zip" varchar(5) [not null]
+  "stusps" varchar(2) [not null]
+  "statefp" varchar(2)
+
+  Indexes {
+    (zip, stusps) [type: btree, name: "zip_state_pkey"]
+  }
+}
+
+Table "tiger"."zip_state_loc" {
+  "zip" varchar(5) [not null]
+  "stusps" varchar(2) [not null]
+  "statefp" varchar(2)
+  "place" varchar(100) [not null]
+
+  Indexes {
+    (zip, stusps, place) [type: btree, name: "zip_state_loc_pkey"]
+  }
+}
+
+Table "tiger"."cousub" {
+  "gid" int4 [unique, not null, increment]
+  "statefp" varchar(2)
+  "countyfp" varchar(3)
+  "cousubfp" varchar(5)
+  "cousubns" varchar(8)
+  "cosbidfp" varchar(10) [pk, not null]
+  "name" varchar(100)
+  "namelsad" varchar(100)
+  "lsad" varchar(2)
+  "classfp" varchar(2)
+  "mtfcc" varchar(5)
+  "cnectafp" varchar(3)
+  "nectafp" varchar(5)
+  "nctadvfp" varchar(5)
+  "funcstat" varchar(1)
+  "aland" numeric
+  "awater" numeric
+  "intptlat" varchar(11)
+  "intptlon" varchar(12)
+  "the_geom" public.geometry
+
+  Indexes {
+    the_geom [type: gist, name: "tige_cousub_the_geom_gist"]
+  }
+}
+
+Table "tiger"."edges" {
+  "gid" int4 [pk, not null, increment]
+  "statefp" varchar(2)
+  "countyfp" varchar(3)
+  "tlid" int8
+  "tfidl" numeric
+  "tfidr" numeric
+  "mtfcc" varchar(5)
+  "fullname" varchar(100)
+  "smid" varchar(22)
+  "lfromadd" varchar(12)
+  "ltoadd" varchar(12)
+  "rfromadd" varchar(12)
+  "rtoadd" varchar(12)
+  "zipl" varchar(5)
+  "zipr" varchar(5)
+  "featcat" varchar(1)
+  "hydroflg" varchar(1)
+  "railflg" varchar(1)
+  "roadflg" varchar(1)
+  "olfflg" varchar(1)
+  "passflg" varchar(1)
+  "divroad" varchar(1)
+  "exttyp" varchar(1)
+  "ttyp" varchar(1)
+  "deckedroad" varchar(1)
+  "artpath" varchar(1)
+  "persist" varchar(1)
+  "gcseflg" varchar(1)
+  "offsetl" varchar(1)
+  "offsetr" varchar(1)
+  "tnidf" numeric
+  "tnidt" numeric
+  "the_geom" public.geometry
+
+  Indexes {
+    tlid [type: btree, name: "idx_edges_tlid"]
+    countyfp [type: btree, name: "idx_tiger_edges_countyfp"]
+    the_geom [type: gist, name: "idx_tiger_edges_the_geom_gist"]
+  }
+}
+
+Table "tiger"."addrfeat" {
+  "gid" int4 [pk, not null, increment]
+  "tlid" int8
+  "statefp" varchar(2) [not null]
+  "aridl" varchar(22)
+  "aridr" varchar(22)
+  "linearid" varchar(22)
+  "fullname" varchar(100)
+  "lfromhn" varchar(12)
+  "ltohn" varchar(12)
+  "rfromhn" varchar(12)
+  "rtohn" varchar(12)
+  "zipl" varchar(5)
+  "zipr" varchar(5)
+  "edge_mtfcc" varchar(5)
+  "parityl" varchar(1)
+  "parityr" varchar(1)
+  "plus4l" varchar(4)
+  "plus4r" varchar(4)
+  "lfromtyp" varchar(1)
+  "ltotyp" varchar(1)
+  "rfromtyp" varchar(1)
+  "rtotyp" varchar(1)
+  "offsetl" varchar(1)
+  "offsetr" varchar(1)
+  "the_geom" public.geometry
+
+  Indexes {
+    the_geom [type: gist, name: "idx_addrfeat_geom_gist"]
+    tlid [type: btree, name: "idx_addrfeat_tlid"]
+    zipl [type: btree, name: "idx_addrfeat_zipl"]
+    zipr [type: btree, name: "idx_addrfeat_zipr"]
+  }
+}
+
+Table "tiger"."faces" {
+  "gid" int4 [pk, not null, increment]
+  "tfid" numeric
+  "statefp00" varchar(2)
+  "countyfp00" varchar(3)
+  "tractce00" varchar(6)
+  "blkgrpce00" varchar(1)
+  "blockce00" varchar(4)
+  "cousubfp00" varchar(5)
+  "submcdfp00" varchar(5)
+  "conctyfp00" varchar(5)
+  "placefp00" varchar(5)
+  "aiannhfp00" varchar(5)
+  "aiannhce00" varchar(4)
+  "comptyp00" varchar(1)
+  "trsubfp00" varchar(5)
+  "trsubce00" varchar(3)
+  "anrcfp00" varchar(5)
+  "elsdlea00" varchar(5)
+  "scsdlea00" varchar(5)
+  "unsdlea00" varchar(5)
+  "uace00" varchar(5)
+  "cd108fp" varchar(2)
+  "sldust00" varchar(3)
+  "sldlst00" varchar(3)
+  "vtdst00" varchar(6)
+  "zcta5ce00" varchar(5)
+  "tazce00" varchar(6)
+  "ugace00" varchar(5)
+  "puma5ce00" varchar(5)
+  "statefp" varchar(2)
+  "countyfp" varchar(3)
+  "tractce" varchar(6)
+  "blkgrpce" varchar(1)
+  "blockce" varchar(4)
+  "cousubfp" varchar(5)
+  "submcdfp" varchar(5)
+  "conctyfp" varchar(5)
+  "placefp" varchar(5)
+  "aiannhfp" varchar(5)
+  "aiannhce" varchar(4)
+  "comptyp" varchar(1)
+  "trsubfp" varchar(5)
+  "trsubce" varchar(3)
+  "anrcfp" varchar(5)
+  "ttractce" varchar(6)
+  "tblkgpce" varchar(1)
+  "elsdlea" varchar(5)
+  "scsdlea" varchar(5)
+  "unsdlea" varchar(5)
+  "uace" varchar(5)
+  "cd111fp" varchar(2)
+  "sldust" varchar(3)
+  "sldlst" varchar(3)
+  "vtdst" varchar(6)
+  "zcta5ce" varchar(5)
+  "tazce" varchar(6)
+  "ugace" varchar(5)
+  "puma5ce" varchar(5)
+  "csafp" varchar(3)
+  "cbsafp" varchar(5)
+  "metdivfp" varchar(5)
+  "cnectafp" varchar(3)
+  "nectafp" varchar(5)
+  "nctadvfp" varchar(5)
+  "lwflag" varchar(1)
+  "offset" varchar(1)
+  "atotal" float8
+  "intptlat" varchar(11)
+  "intptlon" varchar(12)
+  "the_geom" public.geometry
+  "tractce20" varchar(6)
+  "blkgrpce20" varchar(1)
+  "blockce20" varchar(4)
+  "countyfp20" varchar(3)
+  "statefp20" varchar(2)
+
+  Indexes {
+    countyfp [type: btree, name: "idx_tiger_faces_countyfp"]
+    tfid [type: btree, name: "idx_tiger_faces_tfid"]
+    the_geom [type: gist, name: "tiger_faces_the_geom_gist"]
+  }
+}
+
+Table "tiger"."featnames" {
+  "gid" int4 [pk, not null, increment]
+  "tlid" int8
+  "fullname" varchar(100)
+  "name" varchar(100)
+  "predirabrv" varchar(15)
+  "pretypabrv" varchar(50)
+  "prequalabr" varchar(15)
+  "sufdirabrv" varchar(15)
+  "suftypabrv" varchar(50)
+  "sufqualabr" varchar(15)
+  "predir" varchar(2)
+  "pretyp" varchar(3)
+  "prequal" varchar(2)
+  "sufdir" varchar(2)
+  "suftyp" varchar(3)
+  "sufqual" varchar(2)
+  "linearid" varchar(22)
+  "mtfcc" varchar(5)
+  "paflag" varchar(1)
+  "statefp" varchar(2)
+
+  Indexes {
+    (tlid, statefp) [type: btree, name: "idx_tiger_featnames_tlid_statefp"]
+  }
+}
+
+Table "tiger"."addr" {
+  "gid" int4 [pk, not null, increment]
+  "tlid" int8
+  "fromhn" varchar(12)
+  "tohn" varchar(12)
+  "side" varchar(1)
+  "zip" varchar(5)
+  "plus4" varchar(4)
+  "fromtyp" varchar(1)
+  "totyp" varchar(1)
+  "fromarmid" int4
+  "toarmid" int4
+  "arid" varchar(22)
+  "mtfcc" varchar(5)
+  "statefp" varchar(2)
+
+  Indexes {
+    (tlid, statefp) [type: btree, name: "idx_tiger_addr_tlid_statefp"]
+    zip [type: btree, name: "idx_tiger_addr_zip"]
+  }
+}
+
+Table "tiger"."zcta5" {
+  "gid" int4 [unique, not null, increment]
+  "statefp" varchar(2) [not null]
+  "zcta5ce" varchar(5) [not null]
+  "classfp" varchar(2)
+  "mtfcc" varchar(5)
+  "funcstat" varchar(1)
+  "aland" float8
+  "awater" float8
+  "intptlat" varchar(11)
+  "intptlon" varchar(12)
+  "partflg" varchar(1)
+  "the_geom" public.geometry
+
+  Indexes {
+    (zcta5ce, statefp) [type: btree, name: "pk_tiger_zcta5_zcta5ce"]
+  }
+}
+
+Table "tiger"."tabblock20" {
+  "statefp" varchar(2)
+  "countyfp" varchar(3)
+  "tractce" varchar(6)
+  "blockce" varchar(4)
+  "geoid" varchar(15) [pk, not null]
+  "name" varchar(10)
+  "mtfcc" varchar(5)
+  "ur" varchar(1)
+  "uace" varchar(5)
+  "uatype" varchar(1)
+  "funcstat" varchar(1)
+  "aland" float8
+  "awater" float8
+  "intptlat" varchar(11)
+  "intptlon" varchar(12)
+  "the_geom" public.geometry
+  "housing" float8
+  "pop" float8
+}
+
+Table "tiger"."loader_platform" {
+  "os" varchar(50) [pk, not null]
+  "declare_sect" text
+  "pgbin" text
+  "wget" text
+  "unzip_command" text
+  "psql" text
+  "path_sep" text
+  "loader" text
+  "environ_set_command" text
+  "county_process_command" text
+}
+
+Table "tiger"."loader_variables" {
+  "tiger_year" varchar(4) [pk, not null]
+  "website_root" text
+  "staging_fold" text
+  "data_schema" text
+  "staging_schema" text
+}
+
+Table "tiger"."loader_lookuptables" {
+  "process_order" int4 [not null, default: 1000]
+  "lookup_name" text [pk, not null, note: 'This is the table name to inherit from and suffix of resulting output table -- how the table will be named --  edges here would mean -- ma_edges , pa_edges etc. except in the case of national tables. national level tables have no prefix']
+  "table_name" text [note: 'suffix of the tables to load e.g.  edges would load all tables like *edges.dbf(shp)  -- so tl_2010_42129_edges.dbf .  ']
+  "single_mode" bool [not null, default: true]
+  "load" bool [not null, default: true, note: '''Whether or not to load the table.  For states and zcta5 (you may just want to download states10, zcta510 nationwide file manually) load your own into a single table that inherits from tiger.states, tiger.zcta5.  You\'ll get improved performance for some geocoding cases.''']
+  "level_county" bool [not null, default: false]
+  "level_state" bool [not null, default: false]
+  "level_nation" bool [not null, default: false, note: 'These are tables that contain all data for the whole US so there is just a single file']
+  "post_load_process" text
+  "single_geom_mode" bool [default: false]
+  "insert_mode" bpchar(1) [not null, default: 'c']
+  "pre_load_process" text
+  "columns_exclude" "text[]" [note: 'List of columns to exclude as an array. This is excluded from both input table and output table and rest of columns remaining are assumed to be in same order in both tables. gid, geoid,cpi,suffix1ce are excluded if no columns are specified.']
+  "website_root_override" text [note: 'Path to use for wget instead of that specified in year table.  Needed currently for zcta where they release that only for 2000 and 2010']
+}
+
+Table "tiger"."tract" {
+  "gid" int4 [not null, increment]
+  "statefp" varchar(2)
+  "countyfp" varchar(3)
+  "tractce" varchar(6)
+  "tract_id" varchar(11) [pk, not null]
+  "name" varchar(7)
+  "namelsad" varchar(20)
+  "mtfcc" varchar(5)
+  "funcstat" varchar(1)
+  "aland" float8
+  "awater" float8
+  "intptlat" varchar(11)
+  "intptlon" varchar(12)
+  "the_geom" public.geometry
+}
+
+Table "tiger"."tabblock" {
+  "gid" int4 [not null, increment]
+  "statefp" varchar(2)
+  "countyfp" varchar(3)
+  "tractce" varchar(6)
+  "blockce" varchar(4)
+  "tabblock_id" varchar(16) [pk, not null]
+  "name" varchar(20)
+  "mtfcc" varchar(5)
+  "ur" varchar(1)
+  "uace" varchar(5)
+  "funcstat" varchar(1)
+  "aland" float8
+  "awater" float8
+  "intptlat" varchar(11)
+  "intptlon" varchar(12)
+  "the_geom" public.geometry
+}
+
+Table "tiger"."bg" {
+  "gid" int4 [not null, increment]
+  "statefp" varchar(2)
+  "countyfp" varchar(3)
+  "tractce" varchar(6)
+  "blkgrpce" varchar(1)
+  "bg_id" varchar(12) [pk, not null]
+  "namelsad" varchar(13)
+  "mtfcc" varchar(5)
+  "funcstat" varchar(1)
+  "aland" float8
+  "awater" float8
+  "intptlat" varchar(11)
+  "intptlon" varchar(12)
+  "the_geom" public.geometry
+  Note: 'block groups'
+}
+
+Table "tiger"."pagc_gaz" {
+  "id" int4 [pk, not null, increment]
+  "seq" int4
+  "word" text
+  "stdword" text
+  "token" int4
+  "is_custom" bool [not null, default: true]
+}
+
+Table "tiger"."pagc_lex" {
+  "id" int4 [pk, not null, increment]
+  "seq" int4
+  "word" text
+  "stdword" text
+  "token" int4
+  "is_custom" bool [not null, default: true]
+}
+
+Table "tiger"."pagc_rules" {
+  "id" int4 [pk, not null, increment]
+  "rule" text
+  "is_custom" bool [default: true]
+}
+
+Table "vault"."secrets" {
+  "id" uuid [pk, not null, default: `gen_random_uuid()`]
+  "name" text [unique]
+  "description" text [not null, default: '']
+  "secret" text [not null]
+  "key_id" uuid [default: `(pgsodium.create_key()).id`]
+  "nonce" bytea [default: `pgsodium.crypto_aead_det_noncegen()`]
+  "created_at" timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  "updated_at" timestamptz [not null, default: `CURRENT_TIMESTAMP`]
+  Note: 'Table with encrypted `secret` column for storing sensitive information on disk.'
+}

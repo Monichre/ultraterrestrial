@@ -41,7 +41,8 @@ import { saveUserMindMap } from '@/features/user/api/save-event'
 import { useStateOfDisclosure } from '@/providers/state-of-disclosure-provider'
 import { DOMAIN_MODEL_COLORS } from '@/utils'
 import { capitalize } from '@/utils/functions'
-import type { DatabaseSchema, InferredTypes } from '@/services/xata'
+import type { DatabaseSchema, InferredTypes } from '@/db/xata'
+import { map } from 'd3'
 
 // import { simulation } from '@/features/mindmap/utils/force-directed'
 
@@ -197,7 +198,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     ] )
   }, [] )
 
-  const updateChildNodeBatchIndex = useCallback( ( type: RootNodeKey ) => {
+  const updateChildNodeBatchIndex = useCallback( ( type: RootNodeKey, amount?: number ) => {
     console.log( '🚀 ~ file: mindmap-context.tsx:196 ~ updateChildNodeBatchIndex ~ type:', type )
     // if (rootNodeState[type]) {
     //   const { lastIndex } = rootNodeState[type]
@@ -206,10 +207,10 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     setRootNodeState( ( rootNodeState: any ) => ( {
       ...rootNodeState,
       [type]: {
-        lastIndex: rootNodeState[type].lastIndex + childNodeBatchSize,
+        lastIndex: rootNodeState[type].lastIndex + amount || childNodeBatchSize,
       },
     } ) )
-  }, [] )
+  }, [rootNodeState] )
 
   const detectNodeOverlap = ( node: { id: string } ) => {
     const source: any = getNode( node.id )
@@ -670,10 +671,12 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     addNodes( newNode )
     return newNode
   }
+
   const createGroupNodeLayoutWithoutRootNode = useCallback(
     ( { groupId, childNodes }: any ) => {
       const model = groupId.split( '-' )[0]
       const isPersonnel = model === 'personnel'
+      const isEvents = model === 'events'
       const personnelGroupNodeConfig = {
         id: groupId,
         type: 'personnelGroupNode',
@@ -733,46 +736,112 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
         ...config,
         position: groupNodePosition,
       }
-
-      // Position the child nodes within the group node
-      const childNodeWidth = isPersonnel ? 150 : 366.27 // As per the dimensions you provided
-      const childNodeHeight = isPersonnel ? 100 : 230.23
-      const parentWidth = config.initialWidth
       const parentHeight = config.initialHeight
+      const parentWidth = config.initialWidth
+
+      const amount = model === 'events' ? 4 : childNodeBatchSize
+      const divisor = model === 'events' ? 3 : 0
+      const baseChildWidth = Math.floor( parentWidth / childNodeBatchSize )
+
+      console.log( "🚀 ~ file: mindmap-context.tsx:746 ~ assignPositionsToChildNodes ~ baseChildWidth:", baseChildWidth )
+
+      const childContainerStart = parentWidth - Math.floor( parentWidth / divisor )
+
+      console.log( "🚀 ~ file: mindmap-context.tsx:747 ~ assignPositionsToChildNodes ~ childContainerStart:", childContainerStart )
+
+
+      const childNodeHeight = isPersonnel ? 100 : baseChildWidth
+      // Position the child nodes within the group node
+      const childNodeWidth = isPersonnel ? 150 : baseChildWidth
       const centerX = ( parentWidth - childNodeWidth ) / 2
-      const verticalSpacing = 20
-      const totalHeight =
-        childNodeHeight * childNodes.length + verticalSpacing * ( childNodes.length - 1 )
-      let startY = isPersonnel ? 0 : ( parentHeight - totalHeight ) / 2
+      const horizontalSpacing = 0
+
+      let startX = childContainerStart
+      let xPosition = childContainerStart
+      let yPosition = 0
 
       const suffix = capitalize( model )
       const groupNodeChildren = childNodes.map( ( childNode: any, index: number ) => {
-        startY += childNodeHeight + verticalSpacing
-        const cn = {
-          ...childNode,
-          type: `entityGroupNodeChild${suffix}`,
-          position: {
-            x: centerX, // Horizontally centered within the group node
-            y: isPersonnel ? startY : index * ( childNodeHeight + verticalSpacing ),
-          },
-          // zIndex: 2,
-          hidden: false,
-          parentId: groupId,
-          className: groupId,
+        startX += ( childNodeWidth + horizontalSpacing ) * index
+
+
+        if ( isEvents ) {
+          if ( index === 0 ) {
+            xPosition = childNodeWidth
+            yPosition = 0
+          } else if ( index === 1 ) {
+
+            xPosition = childNodeWidth * 2
+            yPosition = 0
+          } else if ( index === 2 ) {
+            xPosition = childNodeWidth
+            yPosition = childNodeHeight
+          } else if ( index === 3 ) {
+            xPosition = childNodeWidth * 2
+            yPosition = childNodeHeight
+
+          }
+
+          const cn = {
+            ...childNode,
+            type: `entityGroupNodeChild${suffix}`,
+            position: screenToFlowPosition( {
+              x: xPosition, // Horizontally centered within the group node
+              y: yPosition
+            } ),
+            // zIndex: 2,
+            hidden: false,
+            parentId: groupId,
+            extent: 'parent',
+            className: groupId,
+            style: {
+              width: `${childNodeWidth}px`,
+              height: `${childNodeHeight}px`,
+            }
+          }
+          console.log( "🚀 ~ file: mindmap-context.tsx:831 ~ groupNodeChildren ~ cn:", cn )
+
+
+          console.log( "🚀 ~ file: mindmap-context.tsx:831 ~ groupNodeChildren ~ cn:", cn )
+
+
+          console.log( "🚀 ~ file: mindmap-context.tsx:831 ~ groupNodeChildren ~ cn:", cn )
+
+          return cn
+          // if ( !isPersonnel ) {
+
+          // }
+
+        } else {
+          yPosition = 20
+          xPosition = startX + ( childNodeWidth * index )
+
+          return {
+            ...childNode,
+            type: `entityGroupNodeChild${suffix}`,
+            position: screenToFlowPosition( {
+              x: xPosition, // Horizontally centered within the group node
+              y: yPosition
+            } ),
+            // zIndex: 2,
+            hidden: false,
+            parentId: groupId,
+            extent: 'parent',
+            className: groupId,
+            style: {
+              width: `${childNodeWidth}px`,
+              height: `${childNodeHeight}px`,
+            }
+          }
         }
-        // if ( !isPersonnel ) {
-        cn.extent = 'parent'
-        // }
-        return cn
       } )
+
 
       groupNode.data.children = [...groupNodeChildren]
       return { groupNode, groupNodeChildren }
     },
     [getNodes, getNodesBounds]
   )
-
-
 
   const renderUserInputResultsLayout = useCallback(
     ( { groupId, sourceNode, results }: any ) => {
@@ -926,6 +995,8 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     // addEdges( newEdge )
 
   }, [graph] )
+
+  //cc:loadingRecordsIntoMindMap[MindMapSideMenu]#2;addNextEntitiesToMindMap
   const addNextEntitiesToMindMap: any = useCallback(
     ( source: any ) => {
       console.log(
@@ -940,6 +1011,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
       } = source
       console.log( 'model: ', model )
       const isUserInputNode = false // nodeType === 'userInputNode'
+      const amount = model === 'events' ? 4 : childNodeBatchSize
       console.log(
         '🚀 ~ file: mindmap-context.tsx:941 ~ assignPositionsToChildNodes ~ isUserInputNode:',
         isUserInputNode
@@ -950,8 +1022,11 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
       const sourceModelNodesState = rootNodeState[sourceModelIndex]
       const { lastIndex } = sourceModelNodesState
 
+      console.log( "🚀 ~ file: mindmap-context.tsx:954 ~ assignPositionsToChildNodes ~ lastIndex:", lastIndex )
+
+
       // Fetch the next batch of child nodes
-      const resultNodes = graph[model].nodes.slice( lastIndex, lastIndex + childNodeBatchSize )
+      const resultNodes = graph[model].nodes.slice( lastIndex, lastIndex + amount )
       const groupId = `${model}-group-${lastIndex}`
 
       const { groupNode, groupNodeChildren }: any = isUserInputNode
@@ -994,7 +1069,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
 
       setEdges( ( edges: any ) => [...edges, edge] )
 
-      updateChildNodeBatchIndex( sourceModelIndex )
+      updateChildNodeBatchIndex( sourceModelIndex, amount )
 
       zoomTo( 2, {
         duration: 500,

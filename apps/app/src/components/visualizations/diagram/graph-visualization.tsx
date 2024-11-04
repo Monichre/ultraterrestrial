@@ -3,7 +3,7 @@
 // import { useState, createRef, useEffect } from 'react'
 // import { Canvas } from '@react-three/fiber'
 // import { Nodes, Node } from './nodes'
-// import { getConnectionModels } from '@/services/xata/models'
+// import { getConnectionModels } from '@/db/xata/models'
 import { ThreeDGraph } from './3d-graph'
 import { TrackballControls, OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
@@ -57,7 +57,7 @@ import { Canvas } from '@react-three/fiber'
 //   )
 // }
 
-export const GraphVisualization = ({ models }: any) => {
+export const GraphVisualization = ( { models }: any ) => {
   const { events, topics, organizations, testimonies, personnel } = models
   // const fetchRootRecords = useCallback(async () => {
   //   const data = await fetch(`/api/xata/connections`).then(

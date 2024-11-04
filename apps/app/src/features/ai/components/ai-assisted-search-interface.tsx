@@ -176,9 +176,9 @@ export const AiAssistedSearch = memo( () => {
     threadId,
     setThreadId,
     ...rest
-  } = useAssistant( { api: '/api/assistants/disclosure/message' } )
+  } = useAssistant( { api: '/api/disclosure/knowledge-layer/assistants/rag/message' } )
   console.log( 'rest:', rest, { messages } )
-  useAssistant( { api: '/api/assistants/disclosure/message' } )
+
 
   // const [value, setValue, remove] = useLocalStorage('threadId', null)
 

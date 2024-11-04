@@ -1,5 +1,5 @@
 
-import { xata } from "@/services/xata"
+import { xata } from "@/db/xata"
 
 import fs from 'fs/promises'
 import path from 'path'

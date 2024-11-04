@@ -1,4 +1,5 @@
-import type { NetworkGraphPayload } from '@/services/xata'
+
+import type { NetworkGraphPayload } from '@/features/mindmap/api/get-entity-network-graph-data'
 import { useEffect, useState } from 'react'
 
 type EntityGraphSchema = {

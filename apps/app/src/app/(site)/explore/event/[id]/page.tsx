@@ -1,8 +1,7 @@
-import { getXataClient } from '@/services/xata'
-const xata = getXataClient()
+import { xata } from "@/db/xata"
 
-const record = await xata.db.events.read( 'rec_xyz' )
-console.log( record )
+// const record = await xata.db.events.read( 'rec_xyz' )
+// console.log( record )
 
 export default async function EventPage( { params: { id } } ) {
   const event = await xata.db.events.read( id )
@@ -21,3 +20,6 @@ export default async function EventPage( { params: { id } } ) {
 // Ethical Considerations	Communication and  intervention
 // Public Perception	Media, public opinion, and pop culture
 // Origins and Intent	Comprehensive view of current theories
+
+
+

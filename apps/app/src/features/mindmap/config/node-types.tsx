@@ -9,7 +9,7 @@ import { DocumentNode } from '@/features/mindmap/nodes/document-node'
 import { GroupResultsNode } from '@/features/mindmap/nodes/group-results-node'
 import { PersonnelGroupNode } from '@/features/mindmap/nodes/personnel-group-node'
 import { PersonnelGroupNodeChild } from '@/features/mindmap/nodes/personnel-group-node-child'
-import { UserInputNode } from '@/features/mindmap/nodes/user-input-node'
+import { UserInputNode } from '@/features/mindmap/nodes/user-input-node/user-input-node'
 
 export const nodeTypes: any = {
   // Utilities Nodes 
