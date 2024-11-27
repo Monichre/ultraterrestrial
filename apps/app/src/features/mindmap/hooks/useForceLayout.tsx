@@ -1,5 +1,5 @@
 import { collide } from '@/features/mindmap/layouts/collide'
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { nextTick } from '@/utils'
 import {
   type ReactFlowState,

@@ -1,7 +1,7 @@
 // Start Generation Here
-import axios from 'axios'
 import { XataFile } from '@xata.io/client'
-import { getXataClient } from '../src/index' // Adjust the path as necessary
+import axios from 'axios'
+import { getXataClient } from '../processing/src/index' // Adjust the path as necessary
 
 /**
  * Downloads an image from the given URL and returns it as a base64 string.

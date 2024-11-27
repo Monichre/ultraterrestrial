@@ -1,4 +1,5 @@
-import type { DEFAULT } from '@react-three/fiber/dist/declarations/src/core/utils'
+
+
 import chroma from 'chroma-js'
 
 export function hexToRgba( hex: string, alpha: number ): string {
@@ -38,11 +39,11 @@ export const NEONS = {
 }
 
 export const DOMAIN_MODEL_COLORS: any = {
-  topics: TOPICS_PINK,
-  events: EVENTS_GREEN,
-  personnel: SME_BLUE,
-  organizations: ORGANIZATIONS_PURPLE,
-  testimonies: TESTIMONIES_RED,
+  topics: '#E393E6',
+  events: '#79FFE1',
+  personnel: '#27F1FF',
+  organizations: '#7c89b9',
+  testimonies: '#FA1E4E',
   root: '#27F1FF',
 }
 
@@ -159,6 +160,31 @@ $gradient-bottom-left: linear-gradient(315deg, #010000ff, #a8a3a4ff, #524f50ff, 
 $gradient-radial: radial-gradient(#010000ff, #a8a3a4ff, #524f50ff, #09080bff, #2f2826ff);
 
 */
+
+const blackAlter = {
+  'Charcoal Gray ': '#121212',
+  'Dark Slate Gray ': ' #191919',
+  'Outer Space ': ' #252525',
+  'Rich Black ': ' #0A0A0A',
+  'Coffee Bean ': ' #1B1B1B',
+  'Dark Gray ': ' #212427',
+  'Oil Black ': ' #0C0C0C',
+  'Obsidian ': ' #0B1215',
+  'Ebony ': ' #222428',
+  'Black Chocolate ': '#100D08',
+  'Gunmetal ': '#1D1F21',
+  'Smoky Black ': '#101720',
+  'Oxford Blue ': '#212A37',
+  'Eerie Black ': '#232023',
+  'Jet Black ': '#161618',
+  'Iridium ': '#181818',
+  Arsenic: '#11181C',
+  'Charleston Green': '#212124',
+  'Dark Gunmetal': '#222428',
+  Jet: '#2A2A2A',
+  'Black Olive': '#242526',
+  'Midnight Blue': '#212121',
+}
 
 const gorgeous = [
   '#1a1b1a',

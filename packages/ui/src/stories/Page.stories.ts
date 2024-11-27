@@ -1,50 +1,32 @@
-import { Home } from '@/layouts/home'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
+
+import { Page } from './Page';
 
 const meta = {
-  title: 'Pages/Home',
-  component: Home,
+  title: 'Example/Page',
+  component: Page,
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
-    nextjs: {
-      router: {
-        pathname: '/',
-        asPath: '/',
-      },
-    },
   },
-  tags: ['autodocs'],
-} satisfies Meta<typeof Home>
+} satisfies Meta<typeof Page>;
 
-export default meta
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-type Story = StoryObj<typeof meta>
+export const LoggedOut: Story = {};
 
-export const HomePage: Story = {}
+// More on interaction testing: https://storybook.js.org/docs/writing-tests/interaction-testing
+export const LoggedIn: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const loginButton = canvas.getByRole('button', { name: /Log in/i });
+    await expect(loginButton).toBeInTheDocument();
+    await userEvent.click(loginButton);
+    await expect(loginButton).not.toBeInTheDocument();
 
-// const meta = {
-//   title: 'Components/Spatial Gallery',
-//   component: SpatialGallery,
-//   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-//   tags: ['autodocs'],
-//   parameters: {
-//     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
-//     layout: 'fullscreen',
-
-//     nextjs: {
-//       router: {
-//         pathname: '/explore/events/',
-//         asPath: '/profile/1',
-//         query: {
-//           id: '',
-//         },
-//       },
-//     },
-//   },
-//   args: {
-//     images: [],
-//   },
-// } satisfies Meta<typeof SpatialGallery>
-
-// export default meta
+    const logoutButton = canvas.getByRole('button', { name: /Log out/i });
+    await expect(logoutButton).toBeInTheDocument();
+  },
+};

@@ -1,4 +1,4 @@
-import { mem0AI } from '@/lib/mem0'
+import { memoryAgent } from '@/lib/mem0'
 import { DISCLOSURE_ASSISTANT_ID } from '@/services/agents/openai/config'
 
 // Types
@@ -16,9 +16,21 @@ type EntityType = 'events' | 'personnel' | 'topics' | 'testimonies' | 'organizat
 
 const AGENT_ID = DISCLOSURE_ASSISTANT_ID || process.env.OPENAI_ASSISTANT_ID
 
-const addMemory = async ( messages: any, options: any ) => {
+const addMemory = async ( message: any, options: any ) => {
   try {
-    return await mem0AI.add( messages, {
+    return await memoryAgent.add( messages, {
+      output_format: 'v1.1',
+      ...options
+    } )
+  } catch ( error ) {
+    console.error( 'Error adding memory:', error )
+    throw error
+  }
+}
+
+const addMemorySeries = async ( messages: any, options: any ) => {
+  try {
+    return await memoryAgent.add( messages, {
       output_format: 'v1.1',
       ...options
     } )
@@ -46,7 +58,7 @@ export const addConversationToDisclosureAssistantMemory = async ( {
 
 export const searchMemory = async ( { query, metadata }: { query: string, metadata?: MemoryMetadata } ) => {
   try {
-    const results = await mem0AI.search( query, { ...metadata } )
+    const results = await memoryAgent.search( query, { ...metadata } )
     return results
   } catch ( error ) {
     console.error( 'Error searching memory:', error )
@@ -71,7 +83,7 @@ export const storeUserCoreMemory = async ( {
 
 export const getUserMemories = async ( { user }: { user: { id: string } } ) => {
   try {
-    const memories = await mem0AI.getAll( { user_id: user.id } )
+    const memories = await memoryAgent.getAll( { user_id: user.id } )
     return memories
   } catch ( error ) {
     console.error( 'Error getting user memories:', error )
@@ -81,7 +93,7 @@ export const getUserMemories = async ( { user }: { user: { id: string } } ) => {
 
 export const getAssistantMemories = async () => {
   try {
-    const memories = await mem0AI.getAll( { agent_id: AGENT_ID } )
+    const memories = await memoryAgent.getAll( { agent_id: AGENT_ID } )
     return memories
   } catch ( error ) {
     console.error( 'Error getting assistant memories:', error )

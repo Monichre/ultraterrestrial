@@ -20,3 +20,12 @@ apps/app/ultravenv/
 ./apps/**/coverage
 ./apps/**/public
 
+*.csv
+*.json
+*.jsonl
+*.xlsx
+*.xls
+packages/documentation/files/*.sql
+packages/documentation/**/*.sql
+
+*storybook.log

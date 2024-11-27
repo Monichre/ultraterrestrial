@@ -4,7 +4,7 @@ import { memo, useEffect, useState } from 'react'
 
 
 import { SubjectMatterExpertCard } from '@/features/mindmap/components/cards/subject-matter-expert-card'
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 
 interface Photo {
   id: string

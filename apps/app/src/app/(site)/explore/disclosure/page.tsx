@@ -5,7 +5,7 @@ import { MindMap } from '@/features/mindmap'
 import { Loading } from '@/components/loaders/loading'
 import { getEntityNetworkGraphData, type NetworkGraphPayload } from '@/features/mindmap/api/get-entity-network-graph-data'
 import { MindMapCursor } from '@/features/mindmap/components/mindmap-cursor'
-import { StateOfDisclosureProvider } from '@/providers'
+import { StateOfDisclosureProvider } from '@/contexts'
 
 
 export default async function Index() {

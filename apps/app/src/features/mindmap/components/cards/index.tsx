@@ -9,5 +9,5 @@ export * from './root-node-card/root-node-card'
 export * from './testimony-card'
 import { MiniCard } from './mini-card'
 import { GridCard } from './event/grid-card'
-
-export const EventCard = GridCard
+import { BonsaiCard } from './event/bonsai-card'
+export const EventCard = BonsaiCard

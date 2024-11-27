@@ -1,0 +1,50 @@
+[data-component='Toggle'] {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  overflow: hidden;
+
+  background-color: #ececf1;
+  color: #101010;
+  height: 40px;
+  border-radius: 1000px;
+}
+
+[data-component='Toggle']:hover {
+  background-color: #d8d8d8;
+}
+
+[data-component='Toggle'] .label {
+  position: relative;
+  color: #666;
+  transition: color 0.1s ease-in-out;
+  padding: 0 16px;
+  z-index: 2;
+  user-select: none;
+}
+
+[data-component='Toggle'] .label.right {
+  margin-left: -8px;
+}
+
+[data-component='Toggle'] .toggle-background {
+  background-color: #101010;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  bottom: 0;
+  z-index: 1;
+  border-radius: 1000px;
+  transition: left 0.1s ease-in-out, width 0.1s ease-in-out;
+}
+
+[data-component='Toggle'][data-enabled='true'] .label.right {
+  color: #fff;
+}
+
+[data-component='Toggle'][data-enabled='false'] .label.left {
+  color: #fff;
+}

@@ -6,7 +6,7 @@ import { memo, useEffect, useState } from 'react'
 import { KeyFiguresIcon } from '@/components/icons'
 import { CoreNodeBottom, CoreNodeContainer, CoreNodeContent } from '@/features/mindmap/nodes/core-node-ui'
 
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { Handle, Position } from '@xyflow/react'
 import { SparklesIcon } from 'lucide-react'
 

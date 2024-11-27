@@ -9,12 +9,8 @@ import {
   FloatingPanelCloseButton,
   FloatingPanelContent,
   FloatingPanelFooter,
-  FloatingPanelForm,
-  FloatingPanelLabel,
   FloatingPanelRoot,
-  FloatingPanelSubmitButton,
-  FloatingPanelTextarea,
-  FloatingPanelTrigger,
+  FloatingPanelTrigger
 } from '@/components/animated'
 import {
   ArtifactsIcon,
@@ -27,8 +23,7 @@ import {
   TopicsIcon,
 } from '@/components/icons'
 import { Button } from '@/components/ui/button'
-import { useMindMap } from '@/providers/mindmap-context'
-import { Pencil2Icon } from '@radix-ui/react-icons'
+import { useMindMap } from '@/contexts/mindmap-context'
 import {
   Tooltip,
   TooltipContent,
@@ -40,46 +35,77 @@ import { ArrowDownToLine, FileSearch, Plus } from 'lucide-react'
 import {
   useCallback,
   useEffect,
+  useRef,
   useState,
   type JSX,
   type SVGProps,
 } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
 const QuickActionsFloatingPanel = () => {
 
+  const idCounter = useRef( 0 )
 
-  const { addNextEntitiesToMindMap, addNodes, addEdges, screenToFlowPosition } = useMindMap()
-  //cc:loadingRecordsIntoMindMap[MindMapSideMenu]#1;handleLoadingRecord => addNextEntitiesToMindMap
-  const calculateCenterOfScreen = useCallback( () => {
-    const centerX = window.innerWidth / 2
-    const centerY = window.innerHeight / 2
-    return { x: centerX, y: centerY }
+  // Function to get the next sequential ID
+  const getNextId = useCallback( () => {
+    idCounter.current += 1
+    return `userInputNode-${idCounter.current}`
   }, [] )
 
-
-  const center = screenToFlowPosition( calculateCenterOfScreen() )
+  const { addNextEntitiesToMindMap, addNodes, addEdges, screenToFlowPosition, getNodes } = useMindMap()
+  //cc:loadingRecordsIntoMindMap[MindMapSideMenu]#1;handleLoadingRecord => addNextEntitiesToMindMap
   const handleLoadingRecords = useCallback(
     async ( rootNodeSim: any ) => {
 
+
+      const calculateCenterOfScreen = () => {
+        const centerX = window.innerWidth / 2
+        const centerY = window.innerHeight / 2
+        return { x: centerX, y: centerY }
+      }
+
+
+      const center = screenToFlowPosition( calculateCenterOfScreen() )
 
       const { data: { type } } = rootNodeSim
       const amount = type === 'events' ? '4' : '3'
 
       const userNode: any = {
-        id: uuidv4(),
+        // Start of Selection
+        id: getNextId(),
         type: 'userInputNode',
         position: {
           ...center
         },
         data: {
           label: 'Your Query',
-          input: `We're beginning your exploration by loading ${amount} ${type}.`,
+          input: `Loading ${amount} ${type}.`,
           entities: null,
           type: type,
         },
       }
       addNodes( userNode )
+
+      const nodes = getNodes() // Replace with the appropriate method to retrieve nodes
+      const existingUserInputNodes = nodes
+        .filter( ( node: any ) => node.type === 'userInputNode' && node.id !== userNode.id )
+        .sort( ( a: any, b: any ) => {
+          // Assuming IDs are in the format 'userInputNode-<number>'
+          const aNum = parseInt( a.id.split( '-' )[1], 10 )
+          const bNum = parseInt( b.id.split( '-' )[1], 10 )
+          return aNum - bNum
+        } )
+
+      // If there is at least one existing userInputNode, create an edge from the last one to the new one
+      if ( existingUserInputNodes.length > 0 ) {
+        const lastUserInputNode = existingUserInputNodes[existingUserInputNodes.length - 1]
+        const edge = {
+          id: `${lastUserInputNode.id}-${userNode.id}`,
+          source: lastUserInputNode.id,
+          target: userNode.id,
+          type: 'step'
+        }
+        addEdges( edge )
+      }
 
       // const
       const { groupNode, groupNodeChildren } = await addNextEntitiesToMindMap( rootNodeSim )
@@ -98,14 +124,14 @@ const QuickActionsFloatingPanel = () => {
           id: `${userNode.id}-${groupNode.id}`,
           source: userNode.id,
           target: groupNode.id,
-          type: 'smooth'
+          type: 'step'
         }
         addEdges( edge )
       }
 
 
     },
-    [addNextEntitiesToMindMap]
+    [addEdges, addNextEntitiesToMindMap, addNodes, screenToFlowPosition]
   )
 
 
@@ -199,35 +225,6 @@ const QuickActionsFloatingPanel = () => {
     </FloatingPanelRoot>
   )
 }
-export function AddNoteFloatingPanelInput() {
-  const handleSubmit = ( note: string ) => {
-    console.log( 'Submitted note:', note )
-  }
-
-  return (
-    <FloatingPanelRoot>
-      <FloatingPanelTrigger
-        title=''
-        className='flex items-center space-x-2 px-4 py-2 '
-      >
-        <Pencil2Icon className='h-5 w-5 text-white stroke-1' />
-      </FloatingPanelTrigger>
-
-      <FloatingPanelContent className='w-80'>
-        <FloatingPanelForm onSubmit={handleSubmit}>
-          <FloatingPanelBody>
-            <FloatingPanelLabel htmlFor='note-input'>Note</FloatingPanelLabel>
-            <FloatingPanelTextarea id='note-input' className='min-h-[100px]' />
-          </FloatingPanelBody>
-          <FloatingPanelFooter>
-            <FloatingPanelCloseButton />
-            <FloatingPanelSubmitButton />
-          </FloatingPanelFooter>
-        </FloatingPanelForm>
-      </FloatingPanelContent>
-    </FloatingPanelRoot>
-  )
-}
 
 export function MindMapSideMenu() {
   const {
@@ -292,9 +289,6 @@ export function MindMapSideMenu() {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-      </div>
-      <div className='flex flex-col items-center'>
-        <AddNoteFloatingPanelInput />
       </div>
 
       <div className='flex flex-col items-center '>

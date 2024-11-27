@@ -1,6 +1,6 @@
 
 export * from '../mindmap/api/search'
-export * from './api/embedding'
+
 export * from './components/ai-assisted-search-interface'
 export * from './components/chat-interface'
 export * from './components/chat-interface/chat'

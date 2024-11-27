@@ -1270,3 +1270,7 @@ note .ai-response-markup h3,
   left: 53%;
   margin-left: 56px;
 }
+
+.core-node-container .grid-card {
+  border: none;
+}

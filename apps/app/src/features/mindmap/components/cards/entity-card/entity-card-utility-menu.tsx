@@ -3,7 +3,6 @@
 import { memo, type FunctionComponent } from 'react'
 
 import { ConnectionsIcon } from '@/components/icons'
-import { AddNote } from '@/components/note/AddNote'
 import { Button } from '@/components/ui/button/button'
 import { Separator } from '@/components/ui/separator'
 
@@ -29,7 +28,7 @@ export const EM: FunctionComponent<EntityCardUtilityMenuProps> = ( {
         <ConnectionsIcon className='h-5 w-5 text-white stroke-1' />
       </Button>
       <Separator orientation='vertical' className='ml-4' />
-      <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} />
+      {/* <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} /> */}
     </div>
   )
 }

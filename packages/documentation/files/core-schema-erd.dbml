@@ -1,0 +1,357 @@
+    // Start of Selection
+
+    Table "event_subject_matter_experts" {
+      "id" int4 [pk, not null, increment]
+      "xata_id" varchar [unique]
+      "event_id" int4
+      "subject_matter_expert_id" int4
+      "created_at" timestamp
+      "updated_at" timestamp
+      "version" int4
+      "api_data" jsonb
+    }
+    
+    Table "event_topic_subject_matter_experts" {
+      "id" int4 [pk, not null, increment]
+      "xata_id" varchar [unique]
+      "event_id" int4
+      "topic_id" int4
+      "subject_matter_expert_id" int4
+      "created_at" timestamp
+      "updated_at" timestamp
+      "version" int4
+      "api_data" jsonb
+    }
+    
+    Table "events" {
+      "id" int4 [pk, not null, increment]
+      "xata_id" varchar [unique]
+      "name" varchar
+      "location" varchar
+      "date" date
+      "latitude" float4
+      "longitude" float4
+      "description" text
+      "photos" jsonb
+      "api_data" jsonb
+    }
+    
+    Table "key_figures" {
+      "id" int4 [pk, not null, increment]
+      "xata_id" varchar [unique]
+      "name" varchar
+      "bio" text
+      "role" varchar
+      "facebook" varchar
+      "twitter" varchar
+      "website" varchar
+      "instagram" varchar
+      "rank" int4
+      "photo" jsonb
+      "credibility" int4
+      "popularity" int4
+      "authority" int4
+      "created_at" timestamp
+      "updated_at" timestamp
+      "version" int4
+      "api_data" jsonb
+    }
+    
+    Table "organization_members" {
+      "id" int4 [pk, not null, increment]
+      "xata_id" varchar [unique]
+      "member_id" int4
+      "organization_id" int4
+      "created_at" timestamp
+      "updated_at" timestamp
+      "version" int4
+      "api_data" jsonb
+    }
+    
+    Table "organizations" {
+      "id" int4 [pk, not null, increment]
+      "xata_id" varchar [unique]
+      "name" varchar
+      "specialization" varchar
+      "description" text
+      "photo" text
+      "image" text
+      "created_at" timestamp
+      "updated_at" timestamp
+      "version" int4
+      "api_data" jsonb
+    }
+    
+    Table "sightings" {
+      "date" timestamptz
+      "description" text
+      "media_link" text
+      "city" varchar
+      "state" varchar
+      "country" varchar
+      "shape" varchar
+      "duration_seconds" varchar
+      "duration_hours_min" varchar
+      "comments" text
+      "date_posted" date
+      "latitude" numeric
+      "longitude" numeric
+      "api_data" jsonb
+    }
+    
+    Table "testimonies" {
+      "id" int4 [pk, not null, increment]
+      "xata_id" varchar [unique]
+      "claim" text
+      "summary" text
+      "documentation" jsonb
+      "event_id" int4
+      "date" timestamp
+      "witness_id" int4
+      "organization_id" int4
+      "created_at" timestamp
+      "updated_at" timestamp
+      "version" int4
+      "api_data" jsonb
+    }
+    
+    Table "testimonies_xata" {
+      "xata_id" text [pk, not null]
+      "claim" text
+      "summary" text
+      "documentation" jsonb
+      "event" text
+      "date" text
+      "witness" text
+      "organization" text
+    }
+    
+    Table "topic_subject_matter_experts" {
+      "id" int4 [pk, not null, increment]
+      "xata_id" varchar [unique]
+      "topic_id" int4
+      "subject_matter_expert_id" int4
+      "created_at" timestamp
+      "updated_at" timestamp
+      "version" int4
+      "api_data" jsonb
+    }
+    
+    Table "topics" {
+      "id" int4 [pk, not null, increment]
+      "xata_id" varchar [unique]
+      "name" varchar
+      "summary" text
+      "photo" text
+      "photos" jsonb
+      "created_at" timestamp
+      "updated_at" timestamp
+      "version" int4
+      "api_data" jsonb
+    }
+    
+    Table "topics_testimonies" {
+      "id" int4 [pk, not null, increment]
+      "xata_id" varchar [unique]
+      "topic_id" int4
+      "testimony_id" int4
+      "created_at" timestamp
+      "updated_at" timestamp
+      "version" int4
+      "api_data" jsonb
+    }
+    
+    Table "xata_to_postgres_mapping" {
+      "xata_id" varchar [pk, not null]
+      "new_id" int4
+    }
+    
+    Table "documents" {
+      "id" int8 [pk, not null, increment]
+      "content" text
+      "metadata" jsonb
+      "embedding" public.vector
+      "api_data" jsonb
+    }
+    
+    Table "users" {
+      "id" int4 [pk, not null, increment]
+      "email" text [unique, not null]
+      "name" text [not null]
+      "photo" text
+      "profile_image_url" text
+      "external_id" text
+      "api_data" jsonb
+    }
+    
+    Table "user_theories" {
+      "id" int4 [pk, not null, increment]
+      "user_id" int4
+      "title" text [not null]
+      "content" text
+      "synopsis" text
+      "diagrams" "text[]"
+      "description" text
+    
+      Indexes {
+        (user_id, title) [type: btree, name: "user_theories_user_id_name_key"]
+      }
+    }
+    
+    Table "user_saved_events" {
+      "id" int4 [pk, not null, increment]
+      "user_id" int4
+      "event_id" int4
+      "note" text
+      "note_title" text
+      "api_data" jsonb
+    }
+    
+    Table "user_saved_topics" {
+      "id" int4 [pk, not null, increment]
+      "user_id" int4
+      "topic_id" int4
+      "note" text
+      "note_title" text
+      "api_data" jsonb
+    }
+    
+    Table "theories" {
+      "id" int4 [pk, not null, increment]
+      "description" text
+      "title" text
+    }
+    
+    Table "user_saved_testimonies" {
+      "id" int4 [pk, not null, increment]
+      "user_id" int4
+      "testimony_id" int4
+      "note" text
+      "note_title" text
+      "api_data" jsonb
+    }
+    
+    Table "user_saved_documents" {
+      "id" int4 [pk, not null, increment]
+      "user_id" int4
+      "document_id" int4
+      "note" text
+      "note_title" text
+      "api_data" jsonb
+    }
+    
+    Table "user_saved_organizations" {
+      "id" int4 [pk, not null, increment]
+      "user_id" int4
+      "organization_id" int4
+      "note" text
+      "note_title" text
+      "api_data" jsonb
+    }
+    
+    Table "mindmaps" {
+      "id" int4 [pk, not null, increment]
+      "json" json [default: `{}`]
+      "embedding" public.vector
+      "user_id" int4
+      "file" text
+      "api_data" jsonb
+    }
+    
+    Table "artifacts" {
+      "id" int4 [pk, not null, increment]
+      "name" text [unique, not null]
+      "description" text
+      "photos" "text[]"
+      "date" text
+      "source" text
+      "origin" text
+      "images" "text[]"
+      "xata_id" text [unique]
+      "api_data" jsonb
+    }
+    
+    
+    Ref "event_subject_matter_experts_event_id_fkey":"events"."id" < "event_subject_matter_experts"."event_id"
+    
+    Ref "event_subject_matter_experts_subject_matter_expert_id_fkey":"key_figures"."id" < "event_subject_matter_experts"."subject_matter_expert_id"
+    
+    Ref "event_topic_subject_matter_expert_subject_matter_expert_id_fkey":"key_figures"."id" < "event_topic_subject_matter_experts"."subject_matter_expert_id"
+    
+    Ref "event_topic_subject_matter_experts_event_id_fkey":"events"."id" < "event_topic_subject_matter_experts"."event_id"
+    
+    Ref "event_topic_subject_matter_experts_topic_id_fkey":"topics"."id" < "event_topic_subject_matter_experts"."topic_id"
+    
+    Ref "mindmaps_user_id_fkey":"users"."id" < "mindmaps"."user_id" [delete: cascade]
+    
+    Ref "organization_members_member_id_fkey":"key_figures"."id" < "organization_members"."member_id"
+    
+    Ref "organization_members_organization_id_fkey":"organizations"."id" < "organization_members"."organization_id"
+    
+    Ref "testimonies_event_id_fkey":"events"."id" < "testimonies"."event_id"
+    
+    Ref "testimonies_organization_id_fkey":"organizations"."id" < "testimonies"."organization_id"
+    
+    Ref "testimonies_witness_id_fkey":"key_figures"."id" < "testimonies"."witness_id"
+    
+    Ref "topic_subject_matter_experts_subject_matter_expert_id_fkey":"key_figures"."id" < "topic_subject_matter_experts"."subject_matter_expert_id"
+    
+    Ref "topic_subject_matter_experts_topic_id_fkey":"topics"."id" < "topic_subject_matter_experts"."topic_id"
+    
+    Ref "topics_testimonies_testimony_id_fkey":"testimonies"."id" < "topics_testimonies"."testimony_id"
+    
+    Ref "topics_testimonies_topic_id_fkey":"topics"."id" < "topics_testimonies"."topic_id"
+    
+    Ref "user_saved_documents_document_id_fkey":"documents"."id" < "user_saved_documents"."document_id" [delete: set null]
+    
+    Ref "user_saved_documents_user_id_fkey":"users"."id" < "user_saved_documents"."user_id" [delete: cascade]
+    
+    Ref "user_saved_events_event_id_fkey":"events"."id" < "user_saved_events"."event_id" [delete: cascade]
+    
+    Ref "user_saved_events_user_id_fkey":"users"."id" < "user_saved_events"."user_id" [delete: cascade]
+    
+    Ref "user_saved_organizations_organization_id_fkey":"organizations"."id" < "user_saved_organizations"."organization_id" [delete: set null]
+    
+    Ref "user_saved_organizations_user_id_fkey":"users"."id" < "user_saved_organizations"."user_id" [delete: cascade]
+    
+    Ref "user_saved_testimonies_testimony_id_fkey":"testimonies"."id" < "user_saved_testimonies"."testimony_id" [delete: set null]
+    
+    Ref "user_saved_testimonies_user_id_fkey":"users"."id" < "user_saved_testimonies"."user_id" [delete: cascade]
+    
+    Ref "user_saved_topics_topic_id_fkey":"topics"."id" < "user_saved_topics"."topic_id" [delete: cascade]
+    
+    Ref "user_saved_topics_user_id_fkey":"users"."id" < "user_saved_topics"."user_id" [delete: cascade]
+    
+    Ref "user_theories_user_id_fkey":"users"."id" < "user_theories"."user_id" [delete: cascade]
+    
+    ```mermaid
+    erDiagram
+      event_subject_matter_experts ||--o{ events : event_id
+      event_subject_matter_experts ||--o{ key_figures : subject_matter_expert_id
+      event_topic_subject_matter_experts ||--o{ events : event_id
+      event_topic_subject_matter_experts ||--o{ topics : topic_id
+      event_topic_subject_matter_experts ||--o{ key_figures : subject_matter_expert_id
+      organization_members ||--o{ key_figures : member_id
+      organization_members ||--o{ organizations : organization_id
+      testimonies ||--o{ events : event_id
+      testimonies ||--o{ organizations : organization_id
+      testimonies ||--o{ key_figures : witness_id
+      testimonies_xata ||--o{ testimonies : testimony_id
+      topic_subject_matter_experts ||--o{ topics : topic_id
+      topic_subject_matter_experts ||--o{ key_figures : subject_matter_expert_id
+      topics_testimonies ||--o{ topics : topic_id
+      topics_testimonies ||--o{ testimonies : testimony_id
+      user_saved_documents ||--o{ documents : document_id
+      user_saved_documents ||--o{ users : user_id
+      user_saved_events ||--o{ events : event_id
+      user_saved_events ||--o{ users : user_id
+      user_saved_organizations ||--o{ organizations : organization_id
+      user_saved_organizations ||--o{ users : user_id
+      user_saved_testimonies ||--o{ testimonies : testimony_id
+      user_saved_testimonies ||--o{ users : user_id
+      user_saved_topics ||--o{ topics : topic_id
+      user_saved_topics ||--o{ users : user_id
+      user_theories ||--o{ users : user_id
+      mindmaps ||--o{ users : user_id
+      artifacts ||--o{ documents : document_id
+    ```

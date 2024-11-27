@@ -1,21 +1,15 @@
 {
-  "rust-analyzer.cargo.features": ["metal", "pipes"],
-  "rust-analyzer.server.extraEnv": {
-    "DYLD_LIBRARY_PATH": "${workspaceFolder}/screenpipe-vision/lib:${env:DYLD_LIBRARY_PATH}",
-    "SCREENPIPE_APP_DEV": "true"
-  },
-  "rust-analyzer.cargo.extraEnv": {
-    "DYLD_LIBRARY_PATH": "${workspaceFolder}/screenpipe-vision/lib:${env:DYLD_LIBRARY_PATH}",
-    "SCREENPIPE_APP_DEV": "true"
-  },
+
   "terminal.integrated.env.osx": {
     "DYLD_LIBRARY_PATH": "${workspaceFolder}/screenpipe-vision/lib:${env:DYLD_LIBRARY_PATH}",
     "SCREENPIPE_APP_DEV": "true"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  
+  
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    // "source.fixAll.eslint": "explicit"
+    "source.organizeImports": "explicit"
   },
   "prettier.singleQuote": true,
   "prettier.semi": false,
@@ -37,5 +31,25 @@
     "foreground": "#f44336",
     "background": "#592c2c",
   },
-}
+},
+
+  
+  "editor.formatOnType": false, // required
+  "editor.formatOnPaste": true, // optional
+  "editor.formatOnSave": true, // optional
+  "editor.formatOnSaveMode": "file", // required to format on save
+  "files.autoSave": "onFocusChange", // optional but recommended
+  "vs-code-prettier-eslint.prettierLast": false,
+  "commentAnchors.workspace.pathFormat": "full",
+  "commentAnchors.tags.provideAutoCompletion": true,
+  "commentAnchors.tags.displayInSidebar": true,
+  "commentAnchors.tags.displayInGutter": true,
+  "commentAnchors.tags.displayInRuler": true,
+  "commentAnchors.tags.displayLineNumber": true,
+    "commentAnchors.workspace.enabled": true,
+    "[sql]": {
+      "editor.defaultFormatter": "cweijan.vscode-postgresql-client2"
+    },
+    
+    
 }

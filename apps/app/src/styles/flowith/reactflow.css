@@ -1,4 +1,4 @@
-.react-flow {
+/* .react-flow {
   direction: ltr;
   --xy-edge-stroke-default: #b1b1b7;
   --xy-edge-strokeWidth-default: 1;
@@ -769,4 +769,4 @@ svg.react-flow__connectionline {
 
 .react-flow__edge-text {
   fill: var(--xy-edge-label-color, var(--xy-edge-label-color-default));
-}
+} */

@@ -4,7 +4,7 @@ import { memo, useEffect, useState } from 'react'
 
 import { BlurAppear } from '@/components/animated'
 import { renderEntity } from '@/features/mindmap/components/cards/render-entity-card'
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { Handle, Position } from '@xyflow/react'
 
 interface Photo {

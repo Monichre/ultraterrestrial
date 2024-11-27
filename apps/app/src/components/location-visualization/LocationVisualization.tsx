@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button/button'
 
 // import { AdminDashboardGlobe } from '@/components/ui/globe'
 import { Globeanime } from '@/components/ui/globe/globe-alt'
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 

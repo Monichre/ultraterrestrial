@@ -176,7 +176,7 @@ export const AiAssistedSearch = memo( () => {
     threadId,
     setThreadId,
     ...rest
-  } = useAssistant( { api: '/api/disclosure/knowledge-layer/assistants/rag/message' } )
+  } = useAssistant( { api: '/api/disclosure/chat' } )
   console.log( 'rest:', rest, { messages } )
 
 

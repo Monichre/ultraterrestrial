@@ -1,0 +1,377 @@
+[data-component="ConsolePage"] {
+  font-family: "Roboto Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+[data-component="ConsolePage"] > div {
+  flex-shrink: 0;
+}
+
+[data-component="ConsolePage"] .content-top {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  min-height: 40px;
+}
+
+[data-component="ConsolePage"] .content-top .content-title {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+[data-component="ConsolePage"] .content-top .content-title img {
+  width: 24px;
+  height: 24px;
+}
+
+[data-component="ConsolePage"] .content-main {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 16px;
+  height: calc(100vh - (40px + 230px));
+  border-bottom: 1px solid #eee;
+}
+
+[data-component="ConsolePage"] .content-main .content-block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  width: 100%;
+}
+
+[data-component="ConsolePage"]
+  .content-main
+  .content-block
+  .content-block-title {
+  flex-shrink: 0;
+  padding-top: 16px;
+  padding-bottom: 4px;
+  position: relative;
+}
+
+[data-component="ConsolePage"]
+  .content-main
+  .content-block
+  .content-block-body {
+  color: #6e6e7f;
+  position: relative;
+  flex-grow: 1;
+  padding: 8px 0px;
+  padding-top: 4px;
+  line-height: 1.2em;
+  overflow: auto;
+}
+
+[data-component="ConsolePage"]
+  .content-main
+  .content-block
+  .content-block-body.full {
+  padding: 0px;
+}
+
+[data-component="ConsolePage"] .content-main .conversation {
+  display: flex;
+  width: 33% !important;
+  overflow: hidden;
+  height: 100%;
+  border-right: 1px solid #eee !important;
+  padding-right: 8px !important;
+}
+
+[data-component="ConsolePage"] .content-main .content-right {
+  width: 66% !important;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 8px;
+  height: inherit;
+  overflow: scroll;
+}
+
+[data-component="ConsolePage"] .content-main .content-right > img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+[data-component="ConsolePage"] .content-main .content-right > div {
+  margin: 24px 0;
+  position: relative;
+}
+
+[data-component="ConsolePage"]
+  .content-main
+  .content-right
+  > div
+  .content-block-title {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 2em;
+  top: 16px;
+  left: 16px;
+  padding: 4px 16px;
+  background-color: #fff;
+  border-radius: 1000px;
+  min-height: 32px;
+  z-index: 9999;
+  text-align: center;
+  white-space: pre;
+}
+
+[data-component="ConsolePage"]
+  .content-main
+  .content-right
+  > div
+  .content-block-title.bottom {
+  top: auto;
+  bottom: 16px;
+  right: 16px;
+}
+
+[data-component="ConsolePage"] .content-main .content-right > div.kv {
+  height: 250px;
+  max-height: 250px;
+  white-space: pre;
+  background-color: #ececf1;
+}
+
+[data-component="ConsolePage"]
+  .content-main
+  .content-right
+  > div.kv
+  .content-block-body {
+  padding: 16px;
+  margin-top: 56px;
+}
+
+[data-component="ConsolePage"] .content-main .content-logs {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+[data-component="ConsolePage"] .content-main .content-logs > div {
+  flex-grow: 1;
+}
+
+[data-component="ConsolePage"] .conversation-item {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+[data-component="ConsolePage"] .conversation-item:not(:hover) .close {
+  display: none;
+}
+
+[data-component="ConsolePage"] .conversation-item .close {
+  position: absolute;
+  top: 0px;
+  right: -20px;
+  background: #aaa;
+  color: #fff;
+  display: flex;
+  border-radius: 16px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+[data-component="ConsolePage"] .conversation-item .close:hover {
+  background: #696969;
+}
+
+[data-component="ConsolePage"] .conversation-item .close svg {
+  strokewidth: 3;
+  width: 12px;
+  height: 12px;
+}
+
+[data-component="ConsolePage"] .conversation-item .speaker {
+  position: relative;
+  text-align: left;
+  gap: 16px;
+  width: 80px;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+[data-component="ConsolePage"] .conversation-item .speaker.user {
+  color: #0099ff;
+}
+
+[data-component="ConsolePage"] .conversation-item .speaker.assistant {
+  color: #009900;
+}
+
+[data-component="ConsolePage"] .conversation-item .speaker-content {
+  color: #18181b;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+[data-component="ConsolePage"] .conversation-item .speaker-content audio {
+  margin-top: 8px;
+  height: 40px;
+}
+
+[data-component="ConsolePage"] .event {
+  border-radius: 3px;
+  white-space: pre;
+  display: flex;
+  padding: 0px;
+  gap: 16px;
+}
+
+[data-component="ConsolePage"] .event .event-timestamp {
+  text-align: left;
+  gap: 8px;
+  padding: 4px 0px;
+  width: 80px;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+[data-component="ConsolePage"] .event .event-details {
+  display: flex;
+  flex-direction: column;
+  color: #18181b;
+  gap: 8px;
+}
+
+[data-component="ConsolePage"] .event .event-details .event-summary {
+  padding: 4px 8px;
+  margin: 0px -8px;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+[data-component="ConsolePage"] .event .event-details .event-summary:hover {
+  border-radius: 8px;
+  background-color: #f0f0f0;
+}
+
+[data-component="ConsolePage"]
+  .event
+  .event-details
+  .event-summary
+  .event-source {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+[data-component="ConsolePage"]
+  .event
+  .event-details
+  .event-summary
+  .event-source.client {
+  color: #0099ff;
+}
+
+[data-component="ConsolePage"]
+  .event
+  .event-details
+  .event-summary
+  .event-source.server {
+  color: #009900;
+}
+
+[data-component="ConsolePage"]
+  .event
+  .event-details
+  .event-summary
+  .event-source.error {
+  color: #990000;
+}
+
+[data-component="ConsolePage"]
+  .event
+  .event-details
+  .event-summary
+  .event-source
+  svg {
+  strokewidth: 3;
+  width: 12px;
+  height: 12px;
+}
+
+[data-component="ConsolePage"] .visualization {
+  position: absolute;
+  display: flex;
+  bottom: 4px;
+  right: 8px;
+  padding: 4px;
+  border-radius: 16px;
+  z-index: 10;
+  gap: 2px;
+}
+
+[data-component="ConsolePage"] .visualization .visualization-entry {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 100px;
+  gap: 4px;
+}
+
+[data-component="ConsolePage"] .visualization .visualization-entry.client {
+  color: #0099ff;
+}
+
+[data-component="ConsolePage"] .visualization .visualization-entry.server {
+  color: #009900;
+}
+
+[data-component="ConsolePage"] .visualization .visualization-entry canvas {
+  width: 100%;
+  height: 100%;
+  color: currentColor;
+}
+
+[data-component="ConsolePage"] .content-actions {
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  gap: 16px;
+}
+
+[data-component="ConsolePage"] .content-actions .inner {
+  flex-direction: row;
+  width: 100%;
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+[data-component="ConsolePage"] .content-actions .bottom {
+  border-bottom: 1px solid #eee;
+  width: 100%;
+}
+
+[data-component="ConsolePage"] .events {
+  border-top: 1px solid #e7e7e7;
+  height: 200px;
+  padding: 16px;
+  overflow: scroll;
+}

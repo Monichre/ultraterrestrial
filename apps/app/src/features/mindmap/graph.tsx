@@ -1,5 +1,5 @@
 'use client'
-import { useMindMap } from '@/providers/mindmap-context'
+import { useMindMap } from '@/contexts/mindmap-context'
 import { Panel, ReactFlow } from '@xyflow/react'
 
 import { LocationVisualization } from '@/components/location-visualization'
@@ -148,7 +148,7 @@ export function Graph( props: any ) {
   return (
     <div
       className='relative h-[100vh] w-[100vw] bg-black bg-dot-white/[0.3] bg-repeat'
-      style={{ backgroundSize: '20px 20px' }}>
+      style={{ backgroundSize: '16px 16px' }}>
       {/* <div className='fixed top-0 left-0 z-0 w-full'>
         <GraphPaper />
       </div> */}
@@ -166,11 +166,11 @@ export function Graph( props: any ) {
         // snapToGrid={true}
         defaultEdgeOptions={edgeOptions}
         nodes={nodes}
-        initialViewport={{
-          zoom: 0,
-          x: 0,
-          y: 0,
-        }}
+        // initialViewport={{
+        //   zoom: 0,
+        //   x: 0,
+        //   y: 0,
+        // }}
 
         edges={edges}
         onNodesChange={onNodesChange}

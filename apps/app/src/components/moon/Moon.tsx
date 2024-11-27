@@ -45,7 +45,7 @@ export const Moon = () => {
   return (
     <div className='h-full w-full' id='moon-canvas'>
       <Canvas gl={{ antialias: false }} >
-        <color attach='background' args={['#101015']} />
+        {/* <color attach='background' args={['#101015']} /> */}
         <PerspectiveCamera makeDefault position={[0, -0.5, 5]} fov={50} />
         <ambientLight intensity={0.01} />
         <directionalLight intensity={5} position={[1, 5, -2]} />

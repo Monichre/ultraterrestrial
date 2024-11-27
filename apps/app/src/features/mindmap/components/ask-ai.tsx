@@ -1,12 +1,11 @@
-import { MemoizedMarkdown } from "@/features/ai"
 import { askAIAction } from "@/features/mindmap/api/actions"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface AskAIProps {
   question: any
   prompt?: any
   table: any
-  children: React.ReactNode
+  children?: React.ReactNode
   updateAnalysis: ( analysis: any ) => void
 }
 

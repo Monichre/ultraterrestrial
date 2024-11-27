@@ -37,7 +37,7 @@ import {
   getTestimonies,
   getOrganizations,
   getEvents,
-} from '@/app/admin/actions'
+} from '@/app/(auth)/admin/actions'
 
 import { SheetTrigger, SheetContent } from '@/components/ui/sheet'
 

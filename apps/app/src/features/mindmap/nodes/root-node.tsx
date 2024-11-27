@@ -11,7 +11,7 @@ type CardProps = React.ComponentProps<typeof Card>
 
 import { BlurAppear } from '@/components/animated/animated-wrappers'
 import { RootNodeCard } from '@/features/mindmap/components/cards/root-node-card/root-node-card'
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 // import { useLayoutedElements } from '@/features/mindmap/graph'
 
 type NumberNode = Node<{ number: number }, 'number'>

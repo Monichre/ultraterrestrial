@@ -6,7 +6,7 @@ import { WavRecorder, WavStreamPlayer } from '../lib/wavtools/index.js'
 import { instructions } from '../utils/conversation_config.js'
 import { WavRenderer } from '../utils/wav_renderer'
 
-import { ArrowDown, ArrowUp, Edit, X, Zap, File } from 'react-feather'
+import { ArrowDown, ArrowUp, Edit, File, X, Zap } from 'react-feather'
 import { Button } from '../components/button/Button'
 import { Toggle } from '../components/toggle/Toggle'
 
@@ -26,7 +26,7 @@ import ReactMarkdown from 'react-markdown'
 
 
 const firecrawl = new FirecrawlApp( {
-  apiKey: 'fc-22d136e7c1484888b4ba53b1a85da50e',
+  apiKey: 'fc-e271f58f93fe4b3fa4885b3234dfa8fb',
 } )
 const LOCAL_RELAY_SERVER_URL: string =
   process.env.REACT_APP_LOCAL_RELAY_SERVER_URL || ''
@@ -645,7 +645,7 @@ export function ConsolePage() {
         console.log( "🚀 ~ file: ConsolePage.tsx:512 ~ url:", url )
 
         const firecrawl = new FirecrawlApp( {
-          apiKey: 'fc-22d136e7c1484888b4ba53b1a85da50e',
+          apiKey: 'fc-e271f58f93fe4b3fa4885b3234dfa8fb',
         } )
         const data = await firecrawl.scrapeUrl( url, {
           formats: ['markdown', "links", 'screenshot'],
@@ -731,7 +731,7 @@ export function ConsolePage() {
       async ( { url, search }: { [key: string]: any } ) => {
         const firecrawl = new FirecrawlApp( {
 
-          apiKey: 'fc-22d136e7c1484888b4ba53b1a85da50e',
+          apiKey: 'fc-e271f58f93fe4b3fa4885b3234dfa8fb',
         } )
 
         const map_data = await firecrawl.mapUrl( url, { search: search } )

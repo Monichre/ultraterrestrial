@@ -1,44 +1,25 @@
-import type { StorybookConfig } from '@storybook/nextjs'
+import type { StorybookConfig } from "@storybook/react-vite";
 
-const config: StorybookConfig = {
-  // features: {
-  //   experimentalRSC: true,
-  // },
-  stories: [
-    '../src/**/*.mdx',
-    '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-    '../src/**/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-    '../src/stories/**/*.stories.@(ts|tsx)',
-    '../src/stories/*.stories.@(ts|tsx)',
-  ],
+import { join, dirname } from "path";
 
-  addons: [
-    '@storybook/addon-onboarding',
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    '@storybook/addon-actions/register',
-    'storybook-vscode-component/register',
-    '@storybook/addon-console',
-    {
-      name: '@storybook/addon-storysource',
-      options: {
-        sourceLoaderOptions: {
-          injectStoryParameters: true,
-        },
-      },
-    },
-    '@storybook/addon-mdx-gfm',
-  ],
-
-  framework: '@storybook/nextjs', // 👈 Add this
-
-  docs: {},
-
-  staticDirs: ['../public'],
-
-  typescript: {
-    reactDocgen: 'react-docgen-typescript',
-  },
+/**
+ * This function is used to resolve the absolute path of a package.
+ * It is needed in projects that use Yarn PnP or are set up within a monorepo.
+ */
+function getAbsolutePath(value: string): any {
+  return dirname(require.resolve(join(value, "package.json")));
 }
-export default config
+const config: StorybookConfig = {
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  addons: [
+    getAbsolutePath("@storybook/addon-onboarding"),
+    getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@chromatic-com/storybook"),
+    getAbsolutePath("@storybook/addon-interactions"),
+  ],
+  framework: {
+    name: getAbsolutePath("@storybook/react-vite"),
+    options: {},
+  },
+};
+export default config;

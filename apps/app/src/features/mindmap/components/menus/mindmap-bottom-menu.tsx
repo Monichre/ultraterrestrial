@@ -6,26 +6,24 @@ import {
   TestimoniesIcon,
   TopicsIcon,
 } from '@/components/icons/entity-icons'
-import { Button } from '@/components/ui/button'
-import { ShinyButton } from '@/components/ui/button/shiny-button'
-import { Separator } from '@/components/ui/separator'
+import { Button, ShinyButton } from '@/components/ui/button'
+import { useMindMap } from '@/contexts'
 import { initiateDatabaseTableQuery } from '@/features/mindmap/api/search'
-import { InputWithVanishAnimation } from '@/features/mindmap/components/cards/root-node-card/InputWithVanishAnimation'
 import { CHILD_DIMENSIONS } from '@/features/mindmap/config/nodes.config'
-import { useMindMap } from '@/providers'
 import { DOMAIN_MODEL_COLORS } from '@/utils/constants'
-import { capitalize } from '@/utils/functions'
 import { useUser } from '@clerk/nextjs'
+import { AnimatePresence } from 'framer-motion'
 // import { x, y } from '@liveblocks/react/dist/suspense-fYGGJ3D9'
-import { useStoreApi } from '@xyflow/react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { PlusIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 // import { computed } from 'tldraw'
 import { v4 as uuidv4 } from 'uuid'
 
 
-
+import { InputWithVanishAnimation } from '@/features/mindmap/components/cards/root-node-card/InputWithVanishAnimation'
+import { capitalize } from '@/utils'
+import { Separator } from '@radix-ui/react-separator'
+import { motion } from 'framer-motion'
+import { PlusIcon } from 'lucide-react'
 export const MindMapBottomMenu = () => {
   const [isExpanded, setIsExpanded] = useState( false )
   const {
@@ -326,6 +324,7 @@ export const MindMapBottomMenu = () => {
   }, [dialogOpen] )
 
   return (
+
     <div className='h-full center w-full'>
       <div className='h-3/4 w-3/4 flex items-end justify-center'>
         <motion.div

@@ -5,7 +5,7 @@ import {
   initiateRagEnrichedDatabaseSearch,
 } from '@/features/mindmap/api/search'
 import { saveEventForUser } from '@/features/user/api/save-event'
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { objectMapToSingular } from '@/utils'
 import { useAuth } from '@clerk/nextjs'
 import { S } from '@liveblocks/react/dist/suspense-fYGGJ3D9'

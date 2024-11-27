@@ -189,7 +189,7 @@
 //   )
 // }
 
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { NEONS } from '@/utils'
 import { BaseEdge, EdgeLabelRenderer, getBezierPath, type EdgeProps } from '@xyflow/react'
 

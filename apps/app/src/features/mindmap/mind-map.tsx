@@ -2,7 +2,7 @@
 
 import { Graph } from '@/features/mindmap/graph'
 
-import { MindMapProvider } from '@/providers/mindmap-context'
+import { MindMapProvider } from '@/contexts/mindmap-context'
 import { ReactFlowProvider } from '@xyflow/react'
 
 export interface MindMapProps { }

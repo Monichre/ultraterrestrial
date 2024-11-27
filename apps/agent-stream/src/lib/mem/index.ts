@@ -2,9 +2,8 @@
 
 // const MemoryClient = require( 'mem0ai' )
 
-import { Users } from "react-feather"
 
-// export const mem0AI = new MemoryClient(
+// export const memoryAgent = new MemoryClient(
 //   process.env.REACT_APP_MEM0_API_KEY || ''
 // )
 
@@ -14,7 +13,7 @@ import { Users } from "react-feather"
 
 // const addMemory = async ( messages: any, options: any ) => {
 //   try {
-//     return await mem0AI.add( messages, {
+//     return await memoryAgent.add( messages, {
 //       output_format: 'v1.1',
 //       ...options
 //     } )

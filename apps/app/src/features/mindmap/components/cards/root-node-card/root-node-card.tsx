@@ -9,7 +9,7 @@ import '@/components/ui/card/cards.css'
 import { useNodesData } from '@xyflow/react'
 
 
-import { useMindMap } from '@/providers/mindmap-context'
+import { useMindMap } from '@/contexts/mindmap-context'
 import { memo, useCallback, useState } from 'react'
 
 import { initiateDatabaseTableQuery } from '@/features/mindmap/api/search'

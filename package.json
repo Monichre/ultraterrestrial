@@ -11,18 +11,17 @@
     "start": "turbo run start",
     "dev": "turbo dev --parallel",
     "dev:cli": "turbo dev --filter=@ultraterrestrial/cli",
-    "dev:internal-agents": "turbo dev --filter=@ultraterrestrial/internal-agents",
+    "dev:ui": "turbo dev --filter=@ultraterrestrial/ui",
     "dev:app": "turbo dev --filter=@ultraterrestrial/app",
+    "dev:cms": "turbo dev --filter=@ultraterrestrial/cms",
+    "dev:live": "turbo dev --filter=@ultraterrestrial/drawing-board",
     "build:app": "turbo build --filter=@ultraterrestrial/app",
     "dev:stream": "turbo dev --filter=@ultraterrestrial/agent-stream",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "new": "plop"
   },
   "packageManager": "bun@1.1.29",
   "dependencies": {
-    "next": "^15.0.0",
-    "plop": "^4.0.1",
-    "react": "^19.0.0-rc-69d4b800-20241021",
-    "react-dom": "^19.0.0-rc-69d4b800-20241021",
     "turbo": "^2.1.3",
     "typescript": "^5.6.2"
   }

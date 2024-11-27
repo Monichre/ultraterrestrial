@@ -1,15 +1,66 @@
-![Example Image](./docs/mindmap.png)
-
 # UltraTerrestrial
 
 **Tracking the State of Disclosure**
 _Striving to document, explore and disseminate the past, present and future of the UFO topic and its bearing on humanity, the universe and our place within it._
 
----
+![Example Image](./preview.jpeg)
 
+# Initial Idea
 
+How it started ...
 
-Pitch?:
+![Charlie Day](apps/app/docs/charlie-day.gif)
+
+and still how I feel. The state of disclosure is a moving
+
+Essentially I was thinking it might be cool to build a "state of disclosure" application that provided engaging visual displays and interactions across the following general areas:
+
+1. Major Historical UFO Event Chronology
+    - Interactive 3D visualization of global UFO sightings
+    - Timeline navigation and filtering capabilities
+    - Detailed event documentation and analysis
+
+2. Disclosure Status Dashboard
+    - Real-time tracking of claims, hearings and news
+    - Progress indicators and milestone tracking
+    - Historical context and developments
+
+3. Topic Analysis & Correlation Engine
+    - Network visualization of connected topics
+    - Pattern recognition and trend analysis
+    - Machine learning-powered insight generation
+
+4. Key Figures Database
+    - Comprehensive profiles of notable individuals
+    - Timeline of involvement and contributions
+    - Network analysis of relationships and connections
+
+5. Investigation Hub
+    - Interactive evidence mapping and visualization
+    - Collaborative research and analysis tools
+    - Pattern recognition across disparate data points
+
+6. Digital Archive
+    - Searchable repository of documents and artifacts
+    - Metadata tagging and cross-referencing
+    - Chain of custody tracking
+
+7. Open Questions Framework
+    - Structured database of unresolved questions
+    - Impact analysis and implications tracking
+    - Progress monitoring and updates
+
+8. Classified Locations Registry
+    - Mapping of suspected facilities
+    - Historical activity analysis
+    - Geospatial correlation with events
+
+9. Contractor Intelligence Database
+    - Profiles of relevant organizations
+    - Project and program tracking
+    - Network analysis of relationships
+
+## Formal Pitch
 
 At its core, Ultraterrestrial is designed to chronicle major historical UFO events with stunning 3D visuals that map sightings across the globe. Picture an interactive world map where you can zoom in and out, explore sightings by location, and navigate through time using a dynamic slider that showcases how these phenomena have evolved over the decades. Heatmaps will highlight regions with high densities of sightings, and for those who love immersive experiences, augmented reality features will let you visualize historical sightings in your current surroundings.
 
@@ -45,260 +96,86 @@ Launching Ultraterrestrial involves strategic marketing and community-building e
 
 In summary, Ultraterrestrial is poised to become the leading platform in the UFO disclosure space, offering a rich, interactive, and comprehensive experience that not only informs but also engages and empowers its users. Whether you’re an avid enthusiast, a dedicated researcher, or just curious about the mysteries of the skies, Ultraterrestrial provides the tools and community to explore the fascinating world of ultraterrestrial phenomena.
 
-[DBML](https://dbdocs.io/liamhellis/ultraterrestrial)
+## Tech Stack
+
+NextJS
+Xata
+OpenAI
+Anthropic
+Tailwind
+ThreeJS
+React Three Fiber
+Framer Motion
+
+[Feature Roadmap](./apps/app/docs/roadmap.md)
+
+[Agentic Research Methodology](./apps/app/docs/AgenticResearchMethodology.md)
+
 
 ```mermaid
-classDiagram
-direction BT
-class artifacts {
-   text name
-   text description
-   text[] photos
-   text date
-   text source
-   text origin
-   text[] images
-   text xata_id
-   jsonb api_data
-   integer id
-}
-class documents {
-   text content
-   jsonb metadata
-   jsonb embedding
-   jsonb api_data
-   integer id
-}
-class event_subject_matter_experts {
-   varchar xata_id
-   integer event_id
-   integer subject_matter_expert_id
-   timestamp created_at
-   timestamp updated_at
-   integer version
-   jsonb api_data
-   integer id
-}
-class event_topic_subject_matter_experts {
-   varchar xata_id
-   integer event_id
-   integer topic_id
-   integer subject_matter_expert_id
-   timestamp created_at
-   timestamp updated_at
-   integer version
-   jsonb api_data
-   integer id
-}
-class events {
-   varchar xata_id
-   varchar name
-   varchar location
-   date date
-   real latitude
-   real longitude
-   text description
-   jsonb photos
-   jsonb api_data
-   integer id
-}
-class key_figures {
-   varchar xata_id
-   varchar name
-   text bio
-   varchar role
-   varchar facebook
-   varchar twitter
-   varchar website
-   varchar instagram
-   integer rank
-   jsonb photo
-   integer credibility
-   integer popularity
-   integer authority
-   timestamp created_at
-   timestamp updated_at
-   integer version
-   jsonb api_data
-   integer id
-}
-class organization_members {
-   varchar xata_id
-   integer member_id
-   integer organization_id
-   timestamp created_at
-   timestamp updated_at
-   integer version
-   jsonb api_data
-   integer id
-}
-class organizations {
-   varchar xata_id
-   varchar name
-   varchar specialization
-   text description
-   text photo
-   text image
-   timestamp created_at
-   timestamp updated_at
-   integer version
-   jsonb api_data
-   integer id
-}
-class sightings {
-   timestamp with time zone date
-   text description
-   text media_link
-   varchar city
-   varchar state
-   varchar country
-   varchar shape
-   varchar duration_seconds
-   varchar duration_hours_min
-   text comments
-   date date_posted
-   numeric latitude
-   numeric longitude
-   jsonb api_data
-}
-class testimonies {
-   varchar xata_id
-   text claim
-   text summary
-   jsonb documentation
-   integer event_id
-   timestamp date
-   integer witness_id
-   integer organization_id
-   timestamp created_at
-   timestamp updated_at
-   integer version
-   jsonb api_data
-   integer id
-}
-class theories {
-   text description
-   text title
-   integer id
-}
-class topic_subject_matter_experts {
-   varchar xata_id
-   integer topic_id
-   integer subject_matter_expert_id
-   timestamp created_at
-   timestamp updated_at
-   integer version
-   jsonb api_data
-   integer id
-}
-class topics {
-   varchar xata_id
-   varchar name
-   text summary
-   text photo
-   jsonb photos
-   timestamp created_at
-   timestamp updated_at
-   integer version
-   jsonb api_data
-   integer id
-}
-class topics_testimonies {
-   varchar xata_id
-   integer topic_id
-   integer testimony_id
-   timestamp created_at
-   timestamp updated_at
-   integer version
-   jsonb api_data
-   integer id
-}
-class user_saved_documents {
-   integer user_id
-   integer document_id
-   text note
-   text note_title
-   jsonb api_data
-   integer id
-}
-class user_saved_events {
-   integer user_id
-   integer event_id
-   text note
-   text note_title
-   jsonb api_data
-   integer id
-}
-class user_saved_organizations {
-   integer user_id
-   integer organization_id
-   text note
-   text note_title
-   jsonb api_data
-   integer id
-}
-class user_saved_testimonies {
-   integer user_id
-   integer testimony_id
-   text note
-   text note_title
-   jsonb api_data
-   integer id
-}
-class user_saved_topics {
-   integer user_id
-   integer topic_id
-   text note
-   text note_title
-   jsonb api_data
-   integer id
-}
-class user_theories {
-   integer user_id
-   text title
-   text content
-   text synopsis
-   text[] diagrams
-   text description
-   integer id
-}
-class users {
-   text email
-   text name
-   text photo
-   text profile_image_url
-   text external_id
-   jsonb api_data
-   integer id
-}
-class xata_to_postgres_mapping {
-   integer new_id
-   varchar xata_id
-}
+flowchart TB
+    subgraph Daily Processing
+        CronTrigger["Daily Cron Trigger\n(NextJS/Cloudflare)"]
+        
+        subgraph Personnel Analysis
+            PA1[Load Personnel Data]
+            PA2[Calculate Network Centrality]
+            PA3[Analyze Topic Coverage]
+            PA4[Calculate Organization Impact]
+            PA5[Compute Historical Contribution]
+            PA6[Generate Authority Score]
+            
+            PA1 --> PA2
+            PA2 --> PA3
+            PA3 --> PA4
+            PA4 --> PA5
+            PA5 --> PA6
+        end
+        
+        subgraph Case Analysis
+            CA1[Load Case Data]
+            CA2[Calculate Documentation Score]
+            CA3[Analyze Expert Citations]
+            CA4[Evaluate Physical Evidence]
+            CA5[Cross-reference Lists]
+            CA6[Generate Credibility Score]
+            
+            CA1 --> CA2
+            CA2 --> CA3
+            CA3 --> CA4
+            CA4 --> CA5
+            CA5 --> CA6
+        end
+        
+        CronTrigger --> PA1
+        CronTrigger --> CA1
+        
+        subgraph Score Updates
+            SU1[Update Database]
+            SU2[Cache Results]
+            SU3[Trigger UI Updates]
+            
+            PA6 --> SU1
+            CA6 --> SU1
+            SU1 --> SU2
+            SU2 --> SU3
+        end
+    end
+    
+    subgraph Data Sources
+        DS1[(Personnel DB)]
+        DS2[(Events DB)]
+        DS3[(Organizations DB)]
+        DS4[(Topics DB)]
+        DS5[(Testimonies DB)]
+        DS6[(Reference Lists)]
+    end
+    
+    DS1 --> PA1
+    DS2 --> CA1
+    DS3 --> PA4
+    DS4 --> PA3
+    DS5 --> CA2
+    DS6 --> CA5
 
-event_subject_matter_experts  -->  events : event_id:id
-event_subject_matter_experts  -->  key_figures : subject_matter_expert_id:id
-event_topic_subject_matter_experts  -->  events : event_id:id
-event_topic_subject_matter_experts  -->  key_figures : subject_matter_expert_id:id
-event_topic_subject_matter_experts  -->  topics : topic_id:id
-organization_members  -->  key_figures : member_id:id
-organization_members  -->  organizations : organization_id:id
-testimonies  -->  events : event_id:id
-testimonies  -->  key_figures : witness_id:id
-testimonies  -->  organizations : organization_id:id
-topic_subject_matter_experts  -->  key_figures : subject_matter_expert_id:id
-topic_subject_matter_experts  -->  topics : topic_id:id
-topics_testimonies  -->  testimonies : testimony_id:id
-topics_testimonies  -->  topics : topic_id:id
-user_saved_documents  -->  documents : document_id:id
-user_saved_documents  -->  users : user_id:id
-user_saved_events  -->  events : event_id:id
-user_saved_events  -->  users : user_id:id
-user_saved_organizations  -->  organizations : organization_id:id
-user_saved_organizations  -->  users : user_id:id
-user_saved_testimonies  -->  testimonies : testimony_id:id
-user_saved_testimonies  -->  users : user_id:id
-user_saved_topics  -->  topics : topic_id:id
-user_saved_topics  -->  users : user_id:id
-user_theories  -->  users : user_id:id
 ```

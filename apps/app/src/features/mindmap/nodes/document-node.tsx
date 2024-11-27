@@ -1,7 +1,7 @@
 'use client'
 
 import { BlurAppear } from '@/components/animated'
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { FileIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 

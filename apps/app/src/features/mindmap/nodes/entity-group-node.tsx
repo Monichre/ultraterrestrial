@@ -5,12 +5,9 @@ import { memo, useEffect, useState } from 'react'
 import { Handle, Position } from '@xyflow/react'
 
 import { BlurAppear } from '@/components/animated/animated-wrappers'
+import { useMindMap } from '@/contexts'
 import { renderEntityGroup } from '@/features/mindmap/components/cards/render-entity-card'
-import {
-  GROUP_NODE_HEIGHT,
-  GROUP_NODE_WIDTH,
-} from '@/features/mindmap/config/nodes.config'
-import { useMindMap } from '@/providers'
+import './nodes.css'
 
 const dayjs = require( 'dayjs' )
 const utc = require( 'dayjs/plugin/utc' )
@@ -48,43 +45,50 @@ const GN = memo( ( props: any ) => {
     // }
   }, [props, updateNodeInternals, nodeData] )
 
-  useEffect( () => {
-    if ( type === 'topics' ) {
-      updateNode( props.id, {
-        style: {
-          height: GROUP_NODE_WIDTH,
-          width: GROUP_NODE_HEIGHT,
-        },
-      } )
-    }
-  }, [props.id, type, updateNode] )
+  // useEffect( () => {
+  //   if ( type === 'topics' ) {
+  //     updateNode( props.id, {
+  //       style: {
+  //         height: GROUP_NODE_WIDTH,
+  //         width: GROUP_NODE_HEIGHT,
+  //       },
+  //     } )
+  //   }
+  // }, [props.id, type, updateNode] )
 
   return (
-    <BlurAppear className='motion-scale-in-0 motion-opacity-in-0' id={props.id}>
-      {handles && handles.length
-        ? handles.map( ( id: string ) => (
-          <Handle
-            key={id}
-            type='source'
-            position={Position.Bottom}
-            id={id}
-            isConnectable={true}
-          />
-        ) )
-        : null}
 
-      <Handle type='target' position={Position.Top} />
-      <div className='overflow-hidden rounded-3xl bg-white dark:bg-black'>
-        {renderEntityGroup( {
-          type: type,
-          data: {
-            ...nodeData,
-            ...props,
-          },
-        } )}
-      </div>
-      {/* <div className='absolute right-5 top-0 h-px w-80 bg-gradient-to-l from-transparent via-white/30 via-10% to-transparent' /> */}
-    </BlurAppear>
+    <>
+      <Handle type="target" position={Position.Top} />
+
+      <BlurAppear className="motion-scale-in-0 motion-opacity-in-0" id={props.id}>
+
+
+        {handles && handles.length
+          ? handles.map( ( id: string ) => (
+            <Handle
+              key={id}
+              type="source"
+              position={Position.Bottom}
+              id={id}
+              isConnectable={true}
+            />
+          ) )
+          : null}
+
+
+        <div className="overflow-hidden rounded-3xl bg-white dark:bg-black">
+          {renderEntityGroup( {
+            type: type,
+            data: {
+              ...nodeData,
+              ...props,
+            },
+          } )}
+        </div>
+        {/* <div className='absolute right-5 top-0 h-px w-80 bg-gradient-to-l from-transparent via-white/30 via-10% to-transparent' /> */}
+      </BlurAppear>
+    </>
   )
 } )
 

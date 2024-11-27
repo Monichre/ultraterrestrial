@@ -1,12 +1,11 @@
 import { SketchyGlobe } from '@/components/icons'
 import { Button } from '@/components/ui/button'
+import { useMindMap } from '@/contexts'
 import {
   formatNodesForCardDisplay
 } from '@/features/mindmap/components/cards/card-stack/card-stack'
 import { CardBottom, CardCorners, CardTop } from '@/features/mindmap/components/cards/entity-group-card/sections'
 import { GROUP_NODE_DIMENSIONS } from '@/features/mindmap/config/nodes.config'
-import { TimelineSidebar } from '@/layouts/timeline/TimlineSidebarUI'
-import { useMindMap } from '@/providers'
 
 import { extractUniqueYearsFromEvents } from '@/utils'
 import { LayersIcon } from 'lucide-react'
@@ -150,11 +149,7 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ( { card } ) => {
           </div>
         </CardTop>
         <div className='flex justify-stretch w-full h-full relative'>
-          {years && (
-            <div className='w-[70px] h-auto flex flex-col justify-center align-center content-center items-center '>
-              <TimelineSidebar years={years} />
-            </div>
-          )}
+
           <div
             className='relative h-full flex flex-col justify-center justify-self-end'
             style={{ perspective: 600, width: 'calc(100% - 70px)' }}
@@ -180,21 +175,6 @@ export const EntityGroupCard: React.FC<EntityGroupCardProps> = ( { card } ) => {
           </div>
         </CardBottom>
 
-        <div className='accent-lines'>
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
         <CardCorners type={card.id.split( '-' )[0]} />
       </div>
     </>

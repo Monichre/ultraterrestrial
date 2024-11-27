@@ -2,7 +2,7 @@
 import { formatNodesForCardDisplay } from '@/features/mindmap/components/cards/card-stack/card-stack'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { truncate } from '@/utils'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronsRight, X } from 'lucide-react'

@@ -22,6 +22,7 @@ export const EXTERNAL_RESOURCES = [
   'https://newparadigminstitute.org/',
   "https://howandwhys.com/",
   'https://bestufovideos.com',
+  'https://thedebrief.org/category/uap/',
   'http://www.theblackvault.com/casefiles/category/ufos',
   'http://www.cufos.org/index.html',
   'https://thedebrief.org/category/uap',
@@ -91,7 +92,7 @@ export const EXTERNAL_RESOURCES = [
   'https://howandwhys.com',
   'https://ufos-scientificresearch.blogspot.com',
   'https://mindsublime.blogspot.com',
-
+  "https://www.stardrive.org/"
 
 ]
 
@@ -114,6 +115,7 @@ export const RSS_FEEDS = [
   { site: 'https://www.theblackvault.com/casefiles/category/ufos/', name: 'The Black Vault Case Files', rss: 'https://www.theblackvault.com/casefiles/category/ufos/feed/' },
   { site: 'https://howandwhys.com/', name: 'How and Why', rss: 'https://howandwhys.com/feed/' },
 ]
+
 
 
 

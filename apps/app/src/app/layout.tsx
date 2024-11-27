@@ -8,7 +8,7 @@ import '@xyflow/react/dist/style.css'
 import { ViewTransitions } from 'next-view-transitions'
 import './globals.css'
 
-import { ThemeProvider } from '@/providers'
+import { ThemeProvider } from '@/contexts'
 
 import { ClerkProvider } from '@clerk/nextjs'
 import { GeistMono } from 'geist/font/mono'

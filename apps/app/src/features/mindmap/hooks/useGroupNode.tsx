@@ -1,6 +1,6 @@
 // hooks/useGroupNode.ts
 
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Node, NodeProps } from '@xyflow/react'
 

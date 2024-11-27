@@ -1,10 +1,10 @@
 'use client'
 
+import { FloatingPanelBody, FloatingPanelCloseButton, FloatingPanelContent, FloatingPanelFooter, FloatingPanelForm, FloatingPanelLabel, FloatingPanelRoot, FloatingPanelSubmitButton, FloatingPanelTextarea, FloatingPanelTrigger } from '@/components/animated'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
-import { ArrowLeftIcon, Lightbulb } from 'lucide-react'
-import { useId, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import { Lightbulb } from 'lucide-react'
+import { useState } from 'react'
 
 // const NoteButton = ({ref, ...rest}) => {
 //   return (
@@ -22,122 +22,48 @@ const TRANSITION = {
   duration: 0.3,
 }
 
+
+
 export const AddNote = ( { saveNote, userNote, children }: any ) => {
-  const uniqueId = useId()
-  const formContainerRef = useRef<HTMLDivElement>( null )
-  const [isOpen, setIsOpen] = useState( false )
+
+
   const [noteTitle, setNoteTitle] = useState( userNote.title )
-  const [note, setNote] = useState<null | string>( userNote.content )
+  const [note, setNote] = useState<null | string>( userNote?.content || '' )
 
   const handleSavingNote = () => {
     saveNote( { title: noteTitle, content: note } )
   }
-  const openMenu = () => {
-    setIsOpen( true )
-  }
-
-  const closeMenu = () => {
-    setIsOpen( false )
-    setNote( null )
-  }
 
   const handleSubmit = () => {
     handleSavingNote()
-    closeMenu()
+
   }
 
   return (
-    <MotionConfig transition={TRANSITION}>
-      <div className='relative flex items-center justify-center'>
-        <motion.div
-          key='button'
-          layoutId={uniqueId}
-          // className='flex h-9 items-center border border-zinc-950/10 px-3 text-zinc-950 dark:border-zinc-50/10 '
 
-          onClick={openMenu}
-        >
-          {children ? (
-            children
-          ) : (
+    <FloatingPanelRoot>
+      <FloatingPanelTrigger
+        title=""
+        className='flex items-center space-x-2 px-4 py-2 '
+      >
+        <Lightbulb className='text-white stroke-1' size='18' />
+      </FloatingPanelTrigger>
 
-            <MotionButton variant='ghost' layoutId={`popover-label-note`} >
-              <Lightbulb className='text-white stroke-1' size='18' />
-            </MotionButton>
+      <FloatingPanelContent className='w-80'>
+        <FloatingPanelForm onSubmit={handleSubmit}>
+          <FloatingPanelBody>
+            <FloatingPanelLabel htmlFor='note-input'>Note</FloatingPanelLabel>
+            <FloatingPanelTextarea id='note-input' className='min-h-[100px]' value={note}
+              onChange={e => setNote( e.target.value )} />
+          </FloatingPanelBody>
+          <FloatingPanelFooter>
+            <FloatingPanelCloseButton />
+            <FloatingPanelSubmitButton />
+          </FloatingPanelFooter>
+        </FloatingPanelForm>
+      </FloatingPanelContent>
+    </FloatingPanelRoot>
 
-          )}
-        </motion.div>
-
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              ref={formContainerRef}
-              layoutId={`popover-note`}
-              className='absolute z-50 h-[250px] w-[364px] overflow-hidden outline-none dark:bg-black border border-white/60 dark:border-white/30 rounded-[calc(var(--radius))] text-white bottom-0 left-auto '
-              style={{
-                borderRadius: 12,
-              }}
-            >
-              <motion.span
-                layoutId={`popover-label-note`}
-                aria-hidden='true'
-                style={{
-                  opacity: note ? 0 : 1,
-                }}
-                className='absolute right-2 top-2 select-none text-sm text-white'
-              >
-                Note
-              </motion.span>
-              <form
-                className='flex h-full flex-col relative p-2'
-                onSubmit={saveNote}
-              >
-                <input
-                  className='w-full h-auto resize-none rounded-md bg-transparent text-sm outline-none !border-none'
-                  value={noteTitle}
-                  onChange={e => setNoteTitle( e.target.value )}
-                  placeholder='Title'
-                />
-
-                <Textarea
-                  className='h-auto h-min-[180px] w-full resize-none rounded-md bg-transparent text-sm outline-none !border-none grow'
-                  autoFocus
-                  value={note}
-                  onChange={e => setNote( e.target.value )}
-                  placeholder='Note content'
-                />
-                <div
-                  key='close'
-                  className='flex justify-between justify-self-end'
-                >
-                  <Button
-                    variant='ghost'
-                    size='sm'
-                    onClick={closeMenu}
-                    aria-label='Close popover'
-                  >
-                    <ArrowLeftIcon
-                      size={16}
-                      className='text-zinc-900 dark:text-zinc-100'
-                    />
-                  </Button>
-                  <Button
-                    variant='outline'
-                    size='sm'
-                    className=''
-                    // className='relative ml-1 flex h-8 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 bg-transparent px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] dark:border-zinc-50/10 dark:text-zinc-50 dark:hover:bg-zinc-800'
-                    type='button'
-                    aria-label='Submit note'
-                    onClick={handleSubmit}
-                  >
-                    <span>Save</span>
-                  </Button>
-                </div>
-              </form>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </MotionConfig>
   )
 }
 

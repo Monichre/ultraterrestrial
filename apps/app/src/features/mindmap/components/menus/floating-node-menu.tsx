@@ -7,7 +7,7 @@ import {
   TopicsIcon,
 } from '@/components/icons'
 import { useClickOutside } from '@/hooks'
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { PlusIcon } from 'lucide-react'

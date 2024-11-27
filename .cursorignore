@@ -1,0 +1,10 @@
+# Add directories or file patterns to ignore during indexing (e.g. foo/ or *.csv)
+*.json
+*.md
+/node_modules/
+/public/
+/apps/drawing-board/node_modules/
+/apps/drawing-board/public/
+/apps/app/node_modules/
+/apps/app/public/
+

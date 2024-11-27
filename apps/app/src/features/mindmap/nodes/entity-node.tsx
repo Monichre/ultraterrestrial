@@ -4,19 +4,13 @@ import { memo, useEffect, useState } from 'react'
 
 import { Handle, Position } from '@xyflow/react'
 
+import { AiStarIcon } from '@/components/icons'
+import { useMindMap } from '@/contexts'
 import { renderEntity } from '@/features/mindmap/components/cards/render-entity-card'
-import { useMindMap } from '@/providers'
+import { CoreNodeBottom, CoreNodeContainer, CoreNodeContent } from '@/features/mindmap/nodes/core-node-ui'
+import { useEntity } from '@/hooks'
 import { cn } from '@/utils'
-import { type d, g, h, o, p, w, z } from '@liveblocks/react/dist/suspense-fYGGJ3D9'
-import { min, type style, svg } from 'd3'
-import type src from 'gsap/src'
-import path, { relative } from 'path'
-import { a } from 'react-spring'
-import type { fill } from 'three/src/extras/TextureUtils'
-import { motion, px, transform } from 'framer-motion'
-import { rotate } from 'maath/dist/declarations/src/buffer'
-import { it } from 'node:test'
-import { start } from 'repl'
+import { GroupIcon } from 'lucide-react'
 
 interface Photo {
   id: string
@@ -33,17 +27,35 @@ interface Photo {
 const EntityNode = memo( ( node: any ) => {
   console.log( 'node: ', node )
   const { useUpdateNodeInternals, useNodesData } = useMindMap()
+
   const updateNodeInternals = useUpdateNodeInternals()
   const [handles, setHandles]: any = useState( [] )
   console.log( 'handles: ', handles )
   const nodeData = useNodesData( node.id )
   const type = node.data.type
+
   const component = renderEntity( {
     type: node.data.type,
     data: {
       ...node.data,
       id: node.id,
     },
+  } )
+  const {
+
+    entity,
+
+    saveNote,
+    updateNote,
+    userNote,
+    connectionListConnections,
+    handleHoverEnter,
+    findConnections,
+  } = useEntity( {
+    card: {
+      ...node.data,
+      id: node.id,
+    }
   } )
 
   useEffect( () => {
@@ -59,34 +71,56 @@ const EntityNode = memo( ( node: any ) => {
     //   updateNodeInternals(node.id)
     // }
   }, [node, updateNodeInternals, nodeData] )
-  // relative min-w-[300px] !w-[300px]
-  {
-    /* // <BlurAppear> */
-  }
+
   return (
-    <div className={cn( 'motion-scale-in-0 motion-opacity-in-0' )} id={node.id}>
+    <>
       <Handle type='target' position={Position.Top} />
+      <CoreNodeContainer className={cn( 'motion-scale-in-0 motion-opacity-in-0 min-w-[200px] core-node-container' )} id={node.id}>
+        <CoreNodeContent className='min-h-[100xp] w-full'>
 
-      {component}
+          {component}
 
-      {handles && handles?.length
-        ? handles.map( ( id: string, index: number ) => (
-          <Handle
-            key={`${id}-${index}`}
-            type='source'
-            position={Position.Bottom}
-            id={id}
-            isConnectable={true}
-          />
-        ) )
-        : null}
-    </div>
+          {handles && handles?.length
+            ? handles.map( ( id: string, index: number ) => (
+              <Handle
+                key={`${id}-${index}`}
+                type='source'
+                position={Position.Bottom}
+                id={id}
+                isConnectable={true}
+              />
+            ) )
+            : null}
+        </CoreNodeContent>
+        <CoreNodeBottom>
+
+
+
+          <div className='relative w-full flex'>
+            <AiStarIcon stroke={'#fff'} className='w-4 h-4 stroke-1' />
+            <GroupIcon stroke={'#fff'} className='w-4 h-4 stroke-1' />
+
+            {/* <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} /> */}
+
+          </div>
+
+
+        </CoreNodeBottom>
+      </CoreNodeContainer>
+    </>
   )
 } )
 
 EntityNode.displayName = 'EntityNode'
 
 export { EntityNode }
+
+// {/* {( node?.data?.entities?.length > 0 && props.data.type && props.data.input ? ( */ }
+
+// <AskAI question={askQuestion( { entities: node?.data?.entities?.map( ( { data }: any ) => data?.name ), input: props.data.input, type: props.data.type } )} table={props?.data?.type} updateAnalysis={updateAnalysis} >
+//   <WaypointsIcon stroke={DOMAIN_MODEL_COLORS.personnel} className='w-4 h-4 stroke-1' />
+// </AskAI>
+//           ) : null )}
 
 const AIToolsGrid = () => {
   return (

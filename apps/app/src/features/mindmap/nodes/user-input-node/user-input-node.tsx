@@ -1,148 +1,32 @@
 'use client'
 
 import {
-  CoreNodeAvatar,
   CoreNodeBottom,
   CoreNodeContainer,
-  CoreNodeContent,
+  CoreNodeContent
 } from '@/features/mindmap/nodes/core-node-ui'
 
-import { useMindMap } from '@/providers'
 import { useUser } from '@clerk/nextjs'
 import { Handle, Position } from '@xyflow/react'
-import { SparklesIcon, WaypointsIcon } from 'lucide-react'
-import { forwardRef, memo, useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 
+import { wait } from '@/utils'
 
-import { chroma, cn, DOMAIN_MODEL_COLORS, wait } from '@/utils'
-import Image from "next/image"
-
-import {
-  motion,
-  useTransform,
-  AnimatePresence,
-  useMotionValue,
-  useSpring,
-  useInView,
-  delay,
-} from "framer-motion"
-import { AskAI } from '@/features/mindmap/components/ask-ai'
-import { MemoizedMarkdown } from '@/features/ai'
-import { LetterFx } from '@/components/animated/text-effect/letter-glitch'
-import { useEntity } from '@/hooks'
-import { useGroupNode } from '@/features/mindmap/hooks/useGroupNode'
-import type { Node, NodeProps } from '@xyflow/react'
-import { Separator } from '@/components/ui/separator'
+import { AnimatedBeam } from '@/components/animated'
+import { GroupIcon } from '@/components/icons'
 import { Button } from '@/components/ui/button'
-import { AiStarIcon, ConnectionsIcon, GroupIcon } from '@/components/icons'
-import { AddNote } from '@/components/note/AddNote'
+import { MemoizedMarkdown } from '@/features/ai'
+import { useGroupNode } from '@/features/mindmap/hooks/useGroupNode'
+import { Anchor } from '@/features/mindmap/nodes/user-input-node/anchor'
+import { useEntity } from '@/hooks'
+import { getImageUrl } from '@/utils/image.utils'
+import type { NodeProps } from '@xyflow/react'
+import {
+  AnimatePresence,
+  motion
+} from "framer-motion"
 import rehypeExternalLinks from 'rehype-external-links'
 import remarkGfm from 'remark-gfm'
-import { AnimatedBeam } from '@/components/animated'
-import { p, type d } from '@liveblocks/react/dist/suspense-fYGGJ3D9'
-import { shadow } from 'deck.gl'
-import { center } from 'maath/dist/declarations/src/buffer'
-import { z } from 'zod'
-import { path, svg, type transition } from 'd3'
-import type { type } from 'os'
-import type { fill } from 'three/src/extras/TextureUtils'
-import { Anchor } from '@/features/mindmap/nodes/user-input-node/anchor'
-
-export const ResultAvatars = ( {
-  entities,
-}: {
-  entities: {
-    id: number
-    name: string
-
-    image: string
-  }[]
-} ) => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>( null )
-  const springConfig = { stiffness: 100, damping: 5 }
-  const x = useMotionValue( 0 ) // going to set this value on mouse move
-  // rotate the tooltip
-  const rotate = useSpring(
-    useTransform( x, [-100, 100], [-45, 45] ),
-    springConfig
-  )
-  // translate the tooltip
-  const translateX = useSpring(
-    useTransform( x, [-100, 100], [-50, 50] ),
-    springConfig
-  )
-  const handleMouseMove = ( event: any ) => {
-    const halfWidth = event.target.offsetWidth / 2
-    x.set( event.nativeEvent.offsetX - halfWidth ) // set the x value, which is then used in transform and rotate
-  }
-
-  return (
-    <>
-      {entities.map( ( item, idx ) => (
-        <div
-          className="-mr-8 relative group w-min"
-          key={item.id}
-          onMouseEnter={() => setHoveredIndex( item.id )}
-          onMouseLeave={() => setHoveredIndex( null )}
-        >
-          <AnimatePresence mode="popLayout">
-            {hoveredIndex === item.id && (
-              <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.6 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  transition: {
-                    type: "spring",
-                    stiffness: 260,
-                    damping: 10,
-                  },
-                }}
-                exit={{ opacity: 0, y: 20, scale: 0.6 }}
-                style={{
-                  translateX: translateX,
-                  rotate: rotate,
-                  whiteSpace: "nowrap",
-                }}
-                className="absolute -top-16 -left-1/2 translate-x-1/2 flex text-xs  flex-col items-center justify-center rounded-md bg-black z-50 shadow-xl px-4 py-2"
-              >
-                <div className="absolute inset-x-10 z-30 w-[20%] -bottom-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-px " />
-                <div className="absolute left-10 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px " />
-                <div className="font-bold text-white relative z-30 text-base">
-                  {item.name}
-                </div>
-                <div className="text-white text-xs">{item.name}</div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <Image
-            onMouseMove={handleMouseMove}
-            height={24}
-            width={24}
-            src={item.image || '/astro-3.png'}
-            alt={item.name}
-            className="object-cover !m-0 !p-0 object-top rounded-full h-10 w-10 border-2 group-hover:scale-105 group-hover:z-30 border-white  relative transition duration-500"
-          />
-        </div>
-      ) )}
-    </>
-  )
-}
-{/* <div className="h-20 w-[260px] max-w-sm animate-pulse rounded-md bg-gray-300" />
-<div className='hint' onMouseEnter={handleHover}>
-      <span className='hint-radius'></span>
-      <span className='hint-dot'></span>
-      <div className='hint-content do--split-children'>
-        
-        <p
-          style={{ color: '#78efff', letterSpacing: '0.05em' }}
-          className={`font-firaCode text-[#78efff]`}
-        >
-          {coordinates[0]}, {coordinates[1]}
-        </p>
-      </div>
-    </div> */}
 
 
 
@@ -164,8 +48,20 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
   const [showAnchor, setShowAnchor] = useState( false )
 
   useEffect( () => {
-    wait( 2 ).then( () => setShowAnchor( true ) )
+    wait( .5 ).then( () => setShowAnchor( true ) )
   }, [] )
+
+  console.log( "🚀 ~ file: user-input-node.tsx:59 ~ previewAvatars ~ node?.data?.entities:", node?.data?.entities )
+  const previewAvatars = node?.data?.entities?.map( ( { data }: any ) => ( {
+
+
+
+    name: data?.name,
+    image: getImageUrl( data ),
+    id: data?.id,
+    designation: data?.role || data?.location,
+  } ) )
+
   // const image = {
   //   url: user?.hasImage ? user?.imageUrl : '/astro-3.png',
   // }
@@ -180,6 +76,7 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
   return (
 
     <motion.div ref={containerRef} className='relative flex flex-col items-center align-center justify-center w-full'>
+
       <AnimatePresence>
         {showAnchor && (
           <>
@@ -205,6 +102,10 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
             {props.data.input || ''}
 
           </p>
+          {/* {( node?.data?.entities?.length > 0 && props.data.type && props.data.input ? (
+
+            <AskAI question={askQuestion( { entities: node?.data?.entities?.map( ( { data }: any ) => data?.name ), input: props.data.input, type: props.data.type } )} table={props?.data?.type} updateAnalysis={updateAnalysis} />
+          ) : null )} */}
           <AnimatePresence>
 
 
@@ -248,21 +149,21 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
 
         </CoreNodeContent>
         <CoreNodeBottom>
-          {( node?.data?.entities?.length > 0 && props.data.type && props.data.input ? (
 
-            <AskAI question={askQuestion( { entities: node?.data?.entities?.map( ( { data }: any ) => data?.name ), input: props.data.input, type: props.data.type } )} table={props?.data?.type} updateAnalysis={updateAnalysis} >
-              <WaypointsIcon stroke={DOMAIN_MODEL_COLORS.personnel} className='w-4 h-4 stroke-1' />
-            </AskAI>
-          ) : null )}
-          <div className='flex justify-end width-[50%] gap-2 align-center items-center'>
+          <div className='flex justify-between w-full align-center items-center'>
+
+            <div className='w-[75%] flex justify-start items-center h-full'>
+
+            </div>
+            <div className='w-[25%] flex justify-end items-center'>
+              <Button variant='ghost' onClick={findConnections} className='p-0'>
+                <GroupIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
+              </Button>
+              {/* <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} /> */}
+            </div>
 
 
 
-
-            <Button variant='ghost' onClick={findConnections} className=''>
-              <GroupIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
-            </Button>
-            <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} />
 
           </div>
         </CoreNodeBottom>

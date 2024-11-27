@@ -1,5 +1,5 @@
 import { createAI } from 'ai/rsc'
-import { submitMessage } from './actions'
+import { submitMessage } from './api/actions'
 
 export const AI = createAI( {
   actions: {

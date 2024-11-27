@@ -3,7 +3,7 @@
 import { memo, useEffect, useState } from 'react'
 import { TestimonyCard } from '../components/cards/testimony-card'
 
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { Handle, Position } from '@xyflow/react'
 
 {

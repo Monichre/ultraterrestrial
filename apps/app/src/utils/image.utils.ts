@@ -35,3 +35,20 @@ export const formatModelWithImage = ( model: ModelWithImage ) => {
     },
   }
 }
+
+
+export function getImageUrl( item: any ): { url: string } {
+  if ( !item ) return { url: '/astro-3.png' }
+
+  // Handle case where item has photos array
+  if ( item.photos?.length && item.photos[0]?.url ) {
+    const photo = item.photos[0]
+    return photo
+  } else if ( item.photo && item?.photo?.url ) {
+    return item?.photo
+  } else {
+
+    return { url: '/astro-3.png' }
+  }
+
+}

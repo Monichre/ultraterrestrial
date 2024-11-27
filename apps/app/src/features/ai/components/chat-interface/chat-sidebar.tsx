@@ -1,17 +1,16 @@
 'use client'
 
-import Link from 'next/link'
-import { MoreHorizontal, SquarePen } from 'lucide-react'
-import { cn } from '@/utils'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   Tooltip,
   TooltipContent,
-  TooltipTrigger,
   TooltipProvider,
-} from '@/components/ui/tooltip'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
+  TooltipTrigger,
+} from '@/components/ui/tooltip/tooltip'
+import { cn } from '@/utils'
 import type { Message } from 'ai'
+import { MoreHorizontal, SquarePen } from 'lucide-react'
 
 interface SidebarProps {
   isCollapsed: boolean

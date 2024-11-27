@@ -17,7 +17,7 @@ import {
   TopicsIcon,
 } from '@/components/icons'
 import { AddNote } from '@/components/note/AddNote'
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 
 const mapRange = (
   inputLower: number,

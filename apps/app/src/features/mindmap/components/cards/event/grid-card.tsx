@@ -28,7 +28,7 @@ export function GridCard( { card }: { card: any } ) {
 
   return (
     <div
-      className="relative bg-neutral-950 aspect-square border-r border-b border-neutral-800"
+      className="relative bg-neutral-950 aspect-square border-r border-b border-neutral-800 grid-card"
       onMouseEnter={() => setIsHovered( true )}
       onMouseLeave={() => setIsHovered( false )}
     >
@@ -60,7 +60,7 @@ export function GridCard( { card }: { card: any } ) {
         <div className="flex justify-between items-start mb-4">
           <div className="scale-90 origin-left">
             <img
-              src={project.logo}
+              src={bgPhoto.url}
               alt={project.name}
               className="h-10 object-contain"
             />

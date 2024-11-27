@@ -1,6 +1,6 @@
 // hooks/useSyncChildNodePositions.ts
 
-import { useMindMap } from '@/providers'
+import { useMindMap } from '@/contexts'
 import { debounce } from 'lodash' // Install lodash if not already installed
 import { useCallback, useMemo } from 'react'
 

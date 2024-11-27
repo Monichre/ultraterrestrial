@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>The UFO Database</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<meta name="description" content="The World's Trusted Database of Unidentified Phenomenon" />
+		<meta name="keywords" content="ufo, uap, uso, flying saucer, flying disc" />
+		<meta name="robots" content="index">
+		<link href="https://theufodatabase.com/assets/images/favicon.svg?1731100404" rel="shortcut icon" type="image/x-icon" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@200;300;400;600&family=Rubik:wght@400;600&family=DM+Mono:wght@200;300;400;600&display=swap" />
+		<link rel="stylesheet" href="https://theufodatabase.com/assets/css/bootstrap.css?1731100404" />
+		<link rel="stylesheet" href="https://theufodatabase.com/assets/css/min.css?1731100404" />
+		<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+
+		
+		<div class="canvas">
+
+			<div class="menu-mobile">
+
+	<button class="btn-menu-mobile-close">
+		<img src="https://theufodatabase.com/assets/images/icons/close-solid-black.svg?1731100404" alt="Close" />
+	</button>
+
+	<ul>
+		<li><a href="https://theufodatabase.com/home" class="">Home</a></li>
+		<li><a href="https://theufodatabase.com/incidents" class="">UFO Incidents</a></li>
+		<li><a href="https://theufodatabase.com/evidence" class="">UFO Evidence</a></li>
+		<li><a href="https://theufodatabase.com/timeline" class="">UFO Timeline</a></li>
+	</ul>
+
+	<h2>
+		Explore
+	</h2>
+
+	<ul>
+		<li><a href="https://theufodatabase.com/people" class="">People</a></li>
+		<li><a href="https://theufodatabase.com/photos" class="">Photos</a></li>
+		<li><a href="https://theufodatabase.com/videos" class="">Videos</a></li>
+		<li><a href="https://theufodatabase.com/docs" class="">Documents</a></li>
+	</ul>
+
+	<button class="btn-search">
+		<span>Search</span>
+		<img src="https://theufodatabase.com/assets/images/icons/search-solid-black.svg?1731100404" alt="Search" />
+	</button>
+
+	<center>
+		<a href="https://theufodatabase.com/ufo-tour" class="btn-tour">
+			<img src="https://theufodatabase.com/assets/images/icons/intro-solid-white.svg?1731100404" alt="Intro to UFOs" />
+			<span>Intro to UFOs</span>
+		</a>
+	</center>
+
+</div><!--/.menu-mobile -->
+
+			<div class="header-search">
+
+				<div class="modal-search">
+
+	<div class="search">
+
+		<form action="https://theufodatabase.com/search" method="post" id="form-search-modal" onsubmit="return searchHeader();">
+
+			<div class="qs">
+				<input type="text" name="qs" placeholder="Search for anything UFO" autocomplete="off" />
+				<button class="btn-clear" type="reset">
+					<img src="https://theufodatabase.com/assets/images/icons/close-solid-black.svg?1731100404" alt="Clear" />
+				</button>
+			</div><!--/.qs -->
+
+			<button class="btn-search">
+				<img src="https://theufodatabase.com/assets/images/icons/search-solid-white.svg?1731100404" alt="Search" />
+			</button>
+
+		</form>
+
+	</div><!--/.search -->
+
+	<div class="search-results"></div>
+
+</div><!--/.modal-search -->
+
+			</div><!--/.header-search -->
+
+			<div class="top">
+
+				<div class="bg-yellow"></div>
+
+				<div class="notice"></div>
+
+				<div class="header">
+
+					<div class="logo">
+
+						<a href="https://theufodatabase.com/home" class="desktop">
+							<img src="https://theufodatabase.com/assets/images/logos/ufodb-beta.webp?1731100404" alt="The UFO Database" />
+						</a>
+
+						<a href="https://theufodatabase.com/home" class="mobile">
+							<img src="https://theufodatabase.com/assets/images/logos/ufodb-beta-mobile.webp?1731100404" alt="The UFO Database" />
+						</a>
+
+					</div><!--/.logo -->
+
+					<div class="nav">
+
+						<a href="https://theufodatabase.com/home" class="">Home</a>
+						<div class="divider"></div>
+
+						<a href="https://theufodatabase.com/incidents" class="">UFO Incidents</a>
+						<div class="divider"></div>
+
+						<a href="https://theufodatabase.com/evidence" class="">UFO Evidence</a>
+						<div class="divider"></div>
+
+						<a href="https://theufodatabase.com/timeline" class="">UFO Timeline</a>
+						<div class="divider"></div>
+
+						<div class="dropdown">
+							<a href="https://theufodatabase.com/explore" class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Explore</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item " href="https://theufodatabase.com/people">People</a></li>
+								<li><a class="dropdown-item " href="https://theufodatabase.com/photos">Photos</a></li>
+								<li><a class="dropdown-item " href="https://theufodatabase.com/videos">Videos</a></li>
+								<li><a class="dropdown-item " href="https://theufodatabase.com/docs">Documents</a></li>
+							</ul>
+						</div>
+
+					</div><!--/.nav -->
+
+					<div class="tools">
+
+						<button class="btn-search">
+							<img src="https://theufodatabase.com/assets/images/icons/search-solid-black.svg?1731100404" alt="Search" />
+						</button>
+
+						<a href="https://theufodatabase.com/ufo-tour" class="btn-tour">
+							<img src="https://theufodatabase.com/assets/images/icons/intro-solid-white.svg?1731100404" alt="Intro to UFOs" />
+							<span>Intro to UFOs</span>
+						</a>
+		
+					</div><!--/.tools -->
+
+					<button class="btn-menu-mobile-open">
+						<img src="https://theufodatabase.com/assets/images/icons/menu-solid-black.svg?1731100404" alt="Menu" />
+					</button>
+
+				</div><!--/.header -->
+	<div class="primary primary-sidebar">
+
+		<div class="main">
+
+			<div class="head">
+
+				<div class="title">
+
+					<h1>
+						Houston, there's a problem.
+					</h1>
+
+				</div><!--/.title -->
+
+			</div><!--/.head -->
+
+			<div class="copy">
+
+				<div class="hr"><span></span></div>
+
+				<p>
+					There was an error retrieving that record. (ERROR:403)
+				</p>
+
+			</div><!--/.copy -->
+
+		</div><!--/.main -->
+
+	</div><!--/.primary -->
+
+</div><!--/.top -->
+			<div class="footer">
+
+				<div class="wrapper">
+
+					<div class="main">
+
+						<div class="links">
+
+							<h6>
+								The Big Stuff
+							</h6>
+
+							<div class="hr"><span></span></div>
+
+							<ul>
+								<li><a href="https://theufodatabase.com/home">Home</a></li>
+								<li><a href="https://theufodatabase.com/incidents">UFO Incidents</a></li>
+								<li><a href="https://theufodatabase.com/evidence">UFO Evidence</a></li>
+								<li><a href="https://theufodatabase.com/timeline">UFO Timeline</a></li>
+							</ul>
+
+						</div><!--/.links -->
+
+						<div class="links">
+
+							<h6>
+								More Links
+							</h6>
+
+							<div class="hr"><span></span></div>
+
+							<ul>
+								<li><a href="https://theufodatabase.com/explore">Explore</a></li>
+								<li><a href="https://theufodatabase.com/ufo-tour">Intro to UFOs</a></li>
+								<li><a href="https://theufodatabase.com/roadmap">Project Roadmap</a></li>
+								<li><a href="https://theufodatabase.com/get-involved">Ways to Contribute</a></li>
+							</ul>
+
+						</div><!--/.links -->
+
+						<div class="social">
+
+							<h6>
+								Connect With Us
+							</h6>
+
+							<div class="hr"><span></span></div>
+
+							<a href="https://www.facebook.com/ufodatabase" target="_blank">
+								<img src="https://theufodatabase.com/assets/images/social/facebook-solid-white.svg?1731100404" alt="Facebook" class="icon-facebook" />
+								<span>Facebook</span>
+							</a><br />
+
+							<a href="https://www.instagram.com/theufodatabase" target="_blank">
+								<img src="https://theufodatabase.com/assets/images/social/instagram-line-white.svg?1731100404" alt="Instagram" class="icon-instagram" />
+								<span>Instagram</span>
+							</a><br />
+
+							<a href="https://twitter.com/theufodb" target="_blank">
+								<img src="https://theufodatabase.com/assets/images/social/twitter-solid-white.svg?1731100404" alt="Twitter" class="icon-twitter" />
+								<span>Twitter</span>
+							</a>
+
+						</div><!--/.social -->
+
+					</div><!--/.main -->
+
+					<div class="newsletter">
+
+						<h6>
+							Email Newsletter
+						</h6>
+
+						<div class="hr"><span></span></div>
+
+						<p>
+							Everything UFO &mdash; delivered to your inbox once a month.
+							<strong>Stay connected to the subject!</strong>
+						</p>
+
+						<form action="https://theufodatabase.com/newsletter/confirmation" method="post" id="form-newsletter">
+
+							<input type="text" name="email" placeholder="Your email address" autocomplete="off" id="form-newsletter-email" />
+
+							<button id="form-newsletter-btn">
+								Subscribe
+							</button>
+
+						</form>
+
+					</div><!--/.newsletter -->
+
+				</div><!--/.wrapper -->
+
+				<div class="bottom">
+
+					<div class="legal">
+
+						<span class="copyright">&copy; 2023 TheUFODatabase.com. All rights reserved.</span>
+
+						<button data-bs-toggle="modal" data-bs-target="#modal-privacy" class="btn-clean">Privacy Policy</button>
+
+						<span class="divider">/</span>
+
+						<button data-bs-toggle="modal" data-bs-target="#modal-terms" class="btn-clean">Terms of Use</button>
+
+					</div><!--/.legal -->
+
+				</div><!--/.bottom -->
+
+			</div><!--/.footer -->
+
+		</div><!--/.canvas -->
+
+		<div class="modals">
+
+			<div class="modal fade" id="modal-privacy" tabindex="-1" aria-labelledby="modal-privacy" aria-hidden="true">
+
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+		<div class="modal-content">
+
+			<div class="modal-header">
+
+				<h2 class="modal-title" id="modal-label">
+					Privacy Policy
+				</h2>
+
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+			</div><!--/.modal-header -->
+
+			<div class="modal-body">
+
+				<p>
+					Your trust is important to us.
+					The UFO Database respects each individual's right to personal privacy.
+					We will collect and use information through our website only in the ways disclosed below.
+					This policy applies solely to information collected on https://www.theufodatabase.com.
+				</p>
+
+				<ol>
+
+					<li class="mb-3">
+						We do use cookies.
+						A cookie is a small text file that a web server places on a user's computer hard drive to be a unique identifier.
+						Cookies enable companies to track usage patterns and deliver customized content to users.
+					</li>
+
+					<li class="mb-3">
+						We will safeguard, according to strict standards of security and confidentiality, any information you share with us.
+						We do not reveal customer information gathered on https://www.theufodatabase.com to any external organization, except:
+					</li>
+
+					<ul>
+						<li>As authorized by the customer,</li>
+						<li>In an effort to enhance the services we provide, or</li>
+						<li>As required by law.</li>
+					</ul>
+
+				</ol>
+
+				<p>
+					We may occasionally email promotional or information material about our company or other offers we feel are relevant to our Registered Users, unless they contact us to remove them from our email list.
+					Please contact us if you have any questions about our Privacy Policy.
+				</p>
+
+			</div><!--/.modal-body -->
+
+			<div class="modal-footer">
+
+				<button class="btn-pop" data-bs-dismiss="modal">Accept Terms</button>
+
+			</div><!--/.modal-footer -->
+
+		</div><!--/.modal-content -->
+
+	</div><!--/.modal-dialog -->
+
+</div><!--/.modal -->
+
+			<div class="modal fade" id="modal-terms" tabindex="-1" aria-labelledby="modal-terms" aria-hidden="true">
+
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+		<div class="modal-content">
+
+			<div class="modal-header">
+
+				<h2 class="modal-title" id="modal-label">
+					Terms of Use
+				</h2>
+
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+			</div><!--/.modal-header -->
+
+			<div class="modal-body">
+
+				<p>
+					These Terms of Service (the "Agreement") are an agreement between The UFO Database (The UFO Database or us or our) and you (User or you or your).
+					This Agreement sets forth the general terms and conditions of your use of the products and services made available by The UFO Database and of the The UFO Database website (collectively, the Services).
+					By using the Services, you agree to be bound by this Agreement.
+					If you do not agree to abide by the terms of this Agreement, you are not authorized to use or access the Services.
+				</p>
+
+				<ul>
+					<li>Be respectful.</li>
+					<li>Ask questions.</li>
+					<li>Keep an open mind.</li>
+				</ul>
+
+				<p>
+					Last Updated January 1, 2023.
+				</p>
+
+			</div><!--/.modal-body -->
+
+			<div class="modal-footer">
+
+				<button class="btn-pop" data-bs-dismiss="modal">Accept Terms</button>
+
+			</div><!--/.modal-footer -->
+
+		</div><!--/.modal-content -->
+
+	</div><!--/.modal-dialog -->
+
+</div><!--/.modal -->
+
+			<div class="modal fade" id="modal-share" tabindex="-1" aria-labelledby="modal-add" aria-hidden="true">
+
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+		<div class="modal-content">
+
+			<div class="modal-header">
+
+				<h2 class="modal-title" id="modal-label">
+					Spread the word!
+				</h2>
+
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+			</div><!--/.modal-header -->
+
+			<div class="modal-body">
+
+				<div class="social">
+
+					<a href="https://www.facebook.com/ufodatabase" target="_blank">
+						<img src="https://theufodatabase.com/assets/images/social/facebook-solid-white.svg?1731100404" alt="Facebook" />
+					</a>
+
+					<a href="https://www.instagram.com/theufodatabase" target="_blank">
+						<img src="https://theufodatabase.com/assets/images/social/instagram-line-white.svg?1731100404" alt="Instagram" />
+					</a>
+
+					<a href="https://twitter.com/theufodb" target="_blank">
+						<img src="https://theufodatabase.com/assets/images/social/twitter-solid-white.svg?1731100404" alt="Twitter" />
+					</a>
+
+					<a href="https://tiktok.com/@theufodatabase" target="_blank">
+						<img src="https://theufodatabase.com/assets/images/social/tiktok-solid-white.svg?1731100404" alt="TikTok" />
+					</a>
+
+					<a href="https://www.youtube.com/@UFOdatabase" target="_blank">
+						<img src="https://theufodatabase.com/assets/images/social/youtube-solid-white.svg?1731100404" alt="YouTube" />
+					</a>
+
+				</div><!--/.social -->
+
+				<div class="copy-text">
+
+					<input type="text" value="https://theufodatabase.com/incidents/james-lumley-cadotte-pass-ufow" class="form-control" />
+
+					<button onclick="copyText();">COPY LINK</button>
+
+				</div><!--/.copy-text -->
+
+				<textarea id="clipboard" /></textarea>
+
+			</div><!--/.modal-body -->
+
+			<div class="modal-footer">
+
+				<button class="btn-pop" data-bs-dismiss="modal">Close</button>
+
+			</div><!--/.modal-footer -->
+
+		</div><!--/.modal-content -->
+
+	</div><!--/.modal-dialog -->
+
+</div><!--/.modal -->
+
+			
+			<div id="video">
+
+	<div class="wrapper">
+
+		<div class="load"></div>
+
+	</div><!--/.wrapper -->
+
+</div><!--/#video -->
+
+		</div><!--/.modals -->
+
+	<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'8df89118c8d1a209',t:'MTczMTEwMDQwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+	<script src="https://theufodatabase.com/assets/js/app.js?1731100404"></script>
+</html>
+<script>
+
+
+var base_url = window.location.origin;
+
+
+</script>

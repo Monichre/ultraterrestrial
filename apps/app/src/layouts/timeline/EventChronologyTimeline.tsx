@@ -1,6 +1,4 @@
 'use client'
-import './timeline.css'
-import { Earth, EarthAtNight } from '@/components/earth'
 import {
   ShootingStars,
   StarsBackground,
@@ -9,15 +7,13 @@ import { SpatialTimeline } from '@/layouts/timeline/SpatialTimeline'
 import { TimelineSidebar } from '@/layouts/timeline/TimlineSidebarUI'
 import {
   extractCoordinatesFromEvents,
-  extractUniqueYearsFromEvents,
-  locationToAngles,
+  extractUniqueYearsFromEvents
 } from '@/utils'
+import './timeline.css'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { CodePenEarth, CodePenEarthAlt, Globe } from '@/features/data-viz'
-import { useScroll } from 'framer-motion'
-import { Globeanime } from '@/components/ui/globe/globe-alt'
 import { EventsGlobe } from '@/layouts/timeline/events-globe'
+import { useScroll } from 'framer-motion'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 export const EventChronologyTimeline = ( { events }: any ) => {
   const years = extractUniqueYearsFromEvents( events )
@@ -65,6 +61,7 @@ export const EventChronologyTimeline = ( { events }: any ) => {
           {/* <CodePenEarth locations={locations} /> */}
         </div>
       </div>
+
 
       <div className='fixed top-0 left-10  h-screen w-screen flex justify-stretch z-10'>
         <div className='h-full w-100px flex flex-col justify-center align-center items-center content-center'>
