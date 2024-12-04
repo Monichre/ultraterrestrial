@@ -20,9 +20,9 @@ export function EventsGlobe( { markers, activeLocation }: any ) {
     let currentTheta = 0
     const doublePi = Math.PI * 2
     const globe = createGlobe( canvasRef.current, {
-      devicePixelRatio: 1,
       width: 1000,
       height: 1000,
+      devicePixelRatio: 1,
       phi: 0,
       theta: 0,
       dark: 1,

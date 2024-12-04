@@ -1,6 +1,7 @@
 export * from './geolocation'
 export * from './intersection-observer'
 export * from './use3dGraph'
+export * from './useAutoResizeTextArea'
 export * from './useCanvasCursor'
 export * from './useClickOutside'
 export * from './useEntity'
@@ -12,3 +13,4 @@ export * from './useTextSplitter'
 export * from './useTimelineConfig'
 export * from './useVisibility'
 export * from './useWindowSize'
+

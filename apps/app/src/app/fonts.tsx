@@ -1,10 +1,14 @@
 import {
-  Oswald,
-  Source_Sans_3,
   Fira_Code,
-  JetBrains_Mono,
+  Oswald,
+  Source_Sans_3
 } from 'next/font/google'
 import localFont from 'next/font/local'
+export const lukasSans = localFont( {
+  src: './fonts/LukasSansVar-Roman-v-0.0.2.woff2',
+  variable: '--font-lukas-sans',
+  display: 'swap'
+} )
 
 export const centimaSans = localFont( {
   src: [

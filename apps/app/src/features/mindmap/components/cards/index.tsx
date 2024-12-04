@@ -7,7 +7,5 @@ export * from './luxe-card'
 export * from './mini-card'
 export * from './root-node-card/root-node-card'
 export * from './testimony-card'
-import { MiniCard } from './mini-card'
-import { GridCard } from './event/grid-card'
-import { BonsaiCard } from './event/bonsai-card'
-export const EventCard = BonsaiCard
+import { EventGlobeCard } from '@/features/mindmap/components/cards/event/event-globe-card'
+export const EventCard = EventGlobeCard //BonsaiCard

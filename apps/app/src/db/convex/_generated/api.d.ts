@@ -13,6 +13,9 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as init from "../init.js";
+import type * as syncXataToConvex from "../syncXataToConvex.js";
+import type * as utils_notifications from "../utils/notifications.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -22,7 +25,11 @@ import type {
  * const myFunctionReference = api.myModule.myFunction;
  * ```
  */
-declare const fullApi: ApiFromModules<{}>;
+declare const fullApi: ApiFromModules<{
+  init: typeof init;
+  syncXataToConvex: typeof syncXataToConvex;
+  "utils/notifications": typeof utils_notifications;
+}>;
 export declare const api: FilterApi<
   typeof fullApi,
   FunctionReference<any, "public">

@@ -143,6 +143,7 @@ export const useEntity = ( { card }: any ) => {
       theory: 'test',
     } )
   }
+
   return {
     entity: card,
     saveNote,

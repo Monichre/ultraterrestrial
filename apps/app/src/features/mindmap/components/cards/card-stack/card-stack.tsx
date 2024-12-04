@@ -4,6 +4,7 @@ import { CardStackUI } from '@/features/mindmap/components/cards/card-stack/card
 
 export const formatNodesForCardDisplay = ( nodes: any ) => {
   console.log( 'nodes: ', nodes )
+  if ( !nodes ) return []
   return nodes.map( ( node ) => {
     const { id, ...rest } = node
     const nodeData = node?.data || rest

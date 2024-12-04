@@ -9,12 +9,11 @@ import {
 import { Button, ShinyButton } from '@/components/ui/button'
 import { useMindMap } from '@/contexts'
 import { initiateDatabaseTableQuery } from '@/features/mindmap/api/search'
-import { CHILD_DIMENSIONS } from '@/features/mindmap/config/nodes.config'
 import { DOMAIN_MODEL_COLORS } from '@/utils/constants'
 import { useUser } from '@clerk/nextjs'
 import { AnimatePresence } from 'framer-motion'
 // import { x, y } from '@liveblocks/react/dist/suspense-fYGGJ3D9'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 // import { computed } from 'tldraw'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -24,8 +23,168 @@ import { capitalize } from '@/utils'
 import { Separator } from '@radix-ui/react-separator'
 import { motion } from 'framer-motion'
 import { PlusIcon } from 'lucide-react'
-export const MindMapBottomMenu = () => {
+
+import { EnhanceAIInput } from '@/features/ai/components/ai-inputs/enhance-ai-input'
+const EntityMenu = ( { activeModel, setActiveModel, modelActions, modelActionMap }: any ) => {
   const [isExpanded, setIsExpanded] = useState( false )
+
+  const containerVariants = {
+    collapsed: { height: 60, width: 600 },
+    expanded: { height: '100%', width: 700 },
+    transition: { duration: 0.5, ease: 'easeInOut' },
+  }
+
+  const contentVariants = {
+    collapsed: { opacity: 0 },
+    expanded: { opacity: 1, transition: { delay: 0.3 } },
+  }
+
+  const iconsContainerVariants = {
+    collapsed: { y: 0 },
+    expanded: { y: '100%', transition: { delay: 0.2 } },
+  }
+
+  const iconVariants = {
+    collapsed: ( i: number ) => ( {
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.15 },
+    } ),
+    expanded: ( i: number ) => ( {
+      opacity: 0,
+      y: 20,
+      transition: { delay: i * 0.15 },
+    } ),
+  }
+
+  const close = () => {
+    setIsExpanded( false )
+    setActiveModel( null )
+  }
+  const [dialogOpen, setDialogOpen] = useState<boolean>( false )
+
+  useEffect( () => {
+    const handleKeyDown = ( event: KeyboardEvent ) => {
+      // event.preventDefault()
+      if ( event.metaKey && event.key === 'k' && !dialogOpen ) {
+        setDialogOpen( true )
+      }
+      // event.preventDefault()
+      if ( event.metaKey && event.key === 'k' && dialogOpen ) {
+        setDialogOpen( false )
+      }
+    }
+
+    window.addEventListener( 'keydown', handleKeyDown )
+
+    return () => {
+      window.removeEventListener( 'keydown', handleKeyDown )
+      // setQuery('')
+    }
+  }, [dialogOpen] )
+  return (
+    <div className='h-3/4 w-3/4 flex items-end justify-center'>
+      <motion.div
+        initial='collapsed'
+        animate={isExpanded ? 'expanded' : 'collapsed'}
+        variants={containerVariants}
+        transition={{ duration: 0.5, ease: 'easeInOut' }}
+        className='rounded-[30px] overflow-hidden border bg-white dark:bg-black relative'>
+        <AnimatePresence>
+          {isExpanded && activeModel && (
+            <motion.div
+              key='content'
+              initial='collapsed'
+              animate='expanded'
+              exit='collapsed'
+              variants={contentVariants}
+              className='text-white mt-6 px-10 flex flex-col gap-4'>
+              <motion.div className='flex items-center justify-between align-middle content-center'>
+                {activeModel && (
+                  <h3 className='w-fit  font-bebasNeuePro text-white'>
+                    {capitalize( activeModel )}
+                  </h3>
+                )}
+                <ShinyButton
+                  onClick={modelActionMap[activeModel].loadAction}
+                  className='load-records-button cursor-pointer ml-auto'>
+                  <PlusIcon className='h-6 w-6 text-white' />
+                </ShinyButton>
+              </motion.div>
+              <Separator className='my-1 w-full' />
+              {/* <div className='h-14 border-b border-muted-foreground/80'>
+                  {activeModel && (
+                    <InputWithVanishAnimation
+                      onSubmit={modelActionMap[activeModel].searchAction}
+                      type={activeModel}
+                      close()
+                      placeholders={['Roswell', 'USS Nimitz']}
+                    />
+                  )}
+                </div> */}
+              {/* {modelActions.map((item, index) => ( */}
+              <div className='flex flex-col gap-2'>
+                <div className=''>
+                  <p
+                    className=' mb-4'
+                    style={{
+                      fontFamily: '__bebasNeue_7c842f',
+                      letterSpacing: '2px',
+                    }}>
+                    Search
+                  </p>
+                  {activeModel && (
+                    <InputWithVanishAnimation
+                      onSubmit={modelActionMap[activeModel].searchAction}
+                      type={activeModel}
+                      placeholders={['Roswell', 'USS Nimitz']}
+                    />
+                  )}
+                </div>
+                <Separator className='my-4 w-full' />
+                <motion.div className='flex w-full my-4 justify-end'>
+                  <Button
+                    variant='ghost'
+                    onClick={close}
+                    className='border-muted-foreground/80 text-neutral-400 cursor-pointer
+                   hover:bg-neutral-700/80 transition-all duration-300 '>
+                    Close
+                  </Button>
+                </motion.div>
+              </div>
+              {/* ))} */}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <motion.div
+          variants={iconsContainerVariants}
+          className='h-[60px] flex items-center w-full gap-2 justify-evenly px-8 cursor-pointer absolute bottom-0 left-0 right-0 mx-auto'>
+          {modelActions.map( ( item, index ) => {
+            // some code here
+            console.log( { item } )
+            return (
+              <motion.div
+                key={index}
+                custom={index}
+                variants={iconVariants}
+                onClick={item.buttonAction}
+                className='
+                  h-10 w-10 center flex flex-col justify-center align-middle items-center transition-all duration-300'>
+                {item.icon}
+              </motion.div>
+            )
+          } )}
+          {/* <AddNoteFloatingPanelInput /> */}
+          {/* <motion.div className='h-10 center flex justify-center align-middle items-center transition-all duration-300'> */}
+          {/* </motion.div> */}
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}
+export const MindMapBottomMenu = () => {
+
   const {
     addNextEntitiesToMindMap,
     loadNodesFromTableQuery,
@@ -36,30 +195,43 @@ export const MindMapBottomMenu = () => {
     addEdges,
     screenToFlowPosition,
     retrieveEntitiesFromStore,
-    addMindMapGroupNode,
-    addMindmapChildNode,
+    organizeLayout,
     setEdges,
-    setNodes
+    setNodes,
+    getNodes,
+    updateNode,
+    getNodesBounds
   } = useMindMap()
   const user = useUser()
   const [activeModel, setActiveModel]: any = useState( 'events' )
+  const [isExpanded, setIsExpanded] = useState( false )
+
   const calculateCenterOfScreen = useCallback( () => {
     const centerX = window.innerWidth / 2
     const centerY = window.innerHeight / 2
     return { x: centerX, y: centerY }
   }, [] )
+  const idCounter = useRef( 0 )
+  const getNextId = useCallback( () => {
+    idCounter.current += 1
+    return `userInputNode-${idCounter.current}`
+  }, [] )
 
   const handleLoadingRecords = useCallback(
     ( { data: { type } }: any ) => {
 
-      console.log( "🚀 ~ file: mindmap-command-center.tsx:42 ~ MindMapBottomMenu ~ type:", type )
       const center = screenToFlowPosition( calculateCenterOfScreen() )
+
+
+
+      // Function to get the next sequential ID
 
 
       const entities = retrieveEntitiesFromStore( type )
 
       const userNode: any = {
-        id: uuidv4(),
+        // id: uuidv4(),
+        id: getNextId(),
         type: 'userInputNode',
         position: {
           ...center
@@ -73,14 +245,14 @@ export const MindMapBottomMenu = () => {
       }
 
 
-      let x = -200
-
+      let x = -600
+      console.log( "🚀 ~ file: mindmap-bottom-menu.tsx:135 ~ MindMapBottomMenu ~ x:", x )
       setNodes( nds => [...nds, userNode, ...entities.map( ( entity: any ) => ( {
         ...entity,
         type: 'entityNode',
         position: {
-          x: x += CHILD_DIMENSIONS.width,
-          y: CHILD_DIMENSIONS.height
+          x: x += 200,
+          y: 350
         },
         parentId: userNode.id,
       } ) )] )
@@ -92,6 +264,7 @@ export const MindMapBottomMenu = () => {
         type: 'smoothstep'
       } ) )] )
 
+      // organizeLayout()
 
       // setNodes( nds => [...nds, ...childNodes] )
 
@@ -104,8 +277,9 @@ export const MindMapBottomMenu = () => {
 
       // addNextEntitiesToMindMap( userNode )
     },
-    [calculateCenterOfScreen, retrieveEntitiesFromStore, screenToFlowPosition, setNodes, setEdges]
+    [calculateCenterOfScreen, retrieveEntitiesFromStore, screenToFlowPosition, updateNode, getNodesBounds, setNodes, setEdges]
   )
+
   const runSearch = useCallback(
     async ( { type, searchTerm }: any ) => {
 
@@ -268,162 +442,20 @@ export const MindMapBottomMenu = () => {
     return acc
   }, {} )
 
-  const containerVariants = {
-    collapsed: { height: 60, width: 600 },
-    expanded: { height: '100%', width: 700 },
-    transition: { duration: 0.5, ease: 'easeInOut' },
-  }
 
-  const contentVariants = {
-    collapsed: { opacity: 0 },
-    expanded: { opacity: 1, transition: { delay: 0.3 } },
-  }
 
-  const iconsContainerVariants = {
-    collapsed: { y: 0 },
-    expanded: { y: '100%', transition: { delay: 0.2 } },
-  }
 
-  const iconVariants = {
-    collapsed: ( i: number ) => ( {
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.15 },
-    } ),
-    expanded: ( i: number ) => ( {
-      opacity: 0,
-      y: 20,
-      transition: { delay: i * 0.15 },
-    } ),
-  }
 
-  const close = () => {
-    setIsExpanded( false )
-    setActiveModel( null )
-  }
-  const [dialogOpen, setDialogOpen] = useState<boolean>( false )
-
-  useEffect( () => {
-    const handleKeyDown = ( event: KeyboardEvent ) => {
-      // event.preventDefault()
-      if ( event.metaKey && event.key === 'k' && !dialogOpen ) {
-        setDialogOpen( true )
-      }
-      // event.preventDefault()
-      if ( event.metaKey && event.key === 'k' && dialogOpen ) {
-        setDialogOpen( false )
-      }
-    }
-
-    window.addEventListener( 'keydown', handleKeyDown )
-
-    return () => {
-      window.removeEventListener( 'keydown', handleKeyDown )
-      // setQuery('')
-    }
-  }, [dialogOpen] )
 
   return (
 
-    <div className='h-full center w-full'>
-      <div className='h-3/4 w-3/4 flex items-end justify-center'>
-        <motion.div
-          initial='collapsed'
-          animate={isExpanded ? 'expanded' : 'collapsed'}
-          variants={containerVariants}
-          transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className='rounded-[30px] overflow-hidden border bg-white dark:bg-black relative'>
-          <AnimatePresence>
-            {isExpanded && activeModel && (
-              <motion.div
-                key='content'
-                initial='collapsed'
-                animate='expanded'
-                exit='collapsed'
-                variants={contentVariants}
-                className='text-white mt-6 px-10 flex flex-col gap-4'>
-                <motion.div className='flex items-center justify-between align-middle content-center'>
-                  {activeModel && (
-                    <h3 className='w-fit  font-bebasNeuePro text-white'>
-                      {capitalize( activeModel )}
-                    </h3>
-                  )}
-                  <ShinyButton
-                    onClick={modelActionMap[activeModel].loadAction}
-                    className='load-records-button cursor-pointer ml-auto'>
-                    <PlusIcon className='h-6 w-6 text-white' />
-                  </ShinyButton>
-                </motion.div>
-                <Separator className='my-1 w-full' />
-                {/* <div className='h-14 border-b border-muted-foreground/80'>
-                  {activeModel && (
-                    <InputWithVanishAnimation
-                      onSubmit={modelActionMap[activeModel].searchAction}
-                      type={activeModel}
-                      close()
-                      placeholders={['Roswell', 'USS Nimitz']}
-                    />
-                  )}
-                </div> */}
-                {/* {modelActions.map((item, index) => ( */}
-                <div className='flex flex-col gap-2'>
-                  <div className=''>
-                    <p
-                      className=' mb-4'
-                      style={{
-                        fontFamily: '__bebasNeue_7c842f',
-                        letterSpacing: '2px',
-                      }}>
-                      Search
-                    </p>
-                    {activeModel && (
-                      <InputWithVanishAnimation
-                        onSubmit={modelActionMap[activeModel].searchAction}
-                        type={activeModel}
-                        placeholders={['Roswell', 'USS Nimitz']}
-                      />
-                    )}
-                  </div>
-                  <Separator className='my-4 w-full' />
-                  <motion.div className='flex w-full my-4 justify-end'>
-                    <Button
-                      variant='ghost'
-                      onClick={close}
-                      className='border-muted-foreground/80 text-neutral-400 cursor-pointer
-                   hover:bg-neutral-700/80 transition-all duration-300 '>
-                      Close
-                    </Button>
-                  </motion.div>
-                </div>
-                {/* ))} */}
-              </motion.div>
-            )}
-          </AnimatePresence>
+    <div className='h-auto center w-full overflow-visible'>
 
-          <motion.div
-            variants={iconsContainerVariants}
-            className='h-[60px] flex items-center w-full gap-2 justify-evenly px-8 cursor-pointer absolute bottom-0 left-0 right-0 mx-auto'>
-            {modelActions.map( ( item, index ) => {
-              // some code here
-              console.log( { item } )
-              return (
-                <motion.div
-                  key={index}
-                  custom={index}
-                  variants={iconVariants}
-                  onClick={item.buttonAction}
-                  className='
-                  h-10 w-10 center flex flex-col justify-center align-middle items-center transition-all duration-300'>
-                  {item.icon}
-                </motion.div>
-              )
-            } )}
-            {/* <AddNoteFloatingPanelInput /> */}
-            {/* <motion.div className='h-10 center flex justify-center align-middle items-center transition-all duration-300'> */}
-            {/* </motion.div> */}
-          </motion.div>
-        </motion.div>
-      </div>
+      {/* <AiCommandInput /> */}
+      <EnhanceAIInput setActiveModel={setActiveModel} modelActions={modelActions} modelActionMap={modelActionMap} activeModel={activeModel} isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+      {/* <Oracle modelActions={modelActions} modelActionMap={modelActionMap} activeModel={activeModel} /> */}
+      {/* EnhancedAIInput */}
+
     </div>
   )
 }

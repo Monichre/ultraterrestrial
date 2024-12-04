@@ -1,17 +1,8 @@
 import { openai } from '@/lib/openai/client'
 import { searchDatabase } from '@/services/ai/openai/tools/search-database'
-import { environment, AI } from '@raycast/api'
-import { tasks } from '@trigger.dev/sdk/v3'
-import { Modes } from '@tsparticles/engine'
-import { is } from '@xata.io/client'
-import { local } from 'd3'
 
-import EventEmitter, { on } from "events"
-import { Github } from 'lucide-react'
+import EventEmitter from "events"
 import type OpenAI from "openai"
-import { platform } from 'os'
-import { to, a } from 'react-spring'
-import { any } from 'zod'
 export class AssistantStreamEventHandler extends EventEmitter {
   client: OpenAI
   constructor( client: OpenAI ) {
@@ -101,18 +92,18 @@ assistantEventHandler.on( "event", assistantEventHandler.onEvent.bind( assistant
 
 export { assistantEventHandler }
 
-Run Exponent Anywhere
+// Run Exponent Anywhere
 
-Software development happens in many places, from your local dev environment to CI.You can bring Exponent to any environment using the Exponent CLI.
+// Software development happens in many places, from your local dev environment to CI.You can bring Exponent to any environment using the Exponent CLI.
 
-  Optimized for frontier models
+//   Optimized for frontier models
 
-Exponent uses a mixture of the latest frontier models in combination to give you the best possible AI pair programming experience that just works.
+// Exponent uses a mixture of the latest frontier models in combination to give you the best possible AI pair programming experience that just works.
 
-Reference and edit files
+// Reference and edit files
 
-Quickly reference files and have Exponent directly edit them in your filesystem, even if they're very long.  No more copy pasting back and forth between your editor and the browser. 
+// Quickly reference files and have Exponent directly edit them in your filesystem, even if they're very long.  No more copy pasting back and forth between your editor and the browser. 
 
-Specialized Modes
+// Specialized Modes
 
-Exponent is a developer platform and can be configured to carry out specialized tasks, such as writing SQL against your analytics DB or reviewing PRs on Github. 
+// Exponent is a developer platform and can be configured to carry out specialized tasks, such as writing SQL against your analytics DB or reviewing PRs on Github. 

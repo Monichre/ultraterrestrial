@@ -5,7 +5,6 @@
 import '@/styles/flowith/flowith.css'
 import '@/styles/flowith/reactflow.css'
 import '@xyflow/react/dist/style.css'
-import { ViewTransitions } from 'next-view-transitions'
 import './globals.css'
 
 import { ThemeProvider } from '@/contexts'
@@ -25,6 +24,7 @@ import {
   firaCode,
   futura,
   jetBrains,
+  lukasSans,
   nunito,
   oswald,
   sentient,
@@ -51,7 +51,7 @@ export default function RootLayout( { children }: { children: React.ReactNode } 
     <ClerkProvider>
       <html lang='en' suppressHydrationWarning className='dark'>
         <body
-          className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} ${bebasNeuePro.variable} ${GeistMono.variable} ${GeistSans.variable} dark`}>
+          className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} ${bebasNeuePro.variable} ${GeistMono.variable} ${GeistSans.variable} ${lukasSans.variable} dark`}>
           <ThemeProvider
             attribute='class'
             defaultTheme='dark'

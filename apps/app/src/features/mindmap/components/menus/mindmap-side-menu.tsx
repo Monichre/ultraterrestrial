@@ -9,9 +9,13 @@ import {
   FloatingPanelCloseButton,
   FloatingPanelContent,
   FloatingPanelFooter,
+  FloatingPanelForm,
   FloatingPanelRoot,
+  FloatingPanelSubmitButton,
+  FloatingPanelTextarea,
   FloatingPanelTrigger
 } from '@/components/animated'
+
 import {
   ArtifactsIcon,
   EventsIcon,
@@ -19,11 +23,12 @@ import {
   OrganizationsIcon,
   SketchyGlobe,
   TestimoniesIcon,
-  ThinTwinklyStar,
-  TopicsIcon,
+  TopicsIcon
 } from '@/components/icons'
 import { Button } from '@/components/ui/button'
 import { useMindMap } from '@/contexts/mindmap-context'
+import { saveEventForUser } from '@/features/user/api/save-event'
+import { useAuth } from '@clerk/nextjs'
 import {
   Tooltip,
   TooltipContent,
@@ -31,7 +36,7 @@ import {
   TooltipTrigger,
 } from '@radix-ui/react-tooltip'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowDownToLine, FileSearch, Plus } from 'lucide-react'
+import { ArrowDownToLine, FileSearch, Lightbulb, Plus } from 'lucide-react'
 import {
   useCallback,
   useEffect,
@@ -41,7 +46,7 @@ import {
   type SVGProps,
 } from 'react'
 
-const QuickActionsFloatingPanel = () => {
+export const QuickActionsFloatingPanel = () => {
 
   const idCounter = useRef( 0 )
 
@@ -51,7 +56,7 @@ const QuickActionsFloatingPanel = () => {
     return `userInputNode-${idCounter.current}`
   }, [] )
 
-  const { addNextEntitiesToMindMap, addNodes, addEdges, screenToFlowPosition, getNodes } = useMindMap()
+  const { addNextEntitiesToMindMap, addNodes, retrieveEntitiesFromStore, addEdges, screenToFlowPosition, getNodes, setNodes, setEdges } = useMindMap()
   //cc:loadingRecordsIntoMindMap[MindMapSideMenu]#1;handleLoadingRecord => addNextEntitiesToMindMap
   const handleLoadingRecords = useCallback(
     async ( rootNodeSim: any ) => {
@@ -69,8 +74,24 @@ const QuickActionsFloatingPanel = () => {
       const { data: { type } } = rootNodeSim
       const amount = type === 'events' ? '4' : '3'
 
-      const userNode: any = {
-        // Start of Selection
+      // const userNode: any = {
+      //   // Start of Selection
+      //   id: getNextId(),
+      //   type: 'userInputNode',
+      //   position: {
+      //     ...center
+      //   },
+      //   data: {
+      //     label: 'Your Query',
+      //     input: `Loading ${amount} ${type}.`,
+      //     entities: null,
+      //     type: type,
+      //   },
+      // }
+      // addNodes( userNode )
+      const entities = retrieveEntitiesFromStore( type )
+      const potentialUserNode: any = {
+        // id: uuidv4(),
         id: getNextId(),
         type: 'userInputNode',
         position: {
@@ -78,16 +99,15 @@ const QuickActionsFloatingPanel = () => {
         },
         data: {
           label: 'Your Query',
-          input: `Loading ${amount} ${type}.`,
-          entities: null,
+          input: `Beginning your exploration by loading 3 ${type}. Fetching Data...`,
+          entities,
           type: type,
         },
       }
-      addNodes( userNode )
 
       const nodes = getNodes() // Replace with the appropriate method to retrieve nodes
       const existingUserInputNodes = nodes
-        .filter( ( node: any ) => node.type === 'userInputNode' && node.id !== userNode.id )
+        .filter( ( node: any ) => node.type === 'userInputNode' && node.id !== potentialUserNode.id )
         .sort( ( a: any, b: any ) => {
           // Assuming IDs are in the format 'userInputNode-<number>'
           const aNum = parseInt( a.id.split( '-' )[1], 10 )
@@ -96,38 +116,61 @@ const QuickActionsFloatingPanel = () => {
         } )
 
       // If there is at least one existing userInputNode, create an edge from the last one to the new one
-      if ( existingUserInputNodes.length > 0 ) {
-        const lastUserInputNode = existingUserInputNodes[existingUserInputNodes.length - 1]
-        const edge = {
-          id: `${lastUserInputNode.id}-${userNode.id}`,
-          source: lastUserInputNode.id,
-          target: userNode.id,
-          type: 'step'
-        }
-        addEdges( edge )
+      let lastUserInputNode = existingUserInputNodes.length > 0 ? existingUserInputNodes[existingUserInputNodes.length - 1] : null
+      // if ( lastUserInputNode ) {
+      //   const edge = {
+      //     id: `${lastUserInputNode.id}-${userNode.id}`,
+      //     source: lastUserInputNode.id,
+      //     target: userNode.id,
+      //     type: 'step'
+      //   }
+      //   addEdges( edge )
+      // }
+
+      if ( !lastUserInputNode ) {
+        lastUserInputNode = potentialUserNode
+        addNodes( lastUserInputNode )
       }
 
+      let x = -600
+      console.log( "🚀 ~ file: mindmap-bottom-menu.tsx:135 ~ MindMapBottomMenu ~ x:", x )
+      setNodes( nds => [...nds, ...entities.map( ( entity: any ) => ( {
+        ...entity,
+        type: 'entityNode',
+        position: {
+          x: x += 200,
+          y: 350
+        },
+        parentId: lastUserInputNode?.id || null,
+      } ) )] )
+
+      setEdges( edges => [...edges, ...entities.map( ( entity: any ) => ( {
+        id: `${lastUserInputNode?.id}-${entity.id}`,
+        source: lastUserInputNode?.id,
+        target: entity.id,
+        type: 'smoothstep'
+      } ) )] )
       // const
-      const { groupNode, groupNodeChildren } = await addNextEntitiesToMindMap( rootNodeSim )
+      // const { groupNode, groupNodeChildren } = await addNextEntitiesToMindMap( rootNodeSim )
 
-      if ( groupNode && groupNodeChildren ) {
-        // const newEdges = groupNodeChildren.map( ( entity: any ) => ( {
+      // if ( groupNode && groupNodeChildren ) {
+      //   // const newEdges = groupNodeChildren.map( ( entity: any ) => ( {
 
-        //   id: `${userNode.id}-${entity.id}`,
-        //   source: userNode.id,
-        //   target: entity.id,
-        //   type: 'smooth'
+      //   //   id: `${userNode.id}-${entity.id}`,
+      //   //   source: userNode.id,
+      //   //   target: entity.id,
+      //   //   type: 'smooth'
 
 
-        // } ) )
-        const edge = {
-          id: `${userNode.id}-${groupNode.id}`,
-          source: userNode.id,
-          target: groupNode.id,
-          type: 'step'
-        }
-        addEdges( edge )
-      }
+      //   // } ) )
+      //   const edge = {
+      //     id: `${userNode.id}-${groupNode.id}`,
+      //     source: userNode.id,
+      //     target: groupNode.id,
+      //     type: 'step'
+      //   }
+      //   addEdges( edge )
+      // }
 
 
     },
@@ -236,23 +279,28 @@ export function MindMapSideMenu() {
     saveMindMap,
   } = useMindMap()
 
-  const actions = [
-    {
-      icon: <ThinTwinklyStar />,
-      label: 'New File',
-      action: () => console.log( 'New File' ),
-    },
-    {
-      icon: <ThinTwinklyStar />,
-      label: 'Upload Image',
-      action: () => console.log( 'Upload Image' ),
-    },
-    {
-      icon: <ThinTwinklyStar />,
-      label: 'Edit Colors',
-      action: () => console.log( 'Edit Colors' ),
-    },
-  ]
+  const [bookmarked, setBookmarked] = useState( false )
+  const [noteTitle, setNoteTitle] = useState( '' )
+  const [note, setNote] = useState<any | string>( '' )
+
+  const saveNote = async () => {
+    setBookmarked( true )
+    // const model = objectMapToSingular[card?.type]
+
+    const saved = await saveEventForUser( {
+      user,
+      event: { id: null },
+      userNote: { title: noteTitle, content: note },
+      theory: 'test',
+    } )
+  }
+
+
+  const updateNote = ( { target: { value } }: any ) => {
+    setNote( value )
+  }
+
+  const user: any = useAuth()
 
   const [isConcise, setIsConcise] = useState( conciseViewActive )
   const pressed = isConcise
@@ -265,10 +313,24 @@ export function MindMapSideMenu() {
   useEffect( () => {
     setIsConcise( conciseViewActive )
   }, [conciseViewActive] )
+
+
+
+  const handleSavingNote = () => {
+    saveNote()
+  }
+
+  const handleSubmit = () => {
+    handleSavingNote()
+
+  }
+
   return (
     // max-w-max m-auto
     // <CultUIPopoverRoot>
+
     <div className='flex flex-col shadow items-center justify-between rounded-full p-1 border border-white/80 dark:border-neutral-700/80 text-neutral-500 bg-gradient-to-b from-card/70 rounded-[calc(var(--radius)-2px)]'>
+
       <div className='flex flex-col'>
         <TooltipProvider>
           <Tooltip>
@@ -312,33 +374,46 @@ export function MindMapSideMenu() {
           <ArrowDownToLine className='stroke-1 h-5 w-5 block' />
           <span className='sr-only'>Open menu</span>
         </Button>
+
+
+
+
+      </div>
+      <div className='flex flex-col items-center '>
+        <FloatingPanelRoot>
+
+          <Button
+            variant='ghost'
+            size='icon'
+            className='text-zinc-100 bg-black m-2'
+            onClick={saveMindMap}
+          >
+
+            <FloatingPanelTrigger className='bg-black'> <Lightbulb className='text-white stroke-1' size='16' /></FloatingPanelTrigger>
+          </Button>
+          <FloatingPanelContent className='bg-black text-white border border-indigo-500/20'>
+            <FloatingPanelForm onSubmit={handleSubmit}>
+              {/* <FloatingPanelLabel htmlFor="note-input">Add Note</FloatingPanelLabel> */}
+              <FloatingPanelTextarea id="note-input" />
+              <FloatingPanelFooter>
+                <FloatingPanelCloseButton />
+                <FloatingPanelSubmitButton />
+              </FloatingPanelFooter>
+            </FloatingPanelForm>
+          </FloatingPanelContent>
+
+
+        </FloatingPanelRoot>
       </div>
     </div>
   )
 }
+
 {
   /* </CultUIPopoverRoot> */
 }
 
-function InboxIcon( props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <polyline points='22 12 16 12 14 15 10 15 8 12 2 12' />
-      <path d='M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z' />
-    </svg>
-  )
-}
+
 
 function LayersIcon( props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) {
   return (
@@ -357,69 +432,6 @@ function LayersIcon( props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) 
       <path d='m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z' />
       <path d='m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65' />
       <path d='m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65' />
-    </svg>
-  )
-}
-
-function MenuIcon( props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <line x1='4' x2='20' y1='12' y2='12' />
-      <line x1='4' x2='20' y1='6' y2='6' />
-      <line x1='4' x2='20' y1='18' y2='18' />
-    </svg>
-  )
-}
-
-function MessageCircleIcon(
-  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
-) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <path d='M7.9 20A9 9 0 1 0 4 16.1L2 22Z' />
-    </svg>
-  )
-}
-
-function ShareIcon( props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <path d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8' />
-      <polyline points='16 6 12 2 8 6' />
-      <line x1='12' x2='12' y1='2' y2='15' />
     </svg>
   )
 }

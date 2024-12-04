@@ -146,6 +146,7 @@ export const CoreNodeBottom: React.FC<CoreNodeBottomProps> = ( { children } ) =>
     </div>
   )
 }
+export const CoreNodeTop = CoreNodeBottom
 
 interface CoreNodeContentProps {
   className?: string

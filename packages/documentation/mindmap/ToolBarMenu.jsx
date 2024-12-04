@@ -159,4 +159,3 @@ const ToolBarMenu = memo(function ToolBarMenu({
     );
 });
 
-export default ToolBarMenu;

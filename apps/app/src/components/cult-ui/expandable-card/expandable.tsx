@@ -16,7 +16,7 @@ import {
 } from "framer-motion"
 import useMeasure from "react-use-measure"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/utils"
 
 const springConfig = { stiffness: 200, damping: 20, bounce: 0.2 }
 

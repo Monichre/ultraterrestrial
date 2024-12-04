@@ -1,15 +1,16 @@
 'use client'
 
 import { use3DGraph } from '@/hooks/use3dGraph'
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 import {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
   type Edge,
+  getConnectedEdges,
+  getIncomers,
   getOutgoers,
-  getStraightPath,
   type Node,
   type OnConnect,
   type OnEdgesChange,
@@ -20,7 +21,7 @@ import {
   useReactFlow,
   useStoreApi,
   useUpdateNodeInternals,
-  type XYPosition,
+  type XYPosition
 } from '@xyflow/react'
 
 import {
@@ -37,12 +38,11 @@ import {
   ROOT_NODE_WIDTH,
 } from '@/features/mindmap/config/index.config'
 
-import { saveUserMindMap } from '@/features/user/api/save-event'
 import { useStateOfDisclosure } from '@/contexts/state-of-disclosure-provider'
+import type { DatabaseSchema } from '@/db/xata'
+import { saveUserMindMap } from '@/features/user/api/save-event'
 import { DOMAIN_MODEL_COLORS } from '@/utils'
 import { capitalize } from '@/utils/functions'
-import type { DatabaseSchema, InferredTypes } from '@/db/xata'
-import { map } from 'd3'
 
 // import { simulation } from '@/features/mindmap/utils/force-directed'
 
@@ -91,6 +91,7 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     updateNodeData,
     getIntersectingNodes,
     isNodeIntersecting,
+    deleteElements,
     zoomTo,
     setCenter,
   } = useReactFlow()
@@ -258,6 +259,49 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     } )
     return intersections
   }
+  const organizeLayout = useCallback( () => {
+    const nodeWidth = 200
+    const nodeHeight = 100
+    const horizontalSpacing = 20
+    const verticalSpacing = 20
+    const localNodes = getNodes()
+    const localEdges = getEdges()
+
+    const rootNodes = localNodes.filter( node => !localEdges.some( ( edge: any ) => edge.target === node.id ) )
+    const childrenMap = new Map<string, string[]>()
+
+    localEdges.forEach( ( edge: any ) => {
+      if ( !childrenMap.has( edge.source ) ) {
+        childrenMap.set( edge.source, [] )
+      }
+      childrenMap.get( edge.source )!.push( edge.target )
+    } )
+
+    const positionNode = ( nodeId: string, x: number, y: number, level: number ): void => {
+      const node = localNodes.find( n => n.id === nodeId )
+      if ( node ) {
+        node.position = { x, y }
+        const children = childrenMap.get( nodeId ) || []
+        const childrenWidth = children.length * ( nodeWidth + horizontalSpacing ) - horizontalSpacing
+        let startX = x - childrenWidth / 2 + nodeWidth / 2
+
+        children.forEach( childId => {
+          positionNode( childId, startX, y + verticalSpacing, level + 1 )
+          startX += nodeWidth + horizontalSpacing
+        } )
+      }
+    }
+
+    const totalWidth = rootNodes.length * ( nodeWidth + horizontalSpacing ) - horizontalSpacing
+    let startX = -totalWidth / 2
+
+    rootNodes.forEach( rootNode => {
+      positionNode( rootNode.id, startX, 0, 0 )
+      startX += nodeWidth + horizontalSpacing
+    } )
+
+    setNodes( [...localNodes] )
+  }, [getNodes, getEdges, setNodes] )
 
   const createRootNode = useCallback( ( node: any, index: number ) => {
     const { id, label, name, fill, data } = node
@@ -1247,6 +1291,8 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     [addEdges, createRootNodeEdge, getNodes, mindMapIntialGraphState, updateNodeData]
   )
 
+
+
   //  useEffects --------------------------------------------------------------------------------------
   useEffect( () => {
     const formattedGraphNodesObject: any = {}
@@ -1277,6 +1323,8 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
     setEdges( [] )
   }, [createRootNode, createRootNodeChild, graph3d] )
 
+
+
   //  Graph State Functions --------------------------------------------------------------------------------------
 
   const onNodesChange: OnNodesChange = useCallback(
@@ -1300,6 +1348,33 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
       setViewport( { x, y, zoom }, { duration } )
     },
     [setViewport]
+  )
+
+  const onNodesDelete = useCallback(
+    ( deleted ) => {
+      setEdges(
+        deleted.reduce( ( acc, node ) => {
+          const incomers = getIncomers( node, nodes, edges )
+          const outgoers = getOutgoers( node, nodes, edges )
+          const connectedEdges = getConnectedEdges( [node], edges )
+
+          const remainingEdges = acc.filter(
+            ( edge ) => !connectedEdges.includes( edge ),
+          )
+
+          const createdEdges = incomers.flatMap( ( { id: source } ) =>
+            outgoers.map( ( { id: target } ) => ( {
+              id: `${source}->${target}`,
+              source,
+              target,
+            } ) ),
+          )
+
+          return [...remainingEdges, ...createdEdges]
+        }, edges ),
+      )
+    },
+    [nodes, edges],
   )
 
   return (
@@ -1362,11 +1437,13 @@ export const MindMapProvider = ( { children }: { children: React.ReactNode } ) =
         getNodesBounds,
         turnOnConciseView,
         conciseViewActive,
-
+        organizeLayout,
+        onNodesDelete,
         createSearchResultsLayout,
         retrieveEntitiesFromStore,
         addMindmapChildNode,
-        addMindMapGroupNode
+        addMindMapGroupNode,
+        deleteElements
       }}>
       <div id='mindmap-container'>{children}</div>
     </MindMapContext.Provider>

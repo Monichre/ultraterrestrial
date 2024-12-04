@@ -1,5 +1,11 @@
+import { KeyFiguresIcon } from '@/components/icons'
 import { useEntity } from '@/hooks'
-import { motion } from 'framer-motion'
+import Image from 'next/image'
+import { useRef } from 'react'
+
+
+
+
 
 export function SubjectMatterExpertCard( { card }: any ) {
   const {
@@ -20,94 +26,76 @@ export function SubjectMatterExpertCard( { card }: any ) {
   console.log( 'personnel card:', card )
   console.log( 'personel entity:', entity )
   const test = false
-  const { popularity, rank, photo, name, role }: any = entity
+  const { popularity, rank, photo, name, role, credibility }: any = entity
+
+  console.log( "🚀 ~ file: SubjectMatterExpertCard.tsx:31 ~ SubjectMatterExpertCard ~ entity:", entity )
+
 
   const image: any = photo[0] || { url: '/astro-3.png' }
+  const imgRef = useRef( null )
+  // useEffect( () => {
+  //   const vfx = new VFX()
+  //   const img: any = document.querySelector( '.vfx-img' )
+  //   vfx.add( img, { shader: "rgbShift" } )
+  // }, [] )
 
 
   return (
-    // <CoreNodeContainer className='motion-scale-in-0 motion-opacity-in-0'  >
+    <div className="group relative mx-auto flex h-[300px] w-[300px] flex-col overflow-hidden rounded-2xl border border-white/5">
+      <div className='absolute top-0 left-0 w-full px-2 flex justify-end'>
+        <p className="mt-2 text-sm font-light leading-relaxed text-[#22d3ee] font-sentient">
+          {rank || popularity || credibility}
+        </p>
 
-    //   <CoreNodeContent className='min-h-[100xp] w-full'>
+      </div>
+      <div className="absolute inset-0 bg-[radial-gradient(40%_128px_at_50%_0%,theme(backgroundColor.white/5%),transparent)]">
+        {/* <div className="absolute inset-0 flex items-center justify-center"> */}
+        {/* <div className="relative w-full h-full">
+            <Image
+              src={bgPhoto.url}
+              alt={name}
+              fill
+              className="object-cover opacity-20"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
+            />
+          </div> */}
+        {/* </div> */}
+      </div>
 
-    <motion.div
+      <div className="absolute top-0 left-0 w-full h-full z-0">
+        <Image
+          ref={imgRef}
+          src={image.url}
+          alt={name}
+          fill
+          className="object-cover opacity-20 vfx-img"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
+        />
+      </div>
 
-      className='relative flex cursor-pointer items-center justify-center'
-      animate={{
-        width: 300,
-        height: 400,
-        y: 0,
-      }}
-      initial={false}
-
-    >
-      <motion.img
-        src={image?.url}
-        alt='image'
-        className='z-[2] h-full w-full bg-zinc-600 object-cover'
-        width={300}
-        height={300}
-        style={{
-          borderRadius: 16,
-          // border: `1px solid ${ card?.color }`
-        }}
-      />
-
-
-
-      <motion.div
-
-        className='absolute h-full w-full'
-        style={{
-          borderRadius: 20,
-        }}
-        animate={{ opacity: 1, y: 0 }}
-        initial={{ opacity: 0, y: 20 }}
-        exit={{ opacity: 0, y: 20 }}
-        transition={{ duration: 0.15 }}
-        layoutId='content'
-      >
-        <motion.div
-          className='absolute z-[3] flex h-full w-full flex-col items-center justify-end gap-2 bg-gradient-to-b from-transparent to-black p-4'
-          animate={{ opacity: 1, y: 0 }}
-          initial={{ opacity: 0, y: 20 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.3 }}
-
-          style={{
-            borderRadius: 16,
-          }}
-        >
-
-          <div className='flex w-full flex-col items-center justify-between gap-1'>
-            <motion.span
-              className='font-semibold text-white'
-              layoutId='title'
-            >
-              {name}
-            </motion.span>
-            <motion.span
-              className='font-semibold text-blue-500 opacity-75'
-              layoutId='url'
-            >
-              {role}
-            </motion.span>
+      <div className="pointer-events-none mt-auto px-6 pb-6 relative z-10">
+        <div className="relative transition duration-300 group-hover:-translate-y-9">
+          <div className="text-lg text-white transition-all duration-300 group-hover:text-base font-bebasNeuePro font-regular tracking-wider">
+            {name}
           </div>
-          <motion.p
-            className='mt-1 text-center text-sm text-white opacity-90'
-            layoutId='description'
-          >
-            Popularity: {popularity}
-          </motion.p>
-        </motion.div>
+          <p className="text-sm font-light leading-relaxed text-white/75">
+            {role}
+          </p>
 
-      </motion.div>
+          <div className="absolute -left-2 bottom-0 translate-y-11 opacity-0 transition duration-300 group-hover:opacity-100">
+            <a
+              href="/components"
+              className="pointer-events-auto inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium text-white transition hover:bg-white/5">
+              <span>View</span>
 
-    </motion.div>
-
-
-
-
+              <KeyFiguresIcon className="w-3 h-3" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
 

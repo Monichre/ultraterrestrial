@@ -3,7 +3,8 @@
 import {
   CoreNodeBottom,
   CoreNodeContainer,
-  CoreNodeContent
+  CoreNodeContent,
+  CoreNodeTop
 } from '@/features/mindmap/nodes/core-node-ui'
 
 import { useUser } from '@clerk/nextjs'
@@ -13,9 +14,13 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { wait } from '@/utils'
 
 import { AnimatedBeam } from '@/components/animated'
-import { GroupIcon } from '@/components/icons'
+import { AiStarIcon, GroupIcon } from '@/components/icons'
+import { AddNote } from '@/components/note/AddNote'
 import { Button } from '@/components/ui/button'
+import { useMindMap } from '@/contexts/mindmap-context'
 import { MemoizedMarkdown } from '@/features/ai'
+import { WorldMap } from '@/features/data-viz/components/world-map/world-map'
+import { AskAI } from '@/features/mindmap/components/ask-ai'
 import { useGroupNode } from '@/features/mindmap/hooks/useGroupNode'
 import { Anchor } from '@/features/mindmap/nodes/user-input-node/anchor'
 import { useEntity } from '@/hooks'
@@ -25,9 +30,32 @@ import {
   AnimatePresence,
   motion
 } from "framer-motion"
+import { XIcon } from 'lucide-react'
 import rehypeExternalLinks from 'rehype-external-links'
 import remarkGfm from 'remark-gfm'
 
+
+const EventRecordsContent = memo( ( { data }: any ) => {
+  const { entities, type, input } = data
+
+
+
+
+  const dots = entities && entities.length > 0 ? entities.map( ( entity: any ) => ( {
+
+    start: { lat: entity.data.latitude, lng: entity.data.longitude },
+    end: { lat: entity.data.latitude, lng: entity.data.longitude },
+  } ) ) : []
+
+  return (
+    <div className='w-full h-full'>
+      <WorldMap
+        dots={dots}
+
+      />
+    </div>
+  )
+} )
 
 
 export const UserInputNode = memo( ( props: NodeProps ) => {
@@ -42,7 +70,15 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
     setAnalysis( analysis )
   }, [] )
 
+  const [showAskAI, setShowAskAI] = useState( false )
+  const toggleShowAskAI = () => {
+    setShowAskAI( !showAskAI )
+  }
   const { saveNote, updateNote, userNote, findConnections } = useEntity( { card: node } )
+  const { deleteElements } = useMindMap()
+  const handleDelete = () => {
+    deleteElements( [node.id] )
+  }
 
   const { user } = useUser()
   const [showAnchor, setShowAnchor] = useState( false )
@@ -54,13 +90,15 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
   console.log( "🚀 ~ file: user-input-node.tsx:59 ~ previewAvatars ~ node?.data?.entities:", node?.data?.entities )
   const previewAvatars = node?.data?.entities?.map( ( { data }: any ) => ( {
 
-
-
     name: data?.name,
     image: getImageUrl( data ),
     id: data?.id,
     designation: data?.role || data?.location,
   } ) )
+
+  // if ( props.data.type === 'topics' || props.data.type === 'testimonies' ) {
+  //   return <TopicAndTestimoniesGroupCard card={node} />
+  // }
 
   // const image = {
   //   url: user?.hasImage ? user?.imageUrl : '/astro-3.png',
@@ -95,17 +133,28 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
       </AnimatePresence>
 
       <CoreNodeContainer id={props.id} className='motion-scale-in-0 motion-opacity-in-0' ref={nodeRef} >
-
+        <CoreNodeTop>
+          <div className='flex justify-between w-content align-center items-center ml-auto'>
+            {/* <Button variant='outline' onClick={findConnections} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 dark:text-white dark:bg-black  hover:border-indigo-800 mx-1'>
+              <GroupIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
+            </Button>
+            <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} /> */}
+            <Button variant='outline' onClick={handleDelete} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 dark:text-white bg-black  hover:border-indigo-800 mx-1'>
+              <XIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
+            </Button>
+          </div>
+        </CoreNodeTop>
         <CoreNodeContent className='min-h-[100xp] w-full'>
-          <p className='text-sm text-white font-source-sans'>
+          <div className='py-2'>
 
-            {props.data.input || ''}
+            <p className='text-sm text-white font-source-sans'>
 
-          </p>
-          {/* {( node?.data?.entities?.length > 0 && props.data.type && props.data.input ? (
+              {props.data.input || ''}
 
-            <AskAI question={askQuestion( { entities: node?.data?.entities?.map( ( { data }: any ) => data?.name ), input: props.data.input, type: props.data.type } )} table={props?.data?.type} updateAnalysis={updateAnalysis} />
-          ) : null )} */}
+            </p>
+          </div>
+          {props.data.type === 'events' && <EventRecordsContent data={props.data} />}
+
           <AnimatePresence>
 
 
@@ -150,22 +199,34 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
         </CoreNodeContent>
         <CoreNodeBottom>
 
-          <div className='flex justify-between w-full align-center items-center'>
+          <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-400'>
+            <div className='size-5'>
+              <span
+                className='relative flex shrink-0 overflow-hidden rounded-full aspect-square h-full animate-overlayShow cursor-pointer border-2 shadow duration-200 pointer-events-none'
+                data-state='closed'
+                style={{
+                  borderColor: 'rgba(255, 255, 255, 0.5)',
+                  transform: 'translateX(0px)',
+                }}
+              >
+                <AiStarIcon stroke={'#fff'} className='w-4 h-4 stroke-1' onClick={toggleShowAskAI} />
+                {showAskAI && ( node?.data?.entities?.length > 0 && props.data.type && props.data.input ? (
 
-            <div className='w-[75%] flex justify-start items-center h-full'>
+                  <AskAI question={askQuestion( { entities: node?.data?.entities?.map( ( { data }: any ) => data?.name ), input: props.data.input, type: props.data.type } )} table={props?.data?.type} updateAnalysis={updateAnalysis} />
+                ) : null )}
 
+              </span>
             </div>
-            <div className='w-[25%] flex justify-end items-center'>
-              <Button variant='ghost' onClick={findConnections} className='p-0'>
-                <GroupIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
-              </Button>
-              {/* <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} /> */}
-            </div>
-
-
-
-
+            <span className='text-neutral-600 dark:text-neutral-400'>
+            </span>
           </div>
+          <span className='flex items-center gap-1'>
+
+            <Button variant='outline' onClick={findConnections} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 dark:text-white dark:bg-black  hover:border-indigo-800 mx-1'>
+              <GroupIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
+            </Button>
+            <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} />
+          </span>
         </CoreNodeBottom>
       </CoreNodeContainer>
 

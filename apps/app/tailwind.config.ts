@@ -51,6 +51,7 @@ const config = {
 				firaCode: ['var(--font-fira-code)'],
 				centimaSans: ['var(--font-centima-sans)'],
 				eirene: ['var(--font-eirene})'],
+				lukasSans: ['var(--font-lukas-sans})'],
 				stellar: ['var(--font-stellar})'],
 				jetbrains: ['var(--font-sentient)'],
 				nunito: ['var(--font-nunito)'],

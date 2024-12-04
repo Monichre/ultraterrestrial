@@ -1,6 +1,6 @@
 'use client'
 
-import { FloatingPanelBody, FloatingPanelCloseButton, FloatingPanelContent, FloatingPanelFooter, FloatingPanelForm, FloatingPanelLabel, FloatingPanelRoot, FloatingPanelSubmitButton, FloatingPanelTextarea, FloatingPanelTrigger } from '@/components/animated'
+import { PopoverCloseButton, PopoverContent, PopoverFooter, PopoverForm, PopoverRoot, PopoverSubmitButton, PopoverTextarea, PopoverTrigger } from '@/components/animated'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { Lightbulb } from 'lucide-react'
@@ -41,28 +41,29 @@ export const AddNote = ( { saveNote, userNote, children }: any ) => {
 
   return (
 
-    <FloatingPanelRoot>
-      <FloatingPanelTrigger
-        title=""
+    <PopoverRoot>
+      <PopoverTrigger
+
         className='flex items-center space-x-2 px-4 py-2 '
       >
         <Lightbulb className='text-white stroke-1' size='18' />
-      </FloatingPanelTrigger>
+      </PopoverTrigger>
 
-      <FloatingPanelContent className='w-80'>
-        <FloatingPanelForm onSubmit={handleSubmit}>
-          <FloatingPanelBody>
-            <FloatingPanelLabel htmlFor='note-input'>Note</FloatingPanelLabel>
-            <FloatingPanelTextarea id='note-input' className='min-h-[100px]' value={note}
-              onChange={e => setNote( e.target.value )} />
-          </FloatingPanelBody>
-          <FloatingPanelFooter>
-            <FloatingPanelCloseButton />
-            <FloatingPanelSubmitButton />
-          </FloatingPanelFooter>
-        </FloatingPanelForm>
-      </FloatingPanelContent>
-    </FloatingPanelRoot>
+
+
+
+      <PopoverContent className='bg-black text-white border border-indigo-500/20'>
+        <PopoverForm onSubmit={handleSubmit}>
+          {/* <PopoverLabel>Add Note</PopoverLabel> */}
+          <PopoverTextarea id='note-input' className='min-h-[100px]' value={note}
+            onChange={e => setNote( e.target.value )} />
+          <PopoverFooter>
+            <PopoverCloseButton />
+            <PopoverSubmitButton />
+          </PopoverFooter>
+        </PopoverForm>
+      </PopoverContent>
+    </PopoverRoot>
 
   )
 }

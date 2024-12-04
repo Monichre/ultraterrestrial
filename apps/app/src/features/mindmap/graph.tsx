@@ -84,6 +84,7 @@ export function Graph( props: any ) {
     getRootNodeChildren,
     adjustViewport,
     zoomOut,
+    onNodesDelete,
     addLocationsToVisualize,
     updateActiveNode,
     detectNodeOverlap,
@@ -94,6 +95,8 @@ export function Graph( props: any ) {
     animated: true,
     style: { stroke: 'white' },
   }
+
+
 
   const { ref, clickPosition, attrs, isOpen, closeMenu } = useContextMenu()
 
@@ -176,6 +179,7 @@ export function Graph( props: any ) {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onNodesDelete={onNodesDelete}
         connectionMode='loose'
         // connectionLineComponent={FloatingConnectionLine}
         elevateNodesOnSelect={true}
