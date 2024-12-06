@@ -1,26 +1,19 @@
 "use client"
 
 
-import { MyFavoriteStarIllustration } from "@/components/icons/icons"
-import { useAutoResizeTextarea, useClickOutside } from "@/hooks"
 import { Command } from "cmdk"
 import { AnimatePresence, motion } from "framer-motion"
-import {
-  Brain,
-  File,
-  MessageSquare,
-  Search,
-  Settings,
-  Wand2,
-  X
-} from "lucide-react"
+
+import { AiStarIcon, FlyingSaucerIcon } from "@/components/icons"
+import { OracleInput, ToggleButton } from "@/features/ai/components/ai-inputs/oracle-input"
+import { Cross1Icon, FileIcon as File, LightningBoltIcon } from "@radix-ui/react-icons"
+
+import { MagicWandIcon } from "@/components/icons"
+import { capitalize, ICON_GREEN } from "@/utils"
+import { Brain } from "lucide-react"
 import { useCallback, useRef, useState } from "react"
 
-const AI_MODELS = [
-  { name: "GPT-4", description: "The popular kid" },
-  { name: "GPT-3.5", description: "Time flies, he is old now..." },
-  { name: "Claude", description: "Yes, the best for coding" },
-].map( ( model ) => ( { ...model, icon: <Brain className="w-4 h-4" /> } ) )
+
 
 const MIN_HEIGHT = 40
 
@@ -39,32 +32,26 @@ const FileDisplay = ( {
       onClick={onClear}
       className="ml-1 p-0.5 rounded-full hover:bg-black/10 dark:hover:bg-white/10"
     >
-      <X className="w-3 h-3 dark:text-white" />
+      <Cross1Icon className="w-3 h-3 dark:text-white" />
     </button>
   </div>
 )
 
-export function EnhanceAIInput( { modelActions, modelActionMap, activeModel, setActiveModel, isExpanded, setIsExpanded }: { modelActions: any, modelActionMap: any, activeModel: string, setActiveModel: ( activeModel: string ) => void, isExpanded: boolean, setIsExpanded: ( isExpanded: boolean ) => void } ) {
+export function EnhanceAIInput( { modelActions, addDataToMindMap }: any ) {
   const menuRef = useRef<HTMLDivElement>( null )
-  const [isOpen, setIsOpen] = useState( isExpanded )
+  const [isOpen, setIsOpen] = useState( false )
   const [activeCommand, setActiveCommand] = useState<string | null>( null )
   const inputRef = useRef<HTMLInputElement>( null )
   const containerRef = useRef<HTMLDivElement>( null )
   const [inputValue, setInputValue] = useState( "" )
 
   const [state, setState] = useState( {
-    value: "",
-    fileName: "",
-    isPrivacyMode: false,
-    selectedModel: activeModel,
-    isMenuOpen: false,
+
+    selectedModel: null,
     isModelMenuOpen: false,
   } )
 
-  const { textareaRef, adjustHeight } = useAutoResizeTextarea( {
-    minHeight: MIN_HEIGHT,
-    maxHeight: 200,
-  } )
+
 
   const updateState = useCallback(
     ( updates: Partial<typeof state> ) =>
@@ -77,10 +64,6 @@ export function EnhanceAIInput( { modelActions, modelActionMap, activeModel, set
     // updateState( { isMenuOpen: true } )
   }
 
-  useClickOutside( menuRef, () => {
-    if ( state.isMenuOpen ) updateState( { isMenuOpen: false } )
-    if ( state.isModelMenuOpen ) updateState( { isModelMenuOpen: false } )
-  } )
 
   // const handleKeyDown = ( e: React.KeyboardEvent<HTMLTextAreaElement> ) => {
   //   if ( e.key === "Enter" && !e.shiftKey ) {
@@ -89,30 +72,26 @@ export function EnhanceAIInput( { modelActions, modelActionMap, activeModel, set
   // adjustHeight( true )
   //   }
   // }
-  const handleButtonClick = () => {
-    if ( !inputValue.trim() && !activeCommand ) return
-    setInputValue( "" )
-    setIsOpen( false )
-    setActiveCommand( null )
-  }
 
   const handleKeyDown = useCallback(
     ( e: React.KeyboardEvent ) => {
       if ( e.key === "Enter" && !e.shiftKey ) {
         e.preventDefault()
 
-        adjustHeight( true )
-        handleButtonClick()
+        // adjustHeight( true )
+        // handleButtonClick()
       }
 
-      if ( e.key === "Backspace" && inputValue === "" && activeCommand ) {
+      if ( e.key === "Backspace" && inputValue === "" || e.key === "Backspace" && inputValue === " " ) {
         setActiveCommand( null )
+
+        setIsOpen( false )
       }
       if ( e.key === "/" ) {
         setIsOpen( true )
       }
     },
-    [activeCommand, inputValue, handleButtonClick]
+    [activeCommand, inputValue]
   )
 
   const handleCommandSelect = ( commandId: string ) => {
@@ -121,32 +100,44 @@ export function EnhanceAIInput( { modelActions, modelActionMap, activeModel, set
       setInputValue( "" )
       setActiveCommand( commandId )
       setIsOpen( false )
-      inputRef.current?.focus()
+
     }
   }
 
+  // useEffect( () => {
+  //   if ( inputValue )
+  // }, [activeModel] )
 
+
+  const handleLoadingModelData = () => {
+    console.log( "loading model data" )
+
+    addDataToMindMap( state.selectedModel )
+
+
+
+  }
 
   const COMMANDS = [
     {
       id: "chat",
       label: "Chat",
       description: "Start a conversation",
-      icon: MessageSquare,
+      icon: FlyingSaucerIcon,
       prefix: "/chat",
     },
     {
       id: "generate",
       label: "Generate",
       description: "Generate code or content",
-      icon: Wand2,
+      icon: MagicWandIcon,
       prefix: "/generate",
     },
     {
       id: "analyze",
       label: "Analyze",
       description: "Analyze code or text",
-      icon: Search,
+      icon: LightningBoltIcon,
       prefix: "/analyze",
     },
   ]
@@ -154,25 +145,34 @@ export function EnhanceAIInput( { modelActions, modelActionMap, activeModel, set
   return (
     <div className="p-4 flex flex-col w-[500px]">
 
-      <div className="relative w-full h-full overflow-hidden rounded-2xl">
+      <div className="relative w-full overflow-hidden">
         {/* <div className="border-b border-black/10 dark:border-white/10"> */}
-        <div className="flex justify-between items-center px-4 py-2 text-sm text-zinc-600 dark:text-zinc-400">
+        <div className="flex flex-col justify-between items-center px-4 py-2 text-sm text-zinc-600 dark:text-zinc-400">
           <div className="relative w-full" ref={menuRef} >
-            <motion.button
-              onClick={toggleModelMenu
-              }
-              className="flex items-center gap-2 group"
-            >
-              <div className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 hover:ring-indigo-500/50 group/tab mb-1 relative flex w-fit items-center gap-3 rounded-xl  px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 bg-neutral-800 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90">
-                <Settings className="w-3.5 h-3.5" />
-                <span className="text-sm font-medium">Oracle Mode: {state.selectedModel}</span>
-              </div>
+            <div className="flex w-full justify-between items-center content-center">
 
-            </motion.button>
+              <motion.button
+                onClick={toggleModelMenu}
+                className="flex items-center gap-2 group"
+              >
+                <div className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 hover:ring-indigo-500/50 group/tab mb-1 relative flex w-fit items-center gap-3 rounded-xl  px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 bg-neutral-800 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90">
+                  <AiStarIcon className='w-5 h-5' fill={ICON_GREEN} />
+                  <span className="text-sm font-sm">Oracle Model |  {state.selectedModel && capitalize( state.selectedModel )}</span>
+                </div>
+
+
+              </motion.button>
+
+              <ToggleButton
+                icon={<Brain className="w-4 h-4" />}
+                label="Memory"
+              />
+
+            </div>
 
             <motion.div
               ref={menuRef}
-              className="rounded-xl relative flex gap-2 items-center relative w-full duration-200 text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90 willChange gpu-transform border border-neutral-700/30 text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90"
+              className="rounded-xl relative flex gap-2 items-center relative w-full duration-200 text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90 willChange gpu-transform text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90"
 
               initial={{
                 height: 0,
@@ -217,7 +217,7 @@ export function EnhanceAIInput( { modelActions, modelActionMap, activeModel, set
                           key={model.name}
                           className="w-full px-3 py-1.5 text-left hover:bg-black/5 dark:hover:bg-white/5 flex items-center gap-2 text-sm transition-colors dark:text-white"
                           onClick={() =>
-                            updateState( { selectedModel: model.name, isModelMenuOpen: false } )
+                            updateState( { selectedModel: model.name.toLowerCase(), isModelMenuOpen: false } )
                           }
                         >
                           <div className="flex items-center gap-2 flex-1">
@@ -237,116 +237,70 @@ export function EnhanceAIInput( { modelActions, modelActionMap, activeModel, set
               </AnimatePresence>
             </motion.div>
 
-
-
-            {/* </div> */}
-
-
           </div>
+
         </div>
-
-
-
-        <div className="relative" ref={containerRef}>
-
-
-
-          <div className="flex items-center flex-wrap gap-2 px-3 h-auto min-h-[48px] py-2">
-            {activeCommand &&
-              ( () => {
-                const activeCmd = COMMANDS.find(
-                  ( cmd ) => cmd.id === activeCommand
-                )
-                if ( !activeCmd ) return null
-
-                return (
-                  <div className="flex items-center gap-2 text-sm bg-black/10 dark:bg-white/10 px-2 py-1 rounded-md">
-                    <span className="flex items-center gap-1.5 flex-shrink-0">
-                      <activeCmd.icon className="w-4 h-4 text-black/50 dark:text-white/50" />
-                      <span className="text-black/70 dark:text-white/70">
-                        {activeCmd.label}
-                      </span>
-                    </span>
-                  </div>
-                )
-              } )()}
-            <div className="rounded-xl border border-transparent flex gap-2 items-center relative w-full p-2 px-2.5 duration-200 border border-white/30 border-neutral-700/30 text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90" style={{
-              borderRadius: 25,
-              padding: '12px 16px',
-            }}>
-
-              <div className=" flex items-center gap-2 flex items-center justify-center">
-                <div className="w-6 h-6 rounded-full  flex items-center justify-center">
-                  <MyFavoriteStarIllustration />
-                </div>
-                <input
-                  type="text"
-                  ref={inputRef}
-
-                  value={inputValue}
-                  onChange={( e ) => setInputValue( e.target.value )}
-                  onKeyDown={handleKeyDown}
-                  onFocus={() => setIsOpen( !!activeCommand )}
-                  placeholder={
-                    activeCommand
-                      ? "Type your message..."
-                      : "Type / for commands..."
-                  }
-                  className="bg-transparent text-zinc-200 text-sm focus:outline-none flex-1"
-
-                />
-              </div>
-            </div>
-
-
-
-
-          </div>
-        </div>
-
-        <AnimatePresence>
-          {isOpen && !activeCommand && (
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 8 }}
-              transition={{ duration: 0.15 }}
-              className="absolute w-full mt-2 rounded-lg bg-black/5 dark:bg-white/5 shadow-lg "
-            >
-              <Command className="w-full">
-                <Command.List className="py-2">
-                  {COMMANDS.map( ( command ) => (
-                    <Command.Item
-                      key={command.id}
-                      onSelect={() =>
-                        handleCommandSelect( command.id )
-                      }
-                      className="px-3 py-2.5 flex items-center gap-3 text-sm hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer group"
-                    >
-                      <command.icon className="w-4 h-4 text-black/50 dark:text-white/50 group-hover:text-black/70 dark:group-hover:text-white/70" />
-                      <div className="flex flex-col">
-                        <span className="font-medium text-black/70 dark:text-white/70">
-                          {command.label}
-                        </span>
-                        <span className="text-xs text-black/50 dark:text-white/50">
-                          {command.description}
-                        </span>
-                      </div>
-                      <span className="ml-auto text-xs text-black/30 dark:text-white/30">
-                        {command.prefix}
-                      </span>
-                    </Command.Item>
-                  ) )}
-                </Command.List>
-              </Command>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-
       </div>
 
-    </div>
+
+      <OracleInput
+        activeModel={state.selectedModel}
+        activeCommand={activeCommand}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        handleKeyDown={handleKeyDown}
+        setIsOpen={setIsOpen}
+        loadModelData={handleLoadingModelData}
+
+      />
+
+      <AnimatePresence>
+        {isOpen && !activeCommand && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0, }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.15 }}
+            className="absolute bottom-0 left-0 h-[250px] left-0 w-full mt-2 rounded-lg bg-black/5 dark:bg-white/5 shadow-lg "
+          >
+            <Command className="w-full">
+              <Command.List className="py-2">
+                {COMMANDS.map( ( command ) => (
+                  <Command.Item
+                    key={command.id}
+                    onSelect={() =>
+                      handleCommandSelect( command.id )
+                    }
+                    className="px-3 py-2.5 flex items-center gap-3 text-sm hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer group"
+                  >
+                    <command.icon className="w-4 h-4 text-black/50 dark:text-white/50 group-hover:text-black/70 dark:group-hover:text-white/70" />
+                    <div className="flex flex-col">
+                      <span className="font-medium text-black/70 dark:text-white/70">
+                        {command.label}
+                      </span>
+                      <span className="text-xs text-black/50 dark:text-white/50">
+                        {command.description}
+                      </span>
+                    </div>
+                    <span className="ml-auto text-xs text-black/30 dark:text-white/30">
+                      {command.prefix}
+                    </span>
+                  </Command.Item>
+                ) )}
+              </Command.List>
+            </Command>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* </motion.div> */}
+
+
+
+      {/* </div> */}
+
+    </div >
+
+    // </div>
 
   )
 }

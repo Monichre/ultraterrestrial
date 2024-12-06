@@ -74,21 +74,7 @@ export const QuickActionsFloatingPanel = () => {
       const { data: { type } } = rootNodeSim
       const amount = type === 'events' ? '4' : '3'
 
-      // const userNode: any = {
-      //   // Start of Selection
-      //   id: getNextId(),
-      //   type: 'userInputNode',
-      //   position: {
-      //     ...center
-      //   },
-      //   data: {
-      //     label: 'Your Query',
-      //     input: `Loading ${amount} ${type}.`,
-      //     entities: null,
-      //     type: type,
-      //   },
-      // }
-      // addNodes( userNode )
+
       const entities = retrieveEntitiesFromStore( type )
       const potentialUserNode: any = {
         // id: uuidv4(),
@@ -117,15 +103,7 @@ export const QuickActionsFloatingPanel = () => {
 
       // If there is at least one existing userInputNode, create an edge from the last one to the new one
       let lastUserInputNode = existingUserInputNodes.length > 0 ? existingUserInputNodes[existingUserInputNodes.length - 1] : null
-      // if ( lastUserInputNode ) {
-      //   const edge = {
-      //     id: `${lastUserInputNode.id}-${userNode.id}`,
-      //     source: lastUserInputNode.id,
-      //     target: userNode.id,
-      //     type: 'step'
-      //   }
-      //   addEdges( edge )
-      // }
+
 
       if ( !lastUserInputNode ) {
         lastUserInputNode = potentialUserNode

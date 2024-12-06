@@ -11,7 +11,7 @@ export * from './components/chat-interface/chat-textarea'
 export * from './components/chat-interface/chat-topbar'
 export * from './components/chat-interface/conversation'
 export * from './components/entity-menu'
-export * from './components/hooks/usePromptState'
+
 export * from './components/markdown'
 export * from './components/message'
 export * from './components/mindmap-entity-loader-card'
@@ -25,3 +25,4 @@ export * from './components/prompts/PromptUI'
 export * from './components/prompts/SimilarTopics'
 export * from './components/prompts/Sources'
 export * from './components/SuggestedSearchItem'
+

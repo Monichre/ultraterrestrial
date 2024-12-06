@@ -29,3 +29,4 @@ packages/documentation/files/*.sql
 packages/documentation/**/*.sql
 
 *storybook.log
+.aider*
