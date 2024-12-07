@@ -30,3 +30,4 @@ packages/documentation/**/*.sql
 
 *storybook.log
 .aider*
+packages/
