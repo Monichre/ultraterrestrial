@@ -46,6 +46,19 @@ import {
   type SVGProps,
 } from 'react'
 
+const ActionButton = ( { icon, label, action }: { icon: React.ReactNode, label: string, action: () => void } ) => {
+
+  const handleClick = () => {
+    action()
+    closeFloatingPanel()
+  }
+  return (
+    <FloatingPanelButton onClick={handleClick} className='w-full flex items-center space-x-1 space-y-2 px-2 py-1 bg-black text-white'>
+      {icon}
+      <span>{label}</span>
+    </FloatingPanelButton>
+  )
+}
 export const QuickActionsFloatingPanel = () => {
 
   const idCounter = useRef( 0 )
@@ -360,15 +373,9 @@ export function MindMapSideMenu() {
       <div className='flex flex-col items-center '>
         <FloatingPanelRoot>
 
-          <Button
-            variant='ghost'
-            size='icon'
-            className='text-zinc-100 bg-black m-2'
-            onClick={saveMindMap}
-          >
 
-            <FloatingPanelTrigger className='bg-black'> <Lightbulb className='text-white stroke-1' size='16' /></FloatingPanelTrigger>
-          </Button>
+          <FloatingPanelTrigger className='bg-black'> <Lightbulb className='text-white stroke-1' size='16' /></FloatingPanelTrigger>
+
           <FloatingPanelContent className='bg-black text-white border border-indigo-500/20'>
             <FloatingPanelForm onSubmit={handleSubmit}>
               {/* <FloatingPanelLabel htmlFor="note-input">Add Note</FloatingPanelLabel> */}

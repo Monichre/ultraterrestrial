@@ -1,56 +1,103 @@
-# AI Analyst by E2B
-This is an AI-powered code and data analysis tool built with Next.js and the [E2B SDK](https://e2b.dev/docs).
+# Airbnb Listing Analyzer
 
-![Preview](preview.png)
+This project demonstrates how to scrape and analyze Airbnb data using [Firecrawl](https://www.firecrawl.dev/) and [Anthropic's Claude](https://www.anthropic.com/) in a NextJS application.
 
-→ Try on [ai-analyst.e2b.dev](https://ai-analyst.e2b.dev/)
+## Prerequisites
+
+1. **Node.js and npm**
+   - Node.js 18.x or later
+   - npm 9.x or later
+   
+   You can check your versions by running:
+   ```bash
+   node --version
+   npm --version
+   ```
+
+2. **API Keys**
+   - [Firecrawl API key](https://www.firecrawl.dev/) - Sign up at Firecrawl to get your API key
+   - [Anthropic API key](https://www.anthropic.com/) - Get your Claude API key from Anthropic
+
+3. **Environment Setup**
+   Create a `.env.local` file in your project root with:
+   ```
+   ANTHROPIC_API_KEY=your_anthropic_api_key_here
+   FIRECRAWL_API_KEY=your_firecrawl_api_key_here
+   ```
+
+4. **Dependencies**
+   ```bash
+   npm install @anthropic-ai/sdk firecrawl-js chart.js react-chartjs-2
+   ```
+
+## Project Structure
+
+```
+├── components/
+│   └── AirbnbAnalyzer.tsx    # Main analyzer component
+├── pages/
+│   ├── api/
+│   │   └── analyze-airbnb.ts # API route for analysis
+│   └── index.tsx             # Main page
+├── .env.local                # Environment variables
+└── package.json
+```
 
 ## Features
-- 🔸 Analyze data with Meta's Llama 3.1
-- 🔸 Upload CSV files
-- 🔸 Create interactive charts
 
-**Powered by:**
-- 🔸 ✶ [E2B Sandbox](https://github.com/e2b-dev/code-interpreter)
-- 🔸 Vercel's AI SDK
-- 🔸 Next.js
-- 🔸 echarts library for interactive charts
+- 🏠 Airbnb listing data scraping
+- 📊 Price analysis and statistics
+- 🛋️ Amenities visualization
+- 🏷️ Room type distribution
+- ⭐ Rating analysis
+- 📍 Location information
 
-**Supported LLM Providers:**
-- 🔸 TogetherAI
-- 🔸 Fireworks
+## Getting Started
 
-**Supported chart types:**
-- 🔸 All the supported charts are descriebd [here](https://e2b.dev/docs/code-interpreting/create-charts-visualizations/interactive-charts#supported-intertactive-charts).
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd airbnb-analyzer
+   ```
 
-**Make sure to give us a star!**
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-<img width="165" alt="Screenshot 2024-04-20 at 22 13 32" src="https://github.com/mishushakov/llm-scraper/assets/10400064/11e2a79f-a835-48c4-9f85-5c104ca7bb49">
+3. Set up your environment variables in `.env.local`
 
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Get started
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-Visit the [online version](https://ai-analyst.e2b.dev/) or run locally on your own.
+## Usage
 
-### 1. Clone repository
-```
-git clone https://github.com/e2b-dev/ai-analyst.git
-```
+1. Enter an Airbnb listing URL in the input field
+2. Click "Analyze"
+3. View the comprehensive analysis including:
+   - Price statistics
+   - Amenities breakdown
+   - Room type distribution
+   - Ratings
+   - Location details
 
-### 2. Install dependencies
-```
-cd fragments && npm i
-```
+## Development
 
-### 3. Get API keys
-Copy `.example.env` to `.env.local` and fill in variables for E2B and one LLM provider.
+To add new features or modify the analysis:
 
-E2B: `E2B_API_KEY`
+1. Update the API route in `pages/api/analyze-airbnb.ts`
+2. Modify the visualization component in `components/AirbnbAnalyzer.tsx`
+3. Add new charts or analysis features as needed
 
-- Get your [E2B API key here](https://e2b.dev/dashboard?tab=keys).
+## Contributing
 
-LLM Providers:
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- Fireworks: `FIREWORKS_API_KEY`
-- Together AI: `TOGETHER_API_KEY`
-- Ollama: `OLLAMA_BASE_URL`
+## License
+
+MIT License - feel free to use this code for your own projects.
+

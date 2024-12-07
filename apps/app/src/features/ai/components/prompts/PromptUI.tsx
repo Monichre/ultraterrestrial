@@ -1,13 +1,14 @@
 'use client'
-import { usePromptState } from '@/features/ai/components/hooks/usePromptState'
-import * as React from 'react'
-import Image from 'next/image'
 
+import Image from 'next/image'
+import * as React from 'react'
+
+import { Answer } from '@/features/ai/components/prompts/Answer'
 import SimilarTopics from '@/features/ai/components/prompts/SimilarTopics'
 import { Sources } from '@/features/ai/components/prompts/Sources'
-import { Answer } from '@/features/ai/components/prompts/Answer'
 
 import { PromptInput } from '@/features/ai/components/prompts/PromptInput'
+import { usePromptState } from '@/features/ai/components/prompts/PromptState'
 
 interface PromptUIProps { }
 

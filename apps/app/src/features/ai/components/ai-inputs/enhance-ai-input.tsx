@@ -148,16 +148,17 @@ export function EnhanceAIInput( { modelActions, addDataToMindMap }: any ) {
       <div className="relative w-full overflow-hidden">
         {/* <div className="border-b border-black/10 dark:border-white/10"> */}
         <div className="flex flex-col justify-between items-center px-4 py-2 text-sm text-zinc-600 dark:text-zinc-400">
-          <div className="relative w-full" ref={menuRef} >
-            <div className="flex w-full justify-between items-center content-center">
+          <div className="relative w-full z-50" ref={menuRef} >
+            <div className="flex w-full justify-between items-center content-center px-2">
 
               <motion.button
                 onClick={toggleModelMenu}
-                className="flex items-center gap-2 group"
+                className="flex items-center gap-2 group relative z-50"
               >
-                <div className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 hover:ring-indigo-500/50 group/tab mb-1 relative flex w-fit items-center gap-3 rounded-xl  px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 bg-neutral-800 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90">
+
+                <div className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 hover:ring-indigo-500/50 group/tab mb-1 relative flex w-fit items-center gap-3\1 rounded-xl  px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90">
                   <AiStarIcon className='w-5 h-5' fill={ICON_GREEN} />
-                  <span className="text-sm font-sm">Oracle Model |  {state.selectedModel && capitalize( state.selectedModel )}</span>
+                  <span className="text-white text-sm font-sm">Oracle {state.selectedModel && `| ${capitalize( state.selectedModel )}`} </span>
                 </div>
 
 
@@ -172,7 +173,7 @@ export function EnhanceAIInput( { modelActions, addDataToMindMap }: any ) {
 
             <motion.div
               ref={menuRef}
-              className="rounded-xl relative flex gap-2 items-center relative w-full duration-200 text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90 willChange gpu-transform text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90"
+              className="rounded-xl relative flex gap-2 items-center relative w-full duration-200 text-neutral-500 willChange gpu-transform text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90"
 
               initial={{
                 height: 0,
@@ -261,34 +262,38 @@ export function EnhanceAIInput( { modelActions, addDataToMindMap }: any ) {
             animate={{ opacity: 1, y: 0, }}
             exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.15 }}
-            className="absolute bottom-0 left-0 h-[250px] left-0 w-full mt-2 rounded-lg bg-black/5 dark:bg-white/5 shadow-lg "
+            className="absolute bottom-[34px] left-0 h-[300px] left-0 w-full z-40 flex justify-center items-center"
           >
-            <Command className="w-full">
-              <Command.List className="py-2">
-                {COMMANDS.map( ( command ) => (
-                  <Command.Item
-                    key={command.id}
-                    onSelect={() =>
-                      handleCommandSelect( command.id )
-                    }
-                    className="px-3 py-2.5 flex items-center gap-3 text-sm hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer group"
-                  >
-                    <command.icon className="w-4 h-4 text-black/50 dark:text-white/50 group-hover:text-black/70 dark:group-hover:text-white/70" />
-                    <div className="flex flex-col">
-                      <span className="font-medium text-black/70 dark:text-white/70">
-                        {command.label}
+            <div className="rounded-lg shadow-lg w-[444px] mt-2 rounded-lg shadow-lg h-full border border-neutral-700/30 text-neutral-500 bg-black bg-gradient-to-b from-black">
+
+
+              <Command className="w-full">
+                <Command.List className="py-2">
+                  {COMMANDS.map( ( command ) => (
+                    <Command.Item
+                      key={command.id}
+                      onSelect={() =>
+                        handleCommandSelect( command.id )
+                      }
+                      className="px-3 py-2.5 flex items-center gap-3 text-sm hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer group"
+                    >
+                      <command.icon className="w-4 h-4 text-black/50 dark:text-white/50 group-hover:text-black/70 dark:group-hover:text-white/70" />
+                      <div className="flex flex-col">
+                        <span className="font-medium text-black/70 dark:text-white/70">
+                          {command.label}
+                        </span>
+                        <span className="text-xs text-black/50 dark:text-white/50">
+                          {command.description}
+                        </span>
+                      </div>
+                      <span className="ml-auto text-xs text-black/30 dark:text-white/30">
+                        {command.prefix}
                       </span>
-                      <span className="text-xs text-black/50 dark:text-white/50">
-                        {command.description}
-                      </span>
-                    </div>
-                    <span className="ml-auto text-xs text-black/30 dark:text-white/30">
-                      {command.prefix}
-                    </span>
-                  </Command.Item>
-                ) )}
-              </Command.List>
-            </Command>
+                    </Command.Item>
+                  ) )}
+                </Command.List>
+              </Command>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

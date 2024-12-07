@@ -88,15 +88,15 @@ export const OracleInput = ( {
 
   return (
     <>
-      <div className="relative flex items-center flex-wrap gap-2 px-3 h-auto min-h-[48px] py-2">
-        {/* Active Command Display */}
+      <div className="relative flex items-center flex-wrap gap-2 px-3 h-auto min-h-[48px] z-50">
+
         {activeCommand && (
           <div className="flex items-center gap-2 text-sm bg-black/10 dark:bg-white/10 px-2 py-1 rounded-md">
             <span className="flex items-center gap-1.5 flex-shrink-0">
-              {/* Replace with actual command icon component */}
+
               <DotIcon className="w-4 h-4 text-black/50 dark:text-white/50" />
               <span className="text-black/70 dark:text-white/70">
-                {/* Replace with actual command label */}
+
                 {activeCommand}
               </span>
             </span>
@@ -112,11 +112,19 @@ export const OracleInput = ( {
           }}
         >
           {/* Input Section */}
-          <div className="flex items-center gap-2 justify-start w-full">
+          <div className="flex items-center gap-1 justify-start w-full">
+
             <div className="w-6 h-6 rounded-full flex items-center justify-center">
 
+
+
               <SlashIcon className="h-6 w-6" fill={ICON_GREEN} />
+
+
+
+              {/* {activeModel} */}
             </div>
+
 
             <input
               type="text"

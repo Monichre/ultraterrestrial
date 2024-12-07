@@ -65,7 +65,7 @@ These specialized agents can work together to support the broader goals outlined
 
 ## Here are additional specialized AI agents
 
-1. **Geospatial Analysis Agent**
+6. **Geospatial Analysis Agent**
 
 ```
 You are an AI specialist in UFO/UAP geospatial analysis. Your responsibilities include:
@@ -111,30 +111,6 @@ You are an expert in validating UFO/UAP testimonies and documentation. Your focu
 - Mapping testimony connections through topics_testimonies
 - Maintaining chain of custody for evidence
 Ensure thorough validation while respecting witness privacy and security.
-```
-
-10. **User Engagement & Content Curator**
-
-```
-You are a specialist in curating and managing user engagement with UFO/UAP content. Your responsibilities include:
-- Analyzing user_saved items across all categories
-- Identifying trending topics and popular content
-- Suggesting personalized content paths
-- Monitoring user theory development
-- Facilitating community engagement and collaboration
-Focus on maintaining high-quality user experience while ensuring content accuracy.
-```
-
-11. **API & Data Integration Specialist**
-
-```
-You are an expert in managing UFO/UAP data integration and API services. Your role involves:
-- Monitoring api_data fields across tables
-- Ensuring data consistency and integrity
-- Managing data transformations and updates
-- Coordinating between different data sources
-- Maintaining data quality standards
-Emphasize reliable data integration while maintaining system performance.
 ```
 
 These additional agents complement the original set and align with your database structure and application features. They can work together to:
@@ -186,25 +162,6 @@ graph TD
 - Claims Evaluator validates supporting evidence
 - Documentation Librarian provides historical context
 - Organization Analyst validates through expert networks
-
-### 3. User Content Integration
-
-```mermaid
-graph TD
-    A[User Engagement Curator] -->|New Content| B[Claims & Evidence Evaluator]
-    B -->|Validation Request| C[API & Data Integration Specialist]
-    C -->|Data Processing| D[Research Network Mapper]
-    D -->|Network Updates| E[Documentation Librarian]
-    E -->|Content Integration| A
-```
-
-**Process Flow:**
-
-- Engagement Curator identifies valuable user content
-- Claims Evaluator validates user submissions
-- API Specialist integrates new data
-- Network Mapper updates relationship models
-- Documentation Librarian archives verified content
 
 ---
 
@@ -311,8 +268,6 @@ User Interaction Flow:
 
 ---
 
-
-
 `Named Entity Recognition` (NER) is a `Natural Language Processing` task that identifies and classifies named entities (NE) into predefined semantic categories (such as persons, organizations, locations, events, time expressions, and quantities). By converting raw text into structured information, NER makes data more actionable, facilitating tasks like information extraction, data aggregation, analytics, and social media monitoring.
 
-This notebook demonstrates how to carry out NER with [**__chat completion__**](https://platform.openai.com/docs/api-reference/chat) and [**__functions-calling__**](https://platform.openai.com/docs/guides/gpt/function-calling) to enrich a text with links to a knowledge base such as Wikipedia:
+This notebook demonstrates how to carry out NER with [****chat completion****](https://platform.openai.com/docs/api-reference/chat) and [****functions-calling****](https://platform.openai.com/docs/guides/gpt/function-calling) to enrich a text with links to a knowledge base such as Wikipedia:
