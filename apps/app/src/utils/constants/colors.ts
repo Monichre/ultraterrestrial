@@ -10,6 +10,7 @@ export function hexToRgba( hex: string, alpha: number ): string {
 }
 
 export const ICON_GREEN = `#adf0dd`
+export const ICON_BLUE = `#27F1FF`
 
 export const paletteTwo = {
   green: `#6FB08C`,
@@ -65,6 +66,7 @@ export const palette: Record<string, string> = {
   richBlack: `#030513`,
   black: `#060404`,
   silver: `#C5CBCC`,
+
   gray: `#4e5969`,
   brown: `#28180B`,
   smoke: `#130F0E`,
@@ -351,3 +353,10 @@ export { chroma }
 // $leather: #4f4c4d
 // $light - azur: #C7E3F9
 // $tomato: #d64444
+
+
+// Inspired by https://www.awwwards.com/sites/space-safari-to-erikte-planet
+const ULTRATERRESTRIAL_COLORS = {
+  black: "#101918",
+  blue: "#9BFFF5"
+}

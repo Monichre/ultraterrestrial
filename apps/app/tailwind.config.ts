@@ -24,14 +24,14 @@ function addVariablesForColors( { addBase, theme }: any ) {
 }
 
 const config = {
-	darkMode: 'class',
+	darkMode: ['class', 'dark'],
 	content: [
 		'./src/components/**/*.{ts,tsx}',
 		'./src/app/**/*.{ts,tsx}',
 		'./src/**/*.{ts,tsx}',
 		'./src/stories/*.{ts,tsx}',
 		'./src/stories/**/*.stories.{ts,tsx}',
-		...storyPaths,
+		...storyPaths
 	],
 	prefix: '',
 	theme: {
@@ -44,22 +44,19 @@ const config = {
 		},
 		extend: {
 			fontFamily: {
-				oswald: ['var(--font-oswald)'],
-				source: ['var(---font-source-sans)'],
-				ailerons: ['var(--font-ailerons)'],
-				futura: ['var(--font-futura)'],
-				firaCode: ['var(--font-fira-code)'],
-				centimaSans: ['var(--font-centima-sans)'],
-				eirene: ['var(--font-eirene})'],
-				lukasSans: ['var(--font-lukas-sans})'],
-				stellar: ['var(--font-stellar})'],
-				jetbrains: ['var(--font-sentient)'],
-				nunito: ['var(--font-nunito)'],
-				sentient: ['var(--font-sentient)'],
-				bebasNeue: ['var(--font-bebasNeue)'],
-				bebasNeuePro: ['var(--font-bebasNeuePro)'],
-				commitMono: ['var(--font-commit-mono)'],
-				geistSans: ['var(--font-geist-sans)']
+				neueHaas: [
+					'var(--font-neue-haas)'
+				],
+				monument: [
+					'var(--font-monument)'
+				],
+				monumentMono: [
+					'var(--font-monument-mono)'
+				],
+
+				lukasSans: [
+					'var(--font-lukas-sans})'
+				]
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -124,9 +121,46 @@ const config = {
 				'border-width': 'border-width 3s infinite alternate',
 				'zoom-in': 'zoom-in',
 				moveUp: 'moveUp 1.4s ease forwards',
-				appear: 'appear 1s 1s forwards'
+				appear: 'appear 1s 1s forwards',
+				'show-hide': 'show-hide 12s ease 0s infinite',
+				shadow: 'shadow 12s ease 0s infinite',
+				'up-2-8': 'go-up-2-8 12s ease 0s infinite',
+				'up-3-7': 'go-up-3-7 12s ease 0s infinite',
+				'up-4-6': 'go-up-4-6 12s ease 0s infinite',
+				'up-5': 'go-up-5 12s ease 0s infinite',
+				'down-2-8': 'go-down-2-8 12s ease 0s infinite',
+				'down-3-7': 'go-down-3-7 12s ease 0s infinite',
+				'down-4-6': 'go-down-4-6 12s ease 0s infinite',
+				'down-5': 'go-down-5 12s ease 0s infinite'
 			},
 			keyframes: {
+				'show-hide': {
+					'0%, 100%': {
+						opacity: '0',
+						transform: 'scale(0.8)'
+					},
+					'20%, 80%': {
+						opacity: '1',
+						transform: 'scale(1)'
+					}
+				},
+				shadow: {
+					'0%, 10%, 90%, 100%': {
+						opacity: '0'
+					},
+					'45%, 55%': {
+						opacity: '0.25',
+						height: '0.25vmin'
+					}
+				},
+				'go-up-2-8': {
+					'0%, 10%, 90%, 100%': {
+						top: '0'
+					},
+					'40%, 60%': {
+						top: '-0.6vmin'
+					}
+				},
 				moveUp: {
 					'0%': {
 						transform: 'translateY(5%)',
@@ -245,6 +279,12 @@ const config = {
 						opacity: '0'
 					}
 				}
+			},
+			dropShadow: {
+				glow: '0 0 1px rgba(255, 255, 255, 1)'
+			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(ellipse at center, var(--tw-gradient-stops))'
 			}
 		}
 	},

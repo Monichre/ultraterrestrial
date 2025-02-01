@@ -1,12 +1,17 @@
 {
-
   "terminal.integrated.env.osx": {
     "DYLD_LIBRARY_PATH": "${workspaceFolder}/screenpipe-vision/lib:${env:DYLD_LIBRARY_PATH}",
     "SCREENPIPE_APP_DEV": "true"
   },
-  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
-  
-  
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.formatOnType": false,
+    "editor.formatOnPaste": true
+  },
+
   "editor.codeActionsOnSave": {
     // "source.fixAll.eslint": "explicit"
     "source.organizeImports": "explicit"
@@ -17,23 +22,18 @@
   "prettier.trailingComma": "es5",
   "prettier.printWidth": 100,
   "todo-tree.regex.regex": "((//|#|<!--|;|/\\*|^)\\s*($TAGS)|^//\\s*\\[x\\]|^//\\s*\\[ \\])",
-"todo-tree.general.tags": [
-  "TODO",
-  "[x]",
-  "[ ]",
-],
-"todo-tree.highlights.customHighlight": {
-  "[x]":{
-    "foreground": "#64dd17",
-    "background":"#008800"
+  "todo-tree.general.tags": ["TODO", "[x]", "[ ]"],
+  "todo-tree.highlights.customHighlight": {
+    "[x]": {
+      "foreground": "#64dd17",
+      "background": "#008800"
+    },
+    "[ ]": {
+      "foreground": "#f44336",
+      "background": "#592c2c"
+    }
   },
-  "[ ]":{
-    "foreground": "#f44336",
-    "background": "#592c2c",
-  },
-},
 
-  
   "editor.formatOnType": false, // required
   "editor.formatOnPaste": true, // optional
   "editor.formatOnSave": true, // optional
@@ -46,13 +46,13 @@
   "commentAnchors.tags.displayInGutter": true,
   "commentAnchors.tags.displayInRuler": true,
   "commentAnchors.tags.displayLineNumber": true,
-    "commentAnchors.workspace.enabled": true,
-    "[sql]": {
-      "editor.defaultFormatter": "cweijan.vscode-postgresql-client2"
-    },
-    "[css]": {
-      "editor.defaultFormatter": "vscode.css-language-features"
-    },
-    
-    
+  "commentAnchors.workspace.enabled": true,
+  "[sql]": {
+    "editor.defaultFormatter": "cweijan.vscode-postgresql-client2"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "taipyStudio.gUI.elementsFilePaths": [],
+  "python.analysis.typeCheckingMode": "basic"
 }

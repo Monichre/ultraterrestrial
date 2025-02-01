@@ -157,7 +157,7 @@ export default async function Index() {
   return (
     // bg-dot-white/[0.2]
     <Suspense fallback={<Loading />}>
-      <div className='h-screen w-screen word-cloud-page bg-black relative '>
+      <div className='h-[100vw] overflow-hidden w-screen word-cloud-page bg-black relative '>
         <Spotlight
           className='-top-40 left-0 md:left-60 md:-top-20'
           fill='white'

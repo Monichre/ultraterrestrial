@@ -11,6 +11,12 @@ export class AssistantStreamEventHandler extends EventEmitter {
   }
 
   async onEvent( event: { event: string; data: Record<string, any> } ) {
+
+    console.log( "🚀 ~ file: stream-handler.ts:15 ~ AssistantStreamEventHandler ~ onEvent ~ event:", event )
+
+
+    console.log( "🚀 ~ file: stream-handler.ts:15 ~ AssistantStreamEventHandler ~ onEvent ~ data:", data )
+
     console.log( "🚀 ~ file: event-handler.ts:10 ~ AssistantStreamEventHandler ~ onEvent ~ event:", event )
     try {
       console.log( event )

@@ -139,9 +139,9 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
               <GroupIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
             </Button>
             <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} /> */}
-            <Button variant='outline' onClick={handleDelete} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 dark:text-white bg-black  hover:border-indigo-800 mx-1'>
+            {/* <Button variant='outline' onClick={handleDelete} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 dark:text-white bg-black  hover:border-indigo-800 mx-1'>
               <XIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
-            </Button>
+            </Button> */}
           </div>
         </CoreNodeTop>
         <CoreNodeContent className='min-h-[100xp] w-full'>

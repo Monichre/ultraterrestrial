@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import './graph-paper.css' // Include your CSS styles
 import { GraphPaperAnimation } from './main'
 export const GraphPaper = () => {

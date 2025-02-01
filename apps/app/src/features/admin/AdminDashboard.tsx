@@ -1,54 +1,36 @@
 'use client'
-import React, { useCallback, useEffect, useState } from 'react'
 import {
   AppSidebar,
   AppSidebarBody,
   AppSidebarLink,
 } from '@/components/app-sidebar'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import Image from 'next/image'
 import { cn } from '@/utils/cn'
+import { motion } from 'framer-motion'
 import {
-  LayoutDashboardIcon,
-  User,
   ArrowBigLeft,
-  Settings,
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  PanelLeft,
+  LayoutDashboardIcon,
   Search,
-  Sheet,
-  ShoppingCart,
-  Users2,
-  DollarSign,
+  Settings,
+  User
 } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useCallback, useEffect, useState } from 'react'
 
+import {
+  getEvents,
+  getKeyFigures,
+  getOrganizations,
+  getTestimonies,
+  getTopics,
+} from '@/app/(auth)/admin/actions'
 import { RecordsTable } from '@/features/admin/ui/RecordsTable'
 import { SelectedRecordsList } from './ui/SelectedRecordsList'
-import { AnimatedGridPatternBackground } from '@/components/backgrounds/animated-grid-pattern'
-import {
-  getTopics,
-  getKeyFigures,
-  getTestimonies,
-  getOrganizations,
-  getEvents,
-} from '@/app/(auth)/admin/actions'
 
-import { SheetTrigger, SheetContent } from '@/components/ui/sheet'
 
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuItem,
-} from '@radix-ui/react-dropdown-menu'
+import { DotPattern } from '@/components/backgrounds'
+import { AdminDashboardGlobe } from '@/components/globes/cobe-globes'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -57,17 +39,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-  CardDescription,
-} from '@/components/ui/card'
-import { DotPattern, Meteors } from '@/components/backgrounds'
-import { AdminDashboardGlobe } from '@/components/ui/globe'
 
 export const Logo = () => {
   return (

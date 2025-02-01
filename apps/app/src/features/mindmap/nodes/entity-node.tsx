@@ -7,14 +7,13 @@ import { Handle, Position } from '@xyflow/react'
 import { PopoverCloseButton, PopoverContent, PopoverFooter, PopoverForm, PopoverRoot, PopoverSubmitButton, PopoverTextarea, PopoverTrigger } from '@/components/animated'
 import { AiStarIcon } from '@/components/icons'
 import { AddNote } from '@/components/note/AddNote'
-import { Button } from '@/components/ui/button'
 import { useMindMap } from '@/contexts'
 import { renderEntity } from '@/features/mindmap/components/cards/render-entity-card'
 import { TestimonyCoreNodeBottom } from '@/features/mindmap/components/cards/testimony-card'
 import { CoreNodeBottom, CoreNodeContainer, CoreNodeContent, CoreNodeTop } from '@/features/mindmap/nodes/core-node-ui'
 import { useEntity } from '@/hooks'
-import { cn } from '@/utils'
-import { Lightbulb, XIcon } from 'lucide-react'
+import { cn, ICON_GREEN } from '@/utils'
+import { Lightbulb } from 'lucide-react'
 
 interface Photo {
   id: string
@@ -26,6 +25,35 @@ interface Photo {
   size: number
   version: number
   url: string
+}
+
+export const IconMenuWrapper = ( { children }: { children: React.ReactNode } ) => {
+  return (
+    <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 bg-neutral-800 text-neutral-400 border border-white/50'
+      style={{
+        borderColor: 'rgba(255, 255, 255, 0.5)',
+        transform: 'translateX(0px)',
+      }}
+    >
+      <div className=''>
+        <span
+          className='relative flex align-middle items-center content-center justify-start shrink-0 overflow-hidden rounded-full aspect-square h-full animate-overlayShow cursor-pointer shadow duration-200 pointer-events-none'
+          data-state='closed'
+        // style={{
+        //   borderColor: 'rgba(255, 255, 255, 0.5)',
+        //   transform: 'translateX(0px)',
+        // }}
+        >
+          {children}
+
+
+        </span>
+      </div>
+      <span className='text-neutral-600 text-neutral-400'>
+
+      </span>
+    </div>
+  )
 }
 
 const EntityNode = memo( ( node: any ) => {
@@ -86,10 +114,10 @@ const EntityNode = memo( ( node: any ) => {
         <CoreNodeContainer className={cn( 'motion-scale-in-0 motion-opacity-in-0 min-w-[200px] core-node-container overflow-visible' )} id={node.id}>
           <CoreNodeTop>
             <div className='flex justify-between w-content align-center items-center ml-auto'>
-              <Button variant='outline' onClick={handleDelete} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 dark:text-white dark:bg-black  hover:border-indigo-800 mx-1'>
+              {/* <Button variant='outline' onClick={handleDelete} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 text-white bg-black  hover:border-indigo-800 mx-1'>
                 <XIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
               </Button>
-
+ */}
 
             </div>
           </CoreNodeTop>
@@ -111,26 +139,35 @@ const EntityNode = memo( ( node: any ) => {
           </CoreNodeContent>
           <CoreNodeBottom>
             {node?.data?.type === 'testimonies' || node?.data?.type === 'testimony' ? <TestimonyCoreNodeBottom card={node.data} >
-              <PopoverTrigger><Lightbulb className='text-white stroke-1' size='16' /></PopoverTrigger>
+              <PopoverTrigger>
+                <IconMenuWrapper>
+                  <Lightbulb className='text-white stroke-1' size='16' />
+                </IconMenuWrapper>
+              </PopoverTrigger>
 
             </TestimonyCoreNodeBottom> : (
               <>
-                <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-400'>
+                <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 bg-neutral-800 text-neutral-400 border border-white/50'
+                  style={{
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    transform: 'translateX(0px)',
+                  }}
+                >
                   <div className='size-5'>
                     <span
-                      className='relative flex shrink-0 overflow-hidden rounded-full aspect-square h-full animate-overlayShow cursor-pointer border-2 shadow duration-200 pointer-events-none'
+                      className='relative flex align-middle items-center content-center justify-start shrink-0 overflow-hidden rounded-full aspect-square h-full animate-overlayShow cursor-pointer shadow duration-200 pointer-events-none'
                       data-state='closed'
-                      style={{
-                        borderColor: 'rgba(255, 255, 255, 0.5)',
-                        transform: 'translateX(0px)',
-                      }}
+                    // style={{
+                    //   borderColor: 'rgba(255, 255, 255, 0.5)',
+                    //   transform: 'translateX(0px)',
+                    // }}
                     >
-                      <AiStarIcon stroke={'#fff'} className='w-4 h-4 stroke-1' />
+                      <AiStarIcon stroke={ICON_GREEN} className='w-4 h-4 stroke-1' />
 
 
                     </span>
                   </div>
-                  <span className='text-neutral-600 dark:text-neutral-400'>
+                  <span className='text-neutral-600 text-neutral-400'>
 
                   </span>
                 </div>

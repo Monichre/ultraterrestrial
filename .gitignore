@@ -8,11 +8,10 @@ apps/app/ultravenv/
 .env
 
 **/*.env
-./packages/**/node_modules
-./packages/**/dist
-./packages/**/build
-./packages/**/coverage
-./packages/**/public
+
+/packages/scrape_squad/
+/packages/rag-app/
+/packages/ai-analyst/
 ./apps/**/node_modules
 ./apps/**/.next
 ./apps/**/dist
@@ -25,9 +24,8 @@ apps/app/ultravenv/
 *.jsonl
 *.xlsx
 *.xls
-packages/documentation/files/*.sql
-packages/documentation/**/*.sql
 
 *storybook.log
 .aider*
-packages/
+
+./apps/app/playground/

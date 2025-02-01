@@ -116,7 +116,7 @@ export const Menu = ( {
   return (
     <nav
       onMouseLeave={() => setActive( null )} // resets the state
-      className='relative flex justify-center space-x-12 px-8 py-6 '
+      className='relative flex justify-center space-x-12 px-4 py-2 '
     >
       {children}
     </nav>
@@ -258,7 +258,7 @@ export function FullSiteNav( { className }: { className?: string } ) {
       )}
     >
       <div className='absolute left-10 z-[100] flex-initial w-fit flex items-center content-center justify-self-end align-middle'>
-        <UltraterrestrialLogo />
+
         {/* Remove or comment out the UltraLogoAlt component if it's not defined */}
         {/* <UltraLogoAlt /> */}
       </div>

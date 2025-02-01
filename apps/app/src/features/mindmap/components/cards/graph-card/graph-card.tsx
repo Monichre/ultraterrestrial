@@ -7,7 +7,6 @@ import { motion } from 'framer-motion'
 
 import { useState } from 'react'
 
-import { ConnectionList } from '@/features/mindmap/components/connection-list'
 import { useEntity } from '@/hooks'
 import { format } from 'date-fns'
 
@@ -118,7 +117,7 @@ export function GraphCard( { card }: any ) {
               style={{ borderLeft: `1px solid ${modelColor}` }}
             >
               <motion.img
-                src={image.url || image.src}
+                src={bgPhoto.url || bgPhoto.src}
                 alt='What I Talk About When I Talk About Running - book cover'
                 className='h-[75px] w-[75px] object-cover object-center p-1 mr-4'
                 style={{

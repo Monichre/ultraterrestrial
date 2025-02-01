@@ -10,26 +10,13 @@ import './globals.css'
 import { ThemeProvider } from '@/contexts'
 
 import { ClerkProvider } from '@clerk/nextjs'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
 
 import { FullSiteNav } from '@/components/navbar/full-site-nav'
 import {
-  ailerons,
-  bebasNeue,
-  bebasNeuePro,
-  centimaSans,
-  commitMono,
-  eirene,
-  firaCode,
-  futura,
-  jetBrains,
   lukasSans,
-  nunito,
-  oswald,
-  sentient,
-  sourceSans,
-  stellar,
+  monumentGrotesk,
+  monumentGroteskMono,
+  neueHaasGrotesk
 } from './fonts'
 
 const defaultUrl = process.env.VERCEL_URL
@@ -49,13 +36,15 @@ export default function RootLayout( { children }: { children: React.ReactNode } 
   return (
 
     <ClerkProvider>
-      <html lang='en' suppressHydrationWarning className='dark'>
+      <html lang='en' suppressHydrationWarning className='!dark'>
         <body
-          className={` ${oswald.variable} ${sourceSans.variable} ${ailerons.variable} ${futura.variable} ${firaCode.variable} ${eirene.variable} ${stellar.variable} ${centimaSans.variable} ${jetBrains.variable} ${nunito.variable} ${sentient.variable} ${bebasNeue.variable} ${commitMono.variable} ${bebasNeuePro.variable} ${GeistMono.variable} ${GeistSans.variable} ${lukasSans.variable} dark`}>
+          className={` ${neueHaasGrotesk.variable} ${monumentGrotesk.variable} ${monumentGroteskMono.variable} ${lukasSans.variable} dark`}>
           <ThemeProvider
             attribute='class'
+            forcedTheme='dark'
             defaultTheme='dark'
-            enableSystem
+            enableSystem={false}
+          // enableSystem
           // disableTransitionOnChange
           >
             {/* <DataLayer> */}

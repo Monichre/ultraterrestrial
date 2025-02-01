@@ -22,7 +22,7 @@ export const getClaudeSummary = async ( { system = baseResearcherPrompt, prompt,
   return summary
 }
 export const streamClaudeResponse = async ( { prompt, system, message }: { prompt: string, system?: string, message: { role: 'user', content: string } } ) => {
-  const result: any = await streamText( {
+  const result: any = streamText( {
     model: anthropic( 'claude-3-5-sonnet-20241022' ),
 
     system,

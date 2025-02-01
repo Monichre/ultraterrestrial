@@ -174,12 +174,25 @@
   --teal-a10: #00d3fff4;
   --teal-a11: #00d4fff8;
   --teal-a12: #abedff;
+  --teal-1: oklch(0% 0.0217 218.9);
+    --teal-2: oklch(18.2% 0.023 218.9);
+    --teal-3: oklch(25.7% 0.0556 218.9);
+    --teal-4: oklch(30.7% 0.0794 218.9);
+    --teal-5: oklch(35.7% 0.0888 218.9);
+    --teal-6: oklch(41.1% 0.0944 218.9);
+    --teal-7: oklch(47.7% 0.1045 218.9);
+    --teal-8: oklch(55.7% 0.1243 218.9);
+    --teal-9: oklch(80.7% 0.1458 218.9);
+    --teal-10: oklch(77.4% 0.1458 218.9);
+    --teal-11: oklch(78.6% 0.1458 218.9);
+    --teal-12: oklch(90.9% 0.0718 218.9);
 
   --teal-contrast: #05262f;
   --teal-surface: #0c283280;
   --teal-indicator: #00d5ff;
   --teal-track: #00d5ff;
 }
+ 
 
 @supports (color: color(display-p3 1 1 1)) {
   @media (color-gamut: p3) {
@@ -221,9 +234,6 @@
 }
 
  */
-
-
-
 
 @layer utilities {
   .bg-card {
@@ -415,11 +425,13 @@ html {
 }
 
 body {
-  min-block-size: 400vh;
+  /* min-block-size: 400vh; */
   @apply bg-background text-foreground;
   /* font-family: 'JetBrains Mono', monospace; */
-  font-family: var(--font-source-sans);
+  font-family: var(--font-lukas-sans);
+  /* font-family: "Source Sans 3", sans-serif!important; */
   /* var(--font-fira-code); */
+
 
   position: relative;
   /* font-family: 'Sentient', serif; */
@@ -475,23 +487,27 @@ body::after {
 h2,
 h3 {
   /* font-family: 'Centima Sans', sans-serif; */
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Bebas Neue Pro', sans-serif;
 
-  font-size: 24px;
+  /* font-size: 24px;
   line-height: 32px;
-  font-weight: 400;
+  font-weight: 400; */
   letter-spacing: 1.5px;
 }
 
 p {
   /* font-family: 'JetBrains Mono', monospace; */
-  font-family: var(--font-source-sans) !important;
+  /* font-family: var(--font-source-sans) !important; */
+  /* font-family: "Source Sans 3", sans-serif!important; */
+  font-family: var(--font-lukas-sans) !important;
+  letter-spacing: 1px;
+  font-weight: 300;
   /* 'Sentient', serif; */
 
   /* font-family: 'JetBrains Mono', monospace; */
   /* font-family: var(--font-fira-code); */
-  font-size: 14px;
-  line-height: 21px;
+  font-size: 15px;
+  /* line-height: 21px; */
   /* font-weight: 300; */
   /* font-family: 'Nunito', sans-serif; */
 }
@@ -670,6 +686,103 @@ a {
   background: transparent !important;
 
 } */
+
+
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 70vmin;
+  margin: 0 auto;
+}
+
+.content div {
+  position: absolute;
+  display: flex;
+  animation: show-hide var(--sp) ease 0s infinite;
+  mix-blend-mode: plus-lighter;
+}
+
+
+.content div span {
+  width: 5vmin;
+  position: relative;
+  text-align: center;
+  box-sizing: border-box;
+  color: #ffffff90;
+  text-shadow: 0 0 1px var(--white);
+}
+
+.up:before,
+.down:before {
+  width: 80%;
+  height: 0.1vmin;
+  background: radial-gradient(ellipse at 50% 50%, var(--white), #ffffff00 70%);
+  content: "";
+  position: absolute;
+  border-radius: 100%;
+  filter: blur(2px);
+  left: 10%;
+  top: 49%;
+  box-shadow: 0 0 100px 0 var(--white);
+  animation: shadow var(--sp) ease 0s infinite;
+}
+
+.down:before {
+  width: 1vmin;
+  height: 0.5vmin;
+  filter: blur(3px);
+  left: calc(50% - 0.5vmin);
+  top: 45%;
+  box-shadow: 0 0 10px 0 var(--white);
+}
+
+
+
+.up span,
+.down span {
+  animation-duration: var(--sp);
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
+
+/* Up animations */
+.up-2-8 {
+  animation-name: go-up-2-8;
+}
+
+.up-3-7 {
+  animation-name: go-up-3-7;
+}
+
+.up-4-6 {
+  animation-name: go-up-4-6;
+}
+
+.up-5 {
+  animation-name: go-up-5;
+}
+
+/* Down animations */
+.down-2-8 {
+  animation-name: go-down-2-8;
+}
+
+.down-3-7 {
+  animation-name: go-down-3-7;
+}
+
+.down-4-6 {
+  animation-name: go-down-4-6;
+}
+
+.down-5 {
+  animation-name: go-down-5;
+}
+
+
 
 .site-tagline {
   position: relative;
@@ -853,7 +966,8 @@ td p {
 }
 
 .fullsite-nav p {
-  font-family: 'Bebas Neue Pro' !important;
+
+
   /* font-weight: 700; */
   font-size: 18px;
 }
@@ -888,7 +1002,7 @@ td p {
 }
 
 .react-flow__edges svg {
-  z-index: 2 !important;
+  z-index: 1 !important;
 }
 
 .cl-rootBox.cl-signIn-root.cl-internal-phfxlr {
@@ -1505,6 +1619,24 @@ note .ai-response-markup h3,
   margin-left: 56px;
 }
 
+.react-flow,
+.react-flow__renderer {
+  cursor: none !important;
+}
+
 .core-node-container .grid-card {
   border: none;
+}
+
+.react-flow__pane {
+  cursor: none !important;
+}
+
+.react-flow__pane.draggable {
+  cursor: none !important;
+}
+
+input,
+textarea {
+  cursor: auto !important;
 }

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-export async function GET(request: any) {
+export async function GET( request: any ) {
   try {
     // Use process.cwd() to get the current working directory
     const sightingsFilePath = path.join(
@@ -19,7 +19,7 @@ using Node.js file system module (fs) and path module. */
     const ufoPostsFilePath = path.join(
       process.cwd(),
       'public',
-      'ufo-posts-final.geojson'
+      'ufo-posts.geojson'
     )
     const ufoPostsFileContents = await fs.promises.readFile(
       ufoPostsFilePath,
@@ -36,13 +36,13 @@ using Node.js file system module (fs) and path module. */
     )
 
     // Parse the JSON content
-    const sightings = JSON.parse(sightingsFileContents)
-    const militaryBases = JSON.parse(militaryBasesFileContents)
-    const ufoPosts = JSON.parse(ufoPostsFileContents)
+    const sightings = JSON.parse( sightingsFileContents )
+    const militaryBases = JSON.parse( militaryBasesFileContents )
+    const ufoPosts = JSON.parse( ufoPostsFileContents )
 
     // Return the parsed GeoJSON content
     return new Response(
-      JSON.stringify({
+      JSON.stringify( {
         data: {
           sightings,
           militaryBases,
@@ -51,7 +51,7 @@ using Node.js file system module (fs) and path module. */
           which indicates a comment in TypeScript. */
           ufoPosts,
         },
-      }),
+      } ),
       {
         status: 200,
         headers: {
@@ -59,12 +59,12 @@ using Node.js file system module (fs) and path module. */
         },
       }
     )
-  } catch (error) {
-    console.error('Error reading GeoJSON file:', error)
+  } catch ( error ) {
+    console.error( 'Error reading GeoJSON file:', error )
 
     // Return an error response
     return new Response(
-      JSON.stringify({ error: 'Failed to read GeoJSON file' }),
+      JSON.stringify( { error: 'Failed to read GeoJSON file' } ),
       {
         status: 500,
         headers: {

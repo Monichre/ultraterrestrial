@@ -8,3 +8,7 @@
 /apps/app/node_modules/
 /apps/app/public/
 
+/apps/app/playground/
+/apps/app/docs/
+
+/packages/

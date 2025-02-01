@@ -9,7 +9,8 @@ import { useRouter } from 'next/navigation'
 import {
   Suspense,
   useRef,
-  useState
+  useState,
+  memo
 } from 'react'
 import * as THREE from 'three'
 
@@ -20,6 +21,7 @@ import { ModelAvatar } from '@/features/mindmap/components/connection-list'
 import { cn } from '@/utils'
 import { DOMAIN_MODEL_COLORS } from '@/utils/constants/colors'
 import { motion } from 'framer-motion'
+
 // import {
 //   StarsCard,
 //   StarsCardDescription,
@@ -87,7 +89,7 @@ const Glow = ( { delay }: { delay: number } ) => {
 }
 
 // generate random words
-const Word = ( { children, item, ...props }: any ): any => {
+const Word = memo( ( { children, item, ...props }: any ): any => {
   // updateWithRef
   console.log( 'props: ', props )
   console.log( 'children: ', children )
@@ -121,7 +123,7 @@ const Word = ( { children, item, ...props }: any ): any => {
     </Html>
     // </Billboard>
   )
-}
+} )
 
 // const ConnectionLines = ({ connections }: any) => {
 //   const group: any = useRef()
@@ -163,11 +165,11 @@ const Word = ( { children, item, ...props }: any ): any => {
 //   )
 // }
 
-function Cloud( { words }: any ) {
+const Cloud = memo( ( { words }: any ) => {
   return words.map( ( [position, item]: any, index: any ) => (
     <Word key={index} position={position} children={item.name} item={item} />
   ) )
-}
+} )
 export type WordCloudProps = {
   events: any[]
 }

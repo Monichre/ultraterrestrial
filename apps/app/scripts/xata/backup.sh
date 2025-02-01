@@ -1,12 +1,6 @@
 #!/bin/bash
-source ./venv/bin/activate
-import os
-from dotenv import load_dotenv
-import os
-load_dotenv()
 
-# path=os.path.join(directory, exports)
-XATA_API_KEY=os.environ.get("XATA_API_KEY")
+XATA_API_KEY="${XATA_API_KEY}"
 
 python3 ./xata_tools/xreplay.py \
 --from_workspace UltraTerrestrial-kgubvq \

@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react'
 import { motion, useMotionValue } from 'framer-motion'
+import { useState } from 'react'
 
+import { HandDrawnArrowLeft, HandDrawnArrowRight } from '@/components/icons'
 import { cn } from '@/utils/cn'
-import { HandrawnArrowLeft, HandrawnArrowRight } from '@/components/icons'
 
 export const ImageSwiper: React.FC<{
   images: string[]
@@ -41,7 +41,7 @@ export const ImageSwiper: React.FC<{
             }
           }}
         >
-          <HandrawnArrowLeft />
+          <HandDrawnArrowLeft />
         </button>
         <button
           style={imgIndex === images.length - 1 ? { opacity: 0 } : {}}
@@ -52,7 +52,7 @@ export const ImageSwiper: React.FC<{
             }
           }}
         >
-          <HandrawnArrowRight />
+          <HandDrawnArrowRight />
         </button>
       </div>
       <div className='pointer-events-none absolute bottom-2 z-10 flex w-full items-center justify-center'>

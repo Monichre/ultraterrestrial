@@ -41,7 +41,7 @@
     "src/stories/**/*.stories.ts",
     "src/stories/**/*.stories.tsx",
     "src/stories/*.stories.ts"
-  ],
+, ".storybook/main.ts"  ],
   "exclude": [
     "node_modules"
   ]

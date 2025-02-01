@@ -9,9 +9,8 @@ import { edgeTypes } from '@/features/mindmap/config/edge-types'
 import { nodeTypes } from '@/features/mindmap/config/index.config'
 
 import {
-  MindMapAiChat,
   MindMapAnimatedClickMenu,
-  MindMapSideMenu,
+  MindMapSideMenu
 } from '@/features/mindmap/components/menus'
 import { MindMapBottomMenu } from '@/features/mindmap/components/menus/mindmap-bottom-menu'
 
@@ -100,58 +99,15 @@ export function Graph( props: any ) {
 
   const { ref, clickPosition, attrs, isOpen, closeMenu } = useContextMenu()
 
-  // const workerRef = useRef(null)
 
-  // useEffect(() => {
-  //   if (nodes.length === 0) return
-
-  //   // Initialize the Web Worker
-  //   if (!workerRef.current) {
-  //     workerRef.current = new Worker('/simulationWorker.js')
-  //   }
-
-  //   const worker = workerRef.current
-
-  //   worker.postMessage({ nodes, edges })
-
-  //   worker.onmessage = (event) => {
-  //     const updatedNodes = event.data
-  //     setNodes(updatedNodes)
-  //     fitView()
-  //   }
-
-  //   // Cleanup
-  //   return () => {
-  //     worker.terminate()
-  //     workerRef.current = null
-  //   }
-  // }, [nodes.length, edges.length])
-
-  // const onLayout = useCallback(
-  //   ({direction, useInitialNodes = false}) => {
-  //     const opts = {'elk.direction': direction, ...elkOptions}
-  //     const ns = nodes
-  //     const es = edges
-
-  //     getLayoutedElements(ns, es, opts).then(({nodes: layoutedNodes, edges: layoutedEdges}) => {
-  //       setNodes(layoutedNodes)
-  //       setEdges(layoutedEdges)
-
-  //       window.requestAnimationFrame(() => fitView())
-  //     })
-  //   },
-  //   [nodes, edges]
-  // )
-
-  // // Calculate the initial layout on mount.
-  // useLayoutEffect(() => {
-  //   onLayout({direction: 'DOWN', useInitialNodes: true})
-  // }, [])
 
   return (
+
+
     <div
       className='relative h-[100vh] w-[100vw] bg-black bg-dot-white/[0.3] bg-repeat'
-      style={{ backgroundSize: '16px 16px' }}>
+      style={{ backgroundSize: '16px 16px' }
+      }>
       {/* <div className='fixed top-0 left-0 z-0 w-full'>
         <GraphPaper />
       </div> */}
@@ -205,10 +161,12 @@ export function Graph( props: any ) {
           <MindMapBottomMenu />
         </Panel>
 
-        <Panel position='bottom-right'>
+        {/* <Panel position='bottom-right'>
           <MindMapAiChat />
-        </Panel>
+        </Panel> */}
       </ReactFlow>
     </div>
+
+
   )
 }

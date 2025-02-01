@@ -90,36 +90,39 @@ module.exports = {
       type: 'confirm',
       name: 'includeCss',
       message: 'Would you like to include a CSS file?',
-      default: true,
+      default: false,
     },
     {
       type: 'confirm',
       name: 'includeStories',
       message: 'Would you like to include a Storybook stories file?',
-      default: true,
+      default: false,
     },
   ],
   actions: function (data) {
     // Validate destinationPath exists
-    if (!data.destinationPath) {
-      throw new Error('destinationPath is required but was not provided')
-    }
+    console.log('🚀 ~ file: index.js:165 ~ data:', data)
+    // if (!data.destinationPath) {
+    //   throw new Error('destinationPath is required but was not provided')
+    // }
 
     // Determine the base path
-    let basePath
+    let basePath = data.workspace
+    const templatePath = path.join('../../../', '..', '..', '..', 'templates', 'app', 'component')
+    console.log('🚀 ~ file: index.js:111 ~ templatePath:', templatePath)
     if (data.addToExisting && data.existingDir) {
       // If adding to an existing directory, append the existingDir to the appropriate subdirectory
       if (data.animated) {
-        basePath = path.join(data.destinationPath, 'src/components/animated', data.existingDir)
+        basePath = path.join(basePath, 'src/components/animated', data.existingDir)
       } else if (data.ui) {
-        basePath = path.join(data.destinationPath, 'src/components/ui', data.existingDir)
+        basePath = path.join(basePath, 'src/components/ui', data.existingDir)
       } else {
-        basePath = path.join(data.destinationPath, 'src/components', data.existingDir)
+        basePath = path.join(basePath, 'src/components', data.existingDir)
       }
     } else {
       // If not adding to existing, determine subdirectory based on animated or ui
       const subDir = data.animated ? 'animated' : data.ui ? 'ui' : ''
-      basePath = path.join(data.destinationPath, 'src/components', subDir)
+      basePath = path.join(basePath, 'src/components', subDir)
     }
 
     const componentPath = path.join(basePath, '{{dashCase name}}')
@@ -128,12 +131,12 @@ module.exports = {
       {
         type: 'add',
         path: path.join(componentPath, 'index.tsx'),
-        templateFile: './templates/component/index.hbs',
+        templateFile: path.join(templatePath, 'index.hbs'),
       },
       {
         type: 'add',
         path: path.join(componentPath, '{{properCase name}}.tsx'),
-        templateFile: './templates/component/component.hbs',
+        templateFile: path.join(templatePath, 'component.hbs'),
       },
     ]
 
@@ -142,22 +145,25 @@ module.exports = {
       actions.push({
         type: 'add',
         path: path.join(componentPath, '{{properCase name}}.css'),
-        templateFile: './templates/component/component.css.hbs',
+        templateFile: path.join(templatePath, 'component.css.hbs'),
       })
     }
 
     // Conditionally add Stories file
-    if (data.includeStories) {
-      actions.push({
-        type: 'add',
-        path: path.join(
-          data.destinationPath,
-          'src/stories/{{dashCase name}}/{{properCase name}}.stories.ts'
-        ),
-        templateFile: './templates/component/component.stories.hbs',
-      })
-    }
+    // if (data.includeStories) {
+    //   actions.push({
+    //     type: 'add',
+    //     path: path.join(
+    //       data.destinationPath,
+    //       'src/stories/{{dashCase name}}/{{properCase name}}.stories.ts'
+    //     ),
+    //     templateFile: '.component.stories.hbs',
+    //   })
+    // }
 
     return actions
   },
 }
+
+  
+

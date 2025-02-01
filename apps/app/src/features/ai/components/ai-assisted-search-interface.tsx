@@ -14,7 +14,8 @@ import { Divider } from '@/features/user/note/ui/PopoverMenu'
 import { cn } from '@/utils'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
-import { useAssistant } from 'ai/react'
+import { Message, useAssistant } from 'ai/react'
+
 import { AnimatePresence, motion } from 'framer-motion'
 import { SearchIcon } from 'lucide-react'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
@@ -166,18 +167,8 @@ const suggestions = [
 ]
 
 export const AiAssistedSearch = memo( () => {
-  const {
-    status,
-    messages,
-    input,
-    submitMessage,
-    handleInputChange,
-    append,
-    threadId,
-    setThreadId,
-    ...rest
-  } = useAssistant( { api: '/api/disclosure/chat' } )
-  console.log( 'rest:', rest, { messages } )
+  const { status, messages, input, submitMessage, handleInputChange } = useAssistant( { api: '/api/disclosure/chat' } )
+
 
 
   // const [value, setValue, remove] = useLocalStorage('threadId', null)
@@ -188,12 +179,12 @@ export const AiAssistedSearch = memo( () => {
   //   }
   // }, [threadId, setValue, value, setThreadId])
 
-  const handleSelection = ( suggestion: string ) => {
-    append( {
-      role: 'user',
-      content: suggestion,
-    } )
-  }
+  // const handleSelection = ( suggestion: string ) => {
+  //   append( {
+  //     role: 'user',
+  //     content: suggestion,
+  //   } )
+  // }
 
   const [dialogOpen, setDialogOpen] = useState( false )
 
@@ -234,6 +225,8 @@ export const AiAssistedSearch = memo( () => {
   let initial = messages.length === 0
 
   return (
+
+
     <Dialog
       open={dialogOpen}
       onOpenChange={handleDialogChange}
@@ -283,25 +276,9 @@ export const AiAssistedSearch = memo( () => {
               >
                 <ScrollArea.Viewport className='h-full w-full'>
                   <div className='space-y-4 px-2 py-4'>
-                    {initial && (
-                      <LoadingSequence
-                        loadingStates={[
-                          {
-                            text: 'Consulting our proprietary Ufology expert: Party Martian. The Warden of Ultraterrestrial and dedicated steward of the Disclosure movement',
-                          },
-                          {
-                            text: `Give it a second, we're literally calling Zeta Reticuli`,
-                          },
-                          {
-                            text: 'I know, I know, why is an ET from Zeta Reticul called Party Martian? Why are native americans called Indians bro?',
-                          },
-                          { text: 'Make a snack' },
-                        ]}
-                        loading={status === 'in_progress'}
-                      />
-                    )}
 
-                    {initial && (
+
+                    {/* {initial && (
                       <div>
                         <div className='mb-2 px-2 text-xs font-semibold uppercase text-white'>
                           Suggestions
@@ -317,7 +294,23 @@ export const AiAssistedSearch = memo( () => {
                         </ul>
                         <Divider />
                       </div>
-                    )}
+                    )} */}
+
+                    {messages.map( ( m: Message ) => (
+                      <div key={m.id}>
+                        <strong>{`${m.role}: `}</strong>
+                        {m.role !== 'data' && m.content}
+                        {m.role === 'data' && (
+                          <>
+                            {( m.data as any ).description}
+                            <br />
+                            <pre className={'bg-gray-200'}>
+                              {JSON.stringify( m.data, null, 2 )}
+                            </pre>
+                          </>
+                        )}
+                      </div>
+                    ) )}
 
                     {messages.length > 0 && (
                       <div className='flex flex-col p-2 gap-2 pb-8'>

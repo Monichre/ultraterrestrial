@@ -1,6 +1,7 @@
 import { SketchyGlobe } from '@/components/icons'
 import { Button } from '@/components/ui/button'
 import { useMindMap } from '@/contexts'
+// @ts-no
 import {
   formatNodesForCardDisplay
 } from '@/features/mindmap/components/cards/card-stack/card-stack'

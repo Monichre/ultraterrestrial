@@ -1,12 +1,10 @@
 'use client'
 
-import { EarthOptimized } from '@/components/earth/Earth'
 import { wait } from '@/utils'
-import { log } from 'console'
 // import { Howl } from 'howler'
-import { AnimatePresence, inView, motion, useInView } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 
 const CanvasCursor = dynamic( () => import( '@/components/ui/canvas-cursor' ).then( mod => mod.CanvasCursor ) )
@@ -15,27 +13,13 @@ const SiteTitle = dynamic( () => import( './SiteTitle' ).then( mod => mod.SiteTi
 // const BlurAppear = dynamic(() => import('@/components/animated').then(mod => mod.BlurAppear))
 const ShootingStars = dynamic( () => import( '@/components/backgrounds/shooting-stars' ).then( mod => mod.ShootingStars ) )
 const StarsBackground = dynamic( () => import( '@/components/backgrounds/shooting-stars' ).then( mod => mod.StarsBackground ) )
-// const Earth = dynamic( () => import( '@/components/earth' ).then( mod => mod.Earth ) )
+
 const Moon = dynamic( () => import( '@/components/moon' ).then( mod => mod.Moon ) )
 
+const Earth = dynamic( () => import( '@/components/earth' ).then( mod => mod.EarthOptimized ) )
 
 
-const onRenderCallback = (
-  id: any, // the "id" prop of the Profiler tree that has just committed
-  phase: any, // either "mount" or "update"
-  actualDuration: any, // time spent rendering the committed update
-  baseDuration: any, // estimated time to render the entire subtree without memoization
-  startTime: any, // when React began rendering this update
-  commitTime: any, // when React committed this update
-  interactions: any // the Set of interactions belonging to this update
-) => {
-  console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ actualDuration:", actualDuration )
-  console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ baseDuration:", baseDuration )
-  console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ startTime:", startTime )
-  console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ commitTime:", commitTime )
-  console.log( "🚀 ~ file: home.tsx:32 ~ onRenderCallback ~ interactions:", interactions )
 
-}
 
 
 export interface HomeProps { }
@@ -44,6 +28,7 @@ export const Home: React.FC<HomeProps> = () => {
 
 
   const [moonInView, setMoonInView] = useState( false )
+  const earthRef = useRef<HTMLDivElement>( null )
 
   // console.log( "🚀 ~ file: home.tsx:42 ~ earthInView:", earthInView )
 
@@ -90,28 +75,32 @@ export const Home: React.FC<HomeProps> = () => {
   // } )
 
   return (
-    <div className='h-[100vh] w-[100vw] relative'>
+    <div className='h-[100vh] w-[100vw] relative overflow-hidden'>
       <div className='absolute top-0 left-0 h-[100vh] w-[100vw] z-1'>
+
         <Moon />
+        {/* <DoubleHelixScene /> */}
       </div>
-      {/* <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1'>
+      <div className='absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1 flex flex-col justify-center items-center'>
+
         <Earth ref={earthRef} />
-      </div> */}
+      </div>
       {/* 
       <Profiler id="Earth" onRender={onRenderCallback}>
         <Earth />
       </Profiler> */}
 
       <CanvasCursor />
-      <div className='astronaut h-full w-full relative flex flex-col justify-center align-middle relative overflow-hidden items-center z-40'>
+      <div className='astronaut h-[100vh] w-full absolute top-0 left-0 flex flex-col justify-center align-middle relative overflow-hidden items-center z-40'>
         {/* @ts-ignore */}
-        {/* <AnimatePresence>
-          {moonInView && ( )}
-        </AnimatePresence> */}
-        <motion.div className='w-full'>
-          <SiteTitle />
-          <LovecraftQuote />
-        </motion.div>
+        <AnimatePresence>
+
+          {/* <div className='w-full'> */}
+          {/* <SiteTitle /> */}
+          {/* <TitleAlt /> */}
+          {/* <LovecraftQuote /> */}
+        </AnimatePresence>
+        {/* </div> */}
       </div>
       <ShootingStars />
       <StarsBackground />

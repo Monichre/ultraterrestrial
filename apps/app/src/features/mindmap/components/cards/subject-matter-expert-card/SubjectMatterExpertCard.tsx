@@ -86,7 +86,7 @@ export function SubjectMatterExpertCard( { card }: any ) {
 
           <div className="absolute -left-2 bottom-0 translate-y-11 opacity-0 transition duration-300 group-hover:opacity-100">
             <a
-              href="/components"
+              href={`/explore/key-figures/${entity.id}`}
               className="pointer-events-auto inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium text-white transition hover:bg-white/5">
               <span>View</span>
 

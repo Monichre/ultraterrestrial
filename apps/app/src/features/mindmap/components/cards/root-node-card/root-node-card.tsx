@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/co
 
 import { capitalize, cn } from '@/utils'
 
-import { ShinyButton } from '@/components/ui/button'
+
 import '@/components/ui/card/cards.css'
 import { useNodesData } from '@xyflow/react'
 

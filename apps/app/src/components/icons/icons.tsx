@@ -1,41 +1,13 @@
-import { cn, DOMAIN_MODEL_COLORS, ICON_GREEN, NEONS } from '@/utils'
+import { cn, DOMAIN_MODEL_COLORS, ICON_BLUE, NEONS } from '@/utils'
 
 import chroma from 'chroma-js'
 import { motion } from 'framer-motion'
 import { Tally1, Tally2, Tally3, Tally4, Tally5 } from 'lucide-react'
+import type { SVGProps } from 'react'
 import * as React from 'react'
 
 
-export const BroadcastIcon = ( { className, ...props }: IconProps ) => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={cn( "", className )}
-    {...props}
-  >
-    <path d="M6.87348 15.1266C4.04217 12.2953 4.04217 7.70484 6.87348 4.87354" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M17.1265 4.87354C19.9578 7.70484 19.9578 12.2953 17.1265 15.1266" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M15.0052 6.99475C16.6649 8.65448 16.6649 11.3454 15.0052 13.0052" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M8.9948 13.0052C7.33507 11.3454 7.33507 8.65448 8.9948 6.99475" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M12.5 10C12.5 10.2761 12.2761 10.5 12 10.5C11.7239 10.5 11.5 10.2761 11.5 10C11.5 9.72386 11.7239 9.5 12 9.5C12.2761 9.5 12.5 9.72386 12.5 10Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M12 13.75V19.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-)
-
-
-
-// @radix-ui/react-icons
-export type IconProps = React.HTMLAttributes<HTMLOrSVGElement> & {
-  stroke?: string
-  className?: string
-  onClick?: any
-  fill?: string
-}
-
-const animationConfig = ( { fill = ICON_GREEN, stroke = ICON_GREEN }: IconProps ) => {
+export const iconAnimationConfig: any = ( { fill = ICON_BLUE, stroke = ICON_BLUE }: IconProps ) => {
   const color = ( fill || stroke ) ?? DOMAIN_MODEL_COLORS.root
   const hiddenColor = chroma( color ).alpha( 0 ).css()
   const visibleColor = chroma( color ).alpha( 1 ).css()
@@ -52,10 +24,42 @@ const animationConfig = ( { fill = ICON_GREEN, stroke = ICON_GREEN }: IconProps 
   }
 }
 
+// let config = iconAnimationConfig( { stroke } )
+export const BroadcastIcon = ( { className, stroke, fill, ...props }: IconProps ) => (
+  <motion.svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill={fill}
+    className={cn( "", className )}
+    variants={iconAnimationConfig( { stroke } )}
+    {...props}
+  >
+    <motion.path d="M6.87348 15.1266C4.04217 12.2953 4.04217 7.70484 6.87348 4.87354" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <motion.path d="M17.1265 4.87354C19.9578 7.70484 19.9578 12.2953 17.1265 15.1266" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <motion.path d="M15.0052 6.99475C16.6649 8.65448 16.6649 11.3454 15.0052 13.0052" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <motion.path d="M8.9948 13.0052C7.33507 11.3454 7.33507 8.65448 8.9948 6.99475" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <motion.path d="M12.5 10C12.5 10.2761 12.2761 10.5 12 10.5C11.7239 10.5 11.5 10.2761 11.5 10C11.5 9.72386 11.7239 9.5 12 9.5C12.2761 9.5 12.5 9.72386 12.5 10Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+    <motion.path d="M12 13.75V19.25" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </motion.svg>
+)
+
+
+
+// @radix-ui/react-icons
+export type IconProps = React.HTMLAttributes<HTMLOrSVGElement> & {
+  stroke?: string
+  className?: string
+  onClick?: any
+  fill?: string
+}
+
+
+
 export const HandDrawnArrowRight = ( { fill, stroke, className, ...rest }: IconProps ) => {
-  const config = animationConfig( { fill, stroke } )
+
   return (
-    <svg
+    <motion.svg
       {...rest}
       width='150'
       height='82'
@@ -63,7 +67,7 @@ export const HandDrawnArrowRight = ( { fill, stroke, className, ...rest }: IconP
       fill='none'
       xmlns='http://www.w3.org/2000/svg'>
       <motion.path
-        variants={config}
+        variants={iconAnimationConfig( { stroke } )}
         initial='hidden'
         animate='visible'
         fill-rule='evenodd'
@@ -71,19 +75,20 @@ export const HandDrawnArrowRight = ( { fill, stroke, className, ...rest }: IconP
         d='M67.616 0.147978C57.1498 0.781251 46.3786 4.08834 38.3061 9.10762C31.9231 13.0949 25.4463 19.3807 20.0724 26.7689C15.5199 33.0312 11.249 40.1849 8.76149 45.6967C6.18015 51.4431 4.37323 57.0487 2.26123 65.7738C-0.226243 76.0234 -0.531333 79.0491 0.712402 80.8785C1.1348 81.5118 1.36949 81.6525 2.02656 81.6525H2.84789L3.01215 79.6589C3.15295 77.6887 3.36414 76.774 6.34441 66.0552C8.85535 56.9314 10.7796 51.7714 14.018 45.4152C19.5796 34.4854 27.9103 23.626 35.2554 17.8092C42.5066 12.0629 51.1658 8.5447 61.984 6.90288C63.3216 6.71525 66.1845 6.59798 69.8453 6.59798C76.1813 6.62143 78.9269 6.90288 83.8315 8.09907C93.8987 10.5852 100.352 14.3614 113.259 25.3382C115.817 27.5194 121.003 32.4918 121.003 32.7732C121.003 32.8436 120.346 32.7732 119.548 32.6091C117.389 32.1634 116.286 32.2103 115.136 32.8202C113.939 33.4534 113.024 34.9311 113.024 36.2211C113.024 38.1678 114.291 39.5985 117.131 40.8651C117.905 41.1934 121.918 43.1636 126.048 45.2276C134.332 49.3791 135.857 50.0358 139.494 51.0443C143.906 52.2874 146.511 51.9356 148.271 49.8951C149.82 48.0891 150.031 45.6498 148.858 43.2574C148.506 42.5772 147.027 40.4898 145.549 38.6134C142.404 34.6496 141.7 33.5472 140.433 30.592C139.236 27.8009 138.18 24.0951 136.843 18.0438C134.543 7.44234 134.684 7.95834 134.027 8.61507C133.229 9.41252 132.032 17.8796 132.032 22.7112C132.032 26.1122 132.29 28.1996 133.088 31.4832C133.393 32.7732 133.628 33.8287 133.604 33.8522C133.581 33.8756 132.76 32.8202 131.797 31.5067C127.503 25.69 116.826 16.3551 107.275 10.0927C99.4838 5.00307 92.6784 2.35271 83.4091 0.851615C78.3872 0.0307056 73.248 -0.180385 67.616 0.147978Z'
         fill={fill}
       />
-    </svg>
+    </motion.svg>
   )
 }
 
-export const HandDrawnArrowDown = ( { fill, stroke, className, ...rest }: IconProps ) => {
-  const config = animationConfig( { fill } )
+export const HandDrawnArrowDown = ( { fill, stroke = ICON_BLUE, className, ...rest }: IconProps ) => {
+  const config = iconAnimationConfig( { fill } )
   return (
-    <svg
+    <motion.svg
       {...rest}
       width='48'
       height='218'
       viewBox='0 0 48 218'
       fill='none'
+      stroke={stroke}
       xmlns='http://www.w3.org/2000/svg'>
       <motion.path
         variants={config}
@@ -94,7 +99,7 @@ export const HandDrawnArrowDown = ( { fill, stroke, className, ...rest }: IconPr
         d='M43.6953 0.553886C43.2025 1.04659 43.1086 1.32814 43.1086 2.64201C43.1086 3.6978 43.2729 4.54243 43.6484 5.41053C44.1412 6.63055 44.1647 6.84171 44.1412 14.8657C44.1178 23.4294 43.9535 28.0514 42.9913 45.601C41.7006 68.8753 40.668 81.0521 38.7671 95.3404C36.8193 110.075 32.6656 130.745 29.1219 143.555C26.6344 152.447 19.9696 172.765 16.9422 180.601C14.1496 187.828 9.92543 196.72 8.35309 198.691L7.88374 199.277L8.02454 196.227C8.30615 190.197 8.23576 173.727 7.93068 173.187C7.60213 172.53 6.49915 171.944 5.65432 171.944C4.66868 171.944 3.54224 173.234 3.23716 174.759C3.09635 175.463 2.86167 179.264 2.74433 183.206C2.36885 195.101 1.89949 200.849 0.749579 207.723C-0.165658 213.19 -0.21259 214.316 0.444503 215.56C1.2424 217.085 1.99337 217.554 3.87078 217.648C5.11457 217.718 5.84206 217.624 7.27359 217.132C9.69075 216.311 15.5811 213.472 22.6683 209.694C32.3839 204.509 31.9381 204.791 31.3983 204.251C30.8116 203.665 19.2655 206.527 11.1692 209.272C8.89285 210.023 6.96851 210.656 6.87464 210.656C6.80423 210.656 6.73382 210.304 6.73382 209.882C6.73382 209.295 7.08585 208.709 8.28269 207.254C14.9475 199.136 19.5706 189.165 26.6344 167.721C33.4165 147.121 35.599 138.98 39.0018 121.266C44.1412 94.6131 46.136 73.0281 47.1451 33.0957C47.3563 24.4148 47.3563 20.3793 47.1216 15.0065C46.6757 4.16704 46.2768 1.11697 45.1738 0.319265C44.4698 -0.149975 44.3524 -0.126513 43.6953 0.553886Z'
         fill={fill}
       />
-    </svg>
+    </motion.svg>
   )
 }
 
@@ -106,7 +111,7 @@ export const StarDoodle = ( { stroke = NEONS.blue }: any ) => (
     viewBox='-20 -20 122 124'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
-    variants={animationConfig( { stroke } )}
+    variants={iconAnimationConfig( { stroke } )}
   >
     <motion.path
       d='M41.5816 1.21606C39.7862 5.82482 40.3852 10.0977 40.5593 14.9633C40.7854 21.2812 40.9774 27.5593 41.4363 33.8661'
@@ -273,7 +278,7 @@ export const Star = ( props: any ) => (
 export const ThinTwinklyStar = ( { className, ...rest }: IconProps ) => (
   <svg
     {...rest}
-    className={cn( 'w-10 h-10', className )}
+    className={cn( 'w-4 h-4', className )}
     viewBox='0 0 75 75'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'>
@@ -1122,7 +1127,7 @@ export const MyFavoriteStarIllustration = ( { stroke, ...rest }: any ) => (
     viewBox='0 0 84 87'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
-    variants={animationConfig( { stroke } )}
+    variants={iconAnimationConfig( { stroke } )}
   >
     <motion.path
       d='M42.007 0L42.4664 40.9945L60.6671 4.25904L43.2941 41.3931L75.6313 16.1926L43.8669 42.1114L83.9358 33.4371L44.0714 43.007L83.9358 52.577L43.8669 43.9027L75.6313 69.8215L43.2941 44.621L60.6671 81.7551L42.4664 45.0196L42.007 86.0141L41.5477 45.0196L23.347 81.7551L40.7199 44.621L8.38278 69.8215L40.1471 43.9027L0.0782776 52.577L39.9427 43.007L0.0782776 33.4371L40.1471 42.1114L8.38278 16.1926L40.7199 41.3931L23.347 4.25904L41.5477 40.9945L42.007 0Z'
@@ -1290,29 +1295,8 @@ export const SketchyGlobe = ( { fill = '#9D9D9D' }: any ) => (
   </svg>
 )
 
-export const HandrawnArrowRight = ( { stroke = 'currentColor', onClick, className }: any ) => (
-  <svg
-    className={cn( 'w-10 h-10', className )}
-    viewBox='0 0 110 33'
-    fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-    onClick={onClick}>
-    <motion.path
-      d='M0.734436 32.0433C28.1185 20.8631 58.321 14.4162 87.6991 11.2271C93.6909 10.5767 99.7856 10.1329 105.681 8.82643C106.565 8.6305 107.666 8.45126 108.257 7.71167'
-      stroke={stroke}
-      strokeWidth='1'
-      stroke-linecap='round'
-    />
-    <motion.path
-      d='M105.295 7.55369C103.251 6.41332 98.0697 4.73081 97.3989 2.01718C97.3762 1.92544 97.3095 1.31771 97.3374 1.37859C98.1737 3.20315 97.6004 7.32036 97.4208 9.32238C97.3735 9.84973 96.396 15.3811 96.8612 15.1485C101.235 12.9619 105.361 8.83254 109.442 6.05271'
-      stroke='currentColor'
-      strokeWidth='1'
-      stroke-linecap='round'
-    />
-  </svg>
-)
 
-export const HandrawnArrowLeft = ( { stroke = 'currentColor', onClick, className }: any ) => (
+export const HandDrawnArrowLeft = ( { stroke = 'currentColor', onClick, className }: any ) => (
   <svg
     className={cn( 'w-10 h-10', className )}
     viewBox='0 0 110 33'
@@ -1478,18 +1462,7 @@ export const TallyMark1 = ( { stroke, fill, className }: any ) => {
 
 // <AudioLines />
 export const WaypointsIcon = ( { stroke = 'currentColor', fill, className }: any ) => {
-  const draw = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { type: 'spring', duration: 1.5, bounce: 0 },
-        opacity: { duration: 0.01 },
-        staggerChildren: 0.02,
-      },
-    },
-  }
+  const config = iconAnimationConfig( { stroke } )
 
   return (
     <motion.svg
@@ -1502,7 +1475,7 @@ export const WaypointsIcon = ( { stroke = 'currentColor', fill, className }: any
       strokeWidth='1'
       stroke-linecap='round'
       stroke-linejoin='round'
-      variants={draw}
+      variants={config}
       initial='hidden'
       animate='visible'
       className={className}>
@@ -1530,18 +1503,7 @@ export const WaypointsIcon = ( { stroke = 'currentColor', fill, className }: any
 }
 
 export const ConnectionsIcon = ( { stroke = 'currentColor', className }: any ) => {
-  const draw = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { type: 'spring', duration: 1.5, bounce: 0 },
-        opacity: { duration: 0.01 },
-        staggerChildren: 0.02,
-      },
-    },
-  }
+  const config = iconAnimationConfig( { stroke } )
 
   return (
     <motion.svg
@@ -1554,32 +1516,21 @@ export const ConnectionsIcon = ( { stroke = 'currentColor', className }: any ) =
       strokeWidth='1'
       stroke-linecap='round'
       stroke-linejoin='round'
-      variants={draw}
+      variants={config}
       initial='hidden'
       animate='visible'
       className={className}>
-      <motion.circle cx='18' cy='5' r='3' variants={draw} />
-      <motion.circle cx='6' cy='12' r='3' variants={draw} />
-      <motion.circle cx='18' cy='19' r='3' variants={draw} />
-      <motion.line x1='8.59' x2='15.42' y1='13.51' y2='17.49' variants={draw} />
-      <motion.line x1='15.41' x2='8.59' y1='6.51' y2='10.49' variants={draw} />
+      <motion.circle cx='18' cy='5' r='3' variants={config} />
+      <motion.circle cx='6' cy='12' r='3' variants={config} />
+      <motion.circle cx='18' cy='19' r='3' variants={config} />
+      <motion.line x1='8.59' x2='15.42' y1='13.51' y2='17.49' variants={config} />
+      <motion.line x1='15.41' x2='8.59' y1='6.51' y2='10.49' variants={config} />
     </motion.svg>
   )
 }
 
 export const GroupIcon = ( { stroke = 'currentColor', className }: any ) => {
-  const draw = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { type: 'spring', duration: 1.5, bounce: 0 },
-        opacity: { duration: 0.01 },
-        staggerChildren: 0.02,
-      },
-    },
-  }
+  const config = iconAnimationConfig( { stroke } )
   return (
     <motion.svg
       xmlns='http://www.w3.org/2000/svg'
@@ -1592,43 +1543,35 @@ export const GroupIcon = ( { stroke = 'currentColor', className }: any ) => {
       stroke-linecap='round'
       stroke-linejoin='round'
       className={className}
-      variants={draw}
+      variants={config}
       animate='visible'
       initial='hidden'>
-      <motion.path d='M3 7V5c0-1.1.9-2 2-2h2' variants={draw} />
-      <motion.path d='M17 3h2c1.1 0 2 .9 2 2v2' variants={draw} />
-      <motion.path d='M21 17v2c0 1.1-.9 2-2 2h-2' variants={draw} />
-      <motion.path d='M7 21H5c-1.1 0-2-.9-2-2v-2' variants={draw} />
-      <motion.rect width='7' height='5' x='7' y='7' rx='1' variants={draw} />
-      <motion.rect width='7' height='5' x='10' y='12' rx='1' variants={draw} />
+      <motion.path d='M3 7V5c0-1.1.9-2 2-2h2' variants={config} />
+      <motion.path d='M17 3h2c1.1 0 2 .9 2 2v2' variants={config} />
+      <motion.path d='M21 17v2c0 1.1-.9 2-2 2h-2' variants={config} />
+      <motion.path d='M7 21H5c-1.1 0-2-.9-2-2v-2' variants={config} />
+      <motion.rect width='7' height='5' x='7' y='7' rx='1' variants={config} />
+      <motion.rect width='7' height='5' x='10' y='12' rx='1' variants={config} />
     </motion.svg>
   )
 }
 
-export const AiStarIcon = ( { stroke = 'currentColor', fill = 'currentColor', className = 'w-10 h-10' }: any ) => {
-  const draw = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        pathLength: { type: 'spring', duration: 1.5, bounce: 0 },
-        opacity: { duration: 0.01 },
-        staggerChildren: 0.02,
-      },
-    },
-  }
+export const AiStarIcon = ( { stroke, fill = 'currentColor', className = 'w-4 h-4', ...props }: any ) => {
+  const config = iconAnimationConfig( { stroke } )
   return (
 
-    <motion.svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <motion.path d="M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z" fill={fill} variants={draw} />
-      <motion.path d="M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z" fill={fill} fill-opacity="0.2" variants={draw} />
+    <motion.svg
+      className={className}
+      viewBox="0 0 64 64" variants={config}
+      fill="none" xmlns="http://www.w3.org/2000/svg" stroke={stroke} {...props}>
+      <motion.path d="M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z" />
+      <motion.path d="M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z" fill-opacity="0.2" />
     </motion.svg>
   )
 }
 
 export const StarIcon = ( { stroke = 'currentColor', fill = 'currentColor', className = 'w-10 h-10' }: any ) => {
-  const draw = {
+  const config = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: {
       pathLength: 1,
@@ -1636,7 +1579,7 @@ export const StarIcon = ( { stroke = 'currentColor', fill = 'currentColor', clas
     },
   }
   return (
-    <motion.svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" variants={draw} initial='hidden' animate='visible'>
+    <motion.svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" variants={config} initial='hidden' animate='visible'>
       <motion.path d="M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z" fill={fill} />
       <motion.path d="M1.91734 2.01577L25.1499 23.4512L50.0672 0.330973L26.947 25.2483L63.5456 63.644L25.1499 27.0455L0.232543 50.1656L23.3527 25.2483L1.91734 2.01577Z" fill={fill} fill-opacity="0.2" />
     </motion.svg>
@@ -2097,4 +2040,28 @@ export const AppPaletteTwo = () => {
       </linearGradient>
     </defs>
   </svg>
+}
+
+
+export function LayersIcon( { stroke = ICON_BLUE, ...props }: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) {
+  const config: any = iconAnimationConfig( { stroke } )
+  return (
+    // @ts-ignore
+    <motion.svg
+      {...props}
+      xmlns='http://www.w3.org/2000/svg'
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke={stroke}
+      strokeWidth='2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    >
+      <motion.path d='m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z' />
+      <motion.path d='m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65' />
+      <motion.path d='m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65' />
+    </motion.svg>
+  )
 }

@@ -1,10 +1,8 @@
-import { SlideFadeIn } from '@/components/animated/animated-wrappers'
-import { Button } from '@/components/ui/button/button'
 
 // import { AdminDashboardGlobe } from '@/components/ui/globe'
-import { Globeanime } from '@/components/ui/globe/globe-alt'
+
+import { AdminDashboardGlobe } from '@/components/globes/cobe-globes/admin-dashboard-globe'
 import { useMindMap } from '@/contexts'
-import { XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 // const ActiveNodeUI = (node) => {
@@ -52,7 +50,7 @@ export const LocationVisualization: React.FC<LocationVisualizationProps> = (
         >
           <XIcon className='w-5 h-5' />
         </Button> */}
-        <Globeanime markers={markers} />
+        <AdminDashboardGlobe markers={markers} />
 
         <div className='w-full flex-col align-middle justify-center items-center content-center'>
           {/* <AdminDashboardGlobe markers={markers} /> */}

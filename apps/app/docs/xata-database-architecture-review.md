@@ -1,7 +1,6 @@
-**3.5 Sonnet**
-Based on the provided schema.json, I'll analyze the structure and provide recommendations for optimization. Let me break this down into key components:
 
 1. **Core Entities**:
+
 ```mermaid
 erDiagram
     Topics ||--o{ TopicsTestimonies : contains
@@ -39,6 +38,7 @@ ALTER TABLE events ADD COLUMN deleted_at TIMESTAMP NULL;
 ```
 
 3. **Suggested Additional Constraints**:
+
 ```sql
 -- Add check constraints for ratings
 ALTER TABLE personnel ADD CONSTRAINT chk_credibility 
@@ -54,6 +54,7 @@ ALTER TABLE locations ADD CONSTRAINT chk_longitude
 ```
 
 4. **Security Enhancements**:
+
 ```sql
 -- Add role-based access control
 CREATE TABLE user_roles (
@@ -351,6 +352,7 @@ CREATE TABLE CaseFiles (
 ```
 
 ### Key Points
+
 - **File Handling**: Assumed file paths or URLs for file columns.
 - **Array Handling**: Used PostgreSQL's array type for fields like `photos` and `images`.
 - **JSON and Vector Types**: Used PostgreSQL's JSONB and VECTOR types for flexible data storage.
@@ -384,14 +386,14 @@ The provided schema defines a complex database structure with multiple tables an
 
 The schema defines various relationships between tables, including:
 
-* Many-to-many relationships between events and personnel (event-topic-subject-matter-experts)
-* Many-to-many relationships between topics and personnel (topic-subject-matter-experts)
-* Many-to-many relationships between events and topics (event-topic-subject-matter-experts)
-* Many-to-many relationships between users and various entities (user-saved-events, user-saved-topics, etc.)
-* One-to-many relationships between personnel and testimonies (testimonies)
-* One-to-many relationships between events and testimonies (testimonies)
-* One-to-many relationships between organizations and testimonies (testimonies)
-* One-to-many relationships between personnel and documents (documents)
+- Many-to-many relationships between events and personnel (event-topic-subject-matter-experts)
+- Many-to-many relationships between topics and personnel (topic-subject-matter-experts)
+- Many-to-many relationships between events and topics (event-topic-subject-matter-experts)
+- Many-to-many relationships between users and various entities (user-saved-events, user-saved-topics, etc.)
+- One-to-many relationships between personnel and testimonies (testimonies)
+- One-to-many relationships between events and testimonies (testimonies)
+- One-to-many relationships between organizations and testimonies (testimonies)
+- One-to-many relationships between personnel and documents (documents)
 
 **Suggestions:**
 
@@ -404,6 +406,7 @@ The schema defines various relationships between tables, including:
 7. **Junction tables:** Review the junction tables to ensure that they are properly defined and used to avoid data inconsistencies.
 
 Here is a revised version of the schema with some of these suggestions applied:
+
 ```json
 {
   "tables": [
@@ -432,4 +435,5 @@ Here is a revised version of the schema with some of these suggestions applied:
   ]
 }
 ```
+
 Note that this is just a revised version of the schema, and you should review and test it thoroughly before implementing it in your database.

@@ -1,9 +1,9 @@
 import { openai } from '@/lib/openai/client'
 import { DISCLOSURE_ASSISTANT_ID } from '@/services/ai/openai/config'
-import { assistantEventHandler } from '@/services/ai/openai/stream-handler'
 import { searchDatabase } from '@/services/ai/openai/tools/search-database'
 import { AssistantResponse } from 'ai'
 
+export const maxDuration = 30
 
 export const askDisclosureAgent = async ( input: { threadId: string | null; message: string } ) => {
   const threadId =
@@ -28,12 +28,16 @@ export const askDisclosureAgent = async ( input: { threadId: string | null; mess
   return AssistantResponse(
     { threadId, messageId: createdMessage.id },
     async ( { forwardStream, sendDataMessage }: any ) => {
+
+      // { type: 'function', function: { name: 'search_database' } }
+
       const runStream = openai.beta.threads.runs.stream(
         threadId,
         {
-          include: ['step_details.tool_calls[*].file_search.results[*].content'],
+          // include: ['step_details.tool_calls[*].file_search.results[*].content'],
           tool_choice: 'required',
-          tools: [{ type: 'file_search' }, { type: 'function', function: { name: 'search_database' } }],
+          tools: [{ type: 'file_search' }],
+
           // tool_choice: { "type": "file_search" },
           assistant_id:
             DISCLOSURE_ASSISTANT_ID ??
@@ -60,7 +64,7 @@ export const askDisclosureAgent = async ( input: { threadId: string | null; mess
         `,
         },
 
-        assistantEventHandler
+        // assistantEventHandler
       )
 
       let runResult = await forwardStream( runStream )
@@ -86,6 +90,12 @@ export const askDisclosureAgent = async ( input: { threadId: string | null; mess
             switch ( toolCall.function.name ) {
               case 'search_database':
                 const { table, search_terms: searchTerms, search_fields: searchFields } = parameters
+                sendDataMessage( {
+                  role: 'data',
+                  data: {
+                    parameters
+                  },
+                } )
 
                 const analogousRecords = await searchDatabase( { table, searchTerms, searchFields } )
 

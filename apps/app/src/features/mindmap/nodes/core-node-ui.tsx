@@ -115,7 +115,7 @@ export const CoreNodeAvatar: React.FC<CoreNodeAvatarProps & { label?: string }> 
   label,
 } ) => {
   return (
-    <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-400'>
+    <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 bg-neutral-800 text-neutral-400'>
       <div className='size-5'>
         <span
           className='relative flex shrink-0 overflow-hidden rounded-full absolute aspect-square h-full animate-overlayShow cursor-pointer border-1 shadow duration-200 pointer-events-none'
@@ -130,7 +130,7 @@ export const CoreNodeAvatar: React.FC<CoreNodeAvatarProps & { label?: string }> 
           />
         </span>
       </div>
-      <span className='text-neutral-600 dark:text-neutral-400'>{label}</span>
+      <span className='text-neutral-600 text-neutral-400'>{label}</span>
     </div>
   )
 }
@@ -157,7 +157,7 @@ export const CoreNodeContent: React.FC<CoreNodeContentProps> = ( { className = '
   return (
     <section
       className={cn(
-        'overflow-hidden relative rounded-2xl duration-200 border-1 bg-neutral-50 px-2 py-3 shadow-lg shadow-neutral-200/50 dark:bg-neutral-950 dark:shadow-neutral-800/50 border-neutral-200 dark:border-neutral-800 transition-all duration-300 will-change-transform',
+        'overflow-hidden relative rounded-2xl duration-200 border-1 bg-neutral-50 px-2 py-3 bg-neutral-950 shadow-neutral-800/50 border-neutral-200 border-neutral-800 transition-all duration-300 will-change-transform',
         className
       )}>
       {children}
@@ -168,14 +168,14 @@ export const CoreNodeContainer = ( { children, id, className, ref }: any ) => {
   return (
     <div
       ref={ref}
-      className={cn( 'overflow-hidden rounded-3xl bg-white dark:bg-black relative', className )}
+      className={cn( 'overflow-hidden rounded-3xl bg-black relative', className )}
       id={id}>
       <main
-        className={`border-1 p-1.5 rounded-3xl duration-200 border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 group hover:border-indigo-200 dark:hover:border-indigo-800 transition-all duration-300 will-change-transform`}>
+        className={`border-1 p-1.5 rounded-3xl duration-200 border-neutral-200 border-neutral-800 bg-neutral-100 bg-neutral-900 group hover:border-indigo-200 hover:border-indigo-800 transition-all duration-300 will-change-transform`}>
         {children}
       </main>
       <button
-        className='invisible ring-neutral-950/10 dark:ring-neutral-50/10 absolute -bottom-3 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full bg-neutral-200 p-1 outline-none ring-2 duration-200 md:hover:block md:peer-hover/wrap:block dark:bg-neutral-800'
+        className='invisible ring-neutral-950/10 ring-neutral-50/10 absolute -bottom-3 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full bg-neutral-200 p-1 outline-none ring-2 duration-200 md:hover:block md:peer-hover/wrap:block bg-neutral-800'
         data-state='closed'>
         <svg
           width='15'

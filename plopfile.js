@@ -31,6 +31,9 @@ module.exports = function (plop) {
 
   // Add workspace selection to each generator and pass destination directory
   const addWorkspacePrompt = (generator) => {
+
+    console.log("🚀 ~ file: plopfile.js:35 ~ addWorkspacePrompt ~ generator:", generator)
+
     if (generator.prompts) {
       generator.prompts.unshift({
         type: 'list',
@@ -40,17 +43,17 @@ module.exports = function (plop) {
       })
 
       // Add destination directory to generator data
-      const originalActions = generator.actions || []
+      // const originalActions = generator.actions || []
 
-      console.log(
-        '🚀 ~ file: plopfile.js:45 ~ addWorkspacePrompt ~ originalActions:',
-        originalActions
-      )
+      // console.log(
+      //   '🚀 ~ file: plopfile.js:45 ~ addWorkspacePrompt ~ originalActions:',
+      //   originalActions
+      // )
 
-      generator.actions = (data) => {
-        data.destinationPath = path.join(process.cwd(), data.workspace)
-        return originalActions
-      }
+      // generator.actions = (data) => {
+      //   data.destinationPath = path.join(process.cwd(), data.workspace)
+      //   return originalActions
+      // }
     }
     return generator
   }

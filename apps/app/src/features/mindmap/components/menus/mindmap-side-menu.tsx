@@ -19,7 +19,9 @@ import {
 import {
   ArtifactsIcon,
   EventsIcon,
+  HandDrawnArrowDown,
   KeyFiguresIcon,
+  LayersIcon,
   OrganizationsIcon,
   SketchyGlobe,
   TestimoniesIcon,
@@ -28,6 +30,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useMindMap } from '@/contexts/mindmap-context'
 import { saveEventForUser } from '@/features/user/api/save-event'
+import { ICON, ICON_GREEN, ICON_GREEN_GREEN } from '@/utils'
 import { useAuth } from '@clerk/nextjs'
 import {
   Tooltip,
@@ -36,7 +39,7 @@ import {
   TooltipTrigger,
 } from '@radix-ui/react-tooltip'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowDownToLine, FileSearch, Lightbulb, Plus } from 'lucide-react'
+import { ArrowDown, ArrowDownToLine, FileSearch, Lightbulb, Plus } from 'lucide-react'
 import {
   useCallback,
   useEffect,
@@ -46,19 +49,7 @@ import {
   type SVGProps,
 } from 'react'
 
-const ActionButton = ( { icon, label, action }: { icon: React.ReactNode, label: string, action: () => void } ) => {
 
-  const handleClick = () => {
-    action()
-    closeFloatingPanel()
-  }
-  return (
-    <FloatingPanelButton onClick={handleClick} className='w-full flex items-center space-x-1 space-y-2 px-2 py-1 bg-black text-white'>
-      {icon}
-      <span>{label}</span>
-    </FloatingPanelButton>
-  )
-}
 export const QuickActionsFloatingPanel = () => {
 
   const idCounter = useRef( 0 )
@@ -172,49 +163,49 @@ export const QuickActionsFloatingPanel = () => {
 
   const actions = [
     {
-      icon: <EventsIcon className='w-4 h-4' />,
+      icon: <EventsIcon className='w-4 h-4' stroke={ICON_GREEN} />,
       label: 'Events',
       action: async () => {
         await handleLoadingRecords( { data: { type: 'events' } } )
       },
     },
     {
-      icon: <TopicsIcon className='w-4 h-4' />,
+      icon: <TopicsIcon className='w-4 h-4' stroke={ICON_GREEN} />,
       label: 'Topics',
       action: async () => {
         await handleLoadingRecords( { data: { type: 'topics' } } )
       },
     },
     {
-      icon: <KeyFiguresIcon className='w-4 h-4' />,
+      icon: <KeyFiguresIcon className='w-4 h-4' stroke={ICON_GREEN} />,
       label: 'KeyFigures',
       action: async () => {
         await handleLoadingRecords( { data: { type: 'personnel' } } )
       },
     },
     {
-      icon: <TestimoniesIcon className='w-4 h-4' />,
+      icon: <TestimoniesIcon className='w-4 h-4' stroke={ICON_GREEN} />,
       label: 'Testimonies',
       action: async () => {
         await handleLoadingRecords( { data: { type: 'testimonies' } } )
       },
     },
     {
-      icon: <OrganizationsIcon className='w-4 h-4' />,
+      icon: <OrganizationsIcon className='w-4 h-4' stroke={ICON_GREEN} />,
       label: 'Organizations',
       action: async () => {
         await handleLoadingRecords( { data: { type: 'organizations' } } )
       },
     },
     {
-      icon: <FileSearch className='w-4 h-4' />,
+      icon: <FileSearch className='w-4 h-4' stroke={ICON_GREEN} />,
       label: 'Case Files',
       action: async () => {
         await handleLoadingRecords( { data: { type: 'documents' } } )
       },
     },
     {
-      icon: <ArtifactsIcon className='w-4 h-4' />,
+      icon: <ArtifactsIcon className='w-4 h-4' stroke={ICON_GREEN} />,
       label: 'Historical Artifacts',
       action: async () => {
         await handleLoadingRecords( { data: { type: 'artifacts' } } )
@@ -228,7 +219,7 @@ export const QuickActionsFloatingPanel = () => {
         title='Entity Menu'
         className='flex items-center space-x-4 px-4 py-2 dark:bg-black text-white rounded-md transition-colors text-center'
       >
-        <Plus className='w-5 h-5 stroke-1' />
+        <Plus className='w-5 h-5 stroke-1' stroke={ICON_GREEN} />
       </FloatingPanelTrigger>
       <FloatingPanelContent className='w-56 bg-black'>
         <FloatingPanelBody>
@@ -346,7 +337,7 @@ export function MindMapSideMenu() {
 
       <div className='flex flex-col items-center '>
         <QuickActionsFloatingPanel />
-        <Button
+        {/* <Button
           variant='ghost'
           size='icon'
           className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100 m-2'
@@ -354,7 +345,7 @@ export function MindMapSideMenu() {
         >
           <SketchyGlobe className='stroke-1 h-5 w-5 block' />
           <span className='sr-only'>Open menu</span>
-        </Button>
+        </Button> */}
 
         <Button
           variant='ghost'
@@ -362,19 +353,16 @@ export function MindMapSideMenu() {
           className='text-zinc-100 rounded-full hover:bg-gray-600 hover:text-zinc-100 m-2'
           onClick={saveMindMap}
         >
-          <ArrowDownToLine className='stroke-1 h-5 w-5 block' />
+          <ArrowDown className='stroke-1 h-5 w-5 block' stroke={ICON_GREEN} />
           <span className='sr-only'>Open menu</span>
         </Button>
-
-
-
 
       </div>
       <div className='flex flex-col items-center '>
         <FloatingPanelRoot>
 
 
-          <FloatingPanelTrigger className='bg-black'> <Lightbulb className='text-white stroke-1' size='16' /></FloatingPanelTrigger>
+          <FloatingPanelTrigger className='bg-black'> <Lightbulb stroke={ICON_GREEN} className='text-white stroke-1' size='18' /></FloatingPanelTrigger>
 
           <FloatingPanelContent className='bg-black text-white border border-indigo-500/20'>
             <FloatingPanelForm onSubmit={handleSubmit}>
@@ -399,24 +387,3 @@ export function MindMapSideMenu() {
 }
 
 
-
-function LayersIcon( props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement> ) {
-  return (
-    <svg
-      {...props}
-      xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth='2'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    >
-      <path d='m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z' />
-      <path d='m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65' />
-      <path d='m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65' />
-    </svg>
-  )
-}

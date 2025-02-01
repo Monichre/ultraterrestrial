@@ -1,6 +1,6 @@
 'use client'
+import { TransitionPanel } from '@/components/ui/toolbar/transition-panel'
 import React, { useEffect, useState } from 'react'
-import { TransitionPanel } from '@/components/animated/core/transition-panel'
 import useMeasure from 'react-use-measure'
 
 function Button( {

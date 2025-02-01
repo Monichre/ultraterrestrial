@@ -478,22 +478,21 @@
 // New
 'use client'
 
-import React, {
-  memo,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-  FC,
-} from 'react'
-import DeckGL, { GeoJsonLayer, ArcLayer } from 'deck.gl'
-import { Map, NavigationControl, Popup, useControl } from 'react-map-gl'
-import { scaleLog } from 'd3-scale'
-import { cellToLatLng } from 'h3-js'
-import { MapboxOverlay, MapboxOverlayProps } from '@deck.gl/mapbox'
-import 'mapbox-gl/dist/mapbox-gl.css'
 import { DataCard } from '@/components/ui/card/data-card/data-card'
+import { MapboxOverlay, MapboxOverlayProps } from '@deck.gl/mapbox'
+import { scaleLog } from 'd3-scale'
+import { GeoJsonLayer } from 'deck.gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import React, {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { Map, NavigationControl, Popup, useControl } from 'react-map-gl'
 
 // Constants
 const AIR_PORTS_URL =
@@ -501,9 +500,8 @@ const AIR_PORTS_URL =
 
 // Type Definitions
 interface SightingsGlobeProps {
-  sightings: GeoJSON.FeatureCollection
-  militaryBases: GeoJSON.FeatureCollection
-  ufoPosts: GeoJSON.FeatureCollection
+  geoJSONSightings: GeoJSON.FeatureCollection
+  realtimeSightings?: any
 }
 
 interface PopupInfo {
@@ -531,10 +529,14 @@ const DeckGLOverlay: FC<MapboxOverlayProps> = ( props ) => {
 
 // Main Component
 export const SightingsGlobe: FC<SightingsGlobeProps> = memo(
-  ( { sightings, militaryBases, ufoPosts } ) => {
+  ( { geoJSONSightings, realtimeSightings } ) => {
+    const { sightings, militaryBases, ufoPosts }: any = geoJSONSightings
     // References
+    console.log( "🚀 ~ file: sightings-globe.tsx:795 ~ sightings:", sightings )
+    console.log( "🚀 ~ file: sightings-globe.tsx:795 ~ militaryBases:", militaryBases )
+    console.log( "🚀 ~ file: sightings-globe.tsx:795 ~ ufoPosts:", ufoPosts )
     const mapRef = useRef<any>( null )
-
+    // MapboxGlobe
     // State
     const [viewState, setViewState] = useState( {
       longitude: -125.148032,
@@ -687,14 +689,14 @@ export const SightingsGlobe: FC<SightingsGlobeProps> = memo(
         // beforeId: firstLabelLayerId,
       } )
 
-      const airportsLayer = new GeoJsonLayer( {
-        id: 'airports',
-        data: AIR_PORTS_URL,
-        ...baseGeoJsonLayerProps,
-        getPointRadius: ( f: any ) => 11 - f.properties.scalerank,
-        getFillColor: [200, 0, 80, 180],
-        beforeId: firstLabelLayerId,
-      } )
+      // const airportsLayer = new GeoJsonLayer( {
+      //   id: 'airports',
+      //   data: AIR_PORTS_URL,
+      //   ...baseGeoJsonLayerProps,
+      //   getPointRadius: ( f: any ) => 11 - f.properties.scalerank,
+      //   getFillColor: [200, 0, 80, 180],
+      //   beforeId: firstLabelLayerId,
+      // } )
 
       // const arcsLayer = new ArcLayer({
       //   id: 'arcs',
@@ -714,7 +716,7 @@ export const SightingsGlobe: FC<SightingsGlobeProps> = memo(
         sightingsLayer,
         ufoPostsLayer,
         militaryLayer,
-        airportsLayer,
+        // airportsLayer,
         // arcsLayer,
       ]
     }, [sightings, militaryBases, ufoPosts, firstLabelLayerId] )
@@ -792,3 +794,4 @@ export const SightingsGlobe: FC<SightingsGlobeProps> = memo(
     )
   }
 )
+

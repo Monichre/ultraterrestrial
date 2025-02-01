@@ -2,6 +2,7 @@
 
 import { EventsIcon } from '@/components/icons'
 import type { GlobeLocation } from '@/components/ui/globe/display-locations-globe'
+import { PhotoCarousel } from '@/features/mindmap/components/cards/event/photo-carousel'
 import { STOCK_PHOTOS, wait } from '@/utils'
 import createGlobe from 'cobe'
 import { format } from 'date-fns'
@@ -145,7 +146,7 @@ export const EventGlobeCard = ( { card }: any ) => {
       </div>
 
       <div className="absolute top-0 left-0 w-full h-full z-0">
-        <Globe
+        {/* <Globe
           dark
           markers={markers}
           baseColor="#777A80"
@@ -153,7 +154,9 @@ export const EventGlobeCard = ( { card }: any ) => {
           markerColor="#22d3ee"
 
 
-        />
+        /> */}
+
+        {photos?.length && <PhotoCarousel images={photos} />}
       </div>
 
       <div className="pointer-events-none mt-auto px-6 pb-6 relative z-10">

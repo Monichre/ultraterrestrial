@@ -1,9 +1,16 @@
-import { EventChronologyTimeline } from '@/layouts/timeline/EventChronologyTimeline'
-import { getXataClient } from '@/db/xata'
+import { getXataClient, type EventsRecord } from '@/db/xata'
+import { HistoricalEventsTimeline } from '@/layouts/historical-events-timeline/historical-events-timeline'
+import { JSONData } from '@xata.io/client'
+
 const xata = getXataClient()
 export default async function Index() {
-  const events: any = await xata.db.events
+  const events: JSONData<EventsRecord>[] = await xata.db.events
 
+
+
+    .filter( {
+      category: { $includes: "historical" },
+    } )
     .sort( 'date', 'desc' )
     .select( [
       'name',
@@ -26,7 +33,7 @@ export default async function Index() {
 
   return (
     <div className='timeline-page'>
-      <EventChronologyTimeline events={events} />
+      <HistoricalEventsTimeline events={events} />
     </div>
   )
 }

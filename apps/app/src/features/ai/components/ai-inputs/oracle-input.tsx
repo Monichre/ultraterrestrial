@@ -66,7 +66,7 @@ export const OracleInput = ( {
   setInputValue,
   handleKeyDown,
   setIsOpen,
-
+  isOpen,
   loadModelData
 
 }: any ) => {
@@ -84,7 +84,7 @@ export const OracleInput = ( {
     loadModelData( activeModel )
   }, [activeModel, loadModelData] )
 
-  console.log( "🚀 ~ file: oracle-input.tsx:85 ~ handleLoadingModelData ~ activeModel:", activeModel )
+
 
   return (
     <>
@@ -118,7 +118,8 @@ export const OracleInput = ( {
 
 
 
-              <SlashIcon className="h-6 w-6" fill={ICON_GREEN} />
+              {isOpen && <SlashIcon className="h-6 w-6" fill={ICON_GREEN} />
+              }
 
 
 
@@ -133,7 +134,7 @@ export const OracleInput = ( {
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               // onFocus={() => setIsOpen( !!activeCommand )}
-              placeholder={activeCommand ? "Type your message..." : "Type / for commands..."}
+              placeholder={activeCommand ? "Type your message..." : isOpen ? "..." : "Type / for commands..."}
               className="bg-transparent text-zinc-200 text-sm focus:outline-none flex-1"
             />
 

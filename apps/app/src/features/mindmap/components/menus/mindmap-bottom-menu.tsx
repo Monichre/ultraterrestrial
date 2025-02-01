@@ -1,5 +1,6 @@
 'use client'
 import {
+  ArtifactsIcon,
   EventsIcon,
   KeyFiguresIcon,
   OrganizationsIcon,
@@ -8,18 +9,20 @@ import {
 } from '@/components/icons/entity-icons'
 import { useMindMap } from '@/contexts'
 import { initiateDatabaseTableQuery } from '@/features/mindmap/api/search'
-import { DOMAIN_MODEL_COLORS } from '@/utils/constants'
+import { DOMAIN_MODEL_COLORS, ENTITY_DATA_VIZ_COLOR_PALETTE, EVENTS_GREEN, ICON_BLUE, ICON_GREEN, ORGANIZATIONS_PURPLE, SME_BLUE, TESTIMONIES_RED, TOPICS_PINK } from '@/utils/constants'
 // import { x, y } from '@liveblocks/react/dist/suspense-fYGGJ3D9'
 import { useCallback, useRef } from 'react'
 // import { computed } from 'tldraw'
 import { v4 as uuidv4 } from 'uuid'
-
+import { Message, useAssistant } from 'ai/react'
 
 
 import { EnhanceAIInput } from '@/features/ai/components/ai-inputs/enhance-ai-input'
 
 
 export const MindMapBottomMenu = () => {
+  const { status, messages, input, submitMessage, handleInputChange } = useAssistant( { api: '/api/disclosure/chat' } )
+
 
   const {
     addNextEntitiesToMindMap,
@@ -58,12 +61,7 @@ export const MindMapBottomMenu = () => {
     ( { data: { type } }: any ) => {
       const amount = type === 'events' ? '4' : '3'
 
-
-
-
-
       const center = screenToFlowPosition( calculateCenterOfScreen() )
-
 
       // Function to get the next sequential ID
       const entities = retrieveEntitiesFromStore( type )
@@ -209,7 +207,7 @@ export const MindMapBottomMenu = () => {
 
   const modelActions = [
     {
-      icon: <EventsIcon className='w-4 h-4' />,
+      icon: <EventsIcon stroke={ICON_GREEN} />,
       label: 'Add Events',
       name: 'Events',
       searchAction: async ( searchTerm: string ) => {
@@ -220,7 +218,7 @@ export const MindMapBottomMenu = () => {
 
     },
     {
-      icon: <TopicsIcon className='w-4 h-4' />,
+      icon: <TopicsIcon stroke={ICON_GREEN} />,
       label: 'Add Topics',
       name: 'Topics',
       searchAction: async ( searchTerm: string ) => {
@@ -233,7 +231,7 @@ export const MindMapBottomMenu = () => {
 
     },
     {
-      icon: <KeyFiguresIcon className='w-4 h-4' />,
+      icon: <KeyFiguresIcon stroke={ICON_GREEN} />,
       label: 'Add KeyFigures',
       name: 'personnel',
       searchAction: async ( searchTerm: string ) => {
@@ -246,7 +244,7 @@ export const MindMapBottomMenu = () => {
 
     },
     {
-      icon: <TestimoniesIcon className='w-4 h-4' />,
+      icon: <TestimoniesIcon stroke={ICON_GREEN} />,
       label: 'Add Testimonies',
       name: 'Testimonies',
       searchAction: async ( searchTerm: string ) => {
@@ -259,7 +257,7 @@ export const MindMapBottomMenu = () => {
 
     },
     {
-      icon: <OrganizationsIcon className='w-4 h-4' />,
+      icon: <OrganizationsIcon stroke={ICON_GREEN} />,
       label: 'Add Organizations',
       name: 'Organizations',
       searchAction: async ( searchTerm: string ) => {
@@ -269,8 +267,16 @@ export const MindMapBottomMenu = () => {
 
 
 
-
     },
+    {
+      label: "Artifacts",
+      name: "artifacts",
+      icon: <ArtifactsIcon stroke={ICON_GREEN} />,
+      searchAction: async ( searchTerm: string ) => {
+        const res = await runSearch( { type: 'artifacts', searchTerm } )
+
+      },
+    }
   ]
 
 
@@ -282,6 +288,8 @@ export const MindMapBottomMenu = () => {
   return (
 
     <div className='flex justify-center w-full'>
+
+
 
       {/* <AiCommandInput /> */}
       <EnhanceAIInput addDataToMindMap={addDataToMindMap} modelActions={modelActions}

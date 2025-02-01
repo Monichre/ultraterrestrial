@@ -1,8 +1,8 @@
 'use client'
 
-import React, { memo, Suspense, useRef, useMemo } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { motion } from 'framer-motion-3d'
+import React, { memo, Suspense, useRef } from 'react'
 import * as THREE from 'three'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 
@@ -39,7 +39,7 @@ interface EarthProps {
 
 const Earth: React.FC<EarthProps> = memo( ( { activeLocation } ) => {
   return (
-    <div className='h-full w-full' id='earth-canvas'>
+    <div className='h-[80vh] w-[80vw] m-auto' id='earth-canvas'>
       <Suspense
         fallback={
           <img
@@ -84,6 +84,7 @@ export const EN: React.FC<{ ref?: React.Ref<THREE.Mesh> }> = memo( ( { ref } ) =
       <directionalLight intensity={1.5} position={[1, 0, -0.25]} />
       <motion.mesh scale={2.5} ref={ref}>
         <sphereGeometry args={[1, 32, 32]} />
+
         <meshStandardMaterial map={color} normalMap={normal} aoMap={aoMap} />
       </motion.mesh>
     </Canvas>

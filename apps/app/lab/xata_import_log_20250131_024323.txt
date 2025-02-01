@@ -1,0 +1,1281 @@
+[2025-01-31 02:43:23] Starting import from index 5
+[2025-01-31 02:43:23] Total records to process: 607
+[2025-01-31 02:43:23] 
+Processing batch 1 (50 records)
+[2025-01-31 02:43:23] Successfully inserted record: However, Claim Report
+[2025-01-31 02:43:23] Number of photos included: 0
+[2025-01-31 02:43:24] Successfully inserted record: Discusses Need Report
+[2025-01-31 02:43:24] Number of photos included: 0
+[2025-01-31 02:43:25] Successfully inserted record: Discs “Real Report
+[2025-01-31 02:43:25] Number of photos included: 0
+[2025-01-31 02:43:26] Successfully inserted record: Materiel Command Report
+[2025-01-31 02:43:26] Number of photos included: 0
+[2025-01-31 02:43:28] Successfully inserted record: Crashed Craft Report
+[2025-01-31 02:43:28] Number of photos included: 0
+[2025-01-31 02:43:29] Successfully inserted record: Near Guadeloupe Report
+[2025-01-31 02:43:29] Number of photos included: 0
+[2025-01-31 02:43:30] Successfully inserted record: Intelligence Deputy Report
+[2025-01-31 02:43:30] Number of photos included: 0
+[2025-01-31 02:43:31] Successfully inserted record: Laredo, Report
+[2025-01-31 02:43:31] Number of photos included: 0
+[2025-01-31 02:43:32] Successfully inserted record: Data Time Report
+[2025-01-31 02:43:32] Number of photos included: 0
+[2025-01-31 02:43:33] Successfully inserted record: Give Quarterly Report
+[2025-01-31 02:43:33] Number of photos included: 0
+[2025-01-31 02:43:34] Successfully inserted record: Year Where Report
+[2025-01-31 02:43:34] Number of photos included: 0
+[2025-01-31 02:43:35] Successfully inserted record: Propulsion Cal-Berkeley Report
+[2025-01-31 02:43:35] Number of photos included: 0
+[2025-01-31 02:43:37] Successfully inserted record: States Special Report
+[2025-01-31 02:43:37] Number of photos included: 0
+[2025-01-31 02:43:38] Successfully inserted record: Employee, Access Report
+[2025-01-31 02:43:38] Number of photos included: 0
+[2025-01-31 02:43:39] Successfully inserted record: Usaf/Navy Secret Report
+[2025-01-31 02:43:39] Number of photos included: 0
+[2025-01-31 02:43:40] Successfully inserted record: “Exploitation Superstitions Report
+[2025-01-31 02:43:40] Number of photos included: 0
+[2025-01-31 02:43:41] Successfully inserted record: Range Station Report
+[2025-01-31 02:43:41] Number of photos included: 0
+[2025-01-31 02:43:42] Successfully inserted record: Motion Pictures Report
+[2025-01-31 02:43:42] Number of photos included: 0
+[2025-01-31 02:43:43] Successfully inserted record: Conducted Foia-Exempt Report
+[2025-01-31 02:43:43] Number of photos included: 0
+[2025-01-31 02:43:44] Successfully inserted record: Public Magazine Report
+[2025-01-31 02:43:44] Number of photos included: 0
+[2025-01-31 02:43:45] Successfully inserted record: Associated Press Report
+[2025-01-31 02:43:45] Number of photos included: 0
+[2025-01-31 02:43:47] Successfully inserted record: Martin Report
+[2025-01-31 02:43:47] Number of photos included: 0
+[2025-01-31 02:43:48] Successfully inserted record: Frequencies Purpose Report
+[2025-01-31 02:43:48] Number of photos included: 0
+[2025-01-31 02:43:49] Successfully inserted record: Annual Report Report
+[2025-01-31 02:43:49] Number of photos included: 0
+[2025-01-31 02:43:50] Successfully inserted record: Guard Wright Report
+[2025-01-31 02:43:50] Number of photos included: 0
+[2025-01-31 02:43:51] Successfully inserted record: Attended Meeting Report
+[2025-01-31 02:43:51] Number of photos included: 0
+[2025-01-31 02:43:52] Successfully inserted record: Project Twinkle, Report
+[2025-01-31 02:43:52] Number of photos included: 0
+[2025-01-31 02:43:53] Successfully inserted record: Nine Undersea Report
+[2025-01-31 02:43:53] Number of photos included: 0
+[2025-01-31 02:43:54] Successfully inserted record: Near Garrison, Report
+[2025-01-31 02:43:54] Number of photos included: 0
+[2025-01-31 02:43:55] Successfully inserted record: Time Remembers Report
+[2025-01-31 02:43:55] Number of photos included: 0
+[2025-01-31 02:43:56] Successfully inserted record: Provost Julius Report
+[2025-01-31 02:43:56] Number of photos included: 0
+[2025-01-31 02:43:58] Successfully inserted record: Ruppelt Visiting Report
+[2025-01-31 02:43:58] Number of photos included: 0
+[2025-01-31 02:43:59] Successfully inserted record: “Dematerialization” Experiment Report
+[2025-01-31 02:43:59] Number of photos included: 0
+[2025-01-31 02:44:00] Successfully inserted record: Crates Wright Report
+[2025-01-31 02:44:00] Number of photos included: 0
+[2025-01-31 02:44:01] Successfully inserted record: States Summoned Report
+[2025-01-31 02:44:01] Number of photos included: 0
+[2025-01-31 02:44:02] Successfully inserted record: Shaped Crash Report
+[2025-01-31 02:44:02] Number of photos included: 0
+[2025-01-31 02:44:03] Successfully inserted record: Battelle Memorial Report
+[2025-01-31 02:44:03] Number of photos included: 0
+[2025-01-31 02:44:04] Successfully inserted record: Meetings Uap, Report
+[2025-01-31 02:44:04] Number of photos included: 0
+[2025-01-31 02:44:05] Successfully inserted record: “Killed” Press Report
+[2025-01-31 02:44:05] Number of photos included: 0
+[2025-01-31 02:44:07] Successfully inserted record: Meeting Report
+[2025-01-31 02:44:07] Number of photos included: 0
+[2025-01-31 02:44:08] Successfully inserted record: Panther Naval Report
+[2025-01-31 02:44:08] Number of photos included: 0
+[2025-01-31 02:44:09] Successfully inserted record: signed Affidavit
+[2025-01-31 02:44:09] Number of photos included: 0
+[2025-01-31 02:44:10] Successfully inserted record: Reporting Procedures Report
+[2025-01-31 02:44:10] Number of photos included: 0
+[2025-01-31 02:44:11] Successfully inserted record: Grugan Flight Report
+[2025-01-31 02:44:11] Number of photos included: 0
+[2025-01-31 02:44:12] Successfully inserted record: Tells Believed Report
+[2025-01-31 02:44:12] Number of photos included: 0
+[2025-01-31 02:44:13] Successfully inserted record: Waterborne Cirvis Report
+[2025-01-31 02:44:13] Number of photos included: 0
+[2025-01-31 02:44:14] Successfully inserted record: Force Base Report
+[2025-01-31 02:44:14] Number of photos included: 0
+[2025-01-31 02:44:15] Successfully inserted record: Sightings (Flyobrpts) Report
+[2025-01-31 02:44:15] Number of photos included: 0
+[2025-01-31 02:44:17] Successfully inserted record: 4602Nd Aiss Report
+[2025-01-31 02:44:17] Number of photos included: 0
+[2025-01-31 02:44:18] Successfully inserted record: National Security Report
+[2025-01-31 02:44:18] Number of photos included: 0
+[2025-01-31 02:44:19] 
+Batch 1 complete!
+[2025-01-31 02:44:19] Running totals - Successful: 50, Failed: 0
+[2025-01-31 02:44:19] 
+Processing batch 2 (50 records)
+[2025-01-31 02:44:19] Successfully inserted record: Development Contract” Report
+[2025-01-31 02:44:19] Number of photos included: 0
+[2025-01-31 02:44:20] Successfully inserted record: Aviation Advanced Report
+[2025-01-31 02:44:20] Number of photos included: 0
+[2025-01-31 02:44:21] Successfully inserted record: Worked Group Report
+[2025-01-31 02:44:21] Number of photos included: 0
+[2025-01-31 02:44:22] Successfully inserted record: 1940S 1950S Report
+[2025-01-31 02:44:22] Number of photos included: 0
+[2025-01-31 02:44:23] Successfully inserted record: William Tompkins Report
+[2025-01-31 02:44:23] Number of photos included: 0
+[2025-01-31 02:44:24] Successfully inserted record: Around Time Report
+[2025-01-31 02:44:24] Number of photos included: 0
+[2025-01-31 02:44:26] Successfully inserted record: “Special Report Report
+[2025-01-31 02:44:26] Number of photos included: 2
+[2025-01-31 02:44:27] Successfully inserted record: Traveling Train Report
+[2025-01-31 02:44:27] Number of photos included: 0
+[2025-01-31 02:44:28] Successfully inserted record: Writes About Report
+[2025-01-31 02:44:28] Number of photos included: 0
+[2025-01-31 02:44:29] Successfully inserted record: Development Planning Report
+[2025-01-31 02:44:29] Number of photos included: 0
+[2025-01-31 02:44:30] Successfully inserted record: Flying Saucer Report
+[2025-01-31 02:44:30] Number of photos included: 0
+[2025-01-31 02:44:31] Successfully inserted record: Assigned Technical Report
+[2025-01-31 02:44:31] Number of photos included: 0
+[2025-01-31 02:44:32] Successfully inserted record: International, Report
+[2025-01-31 02:44:32] Number of photos included: 0
+[2025-01-31 02:44:34] Successfully inserted record: Projects Officer Report
+[2025-01-31 02:44:34] Number of photos included: 0
+[2025-01-31 02:44:35] Successfully inserted record: Alleged Carlos Report
+[2025-01-31 02:44:35] Number of photos included: 0
+[2025-01-31 02:44:36] Successfully inserted record: Force Manual Report
+[2025-01-31 02:44:36] Number of photos included: 0
+[2025-01-31 02:44:37] Successfully inserted record: Government Information, Report
+[2025-01-31 02:44:37] Number of photos included: 0
+[2025-01-31 02:44:38] Successfully inserted record: Alamitos Tell Report
+[2025-01-31 02:44:38] Number of photos included: 0
+[2025-01-31 02:44:39] Successfully inserted record: Landing White Report
+[2025-01-31 02:44:39] Number of photos included: 0
+[2025-01-31 02:44:40] Successfully inserted record: Laboratories/Aerospace Research Report
+[2025-01-31 02:44:40] Number of photos included: 0
+[2025-01-31 02:44:41] Successfully inserted record: Everglades, Report
+[2025-01-31 02:44:41] Number of photos included: 0
+[2025-01-31 02:44:42] Successfully inserted record: Advised Multi-Agency Report
+[2025-01-31 02:44:42] Number of photos included: 0
+[2025-01-31 02:44:44] Successfully inserted record: Amarillo, Report Report
+[2025-01-31 02:44:44] Number of photos included: 0
+[2025-01-31 02:44:45] Successfully inserted record: Purposefully Landed Report
+[2025-01-31 02:44:45] Number of photos included: 0
+[2025-01-31 02:44:46] Successfully inserted record: Force Sponsors Report
+[2025-01-31 02:44:46] Number of photos included: 0
+[2025-01-31 02:44:47] Successfully inserted record: Anti-Gravity Research Report
+[2025-01-31 02:44:47] Number of photos included: 0
+[2025-01-31 02:44:48] Successfully inserted record: Intelligence Headed Report
+[2025-01-31 02:44:48] Number of photos included: 0
+[2025-01-31 02:44:49] Successfully inserted record: Which, John Report
+[2025-01-31 02:44:49] Number of photos included: 0
+[2025-01-31 02:44:50] Successfully inserted record: Luehman Writes Report
+[2025-01-31 02:44:50] Number of photos included: 0
+[2025-01-31 02:44:51] Successfully inserted record: Walker Their Report
+[2025-01-31 02:44:51] Number of photos included: 0
+[2025-01-31 02:44:53] Successfully inserted record: Phenomena House Report
+[2025-01-31 02:44:53] Number of photos included: 0
+[2025-01-31 02:44:54] Successfully inserted record: Crash Near Report
+[2025-01-31 02:44:54] Number of photos included: 0
+[2025-01-31 02:44:55] Successfully inserted record: Franklin Roosevelt, Report
+[2025-01-31 02:44:55] Number of photos included: 0
+[2025-01-31 02:44:56] Successfully inserted record: Tell Reporter Report
+[2025-01-31 02:44:56] Number of photos included: 0
+[2025-01-31 02:44:57] Successfully inserted record: Government Work Report
+[2025-01-31 02:44:57] Number of photos included: 0
+[2025-01-31 02:44:58] Successfully inserted record: Near Electrical Report
+[2025-01-31 02:44:58] Number of photos included: 0
+[2025-01-31 02:44:59] Successfully inserted record: Newspaper Flying Report
+[2025-01-31 02:44:59] Number of photos included: 0
+[2025-01-31 02:45:00] Successfully inserted record: K-9, States Report
+[2025-01-31 02:45:00] Number of photos included: 0
+[2025-01-31 02:45:01] Successfully inserted record: Studies Later Report
+[2025-01-31 02:45:01] Number of photos included: 0
+[2025-01-31 02:45:03] Successfully inserted record: Technology Division Report
+[2025-01-31 02:45:03] Number of photos included: 0
+[2025-01-31 02:45:04] Successfully inserted record: Giving Information Report
+[2025-01-31 02:45:04] Number of photos included: 0
+[2025-01-31 02:45:05] Successfully inserted record: Subcommittee Usaf Report
+[2025-01-31 02:45:05] Number of photos included: 0
+[2025-01-31 02:45:06] Successfully inserted record: Auto Signature) Report
+[2025-01-31 02:45:06] Number of photos included: 0
+[2025-01-31 02:45:07] Successfully inserted record: Historical Record
+[2025-01-31 02:45:07] Number of photos included: 0
+[2025-01-31 02:45:08] Successfully inserted record: Possibly Report
+[2025-01-31 02:45:08] Number of photos included: 0
+[2025-01-31 02:45:09] Successfully inserted record: Attached 354Th Report
+[2025-01-31 02:45:09] Number of photos included: 0
+[2025-01-31 02:45:10] Successfully inserted record: Withholding Evidence Report
+[2025-01-31 02:45:10] Number of photos included: 0
+[2025-01-31 02:45:11] Successfully inserted record: “Embryo” Produced Report
+[2025-01-31 02:45:11] Number of photos included: 0
+[2025-01-31 02:45:13] Successfully inserted record: Duty Atlas Report
+[2025-01-31 02:45:13] Number of photos included: 2
+[2025-01-31 02:45:14] Successfully inserted record: Alamogordo, States Report
+[2025-01-31 02:45:14] Number of photos included: 0
+[2025-01-31 02:45:15] 
+Batch 2 complete!
+[2025-01-31 02:45:15] Running totals - Successful: 100, Failed: 0
+[2025-01-31 02:45:15] 
+Processing batch 3 (50 records)
+[2025-01-31 02:45:15] Successfully inserted record: Film Vandenberg Report
+[2025-01-31 02:45:15] Number of photos included: 0
+[2025-01-31 02:45:17] Successfully inserted record: Riley, Claims Report
+[2025-01-31 02:45:17] Number of photos included: 0
+[2025-01-31 02:45:18] Successfully inserted record: Duty 579Th Report
+[2025-01-31 02:45:18] Number of photos included: 0
+[2025-01-31 02:45:19] Successfully inserted record: Became Upset Report
+[2025-01-31 02:45:19] Number of photos included: 0
+[2025-01-31 02:45:20] Successfully inserted record: 2 August 1965 - Activity Report
+[2025-01-31 02:45:20] Number of photos included: 0
+[2025-01-31 02:45:21] Successfully inserted record: Lockbourne Near Report
+[2025-01-31 02:45:21] Number of photos included: 0
+[2025-01-31 02:45:22] Successfully inserted record: Ordnance Test Report
+[2025-01-31 02:45:22] Number of photos included: 0
+[2025-01-31 02:45:23] Successfully inserted record: Upcoming Scientific Report
+[2025-01-31 02:45:23] Number of photos included: 0
+[2025-01-31 02:45:24] Successfully inserted record: Committee Project Report
+[2025-01-31 02:45:24] Number of photos included: 0
+[2025-01-31 02:45:25] Successfully inserted record: Matter Within Report
+[2025-01-31 02:45:25] Number of photos included: 0
+[2025-01-31 02:45:27] Successfully inserted record: Aerospace Engineer Report
+[2025-01-31 02:45:27] Number of photos included: 0
+[2025-01-31 02:45:28] Successfully inserted record: Witnessed Disc Report
+[2025-01-31 02:45:28] Number of photos included: 0
+[2025-01-31 02:45:29] Successfully inserted record: 1967 - Pickett 1967 Report
+[2025-01-31 02:45:29] Number of photos included: 0
+[2025-01-31 02:45:30] Successfully inserted record: Base Yuma, Report
+[2025-01-31 02:45:30] Number of photos included: 0
+[2025-01-31 02:45:31] Successfully inserted record: Assigned Task Report
+[2025-01-31 02:45:31] Number of photos included: 0
+[2025-01-31 02:45:32] Successfully inserted record: “Impersonations Force Report
+[2025-01-31 02:45:32] Number of photos included: 0
+[2025-01-31 02:45:33] Successfully inserted record: Site 1967 Report
+[2025-01-31 02:45:33] Number of photos included: 0
+[2025-01-31 02:45:34] Successfully inserted record: Electroaerodynamics Supersonic Report
+[2025-01-31 02:45:34] Number of photos included: 0
+[2025-01-31 02:45:35] Successfully inserted record: Brockway Mcmillan Report
+[2025-01-31 02:45:35] Number of photos included: 0
+[2025-01-31 02:45:37] Successfully inserted record: Corporation, Report
+[2025-01-31 02:45:37] Number of photos included: 0
+[2025-01-31 02:45:38] Successfully inserted record: Metal Disc” Report
+[2025-01-31 02:45:38] Number of photos included: 0
+[2025-01-31 02:45:39] Successfully inserted record: Extensive Report Report
+[2025-01-31 02:45:39] Number of photos included: 0
+[2025-01-31 02:45:40] Successfully inserted record: Standards (Now Report
+[2025-01-31 02:45:40] Number of photos included: 0
+[2025-01-31 02:45:41] Successfully inserted record: Witnessed Objects Report
+[2025-01-31 02:45:41] Number of photos included: 0
+[2025-01-31 02:45:42] Successfully inserted record: Waco, Claims Report
+[2025-01-31 02:45:42] Number of photos included: 0
+[2025-01-31 02:45:43] Successfully inserted record: Pitched Effort Report
+[2025-01-31 02:45:43] Number of photos included: 0
+[2025-01-31 02:45:44] Successfully inserted record: Ail-Eaton, Defense Report
+[2025-01-31 02:45:44] Number of photos included: 0
+[2025-01-31 02:45:45] Successfully inserted record: Experiments Consciousness Report
+[2025-01-31 02:45:45] Number of photos included: 0
+[2025-01-31 02:45:47] Successfully inserted record: John Report
+[2025-01-31 02:45:47] Number of photos included: 0
+[2025-01-31 02:45:48] Successfully inserted record: Blue Book Report
+[2025-01-31 02:45:48] Number of photos included: 0
+[2025-01-31 02:45:49] Successfully inserted record: Force Aerospace Report
+[2025-01-31 02:45:49] Number of photos included: 0
+[2025-01-31 02:45:50] Successfully inserted record: Viewing Magnetometer Report
+[2025-01-31 02:45:50] Number of photos included: 0
+[2025-01-31 02:45:51] Successfully inserted record: Colleague Puthoff’S Report
+[2025-01-31 02:45:51] Number of photos included: 0
+[2025-01-31 02:45:52] Successfully inserted record: Mcconnell Told Report
+[2025-01-31 02:45:52] Number of photos included: 0
+[2025-01-31 02:45:53] Successfully inserted record: Allegedly Meet Report
+[2025-01-31 02:45:53] Number of photos included: 0
+[2025-01-31 02:45:54] Successfully inserted record: Down Navy Report
+[2025-01-31 02:45:54] Number of photos included: 0
+[2025-01-31 02:45:55] Successfully inserted record: Dyess Afb, Report
+[2025-01-31 02:45:55] Number of photos included: 0
+[2025-01-31 02:45:57] Successfully inserted record: Oval Taken Report
+[2025-01-31 02:45:57] Number of photos included: 0
+[2025-01-31 02:45:58] Successfully inserted record: Project Called Report
+[2025-01-31 02:45:58] Number of photos included: 0
+[2025-01-31 02:45:59] Successfully inserted record: Information Wright-Patterson Report
+[2025-01-31 02:45:59] Number of photos included: 0
+[2025-01-31 02:46:00] Successfully inserted record: Luis Obispo Report
+[2025-01-31 02:46:00] Number of photos included: 0
+[2025-01-31 02:46:01] Successfully inserted record: Geller Nuclear Report
+[2025-01-31 02:46:01] Number of photos included: 0
+[2025-01-31 02:46:02] Successfully inserted record: Green’S Connections Report
+[2025-01-31 02:46:02] Number of photos included: 0
+[2025-01-31 02:46:03] Successfully inserted record: Launch Facility Report
+[2025-01-31 02:46:03] Number of photos included: 0
+[2025-01-31 02:46:04] Successfully inserted record: Break-In Occurred Report
+[2025-01-31 02:46:04] Number of photos included: 0
+[2025-01-31 02:46:05] Successfully inserted record: There Group Report
+[2025-01-31 02:46:05] Number of photos included: 0
+[2025-01-31 02:46:07] Successfully inserted record: Wondered Their Report
+[2025-01-31 02:46:07] Number of photos included: 0
+[2025-01-31 02:46:08] Successfully inserted record: States “Unexplained Report
+[2025-01-31 02:46:08] Number of photos included: 0
+[2025-01-31 02:46:09] Successfully inserted record: There Group Report
+[2025-01-31 02:46:09] Number of photos included: 0
+[2025-01-31 02:46:10] Successfully inserted record: Isolated Areas Report
+[2025-01-31 02:46:10] Number of photos included: 0
+[2025-01-31 02:46:11] 
+Batch 3 complete!
+[2025-01-31 02:46:11] Running totals - Successful: 150, Failed: 0
+[2025-01-31 02:46:11] 
+Processing batch 4 (50 records)
+[2025-01-31 02:46:11] Successfully inserted record: Information “Still Report
+[2025-01-31 02:46:11] Number of photos included: 0
+[2025-01-31 02:46:12] Successfully inserted record: Book Files Report
+[2025-01-31 02:46:12] Number of photos included: 0
+[2025-01-31 02:46:13] Successfully inserted record: House “Not” Report
+[2025-01-31 02:46:13] Number of photos included: 0
+[2025-01-31 02:46:14] Successfully inserted record: Agency” Monitor Report
+[2025-01-31 02:46:14] Number of photos included: 0
+[2025-01-31 02:46:15] Successfully inserted record: Wpaeb 1977, Report
+[2025-01-31 02:46:15] Number of photos included: 0
+[2025-01-31 02:46:17] Successfully inserted record: Service Researcher Report
+[2025-01-31 02:46:17] Number of photos included: 0
+[2025-01-31 02:46:18] Successfully inserted record: Stationed Ellsworth Report
+[2025-01-31 02:46:18] Number of photos included: 0
+[2025-01-31 02:46:19] Successfully inserted record: Nasa Administrator Report
+[2025-01-31 02:46:19] Number of photos included: 0
+[2025-01-31 02:46:20] Successfully inserted record: Contactees 1960S Report
+[2025-01-31 02:46:20] Number of photos included: 0
+[2025-01-31 02:46:21] Successfully inserted record: Underground Facility Report
+[2025-01-31 02:46:21] Number of photos included: 0
+[2025-01-31 02:46:22] Successfully inserted record: Coded Message Report
+[2025-01-31 02:46:22] Number of photos included: 0
+[2025-01-31 02:46:24] Successfully inserted record: Private Compiling Report
+[2025-01-31 02:46:24] Number of photos included: 0
+[2025-01-31 02:46:25] Successfully inserted record: Hard Evidence Report
+[2025-01-31 02:46:25] Number of photos included: 0
+[2025-01-31 02:46:26] Successfully inserted record: Sighting Incident Report
+[2025-01-31 02:46:26] Number of photos included: 0
+[2025-01-31 02:46:27] Successfully inserted record: Documents Cannot Report
+[2025-01-31 02:46:27] Number of photos included: 0
+[2025-01-31 02:46:28] Successfully inserted record: Mcdonnell-Douglas Told Report
+[2025-01-31 02:46:28] Number of photos included: 0
+[2025-01-31 02:46:29] Successfully inserted record: Historical Record
+[2025-01-31 02:46:29] Number of photos included: 0
+[2025-01-31 02:46:30] Successfully inserted record: Hinners Testifies Report
+[2025-01-31 02:46:30] Number of photos included: 0
+[2025-01-31 02:46:31] Successfully inserted record: Department Study Report
+[2025-01-31 02:46:31] Number of photos included: 0
+[2025-01-31 02:46:32] Successfully inserted record: “Emergency” Studies Report
+[2025-01-31 02:46:32] Number of photos included: 0
+[2025-01-31 02:46:34] Successfully inserted record: Officials Charge Report
+[2025-01-31 02:46:34] Number of photos included: 0
+[2025-01-31 02:46:36] Successfully inserted record: Investigations Subcommittee Report
+[2025-01-31 02:46:36] Number of photos included: 1
+[2025-01-31 02:46:37] Successfully inserted record: Robertson Panel Report
+[2025-01-31 02:46:37] Number of photos included: 0
+[2025-01-31 02:46:38] Successfully inserted record: Involved Uap, Report
+[2025-01-31 02:46:38] Number of photos included: 0
+[2025-01-31 02:46:39] Successfully inserted record: Remote Viewer Report
+[2025-01-31 02:46:39] Number of photos included: 0
+[2025-01-31 02:46:40] Successfully inserted record: Accidentally Entered Report
+[2025-01-31 02:46:40] Number of photos included: 0
+[2025-01-31 02:46:41] Successfully inserted record: Calls Complete Report
+[2025-01-31 02:46:41] Number of photos included: 0
+[2025-01-31 02:46:42] Successfully inserted record: Mexico State Report
+[2025-01-31 02:46:42] Number of photos included: 0
+[2025-01-31 02:46:43] Successfully inserted record: Weaver, States Report
+[2025-01-31 02:46:43] Number of photos included: 0
+[2025-01-31 02:46:44] Successfully inserted record: Marchetti, Writes Report
+[2025-01-31 02:46:44] Number of photos included: 0
+[2025-01-31 02:46:46] Successfully inserted record: Oregon Near Report
+[2025-01-31 02:46:46] Number of photos included: 0
+[2025-01-31 02:46:47] Successfully inserted record: Leonard Stringfield Report
+[2025-01-31 02:46:47] Number of photos included: 0
+[2025-01-31 02:46:48] Successfully inserted record: Search Will Report
+[2025-01-31 02:46:48] Number of photos included: 0
+[2025-01-31 02:46:49] Successfully inserted record: Forged Anonymous Report
+[2025-01-31 02:46:49] Number of photos included: 0
+[2025-01-31 02:46:50] Successfully inserted record: Delivers Forged Report
+[2025-01-31 02:46:50] Number of photos included: 0
+[2025-01-31 02:46:51] Successfully inserted record: Documents Report
+[2025-01-31 02:46:51] Number of photos included: 0
+[2025-01-31 02:46:52] Successfully inserted record: While Arizona Report
+[2025-01-31 02:46:52] Number of photos included: 0
+[2025-01-31 02:46:53] Successfully inserted record: Officer Richard Report
+[2025-01-31 02:46:53] Number of photos included: 0
+[2025-01-31 02:46:54] Successfully inserted record: Intelligence Group Report
+[2025-01-31 02:46:54] Number of photos included: 0
+[2025-01-31 02:46:56] Successfully inserted record: Following Crashed Report
+[2025-01-31 02:46:56] Number of photos included: 0
+[2025-01-31 02:46:57] Successfully inserted record: Pegasus 1970S Report
+[2025-01-31 02:46:57] Number of photos included: 0
+[2025-01-31 02:46:58] Successfully inserted record: Accepted Contract Report
+[2025-01-31 02:46:58] Number of photos included: 0
+[2025-01-31 02:46:59] Successfully inserted record: Fiancé’S Forced Report
+[2025-01-31 02:46:59] Number of photos included: 0
+[2025-01-31 02:47:00] Successfully inserted record: Pilot Make Report
+[2025-01-31 02:47:00] Number of photos included: 0
+[2025-01-31 02:47:01] Successfully inserted record: Physician Work Report
+[2025-01-31 02:47:01] Number of photos included: 0
+[2025-01-31 02:47:02] Successfully inserted record: Receives Response Report
+[2025-01-31 02:47:02] Number of photos included: 0
+[2025-01-31 02:47:03] Successfully inserted record: Visited Vandenberg Report
+[2025-01-31 02:47:03] Number of photos included: 0
+[2025-01-31 02:47:05] Successfully inserted record: Discovers Intelligence Report
+[2025-01-31 02:47:05] Number of photos included: 0
+[2025-01-31 02:47:06] Successfully inserted record: Sandia Whose Report
+[2025-01-31 02:47:06] Number of photos included: 0
+[2025-01-31 02:47:07] Successfully inserted record: Command (Inscom) Report
+[2025-01-31 02:47:07] Number of photos included: 0
+[2025-01-31 02:47:08] 
+Batch 4 complete!
+[2025-01-31 02:47:08] Running totals - Successful: 200, Failed: 0
+[2025-01-31 02:47:08] 
+Processing batch 5 (50 records)
+[2025-01-31 02:47:08] Successfully inserted record: Hero Montauk, Report
+[2025-01-31 02:47:08] Number of photos included: 0
+[2025-01-31 02:47:09] Successfully inserted record: Consulted Research Report
+[2025-01-31 02:47:09] Number of photos included: 0
+[2025-01-31 02:47:10] Successfully inserted record: Specialized Nuclear Report
+[2025-01-31 02:47:10] Number of photos included: 0
+[2025-01-31 02:47:11] Successfully inserted record: Program Time Report
+[2025-01-31 02:47:11] Number of photos included: 0
+[2025-01-31 02:47:12] Successfully inserted record: Classified Report
+[2025-01-31 02:47:12] Number of photos included: 0
+[2025-01-31 02:47:13] Successfully inserted record: Foia Response Report
+[2025-01-31 02:47:13] Number of photos included: 0
+[2025-01-31 02:47:15] Successfully inserted record: Boomerang Shaped Report
+[2025-01-31 02:47:15] Number of photos included: 0
+[2025-01-31 02:47:16] Successfully inserted record: Allegedly Lights Report
+[2025-01-31 02:47:16] Number of photos included: 0
+[2025-01-31 02:47:17] Successfully inserted record: Seiberling House Report
+[2025-01-31 02:47:17] Number of photos included: 0
+[2025-01-31 02:47:18] Successfully inserted record: Ballistic Missile Report
+[2025-01-31 02:47:18] Number of photos included: 0
+[2025-01-31 02:47:19] Successfully inserted record: Theoretical Physics Report
+[2025-01-31 02:47:19] Number of photos included: 0
+[2025-01-31 02:47:20] Successfully inserted record: Viewing Programs, Report
+[2025-01-31 02:47:20] Number of photos included: 0
+[2025-01-31 02:47:21] Successfully inserted record: Entry Diary Report
+[2025-01-31 02:47:21] Number of photos included: 0
+[2025-01-31 02:47:22] Successfully inserted record: Secret Project Report
+[2025-01-31 02:47:22] Number of photos included: 0
+[2025-01-31 02:47:23] Successfully inserted record: Defense Plans Report
+[2025-01-31 02:47:23] Number of photos included: 0
+[2025-01-31 02:47:25] Successfully inserted record: Dynamics Awarded Report
+[2025-01-31 02:47:25] Number of photos included: 0
+[2025-01-31 02:47:26] Successfully inserted record: Jacques Vallee Report
+[2025-01-31 02:47:26] Number of photos included: 0
+[2025-01-31 02:47:27] Successfully inserted record: Security International Report
+[2025-01-31 02:47:27] Number of photos included: 0
+[2025-01-31 02:47:28] Successfully inserted record: Co-Founder Steve Report
+[2025-01-31 02:47:28] Number of photos included: 0
+[2025-01-31 02:47:29] Successfully inserted record: Space Command’S Report
+[2025-01-31 02:47:29] Number of photos included: 0
+[2025-01-31 02:47:30] Successfully inserted record: Subject Headquarters Report
+[2025-01-31 02:47:30] Number of photos included: 0
+[2025-01-31 02:47:31] Successfully inserted record: Candidate William Report
+[2025-01-31 02:47:31] Number of photos included: 0
+[2025-01-31 02:47:32] Successfully inserted record: Under Contract Report
+[2025-01-31 02:47:32] Number of photos included: 0
+[2025-01-31 02:47:33] Successfully inserted record: Propulsion Edwards Report
+[2025-01-31 02:47:33] Number of photos included: 0
+[2025-01-31 02:47:35] Successfully inserted record: Spoke “Long Report
+[2025-01-31 02:47:35] Number of photos included: 0
+[2025-01-31 02:47:36] Successfully inserted record: Dulce, Claims Report
+[2025-01-31 02:47:36] Number of photos included: 0
+[2025-01-31 02:47:37] Successfully inserted record: Date Test Report
+[2025-01-31 02:47:37] Number of photos included: 0
+[2025-01-31 02:47:38] Successfully inserted record: Hours Norton Report
+[2025-01-31 02:47:38] Number of photos included: 0
+[2025-01-31 02:47:39] Successfully inserted record: Stevens Which Report
+[2025-01-31 02:47:39] Number of photos included: 0
+[2025-01-31 02:47:40] Successfully inserted record: Navy Cecil Report
+[2025-01-31 02:47:40] Number of photos included: 0
+[2025-01-31 02:47:41] Successfully inserted record: First Time Report
+[2025-01-31 02:47:41] Number of photos included: 0
+[2025-01-31 02:47:42] Successfully inserted record: Force Institute Report
+[2025-01-31 02:47:42] Number of photos included: 0
+[2025-01-31 02:47:43] Successfully inserted record: “The Unholy Report
+[2025-01-31 02:47:43] Number of photos included: 0
+[2025-01-31 02:47:45] Successfully inserted record: Tracking This,” Report
+[2025-01-31 02:47:45] Number of photos included: 0
+[2025-01-31 02:47:46] Successfully inserted record: Campaign” Surrounding Report
+[2025-01-31 02:47:46] Number of photos included: 0
+[2025-01-31 02:47:47] Successfully inserted record: George Dickson) Report
+[2025-01-31 02:47:47] Number of photos included: 0
+[2025-01-31 02:47:48] Successfully inserted record: Sumner Shapiro Report
+[2025-01-31 02:47:48] Number of photos included: 0
+[2025-01-31 02:47:49] Successfully inserted record: Elint Cover, Report
+[2025-01-31 02:47:49] Number of photos included: 0
+[2025-01-31 02:47:50] Successfully inserted record: Walker, Former Report
+[2025-01-31 02:47:50] Number of photos included: 0
+[2025-01-31 02:47:51] Successfully inserted record: Over Previous Report
+[2025-01-31 02:47:51] Number of photos included: 0
+[2025-01-31 02:47:52] Successfully inserted record: Co-Founder Group, Report
+[2025-01-31 02:47:52] Number of photos included: 0
+[2025-01-31 02:47:53] Successfully inserted record: Einstein Teller Report
+[2025-01-31 02:47:53] Number of photos included: 0
+[2025-01-31 02:47:55] Successfully inserted record: Research Laboratory Report
+[2025-01-31 02:47:55] Number of photos included: 0
+[2025-01-31 02:47:56] Successfully inserted record: Development (Agard) Report
+[2025-01-31 02:47:56] Number of photos included: 0
+[2025-01-31 02:47:57] Successfully inserted record: 1990s - Briefer Steven Report
+[2025-01-31 02:47:57] Number of photos included: 0
+[2025-01-31 02:47:58] Successfully inserted record: Test Coupling Report
+[2025-01-31 02:47:58] Number of photos included: 0
+[2025-01-31 02:47:59] Successfully inserted record: President Eric Report
+[2025-01-31 02:47:59] Number of photos included: 0
+[2025-01-31 02:48:00] Successfully inserted record: Sightings Southwestern Report
+[2025-01-31 02:48:00] Number of photos included: 0
+[2025-01-31 02:48:01] Successfully inserted record: Vallee: “What Report
+[2025-01-31 02:48:01] Number of photos included: 0
+[2025-01-31 02:48:02] Successfully inserted record: Hired Electricity Report
+[2025-01-31 02:48:02] Number of photos included: 0
+[2025-01-31 02:48:03] 
+Batch 5 complete!
+[2025-01-31 02:48:03] Running totals - Successful: 250, Failed: 0
+[2025-01-31 02:48:03] 
+Processing batch 6 (50 records)
+[2025-01-31 02:48:04] Successfully inserted record: Triangle” Lifting Report
+[2025-01-31 02:48:04] Number of photos included: 0
+[2025-01-31 02:48:05] Successfully inserted record: Publishes Series Report
+[2025-01-31 02:48:05] Number of photos included: 0
+[2025-01-31 02:48:06] Successfully inserted record: July 1947, Report
+[2025-01-31 02:48:06] Number of photos included: 0
+[2025-01-31 02:48:07] Successfully inserted record: Assigned Medical Report
+[2025-01-31 02:48:07] Number of photos included: 0
+[2025-01-31 02:48:08] Successfully inserted record: Raymond Concrete Report
+[2025-01-31 02:48:08] Number of photos included: 0
+[2025-01-31 02:48:09] Successfully inserted record: Liechtenstein, Funded Report
+[2025-01-31 02:48:09] Number of photos included: 0
+[2025-01-31 02:48:10] Successfully inserted record: Craft Over Report
+[2025-01-31 02:48:10] Number of photos included: 0
+[2025-01-31 02:48:11] Successfully inserted record: Thought German, Report
+[2025-01-31 02:48:11] Number of photos included: 0
+[2025-01-31 02:48:12] Successfully inserted record: Translate Russian Report
+[2025-01-31 02:48:12] Number of photos included: 0
+[2025-01-31 02:48:14] Successfully inserted record: Affidavit Husband Report
+[2025-01-31 02:48:14] Number of photos included: 0
+[2025-01-31 02:48:15] Successfully inserted record: Associated Groups Report
+[2025-01-31 02:48:15] Number of photos included: 0
+[2025-01-31 02:48:16] Successfully inserted record: Roswell “Cover Report
+[2025-01-31 02:48:16] Number of photos included: 0
+[2025-01-31 02:48:17] Successfully inserted record: Claim Face Report
+[2025-01-31 02:48:17] Number of photos included: 0
+[2025-01-31 02:48:18] Successfully inserted record: Roberts, States Report
+[2025-01-31 02:48:18] Number of photos included: 0
+[2025-01-31 02:48:19] Successfully inserted record: Training Elint Report
+[2025-01-31 02:48:19] Number of photos included: 0
+[2025-01-31 02:48:20] Successfully inserted record: Technology Transfer Report
+[2025-01-31 02:48:20] Number of photos included: 0
+[2025-01-31 02:48:21] Successfully inserted record: Pulled Into Report
+[2025-01-31 02:48:21] Number of photos included: 0
+[2025-01-31 02:48:22] Successfully inserted record: Affidavit Support Report
+[2025-01-31 02:48:22] Number of photos included: 0
+[2025-01-31 02:48:24] Successfully inserted record: Baass/Aawsap Subcontractor Report
+[2025-01-31 02:48:24] Number of photos included: 0
+[2025-01-31 02:48:25] Successfully inserted record: Believed Crashed Report
+[2025-01-31 02:48:25] Number of photos included: 0
+[2025-01-31 02:48:26] Successfully inserted record: Chief Staff Report
+[2025-01-31 02:48:26] Number of photos included: 0
+[2025-01-31 02:48:27] Successfully inserted record: Around Time Report
+[2025-01-31 02:48:27] Number of photos included: 0
+[2025-01-31 02:48:28] Successfully inserted record: Technology Policy Report
+[2025-01-31 02:48:28] Number of photos included: 0
+[2025-01-31 02:48:29] Successfully inserted record: Tells Ufologist Report
+[2025-01-31 02:48:29] Number of photos included: 0
+[2025-01-31 02:48:30] Successfully inserted record: Conducted, Usaf Report
+[2025-01-31 02:48:30] Number of photos included: 0
+[2025-01-31 02:48:31] Successfully inserted record: Usaf Considers Report
+[2025-01-31 02:48:31] Number of photos included: 0
+[2025-01-31 02:48:32] Successfully inserted record: States Heard Report
+[2025-01-31 02:48:32] Number of photos included: 0
+[2025-01-31 02:48:34] Successfully inserted record: Station Orders Report
+[2025-01-31 02:48:34] Number of photos included: 0
+[2025-01-31 02:48:35] Successfully inserted record: 24/3152 P176) Report
+[2025-01-31 02:48:35] Number of photos included: 0
+[2025-01-31 02:48:36] Successfully inserted record: Pitched Vacuum Report
+[2025-01-31 02:48:36] Number of photos included: 0
+[2025-01-31 02:48:37] Successfully inserted record: Briefing Officer Report
+[2025-01-31 02:48:37] Number of photos included: 0
+[2025-01-31 02:48:38] Successfully inserted record: White Sands Report
+[2025-01-31 02:48:38] Number of photos included: 0
+[2025-01-31 02:48:39] Successfully inserted record: Edward Dudgeon, Report
+[2025-01-31 02:48:39] Number of photos included: 0
+[2025-01-31 02:48:40] Successfully inserted record: Science Experiment Report
+[2025-01-31 02:48:40] Number of photos included: 0
+[2025-01-31 02:48:41] Successfully inserted record: Regular Usaf Report
+[2025-01-31 02:48:41] Number of photos included: 0
+[2025-01-31 02:48:42] Successfully inserted record: Rumor Mentions Report
+[2025-01-31 02:48:42] Number of photos included: 0
+[2025-01-31 02:48:44] Successfully inserted record: Three Radar Report
+[2025-01-31 02:48:44] Number of photos included: 0
+[2025-01-31 02:48:45] Successfully inserted record: Around Time Report
+[2025-01-31 02:48:45] Number of photos included: 0
+[2025-01-31 02:48:46] Successfully inserted record: Intcomm Asks Report
+[2025-01-31 02:48:46] Number of photos included: 0
+[2025-01-31 02:48:47] Successfully inserted record: Flown Into Report
+[2025-01-31 02:48:47] Number of photos included: 0
+[2025-01-31 02:48:48] Successfully inserted record: Object Crash Report
+[2025-01-31 02:48:48] Number of photos included: 0
+[2025-01-31 02:48:49] Successfully inserted record: Funded Laurance Report
+[2025-01-31 02:48:49] Number of photos included: 0
+[2025-01-31 02:48:50] Successfully inserted record: Transfer Sheet Report
+[2025-01-31 02:48:50] Number of photos included: 0
+[2025-01-31 02:48:51] Successfully inserted record: Petersen Garden Report
+[2025-01-31 02:48:51] Number of photos included: 0
+[2025-01-31 02:48:52] Successfully inserted record: Both Observe Report
+[2025-01-31 02:48:52] Number of photos included: 0
+[2025-01-31 02:48:53] Successfully inserted record: Encapsulates Previous Report
+[2025-01-31 02:48:53] Number of photos included: 0
+[2025-01-31 02:48:55] Successfully inserted record: Believed Abductions Report
+[2025-01-31 02:48:55] Number of photos included: 0
+[2025-01-31 02:48:56] Successfully inserted record: Accounting Office Report
+[2025-01-31 02:48:56] Number of photos included: 1
+[2025-01-31 02:48:57] Successfully inserted record: Administration Friend Report
+[2025-01-31 02:48:57] Number of photos included: 0
+[2025-01-31 02:48:58] Successfully inserted record: Army 52Nd Report
+[2025-01-31 02:48:58] Number of photos included: 0
+[2025-01-31 02:48:59] 
+Batch 6 complete!
+[2025-01-31 02:48:59] Running totals - Successful: 300, Failed: 0
+[2025-01-31 02:48:59] 
+Processing batch 7 (50 records)
+[2025-01-31 02:49:00] Successfully inserted record: Hire Experts Report
+[2025-01-31 02:49:00] Number of photos included: 0
+[2025-01-31 02:49:01] Successfully inserted record: Assembling Collection Report
+[2025-01-31 02:49:01] Number of photos included: 0
+[2025-01-31 02:49:02] Successfully inserted record: Jones Report
+[2025-01-31 02:49:02] Number of photos included: 0
+[2025-01-31 02:49:03] Successfully inserted record: Hacking Incidents Report
+[2025-01-31 02:49:03] Number of photos included: 0
+[2025-01-31 02:49:04] Successfully inserted record: Stating Rock Report
+[2025-01-31 02:49:04] Number of photos included: 0
+[2025-01-31 02:49:05] Successfully inserted record: Science Applications Report
+[2025-01-31 02:49:05] Number of photos included: 0
+[2025-01-31 02:49:06] Successfully inserted record: List Projects Report
+[2025-01-31 02:49:06] Number of photos included: 0
+[2025-01-31 02:49:07] Successfully inserted record: States: Became Report
+[2025-01-31 02:49:07] Number of photos included: 0
+[2025-01-31 02:49:09] Successfully inserted record: Knows About Report
+[2025-01-31 02:49:09] Number of photos included: 0
+[2025-01-31 02:49:10] Successfully inserted record: Focused Medical Report
+[2025-01-31 02:49:10] Number of photos included: 0
+[2025-01-31 02:49:11] Successfully inserted record: Project Preserve Report
+[2025-01-31 02:49:11] Number of photos included: 0
+[2025-01-31 02:49:12] Successfully inserted record: Subject Disinformation, Report
+[2025-01-31 02:49:12] Number of photos included: 0
+[2025-01-31 02:49:13] Successfully inserted record: Crash Recovery Report
+[2025-01-31 02:49:13] Number of photos included: 0
+[2025-01-31 02:49:14] Successfully inserted record: Device Creates Report
+[2025-01-31 02:49:14] Number of photos included: 0
+[2025-01-31 02:49:15] Successfully inserted record: Recovered Materials Report
+[2025-01-31 02:49:15] Number of photos included: 0
+[2025-01-31 02:49:16] Successfully inserted record: James Mcandrew, Report
+[2025-01-31 02:49:16] Number of photos included: 0
+[2025-01-31 02:49:17] Successfully inserted record: Nasa Glenn Report
+[2025-01-31 02:49:17] Number of photos included: 0
+[2025-01-31 02:49:19] Successfully inserted record: David Noever, Report
+[2025-01-31 02:49:19] Number of photos included: 0
+[2025-01-31 02:49:20] Successfully inserted record: Haines Publishes Report
+[2025-01-31 02:49:20] Number of photos included: 0
+[2025-01-31 02:49:21] Successfully inserted record: Utilizes Vandenberg Report
+[2025-01-31 02:49:21] Number of photos included: 0
+[2025-01-31 02:49:22] Successfully inserted record: Proposes Seven Report
+[2025-01-31 02:49:22] Number of photos included: 0
+[2025-01-31 02:49:23] Successfully inserted record: Inner Certainty Report
+[2025-01-31 02:49:23] Number of photos included: 0
+[2025-01-31 02:49:24] Successfully inserted record: Carolina Confirm Report
+[2025-01-31 02:49:24] Number of photos included: 0
+[2025-01-31 02:49:25] Successfully inserted record: Alfonso Ruedo Report
+[2025-01-31 02:49:25] Number of photos included: 0
+[2025-01-31 02:49:26] Successfully inserted record: Martin Skunk Report
+[2025-01-31 02:49:26] Number of photos included: 0
+[2025-01-31 02:49:27] Successfully inserted record: Defense Advanced Report
+[2025-01-31 02:49:27] Number of photos included: 0
+[2025-01-31 02:49:29] Successfully inserted record: Contact Afosi Report
+[2025-01-31 02:49:29] Number of photos included: 0
+[2025-01-31 02:49:30] Successfully inserted record: Colonel Aerospace Report
+[2025-01-31 02:49:30] Number of photos included: 0
+[2025-01-31 02:49:31] Successfully inserted record: Hundreds Military Report
+[2025-01-31 02:49:31] Number of photos included: 0
+[2025-01-31 02:49:32] Successfully inserted record: Works Co-Founder Report
+[2025-01-31 02:49:32] Number of photos included: 0
+[2025-01-31 02:49:33] Successfully inserted record: Stationed Nellis Report
+[2025-01-31 02:49:33] Number of photos included: 0
+[2025-01-31 02:49:34] Successfully inserted record: Cooper Anonymous Report
+[2025-01-31 02:49:34] Number of photos included: 0
+[2025-01-31 02:49:35] Successfully inserted record: Analyze Mj-12 Report
+[2025-01-31 02:49:35] Number of photos included: 0
+[2025-01-31 02:49:36] Successfully inserted record: Fascinated John Report
+[2025-01-31 02:49:36] Number of photos included: 0
+[2025-01-31 02:49:37] Successfully inserted record: (Caus) Peter Report
+[2025-01-31 02:49:37] Number of photos included: 0
+[2025-01-31 02:49:39] Successfully inserted record: Sent Ufologist Report
+[2025-01-31 02:49:39] Number of photos included: 0
+[2025-01-31 02:49:40] Successfully inserted record: 603Rd Engineering Report
+[2025-01-31 02:49:40] Number of photos included: 0
+[2025-01-31 02:49:41] Successfully inserted record: Control Group Report
+[2025-01-31 02:49:41] Number of photos included: 0
+[2025-01-31 02:49:42] Successfully inserted record: Non-Profit, Holds Report
+[2025-01-31 02:49:42] Number of photos included: 0
+[2025-01-31 02:49:43] Successfully inserted record: Adair States Report
+[2025-01-31 02:49:43] Number of photos included: 0
+[2025-01-31 02:49:44] Successfully inserted record: Department Energy Report
+[2025-01-31 02:49:44] Number of photos included: 0
+[2025-01-31 02:49:45] Successfully inserted record: Life Sciences Report
+[2025-01-31 02:49:45] Number of photos included: 0
+[2025-01-31 02:49:46] Successfully inserted record: Government Officials Report
+[2025-01-31 02:49:46] Number of photos included: 0
+[2025-01-31 02:49:47] Successfully inserted record: West, President Report
+[2025-01-31 02:49:47] Number of photos included: 0
+[2025-01-31 02:49:49] Successfully inserted record: Building Offers Report
+[2025-01-31 02:49:49] Number of photos included: 0
+[2025-01-31 02:49:50] Successfully inserted record: “Attorney Friend” Report
+[2025-01-31 02:49:50] Number of photos included: 0
+[2025-01-31 02:49:51] Successfully inserted record: Briefed “Very Report
+[2025-01-31 02:49:51] Number of photos included: 0
+[2025-01-31 02:49:52] Successfully inserted record: Heard Regarding Report
+[2025-01-31 02:49:52] Number of photos included: 0
+[2025-01-31 02:49:53] Successfully inserted record: Mcdonelll-Douglas Exotic Report
+[2025-01-31 02:49:53] Number of photos included: 0
+[2025-01-31 02:49:54] Successfully inserted record: (Adst) Active, Report
+[2025-01-31 02:49:54] Number of photos included: 0
+[2025-01-31 02:49:55] 
+Batch 7 complete!
+[2025-01-31 02:49:55] Running totals - Successful: 350, Failed: 0
+[2025-01-31 02:49:55] 
+Processing batch 8 (50 records)
+[2025-01-31 02:49:55] Successfully inserted record: Mutilations Army Report
+[2025-01-31 02:49:55] Number of photos included: 0
+[2025-01-31 02:49:56] Successfully inserted record: Allegedly Involved Report
+[2025-01-31 02:49:56] Number of photos included: 0
+[2025-01-31 02:49:57] Successfully inserted record: Intelligence Community, Report
+[2025-01-31 02:49:57] Number of photos included: 0
+[2025-01-31 02:49:59] Successfully inserted record: Phillips Claims Report
+[2025-01-31 02:49:59] Number of photos included: 0
+[2025-01-31 02:50:00] Successfully inserted record: Intelligence Consultant Report
+[2025-01-31 02:50:00] Number of photos included: 0
+[2025-01-31 02:50:01] Successfully inserted record: Press Club Report
+[2025-01-31 02:50:01] Number of photos included: 0
+[2025-01-31 02:50:02] Successfully inserted record: University, Paul Report
+[2025-01-31 02:50:02] Number of photos included: 0
+[2025-01-31 02:50:03] Successfully inserted record: Instances Black Report
+[2025-01-31 02:50:03] Number of photos included: 0
+[2025-01-31 02:50:04] Successfully inserted record: Blue Book Report
+[2025-01-31 02:50:04] Number of photos included: 0
+[2025-01-31 02:50:05] Successfully inserted record: March 2022) Report
+[2025-01-31 02:50:05] Number of photos included: 0
+[2025-01-31 02:50:06] Successfully inserted record: Join Secret Report
+[2025-01-31 02:50:06] Number of photos included: 0
+[2025-01-31 02:50:08] Successfully inserted record: Recovered Roswell: Report
+[2025-01-31 02:50:08] Number of photos included: 0
+[2025-01-31 02:50:09] Successfully inserted record: Learned While Report
+[2025-01-31 02:50:09] Number of photos included: 0
+[2025-01-31 02:50:10] Successfully inserted record: Force Physician, Report
+[2025-01-31 02:50:10] Number of photos included: 0
+[2025-01-31 02:50:11] Successfully inserted record: Offers Them Report
+[2025-01-31 02:50:11] Number of photos included: 0
+[2025-01-31 02:50:12] Successfully inserted record: Several Researchers Report
+[2025-01-31 02:50:12] Number of photos included: 0
+[2025-01-31 02:50:13] Successfully inserted record: Privatized Outside Report
+[2025-01-31 02:50:13] Number of photos included: 0
+[2025-01-31 02:50:14] Successfully inserted record: Holloman Landing Report
+[2025-01-31 02:50:14] Number of photos included: 0
+[2025-01-31 02:50:15] Successfully inserted record: 1950S Older Report
+[2025-01-31 02:50:15] Number of photos included: 0
+[2025-01-31 02:50:16] Successfully inserted record: Using Work Report
+[2025-01-31 02:50:16] Number of photos included: 0
+[2025-01-31 02:50:18] Successfully inserted record: Documents Obtains Report
+[2025-01-31 02:50:18] Number of photos included: 0
+[2025-01-31 02:50:19] Successfully inserted record: Meeting Narcap Report
+[2025-01-31 02:50:19] Number of photos included: 0
+[2025-01-31 02:50:20] Successfully inserted record: Several Aatip Report
+[2025-01-31 02:50:20] Number of photos included: 0
+[2025-01-31 02:50:21] Successfully inserted record: Weapons Storage Report
+[2025-01-31 02:50:21] Number of photos included: 0
+[2025-01-31 02:50:22] Successfully inserted record: Historical Record
+[2025-01-31 02:50:22] Number of photos included: 0
+[2025-01-31 02:50:23] Successfully inserted record: Industry Delivers Report
+[2025-01-31 02:50:23] Number of photos included: 0
+[2025-01-31 02:50:24] Successfully inserted record: Believes Puthoff’S Report
+[2025-01-31 02:50:24] Number of photos included: 0
+[2025-01-31 02:50:25] Successfully inserted record: Allegedly Traces Report
+[2025-01-31 02:50:25] Number of photos included: 0
+[2025-01-31 02:50:26] Successfully inserted record: Their Hfgw Report
+[2025-01-31 02:50:26] Number of photos included: 0
+[2025-01-31 02:50:28] Successfully inserted record: Haisch, Relayed Report
+[2025-01-31 02:50:28] Number of photos included: 0
+[2025-01-31 02:50:29] Successfully inserted record: Pacific Beach, Report
+[2025-01-31 02:50:29] Number of photos included: 0
+[2025-01-31 02:50:30] Successfully inserted record: Lovekin States Report
+[2025-01-31 02:50:30] Number of photos included: 0
+[2025-01-31 02:50:31] Successfully inserted record: Zimmerman Detroit, Report
+[2025-01-31 02:50:31] Number of photos included: 0
+[2025-01-31 02:50:32] Successfully inserted record: Arlington Institute Report
+[2025-01-31 02:50:32] Number of photos included: 0
+[2025-01-31 02:50:33] Successfully inserted record: Tried “Front Report
+[2025-01-31 02:50:33] Number of photos included: 0
+[2025-01-31 02:50:34] Successfully inserted record: Petersen Arlington Report
+[2025-01-31 02:50:34] Number of photos included: 0
+[2025-01-31 02:50:35] Successfully inserted record: Wouldn’T Tell Report
+[2025-01-31 02:50:35] Number of photos included: 0
+[2025-01-31 02:50:37] Successfully inserted record: States Working Report
+[2025-01-31 02:50:37] Number of photos included: 0
+[2025-01-31 02:50:38] Successfully inserted record: There Four Report
+[2025-01-31 02:50:38] Number of photos included: 0
+[2025-01-31 02:50:39] Successfully inserted record: Phone About Report
+[2025-01-31 02:50:39] Number of photos included: 0
+[2025-01-31 02:50:40] Successfully inserted record: Source Inside Report
+[2025-01-31 02:50:40] Number of photos included: 0
+[2025-01-31 02:50:41] Successfully inserted record: Puthoff, Eric Report
+[2025-01-31 02:50:41] Number of photos included: 0
+[2025-01-31 02:50:42] Successfully inserted record: Catherine Austin Report
+[2025-01-31 02:50:42] Number of photos included: 0
+[2025-01-31 02:50:43] Successfully inserted record: Research Corporation Report
+[2025-01-31 02:50:43] Number of photos included: 0
+[2025-01-31 02:50:44] Successfully inserted record: Time Viewing Report
+[2025-01-31 02:50:44] Number of photos included: 0
+[2025-01-31 02:50:46] Successfully inserted record: Charles Bowsher, Report
+[2025-01-31 02:50:46] Number of photos included: 0
+[2025-01-31 02:50:47] Successfully inserted record: Intelligence Utilize Report
+[2025-01-31 02:50:47] Number of photos included: 0
+[2025-01-31 02:50:48] Successfully inserted record: Fort Worth, Report
+[2025-01-31 02:50:48] Number of photos included: 0
+[2025-01-31 02:50:49] Successfully inserted record: Communication System Report
+[2025-01-31 02:50:49] Number of photos included: 0
+[2025-01-31 02:50:50] Successfully inserted record: 2004 Report
+[2025-01-31 02:50:50] Number of photos included: 0
+[2025-01-31 02:50:51] 
+Batch 8 complete!
+[2025-01-31 02:50:51] Running totals - Successful: 400, Failed: 0
+[2025-01-31 02:50:51] 
+Processing batch 9 (50 records)
+[2025-01-31 02:50:51] Successfully inserted record: Individuals” Boarded Report
+[2025-01-31 02:50:51] Number of photos included: 0
+[2025-01-31 02:50:52] Successfully inserted record: Being, Raechel, Report
+[2025-01-31 02:50:52] Number of photos included: 0
+[2025-01-31 02:50:53] Successfully inserted record: Support Facility Report
+[2025-01-31 02:50:53] Number of photos included: 0
+[2025-01-31 02:50:54] Successfully inserted record: Research Project Report
+[2025-01-31 02:50:54] Number of photos included: 0
+[2025-01-31 02:50:55] Successfully inserted record: Board Retired Report
+[2025-01-31 02:50:55] Number of photos included: 0
+[2025-01-31 02:50:57] Successfully inserted record: Former Manager Report
+[2025-01-31 02:50:57] Number of photos included: 0
+[2025-01-31 02:50:58] Successfully inserted record: Attends Involve Report
+[2025-01-31 02:50:58] Number of photos included: 0
+[2025-01-31 02:50:59] Successfully inserted record: John Negroponte Report
+[2025-01-31 02:50:59] Number of photos included: 0
+[2025-01-31 02:51:00] Successfully inserted record: Investigate Development Report
+[2025-01-31 02:51:00] Number of photos included: 0
+[2025-01-31 02:51:01] Successfully inserted record: Austria Report Report
+[2025-01-31 02:51:01] Number of photos included: 0
+[2025-01-31 02:51:02] Successfully inserted record: Briefer Steven Report
+[2025-01-31 02:51:02] Number of photos included: 0
+[2025-01-31 02:51:03] Successfully inserted record: Briefer Steven Report
+[2025-01-31 02:51:03] Number of photos included: 0
+[2025-01-31 02:51:04] Successfully inserted record: Briefer Steven Report
+[2025-01-31 02:51:04] Number of photos included: 0
+[2025-01-31 02:51:05] Successfully inserted record: Aircraft Design Report
+[2025-01-31 02:51:05] Number of photos included: 0
+[2025-01-31 02:51:07] Successfully inserted record: Systems Just Report
+[2025-01-31 02:51:07] Number of photos included: 0
+[2025-01-31 02:51:08] Successfully inserted record: Deacon” (Pseudonym) Report
+[2025-01-31 02:51:08] Number of photos included: 0
+[2025-01-31 02:51:09] Successfully inserted record: Historical Record
+[2025-01-31 02:51:09] Number of photos included: 0
+[2025-01-31 02:51:10] Successfully inserted record: “Weather Phenomenon” Report
+[2025-01-31 02:51:10] Number of photos included: 0
+[2025-01-31 02:51:11] Successfully inserted record: Pursuing Lockheed Report
+[2025-01-31 02:51:11] Number of photos included: 0
+[2025-01-31 02:51:12] Successfully inserted record: Mario Pinheiro Report
+[2025-01-31 02:51:12] Number of photos included: 0
+[2025-01-31 02:51:13] Successfully inserted record: Experiment Zero Report
+[2025-01-31 02:51:13] Number of photos included: 0
+[2025-01-31 02:51:14] Successfully inserted record: Engineer Oechsler Report
+[2025-01-31 02:51:14] Number of photos included: 0
+[2025-01-31 02:51:15] Successfully inserted record: “The Right Report
+[2025-01-31 02:51:15] Number of photos included: 0
+[2025-01-31 02:51:17] Successfully inserted record: Expressed Interest Report
+[2025-01-31 02:51:17] Number of photos included: 0
+[2025-01-31 02:51:18] Successfully inserted record: States Communications Report
+[2025-01-31 02:51:18] Number of photos included: 0
+[2025-01-31 02:51:19] Successfully inserted record: Lake Facility/S4 Report
+[2025-01-31 02:51:19] Number of photos included: 0
+[2025-01-31 02:51:20] Successfully inserted record: Project Involved Report
+[2025-01-31 02:51:20] Number of photos included: 0
+[2025-01-31 02:51:21] Successfully inserted record: Crash Helicopters/Convoys Report
+[2025-01-31 02:51:21] Number of photos included: 0
+[2025-01-31 02:51:22] Successfully inserted record: First Time Report
+[2025-01-31 02:51:22] Number of photos included: 0
+[2025-01-31 02:51:23] Successfully inserted record: Alamos National Report
+[2025-01-31 02:51:23] Number of photos included: 0
+[2025-01-31 02:51:24] Successfully inserted record: Friend Senior Report
+[2025-01-31 02:51:24] Number of photos included: 0
+[2025-01-31 02:51:25] Successfully inserted record: Publishes Technical Report
+[2025-01-31 02:51:25] Number of photos included: 0
+[2025-01-31 02:51:27] Successfully inserted record: Officially Kicked Report
+[2025-01-31 02:51:27] Number of photos included: 0
+[2025-01-31 02:51:28] Successfully inserted record: Advanced Technology Report
+[2025-01-31 02:51:28] Number of photos included: 0
+[2025-01-31 02:51:29] Successfully inserted record: Could Reach Report
+[2025-01-31 02:51:29] Number of photos included: 0
+[2025-01-31 02:51:30] Successfully inserted record: Aawsap Program Report
+[2025-01-31 02:51:30] Number of photos included: 0
+[2025-01-31 02:51:31] Successfully inserted record: Near Kennedy Report
+[2025-01-31 02:51:31] Number of photos included: 0
+[2025-01-31 02:51:32] Successfully inserted record: Vallee “Building Report
+[2025-01-31 02:51:32] Number of photos included: 0
+[2025-01-31 02:51:33] Successfully inserted record: Baass Team Report
+[2025-01-31 02:51:33] Number of photos included: 0
+[2025-01-31 02:51:34] Successfully inserted record: Obama Administration Report
+[2025-01-31 02:51:34] Number of photos included: 0
+[2025-01-31 02:51:35] Successfully inserted record: Delivered Promises Report
+[2025-01-31 02:51:35] Number of photos included: 0
+[2025-01-31 02:51:37] Successfully inserted record: Witness Twice Report
+[2025-01-31 02:51:37] Number of photos included: 0
+[2025-01-31 02:51:38] Successfully inserted record: Nathan Price Report
+[2025-01-31 02:51:38] Number of photos included: 0
+[2025-01-31 02:51:39] Successfully inserted record: Received Force Report
+[2025-01-31 02:51:39] Number of photos included: 0
+[2025-01-31 02:51:40] Successfully inserted record: Shaped Object Report
+[2025-01-31 02:51:40] Number of photos included: 0
+[2025-01-31 02:51:41] Successfully inserted record: Officer Robert Report
+[2025-01-31 02:51:41] Number of photos included: 1
+[2025-01-31 02:51:42] Successfully inserted record: 24 October 2010 - Cheyenne, Large Report
+[2025-01-31 02:51:42] Number of photos included: 0
+[2025-01-31 02:51:43] Successfully inserted record: Luminous Disc Report
+[2025-01-31 02:51:43] Number of photos included: 0
+[2025-01-31 02:51:44] Successfully inserted record: (Baass) Director Report
+[2025-01-31 02:51:44] Number of photos included: 0
+[2025-01-31 02:51:46] Successfully inserted record: Detroit Claimed Report
+[2025-01-31 02:51:46] Number of photos included: 0
+[2025-01-31 02:51:47] 
+Batch 9 complete!
+[2025-01-31 02:51:47] Running totals - Successful: 450, Failed: 0
+[2025-01-31 02:51:47] 
+Processing batch 10 (50 records)
+[2025-01-31 02:51:47] Successfully inserted record: Studies (Baass) Report
+[2025-01-31 02:51:47] Number of photos included: 0
+[2025-01-31 02:51:48] Successfully inserted record: Reality Uap], Report
+[2025-01-31 02:51:48] Number of photos included: 0
+[2025-01-31 02:51:49] Successfully inserted record: Project Underground Report
+[2025-01-31 02:51:49] Number of photos included: 0
+[2025-01-31 02:51:50] Successfully inserted record: Force Office Report
+[2025-01-31 02:51:50] Number of photos included: 0
+[2025-01-31 02:51:51] Successfully inserted record: Annual Aztec Report
+[2025-01-31 02:51:51] Number of photos included: 0
+[2025-01-31 02:51:52] Successfully inserted record: July 2011 - Other Meetings Report
+[2025-01-31 02:51:52] Number of photos included: 0
+[2025-01-31 02:51:53] Successfully inserted record: Africa Managed Report
+[2025-01-31 02:51:53] Number of photos included: 0
+[2025-01-31 02:51:55] Successfully inserted record: Accetta States Report
+[2025-01-31 02:51:55] Number of photos included: 0
+[2025-01-31 02:51:56] Successfully inserted record: Research Into Report
+[2025-01-31 02:51:56] Number of photos included: 0
+[2025-01-31 02:51:57] Successfully inserted record: Andrew Basiago, Report
+[2025-01-31 02:51:57] Number of photos included: 0
+[2025-01-31 02:51:58] Successfully inserted record: Participated Having Report
+[2025-01-31 02:51:58] Number of photos included: 0
+[2025-01-31 02:51:59] Successfully inserted record: States Labeled Report
+[2025-01-31 02:51:59] Number of photos included: 0
+[2025-01-31 02:52:00] Successfully inserted record: Montana Shows Report
+[2025-01-31 02:52:00] Number of photos included: 0
+[2025-01-31 02:52:01] Successfully inserted record: Alleged Neighbor Report
+[2025-01-31 02:52:01] Number of photos included: 0
+[2025-01-31 02:52:02] Successfully inserted record: Program Looking Report
+[2025-01-31 02:52:02] Number of photos included: 0
+[2025-01-31 02:52:04] Successfully inserted record: Buzzard Codename Report
+[2025-01-31 02:52:04] Number of photos included: 0
+[2025-01-31 02:52:05] Successfully inserted record: Wright-Patterson Doing Report
+[2025-01-31 02:52:05] Number of photos included: 0
+[2025-01-31 02:52:06] Successfully inserted record: Aerospace Engineer Report
+[2025-01-31 02:52:06] Number of photos included: 0
+[2025-01-31 02:52:07] Successfully inserted record: Accounting Service Report
+[2025-01-31 02:52:07] Number of photos included: 0
+[2025-01-31 02:52:08] Successfully inserted record: Experiments Where Report
+[2025-01-31 02:52:08] Number of photos included: 0
+[2025-01-31 02:52:09] Successfully inserted record: Project Bizarre, Report
+[2025-01-31 02:52:09] Number of photos included: 0
+[2025-01-31 02:52:10] Successfully inserted record: Program Mentions Report
+[2025-01-31 02:52:10] Number of photos included: 0
+[2025-01-31 02:52:11] Successfully inserted record: Currencies “Vault” Report
+[2025-01-31 02:52:11] Number of photos included: 0
+[2025-01-31 02:52:12] Successfully inserted record: Briefed Report
+[2025-01-31 02:52:12] Number of photos included: 0
+[2025-01-31 02:52:14] Successfully inserted record: Worked Technology Report
+[2025-01-31 02:52:14] Number of photos included: 0
+[2025-01-31 02:52:15] Successfully inserted record: Experiments Connected Report
+[2025-01-31 02:52:15] Number of photos included: 0
+[2025-01-31 02:52:16] Successfully inserted record: Illustrator Mark Report
+[2025-01-31 02:52:16] Number of photos included: 0
+[2025-01-31 02:52:17] Successfully inserted record: “Brian” Tells Report
+[2025-01-31 02:52:17] Number of photos included: 0
+[2025-01-31 02:52:18] Successfully inserted record: Objects, Diamond Report
+[2025-01-31 02:52:18] Number of photos included: 0
+[2025-01-31 02:52:19] Successfully inserted record: Manager John Report
+[2025-01-31 02:52:19] Number of photos included: 0
+[2025-01-31 02:52:20] Successfully inserted record: Manager John Report
+[2025-01-31 02:52:20] Number of photos included: 0
+[2025-01-31 02:52:21] Successfully inserted record: Rendlesham Forest Report
+[2025-01-31 02:52:21] Number of photos included: 0
+[2025-01-31 02:52:22] Successfully inserted record: Response Foia Report
+[2025-01-31 02:52:22] Number of photos included: 0
+[2025-01-31 02:52:24] Successfully inserted record: Antigravity, Which Report
+[2025-01-31 02:52:24] Number of photos included: 0
+[2025-01-31 02:52:25] Successfully inserted record: Project Greenglow, Report
+[2025-01-31 02:52:25] Number of photos included: 0
+[2025-01-31 02:52:26] Successfully inserted record: Michael Carey, Report
+[2025-01-31 02:52:26] Number of photos included: 0
+[2025-01-31 02:52:27] Successfully inserted record: Darwin Morgan Report
+[2025-01-31 02:52:27] Number of photos included: 0
+[2025-01-31 02:52:28] Successfully inserted record: “Advisors” When Report
+[2025-01-31 02:52:28] Number of photos included: 0
+[2025-01-31 02:52:29] Successfully inserted record: There Multiple Report
+[2025-01-31 02:52:29] Number of photos included: 0
+[2025-01-31 02:52:30] Successfully inserted record: Authors Delonge Report
+[2025-01-31 02:52:30] Number of photos included: 0
+[2025-01-31 02:52:31] Successfully inserted record: Blackjack Team Report
+[2025-01-31 02:52:31] Number of photos included: 0
+[2025-01-31 02:52:32] Successfully inserted record: Christopher Mellon Report
+[2025-01-31 02:52:32] Number of photos included: 0
+[2025-01-31 02:52:34] Successfully inserted record: Polish Authorities Report
+[2025-01-31 02:52:34] Number of photos included: 0
+[2025-01-31 02:52:35] Successfully inserted record: Groups People Report
+[2025-01-31 02:52:35] Number of photos included: 0
+[2025-01-31 02:52:36] Successfully inserted record: Publicly Discloses Report
+[2025-01-31 02:52:36] Number of photos included: 0
+[2025-01-31 02:52:37] Successfully inserted record: “Turning Vehicle Report
+[2025-01-31 02:52:37] Number of photos included: 0
+[2025-01-31 02:52:38] Successfully inserted record: Joshua Wehrle Report
+[2025-01-31 02:52:38] Number of photos included: 0
+[2025-01-31 02:52:39] Successfully inserted record: Naval Contracts, Report
+[2025-01-31 02:52:39] Number of photos included: 0
+[2025-01-31 02:52:40] Successfully inserted record: Advised Usaf Report
+[2025-01-31 02:52:40] Number of photos included: 0
+[2025-01-31 02:52:41] Successfully inserted record: Files Patent Report
+[2025-01-31 02:52:41] Number of photos included: 0
+[2025-01-31 02:52:42] 
+Batch 10 complete!
+[2025-01-31 02:52:42] Running totals - Successful: 500, Failed: 0
+[2025-01-31 02:52:42] 
+Processing batch 11 (50 records)
+[2025-01-31 02:52:42] Successfully inserted record: Development Catherine Report
+[2025-01-31 02:52:42] Number of photos included: 0
+[2025-01-31 02:52:44] Successfully inserted record: Eric Davis Report
+[2025-01-31 02:52:44] Number of photos included: 0
+[2025-01-31 02:52:45] Successfully inserted record: Behavior Alleged Report
+[2025-01-31 02:52:45] Number of photos included: 0
+[2025-01-31 02:52:46] Successfully inserted record: Associated Code Report
+[2025-01-31 02:52:46] Number of photos included: 0
+[2025-01-31 02:52:47] Successfully inserted record: There Collaboration Report
+[2025-01-31 02:52:47] Number of photos included: 0
+[2025-01-31 02:52:48] Successfully inserted record: “The Crash Report
+[2025-01-31 02:52:48] Number of photos included: 0
+[2025-01-31 02:52:49] Successfully inserted record: Current Former Report
+[2025-01-31 02:52:49] Number of photos included: 0
+[2025-01-31 02:52:50] Successfully inserted record: International Study Report
+[2025-01-31 02:52:50] Number of photos included: 0
+[2025-01-31 02:52:51] Successfully inserted record: Crash Real Report
+[2025-01-31 02:52:51] Number of photos included: 0
+[2025-01-31 02:52:52] Successfully inserted record: Find Single Report
+[2025-01-31 02:52:52] Number of photos included: 0
+[2025-01-31 02:52:54] Successfully inserted record: Green Wanted Report
+[2025-01-31 02:52:54] Number of photos included: 0
+[2025-01-31 02:52:55] Successfully inserted record: Usg/Usg Contractor Report
+[2025-01-31 02:52:55] Number of photos included: 0
+[2025-01-31 02:52:56] Successfully inserted record: Former Official Report
+[2025-01-31 02:52:56] Number of photos included: 0
+[2025-01-31 02:52:57] Successfully inserted record: Studies Event Report
+[2025-01-31 02:52:57] Number of photos included: 0
+[2025-01-31 02:52:58] Successfully inserted record: Administration (Nnsa) Report
+[2025-01-31 02:52:58] Number of photos included: 0
+[2025-01-31 02:52:59] Successfully inserted record: “There Crashes” Report
+[2025-01-31 02:52:59] Number of photos included: 0
+[2025-01-31 02:53:00] Successfully inserted record: Government Possession Report
+[2025-01-31 02:53:00] Number of photos included: 0
+[2025-01-31 02:53:01] Successfully inserted record: Staff Member Report
+[2025-01-31 02:53:01] Number of photos included: 0
+[2025-01-31 02:53:02] Successfully inserted record: Half Briefing Report
+[2025-01-31 02:53:02] Number of photos included: 0
+[2025-01-31 02:53:04] Successfully inserted record: Current Former Report
+[2025-01-31 02:53:04] Number of photos included: 0
+[2025-01-31 02:53:05] Successfully inserted record: Information About Report
+[2025-01-31 02:53:05] Number of photos included: 0
+[2025-01-31 02:53:06] Successfully inserted record: Acquisition, Technology Report
+[2025-01-31 02:53:06] Number of photos included: 0
+[2025-01-31 02:53:07] Successfully inserted record: Members Believe Report
+[2025-01-31 02:53:07] Number of photos included: 0
+[2025-01-31 02:53:08] Successfully inserted record: Found Effect Report
+[2025-01-31 02:53:08] Number of photos included: 0
+[2025-01-31 02:53:09] Successfully inserted record: Petersen, Puthoff Report
+[2025-01-31 02:53:09] Number of photos included: 0
+[2025-01-31 02:53:10] Successfully inserted record: Officer Richard Report
+[2025-01-31 02:53:10] Number of photos included: 0
+[2025-01-31 02:53:11] Successfully inserted record: Christopher Mellon Report
+[2025-01-31 02:53:11] Number of photos included: 0
+[2025-01-31 02:53:12] Successfully inserted record: Company “Orbitech” Report
+[2025-01-31 02:53:12] Number of photos included: 0
+[2025-01-31 02:53:14] Successfully inserted record: Allows Craft Report
+[2025-01-31 02:53:14] Number of photos included: 0
+[2025-01-31 02:53:15] Successfully inserted record: Baass Aawsap Report
+[2025-01-31 02:53:15] Number of photos included: 0
+[2025-01-31 02:53:16] Successfully inserted record: Affairs, Admits Report
+[2025-01-31 02:53:16] Number of photos included: 0
+[2025-01-31 02:53:17] Successfully inserted record: Elizondo States Report
+[2025-01-31 02:53:17] Number of photos included: 0
+[2025-01-31 02:53:18] Successfully inserted record: Information Office Report
+[2025-01-31 02:53:18] Number of photos included: 0
+[2025-01-31 02:53:19] Successfully inserted record: Kammerzell Says Report
+[2025-01-31 02:53:19] Number of photos included: 0
+[2025-01-31 02:53:20] Successfully inserted record: 10-12 Foot Report
+[2025-01-31 02:53:20] Number of photos included: 0
+[2025-01-31 02:53:21] Successfully inserted record: Issue Controls Report
+[2025-01-31 02:53:21] Number of photos included: 0
+[2025-01-31 02:53:22] Successfully inserted record: Grandfather Father Report
+[2025-01-31 02:53:22] Number of photos included: 0
+[2025-01-31 02:53:24] Successfully inserted record: Lockheed Martin Report
+[2025-01-31 02:53:24] Number of photos included: 0
+[2025-01-31 02:53:25] Successfully inserted record: That: “Various Report
+[2025-01-31 02:53:25] Number of photos included: 0
+[2025-01-31 02:53:26] Successfully inserted record: Secretary Defense Report
+[2025-01-31 02:53:26] Number of photos included: 0
+[2025-01-31 02:53:27] Successfully inserted record: Informed Sheehan Report
+[2025-01-31 02:53:27] Number of photos included: 0
+[2025-01-31 02:53:28] Successfully inserted record: Services Committees Report
+[2025-01-31 02:53:28] Number of photos included: 0
+[2025-01-31 02:53:29] Successfully inserted record: Group Interfering Report
+[2025-01-31 02:53:29] Number of photos included: 0
+[2025-01-31 02:53:30] Successfully inserted record: When Asked Report
+[2025-01-31 02:53:30] Number of photos included: 0
+[2025-01-31 02:53:31] Successfully inserted record: Transluminal Velocity Report
+[2025-01-31 02:53:31] Number of photos included: 0
+[2025-01-31 02:53:32] Successfully inserted record: Built Device Report
+[2025-01-31 02:53:32] Number of photos included: 0
+[2025-01-31 02:53:34] Successfully inserted record: Portion Uaptf Report
+[2025-01-31 02:53:34] Number of photos included: 0
+[2025-01-31 02:53:35] Successfully inserted record: Elizondo Liaison Report
+[2025-01-31 02:53:35] Number of photos included: 0
+[2025-01-31 02:53:36] Successfully inserted record: Asked Executive Report
+[2025-01-31 02:53:36] Number of photos included: 0
+[2025-01-31 02:53:37] Successfully inserted record: Programs While Report
+[2025-01-31 02:53:37] Number of photos included: 0
+[2025-01-31 02:53:38] 
+Batch 11 complete!
+[2025-01-31 02:53:38] Running totals - Successful: 550, Failed: 0
+[2025-01-31 02:53:38] 
+Processing batch 12 (50 records)
+[2025-01-31 02:53:38] Successfully inserted record: Historical Record
+[2025-01-31 02:53:38] Number of photos included: 0
+[2025-01-31 02:53:39] Successfully inserted record: Community Sources Report
+[2025-01-31 02:53:39] Number of photos included: 0
+[2025-01-31 02:53:40] Successfully inserted record: Large Pyramid Report
+[2025-01-31 02:53:40] Number of photos included: 0
+[2025-01-31 02:53:41] Successfully inserted record: Their Labs Report
+[2025-01-31 02:53:41] Number of photos included: 0
+[2025-01-31 02:53:43] Successfully inserted record: “Company Unfair Report
+[2025-01-31 02:53:43] Number of photos included: 0
+[2025-01-31 02:53:44] Successfully inserted record: Makes Public Report
+[2025-01-31 02:53:44] Number of photos included: 0
+[2025-01-31 02:53:45] Successfully inserted record: Directed Energy Report
+[2025-01-31 02:53:45] Number of photos included: 0
+[2025-01-31 02:53:46] Successfully inserted record: Technology “Deliberately Report
+[2025-01-31 02:53:46] Number of photos included: 0
+[2025-01-31 02:53:47] Successfully inserted record: Provided Information Report
+[2025-01-31 02:53:47] Number of photos included: 0
+[2025-01-31 02:53:48] Successfully inserted record: “Non-Human Material” Report
+[2025-01-31 02:53:48] Number of photos included: 0
+[2025-01-31 02:53:49] Successfully inserted record: Across People Report
+[2025-01-31 02:53:49] Number of photos included: 0
+[2025-01-31 02:53:50] Successfully inserted record: Interview Materials Report
+[2025-01-31 02:53:50] Number of photos included: 0
+[2025-01-31 02:53:51] Successfully inserted record: Deputy Director, Report
+[2025-01-31 02:53:51] Number of photos included: 0
+[2025-01-31 02:53:53] Successfully inserted record: Address Exists Report
+[2025-01-31 02:53:53] Number of photos included: 0
+[2025-01-31 02:53:54] Successfully inserted record: Intelligence Reference Report
+[2025-01-31 02:53:54] Number of photos included: 0
+[2025-01-31 02:53:55] Successfully inserted record: When Asked Report
+[2025-01-31 02:53:55] Number of photos included: 0
+[2025-01-31 02:53:56] Successfully inserted record: Large, Fiery Report
+[2025-01-31 02:53:56] Number of photos included: 0
+[2025-01-31 02:53:57] Successfully inserted record: Accountability” Exists Report
+[2025-01-31 02:53:57] Number of photos included: 0
+[2025-01-31 02:53:58] Successfully inserted record: Intelligence Security Report
+[2025-01-31 02:53:58] Number of photos included: 0
+[2025-01-31 02:53:59] Successfully inserted record: Aware Five Report
+[2025-01-31 02:53:59] Number of photos included: 0
+[2025-01-31 02:54:00] Successfully inserted record: Institute Exotic Report
+[2025-01-31 02:54:00] Number of photos included: 0
+[2025-01-31 02:54:01] Successfully inserted record: Suggests Files Report
+[2025-01-31 02:54:01] Number of photos included: 0
+[2025-01-31 02:54:03] Successfully inserted record: Released Report
+[2025-01-31 02:54:03] Number of photos included: 0
+[2025-01-31 02:54:04] Successfully inserted record: Materials” Collected Report
+[2025-01-31 02:54:04] Number of photos included: 0
+[2025-01-31 02:54:05] Successfully inserted record: Alleged “Calvine Report
+[2025-01-31 02:54:05] Number of photos included: 0
+[2025-01-31 02:54:06] Successfully inserted record: Public Domain Report
+[2025-01-31 02:54:06] Number of photos included: 0
+[2025-01-31 02:54:07] Successfully inserted record: Something Pentagon Report
+[2025-01-31 02:54:07] Number of photos included: 0
+[2025-01-31 02:54:08] Successfully inserted record: There There Report
+[2025-01-31 02:54:08] Number of photos included: 0
+[2025-01-31 02:54:09] Successfully inserted record: Controversial” Heard Report
+[2025-01-31 02:54:09] Number of photos included: 0
+[2025-01-31 02:54:10] Successfully inserted record: Covered Program Report
+[2025-01-31 02:54:10] Number of photos included: 0
+[2025-01-31 02:54:11] Successfully inserted record: Rico Helicopter Report
+[2025-01-31 02:54:11] Number of photos included: 0
+[2025-01-31 02:54:13] Successfully inserted record: Alexander Sent Report
+[2025-01-31 02:54:13] Number of photos included: 0
+[2025-01-31 02:54:14] Successfully inserted record: National Laboratory Report
+[2025-01-31 02:54:14] Number of photos included: 0
+[2025-01-31 02:54:15] Successfully inserted record: Everett Hineman Report
+[2025-01-31 02:54:15] Number of photos included: 0
+[2025-01-31 02:54:16] Successfully inserted record: National Laboratory Report
+[2025-01-31 02:54:16] Number of photos included: 0
+[2025-01-31 02:54:17] Successfully inserted record: Directed Energy Report
+[2025-01-31 02:54:17] Number of photos included: 0
+[2025-01-31 02:54:18] Successfully inserted record: Eric Weinstein Report
+[2025-01-31 02:54:18] Number of photos included: 0
+[2025-01-31 02:54:19] Successfully inserted record: Former Report
+[2025-01-31 02:54:19] Number of photos included: 0
+[2025-01-31 02:54:20] Successfully inserted record: Former Report
+[2025-01-31 02:54:20] Number of photos included: 0
+[2025-01-31 02:54:21] Successfully inserted record: Sedona, “Taken Report
+[2025-01-31 02:54:21] Number of photos included: 0
+[2025-01-31 02:54:23] Successfully inserted record: Congressional Hearings Report
+[2025-01-31 02:54:23] Number of photos included: 0
+[2025-01-31 02:54:24] Successfully inserted record: Claim Piloted Report
+[2025-01-31 02:54:24] Number of photos included: 0
+[2025-01-31 02:54:25] Successfully inserted record: Historical Record
+[2025-01-31 02:54:25] Number of photos included: 0
+[2025-01-31 02:54:26] Successfully inserted record: Woman “Crm” Report
+[2025-01-31 02:54:26] Number of photos included: 0
+[2025-01-31 02:54:27] Successfully inserted record: About Entrance Report
+[2025-01-31 02:54:27] Number of photos included: 0
+[2025-01-31 02:54:28] Successfully inserted record: Sent Photos Report
+[2025-01-31 02:54:28] Number of photos included: 0
+[2025-01-31 02:54:29] Successfully inserted record: Brandon Fugal Report
+[2025-01-31 02:54:29] Number of photos included: 0
+[2025-01-31 02:54:30] Successfully inserted record: National Defense Report
+[2025-01-31 02:54:30] Number of photos included: 0
+[2025-01-31 02:54:31] Successfully inserted record: Kirkpatrick State Report
+[2025-01-31 02:54:31] Number of photos included: 0
+[2025-01-31 02:54:33] Successfully inserted record: Allen Dulles Report
+[2025-01-31 02:54:33] Number of photos included: 0
+[2025-01-31 02:54:34] 
+Batch 12 complete!
+[2025-01-31 02:54:34] Running totals - Successful: 600, Failed: 0
+[2025-01-31 02:54:34] 
+Processing batch 13 (7 records)
+[2025-01-31 02:54:34] Successfully inserted record: Department Defense Report
+[2025-01-31 02:54:34] Number of photos included: 0
+[2025-01-31 02:54:35] Successfully inserted record: “Legacy Programs” Report
+[2025-01-31 02:54:35] Number of photos included: 0
+[2025-01-31 02:54:36] Successfully inserted record: Information Interview Report
+[2025-01-31 02:54:36] Number of photos included: 0
+[2025-01-31 02:54:37] Successfully inserted record: Hedge Fund Report
+[2025-01-31 02:54:37] Number of photos included: 0
+[2025-01-31 02:54:38] Successfully inserted record: National Reconnaissance Report
+[2025-01-31 02:54:38] Number of photos included: 0
+[2025-01-31 02:54:39] Successfully inserted record: Senior Manager Report
+[2025-01-31 02:54:39] Number of photos included: 0
+[2025-01-31 02:54:40] Successfully inserted record: People “Involved Report
+[2025-01-31 02:54:40] Number of photos included: 0
+[2025-01-31 02:54:41] 
+Batch 13 complete!
+[2025-01-31 02:54:41] Running totals - Successful: 607, Failed: 0

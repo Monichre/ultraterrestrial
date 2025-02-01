@@ -3,7 +3,7 @@
 import { PerspectiveCamera, useGLTF } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Bloom, EffectComposer, TiltShift2 } from '@react-three/postprocessing'
-import { forwardRef, memo, Suspense, useRef } from 'react'
+import { Suspense, useRef } from 'react'
 
 
 export const MoonScene = ( { offset = 0, ...props }: any ) => {
@@ -43,7 +43,7 @@ export interface MoonProps { }
 // Start of Selection
 export const Moon = () => {
   return (
-    <div className='h-full w-full' id='moon-canvas'>
+    <div className='h-[60vh] w-[60vw] absolute top-1/4 left-1/4 -translate-x-1/4 -translate-y-1/4' id='moon-canvas'>
       <Canvas gl={{ antialias: false }} >
         {/* <color attach='background' args={['#101015']} /> */}
         <PerspectiveCamera makeDefault position={[0, -0.5, 5]} fov={50} />
