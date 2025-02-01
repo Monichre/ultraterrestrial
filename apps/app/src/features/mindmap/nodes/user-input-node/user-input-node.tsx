@@ -30,7 +30,6 @@ import {
   AnimatePresence,
   motion
 } from "framer-motion"
-import { XIcon } from 'lucide-react'
 import rehypeExternalLinks from 'rehype-external-links'
 import remarkGfm from 'remark-gfm'
 
@@ -199,7 +198,7 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
         </CoreNodeContent>
         <CoreNodeBottom>
 
-          <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-400'>
+          <div className='flex items-center gap-1 rounded-full py-1 pl-2 pr-2.5  bg-neutral-800 text-neutral-400'>
             <div className='size-5'>
               <span
                 className='relative flex shrink-0 overflow-hidden rounded-full aspect-square h-full animate-overlayShow cursor-pointer border-2 shadow duration-200 pointer-events-none'
@@ -217,12 +216,12 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
 
               </span>
             </div>
-            <span className='text-neutral-600 dark:text-neutral-400'>
+            <span className='text-neutral-400'>
             </span>
           </div>
           <span className='flex items-center gap-1'>
 
-            <Button variant='outline' onClick={findConnections} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 dark:text-white dark:bg-black  hover:border-indigo-800 mx-1'>
+            <Button variant='outline' onClick={findConnections} className=' flex items-center px-4 py-2 font-semibold text-white dark:bg-black  hover:border-indigo-800 mx-1'>
               <GroupIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
             </Button>
             <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} />

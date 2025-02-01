@@ -18,7 +18,8 @@ apps/app/ultravenv/
 ./apps/**/build
 ./apps/**/coverage
 ./apps/**/public
-
+/packages/agentic-rag/knowledge/case_files/
+/packages/agentic-rag/knowledge/transcripts/
 *.csv
 *.json
 *.jsonl

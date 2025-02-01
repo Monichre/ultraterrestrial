@@ -290,7 +290,7 @@ export function PopoverSubmitButton( { className }: PopoverSubmitButtonProps ) {
   return (
     <button
       className={cn(
-        "relative ml-1 flex h-8 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 bg-transparent px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] dark:border-zinc-50/10 dark:text-zinc-50 dark:hover:bg-zinc-800",
+        "relative ml-1 flex h-8 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 bg-transparent px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98] border-zinc-50/10 text-zinc-50 :hover:bg-zinc-800",
         className
       )}
       type="submit"
@@ -311,7 +311,7 @@ export function PopoverHeader( {
   return (
     <div
       className={cn(
-        "px-4 py-2 font-semibold text-zinc-900 dark:text-zinc-100",
+        "px-4 py-2 font-semibold text-zinc-100",
         className
       )}
     >

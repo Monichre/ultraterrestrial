@@ -1,9 +1,9 @@
 import type { SearchResult } from '@/app/api/disclosure/data-layer/search/table/route'
 import axios from 'axios'
 
-export const initiateDatabaseWideConnectionSearch = async ( { id, type }: any ) => {
+export const winitiateDatabaseWideConnectionSearch = async ( { id, type }: any ) => {
   try {
-    const response = await axios.get( '/api/data/search/connections', {
+    const response = await axios.get( '/api/disclosure/data-layer/search/connections', {
       params: {
         id,
         type,
@@ -21,7 +21,7 @@ export const initiateDatabaseWideConnectionSearch = async ( { id, type }: any ) 
 
 export const initiateRagEnrichedDatabaseSearch = async ( { subject, type }: any ) => {
   try {
-    const response = await axios.post( '/api/data/enrich', {
+    const response = await axios.post( '/api/disclosure/data-layer/enrich', {
       data: {
         subject,
         type,
@@ -45,7 +45,7 @@ export const initiateDatabaseTableQuery = async ( {
   table: string
 } ): Promise<SearchResult | undefined> => {
   try {
-    const response: any = await axios.get( '/api/data/search/table', {
+    const response: any = await axios.get( '/api/disclosure/data-layer/search/table', {
       params: {
         keyword,
         table,

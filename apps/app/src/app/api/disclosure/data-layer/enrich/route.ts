@@ -1,5 +1,6 @@
-import { checkRelevanceWithAI } from '@/services/agents/disclosure/functions/functions'
+
 import { executePlatformWideConnectionSearch } from '@/db/xata'
+import { checkRelevanceWithAI } from '@/services/ai/openai'
 
 export async function POST( req: any ) {
   const { data } = await req.json()

@@ -1,8 +1,8 @@
 // useContextMenu.ts
 'use client'
 
-import {useLongPress, useMouse} from '@uidotdev/usehooks'
-import {useEffect, useRef, useState} from 'react'
+import { useLongPress, useMouse } from '@uidotdev/usehooks'
+import { useEffect, useRef, useState } from 'react'
 
 interface MenuPosition {
   x: number
@@ -11,40 +11,40 @@ interface MenuPosition {
 
 export function useContextMenu() {
   const [mouse, ref]: any = useMouse()
-  console.log(ref)
-  const [clickPosition, setClickPosition] = useState<MenuPosition | null>(null)
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const targetRef = useRef<HTMLElement | null>(null)
+
+  const [clickPosition, setClickPosition] = useState<MenuPosition | null>( null )
+  const [isOpen, setIsOpen] = useState<boolean>( false )
+  const targetRef = useRef<HTMLElement | null>( null )
 
   const xIntersecting = mouse.elementX > 0 && mouse.elementX < 300
   const yIntersecting = mouse.elementY > 0 && mouse.elementY < 300
   const isIntersecting = xIntersecting && yIntersecting
 
-  const handlePositionChange = (x: number, y: number) => {
-    if (targetRef.current) {
+  const handlePositionChange = ( x: number, y: number ) => {
+    if ( targetRef.current ) {
       const rect = targetRef.current.getBoundingClientRect()
       const isInside = x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
       // Note: setIsHovering is removed as it's not defined in the scope
     }
   }
 
-  const handleContextMenu = (event: any) => {
+  const handleContextMenu = ( event: any ) => {
     event.preventDefault()
-    setClickPosition({x: event.clientX, y: event.clientY})
-    setIsOpen(true)
+    setClickPosition( { x: event.clientX, y: event.clientY } )
+    setIsOpen( true )
   }
   const closeMenu = () => {
-    setIsOpen(false)
-    setClickPosition(null)
+    setIsOpen( false )
+    setClickPosition( null )
   }
 
   const attrs = useLongPress(
     () => {
-      setIsOpen(true)
+      setIsOpen( true )
     },
     {
-      onStart: (event: any) => {
-        handleContextMenu(event)
+      onStart: ( event: any ) => {
+        handleContextMenu( event )
       },
       onFinish: () => null,
       onCancel: () => null,
@@ -52,12 +52,12 @@ export function useContextMenu() {
     }
   )
 
-  useEffect(() => {
-    if (ref?.current) {
-      ref.current.addEventListener('contextmenu', handleContextMenu)
-      ref.current.addEventListener('click', closeMenu)
+  useEffect( () => {
+    if ( ref?.current ) {
+      ref.current.addEventListener( 'contextmenu', handleContextMenu )
+      ref.current.addEventListener( 'click', closeMenu )
     }
-  }, [ref])
+  }, [ref] )
 
   return {
     ref,
