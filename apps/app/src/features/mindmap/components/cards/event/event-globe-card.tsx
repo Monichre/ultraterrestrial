@@ -1,7 +1,7 @@
 'use client'
 
+import type { GlobeLocation } from '@/components/globes'
 import { EventsIcon } from '@/components/icons'
-import type { GlobeLocation } from '@/components/ui/globe/display-locations-globe'
 import { PhotoCarousel } from '@/features/mindmap/components/cards/event/photo-carousel'
 import { STOCK_PHOTOS, wait } from '@/utils'
 import createGlobe from 'cobe'

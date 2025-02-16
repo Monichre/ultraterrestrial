@@ -1,13 +1,14 @@
 import Loading from '@/app/loading'
 import { SightingsGlobe } from '@/features/data-viz/sightings/sightings-globe'
-import { getFullSightingsPayload } from '@/services/sightings/actions/sightings'
+import { getSightingsGeoJSON } from '@/services/sightings/uap-sighting'
 import { Suspense } from 'react'
 
 export default async function Index() {
 
-  const { geoJSONSightings }: any = await getFullSightingsPayload()
+  // const { geoJSONSightings }: any = await getFullSightingsPayload()
+  const { sightings, militaryBases, ufoPosts }: any = await getSightingsGeoJSON()
 
-  console.log( "🚀 ~ file: page.tsx:9 ~ Index ~ geoJSONSightings:", geoJSONSightings )
+  // console.log( "🚀 ~ file: page.tsx:9 ~ Index ~ geoJSONSightings:", geoJSONSightings )
 
 
   // console.log( "🚀 ~ file: page.tsx:9 ~ Index ~ realtimeSightings:", realtimeSightings )
@@ -23,7 +24,7 @@ export default async function Index() {
       <Suspense fallback={<Loading />}>
         {/* <MapboxGlobe sightings={geoJSONSightings?.sightings} /> */}
         <SightingsGlobe
-          geoJSONSightings={{ ...geoJSONSightings }}
+          geoJSONSightings={{ sightings, militaryBases, ufoPosts }}
         // realtimeSightings={realtimeSightings}
         />
       </Suspense>

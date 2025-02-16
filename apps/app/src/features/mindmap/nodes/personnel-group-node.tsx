@@ -53,7 +53,7 @@ const PersonnelGroupNode = memo( ( node: any ) => {
   return (
     <>
 
-      <CoreNodeContainer id={node.id} className='motion-scale-in-0 motion-opacity-in-0 h-full w-full' style={{
+      <CoreNodeContainer id={node.id} className=' motion-opacity-in-0 h-full w-full' style={{
         minHeight: node?.initialHeight,
         minWidth: node?.initialWidth,
       }}>

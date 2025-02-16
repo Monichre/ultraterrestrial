@@ -1,6 +1,6 @@
 'use client'
+import { LayoutGroup, motion } from 'framer-motion'
 import React, { memo, useEffect, useState } from 'react'
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'
 
 import {
   DropdownMenu,
@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Home, Sparkles, LibraryBig, Crosshair } from 'lucide-react'
 import { cn } from '@/utils'
 import {
   SignedIn,
@@ -18,11 +17,9 @@ import {
   useUser,
 } from '@clerk/nextjs'
 
-import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { UltraterrestrialLogo } from '@/components/navbar/ut-logo'
-import { UltraLogoAlt } from '@/components/navbar/ut-logo-alt'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const transition = {
   type: 'spring',
@@ -58,7 +55,7 @@ export const MenuItem = memo(
     return (
       <div
         onMouseEnter={handleMouseEnter}
-        className='relative cursor-pointer z-50'
+        className='relative cursor-pointer z-50 menu-item'
       // onMouseLeave={handleMouseExit}
       >
         <LayoutGroup>
@@ -66,8 +63,8 @@ export const MenuItem = memo(
           <motion.p
             key={`${item}-p`}
             transition={{ duration: 0.3 }}
-            className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9] uppercase !font-bebasNeuePro tracking-widest'
-            style={{ letterSpacing: '1px', fontWeight: 400 }}
+            className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9] '
+
           >
             {item}
           </motion.p>
@@ -127,7 +124,7 @@ export const HoveredLink = ( { children, ...rest }: any ) => {
   return (
     <Link
       {...rest}
-      className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9] uppercase !font-bebasNeuePro font-[500]'
+      className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9] '
       style={{ letterSpacing: '1px', fontWeight: 400 }}
     >
       {children}
@@ -200,7 +197,7 @@ export function DropdownMenuDemo( { isAdmin }: any ) {
           <DropdownMenuItem>
             <SignInButton>
               <Button
-                className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeuePro tracking-widest'
+                className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9]  !font-monumentMono'
                 variant='ghost'
               >
                 Sign In
@@ -271,7 +268,7 @@ export function FullSiteNav( { className }: { className?: string } ) {
             key='Explore'
           >
             <div className='flex flex-col space-y-4'>
-              <HoveredLink className='' href='/explore/disclosure'>
+              <HoveredLink className='' href='/explore/disclosure' >
                 The State of Disclosure
               </HoveredLink>
               <HoveredLink className='' href='/explore/key-figures'>
@@ -335,9 +332,10 @@ export function FullSiteNav( { className }: { className?: string } ) {
           <MenuItem
             setActive={setActive}
             active={active}
-            item='Sightings'
-            key='Sightings'
+            item='sightings'
+            key='sightings'
           >
+
             <div className='flex flex-col space-y-4'>
               <HoveredLink className='' href='/sightings'>
                 UFO Sightings
@@ -351,7 +349,7 @@ export function FullSiteNav( { className }: { className?: string } ) {
         {/* <SignedOut>
           <SignInButton>
             <Button
-              className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9] uppercase  !font-bebasNeuePro tracking-widest'
+              className='cursor-pointer light:text-black dark:text-white hover:opacity-[0.9]    tracking-widest'
               variant='ghost'
             >
               Sign In

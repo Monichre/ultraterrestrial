@@ -161,9 +161,11 @@ export function Graph( props: any ) {
           <MindMapBottomMenu />
         </Panel>
 
-        {/* <Panel position='bottom-right'>
-          <MindMapAiChat />
-        </Panel> */}
+        <Panel position='bottom-right'>
+          {/* <MindMapAiChat /> */}
+          {/* <AssistantModal /> */}
+
+        </Panel>
       </ReactFlow>
     </div>
 

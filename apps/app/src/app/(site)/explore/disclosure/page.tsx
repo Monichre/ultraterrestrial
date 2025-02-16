@@ -5,22 +5,28 @@ import { MindMap } from '@/features/mindmap'
 import { Loading } from '@/components/loaders/loading'
 import { getEntityNetworkGraphData, type NetworkGraphPayload } from '@/features/mindmap/api/get-entity-network-graph-data'
 
-import { StateOfDisclosureProvider } from '@/contexts'
 import { MindMapCursor } from '@/components/cursors'
-
+import { StateOfDisclosureProvider } from '@/contexts'
+// import { useChatRuntime } from "@assistant-ui/react-ai-sdk"
 
 export default async function Index() {
 
 
 
   const data: NetworkGraphPayload = await getEntityNetworkGraphData()
+  const runtime = useChatRuntime( {
+    api: "/api/disclosure/chat",
+  } )
 
   return (
+    // <AssistantRuntimeProvider runtime={runtime}>
     <Suspense fallback={<Loading />}>
+
       <MindMapCursor type='gooey' />
       <StateOfDisclosureProvider stateOfDisclosure={data}>
         <MindMap />
       </StateOfDisclosureProvider>
     </Suspense>
+    // </AssistantRuntimeProvider>
   )
 }

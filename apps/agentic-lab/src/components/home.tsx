@@ -14,11 +14,11 @@ export const Home = () => {
     <Suspense fallback={<div>Loading...</div>}>
       <Room>
         <div className='flex flex-row h-[100vh] w-[100vw]'>
-
-          <StorageTldraw />
           <div className='h-full w-[25vw] '>
             <ConsolePage />
           </div>
+          <StorageTldraw />
+
         </div>
       </Room>
 

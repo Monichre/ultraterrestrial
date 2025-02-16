@@ -92,24 +92,7 @@ export async function POST( req: Request ) {
             ( () => {
               throw new Error( 'ASSISTANT_ID environment is not set' )
             } )(),
-          additional_instructions: `Look across topics, events, key figures, sightings, documents any additional resources at your disposal. Cite all of your sources thoroughly and specifically, including information and other relevant details on the weight of the resource as it pertains to your answer or the completion of the task. Return your response in well formatted markddown but be sure to return the Citations/Annotations data in JSON 
-        in the following format: 
-        ---
-        {
-          "citations": [
-            {
 
-              "Relation to Subject": "{{data}}", 
-              "Evidence": "{{data}}",
-              "Relevance Score": "{{data}}",
-              "Source": "{{Name of Source/Article}}",
-              "File": "{{Name of File}}",
-              "Weight": "{{The weight value you would assign it}}"
-              }
-            ]
-        }
-        ---
-        `,
         },
         { signal: req.signal }
         // assistantEventHandler

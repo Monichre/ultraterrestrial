@@ -1,15 +1,13 @@
 import { getXataClient, type EventsRecord } from '@/db/xata'
-import { HistoricalEventsTimeline } from '@/layouts/historical-events-timeline/historical-events-timeline'
-import { JSONData } from '@xata.io/client'
+import { type JSONData } from '@xata.io/client'
+import { TimelineViews } from './timeline-views'
 
 const xata = getXataClient()
-export default async function Index() {
+
+export default async function TimelinePage() {
   const events: JSONData<EventsRecord>[] = await xata.db.events
-
-
-
     .filter( {
-      category: { $includes: "historical" },
+      category: { $includes: "historic" },
     } )
     .sort( 'date', 'desc' )
     .select( [
@@ -31,9 +29,5 @@ export default async function Index() {
     .getAll()
     .then( ( data ) => data.toSerializable() )
 
-  return (
-    <div className='timeline-page'>
-      <HistoricalEventsTimeline events={events} />
-    </div>
-  )
+  return <TimelineViews events={events} />
 }

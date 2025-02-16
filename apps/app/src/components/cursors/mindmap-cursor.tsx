@@ -1,5 +1,4 @@
 'use client'
-import { ICON_BLUE, ICON_GREEN } from '@/utils/constants/colors'
 import * as React from 'react'
 
 import AnimatedCursor from 'react-animated-cursor'
@@ -37,7 +36,7 @@ export const GooeyCursor: React.FC = () => {
         </defs>
       </svg>
       <AnimatedCursor
-        innerSize={20}
+        innerSize={5}
         outerSize={35}
         innerScale={2}
         outerScale={1.7}
@@ -47,12 +46,12 @@ export const GooeyCursor: React.FC = () => {
         // color={'#fff'}
         innerStyle={{
           // backgroundColor: ICON_GREEN,
-          backgroundColor: 'none',
-          backgroundImage: "url('/ufo.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          cursor: 'none',
+          backgroundColor: '#fff',
+          // backgroundImage: "url('/ufo.png')",
+          // backgroundSize: 'cover',
+          // backgroundPosition: 'center',
+          // backgroundRepeat: 'no-repeat',
+          // cursor: 'none',
         }}
         // outerAlpha={0.4}
         outerStyle={{

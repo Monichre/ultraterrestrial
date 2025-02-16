@@ -125,7 +125,7 @@ export const CoreNodeAvatar: React.FC<CoreNodeAvatarProps & { label?: string }> 
             transform: 'translateX(0px)',
           }}>
           <img
-            className='aspect-square size-full object-cover motion-delay-[400ms] motion-ease-spring-bouncier motion-scale-in-0'
+            className='aspect-square size-full object-cover motion-delay-[400ms] motion-ease-spring-bouncier '
             src={image.url}
           />
         </span>

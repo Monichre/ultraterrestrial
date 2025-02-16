@@ -131,7 +131,7 @@ export const UserInputNode = memo( ( props: NodeProps ) => {
         )}
       </AnimatePresence>
 
-      <CoreNodeContainer id={props.id} className='motion-scale-in-0 motion-opacity-in-0' ref={nodeRef} >
+      <CoreNodeContainer id={props.id} className='motion-opacity-in-0' ref={nodeRef} >
         <CoreNodeTop>
           <div className='flex justify-between w-content align-center items-center ml-auto'>
             {/* <Button variant='outline' onClick={findConnections} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 dark:text-white dark:bg-black  hover:border-indigo-800 mx-1'>

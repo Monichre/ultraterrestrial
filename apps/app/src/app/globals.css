@@ -401,12 +401,39 @@
 font-family: 'Nunito', sans-serif; */
 /* Bebas Neue Regular + Nunito Regular */
 /* https://www.fontshare.com/pairs?user-filter=shortlisted */
-@font-face {
-  font-family: 'JetBrains Mono', monospace;
-  src: url('/src/app/fonts/jetbrains/JetBrainsMono-VariableFront_wght.ttf') format('ttf');
 
-  /* src: url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap'); */
+@font-face {
+  font-family: 'Monument Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Monument-Grotesk/ABCMonumentGrotesk-Regular-Trial.woff2') format('woff2'),
+    url('./fonts/Monument-Grotesk/ABCMonumentGrotesk-Medium-Trial.woff2') format('woff2'),
+    url('./fonts/Monument-Grotesk/ABCMonumentGrotesk-Heavy-Trial.woff2') format('woff2');
 }
+
+@font-face {
+  font-family: 'MONUMENT GROTESK Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/MonumentGroteskMono/ABCMonumentGroteskMono-Regular-Trial.woff2') format('woff2'),
+    url('./fonts/MonumentGroteskMono/ABCMonumentGroteskMono-Medium-Trial.woff2') format('woff2'),
+    url('./fonts/MonumentGroteskMono/ABCMonumentGroteskMono-Heavy-Trial.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/NeueHaasGrotesk/neuehaas.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Lukas Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/LukasSans.woff2') format('woff2');
+}
+
 
 /* @font-face {
   font-family: 'FAMILY_NAME';
@@ -428,7 +455,7 @@ body {
   /* min-block-size: 400vh; */
   @apply bg-background text-foreground;
   /* font-family: 'JetBrains Mono', monospace; */
-  font-family: var(--font-lukas-sans);
+  /* font-family: var(--font-lukas-sans); */
   /* font-family: "Source Sans 3", sans-serif!important; */
   /* var(--font-fira-code); */
 
@@ -487,7 +514,8 @@ body::after {
 h2,
 h3 {
   /* font-family: 'Centima Sans', sans-serif; */
-  font-family: 'Bebas Neue Pro', sans-serif;
+  /* font-family: 'Bebas Neue Pro', sans-serif; */
+  font-family: 'Grotesk Mono', sans-serif;
 
   /* font-size: 24px;
   line-height: 32px;
@@ -499,7 +527,7 @@ p {
   /* font-family: 'JetBrains Mono', monospace; */
   /* font-family: var(--font-source-sans) !important; */
   /* font-family: "Source Sans 3", sans-serif!important; */
-  font-family: var(--font-lukas-sans) !important;
+  /* font-family: var(--font-lukas-sans) !important; */
   letter-spacing: 1px;
   font-weight: 300;
   /* 'Sentient', serif; */
@@ -599,7 +627,8 @@ h3,
 .card h3,
 .header-style {
   /* font-family: var(--font-ailerons); */
-  font-family: var(--font-bebas-neue);
+  /* font-family: var(--font-bebas-neue); */
+  font-family: 'Grotesk Mono', sans-serif;
 }
 
 /* var(--font-source-sans) */
@@ -962,15 +991,23 @@ td p {
 
 .key-figures.fullsite-nav p {
   color: #fff !important;
-  font-family: var(--font-source-sans);
+  /* font-family: var(--font-monument) !important; */
+  /* font-variant-caps: all-small-caps; */
+  /* font-family: var(--font-source-sans); */
 }
 
-.fullsite-nav p {
-
+.fullsite-nav p,
+.fullsite-nav>li,
+.menu-item {
+  color: #fff !important;
+  font-family: var(--font-monument) !important;
+  font-variant-caps: all-small-caps;
 
   /* font-weight: 700; */
-  font-size: 18px;
+  /* font-size: 18px; */
 }
+
+.fullsite-nav>li {}
 
 .react-flow__background {
   background-color: #000;
@@ -984,7 +1021,7 @@ td p {
 
 .ai-response-markup h3,
 .ai-response-markup h4 {
-  font-family: 'Bebas Neue', sans-serif;
+  /* font-family: 'Bebas Neue', sans-serif; */
   /* font-family: var(--font-bebas-neue); */
   /* var(--font-source-sans) */
   /* font-size: 24px;
@@ -998,7 +1035,7 @@ td p {
 .ai-response-markup p,
 .ai-response-markup ul li {
   /* font-family: 'Nunito', sans-serif; */
-  font-family: var(--font-source-sans);
+  /* font-family: var(--font-source-sans); */
 }
 
 .react-flow__edges svg {
@@ -1343,17 +1380,15 @@ note .ai-response-markup h3,
     linear-gradient(rgba(0, 0, 0, 0.3) 0 0) padding-box;
   mask-repeat: no-repeat; 
 } */
-
+/* 
 .hint {
   width: 60px;
   height: 60px;
-  /* margin: 150px auto; */
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* top: -60px; */
-  /* right: 0px; */
+
 }
 
 .anchor-node-icon {
@@ -1364,7 +1399,6 @@ note .ai-response-markup h3,
 }
 
 .hint::before {
-  /* //rotated squre */
   background-color: #fff;
   width: 8px;
   height: 8px;
@@ -1381,7 +1415,6 @@ note .ai-response-markup h3,
 }
 
 .hint::after {
-  /* //green glow */
   pointer-events: none;
   content: '';
   position: absolute;
@@ -1617,6 +1650,179 @@ note .ai-response-markup h3,
   top: -82%;
   left: 53%;
   margin-left: 56px;
+} */
+:root {
+  /* Configurable values */
+  --hint-size: 30px;
+  --hint-color: #fff;
+  --glow-color: rgba(121, 255, 225, 0.3);
+  --glow-initial: 0 0 30px 5px #79ffe1;
+  --glow-mid: 0 0 70px 50px rgba(72, 170, 72, 0);
+  --glow-final: 0 0 0 50px rgba(72, 170, 72, 0);
+  --anim-duration: 2s;
+  --border-initial: rgba(255, 255, 255, 0.6);
+  --border-mid: rgba(255, 255, 255, 0.3);
+  --radius-size: 250px;
+  --radius-bg: rgba(255, 255, 255, 0.1);
+  --radius-trans: 0.5s;
+  --content-width: 300px;
+  --content-padding: 12px 0;
+}
+
+/* Container */
+.hint,
+.anchor-node-icon {
+  width: var(--hint-size);
+  height: var(--hint-size);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Rotated square */
+.hint::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: var(--hint-color);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Pulsing glow */
+.hint::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  box-shadow: 0 0 50px 30px var(--glow-color);
+  animation: glow var(--anim-duration) cubic-bezier(0.25, 0.1, 0.2, 1) infinite;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: var(--glow-initial);
+  }
+
+  70% {
+    box-shadow: var(--glow-mid);
+  }
+
+  100% {
+    box-shadow: var(--glow-final);
+  }
+}
+
+/* Animated border dot */
+.hint-dot {
+  position: absolute;
+  z-index: 3;
+  width: var(--hint-size);
+  height: var(--hint-size);
+  border: 1px solid var(--hint-color);
+  border-radius: 50%;
+  transform: scale(0.95);
+  animation: borderAnim var(--anim-duration) linear infinite;
+  pointer-events: none;
+}
+
+@keyframes borderAnim {
+
+  0%,
+  100% {
+    border-color: var(--border-initial);
+    transform: scale(0.95);
+  }
+
+  50% {
+    border-color: var(--border-mid);
+    transform: scale(1);
+  }
+}
+
+/* Expanding radius */
+.hint-radius {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--radius-size);
+  height: var(--radius-size);
+  margin: calc(-1 * var(--radius-size) / 2);
+  background: var(--radius-bg);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform var(--radius-trans), opacity var(--radius-trans), visibility var(--radius-trans);
+  pointer-events: none;
+}
+
+.hint:hover .hint-radius {
+  transform: scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Tooltip content */
+.hint-content {
+  position: absolute;
+  top: -82%;
+  left: 53%;
+  margin-left: 56px;
+  width: var(--content-width);
+  padding: var(--content-padding);
+  color: var(--hint-color);
+  z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+  pointer-events: none;
+}
+
+.hint:hover>.hint-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Underline animations */
+.hint-content::before,
+.hint-content::after {
+  content: '';
+  position: absolute;
+  background: var(--hint-color);
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  transition: width 0.4s;
+}
+
+.hint-content::before {
+  width: 0;
+}
+
+.hint:hover .hint-content::before {
+  width: 180px;
+}
+
+.hint-content::after {
+  width: 80px;
+  transform-origin: 0 50%;
+  transform: rotate(-225deg);
+  transition: opacity 0.5s ease;
+  opacity: 1;
 }
 
 .react-flow,

@@ -1,11 +1,10 @@
 import { useEntity } from "@/hooks"
 import { STOCK_PHOTOS } from "@/utils"
-import { p } from "@liveblocks/react/dist/suspense-fYGGJ3D9"
+
 import { format } from "date-fns"
 import { project } from "deck.gl"
-import type src from "gsap/src"
 import { ArrowUpRight } from "lucide-react"
-import { type } from "os"
+
 import { useState } from "react"
 
 export function GridCard( { card }: { card: any } ) {

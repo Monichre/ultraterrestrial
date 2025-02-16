@@ -1,21 +1,18 @@
 'use client'
-import {
-  ShootingStars,
-  StarsBackground,
-} from '@/components/backgrounds/shooting-stars'
 // import { SpatialTimeline } from '@/layouts/timeline/SpatialTimeline' port { TimelineSidebar } from '@/layouts/historical-events-timeline/
+import { GraphPaperBackground } from '@/components/backgrounds'
+import type { EventsRecord } from '@/db/xata'
+import { EventsGlobe } from '@/layouts/historical-events-timeline/events-globe'
+import { EventsTimeline } from '@/layouts/historical-events-timeline/events-timeline'
+import { TimelineSidebar } from '@/layouts/historical-events-timeline/timeline-sidebar-ui'
 import {
   extractCoordinatesFromEvents,
   extractUniqueYearsFromEvents
 } from '@/utils'
-import './events-timeline.css'
-
-import { AdminDashboardGlobe } from '@/components/globes'
-import type { EventsRecord } from '@/db/xata'
-import { EventsTimeline } from '@/layouts/historical-events-timeline/events-timeline'
-import { TimelineSidebar } from '@/layouts/historical-events-timeline/timeline-sidebar-ui'
 import type { JSONData } from '@xata.io/client'
 import { useMemo, useRef, useState } from 'react'
+import './events-timeline.css'
+import './timeline.css'
 
 export const HistoricalEventsTimeline = ( { events }: { events: JSONData<EventsRecord>[] } ) => {
   const years: any = extractUniqueYearsFromEvents( events )
@@ -33,10 +30,22 @@ export const HistoricalEventsTimeline = ( { events }: { events: JSONData<EventsR
 
   const updateActiveLocation = ( location: any ) => {
 
-    const [lat, lon] = location
+    console.log( "🚀 ~ updateActiveLocation ~ location:", location )
+
+
+
+
     // const temp = locationToAngles(lat, lon)
     // console.log('temp: ', temp)
-    setActiveLocation( location )
+    if ( location?.length ) {
+      const [lat, lon] = location
+
+      console.log( "🚀 ~ updateActiveLocation ~ lon:", lon )
+
+
+      console.log( "🚀 ~ updateActiveLocation ~ lat:", lat )
+      setActiveLocation( location )
+    }
   }
 
 
@@ -76,15 +85,21 @@ export const HistoricalEventsTimeline = ( { events }: { events: JSONData<EventsR
   return (
     <>
       <div className='fixed top-0 left-0 right-0 bottom-0 bg-black h-full w-full z-0'>
-        <ShootingStars />
-        <StarsBackground />
-        <div className='relative z-10 h-full w-full'>
-          {/* <Earth spin={false} activeLocation={activeLocation} /> */}
-          <AdminDashboardGlobe markers={locations} />
+        {/* <ShootingStars /> */}
+        {/* <StarsBackground /> */}
+        <GraphPaperBackground />
+        <div className='absolute top-0 left-0 z-10 h-auto w-[50%]'>
+          {/* <Earth activeLocation={activeLocation} /> */}
+          {/* <AdminDashboardGlobe markers={locations} /> */}
           {/* <Globe locations={locations} activeLocation={activeLocation} /> */}
           {/* <CodePenGlobe
             markers={locations}
+            activeLocation={activeLocation}
           /> */}
+          <EventsGlobe
+            markers={locations}
+            activeLocation={activeLocation}
+          />
           {/* markers={locations} activeLocation={activeLocation}  */}
           {/* <EarthAtNight /> */}
           {/* <CodePenEarthAlt locations={locations} /> */}

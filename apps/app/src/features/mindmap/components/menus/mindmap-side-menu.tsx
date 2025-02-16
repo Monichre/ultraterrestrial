@@ -19,18 +19,16 @@ import {
 import {
   ArtifactsIcon,
   EventsIcon,
-  HandDrawnArrowDown,
   KeyFiguresIcon,
   LayersIcon,
   OrganizationsIcon,
-  SketchyGlobe,
   TestimoniesIcon,
   TopicsIcon
 } from '@/components/icons'
 import { Button } from '@/components/ui/button'
 import { useMindMap } from '@/contexts/mindmap-context'
 import { saveEventForUser } from '@/features/user/api/save-event'
-import { ICON, ICON_GREEN, ICON_GREEN_GREEN } from '@/utils'
+import { ICON_GREEN } from '@/utils'
 import { useAuth } from '@clerk/nextjs'
 import {
   Tooltip,
@@ -39,14 +37,12 @@ import {
   TooltipTrigger,
 } from '@radix-ui/react-tooltip'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowDown, ArrowDownToLine, FileSearch, Lightbulb, Plus } from 'lucide-react'
+import { ArrowDown, FileSearch, Lightbulb, Plus } from 'lucide-react'
 import {
   useCallback,
   useEffect,
   useRef,
-  useState,
-  type JSX,
-  type SVGProps,
+  useState
 } from 'react'
 
 
@@ -107,6 +103,20 @@ export const QuickActionsFloatingPanel = () => {
 
       // If there is at least one existing userInputNode, create an edge from the last one to the new one
       let lastUserInputNode = existingUserInputNodes.length > 0 ? existingUserInputNodes[existingUserInputNodes.length - 1] : null
+      // Get width of last input node (assuming default width if not found)
+      const lastNodeWidth = lastUserInputNode ?
+        document.getElementById( lastUserInputNode.id )?.getBoundingClientRect().width || 200 :
+        200
+
+      // Calculate total width needed for entities with spacing
+      const entityWidth = 250 // Default entity node width
+      const entitySpacing = 50 // Space between entities
+      const totalEntitiesWidth = ( entities.length * entityWidth ) + ( ( entities.length - 1 ) * entitySpacing )
+
+      // Calculate starting X position to center entities under the last node
+      const startX = lastUserInputNode ?
+        lastUserInputNode.position.x - ( totalEntitiesWidth / 2 ) + ( lastNodeWidth / 2 ) :
+        center.x - ( totalEntitiesWidth / 2 )
 
 
       if ( !lastUserInputNode ) {
@@ -114,13 +124,12 @@ export const QuickActionsFloatingPanel = () => {
         addNodes( lastUserInputNode )
       }
 
-      let x = -600
-      console.log( "🚀 ~ file: mindmap-bottom-menu.tsx:135 ~ MindMapBottomMenu ~ x:", x )
+      // let x = -( lastUserInputNode.position.x + 250 )
       setNodes( nds => [...nds, ...entities.map( ( entity: any ) => ( {
         ...entity,
         type: 'entityNode',
         position: {
-          x: x += 200,
+          x: startX + 250,
           y: 350
         },
         parentId: lastUserInputNode?.id || null,
@@ -167,6 +176,7 @@ export const QuickActionsFloatingPanel = () => {
       label: 'Events',
       action: async () => {
         await handleLoadingRecords( { data: { type: 'events' } } )
+        setOpen( false )
       },
     },
     {

@@ -1,7 +1,7 @@
 import type { SearchResult } from '@/app/api/disclosure/data-layer/search/table/route'
 import axios from 'axios'
 
-export const winitiateDatabaseWideConnectionSearch = async ( { id, type }: any ) => {
+export const initiateDatabaseWideConnectionSearch = async ( { id, type }: any ) => {
   try {
     const response = await axios.get( '/api/disclosure/data-layer/search/connections', {
       params: {

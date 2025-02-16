@@ -3,7 +3,6 @@ import { instructions } from "@/utils/conversation_config"
 import * as React from "react"
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Toggle } from "@/components/toggle/Toggle"
 import { Button } from "@/components/ui/button"
 import { createNewMemory, getSignedUploadUrl } from "@/services/langbase/remember"
 import { addCustomizedMemory } from "@/services/mem"
@@ -12,17 +11,17 @@ import { WavRenderer } from "@/utils/wav_renderer"
 import FirecrawlApp from "@mendable/firecrawl-js"
 import { RealtimeClient } from '@openai/realtime-api-beta'
 import type { ItemType } from "@openai/realtime-api-beta/dist/lib/client"
-import { ArrowDown, ArrowUp, FileIcon, X, Zap } from "lucide-react"
+import { FileIcon, X, Zap } from "lucide-react"
 import './console.css'
 
 import Papa from 'papaparse'
 import ReactMarkdown from 'react-markdown'
 const firecrawl = new FirecrawlApp( {
-  apiKey: 'fc-22d136e7c1484888b4ba53b1a85da50e',
+  apiKey: 'fc-e271f58f93fe4b3fa4885b3234dfa8fb'
 } )
 
 const client = new RealtimeClient( {
-  apiKey: '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',
+  apiKey: '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',
   dangerouslyAllowAPIKeyInBrowser: true,
   debug: true,
 } )
@@ -812,8 +811,8 @@ export function ConsolePage() {
   // data - component="ConsolePage"
   return (
 
-    <div className="flex flex-col w-full h-full overflow-scroll">
-      <div className="w-full h-full flex flex-col overflow-scroll">
+    <div className="flex flex-col w-full h-full overflow-scroll px-2 justify-end">
+      <div className="w-full h-auto flex flex-col overflow-scroll">
         {webData?.length ? webData.map( ( { markdown, screenshot }: { markdown: string; screenshot: string } ) => (
           <div key={screenshot}>
             <img src={screenshot} alt="screenshot" />
@@ -910,12 +909,7 @@ export function ConsolePage() {
         <div className="flex flow-row w-full justify-between items-center">
 
 
-          <Toggle
-            defaultValue={false}
-            labels={['manual', 'vad']}
-            values={['none', 'server_vad']}
-            onChange={( _, value ) => changeTurnEndType( value )}
-          />
+
 
           {isConnected && canPushToTalk && (
             <Button
@@ -974,7 +968,7 @@ export function ConsolePage() {
         <div className="content-block-body" ref={eventsScrollRef}>
           {!realtimeEvents.length && `awaiting connection...`}
 
-          {realtimeEvents && realtimeEvents.map( ( realtimeEvent, i ) => {
+          {/* {realtimeEvents && realtimeEvents.map( ( realtimeEvent, i ) => {
             const count = realtimeEvent.count
             const event = { ...realtimeEvent.event }
             if ( event.type === 'input_audio_buffer.append' ) {
@@ -1032,7 +1026,7 @@ export function ConsolePage() {
                 </div>
               </div>
             )
-          } )}
+          } )} */}
         </div>
       </div>
 

@@ -111,7 +111,7 @@ const EntityNode = memo( ( node: any ) => {
     <>
       <PopoverRoot>
         <Handle type='target' position={Position.Top} />
-        <CoreNodeContainer className={cn( 'motion-scale-in-0 motion-opacity-in-0 min-w-[200px] core-node-container overflow-visible' )} id={node.id}>
+        <CoreNodeContainer className={cn( 'motion-opacity-in-0 min-w-[200px] w-content core-node-container overflow-visible' )} id={node.id}>
           <CoreNodeTop>
             <div className='flex justify-between w-content align-center items-center ml-auto'>
               {/* <Button variant='outline' onClick={handleDelete} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 text-white bg-black  hover:border-indigo-800 mx-1'>
@@ -121,7 +121,7 @@ const EntityNode = memo( ( node: any ) => {
 
             </div>
           </CoreNodeTop>
-          <CoreNodeContent className='min-h-[100xp] w-full'>
+          <CoreNodeContent className='min-h-[100xp] max-w-[300px]'>
 
             {component}
 

@@ -62,7 +62,7 @@ export const GroupResultsNode: any = ( props: any ) => {
       {/* Core Node Container */}
       <CoreNodeContainer
         id={props.id}
-        className="motion-scale-in-0 motion-opacity-in-0"
+        className=" motion-opacity-in-0"
         style={{ width: node.width, height: node.height }}
       >
         <CoreNodeContent>

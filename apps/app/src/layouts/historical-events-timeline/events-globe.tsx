@@ -79,7 +79,7 @@ export function EventsGlobe( { markers, activeLocation }: any ) {
         width: '100%',
         height: '100vh',
         maxWidth: '1000px',
-        margin: 'auto',
+        margin: '-200px auto auto',
         aspectRatio: 1,
       }}
     >

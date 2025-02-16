@@ -101,7 +101,7 @@ export const RootNodeCard = memo( ( { nodeData }: any ) => {
         className={`p-2 relative z-20 after:content-[''] after:absolute after:w-[20%] after:left-[8px] after:bottom-[-4px] after:h-[1px] after:bg-[#78efff]  `}
       >
         <div className='flex align-middle content-center items-center justify-between'>
-          <h3 className={`!font-bebasNeuePro tracking-wider uppercase`}>
+          <h3 className={`!font-monumentMono  tracking-wider uppercase`}>
             {title}
           </h3>
         </div>

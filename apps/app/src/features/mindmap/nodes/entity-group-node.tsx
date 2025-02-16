@@ -61,7 +61,7 @@ const GN = memo( ( props: any ) => {
     <>
       <Handle type="target" position={Position.Top} />
 
-      <BlurAppear className="motion-scale-in-0 motion-opacity-in-0" id={props.id}>
+      <BlurAppear className=" motion-opacity-in-0" id={props.id}>
 
 
         {handles && handles.length
