@@ -3,6 +3,13 @@ import type { Preview } from "@storybook/react"
 import React, { useEffect } from 'react'
 import '../src/app/globals.css'
 
+declare global {
+  interface Window {
+    ScrollTrigger?: {
+      getAll: () => { kill: () => void }[]
+    }
+  }
+}
 
 const preview: Preview = {
   parameters: {
@@ -14,6 +21,12 @@ const preview: Preview = {
       },
     },
     layout: 'fullscreen',
+    canvas: {
+      backgroundColor: '#000000',
+    },
+    viewport: {
+      defaultViewport: 'desktop',
+    },
   },
 
   decorators: [
@@ -27,7 +40,19 @@ const preview: Preview = {
         }
       }, [] )
 
-      return <Story />
+      return (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: '#000000',
+          overflow: 'hidden'
+        }}>
+          <Story />
+        </div>
+      )
     },
   ],
 

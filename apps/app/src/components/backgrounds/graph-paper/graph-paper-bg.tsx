@@ -12,7 +12,8 @@ export const GraphPaperBackground = ( { children }: GraphPaperBackgroundProps ) 
   return (
     <div className="graph-paper-bg relative w-full h-full">
       {children}
-
     </div>
   )
 }
+
+
