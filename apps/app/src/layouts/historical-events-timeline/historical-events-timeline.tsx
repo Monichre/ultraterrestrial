@@ -2,9 +2,9 @@
 // import { SpatialTimeline } from '@/layouts/timeline/SpatialTimeline' port { TimelineSidebar } from '@/layouts/historical-events-timeline/
 import { GraphPaperBackground } from '@/components/backgrounds'
 import type { EventsRecord } from '@/db/xata'
-import { EventsGlobe } from '@/layouts/historical-events-timeline/events-globe'
 import { EventsTimeline } from '@/layouts/historical-events-timeline/events-timeline'
 import { TimelineSidebar } from '@/layouts/historical-events-timeline/timeline-sidebar-ui'
+import { WorldMap } from '@/layouts/historical-events-timeline/world-map'
 import {
   extractCoordinatesFromEvents,
   extractUniqueYearsFromEvents
@@ -88,7 +88,7 @@ export const HistoricalEventsTimeline = ( { events }: { events: JSONData<EventsR
         {/* <ShootingStars /> */}
         {/* <StarsBackground /> */}
         <GraphPaperBackground />
-        <div className='absolute top-0 left-0 z-10 h-auto w-[50%]'>
+        <div className='absolute top-0 left-0 z-10 h-[100vh] w-[100vw]'>
           {/* <Earth activeLocation={activeLocation} /> */}
           {/* <AdminDashboardGlobe markers={locations} /> */}
           {/* <Globe locations={locations} activeLocation={activeLocation} /> */}
@@ -96,10 +96,25 @@ export const HistoricalEventsTimeline = ( { events }: { events: JSONData<EventsR
             markers={locations}
             activeLocation={activeLocation}
           /> */}
-          <EventsGlobe
+          {/* <EventsGlobe
+            markers={locations}
+            activeLocation={activeLocation}
+          /> */}
+          {/* <div className='w-full h-[100vh] flex flex-col justify-center items-center'>
+           
+          </div> */}
+          <WorldMap
             markers={locations}
             activeLocation={activeLocation}
           />
+
+          {/* 
+          <SciFiGlobe
+            markers={locations}
+            activeLocation={activeLocation}
+            arcsData={locations}
+          /> */}
+
           {/* markers={locations} activeLocation={activeLocation}  */}
           {/* <EarthAtNight /> */}
           {/* <CodePenEarthAlt locations={locations} /> */}

@@ -1,15 +1,14 @@
 // ./src/components/ui/card/grid-layout-examples.tsx
 
-import React from 'react';
-import { GridLayout } from './grid-layout';
-import { motion } from 'framer-motion';
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils"
+import { motion } from 'framer-motion'
+import { GridLayout } from './grid-layout'
 
 // Basic Example
 export const BasicGridExample = () => {
   return (
     <GridLayout className="w-full gap-4">
-      {[1, 2, 3, 4].map((item) => (
+      {[1, 2, 3, 4].map( ( item ) => (
         <div
           key={item}
           className="rounded-lg border bg-card p-4 shadow-sm"
@@ -19,10 +18,10 @@ export const BasicGridExample = () => {
             This is a basic card example in the grid layout.
           </p>
         </div>
-      ))}
+      ) )}
     </GridLayout>
-  );
-};
+  )
+}
 
 // Responsive Grid Example
 export const ResponsiveGridExample = () => {
@@ -32,7 +31,7 @@ export const ResponsiveGridExample = () => {
       minChildWidth={200}
       gap={6}
     >
-      {[1, 2, 3, 4, 5, 6].map((item) => (
+      {[1, 2, 3, 4, 5, 6].map( ( item ) => (
         <div
           key={item}
           className="aspect-square rounded-lg border bg-card"
@@ -43,10 +42,10 @@ export const ResponsiveGridExample = () => {
             </span>
           </div>
         </div>
-      ))}
+      ) )}
     </GridLayout>
-  );
-};
+  )
+}
 
 // Featured Grid Example
 export const FeaturedGridExample = () => {
@@ -61,7 +60,7 @@ export const FeaturedGridExample = () => {
         </div>
       </div>
       <GridLayout gap={4} minChildWidth={250}>
-        {[1, 2, 3, 4].map((item) => (
+        {[1, 2, 3, 4].map( ( item ) => (
           <div
             key={item}
             className="rounded-lg border bg-card p-4"
@@ -69,11 +68,11 @@ export const FeaturedGridExample = () => {
             <h3 className="text-lg font-semibold">Card {item}</h3>
             <p className="text-muted-foreground">Regular grid item.</p>
           </div>
-        ))}
+        ) )}
       </GridLayout>
     </div>
-  );
-};
+  )
+}
 
 // Masonry-style Grid Example
 export const MasonryGridExample = () => {
@@ -84,7 +83,7 @@ export const MasonryGridExample = () => {
     { height: 'h-72', color: 'bg-red-100' },
     { height: 'h-48', color: 'bg-purple-100' },
     { height: 'h-64', color: 'bg-pink-100' },
-  ];
+  ]
 
   return (
     <GridLayout
@@ -92,7 +91,7 @@ export const MasonryGridExample = () => {
       minChildWidth={250}
       gap={4}
     >
-      {items.map((item, index) => (
+      {items.map( ( item, index ) => (
         <div
           key={index}
           className={cn(
@@ -107,10 +106,10 @@ export const MasonryGridExample = () => {
             </span>
           </div>
         </div>
-      ))}
+      ) )}
     </GridLayout>
-  );
-};
+  )
+}
 
 // Interactive Grid Example
 export const InteractiveGridExample = () => {
@@ -120,7 +119,7 @@ export const InteractiveGridExample = () => {
       minChildWidth={200}
       gap={4}
     >
-      {[1, 2, 3, 4].map((item) => (
+      {[1, 2, 3, 4].map( ( item ) => (
         <motion.div
           key={item}
           className="rounded-lg border bg-card p-4"
@@ -133,10 +132,10 @@ export const InteractiveGridExample = () => {
             Hover or click me!
           </p>
         </motion.div>
-      ))}
+      ) )}
     </GridLayout>
-  );
-};
+  )
+}
 
 // Content Grid Example
 export const ContentGridExample = () => {
@@ -161,7 +160,7 @@ export const ContentGridExample = () => {
       description: "Extend functionality with our plugin system.",
       icon: "🔌"
     }
-  ];
+  ]
 
   return (
     <GridLayout
@@ -169,7 +168,7 @@ export const ContentGridExample = () => {
       minChildWidth={280}
       gap={6}
     >
-      {content.map((item, index) => (
+      {content.map( ( item, index ) => (
         <div
           key={index}
           className="rounded-lg border bg-card p-6"
@@ -178,17 +177,17 @@ export const ContentGridExample = () => {
           <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
           <p className="text-muted-foreground">{item.description}</p>
         </div>
-      ))}
+      ) )}
     </GridLayout>
-  );
-};
+  )
+}
 
 // Dashboard Grid Example
 export const DashboardGridExample = () => {
   return (
     <div className="grid gap-4">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {['Users', 'Revenue', 'Orders', 'Conversion'].map((metric, index) => (
+        {['Users', 'Revenue', 'Orders', 'Conversion'].map( ( metric, index ) => (
           <div
             key={index}
             className="rounded-lg border bg-card p-4"
@@ -197,10 +196,10 @@ export const DashboardGridExample = () => {
               {metric}
             </h3>
             <p className="mt-2 text-2xl font-bold">
-              {Math.floor(Math.random() * 1000)}
+              {Math.floor( Math.random() * 1000 )}
             </p>
           </div>
-        ))}
+        ) )}
       </div>
       <GridLayout
         className="w-full"
@@ -209,29 +208,29 @@ export const DashboardGridExample = () => {
       >
         <div className="col-span-2 rounded-lg border bg-card p-4">
           <h3 className="mb-4 text-lg font-semibold">Recent Activity</h3>
-          {[1, 2, 3].map((item) => (
+          {[1, 2, 3].map( ( item ) => (
             <div
               key={item}
               className="mb-2 rounded border p-2 text-sm"
             >
               Activity {item}
             </div>
-          ))}
+          ) )}
         </div>
         <div className="rounded-lg border bg-card p-4">
           <h3 className="mb-4 text-lg font-semibold">Quick Actions</h3>
           <div className="space-y-2">
-            {['Add User', 'Create Order', 'Generate Report'].map((action, index) => (
+            {['Add User', 'Create Order', 'Generate Report'].map( ( action, index ) => (
               <button
                 key={index}
                 className="w-full rounded-lg border p-2 text-sm hover:bg-muted"
               >
                 {action}
               </button>
-            ))}
+            ) )}
           </div>
         </div>
       </GridLayout>
     </div>
-  );
-};
+  )
+}

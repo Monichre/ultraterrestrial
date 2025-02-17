@@ -11,9 +11,90 @@ import { ScrollSmoother } from 'gsap-trial/ScrollSmoother'
 import { ScrollTrigger } from 'gsap-trial/ScrollTrigger'
 
 import { Float } from '@/components/animated/float'
+import { CardCorners } from '@/features/mindmap/components/cards/entity-group-card/sections'
+import { ICON_BLUE } from '@/utils'
+import type * as React from "react"
 import ReactPlayer from 'react-player'
 gsap.registerPlugin( useGSAP, ScrollTrigger, ScrollSmoother )
 
+interface CrosshairConfig {
+  topLeft?: boolean
+  topRight?: boolean
+  bottomLeft?: boolean
+  bottomRight?: boolean
+}
+
+interface YearLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode
+  crosshairs?: CrosshairConfig
+  gridLines?: boolean
+  columns?: 8 | 12 | 16
+  lineVariant?: "all" | "vertical" | "horizontal" | "center" | "none"
+}
+
+function CrosshairIcon( { className, stroke = ICON_BLUE }: { className?: string, stroke?: string } ) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      style={{
+        zIndex: 40
+      }}
+    >
+      <path
+        d="M8 1V15M1 8H15"
+        stroke={stroke}
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+export function YearLayout( {
+  children,
+  crosshairs,
+  gridLines = true,
+
+  className,
+  ...props
+}: YearLayoutProps ) {
+  return (
+    <motion.div
+      className={className}
+      {...props}
+    >
+
+      {/* Crosshairs */}
+      {
+        crosshairs?.topLeft && (
+          <CrosshairIcon className="w-3 h-[1px] absolute -left-2 -top-2 z-40" />
+        )
+      }
+      {
+        crosshairs?.topRight && (
+          <CrosshairIcon className="w-3 h-[1px] absolute -right-2 -top-2 z-40" />
+        )
+      }
+      {
+        crosshairs?.bottomLeft && (
+          <CrosshairIcon className="w-3 h-[1px] absolute -bottom-2 -left-2 z-40" />
+        )
+      }
+      {
+        crosshairs?.bottomRight && (
+          <CrosshairIcon className="w-3 h-[1px] absolute -bottom-2 -right-2 z-40" />
+        )
+      }
+
+      <div className="relative z-40">{children}</div>
+    </motion.div >
+  )
+}
 
 
 export const TimelineYearEvents = ( {
@@ -187,7 +268,7 @@ export function EventsTimeline( {
         className="relative"
         style={{
           // overflow: 'visible',
-          // height: '200vh',
+          height: '100vh',
         }}
       >
 
@@ -195,7 +276,9 @@ export function EventsTimeline( {
           // isExpanded={true}
           // showPlayButton={false}
           // fullScreen={true}
-          isScrollPageEnabled={true}
+          isExpanded={false}
+          isSnapEnabled={true}
+          isScrollPageEnabled={false}
           showNavButtons={false}
           onIndexChange={updateActiveIndex}
         >
@@ -203,36 +286,42 @@ export function EventsTimeline( {
             years.map( ( year, index ) => (
               <motion.div
                 key={year}
-                className={`year year-${year}`}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'flex-end',
-                  placeItems: 'flex-end',
-                  width: '80vw !important'
-                }}
+                className={`year year-${year} !h-[75%] !left-auto !right-0 `}
+
+
+              // style={{
+              //   display: 'flex',
+              //   flexDirection: 'column',
+              //   justifyContent: 'center',
+              //   alignItems: 'flex-end',
+              //   placeItems: 'flex-end',
+              //   width: '80vw !important'
+              // }}
               // ref={el => yearRefs.current[year] = el}
 
               >
 
-                {
-                  eventsByYear[year].map( ( event ) => (
-                    <motion.div
-                      key={`${year}-${event.id}`}
-                      id={`${year}-${event.id}`}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="event-item transition-transform duration-300 hover:scale-105 backdrop-blur-md bg-black/20 rounded-md border border-white/10 p-2 my-2"
-                    >
-                      {/* <TimelineToolTip
+                <CardCorners type={'events'} />
+                <div className={`year-inner`}>
+
+                  {
+                    eventsByYear[year].map( ( event ) => (
+                      <motion.div
+                        key={`${year}-${event.id}`}
+                        id={`${year}-${event.id}`}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="event-item transition-transform duration-300 hover:scale-105 backdrop-blur-md bg-black/20 border border-white/10 p-2 my-2"
+                      >
+                        {/* <TimelineToolTip
                       event={event}
                       onHover={updateActiveLocation}
                       coordinates={[event.latitude, event.longitude]}
-                    /> */}
-                      <TimelineYearEvents updateActiveLocation={updateActiveLocation} event={event} />
-                    </motion.div>
-                  ) )
-                }
+                      /> */}
+                        <TimelineYearEvents updateActiveLocation={updateActiveLocation} event={event} />
+                      </motion.div>
+                    ) )
+                  }
+                </div>
 
               </motion.div>
             ) )

@@ -1,18 +1,16 @@
 'use client'
 // components/Globe.js
-import React, { useRef, useEffect, useState, Suspense, useMemo } from 'react'
-import { Canvas, useFrame, useLoader } from '@react-three/fiber'
+import { chroma } from '@/utils'
 import {
   OrbitControls,
   Stars,
   shaderMaterial,
   useTexture,
 } from '@react-three/drei'
+import { Canvas, extend, useFrame } from '@react-three/fiber'
+import React, { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import { extend } from '@react-three/fiber'
 import { TransformControls } from 'three-stdlib'
-import { chroma } from '@/utils'
-import { TextureLoader } from 'three'
 extend( { OrbitControls, TransformControls } )
 // EarthShaderMaterial.js
 const EarthShaderMaterial: any = shaderMaterial(
@@ -206,7 +204,7 @@ function DataPoints( { data }: any ) {
           // )
           const scaleZ = Math.max( size * 200, 0.1 )
 
-          const threeJsColor = new THREE.Color( chroma( color ).rgb() )
+          const threeJsColor = new THREE.Color( chroma( '#a8e5ee' ).rgb() )
           return (
             <Point
               position={position}
@@ -225,13 +223,13 @@ export function CodePenEarth( { locations }: any ) {
   // const [data, setData]: any = useState(locations)
 
   return (
-    <Canvas camera={{ position: [0, 0, 1000], fov: 30 }}>
+    <Canvas camera={{ position: [0, 0, 1000], fov: 30 }} style={{ height: '100%', width: '100%' }}>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Suspense fallback={null}>
-        <Globe />
-        <DataPoints data={locations} />
-      </Suspense>
+
+      <Globe />
+      <DataPoints data={locations} />
+
       <OrbitControls />
       <Stars />
     </Canvas>

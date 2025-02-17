@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState } from 'react'
 import EarthGlobe from 'react-globe.gl'
 // import geojson from '@/src/data/events.geojson'
 
@@ -15,15 +15,15 @@ const images = {
   nightSky: '/8k_stars_milky_way.jpeg',
 }
 
-export const Globe: React.FC<GlobeProps> = ({
+export const CobeGlobe: React.FC<GlobeProps> = ( {
   locations,
   activeLocation,
-}: GlobeProps) => {
-  console.log('locations: ', locations)
+}: GlobeProps ) => {
+  console.log( 'locations: ', locations )
   // const pink = '#E393E6'
   // const lightBlue = '#6EE3E6'
   // const green = #79ffe1
-  const [points, setPoints] = useState<any[]>(locations)
+  const [points, setPoints] = useState<any[]>( locations )
 
   // useEffect(() => {
   //   fetch(`/${type}.geojson`)
@@ -50,15 +50,15 @@ export const Globe: React.FC<GlobeProps> = ({
       animateIn
       pointsData={locations}
       globeImageUrl={images.earthSky}
-      pointLat={(d: any) => d.lat}
-      pointLng={(d: any) => d.lng}
+      pointLat={( d: any ) => d.lat}
+      pointLng={( d: any ) => d.lng}
       backgroundImageUrl={images.nightSky}
       // labelsData={locations}
       pointAltitude={0.3}
       pointResolution={20}
-      pointRadius={(d: any) => d.size}
-      pointColor={(d: any) => d.color}
-      // labelText={(d: any) => d.name}
+      pointRadius={( d: any ) => d.size}
+      pointColor={( d: any ) => d.color}
+    // labelText={(d: any) => d.name}
     />
   )
 }
