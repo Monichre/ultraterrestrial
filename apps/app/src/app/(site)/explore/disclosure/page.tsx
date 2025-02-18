@@ -14,9 +14,7 @@ export default async function Index() {
 
 
   const data: NetworkGraphPayload = await getEntityNetworkGraphData()
-  const runtime = useChatRuntime( {
-    api: "/api/disclosure/chat",
-  } )
+
 
   return (
     // <AssistantRuntimeProvider runtime={runtime}>

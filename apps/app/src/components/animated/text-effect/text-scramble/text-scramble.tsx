@@ -1,8 +1,8 @@
 'use client'
-import { type JSX, useEffect, useState } from 'react'
 import { motion, MotionProps } from 'motion/react'
+import { type JSX, useEffect, useState } from 'react'
 
-type TextScrambleProps = {
+export type TextScrambleProps = {
   children: string
   duration?: number
   speed?: number
@@ -16,7 +16,7 @@ type TextScrambleProps = {
 const defaultChars =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-export function TextScrambleCore( {
+export function TextScramble( {
   children,
   duration = 0.8,
   speed = 0.04,
@@ -82,8 +82,4 @@ export function TextScrambleCore( {
       {displayText}
     </MotionComponent>
   )
-}
-
-export function TextScramble( { children, ...props }: TextScrambleProps ) {
-  return <TextScrambleCore {...props}>{children}</TextScrambleCore>
 }

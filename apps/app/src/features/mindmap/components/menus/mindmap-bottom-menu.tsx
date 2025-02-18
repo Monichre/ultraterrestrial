@@ -9,20 +9,64 @@ import {
 } from '@/components/icons/entity-icons'
 import { useMindMap } from '@/contexts'
 import { initiateDatabaseTableQuery } from '@/features/mindmap/api/search'
-import { DOMAIN_MODEL_COLORS, ENTITY_DATA_VIZ_COLOR_PALETTE, EVENTS_GREEN, ICON_BLUE, ICON_GREEN, ORGANIZATIONS_PURPLE, SME_BLUE, TESTIMONIES_RED, TOPICS_PINK } from '@/utils/constants'
-// import { x, y } from '@liveblocks/react/dist/suspense-fYGGJ3D9'
-import { useCallback, useRef } from 'react'
-// import { computed } from 'tldraw'
+import { DOMAIN_MODEL_COLORS, ICON_GREEN } from '@/utils/constants'
+import { useAssistant } from 'ai/react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { Message, useAssistant } from 'ai/react'
 
+import { Command } from "cmdk"
+import { AnimatePresence, motion } from "framer-motion"
 
-import { EnhanceAIInput } from '@/features/ai/components/ai-inputs/enhance-ai-input'
+import { AddIcon, AiStarIcon, ThinTwinklyStar } from "@/components/icons"
+import { OracleInput, ToggleButton } from "@/features/ai/components/ai-inputs/oracle-input"
+import { LightningBoltIcon } from "@radix-ui/react-icons"
 
+import { TextShimmer } from "@/components/animated/text-effect"
+import { MagicWandIcon } from "@/components/icons"
+import { capitalize } from "@/utils"
+import { Brain, SearchIcon } from "lucide-react"
+
+// Move COMMANDS outside component
+const COMMANDS = [
+  {
+    id: "chat",
+    label: "Chat",
+    description: "Start a conversation with our Disclosure Agent",
+    icon: () => <LightningBoltIcon stroke={ICON_GREEN} />,
+    prefix: "/chat",
+  },
+  {
+    id: "Search",
+    label: "Search",
+    description: "Search existing records across our database, curated and validated web resources and our own AI knowledge base",
+    icon: () => <SearchIcon stroke={ICON_GREEN} />,
+    prefix: "/search",
+  },
+  {
+    id: "Add",
+    label: "Add",
+    description: "Add a new item to the mind map",
+    icon: () => <AddIcon stroke={ICON_GREEN} />,
+    prefix: "/add",
+  },
+  {
+    id: "Connect",
+    label: "Connect",
+    description: "Connect to a database",
+    icon: () => <ThinTwinklyStar stroke={ICON_GREEN} />,
+    prefix: "/connect",
+  },
+  {
+    id: "analyze",
+    label: "Analyze",
+    description: "Analyze the existing records on your mind map and generate new insights",
+    icon: () => <MagicWandIcon stroke={ICON_GREEN} />,
+    prefix: "/analyze",
+  },
+] as const
 
 export const MindMapBottomMenu = () => {
   const { status, messages, input, submitMessage, handleInputChange } = useAssistant( { api: '/api/disclosure/chat' } )
-
 
   const {
     addNextEntitiesToMindMap,
@@ -42,8 +86,6 @@ export const MindMapBottomMenu = () => {
     getNodesBounds
   } = useMindMap()
 
-
-  // const [isExpanded, setIsExpanded] = useState( false )
   const idCounter = useRef( 0 )
   const getNextId = useCallback( () => {
     idCounter.current += 1
@@ -51,95 +93,116 @@ export const MindMapBottomMenu = () => {
   }, [] )
 
   const calculateCenterOfScreen = useCallback( () => {
-    const centerX = window.innerWidth / 2
-    const centerY = window.innerHeight / 2
-    return { x: centerX, y: centerY }
+    return { x: window.innerWidth / 2, y: window.innerHeight / 2 }
   }, [] )
 
+  /**
+   * Computes the positions for child nodes based on the parent's position.
+   * - Retrieves the parent's width and height from the DOM.
+   * - Calculates the total width needed for the children (using fixed node width and spacing).
+   * - Determines the starting x-coordinate so that the children are centered below the parent.
+   */
+  const computeChildPositions = ( parentNode: any, numberOfChildren: number ) => {
+    const parentElem = document.getElementById( parentNode.id )
+    const parentRect = parentElem
+      ? parentElem.getBoundingClientRect()
+      : { width: 200, height: 100 }
+    const parentWidth = parentRect.width || 200
+    const parentHeight = parentRect.height || 100
+
+    const entityWidth = 250 // Default width for each child node
+    const entitySpacing = 50 // Space between child nodes
+    const totalWidth = numberOfChildren * entityWidth + ( numberOfChildren - 1 ) * entitySpacing
+
+    // Parent's center is its left position plus half its width
+    const parentCenterX = parentNode.position.x + parentWidth / 2
+    // Start so that the children (as a group) are centered below the parent's center
+    const startX = parentCenterX - totalWidth / 2
+
+    const verticalSpacing = 100 // Vertical offset from the bottom of the parent
+    const childY = parentNode.position.y + parentHeight + verticalSpacing
+
+    return { startX, childY, entityWidth, entitySpacing }
+  }
 
   const handleLoadingRecords = useCallback(
     ( { data: { type } }: any ) => {
       const amount = type === 'events' ? '4' : '3'
-
       const center = screenToFlowPosition( calculateCenterOfScreen() )
 
-      // Function to get the next sequential ID
+      // Retrieve the entities for this type
       const entities = retrieveEntitiesFromStore( type )
       const potentialUserNode: any = {
-        // id: uuidv4(),
         id: getNextId(),
         type: 'userInputNode',
-        position: {
-          ...center
-        },
+        position: { ...center },
         data: {
           label: 'Your Query',
-          input: `Beginning your exploration by loading 3 ${type}. Fetching Data...`,
+          input: `Beginning your exploration by loading ${amount} ${type}. Fetching Data...`,
           entities,
           type: type,
         },
       }
 
-      const nodes = getNodes() // Replace with the appropriate method to retrieve nodes
+      const nodes = getNodes()
       const existingUserInputNodes = nodes
         .filter( ( node: any ) => node.type === 'userInputNode' && node.id !== potentialUserNode.id )
         .sort( ( a: any, b: any ) => {
-          // Assuming IDs are in the format 'userInputNode-<number>'
           const aNum = parseInt( a.id.split( '-' )[1], 10 )
           const bNum = parseInt( b.id.split( '-' )[1], 10 )
           return aNum - bNum
         } )
 
-      // If there is at least one existing userInputNode, create an edge from the last one to the new one
-      let lastUserInputNode = existingUserInputNodes.length > 0 ? existingUserInputNodes[existingUserInputNodes.length - 1] : null
+      // Use the last user input node as the parent (if it exists)
+      let parentNode = existingUserInputNodes.length > 0
+        ? existingUserInputNodes[existingUserInputNodes.length - 1]
+        : null
 
-
-      if ( !lastUserInputNode ) {
-        lastUserInputNode = potentialUserNode
-        addNodes( lastUserInputNode )
+      if ( !parentNode ) {
+        parentNode = potentialUserNode
+        addNodes( parentNode )
       }
 
+      // Compute positions for child nodes so they are centered under the parent
+      const { startX, childY, entityWidth, entitySpacing } = computeChildPositions( parentNode, entities.length )
 
-      let x = -600
-      console.log( "🚀 ~ file: mindmap-bottom-menu.tsx:135 ~ MindMapBottomMenu ~ x:", x )
-      setNodes( nds => [...nds, ...entities.map( ( entity: any ) => ( {
+      // Map each entity to a new node with computed positions and a parentId
+      const childNodes = entities.map( ( entity: any, index: number ) => ( {
         ...entity,
         type: 'entityNode',
         position: {
-          x: x += 200,
-          y: 350
+          x: startX + index * ( entityWidth + entitySpacing ),
+          y: childY,
         },
-        parentId: lastUserInputNode?.id || null,
+        parentId: parentNode?.id || null,
+      } ) )
 
-      } ) )] )
+      setNodes( ( nds: Node[] ) => [...nds, ...childNodes] )
 
-
-      setEdges( edges => [...edges, ...entities.map( ( entity: any ) => ( {
-        id: `${lastUserInputNode?.id}-${entity.id}`,
-        source: lastUserInputNode?.id,
+      // Create edges that connect the parent node to each child node
+      const newEdges = entities.map( ( entity: any ) => ( {
+        id: `${parentNode?.id}-${entity.id}`,
+        source: parentNode?.id,
         target: entity.id,
-        type: 'smoothstep'
-      } ) )] )
+        type: 'smoothstep',
+      } ) )
 
-      // organizeLayout()
-
-      // setNodes( nds => [...nds, ...childNodes] )
-
-
-      // for ( const childNode of childNodes ) {
-      //   console.log( "🚀 ~ file: mindmap-command-center.tsx:94 ~ MindMapBottomMenu ~ childNode:", childNode )
-      //   addMindmapChildNode( { parentNode: userNode, type, childNode, } )
-      // }
-
-
-      // addNextEntitiesToMindMap( userNode )
+      setEdges( ( edges: Edge[] ) => [...edges, ...newEdges] )
     },
-    [, retrieveEntitiesFromStore, screenToFlowPosition, updateNode, addNodes, setNodes, setEdges]
+    [
+      calculateCenterOfScreen,
+      getNextId,
+      getNodes,
+      retrieveEntitiesFromStore,
+      screenToFlowPosition,
+      addNodes,
+      setNodes,
+      setEdges,
+    ]
   )
 
   const runSearch = useCallback(
     async ( { type, searchTerm }: any ) => {
-
       const userNode: any = {
         id: uuidv4(),
         type: 'userInputNode',
@@ -147,7 +210,6 @@ export const MindMapBottomMenu = () => {
         data: { label: 'Your Query', input: searchTerm },
       }
       addNodes( userNode )
-      // relatedRecords: relatedResults
 
       const response: any = await initiateDatabaseTableQuery( {
         table: type,
@@ -160,6 +222,12 @@ export const MindMapBottomMenu = () => {
         totalCount,
       } = response
 
+      // For a single child node, position it directly below the userNode
+      const userElem = document.getElementById( userNode.id )
+      const userRect = userElem ? userElem.getBoundingClientRect() : { width: 200, height: 100 }
+      const userHeight = userRect.height || 100
+      const childY = userNode.position.y + userHeight + 100 // 100px vertical spacing
+
       const childNode: any = {
         id: record?.id,
         type: `${type}Node`,
@@ -168,9 +236,10 @@ export const MindMapBottomMenu = () => {
           ...record,
         },
         position: {
-          x: 0,
-          y: userNode.position.y + 380,
+          x: userNode.position.x, // For a single node, we align with the parent's x
+          y: childY,
         },
+        parentId: userNode.id,
       }
       const edgeId = `${userNode.id}-${childNode.id}`
       const sourceHandle = `handle:${edgeId}`
@@ -191,18 +260,8 @@ export const MindMapBottomMenu = () => {
 
       addNodes( childNode )
       addEdges( edge )
-
-      // addConnectionNodesFromSearch({
-      //   source,
-      //   searchResults: [record],
-      // })
-      // loadNodesFromTableQuery({
-      //   type,
-      //   searchResults: results,
-      //   searchTerm: searchTerm.trim().replace(/ /g, ''),
-      // })
     },
-    [addConnectionNodesFromSearch, addNodes, addEdges,]
+    [addNodes, addEdges, updateNodeData]
   )
 
   const modelActions = [
@@ -210,92 +269,313 @@ export const MindMapBottomMenu = () => {
       icon: <EventsIcon stroke={ICON_GREEN} />,
       label: 'Add Events',
       name: 'Events',
+      description: 'Add historical events to the mind map',
       searchAction: async ( searchTerm: string ) => {
-        const res = await runSearch( { type: 'events', searchTerm } )
-
+        await runSearch( { type: 'events', searchTerm } )
       },
-
-
     },
     {
       icon: <TopicsIcon stroke={ICON_GREEN} />,
       label: 'Add Topics',
       name: 'Topics',
       searchAction: async ( searchTerm: string ) => {
-        const res = await runSearch( { type: 'topics', searchTerm } )
-
+        await runSearch( { type: 'topics', searchTerm } )
       },
-
-
-
-
     },
     {
       icon: <KeyFiguresIcon stroke={ICON_GREEN} />,
       label: 'Add KeyFigures',
       name: 'personnel',
       searchAction: async ( searchTerm: string ) => {
-        const res = await runSearch( { type: 'personnel', searchTerm } )
-
+        await runSearch( { type: 'personnel', searchTerm } )
       },
-
-
-
-
     },
     {
       icon: <TestimoniesIcon stroke={ICON_GREEN} />,
       label: 'Add Testimonies',
       name: 'Testimonies',
       searchAction: async ( searchTerm: string ) => {
-        const res = await runSearch( { type: 'testimonies', searchTerm } )
-
+        await runSearch( { type: 'testimonies', searchTerm } )
       },
-
-
-
-
     },
     {
       icon: <OrganizationsIcon stroke={ICON_GREEN} />,
       label: 'Add Organizations',
       name: 'Organizations',
       searchAction: async ( searchTerm: string ) => {
-        const res = await runSearch( { type: 'organizations', searchTerm } )
-
+        await runSearch( { type: 'organizations', searchTerm } )
       },
-
-
-
     },
     {
       label: "Artifacts",
       name: "artifacts",
       icon: <ArtifactsIcon stroke={ICON_GREEN} />,
       searchAction: async ( searchTerm: string ) => {
-        const res = await runSearch( { type: 'artifacts', searchTerm } )
-
+        await runSearch( { type: 'artifacts', searchTerm } )
       },
-    }
+    },
   ]
-
 
   const addDataToMindMap = ( model: string ) => {
     handleLoadingRecords( { data: { type: model } } )
   }
 
+  const menuRef = useRef<HTMLDivElement>( null )
+  const [isOpen, setIsOpen] = useState( false )
+  const [activeCommand, setActiveCommand] = useState<string | null>( null )
+  const inputRef = useRef<HTMLInputElement>( null )
+  const containerRef = useRef<HTMLDivElement>( null )
+  const [inputValue, setInputValue] = useState( "" )
+  const [state, setState] = useState<{
+    selectedModel: string | null
+    isModelMenuOpen: boolean
+  }>( {
+    selectedModel: null,
+    isModelMenuOpen: false,
+  } )
+
+  const [filteredCommands, setFilteredCommands] = useState( COMMANDS )
+
+  useEffect( () => {
+    if ( inputValue.startsWith( '/' ) ) {
+      const searchTerm = inputValue.slice( 1 ).toLowerCase()
+      setFilteredCommands(
+        COMMANDS.filter( cmd =>
+          cmd.prefix.toLowerCase().includes( searchTerm ) ||
+          cmd.label.toLowerCase().includes( searchTerm )
+        )
+      )
+    } else {
+      setFilteredCommands( COMMANDS )
+    }
+  }, [inputValue] )
+
+  const updateState = useCallback(
+    ( updates: Partial<typeof state> ) =>
+      setState( ( prev ) => ( { ...prev, ...updates } ) ),
+    []
+  )
+
+  const toggleModelMenu = () => {
+    updateState( { isModelMenuOpen: !state.isModelMenuOpen } )
+    // updateState( { isMenuOpen: true } )
+  }
+
+
+  // const handleKeyDown = ( e: React.KeyboardEvent<HTMLTextAreaElement> ) => {
+  //   if ( e.key === "Enter" && !e.shiftKey ) {
+  //     e.preventDefault()
+  // updateState( { value: "" } )
+  // adjustHeight( true )
+  //   }
+  // }
+
+  const handleKeyDown = useCallback(
+    ( e: React.KeyboardEvent ) => {
+      if ( e.key === "Enter" && !e.shiftKey ) {
+        e.preventDefault()
+        if ( inputValue && inputValue.trim() !== "/" ) {
+          loadNodesFromTableQuery( inputValue )
+        }
+        // adjustHeight( true )
+        // handleButtonClick()
+      }
+
+      if ( e.key === "Backspace" && inputValue === "" || e.key === "Backspace" && inputValue === " " ) {
+        setActiveCommand( null )
+
+        setIsOpen( false )
+      }
+      if ( e.key === "/" ) {
+        setIsOpen( true )
+      }
+    },
+    [activeCommand, inputValue]
+  )
+
+  const handleCommandSelect = ( commandId: string ) => {
+    const command = COMMANDS.find( ( cmd ) => cmd.id === commandId )
+    if ( command ) {
+      setInputValue( "" )
+      setActiveCommand( commandId )
+      setIsOpen( false )
+
+    }
+  }
+
+  // useEffect( () => {
+  //   if ( inputValue )
+  // }, [activeModel] )
+
+
+  const handleLoadingModelData = () => {
+    if ( state.selectedModel ) {
+      addDataToMindMap( state.selectedModel )
+    }
+  }
 
   return (
-
     <div className='flex justify-center w-full'>
+      <div className="p-4 flex flex-col w-[500px]">
+
+        <div className="relative w-full h-auto overflow-hidden">
+          {/* <div className="border-b border-black/10 dark:border-white/10"> */}
+          <div className="flex flex-col justify-between items-center px-4 py-2 text-sm text-zinc-600 dark:text-zinc-400">
+            <div className="relative w-full z-50" ref={menuRef} >
+              <div className="flex w-full justify-between items-center content-center px-2">
+
+                <motion.button
+                  onClick={toggleModelMenu}
+                  className="flex items-center gap-2 group relative z-50"
+                >
+
+                  <div className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 flex hover:ring-indigo-500/50 relative w-fit gap-3\1 rounded-xl align-center items-center content-center px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90">
+                    <AiStarIcon className='w-4 h-4 mr-2' stroke={ICON_GREEN} />
+                    <TextShimmer as="span" className="inline-block mr-2">Oracle {state?.selectedModel && `| ${capitalize( state?.selectedModel )}`} </TextShimmer>
+                  </div>
 
 
+                </motion.button>
 
-      {/* <AiCommandInput /> */}
-      <EnhanceAIInput addDataToMindMap={addDataToMindMap} modelActions={modelActions}
-      />
-      {/* <Oracle modelActions={modelActions} modelActionMap={modelActionMap} activeModel={activeModel} /> */}
-      {/* EnhancedAIInput */}
+                <ToggleButton
+                  icon={<Brain className="w-4 h-4" />}
+                  label="Memory"
+                />
+
+              </div>
+
+              <motion.div
+                ref={menuRef}
+                className="rounded-xl relative flex gap-2 items-center relative w-full duration-200 text-neutral-500 willChange gpu-transform text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90"
+
+                initial={{
+                  height: 0,
+                }}
+                animate={{
+
+                  height: state.isModelMenuOpen ? 250 : '0',
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 500,
+                  damping: 30,
+                  // duration: 0.2,
+                  staggerChildren: 0.1,
+                  delayChildren: 0.2,
+                }}
+
+              >
+                <AnimatePresence >
+
+                  {state.isModelMenuOpen && (
+                    <motion.div
+                      key="model-menu"
+                      // className="h-full w-full"
+                      // className="absolute top-0 left-0 mt-1 w-64 bg-white dark:bg-zinc-800 rounded-md shadow-lg py-1 z-50 border border-black/10 dark:border-white/10"
+                      className="pb-0 flex flex-col h-full items-end rounded-xl justify-evenly absolute w-full text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                    // exit={{ opacity: 0, y: 20 }}
+
+                    >
+
+                      {modelActions.map( ( model, index ) => (
+                        <motion.div className="w-full shrink-0 px-2"
+                          key={model.name}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                        // exit={{ opacity: 0, y: 20 }}
+                        >
+                          <button
+                            type="button"
+                            key={model.name}
+                            className="w-full px-3 py-1.5 text-left hover:bg-black/5 dark:hover:bg-white/5 flex items-center gap-2 text-sm transition-colors dark:text-white"
+                            onClick={() =>
+                              updateState( { selectedModel: model.name.toLowerCase(), isModelMenuOpen: false } )
+                            }
+                          >
+                            <div className="flex items-center justify-start gap-2 flex-1">
+                              {model.icon}
+                              <span className="capitalize">{model.name}</span>
+                            </div>
+                            <span className="text-xs text-zinc-500 dark:text-zinc-400 capitalize">
+                              {model.label}
+                            </span>
+                          </button>
+                        </motion.div>
+                      ) )}
+                    </motion.div>
+
+
+                  )}
+                </AnimatePresence>
+              </motion.div>
+
+            </div>
+
+          </div>
+        </div>
+
+
+        <OracleInput
+          activeModel={state.selectedModel}
+          activeCommand={activeCommand}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          handleKeyDown={handleKeyDown}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+          loadModelData={handleLoadingModelData}
+
+        />
+
+        <AnimatePresence>
+          {isOpen && !activeCommand && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0, }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.15 }}
+              className="absolute bottom-0 left-0 w-full h-auto z-40 flex justify-center items-center"
+            >
+              <div className="rounded-lg shadow-lg w-[444px] h-[400px] mt-2 rounded-lg border border-neutral-700/30 text-neutral-500 bg-black bg-gradient-to-b from-black relative rounded-tl-lg rounded-tr-lg ">
+
+
+                <Command className="w-full">
+                  <Command.List className="py-2">
+                    {filteredCommands.map( ( command ) => (
+                      <Command.Item
+                        key={command.id}
+                        onSelect={() => {
+                          handleCommandSelect( command.id )
+                          setInputValue( `${command.prefix} ` )
+                        }}
+                        className="px-3 py-2.5 flex items-center gap-3 text-sm hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer group"
+                      >
+                        {command.icon()}
+                        <div className="flex flex-col">
+                          <span className="font-medium text-black/70 dark:text-white/70">
+                            {command.label}
+                          </span>
+                          <span className="text-xs text-black/50 dark:text-white/50">
+                            {command.description}
+                          </span>
+                        </div>
+                        <span className="ml-auto text-xs text-black/30 dark:text-white/30">
+                          {command.prefix}
+                        </span>
+                      </Command.Item>
+                    ) )}
+                  </Command.List>
+                </Command>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+
+      </div >
+
 
     </div>
   )

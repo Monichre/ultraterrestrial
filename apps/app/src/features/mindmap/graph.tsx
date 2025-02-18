@@ -20,6 +20,8 @@ import { useContextMenu } from '@/hooks/useContextMenu'
 // this helper function returns the intersection point
 // of the line between the center of the intersectionNode and the target node
 // const {nodes: layoutNodes, edges: layoutEdges} = layoutElementsTreeFlex({}, 'root', 'TB')
+import { EllipsesScramble } from '@/components/animated/text-effect/text-scramble/ellipses-scramble'
+import { Card } from '@/components/ui/card'
 import ELK from 'elkjs/lib/elk.bundled.js'
 const elk = new ELK()
 
@@ -139,7 +141,12 @@ export function Graph( props: any ) {
         connectionMode='loose'
         // connectionLineComponent={FloatingConnectionLine}
         elevateNodesOnSelect={true}
-        fitView
+        defaultViewport={{
+          zoom: 0,
+          x: 0,
+          y: 0,
+        }}
+        // fitView
         onInit={updateMindMapInstance}
         style={{ backgroundColor: 'transparent' }}>
         <Panel position='top-left'>
@@ -161,12 +168,40 @@ export function Graph( props: any ) {
           <MindMapBottomMenu />
         </Panel>
 
-        <Panel position='bottom-right'>
-          {/* <MindMapAiChat /> */}
-          {/* <AssistantModal /> */}
 
-        </Panel>
+
+        {/* bg-gradient-to-r from-black/50 to-transparent  */}
       </ReactFlow>
+      <div className="fixed top-0 right-0 w-[25vw] h-full animate-[slide-in_0.3s_ease-out]">
+        <div className="p-4 animate-[fade-in-up_0.4s_ease-out] flex flex-col gap-4 justify-start items-center align-middle">
+
+          <Card className="bg-black/30 border-[#adf0dd]/30 backdrop-blur-sm p-4 w-full font-mono text-sm pointer-events-auto">
+            <div className="text-[#adf0dd] space-y-1">
+              <div className="opacity-90">[System Log]</div>
+              <EllipsesScramble className="opacity-70">{">"} Initializing Disclosure knowledge base</EllipsesScramble>
+              <EllipsesScramble className="opacity-70">{">"} Initializing global knowledge base scan...</EllipsesScramble>
+              <div className="pl-4 opacity-60">
+                - Indexing core domain models...
+              </div>
+              <div className="pl-4 opacity-60">
+                Sequencing records...
+              </div>
+              <div className="pl-4 opacity-60">
+                - Syncronizing application state with knowledge base...
+              </div>
+
+              <div className="opacity-80">{">"} [System Status]: Knowledge Base Sequenced</div>
+              <div className="opacity-75">{">"} Satellites: Online</div>
+              <div className="opacity-90">{">"} Data streams active:</div>
+              <div className="pl-4 opacity-60">
+                - Sequenced data stream pipeline...
+              </div>
+              <div className="opacity-80">{">"} Analysis: In progress...</div>
+            </div>
+          </Card>
+        </div>
+      </div>
+
     </div>
 
 

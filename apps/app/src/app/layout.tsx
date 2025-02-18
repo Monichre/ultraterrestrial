@@ -36,7 +36,7 @@ export default function RootLayout( { children }: { children: React.ReactNode } 
   return (
 
     <ClerkProvider>
-      <html lang='en' suppressHydrationWarning className='!dark'>
+      <html lang='en' suppressHydrationWarning className='dark'>
         <body
           className={` ${neueHaasGrotesk.variable} ${monumentGrotesk.variable} ${monumentGroteskMono.variable} ${lukasSans.variable} dark`}>
           <ThemeProvider

@@ -1,5 +1,6 @@
 'use client'
 
+import { TitleAlt } from '@/layouts/home/TitleAlt'
 import { wait } from '@/utils'
 // import { Howl } from 'howler'
 import { AnimatePresence } from 'framer-motion'
@@ -97,7 +98,7 @@ export const Home: React.FC<HomeProps> = () => {
 
           {/* <div className='w-full'> */}
           {/* <SiteTitle /> */}
-          {/* <TitleAlt /> */}
+          <TitleAlt />
           {/* <LovecraftQuote /> */}
         </AnimatePresence>
         {/* </div> */}

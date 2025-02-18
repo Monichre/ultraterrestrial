@@ -1,16 +1,12 @@
-import * as React from 'react'
 
 import { getXataClient } from '@/db/xata'
 
-import SwipeGrid from '@/components/animated/swipe-grid/SwipeGrid'
-import { Suspense } from 'react'
 import { Particles } from '@/components/animated/particles/Particles'
-import { BoxReveal } from '@/components/animated/box-reveal'
-import { Button } from '@/components/ui/button/button'
-import { BlurFade } from '@/components/animated/blur-fade'
+import SwipeGrid from '@/components/animated/swipe-grid/SwipeGrid'
 import { TextEffect } from '@/components/animated/text-effect'
-import { cn } from '@/utils'
 import { Loading } from '@/components/loaders/loading'
+import { cn } from '@/utils'
+import { Suspense } from 'react'
 
 type photo = {
   signedUrl: string
@@ -38,10 +34,7 @@ export default async function Index() {
       'bio',
       'role',
       'photo',
-      'facebook',
-      'twitter',
-      'website',
-      'instagram',
+
       'rank',
       'credibility',
       'popularity',

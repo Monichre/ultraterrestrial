@@ -1,3 +1,3 @@
-export * from './TextEffect'
+export * from './text-scramble/text-scramble'
 export * from './text-shimmer'
-export * from './text-scramble'
+export * from './TextEffect'

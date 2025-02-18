@@ -1,12 +1,11 @@
 'use client'
 
 import type { GlobeLocation } from '@/components/globes'
-import { EventsIcon } from '@/components/icons'
-import { PhotoCarousel } from '@/features/mindmap/components/cards/event/photo-carousel'
 import { STOCK_PHOTOS, wait } from '@/utils'
 import createGlobe from 'cobe'
 import { format } from 'date-fns'
 import { useEffect, useRef } from 'react'
+import './event-globe-card.css'
 interface GlobeProps {
   dark?: boolean
   baseColor?: string
@@ -121,64 +120,21 @@ export const EventGlobeCard = ( { card }: any ) => {
 
   console.log( "🚀 ~ file: event-globe-card.tsx:90 ~ EventGlobeCard ~ markers:", markers )
 
-  const formattedDate = date ? format( date, 'MMMM dd, yyyy' ) : null
+  const formattedDate = date ? format( date, 'MM/d/yyyy' ) : null
   return (
-    <div className="group relative mx-auto flex h-[300px] w-[300px] flex-col overflow-hidden rounded-2xl border border-white/5">
-      <div className='absolute top-0 left-0 w-full px-2 flex justify-end'>
-        <p className="mt-2 text-sm font-light leading-relaxed text-[#22d3ee] font-sentient">
-          [{formattedDate}]
-        </p>
+    <div className="p-1 event-globe-card">
 
-      </div>
-      <div className="absolute inset-0 bg-[radial-gradient(40%_128px_at_50%_0%,theme(backgroundColor.white/5%),transparent)]">
-        {/* <div className="absolute inset-0 flex items-center justify-center"> */}
-        {/* <div className="relative w-full h-full">
-            <Image
-              src={bgPhoto.url}
-              alt={name}
-              fill
-              className="object-cover opacity-20"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority
-            />
-          </div> */}
-        {/* </div> */}
-      </div>
+      <h3 className="font-monumentMono text-lg text-white mb-4 tracking-wider">{name}</h3>
+      <p className="location font-monument mb-2">
+        {location}
+        <br />
+        {latitude}° {longitude}°
+      </p>
+      <p> </p>
+      <p className="date font-monument font-[#27F1FF]">
+        {formattedDate}
+      </p>
 
-      <div className="absolute top-0 left-0 w-full h-full z-0">
-        {/* <Globe
-          dark
-          markers={markers}
-          baseColor="#777A80"
-          glowColor="#50505A"
-          markerColor="#22d3ee"
-
-
-        /> */}
-
-        {photos?.length && <PhotoCarousel images={photos} />}
-      </div>
-
-      <div className="pointer-events-none mt-auto px-6 pb-6 relative z-10">
-        <div className="relative transition duration-300 group-hover:-translate-y-9">
-          <div className="text-lg text-white transition-all duration-300 group-hover:text-base font-bebasNeuePro font-regular tracking-wider">
-            {name}
-          </div>
-          <p className="text-sm font-light leading-relaxed text-white/75">
-            {location}
-          </p>
-
-          <div className="absolute -left-2 bottom-0 translate-y-11 opacity-0 transition duration-300 group-hover:opacity-100">
-            <a
-              href="/components"
-              className="pointer-events-auto inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium text-white transition hover:bg-white/5">
-              <span>View</span>
-
-              <EventsIcon className="w-3 h-3" />
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }

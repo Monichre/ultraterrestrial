@@ -316,6 +316,10 @@ export function MindMapSideMenu() {
     handleSavingNote()
 
   }
+  const [crossed, setCrossed] = useState( false )
+  const handleClick = () => {
+    setCrossed( !crossed )
+  }
 
   return (
     // max-w-max m-auto
@@ -323,7 +327,35 @@ export function MindMapSideMenu() {
 
     <div className='flex flex-col shadow items-center justify-between rounded-full p-1 border border-white/80 dark:border-neutral-700/80 text-neutral-500 bg-gradient-to-b from-card/70 rounded-[calc(var(--radius)-2px)]'>
 
-      <div className='flex flex-col'>
+      <div className='flex flex-col items-center '>
+        {/* <motion.div
+          style={{
+            width: '20px',
+            borderTop: `2px solid ${ICON_GREEN}`,
+            transformOrigin: 'center',
+          }}
+          initial={{ translateY: '-3px' }}
+          animate={
+            crossed
+              ? { rotate: '45deg', translateY: '1px' }
+              : { translateY: '-3px', rotate: '0deg' }
+          }
+          transition={{ bounce: 0, duration: 0.1 }}
+        />
+        <motion.div
+          transition={{ bounce: 0, duration: 0.1 }}
+          style={{
+            width: '20px',
+            borderTop: `2px solid ${ICON_GREEN}`,
+            transformOrigin: 'center',
+          }}
+          initial={{ translateY: '3px' }}
+          animate={
+            crossed
+              ? { rotate: '-45deg', translateY: '-1px' }
+              : { translateY: '3px', rotate: '0deg', scaleX: 1 }
+          }
+        /> */}
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>

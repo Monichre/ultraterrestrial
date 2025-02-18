@@ -28,54 +28,65 @@
   box-shadow: 0 35px 20px #777;
   transform: rotate(-4deg);
 }
+
 .data-card::after {
   transform: rotate(4deg);
   right: 10px;
   left: auto;
 }
-.data-card > * {
+
+.data-card>* {
   padding: 0.6rem 1.2rem;
 }
+
 .data-card h1 {
   font-size: clamp(2.2rem, 4.2vw, 3rem);
   line-height: 1;
   font-weight: 500;
 }
+
 .data-card .name {
   grid-column: 1/-1;
   grid-row: 2;
   padding-bottom: 1.2rem;
 }
+
 .data-card .info,
 .data-card .location,
 .data-card .type,
 .data-card .pattern {
   grid-column: 1 / span 2;
 }
+
 .data-card .date,
 .data-card .weight {
   transform: rotate(180deg);
   writing-mode: vertical-lr;
   padding: 1.2rem 0;
 }
+
 .data-card .date,
 .data-card .weight,
 .data-card .footnote,
 .data-card .site {
   font-size: 85%;
 }
+
 .data-card .date {
   grid-row: 3 / span 4;
   grid-column: 3/4;
 }
+
 .data-card .footnote {
   grid-column: 1/2;
 }
+
 .data-card .weight {
   grid-row: 7 / span 1;
   grid-column: 3/4;
   min-height: 10rem;
 }
+
 .data-card .pattern {
   grid-row: 6 / span 2;
   min-height: 16.5rem;
@@ -89,17 +100,17 @@
   padding: 0 0.8rem 0.75rem;
 }
 
-.name,
-.info,
-.location,
-.weight {
+.data-card .name,
+.data-card .info,
+.data-card .location,
+.data-card .weight {
   border-bottom: 0.5px dashed;
 }
 
-.info,
-.location,
-.type,
-.footnote {
+.data-card .info,
+.data-card .location,
+.data-card .type,
+.data-card .footnote {
   border-right: 0.5px dashed;
 }
 
@@ -107,9 +118,11 @@
   display: inline-block;
   pointer-events: none;
 }
+
 .checkbox:nth-child(1) {
   margin-right: 30px;
 }
+
 .checkbox input {
   height: 0;
   width: 0;
@@ -117,7 +130,8 @@
   position: absolute;
   z-index: -1;
 }
-.checkbox input:checked + label:after {
+
+.checkbox input:checked+label:after {
   content: '';
   position: absolute;
   width: 22px;
@@ -128,10 +142,12 @@
   top: 10px;
   border-radius: 5px;
 }
+
 .checkbox label {
   padding: 5px 20px 5px 30px;
   position: relative;
 }
+
 .checkbox label:before {
   content: '';
   position: absolute;
@@ -149,26 +165,24 @@
 .square {
   background: black;
 }
+
 .square.one {
   grid-row: 1;
   grid-column: 3/4;
   height: 2.5rem;
 }
+
 .pattern {
-  background-image: repeating-radial-gradient(
-      circle at 60%,
+  background-image: repeating-radial-gradient(circle at 60%,
       #eee,
       #eee 3px,
       transparent 4px,
-      #eee 5px
-    ),
-    repeating-radial-gradient(
-      circle at 45%,
+      #eee 5px),
+    repeating-radial-gradient(circle at 45%,
       #999,
       #999 3px,
       transparent 4px,
-      #999 5px
-    );
+      #999 5px);
   background-size: 200%;
 }
 
@@ -190,27 +204,25 @@
 }
 
 .pattern-two {
-  background-image: repeating-radial-gradient(
-    ellipse at right,
-    #888 10%,
-    #888 1px,
-    transparent 1px,
-    transparent 3px,
-    #888 3px,
-    #888 4px,
-    transparent 4px,
-    transparent 5px,
-    #888 5px,
-    #888 6px,
-    transparent 6px,
-    #888 6px,
-    #888 7px,
-    transparent 7px,
-    transparent 8px,
-    #888 8px,
-    #888 9px,
-    transparent 9px,
-    transparent 10px
-  );
+  background-image: repeating-radial-gradient(ellipse at right,
+      #888 10%,
+      #888 1px,
+      transparent 1px,
+      transparent 3px,
+      #888 3px,
+      #888 4px,
+      transparent 4px,
+      transparent 5px,
+      #888 5px,
+      #888 6px,
+      transparent 6px,
+      #888 6px,
+      #888 7px,
+      transparent 7px,
+      transparent 8px,
+      #888 8px,
+      #888 9px,
+      transparent 9px,
+      transparent 10px);
   background-size: 20px 40px;
 }

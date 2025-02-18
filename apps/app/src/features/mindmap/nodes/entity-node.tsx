@@ -29,7 +29,7 @@ interface Photo {
 
 export const IconMenuWrapper = ( { children }: { children: React.ReactNode } ) => {
   return (
-    <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 bg-neutral-800 text-neutral-400 border border-white/50'
+    <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 text-neutral-400 border border-white/50'
       style={{
         borderColor: 'rgba(255, 255, 255, 0.5)',
         transform: 'translateX(0px)',
@@ -141,15 +141,15 @@ const EntityNode = memo( ( node: any ) => {
             {node?.data?.type === 'testimonies' || node?.data?.type === 'testimony' ? <TestimonyCoreNodeBottom card={node.data} >
               <PopoverTrigger>
                 <IconMenuWrapper>
-                  <Lightbulb className='text-white stroke-1' size='16' />
+                  <Lightbulb className='text-white stroke-1 bg-none' size='16' />
                 </IconMenuWrapper>
               </PopoverTrigger>
 
             </TestimonyCoreNodeBottom> : (
               <>
-                <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 bg-neutral-800 text-neutral-400 border border-white/50'
+                <div className='flex items-center gap-1 rounded-full  py-1 pl-2 pr-2.5 text-neutral-700 text-neutral-400 border border-white/50'
                   style={{
-                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    borderColor: 'rgba(255, 255, 255, 0.8)',
                     transform: 'translateX(0px)',
                   }}
                   onClick={findConnections}

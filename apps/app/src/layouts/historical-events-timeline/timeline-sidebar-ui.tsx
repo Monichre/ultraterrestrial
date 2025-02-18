@@ -1,11 +1,7 @@
 'use client'
-import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react'
-import { animate, AnimatePresence, motion, useMotionValue, useMotionValueEvent, useScroll, useSpring } from 'framer-motion'
-import { AnimatedBeam } from '@/components/animated/animated-beam'
-import { HandDrawnArrowDown } from '@/components/icons/icons'
-import { ICON_BLUE } from '@/utils/constants'
-import { path } from 'd3'
-import { TextScramble } from '@/components/animated/text-effect/text-scramble'
+import { TextScramble } from '@/components/animated/text-effect/text-scramble/text-scramble'
+import { animate, motion } from 'framer-motion'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export const TimelineSidebar = React.memo( ( { years, currentYearIndex: yearIndex = 0 }: any ) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>( yearIndex )

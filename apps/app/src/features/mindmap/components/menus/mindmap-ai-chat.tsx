@@ -1,8 +1,5 @@
 'use client'
-import { ChatInput, ChatInputSubmit, ChatInputTextArea } from "@/components/ui/chat/chat-input"
-import { ChatMessageArea } from "@/components/ui/chat/chat-message-area"
 
-import { ChatMessage, ChatMessageAvatar, ChatMessageContent } from "@/components/ui/chat/chat-message"
 import { ExpandableChat } from "@/components/ui/chat/expandable-chat"
 import { useAssistant } from "ai/react"
 import { useState } from "react"
@@ -17,7 +14,7 @@ export const MindMapAiChat = () => {
       <ExpandableChat />
 
 
-      <ChatMessageArea className="px-4 py-4 space-y-4">
+      {/* <ChatMessageArea className="px-4 py-4 space-y-4">
         {messages.map( ( message ) => {
           if ( message.role !== "user" ) {
             return (
@@ -56,7 +53,7 @@ export const MindMapAiChat = () => {
           <ChatInputTextArea placeholder="Type a message..." />
           <ChatInputSubmit />
         </ChatInput>
-      </div>
+      </div> */}
 
     </div>
 
