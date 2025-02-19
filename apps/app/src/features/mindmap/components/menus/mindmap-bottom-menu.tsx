@@ -126,7 +126,7 @@ export const MindMapBottomMenu = () => {
     // Start so that the children (as a group) are centered below the parent's center
     const startX = parentCenterX - totalWidth / 2
 
-    const verticalSpacing = 150 // Vertical offset from the bottom of the parent
+    const verticalSpacing = 200 // Vertical offset from the bottom of the parent
     const childY = parentHeight + verticalSpacing
 
     return { startX, childY, entityWidth, entitySpacing }
@@ -134,7 +134,7 @@ export const MindMapBottomMenu = () => {
 
   const handleLoadingRecords = useCallback(
     ( { data: { type } }: any ) => {
-      const amount = type === 'events' ? '4' : '3'
+      const amount = 3
       const center = screenToFlowPosition( calculateCenterOfScreen() )
 
       // Retrieve the entities for this type
