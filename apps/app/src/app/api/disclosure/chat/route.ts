@@ -1,7 +1,7 @@
 // import { cacheMiddleware } from '@/ai/middleware'
 import { openai } from '@/lib/openai/client'
 import { DISCLOSURE_ASSISTANT_ID } from '@/services/ai/openai/config'
-import { searchDatabase } from '@/services/ai/openai/tools/search-database'
+import { assistantEventHandler } from '@/services/ai/openai/stream-handler'
 import { AssistantResponse } from 'ai'
 // const streamIntermediateData = ( dataStream: any ) => {
 //   return createDataStreamResponse( {
@@ -71,11 +71,11 @@ export async function POST( req: Request ) {
   const createdMessage = await openai.beta.threads.messages.create( threadId, {
     role: 'user',
     content: input.message,
-  }, { signal: req.signal } )
+  } )
 
   return AssistantResponse(
     { threadId, messageId: createdMessage.id },
-    async ( { forwardStream, sendDataMessage }: any ) => {
+    async ( { forwardStream }: any ) => {
 
       // { type: 'function', function: { name: 'search_database' } }
 
@@ -94,70 +94,74 @@ export async function POST( req: Request ) {
             } )(),
 
         },
-        { signal: req.signal }
+        assistantEventHandler
+        // { signal: req.signal }
         // assistantEventHandler
       )
 
       let runResult = await forwardStream( runStream )
 
+      console.log( "🚀 ~ runResult:", runResult )
 
-      while (
-        runResult?.status === 'requires_action' &&
-        runResult.required_action?.type === 'submit_tool_outputs'
-      ) {
-        const tool_outputs = await Promise.all(
-          runResult.required_action.submit_tool_outputs.tool_calls.map( async ( toolCall: any ) => {
-            console.log( '🚀 ~ file: route.ts:89 ~ toolCall:', toolCall )
 
-            console.log( '🚀 ~ file: route.ts:138 ~ runResult:', runResult )
 
-            console.log( '🚀 ~ file: route.ts:89 ~ toolCall:', toolCall )
+      // while (
+      //   runResult?.status === 'requires_action' &&
+      //   runResult.required_action?.type === 'submit_tool_outputs'
+      // ) {
+      //   const tool_outputs = await Promise.all(
+      //     runResult.required_action.submit_tool_outputs.tool_calls.map( async ( toolCall: any ) => {
+      //       console.log( '🚀 ~ file: route.ts:89 ~ toolCall:', toolCall )
 
-            const parameters = JSON.parse( toolCall.function.arguments )
+      //       console.log( '🚀 ~ file: route.ts:138 ~ runResult:', runResult )
 
-            console.log( '🚀 ~ file: route.ts:87 ~ parameters:', parameters )
+      //       console.log( '🚀 ~ file: route.ts:89 ~ toolCall:', toolCall )
 
-            sendDataMessage( {
-              role: 'data',
-              data: {
-                name: "test"
-              },
-            } )
+      //       const parameters = JSON.parse( toolCall.function.arguments )
 
-            switch ( toolCall.function.name ) {
-              case 'search_database':
-                const { table, search_terms: searchTerms, search_fields: searchFields } = parameters
+      //       console.log( '🚀 ~ file: route.ts:87 ~ parameters:', parameters )
 
-                const analogousRecords = await searchDatabase( { table, searchTerms, searchFields } )
+      //       sendDataMessage( {
+      //         role: 'data',
+      //         data: {
+      //           name: "test"
+      //         },
+      //       } )
 
-                console.log(
-                  '🚀 ~ file: actions.tsx:112 ~ forawait ~ analogousRecords:',
-                  analogousRecords
-                )
+      //       switch ( toolCall.function.name ) {
+      //         case 'search_database':
+      //           const { table, search_terms: searchTerms, search_fields: searchFields } = parameters
 
-                return {
-                  tool_call_id: toolCall.id,
-                  output: JSON.stringify( analogousRecords ),
-                }
+      //           const analogousRecords = await searchDatabase( { table, searchTerms, searchFields } )
 
-              default:
-                throw new Error( `Unknown tool call function: ${toolCall.function.name}` )
-            }
-          } )
-        )
-        console.log( '🚀 ~ file: route.ts:124 ~ tool_outputs:', tool_outputs )
-        runResult = await forwardStream(
-          openai.beta.threads.runs.submitToolOutputsStream(
-            threadId,
-            runResult.id,
-            { tool_outputs },
-            { signal: req.signal }
-            // tool_outputs[0].tool_call_id,
-            // { tool_outputs },
-          )
-        )
-      }
+      //           console.log(
+      //             '🚀 ~ file: actions.tsx:112 ~ forawait ~ analogousRecords:',
+      //             analogousRecords
+      //           )
 
+      //           return {
+      //             tool_call_id: toolCall.id,
+      //             output: JSON.stringify( analogousRecords ),
+      //           }
+
+      //         default:
+      //           throw new Error( `Unknown tool call function: ${toolCall.function.name}` )
+      //       }
+      //     } )
+      //   )
+      //   console.log( '🚀 ~ file: route.ts:124 ~ tool_outputs:', tool_outputs )
+      //   runResult = await forwardStream(
+      //     openai.beta.threads.runs.submitToolOutputsStream(
+      //       threadId,
+      //       runResult.id,
+      //       { tool_outputs },
+      //       // { signal: req.signal }
+      //       // tool_outputs[0].tool_call_id,
+      //       // { tool_outputs },
+      //     )
+      //   )
+      // }
+      return runResult
       // return {
       //   threadMessages
       // }

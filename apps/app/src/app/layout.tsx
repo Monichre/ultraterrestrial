@@ -4,6 +4,7 @@
 
 import '@/styles/flowith/flowith.css'
 import '@/styles/flowith/reactflow.css'
+import "@copilotkit/react-ui/styles.css"
 import '@xyflow/react/dist/style.css'
 import './globals.css'
 
@@ -39,6 +40,8 @@ export default function RootLayout( { children }: { children: React.ReactNode } 
       <html lang='en' suppressHydrationWarning className='dark'>
         <body
           className={` ${neueHaasGrotesk.variable} ${monumentGrotesk.variable} ${monumentGroteskMono.variable} ${lukasSans.variable} dark`}>
+
+
           <ThemeProvider
             attribute='class'
             forcedTheme='dark'
@@ -62,6 +65,7 @@ export default function RootLayout( { children }: { children: React.ReactNode } 
             {/* </PageTransition> */}
             {/* </AnimationProvider> */}
           </ThemeProvider>
+
         </body>
         {/* </DataLayer> */}
       </html>

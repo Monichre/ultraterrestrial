@@ -67,8 +67,10 @@ export const OracleInput = ( {
   handleKeyDown,
   setIsOpen,
   isOpen,
-  loadModelData
-
+  loadModelData,
+  isChatActive,
+  chatStatus,
+  messages
 }: any ) => {
 
 
@@ -76,7 +78,7 @@ export const OracleInput = ( {
     setIsOpen( !!activeCommand )
   }
   const handleChange = ( e: React.ChangeEvent<HTMLInputElement> ) => {
-    setInputValue( e.target.value )
+    setInputValue( e )
 
   }
   const handleLoadingModelData = useCallback( () => {
@@ -88,60 +90,89 @@ export const OracleInput = ( {
 
   return (
     <>
-      <div className="relative flex items-center flex-wrap gap-2 px-3 h-auto min-h-[48px] z-50">
-
-        {activeCommand && (
-          <div className="flex items-center gap-2 text-sm bg-black/10 dark:bg-white/10 px-2 py-1 rounded-md">
-            <span className="flex items-center gap-1.5 flex-shrink-0">
-
-              <DotIcon className="w-4 h-4 text-black/50 dark:text-white/50" />
-              <span className="text-black/70 dark:text-white/70">
-
-                {activeCommand}
-              </span>
-            </span>
+      <div className="relative flex flex-col w-full">
+        {isChatActive && messages?.length > 0 && (
+          <div className="max-h-[300px] overflow-y-auto mb-4 space-y-2 px-3">
+            {messages.map( ( message: any ) => (
+              <div
+                key={message.id}
+                className={cn(
+                  "p-2 rounded-lg",
+                  message.role === 'user'
+                    ? "bg-neutral-800 ml-auto"
+                    : "bg-neutral-900"
+                )}
+              >
+                {message.content}
+              </div>
+            ) )}
           </div>
         )}
 
-        {/* Input Container */}
-        <div
-          className="rounded-xl border border-transparent flex gap-2 items-center relative w-full p-2 px-2.5 duration-200 border border-white/30 border-neutral-700/30 text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90"
-          style={{
-            borderRadius: 25,
-            padding: '12px 16px',
-          }}
-        >
-          {/* Input Section */}
-          <div className="flex items-center gap-1 justify-start w-full">
+        <div className="relative flex items-center flex-wrap gap-2 px-3 h-auto min-h-[48px] z-50">
 
-            <div className="w-6 h-6 rounded-full flex items-center justify-center">
+          {/* {activeCommand && (
+            <div className="flex items-center gap-2 text-sm bg-black/10 dark:bg-white/10 px-2 py-1 rounded-md">
+              <span className="flex items-center gap-1.5 flex-shrink-0">
 
+                <DotIcon className="w-4 h-4 text-black/50 dark:text-white/50" />
+                <span className="text-black/70 dark:text-white/70">
 
-
-              {isOpen && <SlashIcon className="h-6 w-6" fill={ICON_GREEN} />
-              }
-
-
-
-              {/* {activeModel} */}
+                  {activeCommand}
+                </span>
+              </span>
             </div>
+          )} */}
+
+          {/* Input Container */}
+          <div
+            className="rounded-xl border border-transparent flex gap-2 items-center relative w-full p-2 px-2.5 duration-200 border border-white/30 border-neutral-700/30 text-neutral-500 bg-neutral-950 bg-gradient-to-b from-black/90"
+            style={{
+              borderRadius: 25,
+              padding: '12px 16px',
+            }}
+          >
+            {/* Input Section */}
+            <div className="flex items-center gap-1 justify-start w-full">
+
+              <div className="w-6 h-6 rounded-full flex items-center justify-center">
 
 
-            <input
-              type="text"
 
-              value={inputValue}
-              onChange={handleChange}
-              onKeyDown={handleKeyDown}
-              // onFocus={() => setIsOpen( !!activeCommand )}
-              placeholder={activeCommand ? "Type your message..." : isOpen ? "..." : "Type / for commands..."}
-              className="bg-transparent text-zinc-200 text-sm focus:outline-none flex-1"
-            />
+                {isOpen && <SlashIcon className="h-6 w-6" fill={ICON_GREEN} />
+                }
 
-            <div className="w-6 h-6 rounded-full flex items-center justify-center ml-auto" onClick={handleLoadingModelData}>
-              {activeModel ? <AddIcon className="h-6 w-6" fill={ICON_GREEN} /> : <OracleIcon className="h-6 w-6" fill={ICON_GREEN} />}
+
+
+                {/* {activeModel} */}
+              </div>
+
+
+              <input
+                type="text"
+
+                value={inputValue}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
+                placeholder={
+                  isChatActive
+                    ? chatStatus === 'loading'
+                      ? "AI is thinking..."
+                      : "Chat with AI..."
+                    : activeCommand
+                      ? "Type your message..."
+                      : isOpen
+                        ? "..."
+                        : "Type / for commands..."
+                }
+                className="bg-transparent text-zinc-200 text-sm focus:outline-none flex-1"
+              />
+
+              <div className="w-6 h-6 rounded-full flex items-center justify-center ml-auto" onClick={handleLoadingModelData}>
+                {activeModel ? <AddIcon className="h-6 w-6" fill={ICON_GREEN} /> : <OracleIcon className="h-6 w-6" fill={ICON_GREEN} />}
+              </div>
+
             </div>
-
           </div>
         </div>
       </div>

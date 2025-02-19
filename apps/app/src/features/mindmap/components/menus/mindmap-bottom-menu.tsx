@@ -10,7 +10,7 @@ import {
 import { useMindMap } from '@/contexts'
 import { initiateDatabaseTableQuery } from '@/features/mindmap/api/search'
 import { DOMAIN_MODEL_COLORS, ICON_GREEN } from '@/utils/constants'
-import { useAssistant } from 'ai/react'
+import { useAssistant } from '@ai-sdk/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -24,7 +24,7 @@ import { LightningBoltIcon } from "@radix-ui/react-icons"
 import { TextShimmer } from "@/components/animated/text-effect"
 import { MagicWandIcon } from "@/components/icons"
 import { capitalize } from "@/utils"
-import { Brain, SearchIcon } from "lucide-react"
+import { Brain, DotIcon, SearchIcon } from "lucide-react"
 
 // Move COMMANDS outside component
 const COMMANDS = [
@@ -66,7 +66,7 @@ const COMMANDS = [
 ] as const
 
 export const MindMapBottomMenu = () => {
-  const { status, messages, input, submitMessage, handleInputChange } = useAssistant( { api: '/api/disclosure/chat' } )
+  const { status, messages, input, setInput, submitMessage, handleInputChange, append } = useAssistant( { api: '/api/disclosure/chat' } )
 
   const {
     addNextEntitiesToMindMap,
@@ -83,7 +83,8 @@ export const MindMapBottomMenu = () => {
     setNodes,
     getNodes,
     updateNode,
-    getNodesBounds
+    getNodesBounds,
+    getNode
   } = useMindMap()
 
   const idCounter = useRef( 0 )
@@ -103,24 +104,30 @@ export const MindMapBottomMenu = () => {
    * - Determines the starting x-coordinate so that the children are centered below the parent.
    */
   const computeChildPositions = ( parentNode: any, numberOfChildren: number ) => {
-    const parentElem = document.getElementById( parentNode.id )
-    const parentRect = parentElem
-      ? parentElem.getBoundingClientRect()
-      : { width: 200, height: 100 }
-    const parentWidth = parentRect.width || 200
-    const parentHeight = parentRect.height || 100
 
-    const entityWidth = 250 // Default width for each child node
-    const entitySpacing = 50 // Space between child nodes
+    console.log( "🚀 ~ computeChildPositions ~ parentNode:", parentNode )
+
+
+    // NOTE: We dont need to use the DOM position of the parent node as the chld nodes will be positioned relatively to the parent by default (bc of the parentId prop)
+
+    const parentRect = document.querySelector( `[data-id="${parentNode.id}"]` )?.getBoundingClientRect()
+
+    console.log( "🚀 ~ computeChildPositions ~ parentRect:", parentRect )
+
+    const parentWidth = parentRect?.width || 200
+    const parentHeight = parentRect?.height || 100
+
+    const entityWidth = 270 // Default width for each child node
+    const entitySpacing = 100 // Space between child nodes
     const totalWidth = numberOfChildren * entityWidth + ( numberOfChildren - 1 ) * entitySpacing
 
     // Parent's center is its left position plus half its width
-    const parentCenterX = parentNode.position.x + parentWidth / 2
+    const parentCenterX = parentWidth / 2
     // Start so that the children (as a group) are centered below the parent's center
     const startX = parentCenterX - totalWidth / 2
 
-    const verticalSpacing = 100 // Vertical offset from the bottom of the parent
-    const childY = parentNode.position.y + parentHeight + verticalSpacing
+    const verticalSpacing = 150 // Vertical offset from the bottom of the parent
+    const childY = parentHeight + verticalSpacing
 
     return { startX, childY, entityWidth, entitySpacing }
   }
@@ -184,7 +191,7 @@ export const MindMapBottomMenu = () => {
         id: `${parentNode?.id}-${entity.id}`,
         source: parentNode?.id,
         target: entity.id,
-        type: 'smoothstep',
+        type: 'step',
       } ) )
 
       setEdges( ( edges: Edge[] ) => [...edges, ...newEdges] )
@@ -361,52 +368,52 @@ export const MindMapBottomMenu = () => {
     // updateState( { isMenuOpen: true } )
   }
 
-
-  // const handleKeyDown = ( e: React.KeyboardEvent<HTMLTextAreaElement> ) => {
-  //   if ( e.key === "Enter" && !e.shiftKey ) {
-  //     e.preventDefault()
-  // updateState( { value: "" } )
-  // adjustHeight( true )
-  //   }
-  // }
-
   const handleKeyDown = useCallback(
     ( e: React.KeyboardEvent ) => {
       if ( e.key === "Enter" && !e.shiftKey ) {
         e.preventDefault()
-        if ( inputValue && inputValue.trim() !== "/" ) {
-          loadNodesFromTableQuery( inputValue )
+
+        if ( activeCommand === 'chat' ) {
+          append( { role: 'user', content: inputValue } )
+          setInputValue( "" )
+
         }
-        // adjustHeight( true )
-        // handleButtonClick()
+
+        // if ( inputValue && inputValue.trim() !== "/" ) {
+        //   loadNodesFromTableQuery( inputValue )
+        // }
       }
 
-      if ( e.key === "Backspace" && inputValue === "" || e.key === "Backspace" && inputValue === " " ) {
+      if ( e.key === "Backspace" && ( inputValue === "" || inputValue === " " ) ) {
         setActiveCommand( null )
-
         setIsOpen( false )
       }
       if ( e.key === "/" ) {
         setIsOpen( true )
       }
     },
-    [activeCommand, inputValue]
+    [activeCommand, inputValue, submitMessage, loadNodesFromTableQuery]
+  )
+
+  const handleChange = useCallback(
+    ( e: any ) => {
+      setInputValue( e.target.value )
+      if ( activeCommand === 'chat' ) {
+        // setInput( value )
+        handleInputChange( e )
+      }
+    },
+    [activeCommand, handleInputChange]
   )
 
   const handleCommandSelect = ( commandId: string ) => {
     const command = COMMANDS.find( ( cmd ) => cmd.id === commandId )
     if ( command ) {
-      setInputValue( "" )
       setActiveCommand( commandId )
+      setInputValue( "" )
       setIsOpen( false )
-
     }
   }
-
-  // useEffect( () => {
-  //   if ( inputValue )
-  // }, [activeModel] )
-
 
   const handleLoadingModelData = () => {
     if ( state.selectedModel ) {
@@ -423,20 +430,32 @@ export const MindMapBottomMenu = () => {
           <div className="flex flex-col justify-between items-center px-4 py-2 text-sm text-zinc-600 dark:text-zinc-400">
             <div className="relative w-full z-50" ref={menuRef} >
               <div className="flex w-full justify-between items-center content-center px-2">
+                <div className="flex items-center gap-2">
+                  <motion.button
+                    onClick={toggleModelMenu}
+                    className="flex justify-start items-center gap-1"
+                  >
+                    <div className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 flex hover:ring-indigo-500/50 relative w-fit gap-3\1 rounded-xl align-center items-center content-center px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90">
+                      <AiStarIcon className='w-3 h-3 mr-2' stroke={ICON_GREEN} />
+                      <TextShimmer as="span" className="inline-block mr-2">Oracle {state?.selectedModel && `| ${capitalize( state?.selectedModel )}`} </TextShimmer>
+                    </div>
 
-                <motion.button
-                  onClick={toggleModelMenu}
-                  className="flex items-center gap-2 group relative z-50"
-                >
 
-                  <div className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 flex hover:ring-indigo-500/50 relative w-fit gap-3\1 rounded-xl align-center items-center content-center px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90">
-                    <AiStarIcon className='w-4 h-4 mr-2' stroke={ICON_GREEN} />
-                    <TextShimmer as="span" className="inline-block mr-2">Oracle {state?.selectedModel && `| ${capitalize( state?.selectedModel )}`} </TextShimmer>
-                  </div>
+                  </motion.button>
 
+                  {activeCommand && (
+                    <div className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 flex hover:ring-indigo-500/50 relative w-fit gap-3\1 rounded-xl align-center items-center content-center px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90">
+                      <DotIcon className="w-4 h-4 text-black/50 dark:text-white/50" />
+                      {/* <span className="text-black/70 dark:text-white/70"> */}
+                      <TextShimmer as="span" className="inline-block mr-2">
 
-                </motion.button>
+                        {activeCommand}
+                      </TextShimmer>
 
+                    </div>
+                  )}
+
+                </div>
                 <ToggleButton
                   icon={<Brain className="w-4 h-4" />}
                   label="Memory"
@@ -516,18 +535,22 @@ export const MindMapBottomMenu = () => {
           </div>
         </div>
 
+        <form onSubmit={submitMessage}>
 
-        <OracleInput
-          activeModel={state.selectedModel}
-          activeCommand={activeCommand}
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          handleKeyDown={handleKeyDown}
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-          loadModelData={handleLoadingModelData}
-
-        />
+          <OracleInput
+            activeModel={state.selectedModel}
+            activeCommand={activeCommand}
+            inputValue={inputValue}
+            setInputValue={handleChange}
+            handleKeyDown={handleKeyDown}
+            setIsOpen={setIsOpen}
+            isOpen={isOpen}
+            loadModelData={handleLoadingModelData}
+            isChatActive={activeCommand === 'chat'}
+            chatStatus={status}
+            messages={messages}
+          />
+        </form>
 
         <AnimatePresence>
           {isOpen && !activeCommand && (
@@ -548,7 +571,7 @@ export const MindMapBottomMenu = () => {
                         key={command.id}
                         onSelect={() => {
                           handleCommandSelect( command.id )
-                          setInputValue( `${command.prefix} ` )
+                          // setInputValue( `${command.prefix} ` )
                         }}
                         className="px-3 py-2.5 flex items-center gap-3 text-sm hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer group"
                       >

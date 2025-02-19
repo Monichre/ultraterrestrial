@@ -1,14 +1,13 @@
 'use client'
 
+import { useMindMap } from '@/contexts'
 import {
   initiateDatabaseWideConnectionSearch,
   initiateRagEnrichedDatabaseSearch,
 } from '@/features/mindmap/api/search'
 import { saveEventForUser } from '@/features/user/api/save-event'
-import { useMindMap } from '@/contexts'
 import { objectMapToSingular } from '@/utils'
 import { useAuth } from '@clerk/nextjs'
-import { S } from '@liveblocks/react/dist/suspense-fYGGJ3D9'
 import { useCallback, useState } from 'react'
 
 export const useEntity = ( { card }: any ) => {
@@ -37,14 +36,16 @@ export const useEntity = ( { card }: any ) => {
     id,
   } = card
 
-  const image: any = photos?.length
+  const image = photos?.length
     ? photos[0]
     : photo?.length
       ? photo[0]
       : { url: '/foofighters.webp', signedUrl: '/foofighters.webp' }
 
-  image.src = image.url
-
+  // Check if image is a string URL or an object
+  const imageData = typeof image === 'string'
+    ? { url: image, src: image }
+    : { ...image, src: image.url }
 
   const [showMenu, setShowMMenu] = useState( false )
   const handleHoverLeave = () => {

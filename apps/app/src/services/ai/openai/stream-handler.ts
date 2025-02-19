@@ -15,7 +15,7 @@ export class AssistantStreamEventHandler extends EventEmitter {
     console.log( "🚀 ~ file: stream-handler.ts:15 ~ AssistantStreamEventHandler ~ onEvent ~ event:", event )
 
 
-    console.log( "🚀 ~ file: stream-handler.ts:15 ~ AssistantStreamEventHandler ~ onEvent ~ data:", data )
+    console.log( "🚀 ~ file: stream-handler.ts:15 ~ AssistantStreamEventHandler ~ onEvent ~ data:", event.data )
 
     console.log( "🚀 ~ file: event-handler.ts:10 ~ AssistantStreamEventHandler ~ onEvent ~ event:", event )
     try {

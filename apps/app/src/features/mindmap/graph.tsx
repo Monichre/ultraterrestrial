@@ -22,6 +22,7 @@ import { useContextMenu } from '@/hooks/useContextMenu'
 // const {nodes: layoutNodes, edges: layoutEdges} = layoutElementsTreeFlex({}, 'root', 'TB')
 import { EllipsesScramble } from '@/components/animated/text-effect/text-scramble/ellipses-scramble'
 import { Card } from '@/components/ui/card'
+import { useUser } from '@clerk/nextjs'
 import ELK from 'elkjs/lib/elk.bundled.js'
 const elk = new ELK()
 
@@ -97,9 +98,11 @@ export function Graph( props: any ) {
     style: { stroke: 'white' },
   }
 
+  const user = useUser()
 
 
   const { ref, clickPosition, attrs, isOpen, closeMenu } = useContextMenu()
+
 
 
 
