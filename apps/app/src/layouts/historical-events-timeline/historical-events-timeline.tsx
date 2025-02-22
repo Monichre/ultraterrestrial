@@ -123,28 +123,30 @@ export const HistoricalEventsTimeline = ( { events }: { events: JSONData<EventsR
       </div>
 
       {/* w-screen  */}
-      <div className='fixed top-0 left-0 w-[80px] h-screen flex justify-center z-40'>
-        <div className='h-full w-auto flex flex-col justify-center align-center items-center content-center'>
+      <div className='fixed top-0 left-0 w-screen h-screen z-30'>
+        <div className='absolute top-0 left-0 w-[80px] h-screen flex justify-center z-40'>
+          <div className='h-full w-auto flex flex-col justify-center align-center items-center content-center'>
 
-          <TimelineSidebar years={years} currentYearIndex={currentYearIndex} currentYear={currentYear} />
+            <TimelineSidebar years={years} currentYearIndex={currentYearIndex} currentYear={currentYear} />
 
+          </div>
         </div>
-      </div>
-      <div className='fixed top-0 left-[100px] w-screen h-screen overflow-scroll spatial-timeline z-40'>
+        <div className='absolute top-0 left-0 w-screen h-screen overflow-scroll spatial-timeline z-30'>
 
-        <EventsTimeline
-          updateCurrentYearIndex={updateCurrentYearIndex}
-          updateCurrentYear={updateCurrentYear}
-          currentYear={currentYear}
-          eventsByYear={eventsByYear}
-          years={years}
-          updateActiveLocation={updateActiveLocation}
-        />
-        {/* <ZScrollTimeline
+          <EventsTimeline
+            updateCurrentYearIndex={updateCurrentYearIndex}
+            updateCurrentYear={updateCurrentYear}
+            currentYear={currentYear}
+            eventsByYear={eventsByYear}
+            years={years}
+            updateActiveLocation={updateActiveLocation}
+          />
+          {/* <ZScrollTimeline
           eventsByYear={eventsByYear}
           years={years}
           updateActiveLocation={updateActiveLocation}
         /> */}
+        </div>
       </div>
     </>
   )

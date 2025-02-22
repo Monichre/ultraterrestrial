@@ -1,0 +1,141 @@
+import type { SessionStatus } from "@/app/types";
+import { Button } from "@/components/ui/button";
+import { FileIcon } from "lucide-react";
+
+interface BottomToolbarProps {
+	sessionStatus: SessionStatus;
+	onToggleConnection: () => void;
+	isPTTActive: boolean;
+	setIsPTTActive: (val: boolean) => void;
+	isPTTUserSpeaking: boolean;
+	handleTalkButtonDown: () => void;
+	handleTalkButtonUp: () => void;
+	isEventsPaneExpanded: boolean;
+	setIsEventsPaneExpanded: (val: boolean) => void;
+	isAudioPlaybackEnabled: boolean;
+	setIsAudioPlaybackEnabled: (val: boolean) => void;
+
+	handleFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export function BottomToolbar({
+	sessionStatus,
+	onToggleConnection,
+	isPTTActive,
+	setIsPTTActive,
+	isPTTUserSpeaking,
+	handleTalkButtonDown,
+	handleTalkButtonUp,
+	isEventsPaneExpanded,
+	setIsEventsPaneExpanded,
+	isAudioPlaybackEnabled,
+	handleFileUpload,
+	setIsAudioPlaybackEnabled,
+}: BottomToolbarProps) {
+	const isConnected = sessionStatus === "CONNECTED";
+	const isConnecting = sessionStatus === "CONNECTING";
+
+	function getConnectionButtonLabel() {
+		if (isConnected) return "Disconnect";
+		if (isConnecting) return "Connecting...";
+		return "Connect";
+	}
+
+	function getConnectionButtonClasses() {
+		const baseClasses = "text-white text-base p-2 w-36 rounded-full h-full";
+		const cursorClass = isConnecting ? "cursor-not-allowed" : "cursor-pointer";
+
+		if (isConnected) {
+			// Connected -> label "Disconnect" -> red
+			return `bg-red-600 hover:bg-red-700 ${cursorClass} ${baseClasses}`;
+		}
+		// Disconnected or connecting -> label is either "Connect" or "Connecting" -> black
+		return `bg-black hover:bg-gray-900 ${cursorClass} ${baseClasses}`;
+	}
+
+	return (
+		<div className="flex flex-row items-center justify-evenly">
+			<Button
+				variant={isConnected ? "destructive" : "default"}
+				size="sm"
+				onClick={onToggleConnection}
+				disabled={isConnecting}
+			>
+				{getConnectionButtonLabel()}
+			</Button>
+			<div className="relative">
+				<Button variant="secondary" size="sm">
+					<FileIcon className="w-4 h-4 mr-2" />
+					Upload CSV
+				</Button>
+				<input
+					type="file"
+					accept=".csv"
+					onChange={handleFileUpload}
+					className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+				/>
+			</div>
+
+			{/* <div className="flex flex-row items-center gap-2">
+				<input
+					id="push-to-talk"
+					type="checkbox"
+					checked={isPTTActive}
+					onChange={(e) => setIsPTTActive(e.target.checked)}
+					disabled={!isConnected}
+					className="w-4 h-4"
+				/>
+				<label
+					htmlFor="push-to-talk"
+					className="flex items-center cursor-pointer"
+				>
+					Push to talk
+				</label>
+				<Button
+					onMouseDown={handleTalkButtonDown}
+					onMouseUp={handleTalkButtonUp}
+					onTouchStart={handleTalkButtonDown}
+					onTouchEnd={handleTalkButtonUp}
+					disabled={!isPTTActive}
+					className={
+						(isPTTUserSpeaking ? "bg-gray-300" : "bg-gray-200") +
+						" py-1 px-4 cursor-pointer rounded-full" +
+						(!isPTTActive ? " bg-gray-100 text-gray-400" : "")
+					}
+				>
+					Talk
+				</Button>
+			</div> */}
+
+			{/* <div className="flex flex-row items-center gap-2">
+				<input
+					id="audio-playback"
+					type="checkbox"
+					checked={isAudioPlaybackEnabled}
+					onChange={(e) => setIsAudioPlaybackEnabled(e.target.checked)}
+					disabled={!isConnected}
+					className="w-4 h-4"
+				/>
+				<label
+					htmlFor="audio-playback"
+					className="flex items-center cursor-pointer"
+				>
+					Audio playback
+				</label>
+			</div>
+
+			<div className="flex flex-row items-center gap-2">
+				<input
+					id="logs"
+					type="checkbox"
+					checked={isEventsPaneExpanded}
+					onChange={(e) => setIsEventsPaneExpanded(e.target.checked)}
+					className="w-4 h-4"
+				/>
+				<label htmlFor="logs" className="flex items-center cursor-pointer">
+					Logs
+				</label>
+			</div> */}
+		</div>
+	);
+}

@@ -5,7 +5,7 @@ export function EllipsesScramble( { children, className }: { children: any, clas
   return (
     <TextScramble
       className={className}
-      duration={1.2}
+      duration={2}
       characterSet='. '
     >
 

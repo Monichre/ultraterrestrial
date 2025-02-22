@@ -2,7 +2,6 @@
 import { useMindMap } from '@/contexts/mindmap-context'
 import { Panel, ReactFlow } from '@xyflow/react'
 
-import { LocationVisualization } from '@/components/location-visualization'
 
 import { edgeTypes } from '@/features/mindmap/config/edge-types'
 
@@ -20,8 +19,8 @@ import { useContextMenu } from '@/hooks/useContextMenu'
 // this helper function returns the intersection point
 // of the line between the center of the intersectionNode and the target node
 // const {nodes: layoutNodes, edges: layoutEdges} = layoutElementsTreeFlex({}, 'root', 'TB')
-import { EllipsesScramble } from '@/components/animated/text-effect/text-scramble/ellipses-scramble'
-import { Card } from '@/components/ui/card'
+import { AgentNotificationsLog } from '@/features/mindmap/components/status-ui/agent-notifications-log'
+import { GraphStatusLog } from '@/features/mindmap/components/status-ui/graph-status-log'
 import { useUser } from '@clerk/nextjs'
 import ELK from 'elkjs/lib/elk.bundled.js'
 const elk = new ELK()
@@ -158,7 +157,7 @@ export function Graph( props: any ) {
           </div>
         </Panel>
         <Panel position='top-right'>
-          <LocationVisualization />
+          <GraphStatusLog />
         </Panel>
 
         <MindMapAnimatedClickMenu
@@ -171,39 +170,14 @@ export function Graph( props: any ) {
           <MindMapBottomMenu />
         </Panel>
 
+        <Panel position='bottom-right'>
+          <AgentNotificationsLog />
+        </Panel>
+
 
 
         {/* bg-gradient-to-r from-black/50 to-transparent  */}
       </ReactFlow>
-      <div className="fixed top-0 right-0 w-[25vw] h-full animate-[slide-in_0.3s_ease-out]">
-        <div className="p-4 animate-[fade-in-up_0.4s_ease-out] flex flex-col gap-4 justify-start items-center align-middle">
-
-          <Card className="bg-black/30 border-[#adf0dd]/30 backdrop-blur-sm p-4 w-full font-mono text-sm pointer-events-auto">
-            <div className="text-[#adf0dd] space-y-1">
-              <div className="opacity-90">[System Log]</div>
-              <EllipsesScramble className="opacity-70">{">"} Initializing Disclosure knowledge base</EllipsesScramble>
-              <EllipsesScramble className="opacity-70">{">"} Initializing global knowledge base scan...</EllipsesScramble>
-              <div className="pl-4 opacity-60">
-                - Indexing core domain models...
-              </div>
-              <div className="pl-4 opacity-60">
-                Sequencing records...
-              </div>
-              <div className="pl-4 opacity-60">
-                - Syncronizing application state with knowledge base...
-              </div>
-
-              <div className="opacity-80">{">"} [System Status]: Knowledge Base Sequenced</div>
-              <div className="opacity-75">{">"} Satellites: Online</div>
-              <div className="opacity-90">{">"} Data streams active:</div>
-              <div className="pl-4 opacity-60">
-                - Sequenced data stream pipeline...
-              </div>
-              <div className="opacity-80">{">"} Analysis: In progress...</div>
-            </div>
-          </Card>
-        </div>
-      </div>
 
     </div>
 

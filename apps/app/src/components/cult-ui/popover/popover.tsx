@@ -109,7 +109,7 @@ export function PopoverTrigger( { children, className }: PopoverTriggerProps ) {
       key="button"
       layoutId={`popover-${uniqueId}`}
       className={cn(
-        "flex h-9 items-center  bg-white px-3 text-zinc-950 bg-black",
+        "flex h-9 items-center  bg-white px-3 text-zinc-950",
         className
       )}
       style={{

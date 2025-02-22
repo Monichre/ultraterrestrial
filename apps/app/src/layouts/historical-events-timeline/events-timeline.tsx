@@ -11,7 +11,7 @@ import { ScrollSmoother } from 'gsap-trial/ScrollSmoother'
 import { ScrollTrigger } from 'gsap-trial/ScrollTrigger'
 
 import { Float } from '@/components/animated/float'
-import { CardCorners } from '@/features/mindmap/components/cards/entity-group-card/sections'
+import { EventCaseFileContainer } from '@/layouts/historical-events-timeline/event-case-file/EventCaseFileContainer'
 import { ICON_BLUE } from '@/utils'
 import type * as React from "react"
 import ReactPlayer from 'react-player'
@@ -286,7 +286,7 @@ export function EventsTimeline( {
             years.map( ( year, index ) => (
               <motion.div
                 key={year}
-                className={`year year-${year} !h-[75%] !left-auto !right-0 `}
+                className={`year year-${year} !h-[75%] `}
 
 
               // style={{
@@ -300,29 +300,31 @@ export function EventsTimeline( {
               // ref={el => yearRefs.current[year] = el}
 
               >
+                <EventCaseFileContainer>
 
-                <CardCorners type={'events'} />
-                <div className={`year-inner`}>
 
-                  {
-                    eventsByYear[year].map( ( event ) => (
-                      <motion.div
-                        key={`${year}-${event.id}`}
-                        id={`${year}-${event.id}`}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="event-item transition-transform duration-300 hover:scale-105 backdrop-blur-md bg-black/20 border border-white/10 p-2 my-2"
-                      >
-                        {/* <TimelineToolTip
+
+                  <div className={`year-inner`}>
+
+                    {
+                      eventsByYear[year].map( ( event ) => (
+                        <motion.div
+                          key={`${year}-${event.id}`}
+                          id={`${year}-${event.id}`}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="event-item transition-transform duration-300 hover:scale-105 backdrop-blur-md bg-black/20 border border-white/10 p-2 my-2"
+                        >
+                          {/* <TimelineToolTip
                       event={event}
                       onHover={updateActiveLocation}
                       coordinates={[event.latitude, event.longitude]}
                       /> */}
-                        <TimelineYearEvents updateActiveLocation={updateActiveLocation} event={event} />
-                      </motion.div>
-                    ) )
-                  }
-                </div>
-
+                          <TimelineYearEvents updateActiveLocation={updateActiveLocation} event={event} />
+                        </motion.div>
+                      ) )
+                    }
+                  </div>
+                </EventCaseFileContainer>
               </motion.div>
             ) )
           }
