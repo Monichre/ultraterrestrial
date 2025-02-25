@@ -1,10 +1,11 @@
 "use client";
 
 import { AddIcon, OracleIcon, SlashIcon } from "@/components/icons";
+import { MarkdownContent } from "@/components/ui/chat/markdown-content";
 import { cn } from "@/utils/cn";
 import { ICON_GREEN } from "@/utils/constants";
 import { Brain } from "lucide-react";
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 interface OracleInputProps {
 	containerRef: any;
@@ -63,6 +64,8 @@ export const OracleInput = ({
 	chatStatus,
 	messages,
 }: any) => {
+	const messagesContainerRef = useRef<HTMLDivElement>(null);
+
 	const handleInputFocus = () => {
 		setIsOpen(!!activeCommand);
 	};
@@ -73,11 +76,22 @@ export const OracleInput = ({
 		loadModelData(activeModel);
 	}, [activeModel, loadModelData]);
 
+	// Auto-scroll to the latest message whenever messages change
+	useEffect(() => {
+		if (messagesContainerRef.current && messages?.length > 0) {
+			messagesContainerRef.current.scrollTop =
+				messagesContainerRef.current.scrollHeight;
+		}
+	}, [messages]);
+
 	return (
 		<>
 			<div className="relative flex flex-col w-full">
 				{isChatActive && messages?.length > 0 && (
-					<div className="max-h-[300px] overflow-y-auto mb-4 space-y-3 px-3">
+					<div
+						ref={messagesContainerRef}
+						className="max-h-[300px] overflow-y-auto mb-4 space-y-3 px-3"
+					>
 						{messages.map((message: any) => (
 							<div
 								key={message.id}
@@ -105,7 +119,15 @@ export const OracleInput = ({
 											: "bg-neutral-800 text-neutral-100",
 									)}
 								>
-									{message.content}
+									{message.role === "user" ? (
+										<>{message.content}</>
+									) : (
+										<MarkdownContent
+											id={message?.id}
+											content={message.content}
+											className="max-w-full"
+										/>
+									)}
 								</div>
 							</div>
 						))}

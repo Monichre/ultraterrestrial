@@ -3,12 +3,13 @@ import {
 	ArtifactsIcon,
 	EventsIcon,
 	KeyFiguresIcon,
+	OracleIcon,
 	OrganizationsIcon,
 	TestimoniesIcon,
 	TopicsIcon,
 } from "@/components/icons/entity-icons";
 import { useMindMap } from "@/contexts";
-import { initiateDatabaseTableQuery } from "@/features/mindmap/api/search";
+import { initiateDatabaseTableQuery } from "@/features/mindmap/queries/search";
 import { DOMAIN_MODEL_COLORS, ICON_GREEN } from "@/utils/constants";
 import { useAssistant } from "@ai-sdk/react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -17,7 +18,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Command } from "cmdk";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { AddIcon, AiStarIcon, ThinTwinklyStar } from "@/components/icons";
+import { AddIcon, ThinTwinklyStar } from "@/components/icons";
 import {
 	OracleInput,
 	ToggleButton,
@@ -26,8 +27,9 @@ import { LightningBoltIcon } from "@radix-ui/react-icons";
 
 import { TextShimmer } from "@/components/animated/text-effect";
 import { MagicWandIcon } from "@/components/icons";
-import { capitalize } from "@/utils";
-import { Brain, DotIcon, SearchIcon } from "lucide-react";
+import { searchXataConnections } from "@/features/mindmap/actions";
+import { capitalize, cn } from "@/utils";
+import { Brain, SearchIcon, XIcon } from "lucide-react";
 
 // Move COMMANDS outside component
 const COMMANDS = [
@@ -72,7 +74,7 @@ const COMMANDS = [
 
 export const MindMapBottomMenu = () => {
 	const {
-		status,
+		status: chatStatus,
 		messages,
 		input,
 		setInput,
@@ -361,6 +363,7 @@ export const MindMapBottomMenu = () => {
 		selectedModel: null,
 		isModelMenuOpen: false,
 	});
+	const [searchResults, setSearchResults] = useState<any>(null);
 
 	const [filteredCommands, setFilteredCommands] = useState(COMMANDS);
 
@@ -390,8 +393,12 @@ export const MindMapBottomMenu = () => {
 		// updateState( { isMenuOpen: true } )
 	};
 
+	const closeModelMenu = () => {
+		updateState({ isModelMenuOpen: false });
+	};
+
 	const handleKeyDown = useCallback(
-		(e: React.KeyboardEvent) => {
+		async (e: React.KeyboardEvent) => {
 			if (e.key === "Enter" && !e.shiftKey) {
 				e.preventDefault();
 
@@ -400,9 +407,22 @@ export const MindMapBottomMenu = () => {
 					setInputValue("");
 				}
 
-				// if ( inputValue && inputValue.trim() !== "/" ) {
-				//   loadNodesFromTableQuery( inputValue )
-				// }
+				if (
+					activeCommand === "search" &&
+					inputValue &&
+					inputValue.trim() !== "/"
+				) {
+					// loadNodesFromTableQuery(inputValue);
+					const xataSearchResults = await searchXataConnections({
+						query: inputValue,
+						table: state?.selectedModel || null,
+					});
+					console.log(
+						"🚀 ~ handleKeyDown ~ xataSearchResults:",
+						xataSearchResults,
+					);
+					setSearchResults(xataSearchResults);
+				}
 			}
 
 			if (e.key === "Backspace" && (inputValue === "" || inputValue === " ")) {
@@ -415,7 +435,10 @@ export const MindMapBottomMenu = () => {
 		},
 		[activeCommand, inputValue, submitMessage, loadNodesFromTableQuery],
 	);
-
+	const removeActiveCommand = () => {
+		setActiveCommand(null);
+		setIsOpen(false);
+	};
 	const handleChange = useCallback(
 		(e: any) => {
 			setInputValue(e.target.value);
@@ -433,6 +456,7 @@ export const MindMapBottomMenu = () => {
 			setActiveCommand(commandId);
 			setInputValue("");
 			setIsOpen(false);
+			closeModelMenu();
 		}
 	};
 
@@ -458,9 +482,16 @@ export const MindMapBottomMenu = () => {
 										className="flex justify-start items-center gap-1"
 									>
 										<div className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 flex hover:ring-indigo-500/50 relative w-fit gap-3\1 rounded-xl align-center items-center content-center px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90">
-											<AiStarIcon
-												className="w-3 h-3 mr-2"
-												stroke={ICON_GREEN}
+											{/* <AiStarIcon
+													className="w-3 h-3 mr-2"
+													stroke={ICON_GREEN}
+												/> */}
+											<OracleIcon
+												className={cn(
+													"w-3 h-3 mr-2",
+													chatStatus === "in_progress" ? "animate-spin" : "",
+												)}
+												fill={ICON_GREEN}
 											/>
 											<TextShimmer as="span" className="inline-block mr-2">
 												Oracle{" "}
@@ -471,8 +502,11 @@ export const MindMapBottomMenu = () => {
 									</motion.button>
 
 									{activeCommand && (
-										<div className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 flex hover:ring-indigo-500/50 relative w-fit gap-3\1 rounded-xl align-center items-center content-center px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90">
-											<DotIcon className="w-4 h-4 text-black/50 dark:text-white/50" />
+										<div
+											className="cursor-pointer hover:shadow-sm hover:shadow-indigo-500/50 flex hover:ring-indigo-500/50 relative w-fit gap-3\1 rounded-xl align-center items-center content-center px-2 py-1 text-xs ring-1 ring-neutral-200 duration-200 ring-neutral-700 bg-neutral-950 bg-gradient-to-b from-black/90"
+											onClick={removeActiveCommand}
+										>
+											<XIcon className="w-4 h-4 text-black/50 dark:text-white/50" />
 											{/* <span className="text-black/70 dark:text-white/70"> */}
 											<TextShimmer as="span" className="inline-block mr-2">
 												{activeCommand}
@@ -568,7 +602,7 @@ export const MindMapBottomMenu = () => {
 						isOpen={isOpen}
 						loadModelData={handleLoadingModelData}
 						isChatActive={activeCommand === "chat"}
-						chatStatus={status}
+						chatStatus={chatStatus}
 						messages={messages}
 					/>
 				</form>
@@ -584,15 +618,15 @@ export const MindMapBottomMenu = () => {
 						>
 							<div className="rounded-lg shadow-lg w-[444px] h-[400px] mt-2 rounded-lg border border-neutral-700/30 text-neutral-500 bg-black bg-gradient-to-b from-black relative rounded-tl-lg rounded-tr-lg ">
 								<Command className="w-full">
-									<Command.List className="py-2">
-										{filteredCommands.map((command) => (
+									<Command.List className="">
+										{filteredCommands.map((command, index) => (
 											<Command.Item
 												key={command.id}
 												onSelect={() => {
 													handleCommandSelect(command.id);
 													// setInputValue( `${command.prefix} ` )
 												}}
-												className="px-3 py-2.5 flex items-center gap-3 text-sm hover:bg-black/10 dark:hover:bg-white/10 cursor-pointer group"
+												className="px-3 py-2.5 flex items-center gap-3 text-sm hover:bg-white/10 cursor-pointer group"
 											>
 												{command.icon()}
 												<div className="flex flex-col">

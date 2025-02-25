@@ -1,47 +1,42 @@
-// import { cacheMiddleware } from '@/ai/middleware'
+import { askXataWithAi } from "@/db/xata/db/search-operations";
 import { openai } from "@/lib/openai/client";
 import { DISCLOSURE_ASSISTANT_ID } from "@/services/ai/openai/config";
 import { assistantEventHandler } from "@/services/ai/openai/stream-handler";
-import { searchDatabase } from "@/services/ai/openai/tools/search-database";
+import { NER_EXTRACTION_PROMPT } from "@/services/ai/prompts/ner-extraction-prompt";
 import { AssistantResponse } from "ai";
-// const streamIntermediateData = ( dataStream: any ) => {
-//   return createDataStreamResponse( {
-//     execute: dataStream => {
-//       dataStream.writeData( 'initialized call' )
 
-//       const result = streamText( {
-//         model: openai( 'gpt-4o' ),
-//         messages,
-//         onChunk() {
-//           dataStream.writeMessageAnnotation( { chunk: '123' } )
-//         },
-//         onFinish() {
-//           // message annotation:
-//           dataStream.writeMessageAnnotation( {
-//             id: generateId(), // e.g. id from saved DB record
-//             other: 'information',
-//           } )
-
-//           // call annotation:
-//           dataStream.writeData( 'call completed' )
-//         },
-//       } )
-
-//       result.mergeIntoDataStream( dataStream )
-//     },
-//     onError: error => {
-//       // Error messages are masked by default for security reasons.
-//       // If you want to expose the error message to the client, you can do so here:
-//       return error instanceof Error ? error.message : String( error )
-//     },
-//   } )
-
-// }
-
-// const wrappedModel = wrapLanguageModel( {
-//   model: openai( 'gpt-4o-mini' ),
-//   middleware: cacheMiddleware,
-// } )
+/*
+{
+  "name": "search_database",
+  "description": "Search a specified table in the Xata (Postgres) database using provided search terms.",
+  "strict": false,
+  "parameters": {
+    "type": "object",
+    "properties": {
+     
+      "search_terms": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of search terms to use in the query."
+      },
+      "search_fields": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Fields to search within the table. If omitted, all text fields are searched."
+      },
+  
+     
+    },
+    "required": [
+    
+    ]
+  }
+}
+*/
 
 export async function POST(req: Request) {
 	console.log("🚀 ~ file: route.ts:49 ~ POST ~ req:", req);
@@ -79,26 +74,20 @@ export async function POST(req: Request) {
 				threadId,
 				{
 					// include: ['step_details.tool_calls[*].file_search.results[*].content'],
-					tool_choice: "required",
-					tools: [{ type: "file_search" }],
-					additional_instructions: `Look across topics, events, key figures, sightings, documents any additional resources at your disposal. Cite all of your sources thoroughly and specifically, including information and other relevant details on the weight of the resource as it pertains to your answer or the completion of the task. Return your response in well formatted markddown but be sure to return the Citations/Annotations data in JSON 
-        in the following format: 
-        ---
-        {
-          "citations": [
-            {
-
-              "Relation to Subject": "{{data}}", 
-              "Evidence": "{{data}}",
-              "Relevance Score": "{{data}}",
-              "Source": "{{Name of Source/Article}}",
-              "File": "{{Name of File}}",
-              "Weight": "{{The weight value you would assign it}}"
-              }
-            ]
-        }
-        ---
-        `,
+					// tool_choice: "",
+					// tools: [{ type: "file_search", "search_database" }],
+					tools: [
+						{
+							type: "file_search",
+						},
+						{
+							type: "function",
+							function: {
+								name: "searchDatabase",
+							},
+						},
+					],
+					additional_instructions: NER_EXTRACTION_PROMPT,
 					// tool_choice: { "type": "file_search" },
 					assistant_id:
 						DISCLOSURE_ASSISTANT_ID ??
@@ -132,35 +121,65 @@ export async function POST(req: Request) {
 
 							console.log("🚀 ~ file: route.ts:87 ~ parameters:", parameters);
 
-							sendDataMessage({
-								role: "data",
-								data: {
-									name: "test",
-								},
-							});
-
 							switch (toolCall.function.name) {
-								case "search_database":
-									const {
-										table,
-										search_terms: searchTerms,
-										search_fields: searchFields,
-									} = parameters;
+								case "searchDatabase":
+									// const {
+									// 	table,
+									// 	search_terms: searchTerms,
+									// 	search_fields: searchFields,
+									// } = parameters;
 
-									const analogousRecords = await searchDatabase({
-										table,
-										searchTerms,
-										searchFields,
+									// const analogousRecords = await searchDatabase({
+									// 	table,
+									// 	searchTerms,
+									// 	searchFields,
+									// });
+
+									const askPersonnel = await askXataWithAi({
+										table: "personnel",
+										question: input.message,
+									}).then((res) => {
+										const { answer, records } = res;
+										return {
+											answer,
+											record: records[0],
+										};
 									});
 
-									console.log(
-										"🚀 ~ file: actions.tsx:112 ~ forawait ~ analogousRecords:",
-										analogousRecords,
-									);
+									console.log("🚀 ~ askPersonnel:", askPersonnel);
 
+									const askEvents = await askXataWithAi({
+										table: "events",
+										question: input.message,
+									}).then((res) => {
+										const { answer, records } = res;
+										return {
+											answer,
+											record: records[0],
+										};
+									});
+
+									const askTestimonies = await askXataWithAi({
+										table: "testimonies",
+										question: input.message,
+									}).then((res) => {
+										const { answer, records } = res;
+										return {
+											answer,
+											record: records[0],
+										};
+									});
 									return {
 										tool_call_id: toolCall.id,
-										output: JSON.stringify(analogousRecords),
+										output: JSON.stringify({
+											data: {
+												relatedRecords: {
+													personnel: askPersonnel,
+													events: askEvents,
+													testimonies: askTestimonies,
+												},
+											},
+										}),
 									};
 
 								default:

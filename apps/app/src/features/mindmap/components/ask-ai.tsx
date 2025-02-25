@@ -1,32 +1,36 @@
-import { askAIAction } from "@/features/mindmap/api/actions"
-import { useEffect, useState } from "react"
+import { askAIAction } from "@/features/mindmap/actions";
+import { useEffect, useState } from "react";
 
 interface AskAIProps {
-  question: any
-  prompt?: any
-  table: any
-  children?: React.ReactNode
-  updateAnalysis: ( analysis: any ) => void
+	question: any;
+	prompt?: any;
+	table: any;
+	children?: React.ReactNode;
+	updateAnalysis: (analysis: any) => void;
 }
 
-export const AskAI: React.FC<AskAIProps> = ( { question, prompt, table, children, updateAnalysis } ) => {
-  const [status, setStatus] = useState<any>( 'loading..' )
+export const AskAI: React.FC<AskAIProps> = ({
+	question,
+	prompt,
+	table,
+	children,
+	updateAnalysis,
+}) => {
+	const [status, setStatus] = useState<any>("loading..");
 
-  useEffect( () => {
-    askAIAction( { question, prompt, table } ).then( res => {
-      if ( res?.dbResponse ) {
-        const { answer: text, records } = res
-        setStatus( 'Complete' )
-        updateAnalysis( { text, records } )
-      }
-    } )
+	useEffect(() => {
+		askAIAction({ question, prompt, table }).then((res) => {
+			if (res?.dbResponse) {
+				const { answer: text, records } = res;
+				setStatus("Complete");
+				updateAnalysis({ text, records });
+			}
+		});
+	}, [question, prompt, table, updateAnalysis]);
 
-  }, [question, prompt, table, updateAnalysis] )
-
-  return (
-    <div className='w-full flex justify-start items-center'>
-      {children}: {status}
-    </div>
-
-  )
-}
+	return (
+		<div className="w-full flex justify-start items-center">
+			{children}: {status}
+		</div>
+	);
+};

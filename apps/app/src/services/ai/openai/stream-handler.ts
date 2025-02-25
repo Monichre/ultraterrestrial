@@ -3,11 +3,15 @@ import { searchDatabase } from "@/services/ai/openai/tools/search-database";
 
 import EventEmitter from "events";
 import type OpenAI from "openai";
+
 export class AssistantStreamEventHandler extends EventEmitter {
 	client: OpenAI;
+	toolResults: Record<string, any>; // Store results for future tool calls
+
 	constructor(client: OpenAI) {
 		super();
 		this.client = client;
+		this.toolResults = {};
 	}
 
 	async onEvent(event: { event: string; data: Record<string, any> }) {
@@ -16,17 +20,7 @@ export class AssistantStreamEventHandler extends EventEmitter {
 			event,
 		);
 
-		console.log(
-			"🚀 ~ file: stream-handler.ts:15 ~ AssistantStreamEventHandler ~ onEvent ~ data:",
-			event.data,
-		);
-
-		console.log(
-			"🚀 ~ file: event-handler.ts:10 ~ AssistantStreamEventHandler ~ onEvent ~ event:",
-			event,
-		);
 		try {
-			console.log(event);
 			// Retrieve events that are denoted with 'requires_action'
 			// since these will have our tool_calls
 			if (event.event === "thread.run.requires_action") {
@@ -47,22 +41,15 @@ export class AssistantStreamEventHandler extends EventEmitter {
 			console.error("Error handling event:", error);
 		}
 	}
+
 	async handleFinished(data: any, runId: any, threadId: any) {
 		console.log(
 			"🚀 ~ file: event-handler.ts:33 ~ AssistantStreamEventHandler ~ handleFinished ~ threadId:",
 			threadId,
 		);
-		console.log(
-			"🚀 ~ file: event-handler.ts:33 ~ AssistantStreamEventHandler ~ handleFinished ~ runId:",
-			runId,
-		);
-		console.log(
-			"🚀 ~ file: event-handler.ts:33 ~ AssistantStreamEventHandler ~ handleFinished ~ data:",
-			data,
-		);
 		try {
-			// Implement your chat saving logic here
-			// await saveChat( { runId, threadId, data } )
+			// Reset tool results for new conversations
+			this.toolResults = {};
 			console.log("Chat history saved successfully.");
 		} catch (error) {
 			console.error("Error saving chat history:", error);
@@ -76,38 +63,56 @@ export class AssistantStreamEventHandler extends EventEmitter {
 		);
 
 		try {
-			const toolOutputs =
-				data.required_action.submit_tool_outputs.tool_calls.map(
-					async (toolCall: {
-						function: { name: string; arguments: string };
-						id: any;
-					}) => {
-						if (toolCall.function.name === "search_database") {
-							const {
-								table,
-								search_terms: searchTerms,
-								search_fields: searchFields,
-							} = JSON.parse(toolCall.function.arguments);
+			const toolCalls = data.required_action.submit_tool_outputs.tool_calls;
+			const toolOutputs = [];
 
-							const analogousRecords = await searchDatabase({
-								table,
-								searchTerms,
-								searchFields,
-							});
+			// Process each tool call sequentially
+			for (const toolCall of toolCalls) {
+				const { name } = toolCall.function;
+				const args = JSON.parse(toolCall.function.arguments);
 
-							console.log(
-								"🚀 ~ file: actions.tsx:112 ~ forawait ~ analogousRecords:",
-								analogousRecords,
-							);
+				console.log(`Processing tool call: ${name} with args:`, args);
 
-							return {
-								tool_call_id: toolCall.id,
-								output: JSON.stringify(analogousRecords),
-							};
-						}
-					},
-				);
-			// Submit all the tool outputs at the same time
+				let result;
+
+				if (name === "queryKnowledgeBase") {
+					// First tool: query the knowledge base
+					const { query } = args;
+					
+					// Simulate a knowledge base query with a simple response
+					// In a real implementation, you'd query your actual knowledge base
+					result = {
+						response: `Information about ${query} from knowledge base`,
+						entities: extractEntities(query), // Helper function to extract entities
+					};
+
+					// Store the result for the second tool call
+					this.toolResults.knowledgeBaseResult = result;
+				} 
+				else if (name === "searchDatabase") {
+					// Second tool: use the results from the first tool
+					const previousResult = this.toolResults.knowledgeBaseResult;
+					
+					// Get search terms either from previous result or directly from args
+					const searchTerms = args.search_terms || 
+						(previousResult?.entities?.map((e: any) => e.name) || []);
+					
+					const analogousRecords = await searchDatabase({
+						table: args.table,
+						searchTerms,
+						searchFields: args.search_fields,
+					});
+
+					result = analogousRecords;
+				}
+
+				toolOutputs.push({
+					tool_call_id: toolCall.id,
+					output: JSON.stringify(result),
+				});
+			}
+
+			// Submit all the tool outputs together
 			await this.submitToolOutputs(toolOutputs, runId, threadId);
 		} catch (error) {
 			console.error("Error processing required action:", error);
@@ -131,6 +136,34 @@ export class AssistantStreamEventHandler extends EventEmitter {
 	}
 }
 
+// Helper function to extract entities from text
+function extractEntities(text: string) {
+	// This is a very simplified entity extraction
+	// In a real implementation, you'd use NER models or more sophisticated techniques
+	const entities = [];
+	const keywords = text.match(/\b[A-Z][a-z]+\b/g) || [];
+	
+	for (const keyword of keywords) {
+		entities.push({
+			name: keyword,
+			type: determineEntityType(keyword),
+		});
+	}
+	
+	return entities;
+}
+
+// Simple helper to determine entity type
+function determineEntityType(entity: string) {
+	// This would be more sophisticated in a real implementation
+	const personNames = ["John", "Bob", "Alice", "David", "James"];
+	const organizationNames = ["NASA", "CIA", "FBI", "Pentagon"];
+	
+	if (personNames.includes(entity)) return "PERSONNEL";
+	if (organizationNames.includes(entity)) return "ORGANIZATION";
+	return "TOPIC";
+}
+
 const assistantEventHandler: any = new AssistantStreamEventHandler(openai);
 assistantEventHandler.on(
 	"event",
@@ -138,19 +171,3 @@ assistantEventHandler.on(
 );
 
 export { assistantEventHandler };
-
-// Run Exponent Anywhere
-
-// Software development happens in many places, from your local dev environment to CI.You can bring Exponent to any environment using the Exponent CLI.
-
-//   Optimized for frontier models
-
-// Exponent uses a mixture of the latest frontier models in combination to give you the best possible AI pair programming experience that just works.
-
-// Reference and edit files
-
-// Quickly reference files and have Exponent directly edit them in your filesystem, even if they're very long.  No more copy pasting back and forth between your editor and the browser.
-
-// Specialized Modes
-
-// Exponent is a developer platform and can be configured to carry out specialized tasks, such as writing SQL against your analytics DB or reviewing PRs on Github.
