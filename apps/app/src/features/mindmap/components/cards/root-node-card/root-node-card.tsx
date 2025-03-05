@@ -6,14 +6,14 @@ import {
 	CardDescription,
 	CardFooter,
 	CardHeader,
-} from "@/components/ui/card";
+} from "@/components/ui/card/card";
 
 import { capitalize, cn } from "@/utils";
 
 import "@/components/ui/card/cards.css";
 import { useNodesData } from "@xyflow/react";
 
-import { useMindMap } from "@/contexts/mindmap-context";
+import { useMindMap } from "@/contexts/mindmap";
 import { memo, useCallback, useState } from "react";
 
 import { InputWithVanishAnimation } from "@/features/mindmap/components/cards/root-node-card/InputWithVanishAnimation";

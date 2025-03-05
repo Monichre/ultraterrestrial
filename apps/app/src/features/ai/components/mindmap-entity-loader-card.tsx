@@ -13,7 +13,7 @@ import { capitalize, cn } from "@/utils";
 import { ShinyButton } from "@/components/ui/button";
 import "@/components/ui/card/cards.css";
 
-import { useMindMap } from "@/contexts/mindmap-context";
+import { useMindMap } from "@/contexts/mindmap";
 import { memo, useCallback, useState } from "react";
 
 import { InputWithVanishAnimation } from "@/features/mindmap/components/cards/root-node-card/InputWithVanishAnimation";
