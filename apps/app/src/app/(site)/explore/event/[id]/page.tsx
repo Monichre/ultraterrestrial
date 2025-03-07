@@ -3,7 +3,13 @@ import { xata } from "@/db/xata"
 // const record = await xata.db.events.read( 'rec_xyz' )
 // console.log( record )
 
-export default async function EventPage( { params: { id } } ) {
+export default async function EventPage(props) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   const event = await xata.db.events.read( id )
 
   console.log( 'event: ', event )

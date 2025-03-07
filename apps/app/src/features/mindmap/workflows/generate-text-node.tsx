@@ -3,61 +3,62 @@ import {
 	type NodeProps,
 	Position,
 	useUpdateNodeInternals,
-} from "@xyflow/react"
+} from "@xyflow/react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
-import { type Model, ModelSelector } from "@/components/ui/model-selector"
-import { Separator } from "@/components/ui/separator"
+import { cn } from "@/utils";
+
+import { LabeledHandle } from "@/components/labeled-handle";
+import { ModelSelector } from "@/components/ui/model-selector";
+import { BaseNode } from "@/features/mindmap/workflows/base-node";
 import {
 	EditableHandle,
 	EditableHandleDialog,
-} from "@/features/mindmap/flow/editable-handle"
-import { LabeledHandle } from "@/features/mindmap/flow/labeled-handle"
-import {@/features/mindmap / workflows / labeled - handle
-NodeHeader,
+} from "@/features/mindmap/workflows/editable-handle";
+import type {
+	NodeHeader,
 	NodeHeaderAction,
 	NodeHeaderActions,
 	NodeHeaderIcon,
 	NodeHeaderTitle,
-} from "@/features/mindmap/flow/node-header"
-import {@/features/mindmap / workflows / node - headers / mindmap / flow / node - header - status"
-import { BaseNode } from "@/featur@/features/mindmap/workflows/node-header-status
-import { cn } from "@/utils"
-import { PlusIcon } from "@radix-ui/react-icons"
-import { Bot, Trash } from "lucide-react"
-import { useCallback } from "react"
+} from "@/features/mindmap/workflows/node-header";
+import { NodeHeaderStatus } from "@/features/mindmap/workflows/node-header-status";
+import { Separator } from "@radix-ui/react-separator";
+import { Bot, PlusIcon, Trash } from "lucide-react";
+import type { Model } from "openai-edge";
+import { useCallback } from "react";
 
 export type GenerateTextData = {
-	status: "processing" | "error" | "success" | "idle" | undefined
+	status: "processing" | "error" | "success" | "idle" | undefined;
 	config: {
-		model: Model
-	}
+		model: Model;
+	};
 	dynamicHandles: {
 		tools: {
-			id: string
-			name: string
-			description?: string
-		}[]
-	}
-}
+			id: string;
+			name: string;
+			description?: string;
+		}[];
+	};
+};
 
-export type GenerateTextNode = Node<GenerateTextData, "generate-text">
+export type GenerateTextNode = Node<GenerateTextData, "generate-text">;
 
 interface GenerateTextNodeProps extends NodeProps<GenerateTextNode> {
-	disableModelSelector?: boolean
-	onModelChange: ( model: Model ) => void
-	onCreateTool: ( name: string, description?: string ) => boolean
-	onRemoveTool: ( handleId: string ) => void
+	disableModelSelector?: boolean;
+	onModelChange: (model: Model) => void;
+	onCreateTool: (name: string, description?: string) => boolean;
+	onRemoveTool: (handleId: string) => void;
 	onUpdateTool: (
 		toolId: string,
 		newName: string,
 		newDescription?: string,
-	) => boolean
-	onDeleteNode: () => void
+	) => boolean;
+	onDeleteNode: () => void;
 }
 
-export function GenerateTextNode( {
+export function GenerateTextNode({
 	id,
 	selected,
 	deletable,
@@ -68,45 +69,45 @@ export function GenerateTextNode( {
 	onRemoveTool,
 	onUpdateTool,
 	onDeleteNode,
-}: GenerateTextNodeProps ) {
-	const updateNodeInternals = useUpdateNodeInternals()
+}: GenerateTextNodeProps) {
+	const updateNodeInternals = useUpdateNodeInternals();
 
 	const handleModelChange = useCallback(
-		( value: string ) => {
-			onModelChange?.( value as Model )
+		(value: string) => {
+			onModelChange?.(value as Model);
 		},
 		[onModelChange],
-	)
+	);
 
 	const handleCreateTool = useCallback(
-		( name: string, description?: string ) => {
-			if ( !onCreateTool ) {
-				return false
+		(name: string, description?: string) => {
+			if (!onCreateTool) {
+				return false;
 			}
-			const result = onCreateTool( name, description )
-			if ( result ) {
-				updateNodeInternals( id )
+			const result = onCreateTool(name, description);
+			if (result) {
+				updateNodeInternals(id);
 			}
-			return result
+			return result;
 		},
 		[onCreateTool, id, updateNodeInternals],
-	)
+	);
 
 	const removeHandle = useCallback(
-		( handleId: string ) => {
-			onRemoveTool?.( handleId )
-			updateNodeInternals( id )
+		(handleId: string) => {
+			onRemoveTool?.(handleId);
+			updateNodeInternals(id);
 		},
 		[onRemoveTool, id, updateNodeInternals],
-	)
+	);
 
 	return (
 		<BaseNode
 			selected={selected}
-			className={cn( "w-[350px] p-0 hover:ring-orange-500", {
+			className={cn("w-[350px] p-0 hover:ring-orange-500", {
 				"border-orange-500": data.status === "processing",
 				"border-red-500": data.status === "error",
-			} )}
+			})}
 		>
 			<NodeHeader className="m-0">
 				<NodeHeaderIcon>
@@ -181,7 +182,7 @@ export function GenerateTextNode( {
 						</EditableHandleDialog>
 					</div>
 					<div className="flex flex-col">
-						{data.dynamicHandles.tools.map( ( tool ) => (
+						{data.dynamicHandles.tools.map((tool) => (
 							<EditableHandle
 								key={tool.id}
 								nodeId={id}
@@ -195,10 +196,10 @@ export function GenerateTextNode( {
 								onDelete={removeHandle}
 								showDescription
 							/>
-						) )}
+						))}
 					</div>
 				</div>
 			</div>
 		</BaseNode>
-	)
+	);
 }

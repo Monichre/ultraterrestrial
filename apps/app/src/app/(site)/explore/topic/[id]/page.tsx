@@ -1,4 +1,10 @@
-export default async function TopicPage({ params: { id } }) {
+export default async function TopicPage(props) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   console.log('id: ', id)
 
   return <div>Topic</div>
