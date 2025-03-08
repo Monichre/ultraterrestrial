@@ -1,11 +1,11 @@
-import React from "react";
-import { Handle, HandleProps } from "@xyflow/react";
 import { cn } from "@/utils";
+import { Handle, type HandleProps } from "@xyflow/react";
+import React from "react";
 
 export const BaseHandle = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & HandleProps
+	HTMLDivElement,
+	React.HTMLAttributes<HTMLDivElement> & HandleProps
 >(({ className, ...props }, ref) => (
-  <Handle ref={ref} className={cn("", className)} {...props} />
+	<Handle ref={ref} className={cn("", className)} {...props} />
 ));
 BaseHandle.displayName = "BaseHandle";

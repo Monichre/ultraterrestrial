@@ -1,210 +1,234 @@
 /* eslint-disable react/display-name */
-'use client'
-import { memo, useEffect, useState } from 'react'
+"use client";
+import { memo, useEffect, useState } from "react";
 
-import { Handle, Position } from '@xyflow/react'
+import { Handle, Position } from "@xyflow/react";
 
-import { PopoverCloseButton, PopoverContent, PopoverFooter, PopoverForm, PopoverRoot, PopoverSubmitButton, PopoverTextarea, PopoverTrigger } from '@/components/animated'
-import { AiStarIcon } from '@/components/icons'
-import { AddNote } from '@/components/note/AddNote'
-import { useMindMap } from '@/contexts'
-import { renderEntity } from '@/features/mindmap/components/cards/render-entity-card'
-import { TestimonyCoreNodeBottom } from '@/features/mindmap/components/cards/testimony-card'
-import { CoreNodeBottom, CoreNodeContainer, CoreNodeContent, CoreNodeTop } from '@/features/mindmap/nodes/core-node-ui'
-import { useEntity } from '@/hooks'
-import { cn, ICON_GREEN } from '@/utils'
-import { Lightbulb } from 'lucide-react'
+import {
+	PopoverCloseButton,
+	PopoverContent,
+	PopoverFooter,
+	PopoverForm,
+	PopoverRoot,
+	PopoverSubmitButton,
+	PopoverTextarea,
+	PopoverTrigger,
+} from "@/components/animated";
+import { AiStarIcon, ConnectionsIcon } from "@/components/icons";
+import { AddNote } from "@/components/note/AddNote";
+import { Button } from "@/components/ui/button";
+import { useMindMap } from "@/contexts/mindmap/mindmap-context";
+import { renderEntity } from "@/features/mindmap/components/cards/render-entity-card";
+import { TestimonyCoreNodeBottom } from "@/features/mindmap/components/cards/testimony-card";
+import {
+	CoreNodeBottom,
+	CoreNodeContainer,
+	CoreNodeContent,
+	CoreNodeTop,
+} from "@/features/mindmap/nodes/core-node-ui";
+import { useEntity } from "@/hooks";
+import { ICON_GREEN, cn } from "@/utils";
+import { Lightbulb } from "lucide-react";
 
 interface Photo {
-  id: string
-  name: string
-  mediaType: string
-  enablePublicUrl: boolean
-  signedUrlTimeout: number
-  uploadUrlTimeout: number
-  size: number
-  version: number
-  url: string
+	id: string;
+	name: string;
+	mediaType: string;
+	enablePublicUrl: boolean;
+	signedUrlTimeout: number;
+	uploadUrlTimeout: number;
+	size: number;
+	version: number;
+	url: string;
 }
 
-export const IconMenuWrapper = ( { children }: { children: React.ReactNode } ) => {
-  return (
-    <div className='flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 text-neutral-400 border border-white/50'
-      style={{
-        borderColor: 'rgba(255, 255, 255, 0.5)',
-        transform: 'translateX(0px)',
-      }}
-    >
-      <div className=''>
-        <span
-          className='relative flex align-middle items-center content-center justify-start shrink-0 overflow-hidden rounded-full aspect-square h-full animate-overlayShow cursor-pointer shadow duration-200 pointer-events-none'
-          data-state='closed'
-        // style={{
-        //   borderColor: 'rgba(255, 255, 255, 0.5)',
-        //   transform: 'translateX(0px)',
-        // }}
-        >
-          {children}
+export const IconMenuWrapper = ({
+	children,
+}: { children: React.ReactNode }) => {
+	return (
+		<div
+			className="flex items-center gap-1 rounded-full bg-neutral-200 py-1 pl-2 pr-2.5 text-neutral-700 text-neutral-400 border border-white/50"
+			style={{
+				borderColor: "rgba(255, 255, 255, 0.5)",
+				transform: "translateX(0px)",
+			}}
+		>
+			<div className="">
+				<span
+					className="relative flex align-middle items-center content-center justify-start shrink-0 overflow-hidden rounded-full aspect-square h-full animate-overlayShow cursor-pointer shadow duration-200 pointer-events-none"
+					data-state="closed"
+					// style={{
+					//   borderColor: 'rgba(255, 255, 255, 0.5)',
+					//   transform: 'translateX(0px)',
+					// }}
+				>
+					{children}
+				</span>
+			</div>
+			<span className="text-neutral-600 text-neutral-400"></span>
+		</div>
+	);
+};
 
+const EntityNode = memo((node: any) => {
+	console.log("node: ", node);
+	const { useUpdateNodeInternals, useNodesData, deleteElements } = useMindMap();
+	const handleDelete = () => {
+		deleteElements([node.id]);
+	};
 
-        </span>
-      </div>
-      <span className='text-neutral-600 text-neutral-400'>
+	const updateNodeInternals = useUpdateNodeInternals();
+	const [handles, setHandles]: any = useState([]);
+	console.log("handles: ", handles);
+	const nodeData = useNodesData(node.id);
+	const type = node.data.type;
 
-      </span>
-    </div>
-  )
-}
+	const component = renderEntity({
+		type: node.data.type,
+		data: {
+			...node.data,
+			id: node.id,
+		},
+	});
+	const {
+		entity,
 
-const EntityNode = memo( ( node: any ) => {
-  console.log( 'node: ', node )
-  const { useUpdateNodeInternals, useNodesData, deleteElements } = useMindMap()
-  const handleDelete = () => {
-    deleteElements( [node.id] )
-  }
+		saveNote,
+		updateNote,
+		userNote,
+		connectionListConnections,
+		handleHoverEnter,
+		findConnections,
+	} = useEntity({
+		card: {
+			...node.data,
+			id: node.id,
+		},
+	});
 
-  const updateNodeInternals = useUpdateNodeInternals()
-  const [handles, setHandles]: any = useState( [] )
-  console.log( 'handles: ', handles )
-  const nodeData = useNodesData( node.id )
-  const type = node.data.type
+	useEffect(() => {
+		updateNodeInternals(node.id);
+		if (node?.data?.handles && node.data?.handles.length) {
+			const { data } = node;
+			updateNodeInternals(node.id);
+			setHandles(data.handles);
+		}
 
-  const component = renderEntity( {
-    type: node.data.type,
-    data: {
-      ...node.data,
-      id: node.id,
-    },
-  } )
-  const {
+		// if (node?.data?.concise) {
+		//   updateNodeInternals(node.id)
+		// }
+	}, [node, updateNodeInternals]);
 
-    entity,
-
-    saveNote,
-    updateNote,
-    userNote,
-    connectionListConnections,
-    handleHoverEnter,
-    findConnections,
-  } = useEntity( {
-    card: {
-      ...node.data,
-      id: node.id,
-    }
-  } )
-  console.log( "🚀 ~ file: entity-node.tsx:133 ~ EntityNode ~ entity:", entity )
-  useEffect( () => {
-    updateNodeInternals( node.id )
-    if ( node?.data?.handles && node.data?.handles.length ) {
-      const { data } = node
-      updateNodeInternals( node.id )
-      setHandles( data.handles )
-
-    }
-
-    // if (node?.data?.concise) {
-    //   updateNodeInternals(node.id)
-    // }
-  }, [node, updateNodeInternals, nodeData] )
-
-  return (
-    <>
-      <PopoverRoot>
-        <Handle type='target' position={Position.Top} />
-        <CoreNodeContainer className={cn( 'motion-opacity-in-0 min-w-[200px] w-content core-node-container overflow-visible' )} id={node.id}>
-          <CoreNodeTop>
-            <div className='flex justify-between w-content align-center items-center ml-auto'>
-              {/* <Button variant='outline' onClick={handleDelete} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 text-white bg-black  hover:border-indigo-800 mx-1'>
+	return (
+		<>
+			<PopoverRoot>
+				<Handle type="target" position={Position.Top} />
+				<CoreNodeContainer
+					className={cn(
+						"motion-opacity-in-0 min-w-[200px] w-content core-node-container overflow-visible",
+					)}
+					id={node.id}
+				>
+					<CoreNodeTop>
+						<div className="flex justify-between w-content align-center items-center ml-auto">
+							{/* <Button variant='outline' onClick={handleDelete} className=' flex items-center px-4 py-2 font-semibold text-zinc-900 text-white bg-black  hover:border-indigo-800 mx-1'>
                 <XIcon stroke={'#fff'} className='w-6 h-6 stroke-1' />
               </Button>
  */}
+						</div>
+					</CoreNodeTop>
+					<CoreNodeContent className="min-h-[100xp] max-w-[300px]">
+						{component}
 
-            </div>
-          </CoreNodeTop>
-          <CoreNodeContent className='min-h-[100xp] max-w-[300px]'>
+						{handles && handles?.length
+							? handles.map((id: string, index: number) => (
+									<Handle
+										key={`${id}-${index}`}
+										type="source"
+										position={Position.Bottom}
+										id={id}
+										isConnectable={true}
+									/>
+								))
+							: null}
+					</CoreNodeContent>
+					<CoreNodeBottom>
+						{node?.data?.type === "testimonies" ||
+						node?.data?.type === "testimony" ? (
+							<TestimonyCoreNodeBottom card={node.data}>
+								<PopoverTrigger>
+									<IconMenuWrapper>
+										<Lightbulb
+											className="text-white stroke-1 bg-none"
+											size="16"
+										/>
+									</IconMenuWrapper>
+								</PopoverTrigger>
+							</TestimonyCoreNodeBottom>
+						) : (
+							<>
+								<div
+									className="flex items-center gap-1 rounded-full  py-1 pl-2 pr-2.5 text-neutral-700 text-neutral-400 border border-white/50"
+									style={{
+										borderColor: "rgba(255, 255, 255, 0.8)",
+										transform: "translateX(0px)",
+									}}
+									onClick={findConnections}
+								>
+									<div className="size-5">
+										<span
+											className="relative flex align-middle items-center content-center justify-start shrink-0 overflow-hidden rounded-full aspect-square h-full animate-overlayShow cursor-pointer shadow duration-200 pointer-events-none"
+											data-state="closed"
+											// style={{
+											//   borderColor: 'rgba(255, 255, 255, 0.5)',
+											//   transform: 'translateX(0px)',
+											// }}
+										>
+											<AiStarIcon
+												stroke={ICON_GREEN}
+												className="w-4 h-4 stroke-1"
+											/>
+										</span>
+									</div>
+									<span className="text-neutral-600 text-neutral-400"></span>
+								</div>
+								<AddNote
+									saveNote={saveNote}
+									userNote={userNote}
+									updateNote={updateNote}
+								/>
+								<Button
+									variant="outline"
+									onClick={findConnections}
+									className=" flex items-center px-4 py-2 font-semibold text-white dark:bg-black  hover:border-indigo-800 mx-1"
+								>
+									<ConnectionsIcon
+										stroke={ICON_GREEN}
+										className="w-6 h-6 stroke-1"
+									/>
+								</Button>
+							</>
+						)}
+					</CoreNodeBottom>
+					<PopoverContent className="bg-black text-white border border-indigo-500/20">
+						<PopoverForm onSubmit={saveNote}>
+							{/* <PopoverLabel>Add Note</PopoverLabel> */}
+							<PopoverTextarea onChange={updateNote} />
+							<PopoverFooter>
+								<PopoverCloseButton />
+								<PopoverSubmitButton />
+							</PopoverFooter>
+						</PopoverForm>
+					</PopoverContent>
+				</CoreNodeContainer>
+			</PopoverRoot>
+		</>
+	);
+});
 
-            {component}
+EntityNode.displayName = "EntityNode";
 
-            {handles && handles?.length
-              ? handles.map( ( id: string, index: number ) => (
-                <Handle
-                  key={`${id}-${index}`}
-                  type='source'
-                  position={Position.Bottom}
-                  id={id}
-                  isConnectable={true}
-                />
-              ) )
-              : null}
-          </CoreNodeContent>
-          <CoreNodeBottom>
-            {node?.data?.type === 'testimonies' || node?.data?.type === 'testimony' ? <TestimonyCoreNodeBottom card={node.data} >
-              <PopoverTrigger>
-                <IconMenuWrapper>
-                  <Lightbulb className='text-white stroke-1 bg-none' size='16' />
-                </IconMenuWrapper>
-              </PopoverTrigger>
-
-            </TestimonyCoreNodeBottom> : (
-              <>
-                <div className='flex items-center gap-1 rounded-full  py-1 pl-2 pr-2.5 text-neutral-700 text-neutral-400 border border-white/50'
-                  style={{
-                    borderColor: 'rgba(255, 255, 255, 0.8)',
-                    transform: 'translateX(0px)',
-                  }}
-                  onClick={findConnections}
-
-                >
-                  <div className='size-5'>
-                    <span
-                      className='relative flex align-middle items-center content-center justify-start shrink-0 overflow-hidden rounded-full aspect-square h-full animate-overlayShow cursor-pointer shadow duration-200 pointer-events-none'
-                      data-state='closed'
-                    // style={{
-                    //   borderColor: 'rgba(255, 255, 255, 0.5)',
-                    //   transform: 'translateX(0px)',
-                    // }}
-                    >
-                      <AiStarIcon stroke={ICON_GREEN} className='w-4 h-4 stroke-1' />
-
-
-                    </span>
-                  </div>
-                  <span className='text-neutral-600 text-neutral-400'>
-
-                  </span>
-                </div>
-                <AddNote saveNote={saveNote} userNote={userNote} updateNote={updateNote} />
-              </>
-            )}
-
-
-
-          </CoreNodeBottom>
-          <PopoverContent className='bg-black text-white border border-indigo-500/20'>
-            <PopoverForm onSubmit={saveNote}>
-              {/* <PopoverLabel>Add Note</PopoverLabel> */}
-              <PopoverTextarea onChange={updateNote} />
-              <PopoverFooter>
-                <PopoverCloseButton />
-                <PopoverSubmitButton />
-              </PopoverFooter>
-            </PopoverForm>
-          </PopoverContent>
-        </CoreNodeContainer>
-
-      </PopoverRoot>
-    </>
-  )
-} )
-
-
-
-
-
-
-EntityNode.displayName = 'EntityNode'
-
-export { EntityNode }
+export { EntityNode };
 
 // {/* {( node?.data?.entities?.length > 0 && props.data.type && props.data.input ? ( */ }
 
@@ -212,4 +236,3 @@ export { EntityNode }
 //   <WaypointsIcon stroke={DOMAIN_MODEL_COLORS.personnel} className='w-4 h-4 stroke-1' />
 // </AskAI>
 //           ) : null )}
-

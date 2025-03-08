@@ -48,7 +48,6 @@ const config = {
 				neueHaas: ["var(--font-neue-haas)"],
 				monument: ["var(--font-monument)"],
 				monumentMono: ["var(--font-monument-mono)"],
-
 				lukasSans: ["var(--font-lukas-sans})"],
 			},
 			colors: {
@@ -280,6 +279,8 @@ const config = {
 			backgroundImage: {
 				"gradient-radial":
 					"radial-gradient(ellipse at center, var(--tw-gradient-stops))",
+				"dots-pattern": "radial-gradient(transparent 1px, white 1px)",
+				"dots-pattern-dark": "radial-gradient(transparent 1px, rgb(0 0 0) 1px)",
 			},
 		},
 	},

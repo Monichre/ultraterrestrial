@@ -1,7 +1,11 @@
-export default async function TopicPage({ params: { id } }) {
-  console.log('id: ', id)
+export default async function TopicPage({
+	params,
+}: { params: { id: string } }) {
+	const { id } = await params;
 
-  return <div>Topic</div>
+	console.log("id: ", id);
+
+	return <div>Topic</div>;
 }
 
 // Behavior Patterns	Classifying observed behaviors

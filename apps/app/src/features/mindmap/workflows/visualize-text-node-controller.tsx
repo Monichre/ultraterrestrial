@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import { VisualizeTextNode } from "@/features/mindmap/workflows/visualize-text-node"
-import { useWorkflow } from "@/hooks/flow/use-workflow"
-import type { NodeExecutionState } from "@/lib/flow/workflow-execution-engine"
-import type { NodeProps } from "@xyflow/react"
-import { useCallback } from "react"
+import { useWorkflow } from "@/features/mindmap/hooks/useWorkFlow";
+import { VisualizeTextNode } from "@/features/mindmap/workflows/visualize-text-node";
+import type { NodeExecutionState } from "@/lib/flow/workflow-execution-engine";
+import type { NodeProps } from "@xyflow/react";
+import { useCallback } from "react";
 
 export type VisualizeTextNodeController = Omit<VisualizeTextNode, "data"> & {
-	type: "visualize-text"
+	type: "visualize-text";
 	data: {
-		executionState?: NodeExecutionState
-	}
-}
+		executionState?: NodeExecutionState;
+	};
+};
 
-export function VisualizeTextNodeController( {
+export function VisualizeTextNodeController({
 	id,
 	data,
 	...props
-}: NodeProps<VisualizeTextNodeController> ) {
-	const deleteNode = useWorkflow( ( state ) => state.deleteNode )
+}: NodeProps<VisualizeTextNodeController>) {
+	const deleteNode = useWorkflow((state) => state.deleteNode);
 
-	const handleDeleteNode = useCallback( () => {
-		deleteNode( id )
-	}, [id, deleteNode] )
+	const handleDeleteNode = useCallback(() => {
+		deleteNode(id);
+	}, [id, deleteNode]);
 
 	return (
 		<VisualizeTextNode
@@ -34,5 +34,5 @@ export function VisualizeTextNodeController( {
 			onDeleteNode={handleDeleteNode}
 			{...props}
 		/>
-	)
+	);
 }

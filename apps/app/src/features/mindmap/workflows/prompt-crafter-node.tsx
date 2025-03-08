@@ -1,75 +1,76 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+
 import {
-	Command,
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import type { BaseNode } from "@/features/mindmap/workflows/base-node";
+import {
+	EditableHandle,
+	EditableHandleDialog,
+} from "@/features/mindmap/workflows/editable-handle";
+import { LabeledHandle } from "@/features/mindmap/workflows/labeled-handle";
+import {
+	NodeHeader,
+	NodeHeaderAction,
+	NodeHeaderActions,
+	NodeHeaderIcon,
+	NodeHeaderTitle,
+} from "@/features/mindmap/workflows/node-header";
+import { NodeHeaderStatus } from "@/features/mindmap/workflows/node-header-status";
+import { cn } from "@/utils";
+import { StreamLanguage } from "@codemirror/language";
+import type { EditorView } from "@codemirror/view";
+import { tags as t } from "@lezer/highlight";
+import { PlusIcon } from "@radix-ui/react-icons";
+import { createTheme } from "@uiw/codemirror-themes";
+import CodeMirror from "@uiw/react-codemirror";
+import type { Node } from "@xyflow/react";
+import {
+	type NodeProps,
+	Position,
+	useUpdateNodeInternals,
+} from "@xyflow/react";
+import {
 	CommandEmpty,
 	CommandGroup,
 	CommandInput,
 	CommandItem,
 	CommandList,
-} from "@/components/ui/command"
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover"
-import { Separator } from "@/components/ui/separator"
-import {
-	EditableHandle,
-	EditableHandleDialog,
-} from "@/features/mindmap/flow/editable-handle"
-import { LabeledHandle } from "@/features/mindmap/flow/labeled-handle"
-import {@/features/mindmap / workflows / labeled - handle
-NodeHeader,
-	NodeHeaderAction,
-	NodeHeaderActions,
-	NodeHeaderIcon,
-	NodeHeaderTitle,
-} from "@/features/mindmap/flow/node-header"
-import {@/features/mindmap / workflows / node - headers / mindmap / flow / node - header - status"
-import { BaseNode } from "@/featur@/features/mindmap/workflows/node-header-status
-import { cn } from "@/utils"
-import { StreamLanguage } from "@codemirror/language"
-import type { EditorView } from "@codemirror/view"
-import { tags as t } from "@lezer/highlight"
-import { PlusIcon } from "@radix-ui/react-icons"
-import { createTheme } from "@uiw/codemirror-themes"
-import CodeMirror from "@uiw/react-codemirror"
-import type { Node } from "@xyflow/react"
-import {
-	type NodeProps,
-	Position,
-	useUpdateNodeInternals,
-} from "@xyflow/react"
-import { BetweenVerticalEnd, PencilRuler, Trash } from "lucide-react"
-import { useCallback, useMemo, useRef, useState } from "react"
+} from "cmdk";
+
+import { BetweenVerticalEnd, Command, PencilRuler, Trash } from "lucide-react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 type PromptCrafterData = {
-	status: "processing" | "error" | "success" | "idle" | undefined
+	status: "processing" | "error" | "success" | "idle" | undefined;
 	config: {
-		template: string
-	}
+		template: string;
+	};
 	dynamicHandles: {
 		"template-tags": {
-			id: string
-			name: string
-		}[]
-	}
-}
+			id: string;
+			name: string;
+		}[];
+	};
+};
 
-export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter">
+export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter">;
 
 interface PromptCrafterProps extends NodeProps<PromptCrafterNode> {
-	onPromptTextChange: ( value: string ) => void
-	onCreateInput: ( name: string ) => boolean
-	onRemoveInput: ( handleId: string ) => void
-	onUpdateInputName: ( handleId: string, newLabel: string ) => boolean
-	onDeleteNode: () => void
+	onPromptTextChange: (value: string) => void;
+	onCreateInput: (name: string) => boolean;
+	onRemoveInput: (handleId: string) => void;
+	onUpdateInputName: (handleId: string, newLabel: string) => boolean;
+	onDeleteNode: () => void;
 }
 
 // Custom theme that matches your app's design
-const promptTheme = createTheme( {
+const promptTheme = createTheme({
 	theme: "dark",
 	settings: {
 		background: "transparent",
@@ -83,27 +84,27 @@ const promptTheme = createTheme( {
 		{ tag: t.string, color: "hsl(var(--foreground))" },
 		{ tag: t.invalid, color: "#DC2626" },
 	],
-} )
+});
 
 // Create a function to generate the language with the current inputs
-const createPromptLanguage = ( validInputs: string[] = [] ) =>
-	StreamLanguage.define( {
-		token( stream ) {
-			if ( stream.match( /{{[^}]*}}/ ) ) {
-				const match = stream.current()
-				const inputName = match.slice( 2, -2 )
+const createPromptLanguage = (validInputs: string[] = []) =>
+	StreamLanguage.define({
+		token(stream) {
+			if (stream.match(/{{[^}]*}}/)) {
+				const match = stream.current();
+				const inputName = match.slice(2, -2);
 				// Check if the input name is valid
-				if ( validInputs.includes( inputName ) ) {
-					return "variableName"
+				if (validInputs.includes(inputName)) {
+					return "variableName";
 				}
-				return "invalid"
+				return "invalid";
 			}
-			stream.next()
-			return null
+			stream.next();
+			return null;
 		},
-	} )
+	});
 
-export function PromptCrafterNode( {
+export function PromptCrafterNode({
 	id,
 	selected,
 	deletable,
@@ -113,71 +114,71 @@ export function PromptCrafterNode( {
 	onRemoveInput,
 	onUpdateInputName,
 	onDeleteNode,
-}: PromptCrafterProps ) {
-	const updateNodeInternals = useUpdateNodeInternals()
-	const [isPopoverOpen, setIsPopoverOpen] = useState( false )
-	const editorViewRef = useRef<EditorView>()
+}: PromptCrafterProps) {
+	const updateNodeInternals = useUpdateNodeInternals();
+	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+	const editorViewRef = useRef<EditorView>();
 
 	const handleCreateInput = useCallback(
-		( name: string ) => {
-			const result = onCreateInput( name )
-			if ( result ) {
-				updateNodeInternals( id )
+		(name: string) => {
+			const result = onCreateInput(name);
+			if (result) {
+				updateNodeInternals(id);
 			}
-			return result
+			return result;
 		},
 		[onCreateInput, id, updateNodeInternals],
-	)
+	);
 
 	const handleRemoveInput = useCallback(
-		( handleId: string ) => {
-			onRemoveInput( handleId )
-			updateNodeInternals( id )
+		(handleId: string) => {
+			onRemoveInput(handleId);
+			updateNodeInternals(id);
 		},
 		[onRemoveInput, id, updateNodeInternals],
-	)
+	);
 
 	const handleUpdateInputName = useCallback(
-		( handleId: string, newLabel: string ) => {
-			const result = onUpdateInputName( handleId, newLabel )
-			if ( result ) {
-				updateNodeInternals( id )
+		(handleId: string, newLabel: string) => {
+			const result = onUpdateInputName(handleId, newLabel);
+			if (result) {
+				updateNodeInternals(id);
 			}
-			return result
+			return result;
 		},
 		[onUpdateInputName, id, updateNodeInternals],
-	)
+	);
 
-	const insertInputAtCursor = useCallback( ( inputName: string ) => {
-		const view = editorViewRef.current
-		if ( !view ) {
-			return
+	const insertInputAtCursor = useCallback((inputName: string) => {
+		const view = editorViewRef.current;
+		if (!view) {
+			return;
 		}
 
-		const inputTag = `{{${inputName}}}`
-		const from = view.state.selection.main.from
-		view.dispatch( {
+		const inputTag = `{{${inputName}}}`;
+		const from = view.state.selection.main.from;
+		view.dispatch({
 			changes: { from, insert: inputTag },
 			selection: { anchor: from + inputTag.length },
-		} )
-		setIsPopoverOpen( false )
-	}, [] )
+		});
+		setIsPopoverOpen(false);
+	}, []);
 
 	// Create language with current inputs
-	const extensions = useMemo( () => {
-		const validLabels = ( data.dynamicHandles["template-tags"] || [] ).map(
-			( input ) => input.name,
-		)
-		return [createPromptLanguage( validLabels )]
-	}, [data.dynamicHandles["template-tags"]] )
+	const extensions = useMemo(() => {
+		const validLabels = (data.dynamicHandles["template-tags"] || []).map(
+			(input) => input.name,
+		);
+		return [createPromptLanguage(validLabels)];
+	}, [data.dynamicHandles["template-tags"]]);
 
 	return (
 		<BaseNode
 			selected={selected}
-			className={cn( "w-[350px] p-0 hover:ring-orange-500", {
+			className={cn("w-[350px] p-0 hover:ring-orange-500", {
 				"border-orange-500": data.status === "processing",
 				"border-red-500": data.status === "error",
-			} )}
+			})}
 		>
 			<NodeHeader className="m-0">
 				<NodeHeaderIcon>
@@ -214,11 +215,11 @@ export function PromptCrafterNode( {
 									<CommandEmpty>No inputs found.</CommandEmpty>
 									<CommandGroup>
 										{data.dynamicHandles["template-tags"]?.map(
-											( input ) =>
+											(input) =>
 												input.name && (
 													<CommandItem
 														key={input.id}
-														onSelect={() => insertInputAtCursor( input.name )}
+														onSelect={() => insertInputAtCursor(input.name)}
 														className="text-base"
 													>
 														{input.name}
@@ -237,8 +238,8 @@ export function PromptCrafterNode( {
 					theme={promptTheme}
 					extensions={extensions}
 					onChange={onPromptTextChange}
-					onCreateEditor={( view ) => {
-						editorViewRef.current = view
+					onCreateEditor={(view) => {
+						editorViewRef.current = view;
 					}}
 					className="nodrag border border-gray-200 rounded-md overflow-hidden [&_.cm-content]:!cursor-text [&_.cm-line]:!cursor-text nopan nowheel dark:border-gray-800"
 					placeholder="Craft your prompt here... Use {{input-name}} to reference inputs"
@@ -259,7 +260,7 @@ export function PromptCrafterNode( {
 							variant="create"
 							label=""
 							onSave={handleCreateInput}
-							onCancel={() => { }}
+							onCancel={() => {}}
 							align="end"
 						>
 							<Button
@@ -272,7 +273,7 @@ export function PromptCrafterNode( {
 							</Button>
 						</EditableHandleDialog>
 					</div>
-					{data.dynamicHandles["template-tags"]?.map( ( input ) => (
+					{data.dynamicHandles["template-tags"]?.map((input) => (
 						<EditableHandle
 							key={input.id}
 							nodeId={id}
@@ -284,7 +285,7 @@ export function PromptCrafterNode( {
 							onUpdateTool={handleUpdateInputName}
 							onDelete={handleRemoveInput}
 						/>
-					) )}
+					))}
 				</div>
 				<div className="self-stretch border-l border-gray-200 flex items-center justify-end dark:border-gray-800">
 					<LabeledHandle
@@ -296,5 +297,5 @@ export function PromptCrafterNode( {
 				</div>
 			</div>
 		</BaseNode>
-	)
+	);
 }

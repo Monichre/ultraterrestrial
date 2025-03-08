@@ -1,15 +1,16 @@
-import { Loading } from '@/components/loaders'
-import { Home } from '@/layouts/home'
-import { Suspense } from 'react'
+import Loading from "@/app/loading";
+import { Home } from "@/layouts/home";
+import { Suspense } from "react";
 
-export default async function Index() {
-  return (
-    <div className='h-[100vh] overflow-hidden'>
-      <Suspense fallback={<Loading />}>
-        <Home />
-      </Suspense>
-    </div>
-  )
+export default function Index() {
+	return (
+		<div className="h-[100vh] overflow-hidden">
+			<Suspense fallback={<Loading />}>
+				<Home />
+			</Suspense>
+			{/* </Suspense> */}
+		</div>
+	);
 }
 
 // Behavior Patterns	Classifying observed behaviors

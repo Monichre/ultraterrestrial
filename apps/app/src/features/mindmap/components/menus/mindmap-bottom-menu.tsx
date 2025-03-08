@@ -8,7 +8,7 @@ import {
 	TestimoniesIcon,
 	TopicsIcon,
 } from "@/components/icons/entity-icons";
-import { useMindMap } from "@/contexts";
+import { useMindMap } from "@/contexts/mindmap/mindmap-context";
 import { initiateDatabaseTableQuery } from "@/features/mindmap/queries/search";
 import { DOMAIN_MODEL_COLORS, ICON_GREEN } from "@/utils/constants";
 import { useAssistant } from "@ai-sdk/react";
@@ -93,10 +93,11 @@ export const MindMapBottomMenu = () => {
 		addEdges,
 		screenToFlowPosition,
 		retrieveEntitiesFromStore,
-		organizeLayout,
+
 		setEdges,
 		setNodes,
 		getNodes,
+		addNode,
 		updateNode,
 		getNodesBounds,
 		getNode,
@@ -150,11 +151,16 @@ export const MindMapBottomMenu = () => {
 
 	const handleLoadingRecords = useCallback(
 		({ data: { type } }: any) => {
+			console.log("🚀 ~ MindMapBottomMenu ~ type:", type);
+
 			const amount = 3;
 			const center = screenToFlowPosition(calculateCenterOfScreen());
 
 			// Retrieve the entities for this type
 			const entities = retrieveEntitiesFromStore(type);
+
+			console.log("🚀 ~ MindMapBottomMenu ~ entities:", entities);
+
 			const potentialUserNode: any = {
 				id: getNextId(),
 				type: "userInputNode",
@@ -168,27 +174,30 @@ export const MindMapBottomMenu = () => {
 			};
 
 			const nodes = getNodes();
-			const existingUserInputNodes = nodes
-				.filter(
-					(node: any) =>
-						node.type === "userInputNode" && node.id !== potentialUserNode.id,
-				)
-				.sort((a: any, b: any) => {
-					const aNum = Number.parseInt(a.id.split("-")[1], 10);
-					const bNum = Number.parseInt(b.id.split("-")[1], 10);
-					return aNum - bNum;
-				});
+
+			console.log("🚀 ~ MindMapBottomMenu ~ nodes:", nodes);
+
+			const existingUserInputNodes = nodes?.length
+				? nodes
+						.filter(
+							(node: any) =>
+								node.type === "userInputNode" &&
+								node.id !== potentialUserNode.id,
+						)
+						.sort((a: any, b: any) => {
+							const aNum = Number.parseInt(a.id.split("-")[1], 10);
+							const bNum = Number.parseInt(b.id.split("-")[1], 10);
+							return aNum - bNum;
+						})
+				: [];
 
 			// Use the last user input node as the parent (if it exists)
-			let parentNode =
+			const parentNode =
 				existingUserInputNodes.length > 0
 					? existingUserInputNodes[existingUserInputNodes.length - 1]
-					: null;
+					: potentialUserNode;
 
-			if (!parentNode) {
-				parentNode = potentialUserNode;
-				addNodes(parentNode);
-			}
+			addNode(parentNode);
 
 			// Compute positions for child nodes so they are centered under the parent
 			const { startX, childY, entityWidth, entitySpacing } =
@@ -205,7 +214,7 @@ export const MindMapBottomMenu = () => {
 				parentId: parentNode?.id || null,
 			}));
 
-			setNodes((nds: Node[]) => [...nds, ...childNodes]);
+			addNodes(childNodes);
 
 			// Create edges that connect the parent node to each child node
 			const newEdges = entities.map((entity: any) => ({
@@ -215,7 +224,7 @@ export const MindMapBottomMenu = () => {
 				type: "step",
 			}));
 
-			setEdges((edges: Edge[]) => [...edges, ...newEdges]);
+			addEdges(newEdges);
 		},
 		[
 			calculateCenterOfScreen,
