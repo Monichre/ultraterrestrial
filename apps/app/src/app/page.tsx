@@ -1,9 +1,13 @@
+import Loading from "@/app/loading";
 import { Home } from "@/layouts/home";
+import { Suspense } from "react";
 
-export default async function Index() {
+export default function Index() {
 	return (
 		<div className="h-[100vh] overflow-hidden">
-			<Home />
+			<Suspense fallback={<Loading />}>
+				<Home />
+			</Suspense>
 			{/* </Suspense> */}
 		</div>
 	);

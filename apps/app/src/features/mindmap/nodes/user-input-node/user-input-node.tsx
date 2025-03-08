@@ -18,7 +18,7 @@ import { AiStarIcon } from "@/components/icons";
 import { AddNote } from "@/components/note/AddNote";
 import { useMindMap } from "@/contexts/mindmap";
 import { MemoizedMarkdown } from "@/features/ai";
-import { WorldMap } from "@/features/data-viz/components/world-map/world-map";
+import { WorldMap } from "@/features/data-viz/world-map/world-map";
 import { AskAI } from "@/features/mindmap/components/ask-ai";
 import { useGroupNode } from "@/features/mindmap/hooks/useGroupNode";
 import { Anchor } from "@/features/mindmap/nodes/user-input-node/anchor";

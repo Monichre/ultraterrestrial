@@ -1,0 +1,63 @@
+/* Exploding Stack 3D Effects */
+.transform-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.shadow--main {
+  position: relative;
+  z-index: -1;
+}
+
+.shadow--main div {
+  background: var(--shadow);
+  border-radius: 12px;
+  position: absolute;
+  inset: 0;
+  translate: 0 0;
+}
+
+.shadow--table div,
+.shadow--status div {
+  background: var(--shadow);
+  border-radius: 6px;
+}
+
+.shadow--dialog div {
+  position: absolute;
+  right: 0;
+  top: -2px;
+  width: 140px;
+  height: 112px;
+  background: var(--shadow);
+  border-radius: 6px;
+}
+
+:root {
+  --shadow: rgba(0, 0, 0, 0.3);
+}
+
+.dark {
+  --shadow: rgba(0, 0, 0, 0.7);
+}
+
+/* Exploding animation */
+@keyframes explode {
+  from {
+    transform: translateZ(0);
+  }
+
+  to {
+    transform: translateZ(var(--depth, 3rem));
+  }
+}
+
+.exploded {
+  animation: explode 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}

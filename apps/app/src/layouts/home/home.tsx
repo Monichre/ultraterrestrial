@@ -1,26 +1,29 @@
 "use client";
 
 import { TitleAlt } from "@/layouts/home/TitleAlt";
-import { wait } from "@/utils";
 // import { Howl } from 'howler'
 import { AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
 
-const CanvasCursor = dynamic(() =>
-	import("@/components/ui/canvas-cursor").then((mod) => mod.CanvasCursor),
+const CanvasCursor = dynamic(
+	() => import("@/components/ui/canvas-cursor").then((mod) => mod.CanvasCursor),
+	{
+		ssr: false,
+	},
 );
-const LovecraftQuote = dynamic(() =>
-	import("./LovecraftQuote").then((mod) => mod.LovecraftQuote),
-);
-const SiteTitle = dynamic(() =>
-	import("./SiteTitle").then((mod) => mod.SiteTitle),
-);
+// const LovecraftQuote = dynamic(() =>
+// 	import("./LovecraftQuote").then((mod) => mod.LovecraftQuote),
+// );
+// const SiteTitle = dynamic(() =>
+// 	import("./SiteTitle").then((mod) => mod.SiteTitle),
+// );
 // const BlurAppear = dynamic(() => import('@/components/animated').then(mod => mod.BlurAppear))
-const ShootingStars = dynamic(() =>
-	import("@/components/backgrounds/shooting-stars").then(
-		(mod) => mod.ShootingStars,
-	),
+const ShootingStars = dynamic(
+	() =>
+		import("@/components/backgrounds/shooting-stars").then(
+			(mod) => mod.ShootingStars,
+		) as Promise<React.ComponentType<any>>,
+	{ ssr: false },
 );
 const StarsBackground = dynamic(() =>
 	import("@/components/backgrounds/shooting-stars").then(
@@ -28,30 +31,26 @@ const StarsBackground = dynamic(() =>
 	),
 );
 
-const Moon = dynamic(() => import("@/components/moon").then((mod) => mod.Moon));
+const Moon = dynamic(
+	() => import("@/components/moon").then((mod) => mod.Moon),
+	{
+		ssr: false,
+	},
+);
 
-const Earth = dynamic(() =>
-	import("@/components/earth").then((mod) => mod.EarthOptimized),
+const Earth = dynamic(
+	() => import("@/components/earth").then((mod) => mod.Earth),
+	{
+		ssr: false,
+	},
 );
 
 export type HomeProps = {};
 
 export const Home: React.FC<HomeProps> = () => {
-	const [moonInView, setMoonInView] = useState(false);
-	const earthRef = useRef<HTMLDivElement>(null);
+	// const [moonInView, setMoonInView] = useState(false);
 
 	// console.log( "🚀 ~ file: home.tsx:42 ~ earthInView:", earthInView )
-
-	useEffect(() => {
-		// inView( '#moon-canvas', ( entry ) => {
-		//   setMoonInView( entry.isIntersecting )
-		// } )
-		if (!moonInView) {
-			wait(500).then(() => {
-				setMoonInView(true);
-			});
-		}
-	}, [moonInView]);
 
 	// console.log( "🚀 ~ file: home.tsx:46 ~ moonInView:", moonInView )
 
@@ -83,12 +82,18 @@ export const Home: React.FC<HomeProps> = () => {
 
 	return (
 		<div className="h-[100vh] w-[100vw] relative overflow-hidden">
-			<div className="absolute top-0 left-0 h-[100vh] w-[100vw] z-1">
+			<div
+				className="absolute top-0 left-0 h-[100vh] w-[100vw] z-1"
+				id="moon-wrap"
+			>
 				<Moon />
 				{/* <DoubleHelixScene /> */}
 			</div>
-			<div className="absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1 flex flex-col justify-center items-center">
-				<Earth ref={earthRef} />
+			<div
+				className="absolute top-0 left-0 right-0 bottom-0  h-full w-full !z-1 flex flex-col justify-center items-center"
+				id="earth-wrap"
+			>
+				<Earth />
 			</div>
 			{/* 
       <Profiler id="Earth" onRender={onRenderCallback}>

@@ -1,5 +1,5 @@
-export default async function EventPage() {
-  return <div>Event</div>
+export default function EventPage() {
+	return <div>Event</div>;
 }
 
 // Behavior Patterns	Classifying observed behaviors

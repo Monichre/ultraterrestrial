@@ -1,0 +1,17 @@
+---
+description: Web developing new components or modules
+globs: 
+alwaysApply: true
+---
+
+# Project Structure
+
+## Workspaces
+@apps/*
+@packages/*
+
+When developing components or writing new features always analyze the project structure so that you are not create new directories or files that may already exits
+
+## Core Application 
+This is where most of your tasks will take place
+@apps/app/*

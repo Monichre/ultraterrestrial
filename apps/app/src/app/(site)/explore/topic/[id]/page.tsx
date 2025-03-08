@@ -1,13 +1,11 @@
-export default async function TopicPage(props) {
-  const params = await props.params;
+export default async function TopicPage({
+	params,
+}: { params: { id: string } }) {
+	const { id } = await params;
 
-  const {
-    id
-  } = params;
+	console.log("id: ", id);
 
-  console.log('id: ', id)
-
-  return <div>Topic</div>
+	return <div>Topic</div>;
 }
 
 // Behavior Patterns	Classifying observed behaviors
